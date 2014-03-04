@@ -33,6 +33,7 @@ RETHINK_PATH = '/usr/share/rethinkdb'
 RETHINK_USER = 'rethinkdb'
 RETHINK_INSTANCES_PATH = '/etc/rethinkdb/instances.d'
 RETHINK_DATA_PATH = '/var/lib/rethinkdb/vFense/data'
+RETHINK_SOURCE_CONF = '/opt/TopPatch/conf/rethinkdb_vFense.conf'
 RETHINK_CONF = '/etc/rethinkdb/instances.d/vFense.conf'
 RETHINK_WEB = '/usr/share/rethinkdb/web'
 RETHINK_PID_FILE = '/var/run/rethinkdb/vFense/pid_file'
@@ -105,6 +106,14 @@ def initialize_db():
     os.umask(0)
     if not os.path.exists('/opt/TopPatch/var/tmp'):
         os.mkdir('/opt/TopPatch/var/tmp')
+    if not os.path.exists(RETHINK_CONF):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                RETHINK_SOURCE_CONF,
+                RETHINK_CONF
+            ],
+        )
     if not os.path.exists('/var/lib/rethinkdb/vFense'):
         os.makedirs('/var/lib/rethinkdb/vFense')
         subprocess.Popen(
