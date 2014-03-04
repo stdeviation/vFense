@@ -169,31 +169,13 @@ def initialize_db():
             ],
         )
 
-    rethink_init = subprocess.Popen(['rethinkdb', 'create',
-                                     '--directory', RETHINK_DATA_PATH,
-                                     '--runuser', RETHINK_USER,
-                                     '--rungroup', RETHINK_USER],
-                                    stdout=subprocess.PIPE)
-    rethink_init.poll()
-    rethink_init.wait()
-    if rethink_init.returncode == 0:
-        rethink_start = subprocess.Popen(['rethinkdb', '--config-file',
-                                          RETHINK_CONF, '--runuser', RETHINK_USER,
-                                          '--rungroup', RETHINK_USER,
-                                          '--pid-file', RETHINK_PID_FILE, '--directory',
-                                          RETHINK_DATA_PATH])
-        rethink_start.poll()
-        completed = True
+    rethink_start = subprocess.Popen(['service', 'rethinkdb','start'])
+    while not db_connect():
+        print 'Sleeping until rethink starts'
         sleep(2)
-        while not db_connect():
-            print 'Sleeping until rethink starts'
-            sleep(2)
-    else:
-        completed = False
-        msg = 'Failed during Rethink initialization'
-        return(completed, msg)
+    completed = True
     if completed:
-        conn = r.connect()
+        conn = db_connect()
         r.db_create('toppatch_server').run(conn)
         db = r.db('toppatch_server')
         conn.close()
@@ -246,18 +228,8 @@ def initialize_db():
         completed = True
 
         msg = 'Rethink Initialization and Table creation is now complete'
-        pid = open(RETHINK_PID_FILE, 'r').read()
-        if re.search(r'[0-9]+', pid):
-            try:
-                os.kill(int(pid), signal.SIGTERM)
-                os.remove(RETHINK_PID_FILE)
-            except Exception as e:
-                if e.errno == 3:
-                    os.remove(RETHINK_PID_FILE)
-            rql_msg = 'Rethink stopped successfully\n'
-        else:
-            rql_msg = 'Rethink could not be stopped\n'
-        print rql_msg
+        rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
+        rql_msg = 'Rethink stopped successfully\n'
 
         return completed, msg
     else:
@@ -272,17 +244,8 @@ def clean_database(connected):
     rql_msg = None
     msg = None
     if connected:
-        pid = open(RETHINK_PID_FILE, 'r').read()
-        if re.search(r'[0-9]+', pid):
-            try:
-                os.kill(int(pid), signal.SIGTERM)
-                os.remove(RETHINK_PID_FILE)
-            except Exception as e:
-                if e.errno == 3:
-                    os.remove(RETHINK_PID_FILE)
-            rql_msg = 'Rethink stopped successfully\n'
-        else:
-            rql_msg = 'Rethink couldnt be stopped\n'
+        rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
+        rql_msg = 'Rethink stopped successfully\n'
     try:
         shutil.rmtree(RETHINK_DATA_PATH)
         msg = 'Rethink instances.d directory removed and cleaned'
