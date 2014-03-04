@@ -1,8 +1,8 @@
 from copy import deepcopy
 import logging
 from hashlib import sha256
-from db.client import db_create_close, r
-from server.hierarchy import api
+from vFense.db.client import db_create_close, r
+from vFense.server.hierarchy import api
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

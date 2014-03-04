@@ -1,4 +1,4 @@
-from server.hierarchy import UserKey, DefaultCustomer
+from vFense.server.hierarchy import UserKey, DefaultCustomer
 
 
 class User():

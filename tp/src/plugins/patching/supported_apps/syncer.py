@@ -2,17 +2,17 @@ from time import mktime
 from datetime import datetime
 import logging
 import requests
-from agent import *
-from agent.agents import get_agents_info, get_agent_info
-from errorz.status_codes import PackageCodes
-from plugins.patching import *
-from plugins.patching.rv_db_calls import insert_file_data,\
+from vFense.agent import *
+from vFense.agent.agents import get_agents_info, get_agent_info
+from vFense.errorz.status_codes import PackageCodes
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import insert_file_data,\
     build_agent_app_id, update_file_data,\
     get_apps_data, delete_all_in_table, insert_data_into_table
-from plugins.patching.downloader.downloader import \
+from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
-from db.client import db_connect, r, db_create_close
-from server.hierarchy import Collection, CustomerKey
+from vFense.db.client import db_connect, r, db_create_close
+from vFense.server.hierarchy import Collection, CustomerKey
 
 import redis
 from rq import Connection, Queue

@@ -3,15 +3,15 @@ import logging.config
 from hashlib import sha256
 from datetime import datetime
 
-from tagging import *
-from agent import *
+from vFense.tagging import *
+from vFense.agent import *
 
-from utils.common import *
-from db.client import db_create_close, r
-from plugins.patching import *
-from plugins.patching.rv_db_calls import get_all_avail_stats_by_tagid, \
+from vFense.utils.common import *
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import get_all_avail_stats_by_tagid, \
     get_all_app_stats_by_tagid
-from errorz.error_messages import GenericResults, TagResults
+from vFense.errorz.error_messages import GenericResults, TagResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

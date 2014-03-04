@@ -2,12 +2,12 @@ import json
 import logging
 import logging.config
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 #from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy import api
-from server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy import api
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
 
-from server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.permissions import Permission
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

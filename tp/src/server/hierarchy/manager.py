@@ -1,14 +1,14 @@
 import logging
 import logging.config
-from utils.security import generate_pass
-from server.hierarchy import *
-from server.hierarchy._db import actions
-from server.hierarchy.group import Group
-from server.hierarchy.user import User
-from server.hierarchy.customer import Customer
+from vFense.utils.security import generate_pass
+from vFense.server.hierarchy import *
+from vFense.server.hierarchy._db import actions
+from vFense.server.hierarchy.group import Group
+from vFense.server.hierarchy.user import User
+from vFense.server.hierarchy.customer import Customer
 
-from server.hierarchy.permissions import Permission
-from utils.security import Crypto
+from vFense.server.hierarchy.permissions import Permission
+from vFense.utils.security import Crypto
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

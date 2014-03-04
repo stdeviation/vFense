@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from db.client import *
+from vFense.db.client import *
 
-from server.hierarchy import *
+from vFense.server.hierarchy import *
 #from server.hierarchy.group import *
 #from server.hierarchy.user import *
 #from server.hierarchy.customer import *

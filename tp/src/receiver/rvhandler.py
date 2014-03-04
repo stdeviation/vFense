@@ -3,13 +3,13 @@ import logging
 import redis
 from rq import Connection, Queue
 
-from agent.agents import get_agent_info
-from plugins.patching.os_apps.incoming_updates import \
+from vFense.agent.agents import get_agent_info
+from vFense.plugins.patching.os_apps.incoming_updates import \
    incoming_packages_from_agent 
-from plugins.patching.custom_apps.custom_apps import \
+from vFense.plugins.patching.custom_apps.custom_apps import \
     add_custom_app_to_agents
 
-from plugins.patching.supported_apps.syncer import \
+from vFense.plugins.patching.supported_apps.syncer import \
     get_all_supported_apps_for_agent, get_all_agent_apps_for_agent
 
 rq_host = 'localhost'

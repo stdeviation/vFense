@@ -8,8 +8,8 @@ import tornado.gen
 
 import tornadoredis
 
-from plugins import ra
-from plugins.ra import creator
+from vFense.plugins import ra
+from vFense.plugins.ra import creator
 
 
 class RDStatusQueue(tornado.websocket.WebSocketHandler):

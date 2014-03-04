@@ -1,6 +1,6 @@
-from wol_magic import *
-from models.node import *
-from db.query_table import *
+from vFense.wol_magic import *
+from vFense.models.node import *
+from vFense.db.query_table import *
 
 
 def get_list_of_mac_addresses(session, node_id=None):

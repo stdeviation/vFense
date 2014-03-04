@@ -2,12 +2,12 @@ import simplejson as json
 import re
 import logging
 import logging.config
-from server.handlers import BaseHandler
-from operations import *
-from operations.retriever import OperationRetriever, oper_exists
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request
-from errorz.error_messages import GenericResults
+from vFense.server.handlers import BaseHandler
+from vFense.operations import *
+from vFense.operations.retriever import OperationRetriever, oper_exists
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

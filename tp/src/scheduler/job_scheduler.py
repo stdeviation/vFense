@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from errorz.error_messages import SchedulerResults, GenericResults
+from vFense.errorz.error_messages import SchedulerResults, GenericResults
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

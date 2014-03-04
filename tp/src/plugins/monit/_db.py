@@ -1,6 +1,6 @@
 import time
 
-from db.client import *
+from vFense.db.client import *
 # import rethinkdb as r
 #
 #

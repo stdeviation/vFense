@@ -15,46 +15,46 @@ import tornado.options
 from redis import StrictRedis
 from rq import Connection, Queue
 
-from server.handlers import RootHandler, LoginHandler, LogoutHandler
-from server.handlers import WebSocketHandler, AdminHandler
-from server.api.scheduler_api import ScheduleListerHandler
+from vFense.server.handlers import RootHandler, LoginHandler, LogoutHandler
+from vFense.server.handlers import WebSocketHandler, AdminHandler
+from vFense.server.api.scheduler_api import ScheduleListerHandler
 #from server.api.scheduler_api import ScheduleRemoveHandler
-from server.api.scheduler_api import ScheduleAppDetailHandler
-from server.api.scheduler_api import SchedulerDateBasedJobHandler
-from server.api.scheduler_api import SchedulerDailyRecurrentJobHandler
-from server.api.scheduler_api import SchedulerMonthlyRecurrentJobHandler
-from server.api.scheduler_api import SchedulerYearlyRecurrentJobHandler
-from server.api.scheduler_api import SchedulerWeeklyRecurrentJobHandler
-from server.api.scheduler_api import SchedulerCustomRecurrentJobHandler
-from server.api.reports_api import *
+from vFense.server.api.scheduler_api import ScheduleAppDetailHandler
+from vFense.server.api.scheduler_api import SchedulerDateBasedJobHandler
+from vFense.server.api.scheduler_api import SchedulerDailyRecurrentJobHandler
+from vFense.server.api.scheduler_api import SchedulerMonthlyRecurrentJobHandler
+from vFense.server.api.scheduler_api import SchedulerYearlyRecurrentJobHandler
+from vFense.server.api.scheduler_api import SchedulerWeeklyRecurrentJobHandler
+from vFense.server.api.scheduler_api import SchedulerCustomRecurrentJobHandler
+from vFense.server.api.reports_api import *
 
-from db.client import *
-from scheduler.jobManager import start_scheduler
+from vFense.db.client import *
+from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
-from plugins.patching.Api.app_data import *
-from plugins.patching.Api.node_api import *
-from plugins.patching.Api.stats_api import *
-from plugins.patching.Api.notification_handler import *
-from plugins.patching.Api.os_updates_handler import *
-from plugins.patching.Api.agent_updates_handler import *
-from plugins.patching.Api.custom_updates_handler import *
-from plugins.patching.Api.supported_updates_handler import *
-from plugins.mightymouse.api.relay_servers import *
+from vFense.plugins.patching.Api.app_data import *
+from vFense.plugins.patching.Api.node_api import *
+from vFense.plugins.patching.Api.stats_api import *
+from vFense.plugins.patching.Api.notification_handler import *
+from vFense.plugins.patching.Api.os_updates_handler import *
+from vFense.plugins.patching.Api.agent_updates_handler import *
+from vFense.plugins.patching.Api.custom_updates_handler import *
+from vFense.plugins.patching.Api.supported_updates_handler import *
+from vFense.plugins.mightymouse.api.relay_servers import *
 
-from plugins.ra.api.status import RDStatusQueue
-from plugins.ra.api.rdsession import RDSession
-from plugins.ra.api.settings import SetPassword
-from server.hierarchy import db as hierarchy_db
-from server.api.transactions_api import *
-from server.api.log_api import *
-from server.api.email_api import *
-from server.api.tag_api import *
-from server.api.users_api import *
-from server.api.groups_api import *
-from server.api.customer_api import *
-from server.api.permissions_api import *
-from server.api.monit_api import *
-from scripts.create_indexes import initialize_indexes_and_create_tables
+from vFense.plugins.ra.api.status import RDStatusQueue
+from vFense.plugins.ra.api.rdsession import RDSession
+from vFense.plugins.ra.api.settings import SetPassword
+from vFense.server.hierarchy import db as hierarchy_db
+from vFense.server.api.transactions_api import *
+from vFense.server.api.log_api import *
+from vFense.server.api.email_api import *
+from vFense.server.api.tag_api import *
+from vFense.server.api.users_api import *
+from vFense.server.api.groups_api import *
+from vFense.server.api.customer_api import *
+from vFense.server.api.permissions_api import *
+from vFense.server.api.monit_api import *
+from vFense.scripts.create_indexes import initialize_indexes_and_create_tables
 
 from tornado.options import define, options
 

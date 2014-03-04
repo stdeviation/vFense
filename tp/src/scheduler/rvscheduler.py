@@ -1,13 +1,13 @@
 from time import sleep
 import logging 
 
-from scheduler.jobManager import start_scheduler, job_exists, remove_job
-from plugins.patching.supported_apps.syncer import get_agents_apps, get_supported_apps
-from plugins.cve.cve_parser import parse_cve_and_udpatedb
-from plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
-from plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
+from vFense.scheduler.jobManager import start_scheduler, job_exists, remove_job
+from vFense.plugins.patching.supported_apps.syncer import get_agents_apps, get_supported_apps
+from vFense.plugins.cve.cve_parser import parse_cve_and_udpatedb
+from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
+from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
 
-from agent.agent_uptime_verifier import all_agent_status
+from vFense.agent.agent_uptime_verifier import all_agent_status
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

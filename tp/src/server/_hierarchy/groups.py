@@ -1,5 +1,5 @@
-from server.hierarchy import *
-from permissions import Permission
+from vFense.server.hierarchy import *
+from vFense.permissions import Permission
 
 
 class Group():

@@ -1,14 +1,14 @@
 import logging
 import logging.config
 
-from receiver.rqueuemanager import QueueWorker
-from settings import Default
-from operations.operation_manager import Operation
+from vFense.receiver.rqueuemanager import QueueWorker
+from vFense.settings import Default
+from vFense.operations.operation_manager import Operation
 
-from errorz.error_messages import OperationCodes
+from vFense.errorz.error_messages import OperationCodes
 
-from plugins import ra
-from plugins.ra import DesktopProtocol
+from vFense.plugins import ra
+from vFense.plugins.ra import DesktopProtocol
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('raapi')

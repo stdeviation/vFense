@@ -1,12 +1,12 @@
 import logging
 import logging.config
-from agent import *
+from vFense.agent import *
 
-from utils.common import *
-from db.client import db_create_close, r
-from plugins.patching import *
-from plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
-from errorz.error_messages import GenericResults
+from vFense.utils.common import *
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
+from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

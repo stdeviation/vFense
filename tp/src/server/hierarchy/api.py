@@ -1,5 +1,5 @@
-from server.hierarchy import *
-from server.hierarchy.manager import *
+from vFense.server.hierarchy import *
+from vFense.server.hierarchy.manager import *
 
 
 class User():

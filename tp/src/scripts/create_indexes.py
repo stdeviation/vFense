@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-from db.client import db_connect, r
-from agent import *
-from notifications import *
-from operations import *
-from plugins.patching import *
-from plugins.mightymouse import *
-from plugins.cve import *
-from tagging import *
+from vFense.db.client import db_connect, r
+from vFense.agent import *
+from vFense.notifications import *
+from vFense.operations import *
+from vFense.plugins.patching import *
+from vFense.plugins.mightymouse import *
+from vFense.plugins.cve import *
+from vFense.tagging import *
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [

@@ -2,9 +2,9 @@ import logging
 import logging.config
 import ast
 
-from db.client import *
+from vFense.db.client import *
 
-from receiver.corehandler import process_queue_data
+from vFense.receiver.corehandler import process_queue_data
 
 from json import dumps
 import redis

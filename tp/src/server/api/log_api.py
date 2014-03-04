@@ -5,12 +5,12 @@ import simplejson as json
 
 import logging
 import logging.config
-from server.handlers import BaseHandler, LoginHandler
-from db.client import *
-from utils.common import *
-from logger.rvlogger import RvLogger
-from server.hierarchy.decorators import authenticated_request
-from server.hierarchy.manager import get_current_customer_name
+from vFense.server.handlers import BaseHandler, LoginHandler
+from vFense.db.client import *
+from vFense.utils.common import *
+from vFense.logger.rvlogger import RvLogger
+from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.server.hierarchy.manager import get_current_customer_name
 
 from jsonpickle import encode
 

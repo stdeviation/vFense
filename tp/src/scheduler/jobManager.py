@@ -8,20 +8,20 @@ import apscheduler
 from apscheduler.scheduler import Scheduler
 from apscheduler.jobstores.redis_store import RedisJobStore
 
-from utils.common import *
-from db.client import db_create_close, r, db_connect
-from agent import *
-from tagging import *
-from agent.agents import get_all_agent_ids, get_agent_info
-from tagging.tagManager import get_all_tag_ids, get_tags_info, \
+from vFense.utils.common import *
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.agent import *
+from vFense.tagging import *
+from vFense.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.tagging.tagManager import get_all_tag_ids, get_tags_info, \
     get_tags_info_from_tag_ids
-from plugins.patching import *
-from plugins.patching.rv_db_calls import \
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import \
     get_appids_by_agentid_and_status, get_app_data, get_app_data_by_appids
-from tagging.tagManager import get_agent_ids_from_tag
-from plugins.patching.store_operations import StoreOperation
-from errorz.error_messages import GenericResults, SchedulerResults
-from server.hierarchy import *
+from vFense.tagging.tagManager import get_agent_ids_from_tag
+from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.errorz.error_messages import GenericResults, SchedulerResults
+from vFense.server.hierarchy import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

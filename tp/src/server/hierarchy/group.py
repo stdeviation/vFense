@@ -1,4 +1,4 @@
-from server.hierarchy import GroupKey
+from vFense.server.hierarchy import GroupKey
 
 
 class Group():

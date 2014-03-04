@@ -1,7 +1,7 @@
 import logging
 import logging.config
 
-from db.client import *
+from vFense.db.client import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

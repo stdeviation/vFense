@@ -3,27 +3,27 @@ import tornado.web
 
 import simplejson as json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from errorz.error_messages import GenericResults, PackageResults
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.hierarchy.decorators import convert_json_to_arguments
-from server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.server.hierarchy.permissions import Permission
 
-from plugins.patching import *
-from plugins.patching.rv_db_calls import update_custom_app, \
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import update_custom_app, \
     update_hidden_status, delete_app_from_rv
-from plugins.patching.store_operations import StoreOperation
-from plugins.patching.search.search import RetrieveCustomApps
-from plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
-from plugins.patching.search.search_by_tagid import RetrieveCustomAppsByTagId
-from plugins.patching.search.search_by_appid import RetrieveCustomAppsByAppId, \
+from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.search.search import RetrieveCustomApps
+from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
+from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByTagId
+from vFense.plugins.patching.search.search_by_appid import RetrieveCustomAppsByAppId, \
     RetrieveAgentsByCustomAppId
-from plugins.patching.custom_apps.uploaded.uploader import gen_uuid, \
+from vFense.plugins.patching.custom_apps.uploaded.uploader import gen_uuid, \
     move_packages, store_package_info_in_db
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

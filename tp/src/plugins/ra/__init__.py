@@ -2,7 +2,7 @@ import subprocess
 import json
 import redis
 
-from plugins.ra import _db as db
+from vFense.plugins.ra import _db as db
 
 PluginName = "ra"
 

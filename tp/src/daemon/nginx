@@ -10,8 +10,8 @@
 # Description:       starts nginx using start-stop-daemon
 ### END INIT INFO
 
-PATH=/opt/TopPatch/sbin:/opt/TopPatch/bin:/bin:/sbin:/usr/bin:/usr/sbin
-DAEMON=/opt/TopPatch/sbin/nginx
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+DAEMON=/usr/sbin/nginx
 NAME=nginx
 DESC=nginx
 
@@ -21,7 +21,7 @@ set -e
 
 . /lib/lsb/init-functions
 
-PID=/opt/TopPatch/var/tmp/nginx.pid
+PID=/var/tmp/nginx.pid
 
 # Check if the ULIMIT is set in /etc/default/nginx
 if [ -n "$ULIMIT" ]; then

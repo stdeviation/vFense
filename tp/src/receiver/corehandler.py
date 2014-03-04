@@ -1,7 +1,7 @@
 import logging
 
-from operations.operation_manager import Operation
-from operations import *
+from vFense.operations.operation_manager import Operation
+from vFense.operations import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -2,7 +2,7 @@ import Queue
 from time import sleep
 from random import randint
 import logging, logging.config
-from threading import Thread
+from vFense.threading import Thread
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 

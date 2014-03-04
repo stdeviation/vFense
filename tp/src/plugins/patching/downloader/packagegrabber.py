@@ -3,11 +3,11 @@ import logging
 import logging.config
 import sys
 import time
-from Queue import Queue, Empty, Full
+from vFense.Queue import Queue, Empty, Full
 from urlgrabber import urlgrab
 import threading
 
-from utils.common import hash_verifier
+from vFense.utils.common import hash_verifier
 
 packages_directory = '/opt/TopPatch/var/packages/'
 dependencies_directory = '/opt/TopPatch/var/packages/dependencies/'

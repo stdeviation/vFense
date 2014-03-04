@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import logging
-from db.client import db_create_close, r
+from vFense.db.client import db_create_close, r
 from time import mktime
 from datetime import datetime, timedelta
-from tagging import *
-from agent import *
-from plugins.patching import *
-from plugins.patching.rv_db_calls import get_all_app_stats_by_customer
-from errorz.error_messages import GenericResults
+from vFense.tagging import *
+from vFense.agent import *
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_customer
+from vFense.errorz.error_messages import GenericResults
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 

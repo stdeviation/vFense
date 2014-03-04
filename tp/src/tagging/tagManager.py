@@ -2,12 +2,12 @@
 import logging
 import logging.config
 
-from tagging import *
-from agent import *
-from plugins.patching import *
+from vFense.tagging import *
+from vFense.agent import *
+from vFense.plugins.patching import *
 
-from db.client import db_create_close, r, db_connect
-from errorz.error_messages import GenericResults, TagResults
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.errorz.error_messages import GenericResults, TagResults
 
 import redis
 from rq import Connection, Queue

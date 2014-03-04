@@ -2,14 +2,14 @@ import logging
 import tornado.httpserver
 import tornado.web
 from json import dumps
-from agent.agents import update_agent_status
-from errorz.error_messages import GenericResults, AgentResults
-from server.handlers import BaseHandler
-from server.hierarchy.decorators import agent_authenticated_request
-from server.hierarchy.manager import get_current_customer_name
+from vFense.agent.agents import update_agent_status
+from vFense.errorz.error_messages import GenericResults, AgentResults
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.server.hierarchy.manager import get_current_customer_name
 
-from receiver.corehandler import process_queue_data
-from receiver.rqueuemanager import QueueWorker
+from vFense.receiver.corehandler import process_queue_data
+from vFense.receiver.rqueuemanager import QueueWorker
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvlistener')

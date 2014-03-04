@@ -1,5 +1,5 @@
-from errorz.status_codes import *
-from agent import *
+from vFense.errorz.status_codes import *
+from vFense.agent import *
 
 status = 'http_status'
 code = 'rv_status_code'

@@ -1,7 +1,7 @@
 import re
 import sys
 import gevent
-from gevent import ssl, socket
+from vFense.gevent import ssl, socket
 
 class SslConnect():
     """

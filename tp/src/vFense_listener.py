@@ -15,19 +15,19 @@ import tornado.options
 from redis import StrictRedis
 from rq import Connection, Queue
 
-from server.handlers import RootHandler, RvlLoginHandler, RvlLogoutHandler
-from server.handlers import WebSocketHandler, AdminHandler
-from receiver.api.core.newagent import NewAgentV1
-from receiver.api.core.checkin import CheckInV1
-from receiver.api.core.startup import StartUpV1
-from receiver.api.rv.results import *
-from receiver.api.core.results import *
-from receiver.api.rv.updateapplications import UpdateApplicationsV1
-from receiver.api.ra.results import RemoteDesktopResults
-from receiver.api.monitoring.monitoringdata import UpdateMonitoringStatsV1
+from vFense.server.handlers import RootHandler, RvlLoginHandler, RvlLogoutHandler
+from vFense.server.handlers import WebSocketHandler, AdminHandler
+from vFense.receiver.api.core.newagent import NewAgentV1
+from vFense.receiver.api.core.checkin import CheckInV1
+from vFense.receiver.api.core.startup import StartUpV1
+from vFense.receiver.api.rv.results import *
+from vFense.receiver.api.core.results import *
+from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
+from vFense.receiver.api.ra.results import RemoteDesktopResults
+from vFense.receiver.api.monitoring.monitoringdata import UpdateMonitoringStatsV1
 
-from db.client import *
-from scheduler.jobManager import start_scheduler
+from vFense.db.client import *
+from vFense.scheduler.jobManager import start_scheduler
 
 from tornado.options import define, options
 

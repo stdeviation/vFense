@@ -1,9 +1,9 @@
-from settings import Default
-from db.client import *
+from vFense.settings import Default
+from vFense.db.client import *
 
-from plugins.ra.raoperation import RaOperation
-from plugins.ra.raoperation import store_in_agent_queue, save_operation
-from plugins import ra
+from vFense.plugins.ra.raoperation import RaOperation
+from vFense.plugins.ra.raoperation import store_in_agent_queue, save_operation
+from vFense.plugins import ra
 
 
 @db_create_close

@@ -6,27 +6,27 @@ except ImportError: import json
 
 import logging
 import logging.config
-from models.application import *
-from server.decorators import authenticated_request
-from server.handlers import BaseHandler, LoginHandler
-from models.base import Base
-from models.packages import *
-from models.node import *
-from models.ssl import *
-from models.scheduler import *
-from db.client import *
-from scheduler.jobManager import job_lister, remove_job
-from scheduler.timeBlocker import *
-from tagging.tagManager import *
-from search.search import *
-from utils.common import *
-from packages.pkgManager import *
-from node.nodeManager import *
-from transactions.transactions_manager import *
-from logger.rvlogger import RvLogger
-from wol.wol import *
-from sqlalchemy import distinct, func
-from sqlalchemy.orm import sessionmaker, class_mapper
+from vFense.models.application import *
+from vFense.server.decorators import authenticated_request
+from vFense.server.handlers import BaseHandler, LoginHandler
+from vFense.models.base import Base
+from vFense.models.packages import *
+from vFense.models.node import *
+from vFense.models.ssl import *
+from vFense.models.scheduler import *
+from vFense.db.client import *
+from vFense.scheduler.jobManager import job_lister, remove_job
+from vFense.scheduler.timeBlocker import *
+from vFense.tagging.tagManager import *
+from vFense.search.search import *
+from vFense.utils.common import *
+from vFense.packages.pkgManager import *
+from vFense.node.nodeManager import *
+from vFense.transactions.transactions_manager import *
+from vFense.logger.rvlogger import RvLogger
+from vFense.wol.wol import *
+from vFense.sqlalchemy import distinct, func
+from vFense.sqlalchemy.orm import sessionmaker, class_mapper
 
 from jsonpickle import encode
 

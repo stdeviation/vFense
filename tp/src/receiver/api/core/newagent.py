@@ -5,15 +5,15 @@ import tornado.web
 
 from json import dumps
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 
-from server.hierarchy.decorators import agent_authenticated_request
-from server.hierarchy.decorators import convert_json_to_arguments
-from agent import *
-from operations import *
-from agent.agents import add_agent
-from errorz.error_messages import GenericResults
-from receiver.rvhandler import RvHandOff
+from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.agent import *
+from vFense.operations import *
+from vFense.agent.agents import add_agent
+from vFense.errorz.error_messages import GenericResults
+from vFense.receiver.rvhandler import RvHandOff
 
 import plugins.ra.handoff as RaHandoff
 #from server.handlers import *

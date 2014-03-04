@@ -4,19 +4,19 @@ import logging.config
 import tornado.httpserver
 import tornado.web
 
-from errorz.error_messages import GenericResults, NotificationResults
-from notifications import *
+from vFense.errorz.error_messages import GenericResults, NotificationResults
+from vFense.notifications import *
 import simplejson as json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 
-from server.hierarchy.decorators import authenticated_request
-from server.hierarchy.permissions import Permission
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.hierarchy.decorators import convert_json_to_arguments
-from notifications.search_alerts import AlertSearcher
-from notifications.alerts import Notifier, get_valid_fields, get_all_notifications
+from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.notifications.search_alerts import AlertSearcher
+from vFense.notifications.alerts import Notifier, get_valid_fields, get_all_notifications
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -3,15 +3,15 @@ import logging
 import logging.config
 #import customers.manager
 
-from logger.rvlogger import RvLogger
+from vFense.logger.rvlogger import RvLogger
 #from server.decorators import authenticated_request
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 from json import dumps
-from db.client import *
+from vFense.db.client import *
 
 conn=db_connect()
 k=r.table('unique_applications')

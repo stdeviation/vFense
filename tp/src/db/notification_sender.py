@@ -1,13 +1,13 @@
 import logging
 import logging.config
-from db.client import db_create_close, r
-from db.notificationhandler import RvNotificationHandler, \
+from vFense.db.client import db_create_close, r
+from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
-from operations import *
-from operations.operation_manager import get_oper_info
-from operations.retriever import OperationRetriever
-from notifications import *
-from errorz.error_messages import OperationCodes, GenericResults
+from vFense.operations import *
+from vFense.operations.operation_manager import get_oper_info
+from vFense.operations.retriever import OperationRetriever
+from vFense.notifications import *
+from vFense.errorz.error_messages import OperationCodes, GenericResults
 from emailer.mailer import MailClient
 
 from tornado.template import Loader

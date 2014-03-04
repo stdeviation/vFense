@@ -6,12 +6,12 @@ import logging
 import logging.config
 from lxml import etree
 from re import sub
-from plugins.cve import *
-from plugins.cve.cve_constants import *
-from plugins.cve.cve_db import insert_into_cve_collection, update_cve_categories
-from plugins.cve.downloader import start_nvd_xml_download
-from utils.common import date_parser, timestamp_verifier
-from db.client import r
+from vFense.plugins.cve import *
+from vFense.plugins.cve.cve_constants import *
+from vFense.plugins.cve.cve_db import insert_into_cve_collection, update_cve_categories
+from vFense.plugins.cve.downloader import start_nvd_xml_download
+from vFense.utils.common import date_parser, timestamp_verifier
+from vFense.db.client import r
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -213,10 +213,10 @@ def parse_cve_and_udpatedb(download_latest_nvd=True, nvd_file=NVD_MODIFIED_FILE)
 
             cve_data_list.append(cve_data)
 
-        entry.clear()
-        while entry.getprevious() is not None:
-            del entry.getparent()[0]
-        del entry
+        #entry.clear()
+        #while entry.getprevious() is not None:
+        #    del entry.getparent()[0]
+        #del entry
 
     insert_into_cve_collection(cve_data_list)
     del cve_data_list

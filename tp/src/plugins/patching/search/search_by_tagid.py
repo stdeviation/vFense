@@ -2,12 +2,12 @@ import logging
 import logging.config
 
 from datetime import datetime
-from db.client import db_create_close, r
-from plugins.patching import *
-from agent import *
-from tagging import *
-from tagging.tagManager import tag_exists
-from errorz.error_messages import GenericResults, PackageResults
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching import *
+from vFense.agent import *
+from vFense.tagging import *
+from vFense.tagging.tagManager import tag_exists
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -1,7 +1,7 @@
 import datetime
 import time
 
-from db.client import *
+from vFense.db.client import *
 
 import _db
 from _db import Collection, Master, monit_initialization

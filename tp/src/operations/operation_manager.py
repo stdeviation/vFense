@@ -4,12 +4,12 @@ import logging
 import logging.config
 from datetime import datetime
 from time import mktime
-from db.client import db_create_close, r, db_connect
-from operations import *
-from errorz.error_messages import GenericResults, OperationResults
-from errorz.status_codes import OperationCodes
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.operations import *
+from vFense.errorz.error_messages import GenericResults, OperationResults
+from vFense.errorz.status_codes import OperationCodes
 
-from plugins import ra
+from vFense.plugins import ra
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

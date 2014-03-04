@@ -3,10 +3,10 @@ import requests
 import re
 import sys
 
-from plugins.cve import *
-from plugins.cve.cve_constants import *
-from plugins.cve.bulletin_parser import build_bulletin_id
-from plugins.cve.cve_db import insert_into_bulletin_collection_for_ubuntu
+from vFense.plugins.cve import *
+from vFense.plugins.cve.cve_constants import *
+from vFense.plugins.cve.bulletin_parser import build_bulletin_id
+from vFense.plugins.cve.cve_db import insert_into_bulletin_collection_for_ubuntu
 
 MAIN_URL = 'http://www.ubuntu.com'
 MAIN_USN_URL = 'http://www.ubuntu.com/usn'
@@ -126,11 +126,11 @@ def get_details(soup_details):
 def write_content_to_file(file_location, url):
     usn_file = open(file_location, 'wb')
     usn_page = requests.get(url)
-    usn_page.close()
+    #usn_page.close()
     completed = False
     content = None
     if usn_page.ok:
-        content = usn_page.text.encode('utf-8')
+        content = usn_page.content.encode('utf-8')
         #content = usn_page.text
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace').decode('utf-8')
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace')
@@ -146,9 +146,9 @@ def get_url_content(usn_uri):
     usn = usn_uri.split('/')[-2]
     if re.search('http', usn_uri):
         usn_page = requests.get(usn_uri)
-        usn_page.close()
+        #usn_page.close()
         if usn_page.ok:
-            content = usn_page.text
+            content = usn_page.content
             completed = True
     else:
         usn_file_location = HTML_DIR_UBUNTU + usn
@@ -215,7 +215,7 @@ def process_usn_page(usn_uri):
     return(data, completed)
 
 
-def  begin_usn_home_page_processing(next_page=None, full_parse=False):
+def begin_usn_home_page_processing(next_page=None, full_parse=False):
     if next_page:
         url = MAIN_USN_URL + '/' + next_page
         main_page = requests.get(url)
@@ -223,8 +223,8 @@ def  begin_usn_home_page_processing(next_page=None, full_parse=False):
         main_page = requests.get(MAIN_USN_URL)
 
     if main_page.ok:
-        soup = BeautifulSoup(main_page.text)
-        main_page.close()
+        soup = BeautifulSoup(main_page.content)
+        #main_page.close()
         next_page = (
             soup.find(
                 'div',
@@ -263,3 +263,5 @@ def  begin_usn_home_page_processing(next_page=None, full_parse=False):
         if full_parse:
             if next_page:
                 begin_usn_home_page_processing(next_page.parent['href'], True)
+
+

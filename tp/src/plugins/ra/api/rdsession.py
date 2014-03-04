@@ -1,8 +1,8 @@
 import json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 
-from plugins.ra import creator
+from vFense.plugins.ra import creator
 
 
 class RDSession(BaseHandler):

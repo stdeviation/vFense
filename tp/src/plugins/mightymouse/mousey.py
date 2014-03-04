@@ -2,10 +2,10 @@ import logging
 import logging.config
 from time import mktime
 from datetime import datetime
-from db.client import db_create_close, r, db_connect
-from errorz.error_messages import GenericResults, MightyMouseResults
-from errorz.status_codes import MightyMouseCodes
-from plugins.mightymouse.mouse_db import mouse_exists, \
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.errorz.error_messages import GenericResults, MightyMouseResults
+from vFense.errorz.status_codes import MightyMouseCodes
+from vFense.plugins.mightymouse.mouse_db import mouse_exists, \
     add_mouse, update_mouse, delete_mouse
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

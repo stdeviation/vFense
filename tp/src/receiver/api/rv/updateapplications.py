@@ -4,14 +4,14 @@ import tornado.web
 
 from json import dumps
 
-from db.update_table import AddResults
-from errorz.error_messages import GenericResults, UpdateApplicationsResults
-from server.handlers import BaseHandler
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import agent_authenticated_request
-from server.hierarchy.decorators import convert_json_to_arguments
+from vFense.db.update_table import AddResults
+from vFense.errorz.error_messages import GenericResults, UpdateApplicationsResults
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from receiver.rvhandler import RvHandOff
+from vFense.receiver.rvhandler import RvHandOff
 
 #from server.handlers import *
 

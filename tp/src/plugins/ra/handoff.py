@@ -1,5 +1,5 @@
-from tunnels import ssh
-from plugins import ra
+from vFense.tunnels import ssh
+from vFense.plugins import ra
 
 
 def startup(agent_id, json_operation):

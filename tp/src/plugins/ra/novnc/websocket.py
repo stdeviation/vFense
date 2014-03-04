@@ -18,7 +18,7 @@ as taken from http://docs.python.org/dev/library/ssl.html#certificates
 
 import os, sys, time, errno, signal, socket, traceback, select
 import array, struct
-from base64 import b64encode, b64decode
+from vFense.base64 import b64encode, b64decode
 
 # Imports that vary by python version
 

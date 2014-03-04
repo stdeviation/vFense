@@ -12,20 +12,20 @@ import tornado.web
 import tornado.websocket
 import tornadoredis
 from datetime import datetime, timedelta
-from db.client import *
+from vFense.db.client import *
 from jsonpickle import encode
 #from models.node import NodeInfo
 #from networking.agentoperation import AgentOperation
 #from scheduler.jobManager import job_scheduler, job_lister
-from server.hierarchy.decorators import authenticated_request
-from server.hierarchy.decorators import convert_json_to_arguments
-from server.hierarchy import api
+from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.server.hierarchy import api
 from time import sleep
 from tornado import ioloop
 #from users.manager import *
 #from users.manager import list_user, list_users
 
-from server.hierarchy.manager import Hierarchy
+from vFense.server.hierarchy.manager import Hierarchy
 
 LISTENERS = []
 

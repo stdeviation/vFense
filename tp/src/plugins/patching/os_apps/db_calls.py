@@ -1,7 +1,7 @@
-from db.client import db_create_close, r
-from plugins.patching import *
-from agent import *
-from errorz.error_messages import GenericResults, PackageResults
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching import *
+from vFense.agent import *
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
 import logging
 import logging.config

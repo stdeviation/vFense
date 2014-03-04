@@ -6,11 +6,11 @@ import logging
 import logging.config
 from hashlib import sha256
 from re import sub
-from plugins.cve import *
-from plugins.cve.cve_constants import *
-from plugins.cve.cve_db import insert_into_bulletin_collection_for_windows
-from plugins.cve.downloader import download_latest_xls_from_msft
-from db.client import r
+from vFense.plugins.cve import *
+from vFense.plugins.cve.cve_constants import *
+from vFense.plugins.cve.cve_db import insert_into_bulletin_collection_for_windows
+from vFense.plugins.cve.downloader import download_latest_xls_from_msft
+from vFense.db.client import r
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')

@@ -11,33 +11,34 @@ import logging, logging.config
 
 import create_indexes as ci
 import nginx_config_creator as ncc
-from utils.security import generate_pass
-from utils.common import pick_valid_ip_address
-from db.client import db_connect, r
+from vFense.utils.security import generate_pass
+from vFense.utils.common import pick_valid_ip_address
+from vFense.db.client import db_connect, r
 
-from server import hierarchy
-from server.hierarchy import *
-from server.hierarchy import db as hierarchy_db
-from server.hierarchy.manager import Hierarchy
-from server.hierarchy.permissions import Permission
+from vFense.server import hierarchy
+from vFense.server.hierarchy import *
+from vFense.server.hierarchy import db as hierarchy_db
+from vFense.server.hierarchy.manager import Hierarchy
+from vFense.server.hierarchy.permissions import Permission
 
-from plugins import monit
-from plugins import cve
-from plugins.cve.cve_parser import load_up_all_xml_into_db
-from plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
-from plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
+from vFense.plugins import monit
+from vFense.plugins import cve
+from vFense.plugins.cve.cve_parser import load_up_all_xml_into_db
+from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
+from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-RETHINK_PATH = '/opt/TopPatch/rethinkdb/current'
-RETHINK_INSTANCES_PATH = '/opt/TopPatch/var/rethinkdb/instances.d'
-RETHINK_CONF = '/opt/TopPatch/conf/rethinkdb.conf'
-RETHINK_WEB = '/opt/TopPatch/rethinkdb/current/web'
-PYTHON_PATH = '/opt/TopPatch/python/current'
-REDIS_START = '/opt/TopPatch/tp/src/daemon/redis_init'
-REDIS_PID_FILE = '/opt/TopPatch/var/tmp/redis-6379.pid'
-RETHINK_PID_FILE = '/opt/TopPatch/var/tmp/rethinkdb.pid'
+RETHINK_PATH = '/usr/share/rethinkdb'
+RETHINK_USER = 'rethinkdb'
+RETHINK_INSTANCES_PATH = '/etc/rethinkdb/instances.d'
+RETHINK_DATA_PATH = '/var/lib/rethinkdb/vFense/data'
+RETHINK_CONF = '/etc/rethinkdb/instances.d/vFense.conf'
+RETHINK_WEB = '/usr/share/rethinkdb/web'
+RETHINK_PID_FILE = '/var/run/rethinkdb/vFense/pid_file'
 TOPPATCH_HOME = '/opt/TopPatch/'
+NGINX_CONFIG = '/etc/nginx/sites-available/vFense.conf'
+NGINX_CONFIG_ENABLED = '/etc/nginx/sites-enabled/vFense.conf'
 
 
 if os.getuid() != 0:
@@ -104,10 +105,23 @@ def initialize_db():
     os.umask(0)
     if not os.path.exists('/opt/TopPatch/var/tmp'):
         os.mkdir('/opt/TopPatch/var/tmp')
+    if not os.path.exists('/var/lib/rethinkdb/vFense'):
+        os.makedirs('/var/lib/rethinkdb/vFense')
+        subprocess.Popen(
+            [
+                'chown', '-R', 'rethinkdb.rethinkdb', '/var/lib/rethinkdb/vFense'
+            ],
+        )
+    if os.path.exists(NGINX_CONFIG) and not os.path.exists(NGINX_CONFIG_ENABLED):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                NGINX_CONFIG,
+                NGINX_CONFIG_ENABLED
+            ],
+        )
     if not os.path.exists('/opt/TopPatch/var/log'):
         os.mkdir('/opt/TopPatch/var/log')
-    if not os.path.exists('/opt/TopPatch/var/rethinkdb'):
-        os.mkdir('/opt/TopPatch/var/rethinkdb')
     if not os.path.exists('/opt/TopPatch/var/scheduler'):
         os.mkdir('/opt/TopPatch/var/scheduler')
     if not os.path.exists('/opt/TopPatch/var/packages'):
@@ -122,8 +136,6 @@ def initialize_db():
         os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0773)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
         os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', 0773)
-    if not os.path.exists('/usr/lib/libpcre.so.1'):
-        os.symlink('/opt/TopPatch/lib/libpcre.so.1', '/usr/lib') 
     if not os.path.exists('/etc/init.d/vFense'):
         subprocess.Popen(
             [
@@ -138,41 +150,29 @@ def initialize_db():
                 'defaults'
             ],
         )
-    if not os.path.exists('/etc/init.d/nginx'):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                '/opt/TopPatch/tp/src/daemon/nginx',
-                '/etc/init.d/nginx'
-            ],
-        )
-        subprocess.Popen(
-            [
-                'update-rc.d', 'nginx',
-                'defaults'
-            ],
-        )
     try:
         tp_exists = pwd.getpwnam('toppatch')
 
     except Exception as e:
         subprocess.Popen(
             [
-                'adduser', 'toppatch',
+                'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
             ],
         )
 
-    os.chdir(RETHINK_PATH)
-    rethink_init = subprocess.Popen(['./rethinkdb', 'create',
-                                     '-d', RETHINK_INSTANCES_PATH],
+    rethink_init = subprocess.Popen(['rethinkdb', 'create',
+                                     '--directory', RETHINK_DATA_PATH,
+                                     '--runuser', RETHINK_USER,
+                                     '--rungroup', RETHINK_USER],
                                     stdout=subprocess.PIPE)
     rethink_init.poll()
     rethink_init.wait()
     if rethink_init.returncode == 0:
-        rethink_start = subprocess.Popen(['./rethinkdb', '--config-file',
-                                          RETHINK_CONF,
-                                          '--web-static-directory',
-                                          RETHINK_WEB])
+        rethink_start = subprocess.Popen(['rethinkdb', '--config-file',
+                                          RETHINK_CONF, '--runuser', RETHINK_USER,
+                                          '--rungroup', RETHINK_USER,
+                                          '--pid-file', RETHINK_PID_FILE, '--directory',
+                                          RETHINK_DATA_PATH])
         rethink_start.poll()
         completed = True
         sleep(2)
@@ -184,7 +184,7 @@ def initialize_db():
         msg = 'Failed during Rethink initialization'
         return(completed, msg)
     if completed:
-        conn = r.connect(port=9009)
+        conn = r.connect()
         r.db_create('toppatch_server').run(conn)
         db = r.db('toppatch_server')
         conn.close()
@@ -275,7 +275,7 @@ def clean_database(connected):
         else:
             rql_msg = 'Rethink couldnt be stopped\n'
     try:
-        shutil.rmtree(RETHINK_INSTANCES_PATH)
+        shutil.rmtree(RETHINK_DATA_PATH)
         msg = 'Rethink instances.d directory removed and cleaned'
     except Exception as e:
         msg = 'Rethink instances.d directory could not be removed'
@@ -305,11 +305,6 @@ if __name__ == '__main__':
         subprocess.Popen(
             [
                 'chown', '-R', 'toppatch.toppatch', '/opt/TopPatch'
-            ],
-        )
-        subprocess.Popen(
-            [
-                'chown', '-R', 'root.toppatch', '/opt/TopPatch/sbin/nginx'
             ],
         )
 

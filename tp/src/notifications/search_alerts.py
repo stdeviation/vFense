@@ -2,13 +2,13 @@ from time import mktime
 from datetime import datetime
 import logging
 import logging.config
-from agent import *
-from tagging import *
-from db.client import db_create_close, r
-from errorz.error_messages import GenericResults, NotificationResults
-from operations import *
-from notifications import *
-from rv_exceptions.broken import *
+from vFense.agent import *
+from vFense.tagging import *
+from vFense.db.client import db_create_close, r
+from vFense.errorz.error_messages import GenericResults, NotificationResults
+from vFense.operations import *
+from vFense.notifications import *
+from vFense.rv_exceptions.broken import *
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

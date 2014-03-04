@@ -1,4 +1,4 @@
-from server.hierarchy import CustomerKey
+from vFense.server.hierarchy import CustomerKey
 
 
 class Customer():

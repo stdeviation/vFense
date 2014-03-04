@@ -5,8 +5,8 @@ import logging
 from apscheduler.scheduler import Scheduler
 from apscheduler.jobstores.sqlalchemy_store import SQLAlchemyJobStore
 
-from utils.agentoperation import AgentOperation
-from utils.common import *
+from vFense.utils.agentoperation import AgentOperation
+from vFense.utils.common import *
 
 class JobScheduler():
     def __init__(self, session, job, sched, name=None):

@@ -1,19 +1,19 @@
-from agent import *
+from vFense.agent import *
 import logging
 import logging.config
 
-from utils.common import *
-from agent.agents import update_agent_field, get_agent_info
-from tagging.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
-from tagging.tagManager import delete_agent_from_all_tags
-from tagging import *
-from db.client import db_create_close, r
-from plugins.patching.rv_db_calls import \
+from vFense.utils.common import *
+from vFense.agent.agents import update_agent_field, get_agent_info
+from vFense.tagging.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
+from vFense.tagging.tagManager import delete_agent_from_all_tags
+from vFense.tagging import *
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching.rv_db_calls import \
     get_all_app_stats_by_agentid, delete_all_app_data_for_agent,\
     update_all_app_data_for_agent
-from plugins.patching import *
-from errorz.error_messages import GenericResults
-from server.hierarchy import Collection, api
+from vFense.plugins.patching import *
+from vFense.errorz.error_messages import GenericResults
+from vFense.server.hierarchy import Collection, api
 import redis
 from rq import Queue
 

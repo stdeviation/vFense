@@ -2,12 +2,12 @@ from uuid import uuid4
 import logging
 import os
 import shutil
-from db.client import db_create_close, r
-from errorz.error_messages import GenericResults
-from errorz.status_codes import PackageCodes
-from utils.common import date_parser, timestamp_verifier
-from plugins.patching import *
-from plugins.patching.custom_apps.custom_apps import add_custom_app_to_agents
+from vFense.db.client import db_create_close, r
+from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import PackageCodes
+from vFense.utils.common import date_parser, timestamp_verifier
+from vFense.plugins.patching import *
+from vFense.plugins.patching.custom_apps.custom_apps import add_custom_app_to_agents
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

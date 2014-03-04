@@ -1,11 +1,11 @@
 import logging
-from agent import *
-from db.client import r
-from plugins.patching import *
-from agent.agents import get_all_agent_ids, get_agent_info
-from tagging import *
-from tagging.tagManager import get_tag_ids_by_agent_id
-from plugins.patching.rv_db_calls import \
+from vFense.agent import *
+from vFense.db.client import r
+from vFense.plugins.patching import *
+from vFense.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.tagging import *
+from vFense.tagging.tagManager import get_tag_ids_by_agent_id
+from vFense.plugins.patching.rv_db_calls import \
     apps_to_insert_per_agent, get_apps_data, get_app_data,\
     apps_to_insert_per_tag, update_file_data, get_file_data
 

@@ -2,11 +2,11 @@ import logging
 from datetime import datetime
 import smtplib
 
-from notifications import *
+from vFense.notifications import *
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from db.client import db_create_close, r
+from vFense.db.client import db_create_close, r
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

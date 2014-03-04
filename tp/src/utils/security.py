@@ -1,22 +1,17 @@
 import re
 import bcrypt
-import scrypt
 
 import random
 
 
 class Crypto():
-    """ Helper functions to create, and verify, bcrypt and scrypt encrypted strings. """
+    """ Helper functions to create, and verify, bcrypt encrypted strings. """
 
 
     @staticmethod
     def hash_bcrypt(password):
         return bcrypt.hashpw(password, bcrypt.gensalt())
 
-
-    @staticmethod
-    def hash_scrypt(password, salt_length=64, max_time=0.5):
-        return scrypt.encrypt(Crypto._random_salt(salt_length), password, max_time)
 
     @staticmethod
     def verify_bcrypt_hash(password, _hash):
@@ -32,14 +27,6 @@ class Crypto():
             print(e)
 
         return False
-
-    @staticmethod
-    def verify_scrypt_hash(password, _hash):
-        try:
-            scrypt.decrypt(_hash, password, maxtime=0.5)
-            return True
-        except scrypt.error:
-            return False
 
     @staticmethod
     def _random_salt(length):

@@ -4,36 +4,36 @@ import tornado.web
 
 import simplejson as json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from scheduler.jobManager import schedule_once
+from vFense.scheduler.jobManager import schedule_once
 
-from plugins.patching.search.search_by_tagid import \
+from vFense.plugins.patching.search.search_by_tagid import \
     RetrieveAppsByTagId
 
-from plugins.patching.search.search_by_agentid import \
+from vFense.plugins.patching.search.search_by_agentid import \
     RetrieveAppsByAgentId
 
-from plugins.patching.search.search_by_appid import \
+from vFense.plugins.patching.search.search_by_appid import \
     RetrieveAppsByAppId
 
-from plugins.patching.search.search_by_appid import \
+from vFense.plugins.patching.search.search_by_appid import \
     RetrieveAgentsByAppId
 
-from plugins.patching.search.search import \
+from vFense.plugins.patching.search.search import \
     RetrieveApps
 
-from plugins.patching import *
-from errorz.error_messages import GenericResults, PackageResults
+from vFense.plugins.patching import *
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from plugins.patching.store_operations import StoreOperation
-from plugins.patching.rv_db_calls import update_hidden_status, update_os_app
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.hierarchy.decorators import convert_json_to_arguments
-from server.hierarchy.permissions import Permission
+from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.rv_db_calls import update_hidden_status, update_os_app
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.server.hierarchy.permissions import Permission
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -6,13 +6,13 @@ import simplejson as json
 import logging
 import logging.config
 import os
-from server.handlers import BaseHandler, LoginHandler
-from db.client import *
-from utils.common import *
+from vFense.server.handlers import BaseHandler, LoginHandler
+from vFense.db.client import *
+from vFense.utils.common import *
 from emailer.mailer import *
 
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request
 from jsonpickle import encode
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

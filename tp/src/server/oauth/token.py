@@ -1,6 +1,6 @@
 from hashlib import sha512
 from uuid import uuid4
-from db.client import validate_session
+from vFense.db.client import validate_session
 
 class TokenManager():
 

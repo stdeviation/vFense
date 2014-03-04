@@ -1,9 +1,9 @@
 import json
 
-from server.handlers import BaseHandler
-from server.hierarchy.manager import get_current_customer_name
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.manager import get_current_customer_name
 
-from plugins.ra import ra_settings
+from vFense.plugins.ra import ra_settings
 
 
 class SetPassword(BaseHandler):

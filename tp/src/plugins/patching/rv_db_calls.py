@@ -4,22 +4,22 @@ from hashlib import sha256
 from time import mktime
 from datetime import datetime
 import urllib
-from db.client import db_create_close, r, db_connect
-from plugins.patching import *
-from plugins.mightymouse import *
-from plugins.cve import *
-from plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.plugins.patching import *
+from vFense.plugins.mightymouse import *
+from vFense.plugins.cve import *
+from vFense.plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
     get_vulnerability_categories
-from plugins.mightymouse.mouse_db import get_mouse_addresses
-from errorz.error_messages import GenericResults, PackageResults, \
+from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
+from vFense.errorz.error_messages import GenericResults, PackageResults, \
         MightyMouseResults
-from errorz.status_codes import PackageCodes, MightyMouseCodes
-from agent import *
-from operations import *
-from tagging.tagManager import *
+from vFense.errorz.status_codes import PackageCodes, MightyMouseCodes
+from vFense.agent import *
+from vFense.operations import *
+from vFense.tagging.tagManager import *
 
-from server.hierarchy import CoreProperty
-from server.hierarchy.manager import Hierarchy
+from vFense.server.hierarchy import CoreProperty
+from vFense.server.hierarchy.manager import Hierarchy
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -1,9 +1,9 @@
-from db.client import db_create_close, r
-from plugins.patching import *
-from agent import *
-from agent.agents import get_all_agent_ids, get_agent_info
-from errorz.error_messages import GenericResults, PackageResults
-from plugins.patching.rv_db_calls import \
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching import *
+from vFense.agent import *
+from vFense.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.plugins.patching.rv_db_calls import \
     apps_to_insert_per_agent, get_apps_data, get_app_data,\
     apps_to_insert_per_tag, update_file_data, get_file_data
 

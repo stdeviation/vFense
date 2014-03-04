@@ -5,16 +5,16 @@ import tornado.web
 import simplejson as json
 from json import dumps
 
-from receiver.rvhandler import RvHandOff
-from server.handlers import BaseHandler
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import agent_authenticated_request
-from server.hierarchy.decorators import convert_json_to_arguments
+from vFense.receiver.rvhandler import RvHandOff
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from db.update_table import AddAppResults
-from db.notification_sender import send_notifications
-from errorz.error_messages import GenericResults
-from errorz.status_codes import OperationCodes
+from vFense.db.update_table import AddAppResults
+from vFense.db.notification_sender import send_notifications
+from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import OperationCodes
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

@@ -2,11 +2,11 @@ import logging
 import logging.config
 
 from datetime import datetime
-from db.client import db_create_close, r, db_connect
-from errorz.error_messages import GenericResults, MightyMouseResults
-from errorz.status_codes import MightyMouseCodes
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.errorz.error_messages import GenericResults, MightyMouseResults
+from vFense.errorz.status_codes import MightyMouseCodes
 
-from plugins.mightymouse import *
+from vFense.plugins.mightymouse import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

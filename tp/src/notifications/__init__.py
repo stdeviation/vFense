@@ -1,5 +1,5 @@
 import re
-from operations import *
+from vFense.operations import *
 
 VALID_NOTIFICATION_PLUGINS = (RV_PLUGIN, MONITORING_PLUGIN)
 INSTALL = 'install'

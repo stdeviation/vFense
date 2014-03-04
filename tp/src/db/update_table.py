@@ -6,23 +6,23 @@ from copy import deepcopy
 from datetime import datetime
 from time import mktime
 
-from db.client import db_create_close, r
-from db.notificationhandler import *
-from errorz.error_messages import GenericResults, OperationCodes
-from utils.common import *
-from agent import *
-from agent.agents import get_agent_info, update_agent_field
-from tagging import *
-from plugins.patching import *
-from plugins.patching.rv_db_calls import *
-from plugins.patching.os_apps.incoming_updates import \
+from vFense.db.client import db_create_close, r
+from vFense.db.notificationhandler import *
+from vFense.errorz.error_messages import GenericResults, OperationCodes
+from vFense.utils.common import *
+from vFense.agent import *
+from vFense.agent.agents import get_agent_info, update_agent_field
+from vFense.tagging import *
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import *
+from vFense.plugins.patching.os_apps.incoming_updates import \
     incoming_packages_from_agent
-from operations import *
-from operations.operation_manager import Operation, \
+from vFense.operations import *
+from vFense.operations.operation_manager import Operation, \
     oper_with_appid_exists, oper_with_agentid_exists
-from operations.operation_manager import get_oper_info
+from vFense.operations.operation_manager import get_oper_info
 
-from plugins import ra
+from vFense.plugins import ra
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

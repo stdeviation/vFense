@@ -5,15 +5,15 @@ import re
 from time import time, mktime
 from datetime import datetime
 import urllib
-from db.client import db_create_close, r, db_connect
-from plugins.patching import *
-from plugins.patching.rv_db_calls import update_os_app,\
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import update_os_app,\
     update_supported_app, update_agent_app
-from errorz.error_messages import GenericResults
-from errorz.status_codes import PackageCodes
-from agent import *
+from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import PackageCodes
+from vFense.agent import *
 from urlgrabber import urlgrab
-from utils.common import hash_verifier
+from vFense.utils.common import hash_verifier
 
 packages_directory = '/opt/TopPatch/var/packages/'
 dependencies_directory = '/opt/TopPatch/var/packages/dependencies/'

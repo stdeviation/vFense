@@ -1,4 +1,4 @@
-NGINX_CONFIG_FILE = '/opt/TopPatch/conf/nginx/vFense.conf'
+NGINX_CONFIG_FILE = '/etc/nginx/sites-available/vFense.conf'
 base_nginx_config = """server {
     listen         80;
     server_name    %(server_name)s localhost;

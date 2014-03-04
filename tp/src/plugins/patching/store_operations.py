@@ -1,14 +1,14 @@
 import logging
 import logging.config
-from utils.common import *
-from operations.operation_manager import Operation
-from receiver.rqueuemanager import QueueWorker
-from operations import *
-from agent import *
-from plugins.patching.rv_db_calls import *
-from plugins.patching import *
-from plugins.mightymouse.mouse_db import get_mouse_addresses
-from tagging.tagManager import *
+from vFense.utils.common import *
+from vFense.operations.operation_manager import Operation
+from vFense.receiver.rqueuemanager import QueueWorker
+from vFense.operations import *
+from vFense.agent import *
+from vFense.plugins.patching.rv_db_calls import *
+from vFense.plugins.patching import *
+from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
+from vFense.tagging.tagManager import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

@@ -2,13 +2,13 @@ import json
 import logging
 import logging.config
 
-from agent.agents import get_all_agent_ids
-from agent.agent_handler import AgentManager
+from vFense.agent.agents import get_all_agent_ids
+from vFense.agent.agent_handler import AgentManager
 
-from server.hierarchy import api
-from server.hierarchy.permissions import Permission
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.handlers import BaseHandler
+from vFense.server.hierarchy import api
+from vFense.server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.handlers import BaseHandler
 
 from apscheduler.jobstores.redis_store import RedisJobStore
 

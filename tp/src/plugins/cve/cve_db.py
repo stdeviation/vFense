@@ -1,10 +1,10 @@
 import sys
 import logging
 import logging.config
-from db.client import db_create_close, r, db_connect
-from plugins.cve import *
-from plugins.patching import *
-from plugins.cve.cve_constants import *
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.plugins.cve import *
+from vFense.plugins.patching import *
+from vFense.plugins.cve.cve_constants import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')

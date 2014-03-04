@@ -1,7 +1,7 @@
 import json
-from server.handlers import BaseHandler
-from server.hierarchy.decorators import authenticated_request
-from server.hierarchy.permissions import Permission
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.server.hierarchy.permissions import Permission
 
 
 class GetPermissionsApi(BaseHandler):

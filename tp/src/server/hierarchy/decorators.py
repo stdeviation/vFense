@@ -5,8 +5,8 @@ import json
 
 from tornado.web import HTTPError
 
-from server.hierarchy.manager import Hierarchy
-from server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.manager import Hierarchy
+from vFense.server.hierarchy.permissions import Permission
 
 
 class permission_check(object):

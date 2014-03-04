@@ -4,19 +4,19 @@ import tornado.web
 
 from json import dumps
 
-from server.handlers import BaseHandler
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import agent_authenticated_request
-from server.hierarchy.decorators import convert_json_to_arguments
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from agent import *
-from errorz.error_messages import GenericResults
-from agent.agents import update_agent
-from db.hardware import Hardware
-from receiver.corehandler import process_queue_data
-from receiver.rqueuemanager import QueueWorker
+from vFense.agent import *
+from vFense.errorz.error_messages import GenericResults
+from vFense.agent.agents import update_agent
+from vFense.db.hardware import Hardware
+from vFense.receiver.corehandler import process_queue_data
+from vFense.receiver.rqueuemanager import QueueWorker
 
-from receiver.rvhandler import RvHandOff
+from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff
 #from server.handlers import *
 

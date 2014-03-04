@@ -5,7 +5,7 @@ except ImportError: import json
 
 from tornado.web import RequestHandler
 
-from models.oauth.token import AccessToken
+from vFense.models.oauth.token import AccessToken
 
 class AuthorizeHandler(RequestHandler):
     def get(self):

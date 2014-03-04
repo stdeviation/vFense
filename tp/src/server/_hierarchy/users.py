@@ -1,4 +1,4 @@
-from server.hierarchy import *
+from vFense.server.hierarchy import *
 
 
 class User():

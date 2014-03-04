@@ -1,13 +1,13 @@
-from agent import *
+from vFense.agent import *
 import logging
 from datetime import datetime
 from time import mktime
 from json import dumps
-from db.client import db_create_close, r, db_connect
-from db.hardware import Hardware
-from errorz.error_messages import AgentResults, GenericResults
-from plugins.patching import *
-from server.hierarchy import Collection, api
+from vFense.db.client import db_create_close, r, db_connect
+from vFense.db.hardware import Hardware
+from vFense.errorz.error_messages import AgentResults, GenericResults
+from vFense.plugins.patching import *
+from vFense.server.hierarchy import Collection, api
 import redis
 from rq import Queue
 

@@ -5,12 +5,12 @@ import redis
 
 import settings
 
-from tunnels import get_available_port
+from vFense.tunnels import get_available_port
 
-from plugins import ra
-from plugins.ra import RaValue
-from plugins.ra import novnc
-from plugins.ra.raoperation import save_result
+from vFense.plugins import ra
+from vFense.plugins.ra import RaValue
+from vFense.plugins.ra import novnc
+from vFense.plugins.ra.raoperation import save_result
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

@@ -3,16 +3,16 @@ from copy import deepcopy
 from time import mktime
 from datetime import datetime
 import logging
-from agent import *
-from tagging import *
+from vFense.agent import *
+from vFense.tagging import *
 from datetime import datetime
-from db.client import db_create_close, r
-from errorz.error_messages import GenericResults, NotificationResults
-from operations import *
-from notifications import *
-from rv_exceptions.broken import *
+from vFense.db.client import db_create_close, r
+from vFense.errorz.error_messages import GenericResults, NotificationResults
+from vFense.operations import *
+from vFense.notifications import *
+from vFense.rv_exceptions.broken import *
 
-from server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
+from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

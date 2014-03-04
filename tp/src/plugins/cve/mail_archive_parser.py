@@ -5,7 +5,7 @@ import sys
 import requests
 from BeautifulSoup import BeautifulSoup
 
-from plugins.cve import *
+from vFense.plugins.cve import *
 
 
 def download_file(file_to_write_to, url=REDHAT_ARCHIVE):

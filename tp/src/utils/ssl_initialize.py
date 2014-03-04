@@ -2,8 +2,8 @@ import os
 import logging
 import shutil
 
-from OpenSSL import SSL, crypto
-from utils.ssltools import *
+from vFense.OpenSSL import SSL, crypto
+from vFense.utils.ssltools import *
 
 LOG_DIR = '/opt/TopPatch/var/log'
 LOG_FILE = 'server_ssl.log'

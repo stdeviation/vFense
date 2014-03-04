@@ -5,7 +5,7 @@ from datetime import date
 import requests
 import logging
 import logging.config
-from plugins.cve.cve_constants import *
+from vFense.plugins.cve.cve_constants import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')

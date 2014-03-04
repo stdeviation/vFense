@@ -1,4 +1,4 @@
-from server.hierarchy import _db
+from vFense.server.hierarchy import _db
 
 
 def init():

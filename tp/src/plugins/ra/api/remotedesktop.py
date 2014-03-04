@@ -1,11 +1,11 @@
 import json
 
-from server.handlers import BaseHandler
-from server.hierarchy.permissions import Permission
-from server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.handlers import BaseHandler
+from vFense.server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
 
-from plugins import ra
-from plugins.ra import creator
+from vFense.plugins import ra
+from vFense.plugins.ra import creator
 
 
 class RDSession(BaseHandler):
