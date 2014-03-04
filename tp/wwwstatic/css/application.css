@@ -313,8 +313,8 @@ BODY > HEADER .navbar .nav {
   margin-right: 0;
 }
 BODY > HEADER .navbar .brand IMG {
-  height: 18px;
-  vertical-align: baseline;
+  height: 40px;
+  margin-top: -10px;
 }
 BODY > HEADER .navbar-inner {
   padding-left: 0;
