@@ -159,6 +159,14 @@ def initialize_db():
                 'defaults'
             ],
         )
+    if os.path.exists('/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py'):
+        subprocess.Popen(
+            [
+                'patch', '-N',
+                '/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py',
+                '<', 'scheduler.patch'
+            ],
+        )
     try:
         tp_exists = pwd.getpwnam('toppatch')
 
