@@ -164,7 +164,7 @@ def initialize_db():
             [
                 'patch', '-N',
                 '/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py',
-                '<', 'scheduler.patch'
+                '<', '/opt/TopPatch/conf/patches/scheduler.patch'
             ],
         )
     try:
