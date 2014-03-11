@@ -17,16 +17,16 @@ def get_windows_bulletinid_and_cveids(kb):
         WindowsSecurityBulletinKey.CveIds: []
     }
     try:
-        info = list(
+        returned_info = list(
             r
             .table(WindowsSecurityBulletinCollection)
             .get_all(kb, index=WindowsSecurityBulletinIndexes.ComponentKb)
             .pluck(WindowsSecurityBulletinKey.BulletinId, WindowsSecurityBulletinKey.CveIds)
             .run(conn)
         )
-        if info:
-            if len(info) > 0:
-                info = info[0]
+        if returned_info:
+            if len(returned_info) > 0:
+                info = returned_info[0]
 
         logger.debug('retrieved microsoft bulletin info: %s', info)
 
@@ -61,26 +61,29 @@ def get_vulnerability_categories(cve_id):
     return(info)
 
 
-def get_ubuntu_cveids(app_name, app_version):
+def get_ubuntu_cveids(app_name, app_version, os_string):
     conn = db_connect()
     info = {
         UbuntuSecurityBulletinKey.BulletinId: '',
         UbuntuSecurityBulletinKey.CveIds: []
     }
     try:
-        info = list(
+        returned_info = list(
             r
             .table(UbuntuSecurityBulletinCollection)
             .get_all(
                 [app_name, app_version],
                 index=UbuntuSecurityBulletinIndexes.NameAndVersion
             )
+            .filter(
+                lambda x: x[UbuntuSecurityBulletinKey.OsString].match(os_string)
+            )
             .pluck(UbuntuSecurityBulletinKey.BulletinId, UbuntuSecurityBulletinKey.CveIds)
             .run(conn)
         )
-        if info:
-            if len(info) > 1:
-                info = info[0]
+        if returned_info:
+            if len(returned_info) > 0:
+                info = returned_info[0]
 
         logger.debug('retrieved ubuntu bulletin info: %s', info)
 

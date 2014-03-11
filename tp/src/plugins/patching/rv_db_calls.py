@@ -9,7 +9,7 @@ from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.cve import *
 from vFense.plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
-    get_vulnerability_categories
+    get_vulnerability_categories, get_ubuntu_cveids
 from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
 from vFense.errorz.error_messages import GenericResults, PackageResults, \
         MightyMouseResults
@@ -820,41 +820,58 @@ def update_agent_app(app_id, data, table=AgentAppsCollection):
 
 
 
-def update_vulnerability_info_app(app_id, app, exists, table=AppsCollection):
-    if not app.has_key(AppsKey.CveIds):
-        if app.has_key(AppsKey.AppId):
-            app.pop(AppsKey.AppId)
-        app[AppsKey.CveIds] = []
-        app[AppsKey.VulnerabilityId] = ""
-        app[AppsKey.VulnerabilityCategories] = []
+def update_vulnerability_info_app(
+    app_id, app, exists, os_string,
+    table=AppsCollection
+    ):
 
-        if app[AppsKey.Kb] != "":
-            vuln_info = get_windows_bulletinid_and_cveids(app[AppsKey.Kb])
+    vuln_info = None
+    if app.has_key(AppsKey.AppId):
+        app.pop(AppsKey.AppId)
+    app[AppsKey.CveIds] = []
+    app[AppsKey.VulnerabilityId] = ""
+    app[AppsKey.VulnerabilityCategories] = []
 
-            if vuln_info:
-                app[AppsKey.CveIds] = vuln_info[WindowsSecurityBulletinKey.CveIds]
-                for cve_id in app[AppsKey.CveIds]:
-                    cve_id = cve_id.replace('CVE-', '')
-                    app[AppsKey.VulnerabilityCategories] += get_vulnerability_categories(cve_id)
+    if app[AppsKey.Kb] != "" and os_string.find('Windows') == 0:
+        vuln_info = get_windows_bulletinid_and_cveids(app[AppsKey.Kb])
 
-                app[AppsKey.VulnerabilityCategories] = list(set(app[AppsKey.VulnerabilityCategories]))
+    elif os_string.find('Ubuntu') == 0:
+        vuln_info = (
+            get_ubuntu_cveids(
+                app[AppsKey.Name],
+                app[AppsKey.Version],
+                os_string
+            )
+        )
+    if vuln_info:
+        app[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
+        for cve_id in app[AppsKey.CveIds]:
+            cve_id = cve_id.replace('CVE-', '')
+            app[AppsKey.VulnerabilityCategories] += (
+                get_vulnerability_categories(cve_id)
+            )
 
-                app[AppsKey.VulnerabilityId] = vuln_info[WindowsSecurityBulletinKey.BulletinId]
+        app[AppsKey.VulnerabilityCategories] = (
+            list(set(app[AppsKey.VulnerabilityCategories]))
+        )
+        app[AppsKey.VulnerabilityId] = (
+                vuln_info[SecurityBulletinKey.BulletinId]
+        )
 
         if exists:
             update_os_app(app_id, app, table)
 
-        app[AppsKey.AppId] = app_id
+    app[AppsKey.AppId] = app_id
 
     return(app)
 
 
 @db_create_close
-def unique_application_updater(customer_name, app, conn=None):
+def unique_application_updater(customer_name, app, os_string, conn=None):
 
     table = AppsCollection
 
-    exists = []
+    exists = None
     try:
         exists = (
             r
@@ -873,7 +890,9 @@ def unique_application_updater(customer_name, app, conn=None):
     if exists:
         update_file_data(app[AppsKey.AppId], agent_id, file_data)
         update_customers_in_app(customer_name, app[AppsKey.AppId])
-        update_vulnerability_info_app(exists[AppsKey.AppId], exists, True)
+        update_vulnerability_info_app(
+            exists[AppsKey.AppId], exists, True, os_string
+        )
 
     else:
         update_file_data(app[AppsKey.AppId], agent_id, file_data)
@@ -889,7 +908,11 @@ def unique_application_updater(customer_name, app, conn=None):
         elif len(file_data) == 0 and status == INSTALLED:
             app[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
-        app = update_vulnerability_info_app(app[AppsKey.AppId], app, False)
+        app = (
+            update_vulnerability_info_app(
+                app[AppsKey.AppId], app, False, os_string
+            )
+        )
 
         try:
             (
