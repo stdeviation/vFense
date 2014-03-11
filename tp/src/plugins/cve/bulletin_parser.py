@@ -52,8 +52,8 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentImpact] = row[9]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentSeverity] = row[10]
-        if row[11] != '':
-            info = row[11].split(',')
+        if row[12] != '':
+            info = row[12].split(',')
             for j in info:
                 bulletin_data = j.split('[')
                 if len(bulletin_data) > 1:
@@ -70,8 +70,8 @@ def parse_spread_sheet(bulletin_file):
                     }
                 )
         bulletin_dict[WindowsSecurityBulletinKey.Supersedes] = supercede_list
-        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = row[12]
-        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = row[13].split(',')
+        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = row[13]
+        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = row[14].split(',')
         bulletin_list.append(bulletin_dict)
 
     return(bulletin_list)

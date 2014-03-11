@@ -56,7 +56,7 @@ class IncomingApplicationsFromAgent():
             agent_app = self.set_specific_keys_for_app_agent(app_list[i])
             unique_app, file_data = (
                 unique_application_updater(
-                    self.customer_name, app_list[i]
+                    self.customer_name, app_list[i], self.os_string
                 )
             )
             if agent_app[AppsPerAgentKey.Status] == 'available':
