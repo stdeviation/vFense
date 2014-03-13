@@ -48,6 +48,9 @@ class RetrieveAppsByAppId(object):
                 self.CurrentAppsKey.SupportUrl: r.row[self.CurrentAppsKey.SupportUrl],
                 self.CurrentAppsKey.OsCode: r.row[self.CurrentAppsKey.OsCode],
                 self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
+                self.CurrentAppsKey.CveIds: r.row[self.CurrentAppsKey.CveIds],
+                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
+                self.CurrentAppsKey.VulnerabilityCategories: r.row[self.CurrentAppsKey.VulnerabilityCategories],
             }
         )
 
