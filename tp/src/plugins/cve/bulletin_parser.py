@@ -1,11 +1,14 @@
-from xlrd import open_workbook
 import os
 import re
 import sys
 import logging
 import logging.config
+from datetime import datetime
 from hashlib import sha256
 from re import sub
+
+from xlrd import open_workbook, xldate_as_tuple
+
 from vFense.plugins.cve import *
 from vFense.plugins.cve.cve_constants import *
 from vFense.plugins.cve.cve_db import insert_into_bulletin_collection_for_windows
@@ -41,7 +44,13 @@ def parse_spread_sheet(bulletin_file):
         rows_to_use = unicode(rows_to_use).encode(sys.stdout.encoding, 'replace')
         id = build_bulletin_id(rows_to_use)
         bulletin_dict[WindowsSecurityBulletinKey.Id] = id
-        bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = r.epoch_time(row[0])
+        date = xldate_as_tuple(row[0], workbook.datemode)
+        epoch_time = (
+            (datetime(*date) - datetime(1970,1,1)).total_seconds()
+        )
+        bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
+            r.epoch_time(epoch_time)
+        )
         bulletin_dict[WindowsSecurityBulletinKey.BulletinId] = row[1]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
