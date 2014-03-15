@@ -21,7 +21,6 @@ class NvdParser(object):
         data = {}
         attrib = entry.attrib
         data[CveKey.CveId] = attrib.get(CVE_ID)
-        data[CveKey.CveName] = attrib.get(CVE_NAME)
         data[CveKey.CveSev] = attrib.get(CVE_SEVERITY)
         data[CveKey.CvePublishedDate] = (
             r.epoch_time(
@@ -47,11 +46,7 @@ class NvdParser(object):
         data[CveKey.CvssExploitSubScore] = attrib.get(CVSS_EXPLOIT_SUBSCORE)
         data[CveKey.CvssVector] = self._parse_vectors(attrib.get(CVSS_VECTOR))
         data[CveKey.CvssVersion] = attrib.get(CVSS_VERSION)
-        #if data[CveKey.CveId]:
-        #    print '\nFOOBAR\n'
-        #    print entry.tag
-        #    print type(entry.tag)
-        #    print data
+
         return(data)
 
     def get_descriptions(self, entry):
@@ -63,9 +58,7 @@ class NvdParser(object):
                     DESCRIPTION_SOURCE: descript.attrib.get(DESCRIPTION_SOURCE)
                 }
             )
-        #if list_of_descriptions:
-        #    print entry.tag
-        #    print list_of_descriptions, 'descriptions'
+
         return(list_of_descriptions)
 
     def get_refs(self, entry):
@@ -78,9 +71,7 @@ class NvdParser(object):
                     REF_SOURCE: reference.attrib.get(REF_SOURCE),
                 }
             )
-        #if list_of_refs:
-        #    print entry.tag
-        #    print list_of_refs, 'refs'
+
         return(list_of_refs)
 
     def get_vulns_soft(self, entry):
@@ -99,9 +90,7 @@ class NvdParser(object):
                         version_dict[key] = version.attrib[key]
                     vuln_soft_dict[VENDOR_VERSIONS].append(version_dict)
             vuln_soft_list.append(vuln_soft_dict)
-        #if vuln_soft_list:
-        #    print entry.tag
-        #    print vuln_soft_list, 'soft'
+
         return(vuln_soft_list)
 
     def _parse_vectors(self, unformatted_vector):
