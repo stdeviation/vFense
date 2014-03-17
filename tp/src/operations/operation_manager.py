@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env pyt)
 
 import logging
 import logging.config
@@ -83,6 +83,7 @@ class Operation(object):
     def create_operation(self, operation, plugin, agent_ids,
                          tag_id, cpu_throttle=None, net_throttle=None,
                          restart=None, conn=None):
+        number_of_agents = len(agent_ids)
         keys_to_insert = (
             {
                 OperationKey.Plugin: plugin,
@@ -91,9 +92,10 @@ class Operation(object):
                 OperationKey.CustomerName: self.customer_name,
                 OperationKey.CreatedBy: self.username,
                 OperationKey.TagId: tag_id,
-                OperationKey.AgentsTotalCount: len(agent_ids),
+                OperationKey.AgentsTotalCount: number_of_agents,
+                OperationKey.AgentsExpiredCount: self.INIT_COUNT,
                 OperationKey.AgentsPendingResultsCount: self.INIT_COUNT,
-                OperationKey.AgentsPendingPickUpCount: len(agent_ids),
+                OperationKey.AgentsPendingPickUpCount: number_of_agents,
                 OperationKey.AgentsFailedCount: self.INIT_COUNT,
                 OperationKey.AgentsCompletedCount: self.INIT_COUNT,
                 OperationKey.AgentsCompletedWithErrorsCount: self.INIT_COUNT,
@@ -102,9 +104,10 @@ class Operation(object):
                 OperationKey.CompletedTime: r.epoch_time(0.0),
                 OperationKey.Restart: restart,
                 OperationKey.CpuThrottle: cpu_throttle,
-                OperationKey.NetThrottle: cpu_throttle,
+                OperationKey.NetThrottle: net_throttle,
             }
         )
+        print keys_to_insert
         try:
             added = (
                 r
@@ -148,6 +151,7 @@ class Operation(object):
                         OperationPerAgentKey.CustomerName: self.customer_name,
                         OperationPerAgentKey.Status: PENDINGPICKUP,
                         OperationPerAgentKey.PickedUpTime: r.epoch_time(0.0),
+                        OperationPerAgentKey.ExpiredTime: r.epoch_time(0.0),
                         OperationPerAgentKey.CompletedTime: r.epoch_time(0.0),
                         OperationPerAgentKey.Errors: None
                     }
@@ -177,6 +181,7 @@ class Operation(object):
                         OperationPerAgentKey.CustomerName: self.customer_name,
                         OperationPerAgentKey.Status: PENDINGPICKUP,
                         OperationPerAgentKey.PickedUpTime: r.epoch_time(0.0),
+                        OperationPerAgentKey.ExpiredTime: r.epoch_time(0.0),
                         OperationPerAgentKey.CompletedTime: r.epoch_time(0.0),
                         OperationPerAgentKey.AppsTotalCount: len(applications),
                         OperationPerAgentKey.AppsPendingCount: len(applications),
@@ -251,7 +256,10 @@ class Operation(object):
                             OperationPerAgentKey.AgentId: agent_id,
                             OperationPerAgentKey.OperationId: operation_id,
                             OperationPerAgentKey.CustomerName: self.customer_name,
-                            OperationPerAgentKey.Status: PENDINGPICKUP
+                            OperationPerAgentKey.Status: PENDINGPICKUP,
+                            OperationPerAgentKey.PickedUpTime: r.epoch_time(0.0),
+                            OperationPerAgentKey.ExpiredTime: r.epoch_time(0.0),
+                            OperationPerAgentKey.CompletedTime: r.epoch_time(0.0),
                         }
                     )
                     .run(conn)
@@ -269,6 +277,73 @@ class Operation(object):
                 )
 
                 logger.info(results)
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    self.username, self.uri, self.method
+                ).something_broke(operation_id, operation, e)
+            )
+            logger.exception(results)
+
+        return(results)
+
+    @db_create_close
+    def update_operation_expire_time(self, operation_id, agent_id,
+                                     operation, conn=None):
+        keys_to_update = (
+            {
+                OperationPerAgentKey.Status: OPERATION_EXPIRED,
+                OperationPerAgentKey.ExpiredTime: self.db_time,
+                OperationPerAgentKey.CompletedTime: self.db_time,
+                OperationPerAgentKey.Errors: OPERATION_EXPIRED,
+            }
+        )
+        try:
+            (
+                r
+                .table(OperationsPerAgentCollection)
+                .get_all(
+                    [operation_id, agent_id],
+                    index=OperationPerAgentIndexes.OperationIdAndAgentId
+                )
+                .update(keys_to_update)
+                .run(conn)
+            )
+
+            (
+                r
+                .table(OperationsCollection)
+                .get(operation_id)
+                .update(
+                    {
+                        OperationKey.AgentsPendingPickUpCount: (
+                            r.branch(
+                                r.row[OperationKey.AgentsPendingPickUpCount] > 0,
+                                r.row[OperationKey.AgentsPendingPickUpCount] - 1,
+                                r.row[OperationKey.AgentsPendingPickUpCount],
+                            )
+                        ),
+                        OperationKey.AgentsExpiredCount: (
+                            r.branch(
+                                r.row[OperationKey.AgentsExpiredCount] < r.row[OperationKey.AgentsTotalCount],
+                                r.row[OperationKey.AgentsExpiredCount] + 1,
+                                r.row[OperationKey.AgentsExpiredCount]
+                            )
+                        ),
+                        OperationKey.UpdatedTime: self.db_time
+                    }
+                )
+                .run(conn)
+            )
+
+            results = (
+                OperationResults(
+                    self.username, self.uri, self.method
+                ).operation_updated(operation_id)
+            )
+
+            logger.info(results)
 
         except Exception as e:
             results = (
@@ -725,6 +800,39 @@ class Operation(object):
             elif (operation[OperationKey.AgentsTotalCount] == 
                     (
                         operation[OperationKey.AgentsFailedCount] +
+                        operation[OperationKey.AgentsExpiredCount]
+                    )):
+                (
+                    r
+                    .table(OperationsCollection)
+                    .get(operation_id)
+                    .update(
+                        {
+                            OperationKey.OperationStatus: OperationCodes.ResultsCompletedFailed,
+                            OperationKey.CompletedTime: self.db_time
+                        }
+                    )
+                    .run(conn)
+                )
+
+            elif (operation[OperationKey.AgentsTotalCount] == 
+                    operation[OperationKey.AgentsExpiredCount]):
+                (
+                    r
+                    .table(OperationsCollection)
+                    .get(operation_id)
+                    .update(
+                        {
+                            OperationKey.OperationStatus: OperationCodes.ResultsCompletedFailed,
+                            OperationKey.CompletedTime: self.db_time
+                        }
+                    )
+                    .run(conn)
+                )
+
+            elif (operation[OperationKey.AgentsTotalCount] == 
+                    (
+                        operation[OperationKey.AgentsFailedCount] +
                         operation[OperationKey.AgentsCompletedWithErrorsCount]
                     )):
                 (
@@ -739,6 +847,45 @@ class Operation(object):
                     )
                     .run(conn)
                 )
+
+            elif (operation[OperationKey.AgentsTotalCount] == 
+                    (
+                        operation[OperationKey.AgentsCompletedWithErrorsCount] +
+                        operation[OperationKey.AgentsExpiredCount]
+                    )):
+                (
+                    r
+                    .table(OperationsCollection)
+                    .get(operation_id)
+                    .update(
+                        {
+                            OperationKey.OperationStatus: OperationCodes.ResultsCompletedWithErrors,
+                            OperationKey.CompletedTime: self.db_time
+                        }
+                    )
+                    .run(conn)
+                )
+
+
+            elif (operation[OperationKey.AgentsTotalCount] == 
+                    (
+                        operation[OperationKey.AgentsFailedCount] +
+                        operation[OperationKey.AgentsCompletedWithErrorsCount] +
+                        operation[OperationKey.AgentsExpiredCount]
+                    )):
+                (
+                    r
+                    .table(OperationsCollection)
+                    .get(operation_id)
+                    .update(
+                        {
+                            OperationKey.OperationStatus: OperationCodes.ResultsCompletedWithErrors,
+                            OperationKey.CompletedTime: self.db_time
+                        }
+                    )
+                    .run(conn)
+                )
+
             else:
                 (
                     r
