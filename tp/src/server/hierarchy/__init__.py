@@ -85,6 +85,7 @@ class CoreProperty():
     NetThrottle = 'net_throttle'
     CpuThrottle = 'cpu_throttle'
     PackageUrl = 'package_download_url_base'
+    OperationTtl = 'operation_ttl'
 
 
 class DefaultGroup():

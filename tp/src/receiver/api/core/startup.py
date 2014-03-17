@@ -13,8 +13,6 @@ from vFense.agent import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.agent.agents import update_agent
 from vFense.db.hardware import Hardware
-from vFense.receiver.corehandler import process_queue_data
-from vFense.receiver.rqueuemanager import QueueWorker
 
 from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff
