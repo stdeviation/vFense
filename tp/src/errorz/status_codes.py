@@ -79,6 +79,15 @@ class OperationCodes(object):
     ResultsCompletedWithErrors = 6007
     ResultsCompletedFailed = 6008
     ResultsIncomplete = 6009
+    ResultsExpired = 6010
+    OperationExpired = 6011
+
+
+class OperationPerAgentCodes(object):
+    Checkin = 6500
+    PendingPickUp = 6501
+    PickedUp = 6502
+    OperationExpired = 6503
 
 
 class UpdatesApplications(object):

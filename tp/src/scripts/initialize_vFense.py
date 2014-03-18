@@ -64,6 +64,10 @@ parser.add_argument(
     help='The number of vFense_listener daemons to run at once, cannot surpass 40'
 )
 parser.add_argument(
+    '--queue_ttl', dest='queue_ttl', default=10,
+    help='How many minutes until an operation for an agent is considered expired in the server queue'
+)
+parser.add_argument(
     '--web_count', dest='web_count', default=1,
     help='The number of vFense_web daemons to run at once, cannot surpass 40'
 )
@@ -86,6 +90,11 @@ parser.add_argument(
 parser.set_defaults(cve_data=True)
 
 args = parser.parse_args()
+
+if args.queue_ttl:
+    args.queue_ttl = int(args.queue_ttl)
+    if args.queue_ttl < 2:
+        args.queue_ttl = 10
 
 if args.dns_name:
     url = 'https://%s/packages/' % (args.dns_name)
@@ -196,6 +205,7 @@ def initialize_db():
             {
                 CoreProperty.NetThrottle: '0',
                 CoreProperty.CpuThrottle: 'idle',
+                CoreProperty.OperationTtl: args.queue_ttl,
                 CoreProperty.PackageUrl: url
             }
         )

@@ -1,7 +1,7 @@
 import logging
 import logging.config
 
-from vFense.receiver.rqueuemanager import QueueWorker
+from vFense.receiver.agent_queue import AgentQueue
 from vFense.settings import Default
 from vFense.operations.operation_manager import Operation
 
@@ -102,8 +102,9 @@ def save_result(
 
 def store_in_agent_queue(operation):
 
-    rqueue = QueueWorker(operation.to_dict(), operation.username)
-    rqueue.rpush_object_in_queue(message=operation.data)
+    operation = operation.to_dict()
+    agent_queue = AgentQueue(operation.agent_id, operation.customer_name)
+    agent_queue.add(operation)
 
 
 class RaOperation():
