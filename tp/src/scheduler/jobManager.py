@@ -506,39 +506,40 @@ def scheduled_install_operation(job_info, customer_name,
                     logger.debug(
                         " About to execute the job %s" % (job_info)
                     )
-                if job_info['pkg_type'] == 'system_apps':
-                    oper = (
-                        store_operation.install_os_apps(
-                            job_info['app_ids'],
-                            agentids=job_info['agent_ids'],
-                            tag_id=job_info['tag_ids'],
-                            restart=None
-                        )
-                    )
-                    logger.debug(oper)
+		print job_info
+        if job_info['pkg_type'] == 'system_apps':
+            oper = (
+                store_operation.install_os_apps(
+                    job_info['app_ids'],
+                    agentids=job_info['agent_ids'],
+                    tag_id=job_info['tag_ids'],
+                    restart=None
+                )
+            )
+            logger.debug(oper)
 
-                elif job_info['pkg_type'] == 'custom_apps':
-                    oper = (
-                        store_operation.install_custom_apps(
-                            job_info['app_ids'],
-                            agentids=job_info['agent_ids'],
-                            tag_id=job_info['tag_ids'],
-                            restart=None
-                        )
-                    )
-                    logger.debug(oper)
+        elif job_info['pkg_type'] == 'custom_apps':
+            oper = (
+                store_operation.install_custom_apps(
+                    job_info['app_ids'],
+                    agentids=job_info['agent_ids'],
+                    tag_id=job_info['tag_ids'],
+                    restart=None
+                )
+            )
+            logger.debug(oper)
 
-                elif job_info['pkg_type'] == 'supported_apps':
-                    oper = (
-                        store_operation.install_supported_apps(
-                            job_info['app_ids'],
-                            agentids=job_info['agent_ids'],
-                            tag_id=job_info['tag_ids'],
-                            restart=None
-                        )
-                    )
+        elif job_info['pkg_type'] == 'supported_apps':
+            oper = (
+                store_operation.install_supported_apps(
+                    job_info['app_ids'],
+                    agentids=job_info['agent_ids'],
+                    tag_id=job_info['tag_ids'],
+                    restart=None
+                )
+            )
 
-                    logger.debug(oper)
+            logger.debug(oper)
 
 
 def scheduled_reboot_operation(job_info, customer_name, username,
