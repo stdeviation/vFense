@@ -30,7 +30,7 @@ logger = logging.getLogger('rvapi')
 @db_create_close
 def start_scheduler(redis_db=10, conn=None):
     started = False
-    sched = Scheduler(daemonic=False)
+    sched = Scheduler()
     list_of_customers = []
     customers = (
         r
@@ -38,11 +38,11 @@ def start_scheduler(redis_db=10, conn=None):
         .pluck(CustomerKey.CustomerName)
         .run(conn)
     )
-    sched.add_jobstore(RedisJobStore(db=redis_db), 'patching')
-    list_of_customers.append({'name': 'patching'})
+    sched.add_jobstore(RedisJobStore(db=10), 'rv')
+    list_of_customers.append({'name': 'rv'})
     if customers:
         for customer in customers:
-            sched.add_jobstore(RedisJobStore(db=redis_db),
+            sched.add_jobstore(RedisJobStore(db=10),
                                customer[CustomerKey.CustomerName])
             list_of_customers.append(
                 {
@@ -260,8 +260,6 @@ def remove_job(sched, jobname, customer_name,
             SchedulerResults(username, uri, method)
             .invalid_schedule_name(jobname)
         )
-
-    logger.info(results)
 
     return(results)
 
@@ -508,7 +506,6 @@ def scheduled_install_operation(job_info, customer_name,
                     logger.debug(
                         " About to execute the job %s" % (job_info)
                     )
-		print job_info
         if job_info['pkg_type'] == 'system_apps':
             oper = (
                 store_operation.install_os_apps(
@@ -566,6 +563,30 @@ def scheduled_reboot_operation(job_info, customer_name, username,
     if operation == 'reboot':
         logger.debug(" About to execute the job %s" % (job_info))
         oper = store_operation.reboot(agentids=agent_ids)
+        logger.debug(oper)
+
+def scheduled_shutdown_operation(job_info, customer_name, username,
+                               uri=None, method=None, conn=None):
+
+    store_operation = (
+        StoreOperation(
+            customer_name=customer_name,
+            username=username, uri=uri, method=method
+        )
+    )
+
+    operation = job_info['operation']
+    agent_ids = (
+        get_agentids_per_job(
+            job_info=job_info,
+            username=username,
+            customer_name=customer_name
+        )
+    )
+
+    if operation == 'shutdown':
+        logger.debug(" About to execute the job %s" % (job_info))
+        oper = store_operation.shutdown(agentids=agent_ids)
         logger.debug(oper)
 
 
@@ -711,6 +732,38 @@ def add_yearly_recurrent(sched, customer_name, username,
                         ).something_broke(name, 'adding schedule', e)
                     )
                     
+            elif jobby_job['operation'] == 'shutdown':
+                try:
+                    if not custom and not every:
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation, month=month,
+                                hour=hour,minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+                    
+                    elif custom and every:
+                        year = ("{0}/{1}".format(year,every))
+                        month = (",".join(custom))
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation, year = year,
+                                month=month, day=day, hour=hour, minute=minute, 
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+                    results = (
+                            SchedulerResults(
+                                username, uri, method
+                                ).created(name, job_data)
+                            )
+                except Exception as e:
+                    logger.exception(e)
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).something_broke(name, 'adding schedule', e)
+                    )
+                    
     return(results)
 
 
@@ -837,6 +890,38 @@ def add_monthly_recurrent(sched, customer_name, username,
                         ).something_broke(name, 'adding schedule', e)
                     )
     
+            elif jobby_job['operation'] == 'shutdown':
+                try:
+                    if not custom and not every:
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation, day=day,
+                                hour=hour,minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+
+                    elif custom and every:
+                        month = ("{0}/{1}".format(month,every))
+                        day = (",".join(custom))
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation, month=month,
+                                day=day, hour=hour,minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+                    results = (
+                            SchedulerResults(
+                                username, uri, method
+                                ).created(name, job_data)
+                            )
+                
+                except Exception as e:
+                    logger.exception(e)
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).something_broke(name, 'adding schedule', e)
+                    )
     return(results)
 
 def add_daily_recurrent(sched, customer_name, username,
@@ -929,7 +1014,37 @@ def add_daily_recurrent(sched, customer_name, username,
                                 )
                     elif every:
                         day = ("{0}/{1}".format(date.day, every))
-                        sched.add_cron_job(scheduled_install_operation, 
+                        sched.add_cron_job(scheduled_reboot_operation, 
+                                day = day, hour=hour, minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name)
+
+                    results = (
+                        SchedulerResults(
+                            username, uri, method
+                        ).created(name, job_data)
+                    )
+
+                except Exception as e:
+                    logger.exception(e)
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).something_broke(name, 'adding schedule', e)
+                    )
+
+            elif jobby_job['operation'] == 'shutdown':
+                try:
+                    if not custom and not every:
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation,
+                                hour=hour, minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+                    elif every:
+                        day = ("{0}/{1}".format(date.day, every))
+                        sched.add_cron_job(scheduled_shutdown_operation, 
                                 day = day, hour=hour, minute=minute,
                                 args=[jobby_job, customer_name, username],
                                 name=name, jobstore=customer_name)
@@ -1077,6 +1192,39 @@ def add_weekly_recurrent(sched, customer_name, username,
                     )
     
                 
+            elif jobby_job['operation'] == 'shutdown':
+
+                try:
+                    if not custom:
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation,day_of_week=day_of_week,
+                                hour=hour, minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+                    elif custom:
+                        sched.add_cron_job(
+                                scheduled_shutdown_operation, week=week,
+                                day_of_week=day_of_week,
+                                hour=hour, minute=minute,
+                                args=[jobby_job, customer_name, username],
+                                name=name, jobstore=customer_name
+                                )
+
+                    results = (
+                        SchedulerResults(
+                            username, uri, method
+                        ).created(name, job_data)
+                    )
+
+                except Exception as e:
+                    logger.exception(e)
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).something_broke(name, 'adding schedule', e)
+                    )
+    
     return(results)
 
 
@@ -1153,6 +1301,29 @@ def schedule_once(sched, customer_name, username,
                 try:
                     sched.add_date_job(
                         scheduled_reboot_operation,
+                        date=date,
+                        args=[jobby_job, customer_name, username],
+                        name=name, jobstore=customer_name
+                    )
+                    results = (
+                        SchedulerResults(
+                            username, uri, method
+                        ).created(name, job_data)
+                    )
+
+                except Exception as e:
+                    logger.exception(e)
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).something_broke(name, 'adding schedule', e)
+                    )
+    
+            elif jobby_job['operation'] == 'shutdown':
+
+                try:
+                    sched.add_date_job(
+                        scheduled_shutdown_operation,
                         date=date,
                         args=[jobby_job, customer_name, username],
                         name=name, jobstore=customer_name
