@@ -146,6 +146,14 @@ def initialize_db():
                 '/etc/init.d/vFense'
             ],
         )
+    if not os.path.exists('/usr/bin/rqworker'):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                '/usr/bin/rqworker',
+                '/usr/local/bin/rqworker'
+            ],
+        )
         subprocess.Popen(
             [
                 'update-rc.d', 'vFense',
