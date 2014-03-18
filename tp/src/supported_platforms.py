@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import platform
-from site import getsitepackages
+import sys
 
 REDHAT_DISTROS = [
     'fedora', 'centos', 'centos linux',
@@ -12,7 +12,7 @@ DEBIAN_DISTROS = ['debian', 'ubuntu', 'linuxmint']
 SUPPORTED_DISTROS = REDHAT_DISTROS + DEBIAN_DISTROS
 
 current_python_version = platform.python_version
-site_packages = getsitepackages()
+site_packages = [f for f in sys.path if f.endswith('packages')]
 
 def get_platform():
     return platform.system().lower()
