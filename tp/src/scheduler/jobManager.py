@@ -261,6 +261,8 @@ def remove_job(sched, jobname, customer_name,
             .invalid_schedule_name(jobname)
         )
 
+    logger.info(results)
+
     return(results)
 
 
