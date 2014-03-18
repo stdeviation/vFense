@@ -11,6 +11,8 @@ import logging, logging.config
 
 import create_indexes as ci
 import nginx_config_creator as ncc
+from vFense import *
+from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
@@ -29,17 +31,6 @@ from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processin
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-RETHINK_PATH = '/usr/share/rethinkdb'
-RETHINK_USER = 'rethinkdb'
-RETHINK_INSTANCES_PATH = '/etc/rethinkdb/instances.d'
-RETHINK_DATA_PATH = '/var/lib/rethinkdb/vFense/data'
-RETHINK_SOURCE_CONF = '/opt/TopPatch/conf/rethinkdb_vFense.conf'
-RETHINK_CONF = '/etc/rethinkdb/instances.d/vFense.conf'
-RETHINK_WEB = '/usr/share/rethinkdb/web'
-RETHINK_PID_FILE = '/var/run/rethinkdb/vFense/pid_file'
-TOPPATCH_HOME = '/opt/TopPatch/'
-NGINX_CONFIG = '/etc/nginx/sites-available/vFense.conf'
-NGINX_CONFIG_ENABLED = '/etc/nginx/sites-enabled/vFense.conf'
 
 
 if os.getuid() != 0:
@@ -130,14 +121,7 @@ def initialize_db():
                 'chown', '-R', 'rethinkdb.rethinkdb', '/var/lib/rethinkdb/vFense'
             ],
         )
-    if os.path.exists(NGINX_CONFIG) and not os.path.exists(NGINX_CONFIG_ENABLED):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                NGINX_CONFIG,
-                NGINX_CONFIG_ENABLED
-            ],
-        )
+
     if not os.path.exists('/opt/TopPatch/var/log'):
         os.mkdir('/opt/TopPatch/var/log')
     if not os.path.exists('/opt/TopPatch/var/scheduler'):
@@ -168,11 +152,11 @@ def initialize_db():
                 'defaults'
             ],
         )
-    if os.path.exists('/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py'):
+    if os.path.exists(get_sheduler_location()):
         subprocess.Popen(
             [
                 'patch', '-N',
-                '/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py',
+                get_sheduler_location(),
                 '/opt/TopPatch/conf/patches/scheduler.patch'
             ],
         )
