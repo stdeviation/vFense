@@ -83,6 +83,7 @@ class Operation(object):
     def create_operation(self, operation, plugin, agent_ids,
                          tag_id, cpu_throttle=None, net_throttle=None,
                          restart=None, conn=None):
+
         number_of_agents = len(agent_ids)
         keys_to_insert = (
             {
@@ -107,7 +108,6 @@ class Operation(object):
                 OperationKey.NetThrottle: net_throttle,
             }
         )
-        print keys_to_insert
         try:
             added = (
                 r
