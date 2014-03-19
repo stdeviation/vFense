@@ -138,28 +138,33 @@ def initialize_db():
         os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0773)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
         os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', 0773)
-    if not os.path.exists('/etc/init.d/vFense'):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                '/opt/TopPatch/tp/src/daemon/vFense',
-                '/etc/init.d/vFense'
-            ],
-        )
-    if not os.path.exists('/usr/bin/rqworker'):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                '/usr/bin/rqworker',
-                '/usr/local/bin/rqworker'
-            ],
-        )
+    if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
                 'update-rc.d', 'vFense',
                 'defaults'
             ],
         )
+
+        if not os.path.exists('/etc/init.d/vFense'):
+            subprocess.Popen(
+                [
+                    'ln', '-s',
+                    '/opt/TopPatch/tp/src/daemon/vFense',
+                    '/etc/init.d/vFense'
+                ],
+        )
+
+    if get_distro() in REDHAT_DISTROS:
+        if os.path.exists('/usr/bin/rqworker'):
+            subprocess.Popen(
+                [
+                    'ln', '-s',
+                    '/usr/bin/rqworker',
+                    '/usr/local/bin/rqworker'
+                ],
+            )
+
     if os.path.exists(get_sheduler_location()):
         subprocess.Popen(
             [
@@ -172,11 +177,18 @@ def initialize_db():
         tp_exists = pwd.getpwnam('toppatch')
 
     except Exception as e:
-        subprocess.Popen(
-            [
-                'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
-            ],
-        )
+        if get_distro() in DEBIAN_DISTROS:
+            subprocess.Popen(
+                [
+                    'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
+                ],
+            )
+        elif get_distro() in REDHAT_DISTROS:
+            subprocess.Popen(
+                [
+                    'useradd', 'toppatch',
+                ],
+            )
 
     rethink_start = subprocess.Popen(['service', 'rethinkdb','start'])
     while not db_connect():
