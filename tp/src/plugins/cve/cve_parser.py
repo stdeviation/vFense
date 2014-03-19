@@ -20,8 +20,7 @@ class NvdParser(object):
     def get_entry_info(self, entry):
         data = {}
         attrib = entry.attrib
-        data[CveKey.CveId] = attrib.get(CVE_ID)
-        data[CveKey.CveName] = attrib.get(CVE_NAME)
+        data[CveKey.CveId] = attrib.get(CVE_NAME)
         data[CveKey.CveSev] = attrib.get(CVE_SEVERITY)
         data[CveKey.CvePublishedDate] = (
             r.epoch_time(
@@ -197,8 +196,8 @@ def parse_cve_and_udpatedb(download_latest_nvd=True, nvd_file=NVD_MODIFIED_FILE)
         if entry.tag == NVD_FEEDS_REFS and event == 'start':
             cve_data[CveKey.CveRefs] = parser.get_refs(entry)
 
-        if entry.tag == NVD_FEEDS_VULN_SOFT and event == 'start':
-            cve_data[CveKey.CveVulnsSoft] = parser.get_vulns_soft(entry)
+        #if entry.tag == NVD_FEEDS_VULN_SOFT and event == 'start':
+        #    cve_data[CveKey.CveVulnsSoft] = parser.get_vulns_soft(entry)
 
         cve_data[CveKey.CveCategories] = []
         if entry.tag == NVD_FEEDS_ENTRY and event == 'end':

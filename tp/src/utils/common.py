@@ -43,6 +43,21 @@ week_day = {
     'Sunday': '6'
 }
 
+month_to_num_month = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12,
+}
+
 
 GMT_BY_TIME = {
     '+10:30': 'LHST', '+3:30': 'IRST', '+12:45': 'CHAST',

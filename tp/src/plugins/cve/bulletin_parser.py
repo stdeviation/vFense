@@ -1,6 +1,8 @@
 import os
 import re
 import sys
+from time import mktime
+from datetime import datetime
 import logging
 import logging.config
 from datetime import datetime
@@ -45,9 +47,7 @@ def parse_spread_sheet(bulletin_file):
         id = build_bulletin_id(rows_to_use)
         bulletin_dict[WindowsSecurityBulletinKey.Id] = id
         date = xldate_as_tuple(row[0], workbook.datemode)
-        epoch_time = (
-            (datetime(*date) - datetime(1970,1,1)).total_seconds()
-        )
+        epoch_time = mktime(datetime(*date).timetuple())
         bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
             r.epoch_time(epoch_time)
         )
@@ -55,7 +55,7 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinImpact] = row[4]
-        bulletin_dict[WindowsSecurityBulletinKey.Title] = row[5]
+        bulletin_dict[WindowsSecurityBulletinKey.Details] = row[5]
         bulletin_dict[WindowsSecurityBulletinKey.AffectedProduct] = row[6]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentKb] = row[7]
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]

@@ -2,7 +2,13 @@ from BeautifulSoup import BeautifulSoup
 import requests
 import re
 import sys
+import logging
+import logging.config
+from time import mktime
+from datetime import datetime
+from db.client import r
 
+from vFense.utils.common import month_to_num_month
 from vFense.plugins.cve import *
 from vFense.plugins.cve.cve_constants import *
 from vFense.plugins.cve.bulletin_parser import build_bulletin_id
@@ -13,7 +19,14 @@ MAIN_USN_URL = 'http://www.ubuntu.com/usn'
 USR_URI = '/usn/usn-[0-9]+[0-9]+'
 NEXT_PAGE = '\?page=[0-9]+'
 
-def format_data_to_insert_into_db(usn_id, details, cve_ids, apps_data):
+logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logger = logging.getLogger('cve')
+
+def format_data_to_insert_into_db(
+    usn_id, details, cve_ids,
+    apps_data, date_posted
+    ):
+
     data_to_insert = []
     for data in apps_data:
         string_to_build_id = ''
@@ -36,6 +49,7 @@ def format_data_to_insert_into_db(usn_id, details, cve_ids, apps_data):
                 UbuntuSecurityBulletinKey.Id: bulletin_id,
                 UbuntuSecurityBulletinKey.BulletinId: usn_id,
                 UbuntuSecurityBulletinKey.Details: details,
+                UbuntuSecurityBulletinKey.DatePosted: date_posted,
                 UbuntuSecurityBulletinKey.Apps: data[UbuntuSecurityBulletinKey.Apps],
                 UbuntuSecurityBulletinKey.OsString: data[UbuntuSecurityBulletinKey.OsString],
                 UbuntuSecurityBulletinKey.CveIds: cve_ids
@@ -107,6 +121,20 @@ def get_app_info(info):
 
     return(app_info)
 
+def get_date_posted(date_em):
+    date_posted = u''
+    try:
+        day, month, year = date_em.text.split()
+        day = int(re.sub('[a-zA-Z]+', '', day))
+        month = month_to_num_month[re.sub(',', '', month)]
+        year = int(year)
+        date_posted = (
+            r.epoch_time(mktime(datetime(year, month, day).timetuple()))
+        )
+    except Exception as e:
+        logger.exception(e)
+
+    return(date_posted)
 
 def get_details(soup_details):
     details = u''
@@ -130,8 +158,8 @@ def write_content_to_file(file_location, url):
     completed = False
     content = None
     if usn_page.ok:
-        content = usn_page.content.encode('utf-8')
-        #content = usn_page.text
+        #content = usn_page.content.encode('utf-8')
+        content = usn_page.content
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace').decode('utf-8')
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace')
         completed = True
@@ -175,16 +203,21 @@ def get_url_content(usn_uri):
 def process_usn_page(usn_uri):
     content, completed = get_url_content(usn_uri)
     details = ''
+    date_posted = ''
     bulletin_id = ''
     app_info = []
     data = []
     cve_references = []
     if content:
         soup = BeautifulSoup(content.replace('<br />', '\n'))
+        date_posted_em = soup.find('em')
         bulletin_h2 = soup.div.find('h2')
         details_h3 = soup.div.find('h3', text='Details')
         app_info_dl = soup.div.findAll('dl')
         cve_info_h3 = soup.div.findAll('h3', text='References')
+        if date_posted_em:
+            date_posted = get_date_posted(date_posted_em)
+
         if bulletin_h2:
             bulletin_id = bulletin_h2.text.split()[-1]
         else:
@@ -209,7 +242,7 @@ def process_usn_page(usn_uri):
             )
         data = (
             format_data_to_insert_into_db(
-                bulletin_id, details, cve_references, app_info
+                bulletin_id, details, cve_references, app_info, date_posted
             )
         )
     return(data, completed)
