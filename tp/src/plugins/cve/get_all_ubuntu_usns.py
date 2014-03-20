@@ -247,6 +247,7 @@ def process_usn_page(usn_uri):
 
 
 def begin_usn_home_page_processing(next_page=None, full_parse=False):
+    logger.info('starting ubuntu usn update process')
     if next_page:
         url = MAIN_USN_URL + '/' + next_page
         main_page = requests.get(url)
@@ -294,5 +295,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
         if full_parse:
             if next_page:
                 begin_usn_home_page_processing(next_page.parent['href'], True)
+
+    logger.info('finished ubuntu usn update process')
 
 

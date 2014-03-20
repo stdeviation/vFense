@@ -218,6 +218,7 @@ def load_up_all_xml_into_db():
     if not os.path.exists(XML_DIR):
         os.makedirs(XML_DIR)
     xml_exists = os.listdir(XML_DIR)
+    logger.info('starting cve/nvd update process') 
     if not xml_exists:
         logger.info('downloading nvd/cve xml data files')
         start_nvd_xml_download()
@@ -226,6 +227,7 @@ def load_up_all_xml_into_db():
             nvd_file = os.path.join(directory, xml_file)
             parse_cve_and_udpatedb(False, nvd_file)
     update_cve_categories()
+    logger.info('finished cve/nvd update process') 
 
 #update_cve_categories()
 #load_up_all_xml_into_db()

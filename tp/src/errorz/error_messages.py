@@ -787,7 +787,7 @@ class SchedulerResults(object):
                 uri: self.uri,
                 method: self.method,
                 message: (
-                    '%s - Scchedule removed: %s'
+                    '%s - Schedule removed: %s'
                     % (self.username, job_name)
                 ),
             }
@@ -801,7 +801,7 @@ class SchedulerResults(object):
                 uri: self.uri,
                 method: self.method,
                 message: (
-                    '%s - Scchedule %s failed to remove'
+                    '%s - Schedule %s failed to remove'
                     % (self.username, job_name)
                 ),
             }
