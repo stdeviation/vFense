@@ -129,7 +129,11 @@ opened a malicious website.
 
 <p>Robert O&#39;Callahan discovered a mechanism for timing attacks involving<br />SVG filters and displacements input to feDisplacementMap. An attacker<br />could potentially exploit this to steal confidential information across<br />domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>)</p>
 
+<<<<<<< HEAD
 <p>Tyson Smith and Jesse Schwartzentruber discovered an out-of-bounds read<br />during polygon rendering in MathML. An attacker could potentially exploit<br />this to steal confidential information across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1508">CVE-2014-1508</a>)</p>
+=======
+<p>Tyson Smith and Jesse Schwartzentruber discovered an out-of-bounds read<br />during polygon rendering in MathML. An attacker could potentially exploit<br />this to steal confidential information across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2104-1508">CVE-2104-1508</a>)</p>
+>>>>>>> 0.7.7
 
 <p>John Thomson discovered a memory corruption bug in the Cairo graphics<br />library. If a user had a malicious extension installed, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash, or execute arbitrary code with the privileges of the user invoking<br />Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1509">CVE-2014-1509</a>)</p>
 

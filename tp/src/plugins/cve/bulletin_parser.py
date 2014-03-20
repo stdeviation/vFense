@@ -5,6 +5,8 @@ from time import mktime
 from datetime import datetime
 import logging
 import logging.config
+
+from time import mktime
 from datetime import datetime
 from hashlib import sha256
 from re import sub

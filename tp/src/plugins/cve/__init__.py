@@ -6,7 +6,6 @@ RedHatSecurityBulletinCollection = 'redhat_security_bulletin'
 
 class CveKey():
     CveId = 'cve_id'
-    CveName = 'cve_name'
     CveCategories = 'vulnerability_categories'
     CveDescriptions = 'cve_descriptions'
     CveRefs = 'cve_refs'
