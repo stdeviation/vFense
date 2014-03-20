@@ -6,7 +6,7 @@ import logging
 import logging.config
 from time import mktime
 from datetime import datetime
-from db.client import r
+from vFense.db.client import r
 
 from vFense.utils.common import month_to_num_month
 from vFense.plugins.cve import *
