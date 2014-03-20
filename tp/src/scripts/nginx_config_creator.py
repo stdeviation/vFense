@@ -1,4 +1,6 @@
-NGINX_CONFIG_FILE = '/etc/nginx/sites-available/vFense.conf'
+from vFense import get_nginx_config_location
+
+NGINX_CONFIG_FILE = get_nginx_config_location()
 base_nginx_config = """server {
     listen         80;
     server_name    %(server_name)s localhost;

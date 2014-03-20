@@ -1,4 +1,4 @@
-from vFense.collections import namedtuple
+from collections import namedtuple
 
 UserCollection = 'users'
 GroupCollection = 'groups'

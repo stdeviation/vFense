@@ -9,7 +9,6 @@ from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.manager import get_current_customer_name
 
 from vFense.receiver.corehandler import process_queue_data
-from vFense.receiver.rqueuemanager import QueueWorker
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvlistener')
@@ -23,13 +22,9 @@ class CheckInV1(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            agent_queue = '[]'
-            rqueue = QueueWorker({'agent_id': agent_id}, username)
-            queue_exists = rqueue.exists()
             agent_queue = (
                 process_queue_data(
-                    rqueue, queue_exists, agent_id,
-                    username, customer_name, uri, method
+                    agent_id, username, customer_name, uri, method
                 )
             )
             status = (
