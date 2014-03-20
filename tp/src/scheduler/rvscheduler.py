@@ -86,9 +86,6 @@ if __name__ == '__main__':
         },
     ]
     for job in list_of_cron_jobs:
-        logger.info('job %s exists' % (job['name']))
-        logger.info('removing job %s' % (job['name']))
-        #job_removed = SchedulerCodes.ScheduleRemoved
         job_exist = True
         while job_exist:
             job_removed = (
@@ -98,12 +95,19 @@ if __name__ == '__main__':
                     username
                 ).get('rv_status_code')
             )
+            if job_removed:
+                logger.info('removing job %s' % (job['name']))
+
             job_exist = (
                 job_exists(
                     sched=sched, jobname=job['name'],
                     username=username, customer_name=jobstore_name
                 )
             )
+
+            if job_exist:
+                logger.info('job %s exists' % (job['name']))
+
         sched.add_cron_job(
             job['job'], hour=job['hour'],
             minute=job['minute'], name=job['name'],
