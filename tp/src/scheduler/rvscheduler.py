@@ -19,7 +19,7 @@ get_agents_apps()
 if __name__ == '__main__':
    
     sched = start_scheduler(redis_db=11) 
-    jobstore_name = 'patching'
+    jobstore_name = 'administrative'
     username='admin'
     list_of_cron_jobs = [
         {
