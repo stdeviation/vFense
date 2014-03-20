@@ -95,8 +95,8 @@ if __name__ == '__main__':
                     username
                 ).get('rv_status_code')
             )
-            if job_removed:
-                logger.info('removing job %s' % (job['name']))
+            if job_removed == SchedulerCodes.ScheduleRemoved:
+                logger.info('removed job %s' % (job['name']))
 
             job_exist = (
                 job_exists(
