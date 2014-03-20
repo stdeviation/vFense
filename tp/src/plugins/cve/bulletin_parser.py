@@ -3,6 +3,8 @@ import re
 import sys
 import logging
 import logging.config
+
+from time import mktime
 from datetime import datetime
 from hashlib import sha256
 from re import sub
@@ -45,9 +47,7 @@ def parse_spread_sheet(bulletin_file):
         id = build_bulletin_id(rows_to_use)
         bulletin_dict[WindowsSecurityBulletinKey.Id] = id
         date = xldate_as_tuple(row[0], workbook.datemode)
-        epoch_time = (
-            (datetime(*date) - datetime(1970,1,1)).total_seconds()
-        )
+        epoch_time = mktime(datetime(*date).timetuple())
         bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
             r.epoch_time(epoch_time)
         )

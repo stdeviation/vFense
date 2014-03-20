@@ -11,6 +11,8 @@ import logging, logging.config
 
 import create_indexes as ci
 import nginx_config_creator as ncc
+from vFense import *
+from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
@@ -29,17 +31,6 @@ from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processin
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-RETHINK_PATH = '/usr/share/rethinkdb'
-RETHINK_USER = 'rethinkdb'
-RETHINK_INSTANCES_PATH = '/etc/rethinkdb/instances.d'
-RETHINK_DATA_PATH = '/var/lib/rethinkdb/vFense/data'
-RETHINK_SOURCE_CONF = '/opt/TopPatch/conf/rethinkdb_vFense.conf'
-RETHINK_CONF = '/etc/rethinkdb/instances.d/vFense.conf'
-RETHINK_WEB = '/usr/share/rethinkdb/web'
-RETHINK_PID_FILE = '/var/run/rethinkdb/vFense/pid_file'
-TOPPATCH_HOME = '/opt/TopPatch/'
-NGINX_CONFIG = '/etc/nginx/sites-available/vFense.conf'
-NGINX_CONFIG_ENABLED = '/etc/nginx/sites-enabled/vFense.conf'
 
 
 if os.getuid() != 0:
@@ -64,6 +55,10 @@ parser.add_argument(
     help='The number of vFense_listener daemons to run at once, cannot surpass 40'
 )
 parser.add_argument(
+    '--queue_ttl', dest='queue_ttl', default=10,
+    help='How many minutes until an operation for an agent is considered expired in the server queue'
+)
+parser.add_argument(
     '--web_count', dest='web_count', default=1,
     help='The number of vFense_web daemons to run at once, cannot surpass 40'
 )
@@ -86,6 +81,11 @@ parser.add_argument(
 parser.set_defaults(cve_data=True)
 
 args = parser.parse_args()
+
+if args.queue_ttl:
+    args.queue_ttl = int(args.queue_ttl)
+    if args.queue_ttl < 2:
+        args.queue_ttl = 10
 
 if args.dns_name:
     url = 'https://%s/packages/' % (args.dns_name)
@@ -121,14 +121,7 @@ def initialize_db():
                 'chown', '-R', 'rethinkdb.rethinkdb', '/var/lib/rethinkdb/vFense'
             ],
         )
-    if os.path.exists(NGINX_CONFIG) and not os.path.exists(NGINX_CONFIG_ENABLED):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                NGINX_CONFIG,
-                NGINX_CONFIG_ENABLED
-            ],
-        )
+
     if not os.path.exists('/opt/TopPatch/var/log'):
         os.mkdir('/opt/TopPatch/var/log')
     if not os.path.exists('/opt/TopPatch/var/scheduler'):
@@ -145,25 +138,38 @@ def initialize_db():
         os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0773)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
         os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', 0773)
-    if not os.path.exists('/etc/init.d/vFense'):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                '/opt/TopPatch/tp/src/daemon/vFense',
-                '/etc/init.d/vFense'
-            ],
-        )
+    if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
                 'update-rc.d', 'vFense',
                 'defaults'
             ],
         )
-    if os.path.exists('/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py'):
+
+        if not os.path.exists('/etc/init.d/vFense'):
+            subprocess.Popen(
+                [
+                    'ln', '-s',
+                    '/opt/TopPatch/tp/src/daemon/vFense',
+                    '/etc/init.d/vFense'
+                ],
+        )
+
+    if get_distro() in REDHAT_DISTROS:
+        if os.path.exists('/usr/bin/rqworker'):
+            subprocess.Popen(
+                [
+                    'ln', '-s',
+                    '/usr/bin/rqworker',
+                    '/usr/local/bin/rqworker'
+                ],
+            )
+
+    if os.path.exists(get_sheduler_location()):
         subprocess.Popen(
             [
                 'patch', '-N',
-                '/usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py',
+                get_sheduler_location(),
                 '/opt/TopPatch/conf/patches/scheduler.patch'
             ],
         )
@@ -171,11 +177,18 @@ def initialize_db():
         tp_exists = pwd.getpwnam('toppatch')
 
     except Exception as e:
-        subprocess.Popen(
-            [
-                'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
-            ],
-        )
+        if get_distro() in DEBIAN_DISTROS:
+            subprocess.Popen(
+                [
+                    'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
+                ],
+            )
+        elif get_distro() in REDHAT_DISTROS:
+            subprocess.Popen(
+                [
+                    'useradd', 'toppatch',
+                ],
+            )
 
     rethink_start = subprocess.Popen(['service', 'rethinkdb','start'])
     while not db_connect():
@@ -196,6 +209,7 @@ def initialize_db():
             {
                 CoreProperty.NetThrottle: '0',
                 CoreProperty.CpuThrottle: 'idle',
+                CoreProperty.OperationTtl: args.queue_ttl,
                 CoreProperty.PackageUrl: url
             }
         )
