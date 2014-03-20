@@ -38,8 +38,9 @@ def start_scheduler(redis_db=10, conn=None):
         .pluck(CustomerKey.CustomerName)
         .run(conn)
     )
-    sched.add_jobstore(RedisJobStore(db=11), 'patching')
-    list_of_customers.append({'name': 'patching'})
+    if redis_db == 11:
+        sched.add_jobstore(RedisJobStore(db=11), 'patching')
+        list_of_customers.append({'name': 'patching'})
     if customers:
         for customer in customers:
             sched.add_jobstore(RedisJobStore(db=10),

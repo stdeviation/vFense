@@ -43,7 +43,7 @@ if __name__ == '__main__':
             'name': 'parse_cve_and_udpatedb',
             'jobstore': jobstore_name,
             'job': parse_cve_and_udpatedb,
-            'hour': 0,
+            'hour': '1,7,13',
             'minute': 5,
             'max_instances': 1,
             'coalesce': True
@@ -52,7 +52,7 @@ if __name__ == '__main__':
             'name': 'parse_bulletin_and_updatedb',
             'jobstore': jobstore_name,
             'job': parse_bulletin_and_updatedb,
-            'hour': 1,
+            'hour': '0,12',
             'minute': 0,
             'max_instances': 1,
             'coalesce': True
@@ -61,7 +61,7 @@ if __name__ == '__main__':
             'name': 'begin_usn_home_page_processing',
             'jobstore': jobstore_name,
             'job': begin_usn_home_page_processing,
-            'hour': 1,
+            'hour': '0,6,12',
             'minute': 30,
             'max_instances': 1,
             'coalesce': True
@@ -86,42 +86,32 @@ if __name__ == '__main__':
         },
     ]
     for job in list_of_cron_jobs:
-        job_exist = (
-            job_exists(
-                sched=sched, jobname=job['name'],
-                username=username, customer_name=jobstore_name
+        logger.info('job %s exists' % (job['name']))
+        logger.info('removing job %s' % (job['name']))
+        #job_removed = SchedulerCodes.ScheduleRemoved
+        job_exist = True
+        while job_exist:
+            job_removed = (
+                remove_job(
+                    sched, job['name'], 
+                    jobstore_name,
+                    username
+                ).get('rv_status_code')
             )
-        )
-        if not job_exist:
-            sched.add_cron_job(
-                job['job'], hour=job['hour'],
-                minute=job['minute'], name=job['name'],
-                jobstore=jobstore_name,
-                max_instances=job['max_instances'],
-                coalesce=job['coalesce']
-            )
-            logger.info('job %s added' % (job['name']))
-
-        else:
-            logger.info('job %s exists' % (job['name']))
-            logger.info('removing job %s' % (job['name']))
-            job_removed = SchedulerCodes.ScheduleRemoved
-            while job_removed == SchedulerCodes.ScheduleRemoved:
-                job_removed = (
-                    remove_job(
-                        sched, job['name'], 
-                        jobstore_name,
-                        username
-                    ).get('rv_status_code')
+            job_exist = (
+                job_exists(
+                    sched=sched, jobname=job['name'],
+                    username=username, customer_name=jobstore_name
                 )
-            sched.add_cron_job(
-                job['job'], hour=job['hour'],
-                minute=job['minute'], name=job['name'],
-                jobstore=jobstore_name,
-                max_instances=job['max_instances'],
-                coalesce=job['coalesce']
             )
-            logger.info('job %s added' % (job['name']))
+        sched.add_cron_job(
+            job['job'], hour=job['hour'],
+            minute=job['minute'], name=job['name'],
+            jobstore=jobstore_name,
+            max_instances=job['max_instances'],
+            coalesce=job['coalesce']
+        )
+        logger.info('job %s added' % (job['name']))
 
     while True:
         sleep(60)
