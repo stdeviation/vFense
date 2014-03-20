@@ -1711,3 +1711,7 @@ a.block {
 .notifyOSD.develop.highlight .bubble .title {
   background-color: #006400;
 }
+
+dl.inline dd.cveId {
+    clear: none;
+}

@@ -59,6 +59,19 @@ define(
                             ]
                         },
                         {
+                            rowHeight: 3,
+                            columns: [
+                                {
+                                    moduleName: 'reports/modules/vulnerabilityInfo/vulnerabilityInfo',
+                                    moduleJSON: {
+                                        id: params.id,
+                                        type: params.type
+                                    },
+                                    moduleSpan: 12
+                                }
+                            ]
+                        },
+                        {
                             rowHeight: 0,
                             columns: [
                                 {
