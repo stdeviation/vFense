@@ -7,6 +7,7 @@ from vFense.operations import *
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.cve import *
+from vFense.receiver import *
 from vFense.tagging import *
 Id = 'id'
 def initialize_indexes_and_create_tables():
@@ -39,6 +40,7 @@ def initialize_indexes_and_create_tables():
         (SupportedAppsPerAgentCollection, Id),
         (TagsCollection, TagsKey.TagId),
         (TagsPerAgentCollection, Id),
+        (AgentQueueCollection, Id),
         (AppsCollection, AppsKey.AppId),
     ]
     conn = db_connect()
@@ -70,6 +72,7 @@ def initialize_indexes_and_create_tables():
     supported_app_per_agent_list = r.table(SupportedAppsPerAgentCollection).index_list().run(conn)
     agent_app_list = r.table(AgentAppsCollection).index_list().run(conn)
     agent_app_per_agent_list = r.table(AgentAppsPerAgentCollection).index_list().run(conn)
+    agent_queue_list = r.table(AgentQueueCollection).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.CustomerName in agents_list:
@@ -640,5 +643,9 @@ def initialize_indexes_and_create_tables():
             UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x: 
                 x[UbuntuSecurityBulletinKey.Apps].map(lambda y:
                     [y['name'], y['version']]), multi=True).run(conn)
+
+#################################### Agent Queue Indexes ###################################################
+    if not AgentQueueIndexes.AgentId in agent_queue_list:
+        r.table(AgentQueueCollection).index_create(AgentQueueIndexes.AgentId).run(conn)
 
     conn.close()

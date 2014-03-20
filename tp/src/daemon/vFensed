@@ -1,4 +1,4 @@
-#!/opt/TopPatch/python/current/bin/python
+#!/usr/bin/env python
 import os
 import os.path
 import sys
@@ -222,7 +222,7 @@ def TopPatch_stop():
                         os.remove(service[1])
             sleep(2)
         else:
-            msg = "RemdiationVault %s is not running. Stopping Failed..." \
+            msg = "vFense %s is not running. Stopping Failed..." \
                   % (service[2])
             sys.stderr.write(msg+'\n')
             logger.error(msg)
@@ -271,7 +271,7 @@ if __name__ == "__main__":
             TopPatch_stop()
         elif ACTIONS == 'restart':
             TopPatch_restart()
-            logger.info("TopPatch server restarting..")
+            logger.info("vFense server restarting..")
         elif ACTIONS == 'status':
             TopPatch_status()
         else:

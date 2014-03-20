@@ -8,9 +8,11 @@ from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
 from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
 
 from vFense.agent.agent_uptime_verifier import all_agent_status
+from vFense.jobs.jobs import remove_expired_jobs_and_update_operations
+from vFense.errorz.status_codes import SchedulerCodes
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('admin_scheduler')
 get_supported_apps()
 get_agents_apps()
 
@@ -69,7 +71,16 @@ if __name__ == '__main__':
             'jobstore': jobstore_name,
             'job': all_agent_status,
             'hour': '*',
-            'minute': 5,
+            'minute': '*/5',
+            'max_instances': 1,
+            'coalesce': True
+        },
+        {
+            'name': 'remove_expired_jobs_and_update_operations',
+            'jobstore': jobstore_name,
+            'job': remove_expired_jobs_and_update_operations,
+            'hour': '*',
+            'minute': '*',
             'max_instances': 1,
             'coalesce': True
         },
@@ -94,11 +105,15 @@ if __name__ == '__main__':
         else:
             logger.info('job %s exists' % (job['name']))
             logger.info('removing job %s' % (job['name']))
-            remove_job(
-                sched, job['name'], 
-                jobstore_name,
-                username
-            )
+            job_removed = SchedulerCodes.ScheduleRemoved
+            while job_removed == SchedulerCodes.ScheduleRemoved:
+                job_removed = (
+                    remove_job(
+                        sched, job['name'], 
+                        jobstore_name,
+                        username
+                    ).get('rv_status_code')
+                )
             sched.add_cron_job(
                 job['job'], hour=job['hour'],
                 minute=job['minute'], name=job['name'],

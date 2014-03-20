@@ -2,9 +2,9 @@ import logging
 import logging.config
 from vFense.utils.common import *
 from vFense.operations.operation_manager import Operation
-from vFense.receiver.rqueuemanager import QueueWorker
 from vFense.operations import *
 from vFense.agent import *
+from vFense.receiver.agent_queue import AgentQueue
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
@@ -15,15 +15,21 @@ logger = logging.getLogger('rvapi')
 
 
 class StoreOperation(object):
-    def __init__(self, username, customer_name, uri, method):
+    def __init__(self, username, customer_name, uri, method, ttl=None):
         self.customer_name = customer_name
         self.username = username
         self.uri = uri
         self.method = method
+        self.ttl = ttl
 
     def _store_in_agent_queue(self, operation):
-        rqueue = QueueWorker(operation, self.username)
-        rqueue.rpush_object_in_queue(message=operation)
+        agent_queue = (
+            AgentQueue(
+                operation[OperationPerAgentKey.AgentId],
+                self.customer_name
+            )
+        )
+        agent_queue.add(operation, self.ttl)
 
     def generic_operation(self, oper_type, oper_plugin,
                           agentids=None, tag_id=None):
