@@ -20,11 +20,7 @@ class NvdParser(object):
     def get_entry_info(self, entry):
         data = {}
         attrib = entry.attrib
-<<<<<<< HEAD
         data[CveKey.CveId] = attrib.get(CVE_NAME)
-=======
-        data[CveKey.CveId] = attrib.get(CVE_ID)
->>>>>>> 0.7.7
         data[CveKey.CveSev] = attrib.get(CVE_SEVERITY)
         data[CveKey.CvePublishedDate] = (
             r.epoch_time(

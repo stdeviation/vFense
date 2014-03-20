@@ -158,18 +158,8 @@ def write_content_to_file(file_location, url):
     completed = False
     content = None
     if usn_page.ok:
-<<<<<<< HEAD
-        #content = usn_page.content.encode('utf-8')
         content = usn_page.content
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace').decode('utf-8')
-=======
-        #content = usn_page.content.decode('utf-8')
-        #content = usn_page.content.encode('utf-8')
-        content = usn_page.content
-        #print type(usn_page.content), usn_page.content
-        #content = unicode(usn_page.content).encode(sys.stdout.encoding, 'replace').decode('utf-8')
->>>>>>> 0.7.7
-        #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace')
         completed = True
         usn_file.write(content)
         usn_file.close()
