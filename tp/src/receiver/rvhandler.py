@@ -29,9 +29,7 @@ class RvHandOff():
         self.delete_afterwards = delete_afterwards
         self.customer_name = customer_name
         if not agent_data:
-            agent_data = get_agent_info(
-                agentid=agentid
-            )
+            agent_data = get_agent_info(agentid)
 
         self.add_packages_from_agent(
             username, agentid,

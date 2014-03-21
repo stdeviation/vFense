@@ -62,6 +62,7 @@ def get_agent_queue(agent_id, conn=None):
                 AgentQueueKey.CreatedTime,
                 AgentQueueKey.ExpireTime
             )
+            .order_by(AgentQueueKey.OrderId)
             .run(conn)
         )
 

@@ -144,7 +144,7 @@ class IncomingApplicationsFromAgent():
         if re.search(r'Critical|Important|Security', sev, re.IGNORECASE):
             tp_sev = 'Critical'
 
-        elif re.search(r'Moderate|Low|Bugfix', sev, re.IGNORECASE):
+        elif re.search(r'Recommended|Moderate|Low|Bugfix', sev, re.IGNORECASE):
             tp_sev = 'Recommended'
 
         else:

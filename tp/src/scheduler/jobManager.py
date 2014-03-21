@@ -32,23 +32,31 @@ def start_scheduler(redis_db=10, conn=None):
     started = False
     sched = Scheduler(daemonic=False)
     list_of_customers = []
-    customers = (
-        r
-        .table(Collection.Customers)
-        .pluck(CustomerKey.CustomerName)
-        .run(conn)
-    )
-    sched.add_jobstore(RedisJobStore(db=11), 'patching')
-    list_of_customers.append({'name': 'patching'})
-    if customers:
-        for customer in customers:
-            sched.add_jobstore(RedisJobStore(db=10),
-                               customer[CustomerKey.CustomerName])
-            list_of_customers.append(
-                {
-                    'name': customer[CustomerKey.CustomerName]
-                }
-            )
+
+    if redis_db == 11:
+        sched.add_jobstore(RedisJobStore(db=11), 'administrative')
+        list_of_customers.append({'name': 'administrative'})
+
+    elif redis_db == 10:
+        customers = (
+            r
+            .table(Collection.Customers)
+            .pluck(CustomerKey.CustomerName)
+            .run(conn)
+        )
+
+        if customers:
+            for customer in customers:
+                sched.add_jobstore(
+                    RedisJobStore(db=10),
+                    customer[CustomerKey.CustomerName]
+                )
+                list_of_customers.append(
+                    {
+                        'name': customer[CustomerKey.CustomerName]
+                    }
+                )
+
     if list_of_customers:
         msg = 'Starting Job Scheduler for customers %s' %\
             (', '.join(map(lambda x: x['name'], list_of_customers)))

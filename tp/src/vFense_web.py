@@ -40,6 +40,9 @@ from vFense.plugins.patching.Api.agent_updates_handler import *
 from vFense.plugins.patching.Api.custom_updates_handler import *
 from vFense.plugins.patching.Api.supported_updates_handler import *
 from vFense.plugins.mightymouse.api.relay_servers import *
+##Vulnerability APIs
+from vFense.plugins.cve.api.vulnerability import *
+from vFense.plugins.cve.api.cve import *
 
 from vFense.plugins.ra.api.status import RDStatusQueue
 from vFense.plugins.ra.api.rdsession import RDSession
@@ -225,6 +228,10 @@ class Application(tornado.web.Application):
             (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
             (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
             #(r"/api/package/getDependecies?", GetDependenciesHandler),
+
+            ##### Vulnerability API Handlers
+            (r'/api/v1/vulnerability/os/([A-Za-z0-9_-]+)?', VulnIdHandler),
+            (r'/api/v1/vulnerability/cve/(CVE-[0-9]+-[0-9]+)?', CveIdHandler),
 
             ##### File system access whitelist
             (r"/css/(.*?)", tornado.web.StaticFileHandler,

@@ -180,9 +180,8 @@ class AgentManager():
 
         return(results)
 
-    @db_create_close
     def _changer(self, newname, name_type=AgentKey.DisplayName,
-                 uri=None, method=None, conn=None):
+                 uri=None, method=None):
         if newname:
             agent_updated = (
                 update_agent_field(

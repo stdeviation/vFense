@@ -32,7 +32,7 @@ class WindowsSecurityBulletinKey():
     BulletinKb = 'bulletin_kb'
     BulletinSeverity = 'bulletin_severity'
     BulletinImpact = 'bulletin_impact'
-    Title = 'bulletin_title'
+    Details = 'bulletin_details'
     AffectedProduct = 'affected_product'
     ComponentKb = 'component_kb'
     AffectedComponent = 'affected_component'
@@ -41,6 +41,7 @@ class WindowsSecurityBulletinKey():
     SupersedesBulletinId = 'supercedes_bulletin_id'
     SupersedesBulletinKb = 'supercedes_bulletin_kb'
     Supersedes = 'supercedes'
+    SupportUrl = 'support_url'
     Reboot = 'reboot'
     CveIds = 'cve_ids'
 
@@ -58,6 +59,7 @@ class UbuntuSecurityBulletinKey():
     Apps = 'apps'
     OsString = 'os_string'
     CveIds = 'cve_ids'
+    SupportUrl = 'support_url'
 
 class UbuntuSecurityBulletinIndexes():
     BulletinId = 'bulletin_id'
@@ -82,4 +84,3 @@ class SecurityBulletinKey():
     Supersedes = 'supercedes'
     Reboot = 'reboot'
     CveIds = 'cve_ids'
-

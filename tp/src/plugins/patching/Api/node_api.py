@@ -34,10 +34,11 @@ class FetchValidProductionLevels(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
+        customer_name = get_current_customer_name(username)
         uri = self.request.uri
         method = self.request.method
         try:
-            data = get_production_levels()
+            data = get_production_levels(customer_name)
             results = (
                 GenericResults(
                     username, uri, method
@@ -63,6 +64,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
+        customer_name = get_current_customer_name(username)
         uri = self.request.uri
         method = self.request.method
         try:
@@ -72,7 +74,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
                 data = get_supported_os_codes()
 
             elif os_string:
-                data = get_supported_os_strings()
+                data = get_supported_os_strings(customer_name)
 
             results = (
                 GenericResults(
@@ -304,6 +306,7 @@ class AgentHandler(BaseHandler):
             elif (prod_level and not hostname and not displayname
                     and not new_customer):
                 results = agent.production_state_changer(prod_level, uri, method)
+                print results
 
             elif prod_level and hostname and displayname and not new_customer:
                 agent_data = {

@@ -3,7 +3,7 @@ from datetime import datetime
 import logging
 import requests
 from vFense.agent import *
-from vFense.agent.agents import get_agents_info, get_agent_info
+from vFense.agent.agents import get_agents_info, get_agent_info 
 from vFense.errorz.status_codes import PackageCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import insert_file_data,\

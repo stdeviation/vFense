@@ -20,7 +20,7 @@ class NvdParser(object):
     def get_entry_info(self, entry):
         data = {}
         attrib = entry.attrib
-        data[CveKey.CveId] = attrib.get(CVE_ID)
+        data[CveKey.CveId] = attrib.get(CVE_NAME)
         data[CveKey.CveSev] = attrib.get(CVE_SEVERITY)
         data[CveKey.CvePublishedDate] = (
             r.epoch_time(
@@ -186,8 +186,8 @@ def parse_cve_and_udpatedb(download_latest_nvd=True, nvd_file=NVD_MODIFIED_FILE)
         if entry.tag == NVD_FEEDS_REFS and event == 'start':
             cve_data[CveKey.CveRefs] = parser.get_refs(entry)
 
-        if entry.tag == NVD_FEEDS_VULN_SOFT and event == 'start':
-            cve_data[CveKey.CveVulnsSoft] = parser.get_vulns_soft(entry)
+        #if entry.tag == NVD_FEEDS_VULN_SOFT and event == 'start':
+        #    cve_data[CveKey.CveVulnsSoft] = parser.get_vulns_soft(entry)
 
         cve_data[CveKey.CveCategories] = []
         if entry.tag == NVD_FEEDS_ENTRY and event == 'end':
@@ -218,6 +218,7 @@ def load_up_all_xml_into_db():
     if not os.path.exists(XML_DIR):
         os.makedirs(XML_DIR)
     xml_exists = os.listdir(XML_DIR)
+    logger.info('starting cve/nvd update process') 
     if not xml_exists:
         logger.info('downloading nvd/cve xml data files')
         start_nvd_xml_download()
@@ -226,6 +227,7 @@ def load_up_all_xml_into_db():
             nvd_file = os.path.join(directory, xml_file)
             parse_cve_and_udpatedb(False, nvd_file)
     update_cve_categories()
+    logger.info('finished cve/nvd update process') 
 
 #update_cve_categories()
 #load_up_all_xml_into_db()

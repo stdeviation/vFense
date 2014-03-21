@@ -40,10 +40,10 @@ class StartUpV1(BaseHandler):
             )
             agent_data = (
                 update_agent(
+                    agent_id, system_info,
+                    hardware, rebooted,
                     username, customer_name,
                     uri, method,
-                    agent_id, system_info,
-                    hardware, rebooted
                 )
             )
             agent_data.pop('data')

@@ -1,6 +1,8 @@
 import os
 import re
 import sys
+from time import mktime
+from datetime import datetime
 import logging
 import logging.config
 
@@ -55,7 +57,7 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinImpact] = row[4]
-        bulletin_dict[WindowsSecurityBulletinKey.Title] = row[5]
+        bulletin_dict[WindowsSecurityBulletinKey.Details] = row[5]
         bulletin_dict[WindowsSecurityBulletinKey.AffectedProduct] = row[6]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentKb] = row[7]
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
@@ -86,11 +88,14 @@ def parse_spread_sheet(bulletin_file):
     return(bulletin_list)
 
 def parse_bulletin_and_updatedb():
+    logger.info('starting microsoft security bulletin update process')
     if not os.path.exists(XLS_DIR):
         os.makedirs(XLS_DIR)
     downloaded, xls_file = download_latest_xls_from_msft()
     if downloaded:
         bulletin_data = parse_spread_sheet(xls_file)
         insert_into_bulletin_collection_for_windows(bulletin_data)
+
+    logger.info('finished microsoft security bulletin update process')
 
 #parse_bulletin_and_updatedb()
