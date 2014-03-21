@@ -82,7 +82,6 @@ require.config({
         'jquery.ui.spinner'     : 'libs/jquery-ui/dev/jquery.ui.spinner',
         'jquery.ui.tabs'        : 'libs/jquery-ui/dev/jquery.ui.tabs',
         'jquery.ui.tooltip'     : 'libs/jquery-ui/dev/jquery.ui.tooltip',
-        'jquery.mockjax'        : 'libs/jquery-mockjax/jquery.mockjax',
 
         // jQuery.ui Plugins
         // ---------------------------------------------------------------------
@@ -162,7 +161,6 @@ require.config({
         'jquery.ui.slider'      : {exports: 'jQuery.ui.slider',       deps: ['jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse']},
         'jquery.ui.spinner'     : {exports: 'jQuery.ui.spinner',      deps: ['jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.button']},
         'jquery.ui.tabs'        : {exports: 'jQuery.ui.tabs',         deps: ['jquery.ui.core', 'jquery.ui.widget']},
-        'jquery.mockjax'        : { exports: '$.mockjax', deps: ['jquery'] },
 
 
         // Plugins
