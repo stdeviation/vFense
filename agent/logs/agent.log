@@ -1127,3 +1127,7 @@ DEBUG : 03/21/2014 10:39:28 AM : Login server text: <html>
 ERROR : 03/21/2014 10:39:28 AM : Agent was unable to login.
 ERROR : 03/21/2014 10:39:28 AM : Could not check-in to server. See logs for details.
 DEBUG : 03/21/2014 10:39:28 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:32 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:36 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:40 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:44 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
