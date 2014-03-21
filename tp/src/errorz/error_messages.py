@@ -164,7 +164,7 @@ class GenericResults(object):
         return(
             {
                 status: 200,
-                code: GenericCodes.ObjectUpdated,
+                code: GenericCodes.ObjectCreated,
                 uri: self.uri,
                 method: self.method,
                 message: (

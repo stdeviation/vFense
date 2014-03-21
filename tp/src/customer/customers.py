@@ -8,9 +8,9 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import DbCodes
 
 
-def get_customer_info(customer_name, keys_to_pluck=None):
+def get_customer(customer_name, keys_to_pluck=None):
     """
-    Retrieve customer information
+    Retrieve customer information.
     :param customer_name:  Name of the customer.
     :param keys_to_pluck:  (Optional) list of keys you want to
         retreive from the db.
@@ -26,6 +26,37 @@ def get_customer_info(customer_name, keys_to_pluck=None):
         customer_data = fetch_customer_info(customer_name)
 
     return(customer_data)
+
+def validate_customer_names(customer_names):
+    """
+    Validate a list if customer names.
+    :param customer_names: List of customer names.
+
+    Basic Usage::
+        >>> from vFense.customer.customers import validate_customer_names
+        >>> customer_names = ['default', 'linux']
+        >>> validate_customer_names(customer_names)
+        [
+            {
+                u'customer_name': u'default',
+                u'user_name': u'agent',
+                u'id': u'ccac5136-3077-4d2c-a391-9bb15acd79fe'
+            }
+        ]
+    """
+    validated = True
+    invalid_names = []
+    valid_names = []
+    if isinstance(customer_names, list):
+        for customer_name in customer_names:
+            if get_customer(customer_name):
+                valid_names.append(customer_name)
+            else:
+                invalid_names.append(customer_name)
+                validated = False
+
+    return(validated, valid_names, invalid_names)
+
 
 @results_message
 def create_customer(

@@ -6,7 +6,7 @@ from time import mktime
 from json import dumps
 from vFense.db.client import db_create_close, r, db_connect, results_message
 from vFense.db.hardware import Hardware
-from vFense.customer.customers import get_customer_info, create_customer
+from vFense.customer.customers import get_customer, create_customer
 from vFense.errorz.error_messages import AgentResults, GenericResults
 from vFense.errorz.status_codes import DbCodes, GenericCodes
 from vFense.plugins.patching import *
@@ -358,7 +358,7 @@ def add_agent(system_info, hardware, username=None,
             agent_data[AgentKey.ProductionLevel] = 'Production'
 
         if customer_name != 'default':
-            cexists = get_customer_info(customer_name)
+            cexists = get_customer(customer_name)
             if not cexists and len(customer_name) >= 1:
                 create_customer(
                     customer_name, username=username,
