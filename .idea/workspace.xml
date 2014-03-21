@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92ccc69d-d5b0-4024-b50c-3505cccef799" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tp/wwwstatic/js/vulnerabilityAPI.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agent/db/agent.adb" afterPath="$PROJECT_DIR$/agent/db/agent.adb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agent/etc/.last_uptime" afterPath="$PROJECT_DIR$/agent/etc/.last_uptime" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agent/logs/agent.log" afterPath="$PROJECT_DIR$/agent/logs/agent.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tp/wwwstatic/css/application.css" afterPath="$PROJECT_DIR$/tp/wwwstatic/css/application.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tp/wwwstatic/js/config.js" afterPath="$PROJECT_DIR$/tp/wwwstatic/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js" afterPath="$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js" afterPath="$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TopPatch.iws" />
@@ -17,8 +11,10 @@
     <file path="/Dummy.txt" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395297600941" ignored="false" />
     <file path="/list.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395133237208" ignored="false" />
     <file path="/vulnerabilityAPI.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395149223059" ignored="false" />
-    <file path="/vulnerabilityInfo.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395313099442" ignored="false" />
+    <file path="/vulnerabilityInfo.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395328672752" ignored="false" />
     <file path="/application.css" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395311949043" ignored="false" />
+    <file path="/patch.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395315995312" ignored="false" />
+    <file path="/router.js" changelist="92ccc69d-d5b0-4024-b50c-3505cccef799" time="1395322101212" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,16 +37,34 @@
       <file leaf-file-name="patch.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="67" selection-start="470" selection-end="470" vertical-scroll-proportion="0.0">
+            <state line="69" column="54" selection-start="3597" selection-end="3597" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vulnerabilityAPI.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/vulnerabilityAPI.js">
+      <file leaf-file-name="patches.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patches.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="39" selection-start="1447" selection-end="1447" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="router.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="174" column="115" selection-start="7466" selection-end="7466" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="appTemplate.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/appTemplate.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="76" selection-start="67" selection-end="67" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -59,16 +73,7 @@
       <file leaf-file-name="vulnerabilityInfo.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="49" selection-start="2619" selection-end="2619" vertical-scroll-proportion="0.073891625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="69" selection-start="10631" selection-end="10631" vertical-scroll-proportion="0.0">
+            <state line="97" column="14" selection-start="4382" selection-end="4382" vertical-scroll-proportion="0.11764706">
               <folding />
             </state>
           </provider>
@@ -77,34 +82,7 @@
       <file leaf-file-name="patchInfo.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/patchInfo/patchInfo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="42" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/css/application.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1714" column="20" selection-start="36949" selection-end="36949" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="node.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/node.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hardwareInfo.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/hardwareInfo/hardwareInfo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="66" column="44" selection-start="2715" selection-end="2715" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -130,10 +108,11 @@
       <list>
         <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/modules/lists/list.js" />
         <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/patchInfo/vulnerabilityInfo.js" />
-        <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js" />
         <option value="$PROJECT_DIR$/tp/wwwstatic/js/config.js" />
         <option value="$PROJECT_DIR$/tp/wwwstatic/js/vulnerabilityAPI.js" />
         <option value="$PROJECT_DIR$/tp/wwwstatic/css/application.css" />
+        <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/router.js" />
+        <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js" />
         <option value="$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js" />
       </list>
     </option>
@@ -283,6 +262,66 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TopPatch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TopPatch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wwwstatic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TopPatch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TopPatch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wwwstatic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -423,13 +462,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/.jshintrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.86206895">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tp/src/server/api/scheduler_api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.392157" />
@@ -438,13 +470,6 @@
     <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/lists/list.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="43" selection-start="436" selection-end="436" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patches.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/hardwareOverview/hardwareOverview.js">
@@ -468,44 +493,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/css/application.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1714" column="20" selection-start="36949" selection-end="36949" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/patches.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/patch.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/appTemplate.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="79" selection-start="175" selection-end="175" vertical-scroll-proportion="0.075566754">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/patchInfo/patchInfo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="42" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="67" selection-start="470" selection-end="470" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -517,6 +507,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/css/application.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1714" column="20" selection-start="36949" selection-end="36949" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/vulnerabilityAPI.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="39" selection-start="1447" selection-end="1447" vertical-scroll-proportion="0.0">
@@ -524,9 +521,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/patches.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/patchInfo/patchInfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="44" selection-start="2715" selection-end="2715" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/templates/appTemplate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="76" selection-start="67" selection-end="67" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="115" selection-start="7466" selection-end="7466" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patch.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="54" selection-start="3597" selection-end="3597" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/modules/patches.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tp/wwwstatic/js/application/reports/modules/vulnerabilityInfo/vulnerabilityInfo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="49" selection-start="2619" selection-end="2619" vertical-scroll-proportion="0.073891625">
+        <state line="97" column="14" selection-start="4382" selection-end="4382" vertical-scroll-proportion="0.11764706">
           <folding />
         </state>
       </provider>
