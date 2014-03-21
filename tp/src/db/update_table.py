@@ -37,7 +37,7 @@ class AddResults(object):
         self.username = username
         self.uri = uri
         self.method = method
-        self.agent_data = get_agent_info(agentid=self.agent_id)
+        self.agent_data = get_agent_info(self.agent_id)
         self.customer_name = self.agent_data['customer_name']
         self.date_now = mktime(datetime.now().timetuple())
         self.error = error
@@ -134,7 +134,7 @@ class AddAppResults(object):
         self.username = username
         self.uri = uri
         self.method = method
-        self.agent_data = get_agent_info(agentid=self.agent_id)
+        self.agent_data = get_agent_info(self.agent_id)
         self.customer_name = self.agent_data['customer_name']
         self.date_now = mktime(datetime.now().timetuple())
         self.error = error

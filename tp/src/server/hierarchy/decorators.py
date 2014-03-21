@@ -153,21 +153,3 @@ def convert_json_to_arguments(fn):
             self.write("Content-type application/json is expected.")
 
     return wrapper
-
-def convert_json_to_arguments(fn):
-
-    @functools.wraps(fn)
-    def wrapper(self, *args, **kwargs):
-
-        content_type = self.request.headers.get("Content-Type", "")
-
-        if content_type.startswith("application/json"):
-            self.arguments = json.loads(self.request.body)
-            return fn(self, *args, **kwargs)
-
-        else:
-
-            self.set_status(415)
-            self.write("Content-type application/json is expected.")
-
-    return wrapper

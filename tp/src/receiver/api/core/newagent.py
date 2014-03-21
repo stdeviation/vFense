@@ -39,11 +39,11 @@ class NewAgentV1(BaseHandler):
         try:
             new_agent = (
                 add_agent(
-                    username, customer_name, uri,
-                    method, system_info, hardware
+                    system_info, hardware, username, customer_name, uri, method
                 )
             )
             agent_info = new_agent['data']
+            print agent_info
             self.set_status(new_agent['http_status'])
 
             if new_agent['http_status'] == 200:

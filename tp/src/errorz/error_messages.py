@@ -187,6 +187,22 @@ class GenericResults(object):
                     % (self.username, object_type, object_id)
                 ),
             }
+
+       )
+
+    def object_unchanged(self, object_id, object_type, object_data=[]):
+        return(
+            {
+                status: 200,
+                code: GenericCodes.ObjectUnchanged,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    '%s - %s %s unchanged'
+                    % (self.username, object_type, object_id)
+                ),
+                data: object_data
+            }
         )
 
     def object_exists(self, object_id, object_type):

@@ -1,13 +1,17 @@
 from vFense.agent import *
+from vFense.agent._db import *
 import logging
 from datetime import datetime
 from time import mktime
 from json import dumps
-from vFense.db.client import db_create_close, r, db_connect
+from vFense.db.client import db_create_close, r, db_connect, results_message
 from vFense.db.hardware import Hardware
+from vFense.customer.customers import get_customer_info, create_customer
 from vFense.errorz.error_messages import AgentResults, GenericResults
+from vFense.errorz.status_codes import DbCodes, GenericCodes
 from vFense.plugins.patching import *
 from vFense.server.hierarchy import Collection, api
+from vFense.server.hierarchy.api import Customer
 import redis
 from rq import Queue
 
@@ -19,305 +23,327 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-@db_create_close
-def get_production_levels(conn=None):
-    data = []
-    try:
-        data = (
-            r
-            .table(AgentsCollection)
-            .pluck(AgentKey.ProductionLevel)
-            .distinct()
-            .map(lambda x: x[AgentKey.ProductionLevel])
-            .run(conn)
-        )
-    except Exception as e:
-        logger.exception(e)
-
+def get_production_levels(customer_name):
+    """
+    Retrieve all the production levels that is in the database.
+    :param customer_name: Name of the customer, where the agent is located.
+    Basic Usage::
+        >>> from vFense.agent.agents import get_production_levels
+        >>> customer_name = 'default'
+        >>> get_production_levels(customer_name)
+        [
+            u'Development',
+            u'Production'
+        ]
+    """
+    data = fetch_production_levels_from_agent(customer_name)
     return(data)
 
 
 def get_supported_os_codes():
+    """
+    Retrieve all the base operating systems codes that is in the database.
+    Basic Usage::
+        >>> from vFense.agent.agents import get_supported_os_codes
+        >>> get_supported_os_codes()
+        [
+            u'windows',
+            u'linux',
+            u'darwin',
+        ]
+    """
     oses = ['windows', 'linux', 'darwin']
     return(oses)
 
 
-@db_create_close
-def get_supported_os_strings(conn=None):
-    data = []
-    try:
-        data = (
-            r
-            .table(AgentsCollection)
-            .pluck(AgentKey.OsString)
-            .distinct()
-            .map(lambda x: x[AgentKey.OsString])
-            .run(conn)
-        )
-    except Exception as e:
-        logger.exception(e)
-
+def get_supported_os_strings(customer_name):
+    """
+    Retrieve all the operating systems that is in the database.
+    :param customer_name: Name of the customer, where the agent is located.
+    Basic Usage::
+        >>> from vFense.agent.agents import get_supported_os_strings
+        >>> customer_name = 'default'
+        >>> get_supported_os_strings(customer_name)
+        [
+            u'CentOS 6.5',
+            u'Ubuntu 12.04',
+            u'Windows 7 Professional Service Pack 1',
+            u'Windows 8.1 '
+        ]
+    """
+    data = fetch_supported_os_strings(customer_name)
     return(data)
 
 
-@db_create_close
-def get_agents_info(customer_name=None, agent_os=None,
-                    keys_to_pluck=None, conn=None):
+def get_all_agent_ids(customer_name=None, agent_os=None):
+    """
+    :param customer_name: (Optional) Name of the customer, where the agent
+        is located
+    :param agent_os: (Optional) linux or windows or darwin
+    Basic Usage::
+        >>> from vFense.agent.agents import get_all_agent_ids
+        >>> customer_name = 'default'
+        >>> agent_os = 'os_code'
+        >>> get_all_agent_ids(customer_name, agent_os)
+        [
+            u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+            u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
+        ]
+    """
 
-    if agent_os and not keys_to_pluck and not customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .filter({AgentKey.OsCode: agent_os})
-            .run(conn)
+    if agent_os and customer_name:
+        agents = fetch_agent_ids(customer_name, agent_os)
+
+    elif agent_os and not customer_name:
+        agents = fetch_agent_ids(agent_os=agent_os)
+
+    elif not agent_os and customer_name:
+        agents = fetch_agent_ids(customer_name)
+
+    elif not agent_os and not customer_name:
+        agents = fetch_agent_ids()
+
+    return(agents)
+
+
+def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
+    """
+    :param customer_name: (Optional) Name of the customer, where the agent
+        is located
+    :param agent_os: (Optional) The operating system you are filtering for.
+        linux or windows or darwin
+    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
+        from the database
+    Basic Usage::
+        >>> from vFense.agent.agents import get_agents_info
+        >>> os_code = 'linux'
+        >>> pluck = ['computer_name', 'agent_id']
+        >>> get_agents_info(customer_name, os_code, keys_to_pluck=pluck)
+        [
+            {
+                u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+                u'computer_name': u'ubuntu'
+            },
+            {
+                u'agent_id': u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766',
+                u'computer_name': u'localhost.localdomain'
+            }
+        ]
+    """
+
+    if agent_os and not keys_to_pluck and customer_name:
+        agents = (
+            fetch_agents(
+                customer_name=customer_name,
+                filter_key=AgentKey.OsCode,
+                filter_val=agent_os
+            )
+        )
+
+    elif agent_os and not keys_to_pluck and not customer_name:
+        agents = (
+            fetch_agents(
+                filter_key=AgentKey.OsCode,
+                filter_val=agent_os
+            )
+        )
+
+    elif agent_os and keys_to_pluck and customer_name:
+        agents = (
+            fetch_agents(
+                customer_name=customer_name,
+                filter_key=AgentKey.OsCode,
+                filter_val=agent_os,
+                keys_to_pluck=keys_to_pluck,
+            )
         )
 
     elif agent_os and keys_to_pluck and not customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .filter({AgentKey.OsCode: agent_os})
-            .pluck(keys_to_pluck)
-            .run(conn)
+        agents = (
+            fetch_agents(
+                filter_key=AgentKey.OsCode,
+                filter_val=agent_os,
+                keys_to_pluck=keys_to_pluck,
+            )
+        )
+
+    elif not agent_os and keys_to_pluck and customer_name:
+        agents = (
+            fetch_agents(
+                customer_name=customer_name,
+                keys_to_pluck=keys_to_pluck,
+            )
         )
 
     elif not agent_os and keys_to_pluck and not customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .pluck(keys_to_pluck)
-            .run(conn)
-        )
-    elif agent_os and not keys_to_pluck and customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
-            .filter({AgentKey.OsCode: agent_os})
-            .map(lambda x: x[AgentKey.AgentId])
-            .run(conn)
+        agents = (
+            fetch_agents(
+                keys_to_pluck=keys_to_pluck,
+            )
         )
 
-    elif agent_os and keys_to_pluck and not customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .filter({AgentKey.OsCode: agent_os})
-            .pluck(keys_to_pluck)
-            .run(conn)
+    elif not agent_os and not keys_to_pluck and not customer_name:
+        agents = (
+            fetch_agents()
         )
 
-    elif not agent_os and keys_to_pluck and not customer_name:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .pluck(keys_to_pluck)
-            .run(conn)
+    elif not agent_os and not keys_to_pluck and customer_name:
+        agents = (
+            fetch_agents_collection(customer_name=customer_name)
         )
 
     return(agents)
 
 
-@db_create_close
-def get_agent_info(agentid, keys_to_pluck=None, conn=None):
+def get_agent_info(agent_id, keys_to_pluck=None):
+    """
+    :param agent_id: 36 character uuid of the agent you are updating
+    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
+        from the database
+    Basic Usage::
+        >>> from vFense.agent.agents import get_agent_info
+        >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
+        >>> keys_to_pluck = ['production_level', 'needs_reboot']
+        >>> get_agent_info(agent_id, keys_to_pluck)
+        {
+            u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+            u'production_level': u'Development'
+        }
+    """
     if not keys_to_pluck:
-        agent_info = (
-            r
-            .table(AgentsCollection)
-            .get(agentid)
-            .run(conn)
-        )
+        agent_info = fetch_agent_info(agent_id)
 
     else:
-        agent_info = (
-            r
-            .table(AgentsCollection)
-            .get(agentid)
-            .pluck(keys_to_pluck)
-            .run(conn)
-        )
+        agent_info = fetch_agent_info(agent_id, keys_to_pluck)
 
     return(agent_info)
 
 
-@db_create_close
-def get_all_agent_ids(customer_name=None, agent_os=None, conn=None):
-    if not customer_name and agent_os:
-        agent_ids = list(
-            r
-            .table(AgentsCollection)
-            .filter({AgentKey.OsCode: agent_os})
-            .map(lambda x: x[AgentKey.AgentId])
-            .run(conn)
-        )
+@results_message
+def update_agent_field(agent_id, field, value, username=None, uri=None, method=None):
+    """
+    :param agent_id: 36 character uuid of the agent you are updating
+    :param field: The field you are going to update.
+    :param value: The field will be updated to this value.
 
-    elif customer_name and agent_os:
-        agent_ids = list(
-            r
-            .table(AgentsCollection)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
-            .filter({AgentKey.OsCode: agent_os})
-            .map(lambda x: x[AgentKey.AgentId])
-            .run(conn)
-        )
-
-    elif customer_name and not agent_os:
-        agent_ids = list(
-            r
-            .table(AgentsCollection)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
-            .map(lambda x: x[AgentKey.AgentId])
-            .run(conn)
-        )
-
-    else:
-        agent_ids = list(
-            r
-            .table(AgentsCollection)
-            .map(lambda x: x[AgentKey.AgentId])
-            .run(conn)
-        )
-
-    return(agent_ids)
-
-
-@db_create_close
-def update_agent_field(agentid, field, value, username,
-                       uri=None, method=None, conn=None):
-    try:
-        agent_info = get_agent_info(agentid)
-        if agent_info:
-            (
-                r
-                .table(AgentsCollection)
-                .get(agentid)
-                .update(
-                    {
-                        field: value
-                    }
-                )
-                .run(conn)
-            )
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).object_updated(agentid, 'agent', {field: value})
-            )
-
-        else:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).invalid_id(agentid, 'agent')
-            )
-
-    except Exception as e:
-        status = (
-            GenericResults(
-                username, uri, method
-            ).something_broke(agentid, 'agent', e)
-        )
-
-        logger.exception(status)
-
-    return(status)
-
-
-@db_create_close
-def update_agent_fields(agentid, agent_data, username,
-                        uri=None, method=None, conn=None):
-    try:
-        agent_info = get_agent_info(agentid)
-        if agent_info:
-            (
-                r
-                .table(AgentsCollection)
-                .get(agentid)
-                .update(agent_data)
-                .run(conn)
-            )
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).object_updated(agentid, 'agent', agent_data)
-            )
-            logger.info(status['message'])
-
-        else:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).invalid_id(agentid, 'agent')
-            )
-            logger.info(status['message'])
-
-    except Exception as e:
-        status = (
-            GenericResults(
-                username, uri, method
-            ).something_broke(agentid, 'agent', e)
-        )
-        logger.error(status['message'])
-
-    return(status)
-
-
-def update_agent_status(agentid, username, uri=None, method=None):
-    try:
-        conn = db_connect()
-        update_status = {
-            AgentKey.LastAgentUpdate: r.epoch_time(
-                mktime(
-                    datetime.now()
-                    .timetuple()
-                )
-            ),
-            AgentKey.AgentStatus: 'up'
+    Basic Usage::
+        >>> from vFense.agent.agents import update_agent_field
+        >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
+        >>> field = 'production_level'
+        >>> value = 'Development'
+        >>> update_agent_field(agent_id, field, value)
+        {
+            'uri': None,
+            'rv_status_code': 1008,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'admin - agent 52faa1db-290a-47a7-a4cf-e4ad70e25c38 was updated',
+            'data': {'needs_reboot': 'no'}
         }
-        exists =  (
-            r
-            .table(AgentsCollection)
-            .get(agentid)
-            .run(conn)
+    """
+    try:
+        data = {field: value}
+        update_status = update_agent_data(agent_id, data)
+        results = (
+            update_status[0], agent_id, 'agent', data, update_status[2],
+            username, uri, method
         )
-        if exists:
-            (
-                r
-                .table(AgentsCollection)
-                .get(agentid)
-                .update(update_status)
-                .run(conn)
-            )
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).object_updated(agentid, 'agent', update_status)
-            )
-        else:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).does_not_exists(agentid, 'agent')
-            )
-
-        logger.info(status['message'])
-        conn.close()
 
     except Exception as e:
-        status = (
-            GenericResults(
-                username, uri, method
-            ).something_broke(agentid, 'agent', e)
+        results = (
+            update_status[0], agent_id, 'agent', data, update_status[e],
+            username, uri, method
+        )
+        logger.exception(results)
+
+    return(results)
+
+@results_message
+def update_agent_fields(agent_id, agent_data, username=None,
+                        uri=None, method=None):
+    """
+    :param agent_id: 36 character uuid of the agent you are updating
+    :param agent_data: Dictionary of the data that you are updating
+    Basic Usage::
+        >>> from vFense.agent.agents import update_agent_fields
+        >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
+        >>> agent_data = {'production_level': 'Development'}
+        >>> update_agent_fields(agent_id, agent_data)
+        {
+            'uri': None,
+            'rv_status_code': 1008,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'admin - agent 52faa1db-290a-47a7-a4cf-e4ad70e25c38 was updated',
+            'data': {'needs_reboot': 'no'}
+        }
+    """
+    try:
+        update_status = update_agent_data(agent_id, agent_data)
+        results = (
+            update_status[0], agent_id, 'agent', agent_data, update_status[2],
+            username, uri, method
         )
 
+    except Exception as e:
+        results = (
+            update_status[0], agent_id, 'agent', agent_data, update_status[e],
+            username, uri, method
+        )
         logger.exception(e)
 
+    return(results)
 
-@db_create_close
-def add_agent(username, customer_name, uri, method,
-              system_info, hardware, conn=None):
-    """Add a node to the database"""
+@results_message
+def update_agent_status(agent_id, username=None, uri=None, method=None):
+    """
+    :param agent_id: 36 character uuid of the agent you are updating
+    Basic Usage::
+        >>> from vFense.agent.agents import update_agent_status
+        >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
+        >>> update_agent_status(agent_id)
+        {
+            'uri': None,
+            'rv_status_code': 1008,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'admin - agent 52faa1db-290a-47a7-a4cf-e4ad70e25c38 was updated',
+            'data': {'needs_reboot': 'no'}
+        }
+    """
+
+    now = mktime(datetime.now().timetuple())
+    agent_data = {
+        AgentKey.LastAgentUpdate: r.epoch_time(now),
+        AgentKey.AgentStatus: 'up'
+    }
+    update_status = update_agent_data(agent_id, agent_data)
     try:
+        agent_data[AgentKey.LastAgentUpdate] = now
+        results = (
+            update_status[0], agent_id, 'agent', agent_data, update_status[2],
+            username, uri, method
+        )
+
+    except Exception as e:
+        agent_data[AgentKey.LastAgentUpdate] = now
+        results = (
+            update_status[0], agent_id, 'agent', agent_data, update_status[e],
+            username, uri, method
+        )
+        logger.exception(e)
+
+    return(results)
+
+def add_agent(system_info, hardware, username=None,
+              customer_name=None, uri=None, method=None):
+    """
+    Add a new agent to the database
+    :param system_info: Dictionary with system related info
+    :param hardware:  List of dictionaries that rpresent the hardware
+    """
+    try:
+        now = mktime(datetime.now().timetuple())
         agent_data = {}
         agent_data[AgentKey.AgentStatus] = 'up'
         agent_data[AgentKey.MachineType] = 'physical'
@@ -332,35 +358,25 @@ def add_agent(username, customer_name, uri, method,
             agent_data[AgentKey.ProductionLevel] = 'Production'
 
         if customer_name != 'default':
-            cexists = (
-                r
-                .table(Collection.Customers)
-                .get(agent_data[AgentKey.CustomerName])
-                .run(conn)
-            )
-
+            cexists = get_customer_info(customer_name)
             if not cexists and len(customer_name) >= 1:
-                api.Customer.create(customer_name, username)
+                create_customer(
+                    customer_name, username=username,
+                    uri=uri, method=method
+                )
 
         for key, value in system_info.items():
             agent_data[key] = value
 
-        agent_data[AgentKey.LastAgentUpdate] = (
-            r.epoch_time(mktime(datetime.now().timetuple()))
-        )
+        agent_data[AgentKey.LastAgentUpdate] = r.epoch_time(now)
 
-        agent_added = (
-            r
-            .table(AgentsCollection)
-            .insert(agent_data)
-            .run(conn)
+        object_status, object_count, error, generated_ids = (
+            insert_agent_data(agent_data)
         )
-
-        if 'inserted' in agent_added:
-            if agent_added['inserted'] > 0:
-                agent_id = agent_added['generated_keys'][0]
-                Hardware().add(agent_id, agent_data[AgentKey.Hardware])
-                data = {
+        if object_status == DbCodes.Inserted and object_count > 0:
+            agent_id = generated_ids[0]
+            Hardware().add(agent_id, agent_data[AgentKey.Hardware])
+            data = {
                     AgentKey.AgentId: agent_id,
                     AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
                     AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
@@ -370,22 +386,22 @@ def add_agent(username, customer_name, uri, method,
                     AgentKey.OsString: agent_data[AgentKey.OsString],
                 }
 
-                status = (
-                    AgentResults(
-                        username, uri, method
-                    ).new_agent(agent_id, data)
-                )
+            status = (
+                AgentResults(
+                    username, uri, method
+                ).new_agent(agent_id, data)
+            )
 
-                logger.info(status['message'])
+            logger.debug(status['message'])
 
-            else:
-                status = (
-                    GenericResults(
-                        username, uri, method
-                    ).something_broke(agentid, 'agent', agent_added)
-                )
+        else:
+            status = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke(agentid, 'agent', agent_added)
+            )
 
-                logger.info(status['message'])
+            logger.info(status['message'])
 
     except Exception as e:
         status = (
@@ -399,20 +415,21 @@ def add_agent(username, customer_name, uri, method,
     return(status)
 
 
-@db_create_close
-def update_agent(username, customer_name, uri, method,
-                 agent_id, system_info, hardware,
-                 rebooted, conn=None):
-    """Add a node to the database"""
+def update_agent(agent_id, system_info, hardware, rebooted,
+                 username=None, customer_name=None,
+                 uri=None, method=None):
+    """
+    Update various aspects of agent
+    :param agent_id: 36 character uuid of the agent you are updating
+    :param system_info: Dictionary with system related info
+    :param hardware:  List of dictionaries that rpresent the hardware
+    :param rebooted: yes or no
+    """
     agent_data = {}
 
     try:
-        agent_orig_info = (
-            r
-            .table(AgentsCollection)
-            .get(agent_id)
-            .run(conn)
-        )
+        now = mktime(datetime.now().timetuple())
+        agent_orig_info = get_agent_info(agent_id)
         if agent_orig_info:
             agent_data[AgentKey.Hardware] = hardware
 
@@ -420,7 +437,7 @@ def update_agent(username, customer_name, uri, method,
                 agent_data[key] = value
 
             agent_data[AgentKey.LastAgentUpdate] = (
-                r.epoch_time(mktime(datetime.now().timetuple()))
+                r.epoch_time(now)
             )
             agent_data[AgentKey.HostName] = (
                 agent_orig_info.get(AgentKey.HostName, None)
@@ -432,21 +449,15 @@ def update_agent(username, customer_name, uri, method,
             if rebooted == 'yes':
                 agent_data[AgentKey.NeedsReboot] = 'no'
 
-            (
-                r
-                .table(AgentsCollection)
-                .get(agent_id)
-                .update(agent_data)
-                .run(conn)
-            )
+            update_agent_data(agent_id, agent_data)
             Hardware().add(agent_id, hardware)
             status = (
                 AgentResults(
                     username, uri, method
                 ).startup(agent_id, agent_data)
             )
+            logger.debug(status)
 
-            logger.info(status)
 
         else:
             status = (

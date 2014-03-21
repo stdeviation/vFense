@@ -15,10 +15,19 @@ class GenericCodes(object):
     FileUploaded = 1014
     FileFailedToUpload = 1015
     FileDoesntExist = 1016
+    ObjectUnchanged = 1017
 
 
 class DbCodes(object):
     Down = 2000
+    Updated = 2001
+    Inserted = 2002
+    Unchanged = 2003
+    Replaced = 2004
+    Errors = 2005
+    Deleted = 2006
+    Nothing = 2007
+    Skipped = 2008
 
 
 class AgentCodes(object):

@@ -89,7 +89,7 @@ def systems_os_details(username, customer_name, os_code=None,
     systems_os_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         system_detail=system_os_details(agent_info=agent_info)
         systems_os_details.append(system_detail)
 
@@ -116,7 +116,7 @@ def systems_hardware_details (username, customer_name, os_code=None,
     systems_hardware_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         hardware_detail=system_hardware_details(agent_info=agent_info)
         systems_hardware_details.append(hardware_detail)
 
@@ -143,7 +143,7 @@ def systems_cpu_details (username, customer_name, os_code=None,
     systems_cpu_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         cpu_stats=system_cpu_stats(agent_info)
         systems_cpu_details.append(cpu_stats)
     
@@ -169,7 +169,7 @@ def systems_memory_stats(username, customer_name, os_code=None,
     systems_memory_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         memory_stats=system_memory_stats(agent_info)
         systems_memory_details.append(memory_stats)
     
@@ -196,7 +196,7 @@ def systems_disk_stats(username, customer_name, os_code=None,
     systems_disk_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         disk_stats=system_disk_stats(agent_info)
         systems_disk_details.append(disk_stats)
     
@@ -222,7 +222,7 @@ def systems_network_details(username, customer_name, os_code=None,
     systems_network_infos=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid=agentid)
+        agent_info=get_agent_info(agentid)
         network_details=system_network_details(agent_info)
         systems_network_infos.append(network_details)
     
