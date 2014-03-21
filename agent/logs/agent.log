@@ -1131,3 +1131,112 @@ DEBUG : 03/21/2014 10:39:32 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / re
 DEBUG : 03/21/2014 10:39:36 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
 DEBUG : 03/21/2014 10:39:40 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
 DEBUG : 03/21/2014 10:39:44 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:48 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:48 AM : Results to be sent: [<serveroperation.sofoperation.ResultOperation instance at 0x27f4320>]
+DEBUG : 03/21/2014 10:39:48 AM : Sending message to server
+DEBUG : 03/21/2014 10:39:48 AM : https://10.211.55.3/rvl/v1/f34029cf-6699-40df-b75b-6a1adfded0ed/core/startup
+DEBUG : 03/21/2014 10:39:48 AM : Logging into server
+DEBUG : 03/21/2014 10:39:48 AM : Login status code: 502 
+DEBUG : 03/21/2014 10:39:48 AM : Login server text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.1.19</center>
+</body>
+</html>
+ 
+ERROR : 03/21/2014 10:39:48 AM : Agent was unable to login.
+DEBUG : 03/21/2014 10:39:48 AM : Added result / 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent to OpQueue.
+DEBUG : 03/21/2014 10:39:48 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:52 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:39:56 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:00 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:04 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:08 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:12 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:16 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:20 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:24 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:28 AM : Sending message to server
+DEBUG : 03/21/2014 10:40:28 AM : https://10.211.55.3/rvl/v1/f34029cf-6699-40df-b75b-6a1adfded0ed/core/checkin
+DEBUG : 03/21/2014 10:40:28 AM : Logging into server
+DEBUG : 03/21/2014 10:40:28 AM : Login status code: 502 
+DEBUG : 03/21/2014 10:40:28 AM : Login server text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.1.19</center>
+</body>
+</html>
+ 
+ERROR : 03/21/2014 10:40:28 AM : Agent was unable to login.
+ERROR : 03/21/2014 10:40:28 AM : Could not check-in to server. See logs for details.
+DEBUG : 03/21/2014 10:40:28 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:32 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:36 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:40 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:44 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:48 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:52 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:52 AM : Results to be sent: [<serveroperation.sofoperation.ResultOperation instance at 0x27f4320>]
+DEBUG : 03/21/2014 10:40:52 AM : Sending message to server
+DEBUG : 03/21/2014 10:40:52 AM : https://10.211.55.3/rvl/v1/f34029cf-6699-40df-b75b-6a1adfded0ed/core/startup
+DEBUG : 03/21/2014 10:40:52 AM : Logging into server
+DEBUG : 03/21/2014 10:40:52 AM : Login status code: 502 
+DEBUG : 03/21/2014 10:40:52 AM : Login server text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.1.19</center>
+</body>
+</html>
+ 
+ERROR : 03/21/2014 10:40:52 AM : Agent was unable to login.
+DEBUG : 03/21/2014 10:40:52 AM : Added result / 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent to OpQueue.
+DEBUG : 03/21/2014 10:40:52 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:40:56 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:00 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:04 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:08 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:12 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:16 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:20 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:24 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:28 AM : Sending message to server
+DEBUG : 03/21/2014 10:41:28 AM : https://10.211.55.3/rvl/v1/f34029cf-6699-40df-b75b-6a1adfded0ed/core/checkin
+DEBUG : 03/21/2014 10:41:28 AM : Logging into server
+DEBUG : 03/21/2014 10:41:28 AM : Login status code: 502 
+DEBUG : 03/21/2014 10:41:28 AM : Login server text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.1.19</center>
+</body>
+</html>
+ 
+ERROR : 03/21/2014 10:41:28 AM : Agent was unable to login.
+ERROR : 03/21/2014 10:41:28 AM : Could not check-in to server. See logs for details.
+DEBUG : 03/21/2014 10:41:28 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:32 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:36 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:40 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:44 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:48 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:52 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:56 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
+DEBUG : 03/21/2014 10:41:56 AM : Results to be sent: [<serveroperation.sofoperation.ResultOperation instance at 0x27f4320>]
+DEBUG : 03/21/2014 10:41:56 AM : Sending message to server
+DEBUG : 03/21/2014 10:41:56 AM : https://10.211.55.3/rvl/v1/f34029cf-6699-40df-b75b-6a1adfded0ed/core/startup
+DEBUG : 03/21/2014 10:41:56 AM : Logging into server
+DEBUG : 03/21/2014 10:41:56 AM : Login status code: 502 
+DEBUG : 03/21/2014 10:41:56 AM : Login server text: <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx/1.1.19</center>
+</body>
+</html>
+ 
+ERROR : 03/21/2014 10:41:56 AM : Agent was unable to login.
+DEBUG : 03/21/2014 10:41:56 AM : Added result / 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent to OpQueue.
+DEBUG : 03/21/2014 10:41:56 AM : 5374a36d-5050-418c-840c-7ff2fa56a4a2-agent / result will not be saved.
