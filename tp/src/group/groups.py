@@ -3,8 +3,12 @@ from datetime import datetime
 from time import mktime
 
 from vFense.group import *
+from vFense.user import *
+from vFense.customer import *
+from vFense._db import retrieve_object
 from vFense.utils.security import Crypto
-from vFense.group._db import insert_group_data, fetch_group, fetch_group
+from vFense.group._db import insert_group_data, fetch_group, fetch_group, \
+    insert_group_per_user
 from vFense.db.client import r, return_status_tuple, results_message
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import DbCodes
@@ -87,6 +91,71 @@ def validate_group_ids(group_ids):
                 validated = False
 
     return(validated, valid_groups, invalid_groups)
+
+
+@results_message
+def add_user_to_groups(
+    username, customer_name, group_ids,
+    user_name=None, uri=None, method=None
+    ):
+    """
+    Add a user into a vFense group
+    :param username:  Name of the user already in vFense.
+    :param customer_name: The customer this user is part of.
+    :param group_ids: List of group ids.
+    """
+    groups_are_valid = validate_group_ids(group_ids)
+    user_exist = retrieve_object(username, UsersCollection)
+    customer_exist = retrieve_object(customer_name, CustomersCollection)
+    results = None
+    if groups_are_valid[0] and user_exist and customer_exist:
+        data_list = []
+        for group_id in group_ids:
+            group_exist = get_group(group_id)
+            data_to_add = (
+                {
+                    GroupsPerUserKeys.CustomerName: customer_name,
+                    GroupsPerUserKeys.UserName: username,
+                    GroupsPerUserKeys.GroupName: group_exist[GroupKeys.GroupName],
+                    GroupsPerUserKeys.GroupId: group_id
+                }
+            )
+            data_list.append(data_to_add)
+
+        object_status, object_count, error, generated_ids = (
+            insert_group_per_user(data_to_add)
+        )
+
+        results = (
+            object_status, generated_ids, 'groups per user', data_to_add,
+            error, user_name, uri, method
+        )
+
+    elif not groups_are_valid[0]:
+        status_code = DbCodes.Errors
+        status_error = 'Group Ids are invalid: %s' % (groups_are_valid[2])
+        results = (
+            status_code, None, 'groups per user', [],
+            status_error, user_name, uri, method
+        )
+
+    elif not user_exist:
+        status_code = DbCodes.Errors
+        status_error = 'User name is invalid: %s' % (username)
+        results = (
+            status_code, None, 'groups per user', [],
+            status_error, user_name, uri, method
+        )
+
+    elif not customer_exist:
+        status_code = DbCodes.Errors
+        status_error = 'Customer name is invalid: %s' % (customer_name)
+        results = (
+            status_code, None, 'groups per user', [],
+            status_error, user_name, uri, method
+        )
+
+    return(results)
 
 @results_message
 def create_group(group_name, customer_name, permissions, user_ids):

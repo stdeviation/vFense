@@ -161,13 +161,13 @@ def insert_group_per_user(group_data, conn=None):
     try:
         data = (
             r
-            .table(GroupsPerUsersCollection)
+            .table(GroupsPerUserCollection)
             .insert(group_data)
             .run(conn)
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(data)
 
     return(data)
 

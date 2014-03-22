@@ -43,10 +43,12 @@ def fetch_user(username, without_fields=None, conn=None):
             data = (
                 r
                 .table(UsersCollection)
-                .get(username)
+                .get_all(username)
                 .without(without_fields)
                 .run(conn)
             )
+            if data:
+                data = data[0]
 
     except Exception as e:
         logger.exception(e)
@@ -154,35 +156,6 @@ def insert_user(user_data, conn=None):
         logger.exception(status)
 
     return(data)
-
-@db_create_close
-@return_status_tuple
-def insert_user_per_customer(user_data, conn=None):
-    """
-    This function should not be called directly.
-    :param user_data: Can either be a list of dictionaries or a dictionary
-        of the data you are inserting.
-
-    Basic Usage::
-        >>> from vFense.user._db import insert_user_per_customer_data
-        >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
-        >>> insert_user_per_customer_data(user_data)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UsersPerCustomerCollection)
-            .insert(user_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(status)
-
-    return(data)
-
 
 @db_create_close
 @return_status_tuple

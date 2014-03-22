@@ -1,6 +1,6 @@
 UsersCollection = 'users'
 UsersPerCustomerCollection = 'users_per_customer'
-ADMIN = 'admin'
+ADMIN_USER = 'admin'
 
 class UserKeys():
     CurrentCustomer = 'current_customer'

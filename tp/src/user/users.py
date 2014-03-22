@@ -4,11 +4,13 @@ from time import mktime
 
 from vFense.user import *
 from vFense.group import *
-from vFense.utils.security import Crypto
 from vFense.user._db import insert_user, fetch_user, fetch_users, \
-    insert_user_per_customer, insert_user_per_group
-from vFense.group.groups import validate_group_ids, get_group
-from vFense.customer.customers import get_customer, validate_customer_names
+    insert_user_per_group
+from vFense.group.groups import validate_group_ids, get_group, \
+    add_user_to_groups
+from vFense.customer.customers import get_customer, validate_customer_names, \
+    add_user_to_customers
+from vFense.utils.security import Crypto
 from vFense.db.client import r, return_status_tuple, results_message
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import DbCodes
@@ -62,123 +64,6 @@ def get_users(customer_name=None, username=None):
     """
     data = fetch_users(customer_name, username) 
     return(data)
-
-
-@results_message
-def add_user_to_customers(
-    username, customer_names, 
-    user_name=None, uri=None, method=None
-    ):
-    """
-    Add a user into a vFense group
-    :param username:  Name of the user already in vFense.
-    :param customer_names:List of  customer this user will be added too.
-    """
-    customers_are_valid = validate_customer_names(customer_names)
-    user_exist = get_user(username)
-    results = None
-    if customers_are_valid[0] and user_exist:
-        data_list = []
-        for customer_name in customer_names:
-            data_to_add = (
-                {
-                    UserPerCustomerKeys.CustomerName: customer_name,
-                    UserPerCustomerKeys.UserName: username,
-                }
-            )
-            data_list.append(data_to_add)
-
-        object_status, object_count, error, generated_ids = (
-            insert_user_per_customer(data_to_add)
-        )
-
-        results = (
-            object_status, generated_ids, 'users add to customers',
-            data_to_add, error, user_name, uri, method
-        )
-
-    elif not customers_are_valid[0]:
-        status_code = DbCodes.Errors
-        status_error = 'Customer names are invalid: %s' % (customers_are_valid[2])
-        results = (
-            status_code, None, 'users add to customers',
-            customer_names, status_error, user_name, uri, method
-        )
-
-    elif not user_exist:
-        status_code = DbCodes.Errors
-        status_error = 'User name is invalid: %s' % (username)
-        results = (
-            status_code, None, 'users add to customers',
-            customer_names, status_error, user_name, uri, method
-        )
-
-    return(results)
-
-
-@results_message
-def add_user_to_groups(
-    username, customer_name, group_ids,
-    user_name=None, uri=None, method=None
-    ):
-    """
-    Add a user into a vFense group
-    :param username:  Name of the user already in vFense.
-    :param customer_name: The customer this user is part of.
-    :param group_ids: List of group ids.
-    """
-    groups_are_valid = validate_group_ids(group_ids)
-    user_exist = get_user(username)
-    customer_exist = get_customer(customer_name)
-    results = None
-    if groups_are_valid[0] and user_exist and customer_exist:
-        data_list = []
-        for group_id in group_ids:
-            group_exist = get_group(group_id)
-            data_to_add = (
-                {
-                    GroupsPerUserKeys.CustomerName: customer_name,
-                    GroupsPerUserKeys.UserName: username,
-                    GroupsPerUserKeys.GroupName: group_exist[GroupKeys.GroupName],
-                    GroupsPerUserKeys.Id: group_id
-                }
-            )
-            data_list.append(data_to_add)
-
-        object_status, object_count, error, generated_ids = (
-            insert_user_per_group(data_to_add)
-        )
-
-        results = (
-            object_status, generated_ids, 'groups per user', data_to_add,
-            error, user_name, uri, method
-        )
-
-    elif not groups_are_valid[0]:
-        status_code = DbCodes.Errors
-        status_error = 'Group Ids are invalid: %s' % (groups_are_valid[2])
-        results = (
-            status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
-        )
-
-    elif not user_exist:
-        status_code = DbCodes.Errors
-        status_error = 'User name is invalid: %s' % (username)
-        results = (
-            status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
-        )
-
-    elif not customer_exist:
-        status_code = DbCodes.Errors
-        status_error = 'Customer name is invalid: %s' % (customer_name)
-        results = (
-            status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
-        )
-
-    return(results)
 
 @results_message
 def create_user(
@@ -240,14 +125,14 @@ def create_user(
             elif not customer_is_valid and groups_are_valid[0]:
                 error = 'customer name %s does not exist' % (customer_name)
                 results = (
-                    DbCodes.Errors, None, 'create user', user_data, error,
+                    DbCodes.Errors, username, 'create user failed', error, error,
                     user_name, uri, method
                 )
 
             elif not groups_are_valid[0] and customer_is_valid:
                 error = 'group ids %s does not exist' % (groups_are_valid[2])
                 results = (
-                    DbCodes.Errors, None, 'create user', user_data, error,
+                    DbCodes.Errors, None, 'create user failed', error, error,
                     user_name, uri, method
                 )
 
@@ -256,20 +141,20 @@ def create_user(
                 customer_error = 'customer name %s does not exist' % (customer_name)
                 error = group_error + ' and ' + customer_error
                 results = (
-                    DbCodes.Errors, None, 'create user', user_data, error,
+                    DbCodes.Errors, None, 'create user failed', error, error,
                     user_name, uri, method
                 )
 
         else:
             error = 'username %s already exists' % (username)
             results = (
-                DbCodes.Errors, None, 'create_user', [], error,
+                DbCodes.Errors, None, 'create_user failed', error, error,
                 user_name, uri, method
             )
     except Exception as e:
         logger.exception(e)
         results = (
-            DbCodes.Errors, None, 'create user', [], e,
+            DbCodes.Errors, username, 'create user failed', e, e,
             user_name, uri, method
         )
 

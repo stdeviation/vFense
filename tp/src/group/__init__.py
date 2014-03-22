@@ -19,6 +19,7 @@ class GroupsPerUserKeys():
     CustomerName = 'customer_name'
     UserName = 'user_name'
     GroupName = 'group_name'
+    GroupId = 'group_id'
     Id = 'id'
 
 
