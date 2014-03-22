@@ -7,7 +7,7 @@ from vFense.user import *
 from vFense.customer import *
 from vFense._db import retrieve_object
 from vFense.utils.security import Crypto
-from vFense.group._db import insert_group_data, fetch_group, fetch_group, \
+from vFense.group._db import insert_group, fetch_group, fetch_group, \
     insert_group_per_user
 from vFense.db.client import r, return_status_tuple, results_message
 from vFense.errorz.error_messages import GenericResults

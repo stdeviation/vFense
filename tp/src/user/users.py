@@ -4,8 +4,7 @@ from time import mktime
 
 from vFense.user import *
 from vFense.group import *
-from vFense.user._db import insert_user, fetch_user, fetch_users, \
-    insert_user_per_group
+from vFense.user._db import insert_user, fetch_user, fetch_users
 from vFense.group.groups import validate_group_ids, get_group, \
     add_user_to_groups
 from vFense.customer.customers import get_customer, validate_customer_names, \

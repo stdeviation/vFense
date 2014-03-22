@@ -117,16 +117,16 @@ def fetch_groups(customer_name=None, groupname=None, conn=None):
 
 @db_create_close
 @return_status_tuple
-def insert_group_data(group_data, conn=None):
+def insert_group(group_data, conn=None):
     """
     This function should not be called directly.
     :param group_data: Can either be a list of dictionaries or a dictionary
         of the data you are inserting.
 
     Basic Usage::
-        >>> from vFense.group._db import insert_group_data
+        >>> from vFense.group._db import insert_group
         >>> group_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
-        >>> insert_group_data(group_data)
+        >>> insert_group(group_data)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -174,7 +174,36 @@ def insert_group_per_user(group_data, conn=None):
 
 @db_create_close
 @return_status_tuple
-def update_group_data(group_id, group_data, conn=None):
+def update_group(group_id, group_data, conn=None):
+    """
+    :param group_id: group id  of the group you are updateing.
+
+    Basic Usage::
+        >>> from vFense.group._db import update_group
+        >>> group_id = 'd081a343-cc6c-4f08-81d9-62a116fda025'
+        >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
+        >>> update_group(group_id)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupsCollection)
+            .get(group_id)
+            .update(group_data)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(status)
+
+    return(data)
+
+
+@db_create_close
+@return_status_tuple
+def delete_group(group_id, conn=None):
     """
     :param group_id: group id  of the group you are updating
     :param group_data: Dictionary of the data you are updating

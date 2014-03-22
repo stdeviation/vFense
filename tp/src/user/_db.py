@@ -186,27 +186,24 @@ def update_user(username, user_data, conn=None):
 
     return(data)
 
-
 @db_create_close
 @return_status_tuple
-def insert_user_per_group(user_data, conn=None):
+def delete_user(username, conn=None):
     """
-    This function should not be called directly.
-    :param user_data: Can either be a list of dictionaries or a dictionary
-        of the data you are inserting.
-
+    :param username: username of the user you are deleteing.
     Basic Usage::
-        >>> from vFense.user._db import insert_user_per_group
-        >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
-        >>> insert_user_per_group(user_data)
+        >>> from vFense.user._db import delete_user
+        >>> username = 'admin'
+        >>> delete_user(username)
         >>> (2001, 1, None, [])
     """
     data = {}
     try:
         data = (
             r
-            .table(GroupsPerUserCollection)
-            .insert(user_data)
+            .table(UsersCollection)
+            .get(username)
+            .delete()
             .run(conn)
         )
 
@@ -214,4 +211,3 @@ def insert_user_per_group(user_data, conn=None):
         logger.exception(status)
 
     return(data)
-
