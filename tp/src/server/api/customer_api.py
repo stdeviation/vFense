@@ -2,8 +2,8 @@ import json
 import logging
 import logging.config
 
-from vFense.agent.agents import get_all_agent_ids
-from vFense.agent.agent_handler import AgentManager
+from vFense.core.agent.agents import get_all_agent_ids
+from vFense.core.agent.agent_handler import AgentManager
 
 from vFense.server.hierarchy import api
 from vFense.server.hierarchy.permissions import Permission

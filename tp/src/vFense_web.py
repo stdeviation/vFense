@@ -32,7 +32,7 @@ from vFense.db.client import *
 from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
 from vFense.plugins.patching.Api.app_data import *
-from vFense.plugins.patching.Api.node_api import *
+from vFense.core.api.agent import *
 from vFense.plugins.patching.Api.stats_api import *
 from vFense.plugins.patching.Api.notification_handler import *
 from vFense.plugins.patching.Api.os_updates_handler import *

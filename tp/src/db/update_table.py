@@ -2,17 +2,16 @@
 from json import loads
 import logging
 import logging.config
-from copy import deepcopy
 from datetime import datetime
 from time import mktime
 
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
 from vFense.db.notificationhandler import *
 from vFense.errorz.error_messages import GenericResults, OperationCodes
 from vFense.utils.common import *
-from vFense.agent import *
-from vFense.agent.agents import get_agent_info, update_agent_field
-from vFense.tagging import *
+from vFense.core.agent import *
+from vFense.core.agent.agents import get_agent_info, update_agent_field
+from vFense.core.tag import *
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching.os_apps.incoming_updates import \

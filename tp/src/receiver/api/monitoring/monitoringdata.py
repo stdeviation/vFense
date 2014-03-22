@@ -12,7 +12,7 @@ from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from vFense.agent.agents import update_agent, update_agent_field
+from vFense.core.agent.agents import update_agent, update_agent_field
 from vFense.receiver.rvhandler import RvHandOff
 
 from vFense.plugins.monit import update_agent_monit_stats

@@ -5,7 +5,7 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching.os_apps.db_calls import get_all_stats_by_appid
 from vFense.plugins.patching.rv_db_calls import get_file_data
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

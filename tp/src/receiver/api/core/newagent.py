@@ -9,9 +9,9 @@ from vFense.server.handlers import BaseHandler
 
 from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.operations import *
-from vFense.agent.agents import add_agent
+from vFense.core.agent.agents import add_agent
 from vFense.errorz.error_messages import GenericResults
 from vFense.receiver.rvhandler import RvHandOff
 

@@ -11,12 +11,11 @@ from vFense.plugins.cve import *
 from vFense.plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
     get_vulnerability_categories, get_ubuntu_cveids
 from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
-from vFense.errorz.error_messages import GenericResults, PackageResults, \
-        MightyMouseResults
-from vFense.errorz.status_codes import PackageCodes, MightyMouseCodes
-from vFense.agent import *
+from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.errorz.status_codes import PackageCodes
+from vFense.core.agent import *
 from vFense.operations import *
-from vFense.tagging.tagManager import *
+from vFense.core.tag.tagManager import *
 
 from vFense.server.hierarchy import CoreProperty
 from vFense.server.hierarchy.manager import Hierarchy

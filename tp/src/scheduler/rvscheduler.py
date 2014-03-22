@@ -7,7 +7,7 @@ from vFense.plugins.cve.cve_parser import parse_cve_and_udpatedb
 from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
 from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
 
-from vFense.agent.agent_uptime_verifier import all_agent_status
+from vFense.core.agent.agent_uptime_verifier import all_agent_status
 from vFense.jobs.jobs import remove_expired_jobs_and_update_operations
 from vFense.errorz.status_codes import SchedulerCodes
 
