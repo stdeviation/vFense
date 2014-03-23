@@ -5,8 +5,9 @@ from time import mktime
 from vFense.core.agent import *
 from vFense.core.agent._db import *
 from vFense.core.customer.customers import get_customer, create_customer
+from vFense.core.decorators import time_it, results_message
 
-from vFense.db.client import r, results_message
+from vFense.db.client import r
 from vFense.db.hardware import Hardware
 from vFense.errorz.error_messages import AgentResults, GenericResults
 from vFense.errorz.status_codes import DbCodes
@@ -22,6 +23,7 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
+@time_it
 def get_production_levels(customer_name):
     """
     Retrieve all the production levels that is in the database.
@@ -39,6 +41,7 @@ def get_production_levels(customer_name):
     return(data)
 
 
+@time_it
 def get_supported_os_codes():
     """
     Retrieve all the base operating systems codes that is in the database.
@@ -55,6 +58,7 @@ def get_supported_os_codes():
     return(oses)
 
 
+@time_it
 def get_supported_os_strings(customer_name):
     """
     Retrieve all the operating systems that is in the database.
@@ -74,6 +78,7 @@ def get_supported_os_strings(customer_name):
     return(data)
 
 
+@time_it
 def get_all_agent_ids(customer_name=None, agent_os=None):
     """
     :param customer_name: (Optional) Name of the customer, where the agent
@@ -105,6 +110,7 @@ def get_all_agent_ids(customer_name=None, agent_os=None):
     return(agents)
 
 
+@time_it
 def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     """
     :param customer_name: (Optional) Name of the customer, where the agent
@@ -194,6 +200,7 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     return(agents)
 
 
+@time_it
 def get_agent_info(agent_id, keys_to_pluck=None):
     """
     :param agent_id: 36 character uuid of the agent you are updating
@@ -218,6 +225,7 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     return(agent_info)
 
 
+@time_it
 @results_message
 def update_agent_field(agent_id, field, value, username=None, uri=None, method=None):
     """
@@ -257,6 +265,8 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
 
     return(results)
 
+
+@time_it
 @results_message
 def update_agent_fields(agent_id, agent_data, username=None,
                         uri=None, method=None):
@@ -293,6 +303,8 @@ def update_agent_fields(agent_id, agent_data, username=None,
 
     return(results)
 
+
+@time_it
 @results_message
 def update_agent_status(agent_id, username=None, uri=None, method=None):
     """
@@ -334,6 +346,8 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
 
     return(results)
 
+
+@time_it
 def add_agent(system_info, hardware, username=None,
               customer_name=None, uri=None, method=None):
     """
@@ -376,14 +390,14 @@ def add_agent(system_info, hardware, username=None,
             agent_id = generated_ids[0]
             Hardware().add(agent_id, agent_data[AgentKey.Hardware])
             data = {
-                    AgentKey.AgentId: agent_id,
-                    AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
-                    AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
-                    AgentKey.Hardware: agent_data[AgentKey.Hardware],
-                    AgentKey.Tags: agent_data[AgentKey.Tags],
-                    AgentKey.OsCode: agent_data[AgentKey.OsCode],
-                    AgentKey.OsString: agent_data[AgentKey.OsString],
-                }
+                AgentKey.AgentId: agent_id,
+                AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
+                AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
+                AgentKey.Hardware: agent_data[AgentKey.Hardware],
+                AgentKey.Tags: agent_data[AgentKey.Tags],
+                AgentKey.OsCode: agent_data[AgentKey.OsCode],
+                AgentKey.OsString: agent_data[AgentKey.OsString],
+            }
 
             status = (
                 AgentResults(
@@ -414,6 +428,7 @@ def add_agent(system_info, hardware, username=None,
     return(status)
 
 
+@time_it
 def update_agent(agent_id, system_info, hardware, rebooted,
                  username=None, customer_name=None,
                  uri=None, method=None):

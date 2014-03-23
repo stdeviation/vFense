@@ -1,12 +1,14 @@
 import logging
 
-from vFense.db.client import db_create_close, r, return_status_tuple
+from vFense.db.client import db_create_close, r
 from vFense.core.agent import *
 from vFense.plugins.patching import *
+from vFense.core.decorators import return_status_tuple, time_it
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
+@time_it
 @db_create_close
 def fetch_production_levels_from_agent(customer_name, conn=None):
     """
@@ -39,6 +41,8 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_supported_os_strings(customer_name, conn=None):
     """
@@ -73,6 +77,8 @@ def fetch_supported_os_strings(customer_name, conn=None):
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
     """
@@ -133,6 +139,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
     return(data)
 
 
+@time_it
 @db_create_close
 def fetch_agents(
     customer_name=None, filter_key=None, filter_val=None,
@@ -241,6 +248,8 @@ def fetch_agents(
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
     """
@@ -283,6 +292,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
     return(data)
 
 
+@time_it
 @db_create_close
 @return_status_tuple
 def update_agent_data(agent_id, agent_data, conn=None):
@@ -308,10 +318,12 @@ def update_agent_data(agent_id, agent_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)
 
+
+@time_it
 @db_create_close
 @return_status_tuple
 def insert_agent_data(agent_data, conn=None):
@@ -335,6 +347,6 @@ def insert_agent_data(agent_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)
