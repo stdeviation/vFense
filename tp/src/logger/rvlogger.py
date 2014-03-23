@@ -90,8 +90,19 @@ class RvLogger():
                 print 'acceptable levels are %s' % (",".join(self.rproto.values()))
         self.Config = ConfigParser.ConfigParser()
         self.logdir = LOGDIR
-        self.loggers = ['root', 'rvlistener', 'rvweb', 'rvapi', 'csrlistener']
-        self.handlers = ['root', 'rvlist_file', 'rvweb_file', 'rvapi_file', 'csrlist_file']
+        self.loggers = (
+            [
+                'root', 'rvlistener', 'rvweb', 'rvapi',
+                'agentstatus','cve','admin_scheduler','vFense_stats'
+            ]
+        )
+        self.handlers = (
+            [
+                'root', 'rvlist_file', 'rvweb_file', 'rvapi_file',
+                'agentstatus_file', 'cve_file', 'admin_scheduler_file',
+                'vFense_stats_file'
+            ]
+        )
         self.formatters = ['default'] 
         self.section_logger_name = 'loggers'
         self.section_handler_name = 'handlers'

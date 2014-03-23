@@ -43,10 +43,12 @@ def check_password(password):
     password = password.encode('utf-8')
     completed = False
     strength = [
-        'Blank', 'Very Weak', 'Weak',
-        'Medium', 'Strong', 'Very Strong'
+        'Blank', 'Very Weak', 'Sort of Weak',
+        'Medium', 'Sort of Strong', 'Strong',
+        'Very Strong'
     ]
     score = 0
+    mandatory = 0
 
     if len(password) < 1:
         return(completed, strength[0])
@@ -56,21 +58,32 @@ def check_password(password):
 
     if len(password) >= 8:
         score = score + 1
+        mandatory += 1
 
-    if len(password) >= 10:
+    if len(password) >= 12:
         score = score + 1
 
-    if re.search('\d+', password):
+    if re.search('[0-9]', password):
         score = score + 1
+        mandatory += 1
 
-    if re.search('[a-z]', password) and re.search('[A-Z]', password):
+    if re.search('[a-z]', password):
         score = score + 1
+        mandatory += 1
+
+    if re.search('[A-Z]', password):
+        score = score + 1
+        mandatory += 1
 
     if re.search('.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]', password):
         score = score + 1
+        mandatory += 1
 
-    if score >= 4:
+    if score >= 5 and mandatory >= 5:
         completed = True
+
+    elif score >= 5 and mandatory < 5:
+        score = score - 1
 
     return(completed, strength[score])
 
