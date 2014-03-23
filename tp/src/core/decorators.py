@@ -69,6 +69,13 @@ def results_message(fn):
                  ).object_created(object_id, object_type, object_data)
             )
 
+        if status_code == DbCodes.Deleted:
+            status = (
+                 GenericResults(
+                     username, uri, method
+                 ).object_deleted(object_id, object_type)
+            )
+
         if status_code == DbCodes.Replaced:
             status = (
                  GenericResults(

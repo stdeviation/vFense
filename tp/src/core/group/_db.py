@@ -153,6 +153,64 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
 
 @time_it
 @db_create_close
+def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
+    """
+    Retrieve all groups for a user by username
+
+    :param username: Get all groups for which this user is part of.
+
+    :param fields_to_pluck: (Optional) List of fields you want to pluck
+        from the database
+
+    Basic Usage::
+        >>> from vFense.group._db import fetch_groups_for_user
+        >>> username = 'alien'
+        >>> fetch_groups_for_user(username)
+        [
+            {
+                u'group_name': u'FooLah',
+                u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
+                u'user_name': u'alien',
+                u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
+                u'customer_name': u'default'
+            },
+            {
+                u'group_name': u'Administrator',
+                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
+                u'user_name': u'alien',
+                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
+                u'customer_name': u'default'
+            }
+        ]
+    """
+    data = []
+    try:
+        if username and not fields_to_pluck:
+            data = list(
+                r
+                .table(GroupsPerUserCollection)
+                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .run(conn)
+            )
+
+        elif username and fields_to_pluck:
+            data = list(
+                r
+                .table(GroupsPerUserCollection)
+                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .pluck(fields_to_pluck)
+                .run(conn)
+            )
+
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
 def fetch_groups(
     customer_name=None, groupname=None,
     fields_to_pluck=None, conn=None
@@ -386,30 +444,35 @@ def update_group(group_id, group_data, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_user_in_groups(username, group_id=None, conn=None):
+def delete_groups_from_user(username, group_ids=None, conn=None):
     """
     :param username: username
-    :param group_id: (Optional) 36 Character UUID
+    :param group_ids: (Optional) List of group_ids
 
     Basic Usage::
-        >>> from vFense.group._db delete_user_in_groups
+        >>> from vFense.group._db delete_groups_from_user
         >>> username = 'agent_api'
-        >>> delete_user_in_groups(username)
+        >>> delete_groups_from_user(username)
         >>> (2001, 1, None, [])
     """
     data = {}
     try:
-        if group_id:
+        if group_ids:
             data = (
                 r
-                .table(GroupsPerUserCollection)
-                .filter(
-                    {
-                        GroupsPerUserKeys.UserName: username,
-                        GroupsPerUserKeys.GroupId: group_id
-                    }
+                .expr(group_ids)
+                .for_each(
+                    lambda group_id:
+                    r
+                    .table(GroupsPerUserCollection)
+                    .filter(
+                        {
+                            GroupsPerUserKeys.UserName: username,
+                            GroupsPerUserKeys.GroupId: group_id
+                        }
+                    )
+                    .delete()
                 )
-                .delete()
                 .run(conn)
             )
 
@@ -437,8 +500,7 @@ def delete_user_in_groups(username, group_id=None, conn=None):
 @return_status_tuple
 def delete_group(group_id, conn=None):
     """
-    :param group_id: group id  of the group you are updating
-    :param group_data: Dictionary of the data you are updating
+    :param group_id: group id  of the group you are deleteing
 
     Basic Usage::
         >>> from vFense.group._db import delete_group
@@ -453,7 +515,7 @@ def delete_group(group_id, conn=None):
             r
             .table(GroupsCollection)
             .get(group_id)
-            .update(group_data)
+            .delete()
             .run(conn)
         )
 

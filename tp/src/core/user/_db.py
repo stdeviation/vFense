@@ -85,17 +85,17 @@ def fetch_users(customer_name=None, username=None, conn=None):
         if not customer_name and not username:
             data = list(
                 r
-                .table(UsersPerCustomerCollection)
+                .table(CustomersPerUserCollection)
                 .run(conn)
             )
 
         elif not customer_name and username:
             data = list(
                 r
-                .table(UsersPerCustomerCollection)
+                .table(CustomersPerUserCollection)
                 .filter(
                     lambda x:
-                    x[UserPerCustomerKeys.UserName].match("(?i)" + username)
+                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
                 )
                 .run(conn)
             )
@@ -103,9 +103,9 @@ def fetch_users(customer_name=None, username=None, conn=None):
         elif customer_name and not username:
             data = list(
                 r
-                .table(UsersPerCustomerCollection)
+                .table(CustomersPerUserCollection)
                 .get_all(
-                    customer_name, index=UserPerCustomerIndexes.CustomerName
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
                 .run(conn)
             )
@@ -113,13 +113,13 @@ def fetch_users(customer_name=None, username=None, conn=None):
         elif customer_name and username:
             data = list(
                 r
-                .table(UsersPerCustomerCollection)
+                .table(CustomersPerUserCollection)
                 .get_all(
-                    customer_name, index=UserPerCustomerIndexes.CustomerName
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
                 .filter(
                     lambda x:
-                    x[UserPerCustomerKeys.UserName].match("(?i)" + username)
+                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
                 )
                 .run(conn)
             )

@@ -6,8 +6,8 @@ from vFense.core.customer import *
 from vFense.core.permissions import *
 from vFense.core._db import retrieve_object
 from vFense.core.group._db import insert_group, fetch_group, fetch_groups, \
-    insert_group_per_user, fetch_group_by_name, delete_user_in_groups, \
-    fetch_users_in_group
+    insert_group_per_user, fetch_group_by_name, delete_groups_from_user, \
+    fetch_users_in_group, fetch_groups_for_user, delete_group
 
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz.status_codes import DbCodes
@@ -39,6 +39,43 @@ def get_group(group_id):
 
 
 @time_it
+def get_groups_for_user(username, fields_to_pluck=None):
+    """
+    Retrieve all groups for a user by username
+
+    :param username: Get all groups for which this user is part of.
+
+    :param fields_to_pluck: (Optional) List of fields you want to pluck
+        from the database
+
+    Basic Usage::
+        >>> from vFense.group.groups import get_groups_for_user
+        >>> username = 'alien'
+        >>> get_groups_for_user(username)
+        [
+            {
+                u'group_name': u'FooLah',
+                u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
+                u'user_name': u'alien',
+                u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
+                u'customer_name': u'default'
+            },
+            {
+                u'group_name': u'Administrator',
+                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
+                u'user_name': u'alien',
+                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
+                u'customer_name': u'default'
+            }
+        ]
+    """
+    data = fetch_groups_for_user(username, fields_to_pluck)
+
+    return(data)
+
+
+
+@time_it
 def get_group_by_name(group_name, customer_name):
     """
     Retrieve a group from the database
@@ -63,17 +100,33 @@ def get_group_by_name(group_name, customer_name):
 
 
 @time_it
-def get_users_in_group(
-    group_id, fields_to_pluck=None,
-    user_name=None, uri=None, method=None
-    ):
+def get_users_in_group(group_id, fields_to_pluck=None,):
     """
     Fetch all users for group_id
     :param group_id: 36 Character UUID
+    :param fields_to_pluck: (Optional) List of fields to
+        pluck from the database.
+
     Basic Usage::
         >>> from vFense.core.group.groups get_users_in_group
         >>> group_id = ['17753c6a-2099-4389-b97a-e6e2658b6396']
         >>> get_users_in_group(group_id)
+        [
+            {
+                u'group_name': u'Administrator',
+                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
+                u'user_name': u'alllllen',
+                u'id': u'3477f6d9-731e-4313-a765-e4bd05277f2d',
+                u'customer_name': u'default'
+            },
+            {
+                u'group_name': u'Administrator',
+                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
+                u'user_name': u'alien',
+                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
+                u'customer_name': u'default'
+            }
+        ]
     """
     data = fetch_users_in_group(group_id, fields_to_pluck)
     return(data)
@@ -322,17 +375,29 @@ def remove_groups_from_user(
 
     Basic Usage::
         >>> from vFense.core.group.groups remove_groups_from_user
-        >>> username = 'agent_api'
-        >>> remove_groups_from_user(username)
-        >>> (2001, 1, None, [])
+        >>> username = 'alien'
+        >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc', '8757b79c-7321-4446-8882-65457f28c78b']
+        >>> remove_groups_from_user(username, group_ids)
+        {
+            'rv_status_code': 1004,
+            'message': 'None - remove_groups_from_user - group ids: 0834e656-27a5-4b13-ba56-635797d0d1fc, 8757b79c-7321-4446-8882-65457f28c78b does not exist',
+            'http_method': None,
+            'uri': None,
+            'http_status': 409
+        }
     """
     try:
+        if group_ids:
+            msg = 'group ids: ' + ', '.join(group_ids)
+        else:
+            msg = 'groups'
+
         status_code, count, errors, generated_ids = (
-            delete_user_in_groups(username, group_ids)
+            delete_groups_from_user(username, group_ids)
         )
         status = remove_groups_from_user.func_name + ' - '
         results = (
-            status_code, username, status, [], None,
+            status_code, msg, status, [], None,
             user_name, uri, method
         )
 
@@ -351,15 +416,22 @@ def remove_groups_from_user(
 @results_message
 def remove_group(group_id, user_name=None, uri=None, method=None):
     """
-    Create a group in vFense
+    Remove  a group in vFense
     :param group_id: 36 Character UUID
 
     Basic Usage::
-        >>> from vFense.core.group.groups import delete_group
-        >>> group_id = '4b114647-a6ea-449f-a5a0-d5e1961afb28'
-        >>> delete_group(group_id)
+        >>> from vFense.core.group.groups import remove_group
+        >>> group_id = 'b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686'
+        >>> remove_group(group_id)
+        {
+            'rv_status_code': 1012,
+            'message': 'None - remove_group - b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686 was deleted',
+            'http_method': None,
+            'uri': None,
+            'http_status': 200
+        }
     """
-    status = remove_groups.func_name + ' - '
+    status = remove_group.func_name + ' - '
     try:
         users_exist = get_users_in_group(group_id)
         group_exist = get_group(group_id)
@@ -367,7 +439,6 @@ def remove_group(group_id, user_name=None, uri=None, method=None):
             status_code, status_count, error, generated_id = (
                 delete_group(group_id)
             )
-            status = remove_groups.func_name + ' - '
             results = (
                 status_code, group_id, status, [], error,
                 user_name, uri, method
@@ -384,10 +455,8 @@ def remove_group(group_id, user_name=None, uri=None, method=None):
             )
 
         elif not group_exist:
-            error = 'group %s does not exist'
-
             results = (
-                DbCodes.Skipped, group_id, status + error, [], None,
+                DbCodes.Skipped, group_id, status, [], None,
                 user_name, uri, method
             )
 
