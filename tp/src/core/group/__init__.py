@@ -8,7 +8,7 @@ class GroupKeys():
     GroupName = 'group_name'
     CustomerName = 'customer_name'
     Permissions = 'permissions'
-    Id = 'id'
+    GroupId = 'id'
 
 
 class GroupIndexes():

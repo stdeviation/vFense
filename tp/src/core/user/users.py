@@ -4,9 +4,9 @@ from vFense.core.user import *
 from vFense.core.group import *
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
     delete_user
-from vFense.core.group.groups import validate_group_ids, get_group, \
+from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user
-from vFense.core.customer.customers import get_customer, validate_customer_names, \
+from vFense.core.customer.customers import get_customer, \
     add_user_to_customers, remove_customers_from_user
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import results_message, time_it
@@ -53,13 +53,18 @@ def get_users(customer_name=None, username=None):
     Basic Usage::
         >>> from vFense.user.users import get_users
         >>> customer_name = 'default'
-        >>> username = 'ag'
+        >>> username = 'al'
         >>> get_users(customer_name, username)
         [
             {
-                u'customer_name': u'default',
-                u'user_name': u'agent',
-                u'id': u'ccac5136-3077-4d2c-a391-9bb15acd79fe'
+                u'user_name': u'alien',
+                u'id': u'b157fdb8-a268-4b98-894e-1ef456e7ac88',
+                u'customer_name': u'default'
+            },
+            {
+                u'user_name': u'alllllen',
+                u'id': u'bfe53dae-fb46-4a17-8453-312675b21aa2',
+                u'customer_name': u'default'
             }
         ]
     """
@@ -117,7 +122,7 @@ def create_user(
         if not user_exist and pass_strength[0]:
             encrypted_password = Crypto().hash_bcrypt(password)
             customer_is_valid = get_customer(customer_name)
-            groups_are_valid = validate_group_ids(group_ids)
+            groups_are_valid = validate_group_ids(group_ids, customer_name)
             if customer_is_valid and groups_are_valid[0]:
                 user_data = (
                     {

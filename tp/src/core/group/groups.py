@@ -171,7 +171,7 @@ def get_groups(
 
 
 @time_it
-def validate_group_ids(group_ids):
+def validate_group_ids(group_ids, customer_name=None):
     """
     Validate a list if group ids,
     Returns a tuple
@@ -189,8 +189,16 @@ def validate_group_ids(group_ids):
     valid_groups = []
     if isinstance(group_ids, list):
         for group_id in group_ids:
-            if get_group(group_id):
-                valid_groups.append(group_id)
+            group = get_group(group_id)
+            if group:
+                if customer_name:
+                    if group.get(GroupKeys.CustomerName) == customer_name:
+                        valid_groups.append(group_id)
+                    else:
+                        invalid_groups.append(group_id)
+                        validated = False
+                else:
+                    valid_groups.append(group_id)
             else:
                 invalid_groups.append(group_id)
                 validated = False
@@ -230,7 +238,7 @@ def add_user_to_groups(
         }
     }
     """
-    groups_are_valid = validate_group_ids(group_ids)
+    groups_are_valid = validate_group_ids(group_ids, customer_name)
     user_exist = retrieve_object(username, UsersCollection)
     customer_exist = retrieve_object(customer_name, CustomersCollection)
     results = None

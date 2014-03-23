@@ -17,3 +17,4 @@ class CustomerPerUserKeys():
 
 class CustomerPerUserIndexes():
     CustomerName = 'customer_name'
+    UserName = 'user_name'

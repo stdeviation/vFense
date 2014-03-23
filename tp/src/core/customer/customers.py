@@ -353,9 +353,9 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
     status = remove_customer.func_name + ' - '
     try:
         customer_exist = get_customer(customer_name)
-        users_exists_in_customers(customer_name)
+        user_exist = users_exists_in_customers(username, customer_name)
 
-        if customer_exist and not users_exists_in_customers:
+        if customer_exist and not user_exist:
             msg = 'removed customers from user %s' % (username)
 
             status_code, count, errors, generated_ids = (
@@ -368,7 +368,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
             )
 
 
-        elif customer_exist and users_exists_in_customers:
+        elif customer_exist and user_exist:
             msg = (
                 'users still exist for customer %s' % customer_name
             )

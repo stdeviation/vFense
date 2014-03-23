@@ -45,10 +45,46 @@ def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
 
     return(data)
 
+@time_it
+@db_create_close
+def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
+    """
+    Retrieve customer information
+    :param username:  Name of the user.
+    :param keys_to_pluck:  (Optional) list of keys you want to
+        retreive from the db.
+    Basic Usage::
+        >>> from vFense.customer._db import fetch_customers_for_user
+        >>> customer_name = 'default'
+        >>> fetch_customers_for_user(username)
+    """
+    data = []
+    try:
+        if username and keys_to_pluck:
+            data = (
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
+        elif username and not keys_to_pluck:
+            data = (
+                r
+                .table(CustomersCollection)
+                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
 
 @time_it
 @db_create_close
-def users_exists_in_customers(customer_name, conn=None):
+def users_exists_in_customer(username, customer_name, conn=None):
     """
     Retrieve customer information
     :param customer_name:  Name of the customer.
@@ -63,6 +99,11 @@ def users_exists_in_customers(customer_name, conn=None):
             r
             .table(CustomersPerUserCollection)
             .get_all(customer_name, index=UserPerCustomerIndexes.CustomerName)
+            .filter(
+                {
+                    CustomerPerUserKeys.UserName: username
+                }
+            )
             .run(conn)
         )
 

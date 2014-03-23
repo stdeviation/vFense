@@ -2,6 +2,7 @@ import logging
 
 from vFense.core.user import *
 from vFense.core.group import *
+from vFense.core.customer import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
