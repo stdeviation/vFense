@@ -11,20 +11,24 @@ logger = logging.getLogger('rvapi')
 @time_it
 @db_create_close
 def fetch_group(group_id, conn=None):
-    """
-    Retrieve a group from the database
-    :param group_id: 36 Character UUID.
-    Basic Usage::
+    """Retrieve a group from the database
+    Args:
+        group_id: 36 Character UUID.
+
+    Basic Usage:
         >>> from vFense.group._db import fetch_group
         >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
         >>> fetch_group(group_id)
+
+    Returns:
+        Returns a Dict of the properties of a group
         {
-            u'current_customer': u'default',
-            u'enabled': True,
-            u'full_name': u'TopPatchAgentCommunicationAccount',
-            u'default_customer': u'default',
-            u'user_name': u'agent',
-            u'email': u'admin@toppatch.com'
+            u'group_name': u'Administrator',
+            u'customer_name': u'default',
+            u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
+            u'Permissions': [
+                u'administrator'
+            ]
         }
     """
     data = {}
@@ -47,16 +51,22 @@ def fetch_group(group_id, conn=None):
 def fetch_group_by_name(
     group_name, customer_name,
     fields_to_pluck=None, conn=None):
-    """
-    Retrieve a group from the database
-    :param group_name: name of group.
-    :param customer_name: name of customer, that the customer belongs to.
-    :param fields_to_pluck: (Optional) List of fields you want to retrieve.
-    Basic Usage::
+    """Retrieve a group by its name from the database
+    Args:
+        group_name (str): Name of group.
+        customer_name (str): name of the customer, that the group belongs to.
+    
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to retrieve.
+
+    Basic Usage:
         >>> from vFense.group._db import fetch_group_by_name
         >>> group_name = 'Administrator'
         >>> customer_name = 'default'
         >>> fetch_group_by_name(group_name, customer_name)
+
+    Returns:
+        Returns a Dict of the properties of a customer
         {
             u'group_name': u'Administrator',
             u'customer_name': u'default',
@@ -106,15 +116,21 @@ def fetch_group_by_name(
 @time_it
 @db_create_close
 def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
-    """
-    Fetch all users for group_id
-    :param group_id: 36 Character UUID
-    :param fields_to_pluck: (Optional) List of fields you want to
+    """Fetch all users for group_id
+    Args:
+        group_id (str): 36 Character UUID
+
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to
         pluck from the database.
-    Basic Usage::
+
+    Basic Usage:
         >>> from vFense.group._db import fetch_users_in_group
         >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
-        >>> fetch_users_in_group(group_id, ['user_name'])
+        >>> fetch_users_in_group(group_id, [GroupsPerUserKeys.UserName])
+
+    Returns:
+        Returns a list of users
         [
             {
                 u'user_name': u'testing123'
@@ -154,18 +170,21 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
 @time_it
 @db_create_close
 def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
-    """
-    Retrieve all groups for a user by username
+    """Retrieve all groups for a user by username
+    Args:
+        username (str): Get all groups for which this user is part of.
 
-    :param username: Get all groups for which this user is part of.
-
-    :param fields_to_pluck: (Optional) List of fields you want to pluck
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to pluck
         from the database
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group._db import fetch_groups_for_user
         >>> username = 'alien'
         >>> fetch_groups_for_user(username)
+
+    Returns:
+        Returns a list of groups that the user belongs to.
         [
             {
                 u'group_name': u'FooLah',
@@ -215,24 +234,24 @@ def fetch_groups(
     customer_name=None, groupname=None,
     fields_to_pluck=None, conn=None
     ):
-    """
-    Retrieve all groups that is in the database by customer_name or
+    """Retrieve all groups that is in the database by customer_name or
         all of the groups or by regex.
 
-    :param customer_name: (Optional) Name of the customer,
-        in which the group belongs too.
-
-    :param groupname: (Optional) Name of the group you are searching for.
-        This is a regular expression match.
-
-    :param fields_to_pluck: (Optional) List of fields you want to pluck
+    Kwargs:
+        customer_name (str):  Name of the customer,
+        groupname (str):  Name of the group you are searching for.
+            This is a regular expression match.
+        fields_to_pluck (list):  List of fields you want to pluck
         from the database
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group._db import fetch_groups
         >>> customer_name = 'default'
         >>> groupname = 'fo'
         >>> fetch_groups(customer_name, groupname)
+
+    Returns:
+        Returns a Dict of the properties of a group
         [
             {
                 u'group_name': u'FooLee',
@@ -355,15 +374,18 @@ def fetch_groups(
 @db_create_close
 @return_status_tuple
 def insert_group(group_data, conn=None):
-    """
-    This function should not be called directly.
-    :param group_data: Can either be a list of dictionaries or a dictionary
+    """ Insert a new group into the database
+    Args:
+        group_data (list|dict): Can either be a list of dictionaries or a dictionary
         of the data you are inserting.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group._db import insert_group
         >>> group_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_group(group_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -385,15 +407,18 @@ def insert_group(group_data, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_group_per_user(group_data, conn=None):
-    """
-    This function should not be called directly.
-    :param group_data: Can either be a list of dictionaries or a dictionary
+    """Add a group to a user, this function should not be called directly.
+    Args:
+        group_data (list|dict): Can either be a list of dictionaries or a dictionary
         of the data you are inserting.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group._db import insert_group_per_user
         >>> group_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_group_per_user(group_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -415,14 +440,18 @@ def insert_group_per_user(group_data, conn=None):
 @db_create_close
 @return_status_tuple
 def update_group(group_id, group_data, conn=None):
-    """
-    :param group_id: group id  of the group you are updateing.
+    """Update verious fields of a group
+    Args:
+        group_idi (str): group id  of the group you are updateing.
 
     Basic Usage::
         >>> from vFense.group._db import update_group
         >>> group_id = 'd081a343-cc6c-4f08-81d9-62a116fda025'
         >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
         >>> update_group(group_id)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -445,14 +474,20 @@ def update_group(group_id, group_data, conn=None):
 @db_create_close
 @return_status_tuple
 def delete_groups_from_user(username, group_ids=None, conn=None):
-    """
-    :param username: username
-    :param group_ids: (Optional) List of group_ids
+    """Remove a group from a user or remove all groups for a user.
+    Args:
+        username (str): Name of the user.
+
+    Kwargs:
+        group_ids(list): List of group_ids
 
     Basic Usage::
         >>> from vFense.group._db delete_groups_from_user
         >>> username = 'agent_api'
         >>> delete_groups_from_user(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -499,13 +534,17 @@ def delete_groups_from_user(username, group_ids=None, conn=None):
 @db_create_close
 @return_status_tuple
 def delete_group(group_id, conn=None):
-    """
-    :param group_id: group id  of the group you are deleteing
+    """Delete a group from the database.
+    Args:
+        group_id (str): group id of the group you are deleteing
 
     Basic Usage::
         >>> from vFense.group._db import delete_group
         >>> group_id = 'd081a343-cc6c-4f08-81d9-62a116fda025'
         >>> delete_group(group_id)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}

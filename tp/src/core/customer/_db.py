@@ -14,7 +14,7 @@ logger = logging.getLogger('rvapi')
 def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
     """Retrieve customer information
     Args:
-        customer_name  (str):   Name of the customer.
+        customer_name (str):   Name of the customer.
 
     Kwargs:
         keys_to_pluck (array): list of keys you want to retreive from the db.
@@ -316,7 +316,7 @@ def insert_customer(customer_data, conn=None):
 @db_create_close
 @return_status_tuple
 def update_customer(customer_name, customer_data, conn=None):
-    """Update verious fields for a customer
+    """Update verious fields of a customer
     Args:
         customer_name(str): customer_name.
         customer_data(dict): Dictionary of the data you are updateing.
@@ -356,7 +356,7 @@ def insert_user_per_customer(user_data, conn=None):
         user_data(list|dict): Can either be a list of dictionaries or a
         dictionary of the data you are inserting.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.customer._db import insert_user_per_customer
         >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_user_per_customer(user_data)

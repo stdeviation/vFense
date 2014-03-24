@@ -18,13 +18,17 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def get_group(group_id):
-    """
-    Retrieve a group from the database.
-    :param group_id: 36 Character UUID.
-    Basic Usage::
+    """Retrieve a group from the database
+    Args:
+        group_id: 36 Character UUID.
+
+    Basic Usage:
         >>> from vFense.group.groups import get_group
         >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
         >>> get_group(group_id)
+
+    Returns:
+        Returns a Dict of the properties of a group
         {
             u'group_name': u'Administrator',
             u'customer_name': u'default',
@@ -40,18 +44,21 @@ def get_group(group_id):
 
 @time_it
 def get_groups_for_user(username, fields_to_pluck=None):
-    """
-    Retrieve all groups for a user by username
+    """Retrieve all groups for a user by username
+    Args:
+        username (str): Get all groups for which this user is part of.
 
-    :param username: Get all groups for which this user is part of.
-
-    :param fields_to_pluck: (Optional) List of fields you want to pluck
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to pluck
         from the database
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group.groups import get_groups_for_user
         >>> username = 'alien'
         >>> get_groups_for_user(username)
+
+    Returns:
+        Returns a list of groups that the user belongs to.
         [
             {
                 u'group_name': u'FooLah',
@@ -74,18 +81,24 @@ def get_groups_for_user(username, fields_to_pluck=None):
     return(data)
 
 
-
 @time_it
-def get_group_by_name(group_name, customer_name):
-    """
-    Retrieve a group from the database
-    :param group_name: name of the group.
-    :param customer_name: name of the customer that the group belongs to.
-    Basic Usage::
+def get_group_by_name(group_name, customer_name, fields_to_pluck=None):
+    """Retrieve a group by its name from the database
+    Args:
+        group_name (str): Name of group.
+        customer_name (str): name of the customer, that the group belongs to.
+    
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to retrieve.
+
+    Basic Usage:
         >>> from vFense.group.groups import get_group_by_name
         >>> group_name = 'Administrator'
         >>> customer_name = 'default'
         >>> get_group_by_name(group_name, customer_name)
+
+    Returns:
+        Returns a Dict of the properties of a customer
         {
             u'group_name': u'Administrator',
             u'customer_name': u'default',
@@ -101,16 +114,21 @@ def get_group_by_name(group_name, customer_name):
 
 @time_it
 def get_users_in_group(group_id, fields_to_pluck=None,):
-    """
-    Fetch all users for group_id
-    :param group_id: 36 Character UUID
-    :param fields_to_pluck: (Optional) List of fields to
+    """Fetch all users for group_id
+    Args:
+        group_id (str): 36 Character UUID
+
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to
         pluck from the database.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.core.group.groups get_users_in_group
         >>> group_id = ['17753c6a-2099-4389-b97a-e6e2658b6396']
         >>> get_users_in_group(group_id)
+
+    Returns:
+        Returns a list of users
         [
             {
                 u'group_name': u'Administrator',
@@ -137,23 +155,24 @@ def get_groups(
     customer_name=None, groupname=None,
     fields_to_pluck=None
     ):
-    """
-    Retrieve all the groups that is in the database by customer_name or
-        all of the customers or by regex.
+    """Retrieve all groups that is in the database by customer_name or
+        all of the groups or by regex.
 
-    :param customer_name: (Optional) Name of the customer,
-        that the group belongs too.
-    :param groupname: (Optional) Name of the group you are searching for.
-        This is a regular expression match.
-
-    :param fields_to_pluck: (Optional) List of fields you want to pluck
+    Kwargs:
+        customer_name (str):  Name of the customer,
+        groupname (str):  Name of the group you are searching for.
+            This is a regular expression match.
+        fields_to_pluck (list):  List of fields you want to pluck
         from the database
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.group.groups import get_groups
         >>> customer_name = 'default'
         >>> groupname = 'Ad'
         >>> get_groups(customer_name, groupname)
+
+    Returns:
+        Returns a List of dictionaries of the properties of a group
         [
             {
                 u'permissions': [
@@ -172,16 +191,20 @@ def get_groups(
 
 @time_it
 def validate_group_ids(group_ids, customer_name=None):
-    """
-    Validate a list if group ids,
-    Returns a tuple
-    example: (True, [valid_group_ids], [invalid_group_ids])
-    :param group_ids: List of group ids
+    """Validate a list if group ids exist in the database.
+    Args:
+        group_ids (list): List of group ids
 
-    Basic Usage::
+    Kwargs:
+        customer_name (str): Name of the customer the group belongs too.
+
+    Basic Usage:
         >>> from vFense.group.groups import validate_group_ids
         >>> group_ids = ['4b114647-a6ea-449f-a5a0-d5e1961afb28', '3e27f278-7839-416e-b516-fe4f7cbe98d7']
         >>> validate_group_ids(group_ids)
+
+    Return:
+        Tuple (Boolean, [valid_group_ids], [invalid_group_ids])
         (True, ['3ffc2a67-1203-4cb0-ada2-2ae870072680', '0834e656-27a5-4b13-ba56-635797d0d1fc'], [])
     """
     validated = True
@@ -212,18 +235,26 @@ def add_user_to_groups(
     username, customer_name, group_ids,
     user_name=None, uri=None, method=None
     ):
-    """
-    Add a user into a vFense group
-    :param username:  Name of the user already in vFense.
-    :param customer_name: The customer this user is part of.
-    :param group_ids: List of group ids.
+    """Add a user into a vFense group
+    Args:
+        username (str):  Name of the user already in vFense.
+        customer_name (str): The customer this user is part of.
+        group_ids (list): List of group ids.
 
-    Basic Usage::
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
         >>> from vFense.group.groups import add_user_to_groups
         >>> username = 'alien'
         >>> customer_name = 'default'
         >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
         >>> add_user_to_groups(username, customer_name, group_ids)
+
+    Returns:
+        Returns the results in a dictionary
     {
         'uri': None,
         'rv_status_code': 1010,
@@ -298,18 +329,26 @@ def create_group(
         group_name, customer_name, permissions,
         user_name=None, uri=None, method=None
     ):
-    """
-    Create a group in vFense
-    :param group_name: The name of the group.
-    :param customer_name: The name of the customer you are adding this group too.
-    :param permissions: List of permissions, this group has.
+    """Create a group in vFense
+    Args:
+        group_name (str): The name of the group.
+        customer_name (str): The name of the customer you are adding this group too.
+        permissions (list): List of permissions, this group has.
 
-    Basic Usage::
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
         >>> from vFense.group.groups import create_group
         >>> group_name = 'Linux Admins'
         >>> customer_name = 'default'
         >>> permissions = ['administrator']
         >>> create_group(group_name, customer_name, permissions)
+
+    Returns:
+        Returns the results in a dictionary
         {
             'uri': None,
             'rv_status_code': 1010,
@@ -377,15 +416,24 @@ def remove_groups_from_user(
     username, group_ids=None,
     user_name=None, uri=None, method=None
     ):
-    """
-    :param username: username.
-    :param group_ids: (Optional) List of group_ids.
+    """Remove a group from a user
+    Args:
+        username(str): Name of the user
+
+    Kwargs:
+        group_ids(list): List of group_ids.
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage::
         >>> from vFense.core.group.groups remove_groups_from_user
         >>> username = 'alien'
         >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc', '8757b79c-7321-4446-8882-65457f28c78b']
         >>> remove_groups_from_user(username, group_ids)
+
+    Returns:
+        Returns the results in a dictionary
         {
             'rv_status_code': 1004,
             'message': 'None - remove_groups_from_user - group ids: 0834e656-27a5-4b13-ba56-635797d0d1fc, 8757b79c-7321-4446-8882-65457f28c78b does not exist',
@@ -423,14 +471,22 @@ def remove_groups_from_user(
 @time_it
 @results_message
 def remove_group(group_id, user_name=None, uri=None, method=None):
-    """
-    Remove  a group in vFense
-    :param group_id: 36 Character UUID
+    """Remove  a group in vFense
+    Args:
+        group_id (str): 36 Character UUID
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage::
         >>> from vFense.core.group.groups import remove_group
         >>> group_id = 'b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686'
         >>> remove_group(group_id)
+
+    Returns:
+        Returns the results in a dictionary
         {
             'rv_status_code': 1012,
             'message': 'None - remove_group - b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686 was deleted',
