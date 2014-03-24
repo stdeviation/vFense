@@ -3,7 +3,7 @@ import logging
 from vFense.core.user import *
 from vFense.core.group import *
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
-    delete_user
+    delete_user, update_user
 from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user
 from vFense.core.customer.customers import get_customer, \
@@ -18,14 +18,20 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def get_user(username, without_fields=['password']):
-    """
-    Retrieve a user from the database
-    :param username: Name of the user.
-    :param without_fields: (Optional) List of fields you do not want to include.
-    Basic Usage::
+    """Retrieve a user from the database
+    Args:
+        username (str): Name of the user.
+
+    Kwargs:
+        without_fields (list): List of fields you do not want to include.
+
+    Basic Usage:
         >>> from vFense.user.users import get_user
         >>> username = 'admin'
         >>> get_user(username, without_fields=['password'])
+
+    Return:
+        Dictionary of user properties.
         {
             u'current_customer': u'default',
             u'enabled': True,
@@ -40,35 +46,39 @@ def get_user(username, without_fields=['password']):
 
 
 @time_it
-def get_users(customer_name=None, username=None):
-    """
-    Retrieve all customers that is in the database by customer_name or
+def get_users(customer_name=None, username=None, without_fields=None):
+    """Retrieve all users that is in the database by customer_name or
         all of the customers or by regex.
 
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located.
-    :param username: (Optional) Name of the user you are searching for.
-        This is a regular expression match.
+    Kwargs:
+        customer_name (str): Name of the customer, where the agent
+            is located.
+        username (str): Name of the user you are searching for.
+            This is a regular expression match.
+        without_fields (list): List of fields you do not want to include.
 
     Basic Usage::
         >>> from vFense.user.users import get_users
         >>> customer_name = 'default'
         >>> username = 'al'
-        >>> get_users(customer_name, username)
+        >>> without_fields = ['password']
+        >>> get_users(customer_name, username, without_fields)
+
+    Returns:
+        List of users:
         [
             {
-                u'user_name': u'alien',
-                u'id': u'b157fdb8-a268-4b98-894e-1ef456e7ac88',
-                u'customer_name': u'default'
-            },
-            {
-                u'user_name': u'alllllen',
-                u'id': u'bfe53dae-fb46-4a17-8453-312675b21aa2',
-                u'customer_name': u'default'
+                "current_customer": "default", 
+                "email": "test@test.org", 
+                "full_name": "is doing it", 
+                "default_customer": "default", 
+                "user_name": "alien", 
+                "id": "ba9682ef-7adf-4916-8002-9637485b30d8", 
+                "customer_name": "default"
             }
         ]
     """
-    data = fetch_users(customer_name, username) 
+    data = fetch_users(customer_name, username, without_fields) 
     return(data)
 
 
@@ -79,15 +89,21 @@ def create_user(
     customer_name, email, user_name=None,
     uri=None, method=None
     ):
-    """
-    Add a new user into vFense
-    :param username: (Unique) The name of the user you are creating.
-    :param fullname: The full name of the user you are creating.
-    :param password: The unencrypted password of the user.
-    :param group_ids: List of vFense group ids to add the user too.
-    :param customer_name: The customer, this user will be part of.
-    :param email: Email address of the user.
-    Basic Usage::
+    """Add a new user into vFense
+    Args:
+        username (str): The name of the user you are creating.
+        fullname (str): The full name of the user you are creating.
+        password (str): The unencrypted password of the user.
+        group_ids (list): List of vFense group ids to add the user too.
+        customer_name (str): The customer, this user will be part of.
+        email (str): Email address of the user.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
         >>> from vFense.user.users import create_user
         >>> username = 'testing123'
         >>> fullname = 'testing 4 life'
@@ -99,25 +115,29 @@ def create_user(
                 username, fullname, password,
                 group_ids, customer_name, email
             )
-    {
-        'uri': None,
-        'rv_status_code': 1010,
-        'http_method': None,
-        'http_status': 200,
-        'message': 'None - create user testing123 was created',
-        'data': {
-            'current_customer': 'default',
-            'full_name': 'tester4life',
-            'default_customer': 'default',
-            'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
-            'user_name': 'testing123',
-            'email': 'test@test.org'
+
+    Return:
+        Dictionary of the status of the operation.
+        {
+            'uri': None,
+            'rv_status_code': 1010,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'None - create user testing123 was created',
+            'data': {
+                'current_customer': 'default',
+                'full_name': 'tester4life',
+                'default_customer': 'default',
+                'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
+                'user_name': 'testing123',
+                'email': 'test@test.org'
+            }
         }
-    }
     """
 
     user_exist = get_user(username)
     pass_strength = check_password(password)
+    status = create_user.func_name + ' - '
     try:
         if not user_exist and pass_strength[0]:
             encrypted_password = Crypto().hash_bcrypt(password)
@@ -131,7 +151,6 @@ def create_user(
                         UserKeys.FullName: fullname,
                         UserKeys.Password: encrypted_password,
                         UserKeys.UserName: username,
-                        #UserKeys.UserId: username,
                         UserKeys.Email: email
                     }
                 )
@@ -149,21 +168,21 @@ def create_user(
                     user_name, uri, method
                 )
                 results = (
-                    object_status, username, 'create user', user_data, error,
+                    object_status, username, status, user_data, error,
                     user_name, uri, method
                 )
 
             elif not customer_is_valid and groups_are_valid[0]:
                 error = 'customer name %s does not exist' % (customer_name)
                 results = (
-                    DbCodes.Errors, username, 'create user failed', error, error,
+                    DbCodes.Errors, username, status + error, error, error,
                     user_name, uri, method
                 )
 
             elif not groups_are_valid[0] and customer_is_valid:
                 error = 'group ids %s does not exist' % (groups_are_valid[2])
                 results = (
-                    DbCodes.Errors, None, 'create user failed', error, error,
+                    DbCodes.Errors, None, status + error, error, error,
                     user_name, uri, method
                 )
 
@@ -176,14 +195,14 @@ def create_user(
                 )
                 error = group_error + ' and ' + customer_error
                 results = (
-                    DbCodes.Errors, username, 'create user failed', error, error,
+                    DbCodes.Errors, username, status + error, error, error,
                     user_name, uri, method
                 )
 
         elif user_exist:
             error = 'username %s already exists' % (username)
             results = (
-                DbCodes.Errors, username, 'create_user failed', error, error,
+                DbCodes.Errors, username, status + error, error, error,
                 user_name, uri, method
             )
 
@@ -194,14 +213,14 @@ def create_user(
             )
 
             results = (
-                DbCodes.Errors, username, 'create_user failed', error, error,
+                DbCodes.Errors, username, status + error, error, error,
                 user_name, uri, method
             )
 
     except Exception as e:
         logger.exception(e)
         results = (
-            DbCodes.Errors, username, 'create user failed', e, e,
+            DbCodes.Errors, username, status + e, e, e,
             user_name, uri, method
         )
 
@@ -211,12 +230,21 @@ def create_user(
 @time_it
 @results_message
 def remove_user(username, user_name=None, uri=None, method=None):
-    """
-    Add a new user into vFense
-    :param username: The name of the user you are deleteing.
+    """Remove a user from vFense
+    Args:
+        username (str): The name of the user you are deleteing.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Return:
+        Dictionary of the status of the operation.
     """
 
     user_exist = get_user(username)
+    status = remove_user.func_name + ' - '
     try:
         if user_exist:
             remove_groups_from_user(username)
@@ -226,7 +254,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
                 delete_user(username)
             )
 
-            status = 'User removed %s' % (username)
+            status = status + 'User removed %s' % (username)
 
             results = (
                 object_status, username, status, [], error,
@@ -247,6 +275,184 @@ def remove_user(username, user_name=None, uri=None, method=None):
 
         results = (
             DbCodes.Errors, username, status, [], e,
+            user_name, uri, method
+        )
+
+    return(results)
+
+
+@time_it
+@results_message
+def change_password(
+    username, password, new_password,
+    user_name=None, uri=None, method=None
+    ):
+    """Change password for a user.
+    Args:
+        username (str): The name of the user you are deleteing.
+        password (str): Original password.
+        new_password (str): New password.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Return:
+        Dictionary of the status of the operation.
+        {
+            'uri': None,
+            'rv_status_code': 1008,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'None - change_password - Password changed for user admin - admin was updated',
+            'data': []
+        }
+    """
+    user_exist = get_user(username, without_fields=None)
+    status = change_password.func_name + ' - '
+    try:
+        if user_exist:
+            pass_strength = check_password(new_password)
+            original_encrypted_password = user_exist[UserKeys.Password].encode('utf-8')
+            original_password_verified = (
+                Crypto().verify_bcrypt_hash(password, original_encrypted_password)
+            )
+            encrypted_new_password = Crypto().hash_bcrypt(new_password)
+            new_password_verified_against_orignal_password = (
+                Crypto().verify_bcrypt_hash(new_password, original_encrypted_password)
+            )
+            if (original_password_verified and pass_strength[0] and
+                    not new_password_verified_against_orignal_password):
+
+                user_data = {UserKeys.Password: encrypted_new_password}
+
+                object_status, object_count, error, generated_ids = (
+                    update_user(username, user_data)
+                )
+
+                msg = 'Password changed for user %s - ' % (username)
+                results = (
+                    object_status, username, status + msg, [], error,
+                    user_name, uri, method
+                )
+
+            elif new_password_verified_against_orignal_password:
+                error = 'New password is the same as the original - user %s - ' % (username)
+
+                results = (
+                    DbCodes.Unchanged, username, status + error, [], error,
+                    user_name, uri, method
+                )
+
+            elif original_password_verified and not pass_strength[0]:
+                error = 'New password is to weak for user %s - ' % (username)
+
+                results = (
+                    DbCodes.Unchanged, username, status + error, [], error,
+                    user_name, uri, method
+                )
+
+            elif not original_password_verified:
+                error = 'Password not verified for user %s - ' % (username)
+
+                results = (
+                    DbCodes.Unchanged, username, status + error, [], error,
+                    user_name, uri, method
+                )
+
+        else:
+            error = 'User %s does not exist - ' % (username)
+
+            results = (
+                DbCodes.Skipped, username, status + error, [], error,
+                user_name, uri, method
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+        results = (
+            DbCodes.Errors, username, status, [], e,
+            user_name, uri, method
+        )
+
+    return(results)
+
+
+@time_it
+@results_message
+def update_user_properties(username, **kwargs):
+    """ Edit the properties of a customer. 
+    Args:
+        username (str): Name of the user you are editing.
+
+    Kwargs:
+        full_name (str): The full name of the user
+        email (str): The email address of the user
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Return:
+        Dictionary of the status of the operation.
+        {
+            'uri': None,
+            'rv_status_code': 1008,
+            'http_method': None,
+            'http_status': 200,
+            'message': 'None-update_user_properties-adminwasupdated',
+            'data': {
+                'full_name': 'vFense Admin'
+            }
+        }
+    """
+
+    if not kwargs.get('user_name'):
+        user_name = None
+    else:
+        user_name = kwargs.pop('user_name')
+
+    if not kwargs.get('uri'):
+        uri = None
+    else:
+        uri = kwargs.pop('uri')
+
+    if not kwargs.get('method'):
+        method = None
+    else:
+        method = kwargs.pop('method')
+
+    if kwargs.get(UserKeys.Password):
+        kwargs.pop(UserKeys.Password)
+
+    user_exist = get_user(username, without_fields=None)
+    status = update_user_properties.func_name + ' - '
+    try:
+        if user_exist:
+            object_status, object_count, error, generated_ids = (
+                update_user(username, kwargs)
+            )
+
+            results = (
+                object_status, username, status, kwargs, error,
+                user_name, uri, method
+            )
+
+        else:
+            error = 'User %s does not exist - ' % (username)
+
+            results = (
+                DbCodes.Skipped, username, status + error, kwargs, error,
+                user_name, uri, method
+            )
+
+    except Exception as e:
+        logger.exception(e)
+        error = 'Failed to update properties for user %s - ' % (username)
+
+        results = (
+            DbCodes.Errors, username, status + error, kwargs, e,
             user_name, uri, method
         )
 

@@ -13,14 +13,20 @@ logger = logging.getLogger('rvapi')
 @time_it
 @db_create_close
 def fetch_user(username, without_fields=None, conn=None):
-    """
-    Retrieve a user from the database
-    :param username: Name of the user.
-    :param without_fields: (Optional) List of fields you do not want to include.
-    Basic Usage::
+    """Retrieve a user from the database
+    Args:
+        username (str): Name of the user.
+
+    Kwargs:
+        without_fields (list): List of fields you do not want to include.
+
+    Basic Usage:
         >>> from vFense.user._db import fetch_user
         >>> username = 'admin'
         >>> fetch_user(username, without_fields=['password'])
+
+    Return:
+        Dictionary of user properties.
         {
             u'current_customer': u'default',
             u'enabled': True,
@@ -58,39 +64,59 @@ def fetch_user(username, without_fields=None, conn=None):
 
 @time_it
 @db_create_close
-def fetch_users(customer_name=None, username=None, conn=None):
-    """
-    Retrieve all customers that is in the database by customer_name or
+def fetch_users(
+    customer_name=None, username=None,
+    without_fields=None, conn=None
+    ):
+    """Retrieve all users that is in the database by customer_name or
         all of the customers or by regex.
 
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located.
-    :param username: (Optional) Name of the user you are searching for.
-        This is a regular expression match.
+    Kwargs:
+        customer_name (str): Name of the customer, where the agent
+            is located.
+        username (str): Name of the user you are searching for.
+            This is a regular expression match.
+        without_fields (list): List of fields you do not want to include.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.user._db import fetch_users
         >>> customer_name = 'default'
-        >>> username = 'ag'
-        >>> fetch_users(customer_name, username)
+        >>> username = 'al'
+        >>> without_fields = ['password']
+        >>> fetch_users(customer_name, username, without_field)
+
+    Returns:
+        List of users:
         [
             {
-                u'customer_name': u'default',
-                u'user_name': u'agent',
-                u'id': u'ccac5136-3077-4d2c-a391-9bb15acd79fe'
+                "current_customer": "default", 
+                "email": "test@test.org", 
+                "full_name": "is doing it", 
+                "default_customer": "default", 
+                "user_name": "alien", 
+                "id": "ba9682ef-7adf-4916-8002-9637485b30d8", 
+                "customer_name": "default"
             }
         ]
     """
     data = []
     try:
-        if not customer_name and not username:
+        if not customer_name and not username and not without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(UsersCollection)
                 .run(conn)
             )
 
-        elif not customer_name and username:
+        elif not customer_name and not username and without_fields:
+            data = list(
+                r
+                .table(UsersCollection)
+                .without(without_fields)
+                .run(conn)
+            )
+
+        elif not customer_name and username and without_fields:
             data = list(
                 r
                 .table(CustomersPerUserCollection)
@@ -98,20 +124,17 @@ def fetch_users(customer_name=None, username=None, conn=None):
                     lambda x:
                     x[CustomerPerUserKeys.UserName].match("(?i)" + username)
                 )
-                .run(conn)
-            )
-
-        elif customer_name and not username:
-            data = list(
-                r
-                .table(CustomersPerUserCollection)
-                .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName],
+                    r.table(UsersCollection)
                 )
+                .zip()
+                .without(without_fields)
                 .run(conn)
             )
 
-        elif customer_name and username:
+        elif customer_name and username and without_fields:
             data = list(
                 r
                 .table(CustomersPerUserCollection)
@@ -122,6 +145,66 @@ def fetch_users(customer_name=None, username=None, conn=None):
                     lambda x:
                     x[CustomerPerUserKeys.UserName].match("(?i)" + username)
                 )
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName],
+                    r.table(UsersCollection)
+                )
+                .zip()
+                .without(without_fields)
+                .run(conn)
+            )
+
+        elif customer_name and not username and not without_fields:
+            data = list(
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                )
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName],
+                    r.table(UsersCollection)
+                )
+                .zip()
+                .run(conn)
+            )
+
+        elif customer_name and not username and without_fields:
+            data = list(
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                )
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName],
+                    r.table(UsersCollection)
+                )
+                .zip()
+                .without(without_fields)
+                .run(conn)
+            )
+
+        elif customer_name and username and not without_fields:
+            data = list(
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                )
+                .filter(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
+                )
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.UserName],
+                    r.table(UsersCollection)
+                )
+                .zip()
                 .run(conn)
             )
 
@@ -135,15 +218,19 @@ def fetch_users(customer_name=None, username=None, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_user(user_data, conn=None):
-    """
-    This function should not be called directly.
-    :param user_data: Can either be a list of dictionaries or a dictionary
-        of the data you are inserting.
+    """ Insert a new user and its properties into the database
+        This function should not be called directly.
+    Args:
+        user_data(list|dict): Can either be a list of dictionaries or a dictionary
+            of the data you are inserting.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.user._db import insert_user_data
         >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_user_data(user_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -156,7 +243,7 @@ def insert_user(user_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)
 
@@ -165,15 +252,19 @@ def insert_user(user_data, conn=None):
 @db_create_close
 @return_status_tuple
 def update_user(username, user_data, conn=None):
-    """
-    :param username: username of the user you are updating
-    :param user_data: Dictionary of the data you are updating
+    """Update  user's properties
+    Args:
+        username (str): username of the user you are updating
+        user_data (list|dict): Dictionary of the data you are updating
 
     Basic Usage::
-        >>> from vFense.user._db import update_user_data
+        >>> from vFense.user._db import update_user
         >>> username = 'admin'
         >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
-        >>> update_user_data(username, data)
+        >>> update_user(username, data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -187,7 +278,7 @@ def update_user(username, user_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)
 
@@ -196,12 +287,17 @@ def update_user(username, user_data, conn=None):
 @db_create_close
 @return_status_tuple
 def delete_user(username, conn=None):
-    """
-    :param username: username of the user you are deleteing.
+    """ Delete a user and all of its properties
+    Args:
+        username (str): username of the user you are deleteing.
+
     Basic Usage::
         >>> from vFense.user._db import delete_user
         >>> username = 'admin'
         >>> delete_user(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
