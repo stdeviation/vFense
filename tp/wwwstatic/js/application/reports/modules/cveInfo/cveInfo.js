@@ -7,32 +7,62 @@ define(
                 '#main': {
                     name: 'MAIN',
                     keys: [
-                        {name: 'supercedes', title: 'Supercedes:', supercedes: [
-                                {name: 'supercedes_bulletin_kb', title: 'Supercedes Bulletin KB:'},
-                                {name: 'supercedes_bulletin_id', title: 'Supercedes Bulletin ID:'}
-                            ]
-                        },
-                        {name: 'id', title: 'ID:'},
-                        {name: 'date_posted', title: 'Date Posted:'}
+                        {name: 'cve_id', title: 'CVE ID:'},
+                        {name: 'cve_sev', title: 'CVE Severity:'},
+                        {name: 'cve_published_date', title: 'CVE Published Date:'},
+                        {name: 'cve_modified_date', title: 'CVE Modified Date:'}
                     ]
                 },
-                '#bulletin': {
-                    name: 'BULLETIN',
+                '#cvssvector': {
+                    name: 'CVSS Vector',
+                    keys: [{name: 'cvss_vector', title: 'CVSS Vector:', cvssVector: [
+                        {name: 'metric', title: 'Metric:'},
+                        {name: 'value', title: 'Value:'}
+                    ]
+                    }]
+                },
+                '#classification': {
+                    name: 'Classification',
                     keys: [
-                        {name: 'bulletin_id', title: 'ID:'},
-                        {name: 'bulletin_details', title: 'Description:'}
+                        {name: 'cvss_impact_subscore', title: 'CVSS Impact Sub Score:'},
+                        {name: 'cvss_exploit_subscore', title: 'CVSS Exploit Sub Score:'}
                     ]
                 },
-                '#cveId': {
-                    name: 'CVEIDS',
-                    keys: [{name: 'cve_ids', title: 'CVE IDs:'}]
+                '#references': {
+                    name: 'References',
+                    keys: [{name: 'cve_refs', title: 'CVE References:', references: [
+                        {name: 'url', title: 'URL:'},
+                        {name: 'source', title: 'Source:'},
+                        {name: 'id', title: 'ID:'}
+                        ]
+                    }]
+                },
+                '#description': {
+                    name: 'Description',
+                    keys: {name: 'cve_descriptions', title: 'CVE Description:', cveDescription: [
+                            {name: 'description', title: 'Description:'},
+                            {name: 'source', title: 'Source:'}
+                          ]
+                    }
+                },
+                '#vulnerabilities': {
+                    name: 'Vulnerabilities',
+                    keys: [
+                        {name: 'vulnerability_categories', title: 'Vulnerability Categories:'}
+                    ]
+                },
+                '#cvssscore': {
+                    name: 'CVSS Score',
+                    keys: [
+                        {name: 'cvss_score', title: 'CVSS Score:'},
+                        {name: 'cvss_base_score', title: 'CVSS Base Score:'}
+                    ]
                 }
             };
-        exports.name = 'vulnerabilityInfo';
+        exports.name = 'cveInfo';
         exports.models = {
             Main: Backbone.Model.extend({
                 defaults: {
-                    id: '',
                     defaultTab: '#main'
                 }
             })
@@ -46,16 +76,15 @@ define(
                         throw new Error('hardwareInfo view requires a hardwareInfo model');
                     }
                     var id = this.model.get('id'),
-                        type = this.model.get('type'),
                         that = this;
                     this._currentTab = this.model.get('defaultTab');
-                    this.data = new (Backbone.Model.extend({
-                        baseUrl: '/api/v1/app/' + type + '/',
+                    this.cveModel = new (Backbone.Model.extend({
+                        baseUrl: '/api/v1/vulnerability/cve/',
                         url: function () {
                             return this.baseUrl + id;
                         }
                     }))();
-                    this.listenTo(this.data, 'sync', this.extractVulnerabilityData);
+                    this.listenTo(this.cveModel, 'sync', this.renderTabs);
                 },
                 events: {
                     'click li a[data-toggle=tab]'   : 'changeTab'
@@ -67,7 +96,7 @@ define(
 
                     var $el = this.$el;
 
-                    if (this.data.url) { this.data.fetch(); }
+                    if (this.cveModel.url) { this.cveModel.fetch(); }
                     if ($el.children().length === 0) {
                         $el.html(this.layout());
                     }
@@ -84,37 +113,10 @@ define(
                     );
                     return fragment;
                 },
-                extractVulnerabilityData: function (model) {
+                renderTabs: function(model) {
                     if (model.get('http_status') !== 200) {
                         throw new Error('API was not able to fetch data');
                     }
-
-                    var vulnerabilityID = model.get('data').vulnerability_id,
-                        type = this.model.get('type');
-                    if(model.get('data').vulnerability_id !== '')
-                    {
-                        var that = this;
-                        that.vulnerabilityModel = new (Backbone.Model.extend({
-                            baseUrl: '/api/v1/vulnerability/' + type + '/',
-                            url: function () {
-                                return this.baseUrl + vulnerabilityID;
-                            }
-                        }))();
-
-                        this.listenTo(this.vulnerabilityModel, 'sync', this.renderTabs);
-
-                        if(this.vulnerabilityModel.url)
-                        {
-                            this.vulnerabilityModel.fetch();
-                        }
-                    }
-                    else
-                    {
-                        this.$el.parents('.row-fluid').remove();
-                    }
-                    return this;
-                },
-                renderTabs: function(model) {
                     var selected,
                         $navTabs = this.$el.find('.nav-tabs'),
                         fragment = document.createDocumentFragment(),
@@ -143,7 +145,7 @@ define(
                 renderTab: function (tab) {
                     var $content = this.$el.find('.tab-content'),
                         $dl = $(crel('dl', {class: 'inline'})),
-                        data = this.vulnerabilityModel.get('data'),
+                        data = this.cveModel.get('data'),
                         keys = tabNames[tab].keys;
                     $content.empty();
                     if (keys.length) {
@@ -155,15 +157,36 @@ define(
                             } else if (typeof content === 'string') {
                                 $dl.append(
                                     crel('dt', object.title),
-                                    crel('dd', data[object.name] || 'N/A'));
+                                    crel('dd', data[object.name] || 'N/A')
+                                );
                             } else if (content.length) {
                                 $dl.append(
                                     crel('dt', object.title)
                                 );
                                 var innerContent;
-                                if(object.hasOwnProperty('supercedes'))
+                                if(object.hasOwnProperty('cvssVector'))
                                 {
-                                    innerContent = object.supercedes;
+                                    innerContent = object.cvssVector;
+                                    _.each(innerContent, function (obj) {
+                                        $dl.append(
+                                            crel('dt', obj.title),
+                                            crel('dd', content[0][obj.name] || 'N/A')
+                                        );
+                                    });
+                                }
+                                else if(object.hasOwnProperty('references'))
+                                {
+                                    innerContent = object.references;
+                                    _.each(innerContent, function (obj) {
+                                        $dl.append(
+                                            crel('dt', obj.title),
+                                            crel('dd', content[0][obj.name] || 'N/A')
+                                        );
+                                    });
+                                }
+                                else if(object.hasOwnProperty('cveDescription'))
+                                {
+                                    innerContent = object.cveDescription;
                                     _.each(innerContent, function (obj) {
                                         $dl.append(
                                             crel('dt', obj.title),
@@ -175,7 +198,7 @@ define(
                                 {
                                     _.each(content, function (cveId) {
                                         $dl.append(
-                                            crel('dd', {class: 'cveId'}, crel('a', {href: '#patches/vulnerability/cve/' + cveId}, cveId + ',') || 'N/A')
+                                            crel('dd', {class: 'cveId'}, crel('a', {href: '#'}, cveId + ',') || 'N/A')
                                         );
                                     });
                                 }
