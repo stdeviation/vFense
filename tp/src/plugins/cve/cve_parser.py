@@ -197,6 +197,7 @@ def parse_cve_and_udpatedb(download_latest_nvd=True, nvd_file=NVD_MODIFIED_FILE)
                         key != CveKey.CveVulnsSoft and
                         key != CveKey.CvePublishedDate and
                         key != CveKey.CveCategories and
+                        key != CveKey.CvssVector and
                         key != CveKey.CveModifiedDate):
                     cve_data[key] = unicode(cve_data[key])
 
