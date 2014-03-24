@@ -12,15 +12,27 @@ logger = logging.getLogger('rvapi')
 @time_it
 @db_create_close
 def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
-    """
-    Retrieve customer information
-    :param customer_name:  Name of the customer.
-    :param keys_to_pluck:  (Optional) list of keys you want to
-        retreive from the db.
+    """Retrieve customer information
+    Args:
+        customer_name  (str):   Name of the customer.
+
+    Kwargs:
+        keys_to_pluck (array): list of keys you want to retreive from the db.
+
     Basic Usage::
-        >>> from vFense.customer._db import fetch_customer_info
+        >>> from vFense.customer._db import fetch_customer
         >>> customer_name = 'default'
-        >>> fetch_customer_info(customer_name)
+        >>> fetch_customer(customer_name)
+
+    Returns:
+        Returns a Dict of the properties of a customer
+        {
+            u'cpu_throttle': u'normal',
+            u'package_download_url_base': u'http: //10.0.0.21/packages/',
+            u'operation_ttl': 10,
+            u'net_throttle': 0,
+            u'customer_name': u'default'
+        }
     """
     data = []
     try:
@@ -45,23 +57,172 @@ def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
 
     return(data)
 
+
+@time_it
+@db_create_close
+def fetch_customers(match=None, keys_to_pluck=None, conn=None):
+    """Retrieve all customers or just customers based on regular expressions
+    Kwargs:
+        match (str): Regular expression of the customer name
+            you are searching for.
+        keys_to_pluck (array): list of keys you want to retreive from the db.
+
+    Returns:
+        Returns a List of customers
+
+    Basic Usage::
+        >>> from vFense.customer._db import fetch_customers
+        >>> fetch_customers()
+
+    Return:
+        List of customer properties.
+        [
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'default'
+            },
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'TopPatch'
+            }
+        ]
+    """
+    data = []
+    try:
+        if match and keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersCollection)
+                .filter(
+                    lambda name:
+                    name[CustomerKeys.CustomerName].match("(?i)" + match)
+                )
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
+
+        elif match and not keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersCollection)
+                .filter(
+                    lambda name:
+                    name[CustomerKeys.CustomerName].match("(?i)" + match)
+                )
+                .run(conn)
+            )
+
+        elif not match and not keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersCollection)
+                .run(conn)
+            )
+
+        elif not match and keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersCollection)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
+    """Retrieve all the users for a customer
+    Args:
+        customer_name (str):  Name of the customer.
+
+    Kwargs:
+        keys_to_pluck (list):  list of keys you want to retreive from the db.
+
+    Basic Usage:
+        >>> from vFense.customer._db import fetch_users_for_customer
+        >>> customer_name = 'default'
+        >>> fetch_users_for_customer(customer_name)
+
+    Returns:
+        Returns a List of users for a customer
+
+        [
+            {
+                u'user_name': u'alien',
+                u'id': u'ba9682ef-7adf-4916-8002-9637485b30d8',
+                u'customer_name': u'default'
+            },
+            {
+                u'user_name': u'admin',
+                u'id': u'6bd86dcd-43fc-424e-88f1-684ce2189d88',
+                u'customer_name': u'default'
+            }
+        ]
+    """
+    data = []
+    try:
+        if customer_name and keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
+        elif customer_name and not keys_to_pluck:
+            data = list(
+                r
+                .table(CustomersPerUserCollection)
+                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
 @time_it
 @db_create_close
 def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
-    """
-    Retrieve customer information
-    :param username:  Name of the user.
-    :param keys_to_pluck:  (Optional) list of keys you want to
-        retreive from the db.
+    """Retrieve all the customers for a user
+    Args:
+        username (str):  Name of the user.
+
+    Kwargs:
+        keys_to_pluck (list):  list of keys you want to retreive from the db.
+
     Basic Usage::
         >>> from vFense.customer._db import fetch_customers_for_user
         >>> customer_name = 'default'
         >>> fetch_customers_for_user(username)
+
+    Returns:
+        Returns a List of customers for a user.
+        [
+            {
+                u'user_name': u'admin',
+                u'id': u'6bd86dcd-43fc-424e-88f1-684ce2189d88',
+                u'customer_name': u'default'
+            }
+        ]
     """
     data = []
     try:
         if username and keys_to_pluck:
-            data = (
+            data = list(
                 r
                 .table(CustomersPerUserCollection)
                 .get_all(username, index=CustomerPerUserIndexes.UserName)
@@ -69,9 +230,9 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
                 .run(conn)
             )
         elif username and not keys_to_pluck:
-            data = (
+            data = list(
                 r
-                .table(CustomersCollection)
+                .table(CustomersPerUserCollection)
                 .get_all(username, index=CustomerPerUserIndexes.UserName)
                 .run(conn)
             )
@@ -85,46 +246,55 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
 @time_it
 @db_create_close
 def users_exists_in_customer(username, customer_name, conn=None):
-    """
-    Retrieve customer information
-    :param customer_name:  Name of the customer.
-    Basic Usage::
+    """Verify if username is part of customer
+    Args:
+        username:  Name of the user.
+        customer_name:  Name of the customer.
+
+    Basic Usage:
         >>> from vFense.core.customer._db import user_exists_in_customers
+        >>> username = 'admin'
         >>> customer_name = 'default'
-        >>> user_exists_in_customers(customer_name)
+        >>> user_exists_in_customers(username, customer_name)
+
+    Return:
+        Boolean
+
     """
-    data = []
+    exist = False
     try:
-        data = (
+        empty = (
             r
             .table(CustomersPerUserCollection)
-            .get_all(customer_name, index=UserPerCustomerIndexes.CustomerName)
-            .filter(
-                {
-                    CustomerPerUserKeys.UserName: username
-                }
-            )
+            .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+            .is_empty()
             .run(conn)
         )
+        if not empty:
+            exist = True
 
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return(exist)
 
 
 @time_it
 @db_create_close
 @return_status_tuple
 def insert_customer(customer_data, conn=None):
-    """
-    :param customer_data: Can either be a list of dictionaries or a dictionary
+    """Insert a new customer into the database
+    Args:
+        customer_data (list|dict): Can either be a list of dictionaries or a dictionary
         of the data you are inserting.
 
-    Basic Usage::
+    Basic Usage:
         >>> from vFense.customer._db import insert_customer
         >>> customer_data = {'customer_name': 'vFense', 'operation_queue_ttl': 10}
         >>> insert_customer(data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -146,15 +316,19 @@ def insert_customer(customer_data, conn=None):
 @db_create_close
 @return_status_tuple
 def update_customer(customer_name, customer_data, conn=None):
-    """
-    :param customer_name: customer_name.
-    :param customer_data: Dictionary of the data you are updateing.
+    """Update verious fields for a customer
+    Args:
+        customer_name(str): customer_name.
+        customer_data(dict): Dictionary of the data you are updateing.
 
     Basic Usage::
         >>> from vFense.customer._db import update_customer
         >>> customer_name = 'default'
         >>> customer_data = {'operation_queue_ttl': 10}
         >>> update_customer(customer_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -177,15 +351,18 @@ def update_customer(customer_name, customer_data, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_user_per_customer(user_data, conn=None):
-    """
-    This function should not be called directly.
-    :param user_data: Can either be a list of dictionaries or a dictionary
-        of the data you are inserting.
+    """Add a customer to a user, this function should not be called directly.
+    Args:
+        user_data(list|dict): Can either be a list of dictionaries or a
+        dictionary of the data you are inserting.
 
     Basic Usage::
         >>> from vFense.customer._db import insert_user_per_customer
         >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_user_per_customer(user_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -207,14 +384,20 @@ def insert_user_per_customer(user_data, conn=None):
 @db_create_close
 @return_status_tuple
 def delete_user_in_customers(username, customer_names=None, conn=None):
-    """
-    :param username: username
-    :param customer_names: (Optional) List of customer_names
+    """Remove a customer from a user or remove all customers for a user.
+    Args:
+        username (str): Name of the user.
+
+    Kwargs:
+        customer_names (list): List of customer_names.
 
     Basic Usage::
         >>> from vFense.customer._db delete_user_in_customers
         >>> username = 'agent_api'
         >>> delete_user_in_customers(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
@@ -229,8 +412,8 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
                     .table(CustomersPerUserCollection)
                     .filter(
                         {
-                            CustomersPerUserKeys.UserName: username,
-                            CustomersPerUserKeys.CustomerName: customer_name
+                            CustomerPerUserKeys.UserName: username,
+                            CustomerPerUserKeys.CustomerName: customer_name
                         }
                     )
                     .delete()
@@ -261,13 +444,17 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
 @db_create_close
 @return_status_tuple
 def delete_customer(customer_name, conn=None):
-    """
-    :param customer_name: customer_name
+    """Delete a customer from the database.
+    Args:
+        customer_name: Name of the customer
 
     Basic Usage::
         >>> from vFense.customer._db delete_customer
         >>> customer_name = 'test'
         >>> delete_customer(customer_name)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
     data = {}
