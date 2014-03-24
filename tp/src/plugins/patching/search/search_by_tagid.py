@@ -1,12 +1,11 @@
 import logging
 import logging.config
 
-from datetime import datetime
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
-from vFense.agent import *
-from vFense.tagging import *
-from vFense.tagging.tagManager import tag_exists
+from vFense.core.agent import *
+from vFense.core.tag import *
+from vFense.core.tag.tagManager import tag_exists
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

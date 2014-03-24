@@ -11,7 +11,7 @@ from vFense.plugins.patching.rv_db_calls import update_os_app,\
     update_supported_app, update_agent_app
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import PackageCodes
-from vFense.agent import *
+from vFense.core.agent import *
 from urlgrabber import urlgrab
 from vFense.utils.common import hash_verifier
 

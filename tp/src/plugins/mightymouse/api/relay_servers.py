@@ -7,14 +7,14 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from vFense.agent import *
-from vFense.agent.agent_searcher import AgentSearcher
-from vFense.agent.agent_handler import AgentManager
+from vFense.core.agent import *
+from vFense.core.agent.agent_searcher import AgentSearcher
+from vFense.core.agent.agent_handler import AgentManager
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
-from vFense.agent.agents import get_supported_os_codes, get_supported_os_strings, \
+from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
 from vFense.operations import *
 from vFense.server.hierarchy.permissions import Permission

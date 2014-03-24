@@ -1,11 +1,11 @@
-from vFense.agent import *
 import logging
 import logging.config
+
+from vFense.core.agent import *
 from vFense.utils.common import *
-from vFense.agent.agents import *
+from vFense.core.agent.agents import *
 from vFense.plugins.patching import * 
-from time import ctime
-from vFense.tagging.tagManager import get_agent_ids_from_tag
+from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
 
 def system_os_details(agent_info):

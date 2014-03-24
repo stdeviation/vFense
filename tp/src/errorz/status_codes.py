@@ -28,6 +28,7 @@ class DbCodes(object):
     Deleted = 2006
     Nothing = 2007
     Skipped = 2008
+    DoesntExist = 2009
 
 
 class AgentCodes(object):

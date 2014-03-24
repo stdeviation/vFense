@@ -2,7 +2,7 @@ import logging
 import tornado.httpserver
 import tornado.web
 from json import dumps
-from vFense.agent.agents import update_agent_status
+from vFense.core.agent.agents import update_agent_status
 from vFense.errorz.error_messages import GenericResults, AgentResults
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.decorators import agent_authenticated_request

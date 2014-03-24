@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-from copy import deepcopy
 from time import mktime
 from datetime import datetime
 import logging
-from vFense.agent import *
-from vFense.tagging import *
+from vFense.core.agent import *
+from vFense.core.tag import *
 from datetime import datetime
 from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults, NotificationResults

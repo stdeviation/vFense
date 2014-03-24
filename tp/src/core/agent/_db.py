@@ -1,18 +1,14 @@
-from vFense.agent import *
 import logging
-from datetime import datetime
-from time import mktime
-from json import dumps
-from vFense.db.client import db_create_close, r, db_connect, return_status_tuple
-from vFense.db.hardware import Hardware
-from vFense.errorz.error_messages import AgentResults, GenericResults
-from vFense.errorz.status_codes import DbCodes
+
+from vFense.db.client import db_create_close, r
+from vFense.core.agent import *
 from vFense.plugins.patching import *
-from vFense.server.hierarchy import Collection, api
+from vFense.core.decorators import return_status_tuple, time_it
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
+@time_it
 @db_create_close
 def fetch_production_levels_from_agent(customer_name, conn=None):
     """
@@ -20,7 +16,7 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
     :param customer_name: (Optional) Name of the customer, where the agent
         is located
     Basic Usage::
-        >>> from vFense.agent._db import fetch_production_levels_from_agent
+        >>> from vFense.core.agent._db import fetch_production_levels_from_agent
         >>> customer_name = 'default'
         >>> fetch_production_levels_from_agent(customer_name)
         [
@@ -45,6 +41,8 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_supported_os_strings(customer_name, conn=None):
     """
@@ -52,7 +50,7 @@ def fetch_supported_os_strings(customer_name, conn=None):
     :param customer_name: (Optional) Name of the customer, where the agent
         is located
     Basic Usage::
-        >>> from vFense.agent._db import fetch_supported_os_strings
+        >>> from vFense.core.agent._db import fetch_supported_os_strings
         >>> customer_name = 'default'
         >>> fetch_supported_os_strings(customer_name)
         [
@@ -79,6 +77,8 @@ def fetch_supported_os_strings(customer_name, conn=None):
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
     """
@@ -86,7 +86,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         is located
     :param agent_os: (Optional) linux or windows or darwin
     Basic Usage::
-        >>> from vFense.agent._db import fetch_agent_ids
+        >>> from vFense.core.agent._db import fetch_agent_ids
         >>> customer_name = 'default'
         >>> os_code = 'os_code'
         >>> fetch_agent_ids(customer_name, os_code)
@@ -139,6 +139,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
     return(data)
 
 
+@time_it
 @db_create_close
 def fetch_agents(
     customer_name=None, filter_key=None, filter_val=None,
@@ -151,7 +152,7 @@ def fetch_agents(
     :param keys_to_pluck: (Optional) Specific keys that you are retrieving
         from the database
     Basic Usage::
-        >>> from vFense.agent._db import fetch_agents
+        >>> from vFense.core.agent._db import fetch_agents
         >>> key = 'os_code'
         >>> val = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
@@ -247,6 +248,8 @@ def fetch_agents(
 
     return(data)
 
+
+@time_it
 @db_create_close
 def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
     """
@@ -254,7 +257,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
     :param keys_to_pluck: (Optional) Specific keys that you are retrieving
         from the database
     Basic Usage::
-        >>> from vFense.agent._db import fetch_agent_info
+        >>> from vFense.core.agent._db import fetch_agent_info
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
         >>> keys_to_pluck = ['production_level', 'needs_reboot']
         >>> fetch_agent_info(agent_id, keys_to_pluck)
@@ -289,6 +292,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
     return(data)
 
 
+@time_it
 @db_create_close
 @return_status_tuple
 def update_agent_data(agent_id, agent_data, conn=None):
@@ -297,7 +301,7 @@ def update_agent_data(agent_id, agent_data, conn=None):
     :param agent_data: Dictionary of the data you are updating
 
     Basic Usage::
-        >>> from vFense.agent._db import update_agent_data
+        >>> from vFense.core.agent._db import update_agent_data
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
         >>> update_agent(agent_id, data)
@@ -314,10 +318,12 @@ def update_agent_data(agent_id, agent_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)
 
+
+@time_it
 @db_create_close
 @return_status_tuple
 def insert_agent_data(agent_data, conn=None):
@@ -326,7 +332,7 @@ def insert_agent_data(agent_data, conn=None):
         of the data you are inserting.
 
     Basic Usage::
-        >>> from vFense.agent._db import insert_agent_data
+        >>> from vFense.core.agent._db import insert_agent_data
         >>> agent_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_agent_data(agent_data)
         >>> (2001, 1, None, [u'317e4228-047f-450a-9f38-a554af098e0a'])
@@ -341,6 +347,6 @@ def insert_agent_data(agent_data, conn=None):
         )
 
     except Exception as e:
-        logger.exception(status)
+        logger.exception(e)
 
     return(data)

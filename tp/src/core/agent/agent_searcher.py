@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from vFense.agent import *
 
 from vFense.utils.common import *
+from vFense.core.agent import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid

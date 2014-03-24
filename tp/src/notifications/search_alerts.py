@@ -1,9 +1,7 @@
-from time import mktime
-from datetime import datetime
 import logging
 import logging.config
-from vFense.agent import *
-from vFense.tagging import *
+from vFense.core.agent import *
+from vFense.core.tag import *
 from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults, NotificationResults
 from vFense.operations import *

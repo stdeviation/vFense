@@ -1,7 +1,7 @@
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
-from vFense.agent import *
-from vFense.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.core.agent import *
+from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.plugins.patching.rv_db_calls import \
     apps_to_insert_per_agent, get_apps_data, get_app_data,\

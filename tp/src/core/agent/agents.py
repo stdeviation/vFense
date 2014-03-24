@@ -1,17 +1,17 @@
-from vFense.agent import *
-from vFense.agent._db import *
 import logging
 from datetime import datetime
 from time import mktime
-from json import dumps
-from vFense.db.client import db_create_close, r, db_connect, results_message
+
+from vFense.core.agent import *
+from vFense.core.agent._db import *
+from vFense.core.customer.customers import get_customer, create_customer
+from vFense.core.decorators import time_it, results_message
+
+from vFense.db.client import r
 from vFense.db.hardware import Hardware
-from vFense.customer.customers import get_customer_info, create_customer
 from vFense.errorz.error_messages import AgentResults, GenericResults
-from vFense.errorz.status_codes import DbCodes, GenericCodes
+from vFense.errorz.status_codes import DbCodes
 from vFense.plugins.patching import *
-from vFense.server.hierarchy import Collection, api
-from vFense.server.hierarchy.api import Customer
 import redis
 from rq import Queue
 
@@ -23,12 +23,13 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
+@time_it
 def get_production_levels(customer_name):
     """
     Retrieve all the production levels that is in the database.
     :param customer_name: Name of the customer, where the agent is located.
     Basic Usage::
-        >>> from vFense.agent.agents import get_production_levels
+        >>> from vFense.core.agent.agents import get_production_levels
         >>> customer_name = 'default'
         >>> get_production_levels(customer_name)
         [
@@ -40,11 +41,12 @@ def get_production_levels(customer_name):
     return(data)
 
 
+@time_it
 def get_supported_os_codes():
     """
     Retrieve all the base operating systems codes that is in the database.
     Basic Usage::
-        >>> from vFense.agent.agents import get_supported_os_codes
+        >>> from vFense.core.agent.agents import get_supported_os_codes
         >>> get_supported_os_codes()
         [
             u'windows',
@@ -56,12 +58,13 @@ def get_supported_os_codes():
     return(oses)
 
 
+@time_it
 def get_supported_os_strings(customer_name):
     """
     Retrieve all the operating systems that is in the database.
     :param customer_name: Name of the customer, where the agent is located.
     Basic Usage::
-        >>> from vFense.agent.agents import get_supported_os_strings
+        >>> from vFense.core.agent.agents import get_supported_os_strings
         >>> customer_name = 'default'
         >>> get_supported_os_strings(customer_name)
         [
@@ -75,13 +78,14 @@ def get_supported_os_strings(customer_name):
     return(data)
 
 
+@time_it
 def get_all_agent_ids(customer_name=None, agent_os=None):
     """
     :param customer_name: (Optional) Name of the customer, where the agent
         is located
     :param agent_os: (Optional) linux or windows or darwin
     Basic Usage::
-        >>> from vFense.agent.agents import get_all_agent_ids
+        >>> from vFense.core.agent.agents import get_all_agent_ids
         >>> customer_name = 'default'
         >>> agent_os = 'os_code'
         >>> get_all_agent_ids(customer_name, agent_os)
@@ -106,6 +110,7 @@ def get_all_agent_ids(customer_name=None, agent_os=None):
     return(agents)
 
 
+@time_it
 def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     """
     :param customer_name: (Optional) Name of the customer, where the agent
@@ -115,7 +120,7 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     :param keys_to_pluck: (Optional) Specific keys that you are retrieving
         from the database
     Basic Usage::
-        >>> from vFense.agent.agents import get_agents_info
+        >>> from vFense.core.agent.agents import get_agents_info
         >>> os_code = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
         >>> get_agents_info(customer_name, os_code, keys_to_pluck=pluck)
@@ -195,13 +200,14 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     return(agents)
 
 
+@time_it
 def get_agent_info(agent_id, keys_to_pluck=None):
     """
     :param agent_id: 36 character uuid of the agent you are updating
     :param keys_to_pluck: (Optional) Specific keys that you are retrieving
         from the database
     Basic Usage::
-        >>> from vFense.agent.agents import get_agent_info
+        >>> from vFense.core.agent.agents import get_agent_info
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
         >>> keys_to_pluck = ['production_level', 'needs_reboot']
         >>> get_agent_info(agent_id, keys_to_pluck)
@@ -219,6 +225,7 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     return(agent_info)
 
 
+@time_it
 @results_message
 def update_agent_field(agent_id, field, value, username=None, uri=None, method=None):
     """
@@ -227,7 +234,7 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
     :param value: The field will be updated to this value.
 
     Basic Usage::
-        >>> from vFense.agent.agents import update_agent_field
+        >>> from vFense.core.agent.agents import update_agent_field
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> field = 'production_level'
         >>> value = 'Development'
@@ -258,6 +265,8 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
 
     return(results)
 
+
+@time_it
 @results_message
 def update_agent_fields(agent_id, agent_data, username=None,
                         uri=None, method=None):
@@ -265,7 +274,7 @@ def update_agent_fields(agent_id, agent_data, username=None,
     :param agent_id: 36 character uuid of the agent you are updating
     :param agent_data: Dictionary of the data that you are updating
     Basic Usage::
-        >>> from vFense.agent.agents import update_agent_fields
+        >>> from vFense.core.agent.agents import update_agent_fields
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> agent_data = {'production_level': 'Development'}
         >>> update_agent_fields(agent_id, agent_data)
@@ -294,12 +303,14 @@ def update_agent_fields(agent_id, agent_data, username=None,
 
     return(results)
 
+
+@time_it
 @results_message
 def update_agent_status(agent_id, username=None, uri=None, method=None):
     """
     :param agent_id: 36 character uuid of the agent you are updating
     Basic Usage::
-        >>> from vFense.agent.agents import update_agent_status
+        >>> from vFense.core.agent.agents import update_agent_status
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> update_agent_status(agent_id)
         {
@@ -335,6 +346,8 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
 
     return(results)
 
+
+@time_it
 def add_agent(system_info, hardware, username=None,
               customer_name=None, uri=None, method=None):
     """
@@ -358,7 +371,7 @@ def add_agent(system_info, hardware, username=None,
             agent_data[AgentKey.ProductionLevel] = 'Production'
 
         if customer_name != 'default':
-            cexists = get_customer_info(customer_name)
+            cexists = get_customer(customer_name)
             if not cexists and len(customer_name) >= 1:
                 create_customer(
                     customer_name, username=username,
@@ -377,14 +390,14 @@ def add_agent(system_info, hardware, username=None,
             agent_id = generated_ids[0]
             Hardware().add(agent_id, agent_data[AgentKey.Hardware])
             data = {
-                    AgentKey.AgentId: agent_id,
-                    AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
-                    AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
-                    AgentKey.Hardware: agent_data[AgentKey.Hardware],
-                    AgentKey.Tags: agent_data[AgentKey.Tags],
-                    AgentKey.OsCode: agent_data[AgentKey.OsCode],
-                    AgentKey.OsString: agent_data[AgentKey.OsString],
-                }
+                AgentKey.AgentId: agent_id,
+                AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
+                AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
+                AgentKey.Hardware: agent_data[AgentKey.Hardware],
+                AgentKey.Tags: agent_data[AgentKey.Tags],
+                AgentKey.OsCode: agent_data[AgentKey.OsCode],
+                AgentKey.OsString: agent_data[AgentKey.OsString],
+            }
 
             status = (
                 AgentResults(
@@ -415,6 +428,7 @@ def add_agent(system_info, hardware, username=None,
     return(status)
 
 
+@time_it
 def update_agent(agent_id, system_info, hardware, rebooted,
                  username=None, customer_name=None,
                  uri=None, method=None):

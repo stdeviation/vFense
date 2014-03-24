@@ -4,7 +4,7 @@ import logging
 import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.operations import *
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, OperationResults, OperationCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import *

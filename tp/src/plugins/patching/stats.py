@@ -3,8 +3,8 @@ import logging
 from vFense.db.client import db_create_close, r
 from time import mktime
 from datetime import datetime, timedelta
-from vFense.tagging import *
-from vFense.agent import *
+from vFense.core.tag import *
+from vFense.core.agent import *
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_customer
 from vFense.errorz.error_messages import GenericResults

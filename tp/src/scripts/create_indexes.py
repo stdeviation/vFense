@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 
 from vFense.db.client import db_connect, r
-from vFense.agent import *
+
+from vFense.core.agent import *
+from vFense.core.tag import *
+from vFense.core.user import *
+from vFense.core.group import *
+from vFense.core.customer import *
+
 from vFense.notifications import *
 from vFense.operations import *
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.cve import *
 from vFense.receiver import *
-from vFense.tagging import *
+
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
@@ -42,13 +48,20 @@ def initialize_indexes_and_create_tables():
         (TagsPerAgentCollection, Id),
         (AgentQueueCollection, Id),
         (AppsCollection, AppsKey.AppId),
+        (UsersCollection, UserKeys.UserName),
+        (GroupsCollection, GroupKeys.GroupId),
+        (GroupsPerUserCollection, GroupsPerUserKeys.Id),
+        (CustomersCollection, CustomerKeys.CustomerName),
+        (CustomersPerUserCollection, CustomerPerUserKeys.Id),
     ]
     conn = db_connect()
+#################################### If Collections do not exist, create them #########################
     list_of_current_tables = r.table_list().run(conn)
     for table in tables:
         if table[0] not in list_of_current_tables:
             r.table_create(table[0], primary_key=table[1]).run(conn)
 
+#################################### Get All Indexes ###################################################
     app_list = r.table(AppsPerAgentCollection).index_list().run(conn)
     unique_app_list = r.table(AppsCollection).index_list().run(conn)
     downloaded_list = r.table('downloaded_status').index_list().run(conn)
@@ -73,6 +86,9 @@ def initialize_indexes_and_create_tables():
     agent_app_list = r.table(AgentAppsCollection).index_list().run(conn)
     agent_app_per_agent_list = r.table(AgentAppsPerAgentCollection).index_list().run(conn)
     agent_queue_list = r.table(AgentQueueCollection).index_list().run(conn)
+    groups_list = r.table(GroupsCollection).index_list().run(conn)
+    groups_per_user_list = r.table(GroupsPerUserCollection).index_list().run(conn)
+    customer_per_user_list = r.table(CustomersPerUserCollection).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.CustomerName in agents_list:
@@ -648,4 +664,28 @@ def initialize_indexes_and_create_tables():
     if not AgentQueueIndexes.AgentId in agent_queue_list:
         r.table(AgentQueueCollection).index_create(AgentQueueIndexes.AgentId).run(conn)
 
+#################################### Group Indexes ###################################################
+    if not GroupIndexes.CustomerName in groups_list:
+        r.table(GroupsCollection).index_create(GroupsIndexes.CustomerName).run(conn)
+
+#################################### Groups Per User Indexes ###################################################
+    if not GroupsPerUserIndexes.UserName in groups_per_user_list:
+        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.UserName).run(conn)
+
+    if not GroupsPerUserIndexes.CustomerName in groups_per_user_list:
+        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.CustomerName).run(conn)
+
+    if not GroupsPerUserIndexes.GroupName in groups_per_user_list:
+        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.GroupName).run(conn)
+
+    if not GroupsPerUserIndexes.GroupId in groups_per_user_list:
+        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.GroupId).run(conn)
+
+#################################### Customer Per User Indexes ###################################################
+    if not CustomerPerUserIndexes.UserName in customer_per_user_list:
+        r.table(CustomersPerUserCollection).index_create(CustomerPerUserIndexes.UserName).run(conn)
+
+    if not CustomerPerUserIndexes.CustomerName in customer_per_user_list:
+        r.table(CustomersPerUserCollection).index_create(CustomerPerUserIndexes.CustomerName).run(conn)
+#################################### Close Database Connection ###################################################
     conn.close()

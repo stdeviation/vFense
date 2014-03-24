@@ -2,7 +2,7 @@ import logging
 
 from time import mktime
 from datetime import datetime
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.db.client import r, db_connect
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

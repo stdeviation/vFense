@@ -10,10 +10,10 @@ from vFense.server.handlers import BaseHandler
 from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import GenericCodes
-from vFense.agent.agent_handler import AgentManager
-from vFense.tagging import *
-from vFense.tagging.tagManager import *
-from vFense.tagging.tag_searcher import TagSearcher
+from vFense.core.agent.agent_handler import AgentManager
+from vFense.core.tag import *
+from vFense.core.tag.tagManager import *
+from vFense.core.tag.tag_searcher import TagSearcher
 from vFense.utils.common import *
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import authenticated_request

@@ -2,11 +2,11 @@
 import logging
 import logging.config
 
-from vFense.tagging import *
-from vFense.agent import *
+from vFense.core.tag import *
+from vFense.core.agent import *
 from vFense.plugins.patching import *
 
-from vFense.db.client import db_create_close, r, db_connect
+from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults, TagResults
 
 import redis

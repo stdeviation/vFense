@@ -9,9 +9,9 @@ from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults
-from vFense.agent.agents import update_agent
+from vFense.core.agent.agents import update_agent
 from vFense.db.hardware import Hardware
 
 from vFense.receiver.rvhandler import RvHandOff

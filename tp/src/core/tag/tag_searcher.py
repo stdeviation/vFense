@@ -1,10 +1,8 @@
 import logging
 import logging.config
-from hashlib import sha256
-from datetime import datetime
 
-from vFense.tagging import *
-from vFense.agent import *
+from vFense.core.tag import *
+from vFense.core.agent import *
 
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r

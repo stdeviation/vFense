@@ -1,5 +1,5 @@
 from vFense.errorz.status_codes import *
-from vFense.agent import *
+from vFense.core.agent import *
 
 status = 'http_status'
 code = 'rv_status_code'
@@ -164,7 +164,7 @@ class GenericResults(object):
         return(
             {
                 status: 200,
-                code: GenericCodes.ObjectUpdated,
+                code: GenericCodes.ObjectCreated,
                 uri: self.uri,
                 method: self.method,
                 message: (

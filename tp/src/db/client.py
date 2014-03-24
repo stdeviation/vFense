@@ -5,8 +5,6 @@ from  functools import wraps
 import ConfigParser
 import types
 
-from vFense.errorz.status_codes import DbCodes
-from vFense.errorz.error_messages import GenericResults
 import rethinkdb as r
 import redis
 
@@ -94,96 +92,5 @@ def db_create_close(fn):
             conn.close()
 
         return(output)
-
-    return wraps(fn) (db_wrapper)
-
-
-def return_status_tuple(fn):
-    """Return the status of the db_call, plus the number of documents"""
-    def db_wrapper(*args, **kwargs):
-        status = fn(*args, **kwargs)
-        return_code = (DbCodes.Nothing, 0, None, [])
-        if status['deleted'] > 0:
-            return_code = (DbCodes.Deleted, status['deleted'], None, [])
-
-        elif status['errors'] > 0:
-            return_code = (
-                DbCodes.Errors, status['errors'], status['first_error'], []
-            )
-
-        elif status['inserted'] > 0:
-            if status.get('generated_keys'):
-                return_code = (
-                    DbCodes.Inserted, status['inserted'],
-                    None, status['generated_keys']
-                )
-            else:
-                return_code = (
-                    DbCodes.Inserted, status['inserted'],
-                    None, []
-                )
-
-        elif status['replaced'] > 0:
-            return_code = (DbCodes.Replaced, status['replaced'], None, [])
-
-        elif status['skipped'] > 0:
-            return_code = (DbCodes.Skipped, status['skipped'], None, [])
-
-        elif status['unchanged'] > 0:
-            return_code = (DbCodes.Unchanged, status['unchanged'], None, [])
-
-        return(return_code)
-
-    return wraps(fn) (db_wrapper)
-
-def results_message(fn):
-    """Return the results in the vFense API standard"""
-    def db_wrapper(*args, **kwargs):
-        data = fn(*args, **kwargs)
-        status_code = data[0]
-        object_id = data[1]
-        object_type = data[2]
-        object_data = data[3]
-        object_error = data[4]
-        username = data[5]
-        uri = data[6]
-        method = data[7]
-
-        if status_code == DbCodes.Inserted:
-            status = (
-                 GenericResults(
-                     username, uri, method
-                 ).object_created(object_id, object_type, object_data)
-            )
-
-        if status_code == DbCodes.Replaced:
-            status = (
-                 GenericResults(
-                     username, uri, method
-                 ).object_updated(object_id, object_type, object_data)
-            )
-
-        elif status_code == DbCodes.Unchanged:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).object_unchanged(object_id, object_type, object_data)
-            )
-
-        elif status_code == DbCodes.Skipped:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).invalid_id(object_id, object_type)
-            )
-
-        elif status_code == DbCodes.Errors:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(object_id, object_type, object_error)
-            )
-
-        return(status)
 
     return wraps(fn) (db_wrapper)
