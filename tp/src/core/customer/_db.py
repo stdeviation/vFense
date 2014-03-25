@@ -1,7 +1,9 @@
 import logging
 
 from vFense.core.customer import *
+from vFense.core.group._constants import *
 from vFense.core.user import *
+from vFense.core.user._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
@@ -39,7 +41,7 @@ def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
         if customer_name and keys_to_pluck:
             data = (
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .get(customer_name)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -47,7 +49,7 @@ def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
         elif customer_name and not keys_to_pluck:
             data = (
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .get(customer_name)
                 .run(conn)
             )
@@ -98,7 +100,7 @@ def fetch_customers(match=None, keys_to_pluck=None, conn=None):
         if match and keys_to_pluck:
             data = list(
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .filter(
                     lambda name:
                     name[CustomerKeys.CustomerName].match("(?i)" + match)
@@ -110,7 +112,7 @@ def fetch_customers(match=None, keys_to_pluck=None, conn=None):
         elif match and not keys_to_pluck:
             data = list(
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .filter(
                     lambda name:
                     name[CustomerKeys.CustomerName].match("(?i)" + match)
@@ -121,14 +123,14 @@ def fetch_customers(match=None, keys_to_pluck=None, conn=None):
         elif not match and not keys_to_pluck:
             data = list(
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .run(conn)
             )
 
         elif not match and keys_to_pluck:
             data = list(
                 r
-                .table(CustomersCollection)
+                .table(CustomerCollections.Customers)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -175,7 +177,7 @@ def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
         if customer_name and keys_to_pluck:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -183,7 +185,7 @@ def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
         elif customer_name and not keys_to_pluck:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
                 .run(conn)
             )
@@ -224,7 +226,7 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
         if username and keys_to_pluck:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(username, index=CustomerPerUserIndexes.UserName)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -232,7 +234,7 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
         elif username and not keys_to_pluck:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(username, index=CustomerPerUserIndexes.UserName)
                 .run(conn)
             )
@@ -265,7 +267,7 @@ def users_exists_in_customer(username, customer_name, conn=None):
     try:
         empty = (
             r
-            .table(CustomersPerUserCollection)
+            .table(CustomerCollections.CustomersPerUser)
             .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
             .is_empty()
             .run(conn)
@@ -301,7 +303,7 @@ def insert_customer(customer_data, conn=None):
     try:
         data = (
             r
-            .table(CustomersCollection)
+            .table(CustomerCollections.Customers)
             .insert(customer_data)
             .run(conn)
         )
@@ -335,7 +337,7 @@ def update_customer(customer_name, customer_data, conn=None):
     try:
         data = (
             r
-            .table(CustomersCollection)
+            .table(CustomerCollections.Customers)
             .get(customer_name)
             .update(customer_data)
             .run(conn)
@@ -369,7 +371,7 @@ def insert_user_per_customer(user_data, conn=None):
     try:
         data = (
             r
-            .table(CustomersPerUserCollection)
+            .table(CustomerCollections.CustomersPerUser)
             .insert(user_data)
             .run(conn)
         )
@@ -409,7 +411,7 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
                 .for_each(
                     lambda customer_name:
                     r
-                    .table(CustomersPerUserCollection)
+                    .table(CustomerCollections.CustomersPerUser)
                     .filter(
                         {
                             CustomerPerUserKeys.UserName: username,
@@ -424,7 +426,7 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
         else:
             data = (
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .filter(
                     {
                         CustomerPerUserKeys.UserName: username,
@@ -461,7 +463,7 @@ def delete_customer(customer_name, conn=None):
     try:
         data = (
             r
-            .table(CustomersCollection)
+            .table(CustomerCollections.Customers)
             .get(customer_name)
             .delete()
             .run(conn)

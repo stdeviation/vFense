@@ -2,7 +2,9 @@ import logging
 
 from vFense.core._db import retrieve_object
 from vFense.core.customer import *
+from vFense.core.customer._constants import *
 from vFense.core.user import *
+from vFense.core.user._constants import *
 from vFense.core.customer._db import insert_customer, fetch_customer, \
     insert_user_per_customer, delete_user_in_customers , delete_customer, \
     users_exists_in_customer, update_customer, fetch_users_for_customer
@@ -163,7 +165,7 @@ def add_user_to_customers(
     """
     customers_are_valid = validate_customer_names(customer_names)
     results = None
-    user_exist = retrieve_object(username, UsersCollection)
+    user_exist = retrieve_object(username, UserCollections.Users)
     data_list = []
     status = add_user_to_customers.func_name + ' - '
     if customers_are_valid[0]:
@@ -284,7 +286,7 @@ def create_customer(
         if not http_application_url_location:
             http_application_url_location = (
                 get_customer(
-                    DEFAULT_CUSTOMER,
+                    DefaultCustomers.DEFAULT,
                     [CustomerKeys.PackageUrl]
                 ).get(CustomerKeys.PackageUrl)
             )
@@ -304,9 +306,9 @@ def create_customer(
                 username, customer_name, user_name, uri, method
             )
 
-            if username != ADMIN_USER:
+            if username != DefaultCustomers.DEFAULT:
                 add_user_to_customers(
-                    ADMIN_USER, customer_name, user_name, uri, method
+                    DefaultCustomers.DEFAULT, customer_name, user_name, uri, method
                 )
 
         results = (

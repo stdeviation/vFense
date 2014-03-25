@@ -1,7 +1,9 @@
 import logging                                                                                                     
 
 from vFense.core.user import *
+from vFense.core.user._constants import *
 from vFense.core.group import *
+from vFense.core.group._constants import *
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
     delete_user, update_user
 from vFense.core.group.groups import validate_group_ids, \
@@ -86,7 +88,7 @@ def get_users(customer_name=None, username=None, without_fields=None):
 @results_message
 def create_user(
     username, fullname, password, group_ids,
-    customer_name, email, user_name=None,
+    customer_name, email, enabled=True, user_name=None,
     uri=None, method=None
     ):
     """Add a new user into vFense
@@ -97,6 +99,8 @@ def create_user(
         group_ids (list): List of vFense group ids to add the user too.
         customer_name (str): The customer, this user will be part of.
         email (str): Email address of the user.
+        enabled (boolean): True or False
+            Default=True
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -130,6 +134,7 @@ def create_user(
                 'default_customer': 'default',
                 'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
                 'user_name': 'testing123',
+                'enabled': True,
                 'email': 'test@test.org'
             }
         }
@@ -151,6 +156,7 @@ def create_user(
                         UserKeys.FullName: fullname,
                         UserKeys.Password: encrypted_password,
                         UserKeys.UserName: username,
+                        UserKeys.Enabled: enabled,
                         UserKeys.Email: email
                     }
                 )
@@ -220,7 +226,7 @@ def create_user(
     except Exception as e:
         logger.exception(e)
         results = (
-            DbCodes.Errors, username, status + e, e, e,
+            DbCodes.Errors, username, status, e, e,
             user_name, uri, method
         )
 
@@ -452,7 +458,7 @@ def update_user_properties(username, **kwargs):
         error = 'Failed to update properties for user %s - ' % (username)
 
         results = (
-            DbCodes.Errors, username, status + error, kwargs, e,
+            DbCodes.Errors, username, status, kwargs, e,
             user_name, uri, method
         )
 

@@ -48,11 +48,11 @@ def initialize_indexes_and_create_tables():
         (TagsPerAgentCollection, Id),
         (AgentQueueCollection, Id),
         (AppsCollection, AppsKey.AppId),
-        (UsersCollection, UserKeys.UserName),
-        (GroupsCollection, GroupKeys.GroupId),
-        (GroupsPerUserCollection, GroupsPerUserKeys.Id),
-        (CustomersCollection, CustomerKeys.CustomerName),
-        (CustomersPerUserCollection, CustomerPerUserKeys.Id),
+        (UserCollections.Users, UserKeys.UserName),
+        (GroupCollections.Groups, GroupKeys.GroupId),
+        (GroupCollections.GroupsPerUser, GroupsPerUserKeys.Id),
+        (CustomerCollections.Customers, CustomerKeys.CustomerName),
+        (CustomerCollections.CustomersPerUser, CustomerPerUserKeys.Id),
     ]
     conn = db_connect()
 #################################### If Collections do not exist, create them #########################
@@ -86,9 +86,9 @@ def initialize_indexes_and_create_tables():
     agent_app_list = r.table(AgentAppsCollection).index_list().run(conn)
     agent_app_per_agent_list = r.table(AgentAppsPerAgentCollection).index_list().run(conn)
     agent_queue_list = r.table(AgentQueueCollection).index_list().run(conn)
-    groups_list = r.table(GroupsCollection).index_list().run(conn)
-    groups_per_user_list = r.table(GroupsPerUserCollection).index_list().run(conn)
-    customer_per_user_list = r.table(CustomersPerUserCollection).index_list().run(conn)
+    groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
+    groups_per_user_list = r.table(GroupCollections.GroupsPerUser).index_list().run(conn)
+    customer_per_user_list = r.table(CustomerCollections.CustomersPerUser).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.CustomerName in agents_list:
@@ -666,26 +666,26 @@ def initialize_indexes_and_create_tables():
 
 #################################### Group Indexes ###################################################
     if not GroupIndexes.CustomerName in groups_list:
-        r.table(GroupsCollection).index_create(GroupIndexes.CustomerName).run(conn)
+        r.table(GroupCollections.Groups).index_create(GroupIndexes.CustomerName).run(conn)
 
 #################################### Groups Per User Indexes ###################################################
     if not GroupsPerUserIndexes.UserName in groups_per_user_list:
-        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.UserName).run(conn)
+        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.UserName).run(conn)
 
     if not GroupsPerUserIndexes.CustomerName in groups_per_user_list:
-        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.CustomerName).run(conn)
+        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.CustomerName).run(conn)
 
     if not GroupsPerUserIndexes.GroupName in groups_per_user_list:
-        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.GroupName).run(conn)
+        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupName).run(conn)
 
     if not GroupsPerUserIndexes.GroupId in groups_per_user_list:
-        r.table(GroupsPerUserCollection).index_create(GroupsPerUserIndexes.GroupId).run(conn)
+        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupId).run(conn)
 
 #################################### Customer Per User Indexes ###################################################
     if not CustomerPerUserIndexes.UserName in customer_per_user_list:
-        r.table(CustomersPerUserCollection).index_create(CustomerPerUserIndexes.UserName).run(conn)
+        r.table(CustomerCollections.CustomersPerUser).index_create(CustomerPerUserIndexes.UserName).run(conn)
 
     if not CustomerPerUserIndexes.CustomerName in customer_per_user_list:
-        r.table(CustomersPerUserCollection).index_create(CustomerPerUserIndexes.CustomerName).run(conn)
+        r.table(CustomerCollections.CustomersPerUser).index_create(CustomerPerUserIndexes.CustomerName).run(conn)
 #################################### Close Database Connection ###################################################
     conn.close()

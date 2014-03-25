@@ -1,6 +1,7 @@
 import logging
 
 from vFense.core.group import *
+from vFense.core.group._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
@@ -35,7 +36,7 @@ def fetch_group(group_id, conn=None):
     try:
         data = (
             r
-            .table(GroupsCollection)
+            .table(GroupCollections.Groups)
             .get(group_id)
             .run(conn)
         )
@@ -80,7 +81,7 @@ def fetch_group_by_name(
         if fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .filter(
                     {
                         GroupKeys.GroupName: group_name,
@@ -93,7 +94,7 @@ def fetch_group_by_name(
         else:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .filter(
                     {
                         GroupKeys.GroupName: group_name,
@@ -148,7 +149,7 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
         if fields_to_pluck:
             data = list(
                 r
-                .table(GroupsPerUserCollection)
+                .table(GroupCollections.GroupsPerUser)
                 .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
                 .pluck(fields_to_pluck)
                 .run(conn)
@@ -156,7 +157,7 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
         else:
             data = list(
                 r
-                .table(GroupsPerUserCollection)
+                .table(GroupCollections.GroupsPerUser)
                 .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
                 .run(conn)
             )
@@ -207,7 +208,7 @@ def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
         if username and not fields_to_pluck:
             data = list(
                 r
-                .table(GroupsPerUserCollection)
+                .table(GroupCollections.GroupsPerUser)
                 .get_all(username, index=GroupsPerUserIndexes.UserName)
                 .run(conn)
             )
@@ -215,12 +216,11 @@ def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
         elif username and fields_to_pluck:
             data = list(
                 r
-                .table(GroupsPerUserCollection)
+                .table(GroupCollections.GroupsPerUser)
                 .get_all(username, index=GroupsPerUserIndexes.UserName)
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
-
 
     except Exception as e:
         logger.exception(e)
@@ -279,14 +279,14 @@ def fetch_groups(
         if not customer_name and not groupname and not fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .run(conn)
             )
 
         elif not customer_name and not groupname and fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
@@ -294,7 +294,7 @@ def fetch_groups(
         elif not customer_name and groupname and not fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .filter(
                     lambda x:
                     x[GroupKeys.GroupName].match("(?i)" + groupname)
@@ -305,7 +305,7 @@ def fetch_groups(
         elif not customer_name and groupname and fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .filter(
                     lambda x:
                     x[GroupKeys.GroupName].match("(?i)" + groupname)
@@ -317,7 +317,7 @@ def fetch_groups(
         elif customer_name and not groupname and not fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .get_all(
                     customer_name, index=GroupIndexes.CustomerName
                 )
@@ -327,7 +327,7 @@ def fetch_groups(
         elif customer_name and not groupname and fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .get_all(
                     customer_name, index=GroupIndexes.CustomerName
                 )
@@ -338,7 +338,7 @@ def fetch_groups(
         elif customer_name and groupname and not fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .get_all(
                     customer_name, index=GroupIndexes.CustomerName
                 )
@@ -352,7 +352,7 @@ def fetch_groups(
         elif customer_name and groupname and fields_to_pluck:
             data = list(
                 r
-                .table(GroupsCollection)
+                .table(GroupCollections.Groups)
                 .get_all(
                     customer_name, index=GroupIndexes.CustomerName
                 )
@@ -392,7 +392,7 @@ def insert_group(group_data, conn=None):
     try:
         data = (
             r
-            .table(GroupsCollection)
+            .table(GroupCollections.Groups)
             .insert(group_data)
             .run(conn)
         )
@@ -425,7 +425,7 @@ def insert_group_per_user(group_data, conn=None):
     try:
         data = (
             r
-            .table(GroupsPerUserCollection)
+            .table(GroupCollections.GroupsPerUser)
             .insert(group_data)
             .run(conn)
         )
@@ -458,7 +458,7 @@ def update_group(group_id, group_data, conn=None):
     try:
         data = (
             r
-            .table(GroupsCollection)
+            .table(GroupCollections.Groups)
             .get(group_id)
             .update(group_data)
             .run(conn)
@@ -499,7 +499,7 @@ def delete_groups_from_user(username, group_ids=None, conn=None):
                 .for_each(
                     lambda group_id:
                     r
-                    .table(GroupsPerUserCollection)
+                    .table(GroupCollections.GroupsPerUser)
                     .filter(
                         {
                             GroupsPerUserKeys.UserName: username,
@@ -514,7 +514,7 @@ def delete_groups_from_user(username, group_ids=None, conn=None):
         else:
             data = (
                 r
-                .table(GroupsPerUserCollection)
+                .table(GroupCollections.GroupsPerUser)
                 .filter(
                     {
                         GroupsPerUserKeys.UserName: username,
@@ -552,7 +552,7 @@ def delete_group(group_id, conn=None):
 
         data = (
             r
-            .table(GroupsCollection)
+            .table(GroupCollections.Groups)
             .get(group_id)
             .delete()
             .run(conn)

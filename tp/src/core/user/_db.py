@@ -1,8 +1,11 @@
 import logging
 
 from vFense.core.user import *
+from vFense.core.user._constants import *
 from vFense.core.group import *
+from vFense.core.group._constants import *
 from vFense.core.customer import *
+from vFense.core.customer._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
@@ -41,7 +44,7 @@ def fetch_user(username, without_fields=None, conn=None):
         if not without_fields:
             data = (
                 r
-                .table(UsersCollection)
+                .table(UserCollections.Users)
                 .get(username)
                 .run(conn)
             )
@@ -49,7 +52,7 @@ def fetch_user(username, without_fields=None, conn=None):
         else:
             data = (
                 r
-                .table(UsersCollection)
+                .table(UserCollection.Users)
                 .get_all(username)
                 .without(without_fields)
                 .run(conn)
@@ -104,14 +107,14 @@ def fetch_users(
         if not customer_name and not username and not without_fields:
             data = list(
                 r
-                .table(UsersCollection)
+                .table(UserCollections.Users)
                 .run(conn)
             )
 
         elif not customer_name and not username and without_fields:
             data = list(
                 r
-                .table(UsersCollection)
+                .table(UserCollections.Users)
                 .without(without_fields)
                 .run(conn)
             )
@@ -119,7 +122,7 @@ def fetch_users(
         elif not customer_name and username and without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .filter(
                     lambda x:
                     x[CustomerPerUserKeys.UserName].match("(?i)" + username)
@@ -137,7 +140,7 @@ def fetch_users(
         elif customer_name and username and without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(
                     customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
@@ -158,7 +161,7 @@ def fetch_users(
         elif customer_name and not username and not without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(
                     customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
@@ -174,7 +177,7 @@ def fetch_users(
         elif customer_name and not username and without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(
                     customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
@@ -191,7 +194,7 @@ def fetch_users(
         elif customer_name and username and not without_fields:
             data = list(
                 r
-                .table(CustomersPerUserCollection)
+                .table(CustomerCollections.CustomersPerUser)
                 .get_all(
                     customer_name, index=CustomerPerUserIndexes.CustomerName
                 )
@@ -237,7 +240,7 @@ def insert_user(user_data, conn=None):
     try:
         data = (
             r
-            .table(UsersCollection)
+            .table(UserCollections.Users)
             .insert(user_data)
             .run(conn)
         )
@@ -271,7 +274,7 @@ def update_user(username, user_data, conn=None):
     try:
         data = (
             r
-            .table(UsersCollection)
+            .table(UserCollections.Users)
             .get(username)
             .update(user_data)
             .run(conn)
@@ -304,7 +307,7 @@ def delete_user(username, conn=None):
     try:
         data = (
             r
-            .table(UsersCollection)
+            .table(UserCollections.Users)
             .get(username)
             .delete()
             .run(conn)

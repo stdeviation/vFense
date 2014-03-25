@@ -1,8 +1,6 @@
-GroupsCollection = 'groups'
-GroupsPerUserCollection = 'groups_per_user'
-INSTALL_ONLY = 'Install Only'
-READ_ONLY = 'Read Only'
-ADMINISTRATOR = 'Administrator'
+class GroupCollections():
+    Groups = 'groups'
+    GroupsPerUser = 'groups_per_user'
 
 class GroupKeys():
     GroupName = 'group_name'
