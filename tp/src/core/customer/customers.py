@@ -51,12 +51,12 @@ def get_customer(customer_name, keys_to_pluck=None):
 
 @time_it
 def get_customer_property(customer_name, customer_property):
-    """Retrieve customer information.
+    """Retrieve customer property.
     Args:
         customer_name (str):  Name of the customer.
 
     Kwargs:
-        customer_property (str): the Property you want to retrieve.
+        customer_property (str): Property you want to retrieve.
 
     Basic Usage:
         >>> from vFense.customer.customers get_customer_property

@@ -154,7 +154,7 @@ def get_details(soup_details):
 def write_content_to_file(file_location, url):
     usn_file = open(file_location, 'wb')
     usn_page = requests.get(url)
-    #usn_page.close()
+    usn_page.close()
     completed = False
     content = None
     if usn_page.ok:
@@ -172,7 +172,7 @@ def get_url_content(usn_uri):
     usn = usn_uri.split('/')[-2]
     if re.search('http', usn_uri):
         usn_page = requests.get(usn_uri)
-        #usn_page.close()
+        usn_page.close()
         if usn_page.ok:
             content = usn_page.content
             completed = True
@@ -256,7 +256,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
 
     if main_page.ok:
         soup = BeautifulSoup(main_page.content)
-        #main_page.close()
+        main_page.close()
         next_page = (
             soup.find(
                 'div',

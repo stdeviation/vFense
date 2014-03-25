@@ -48,6 +48,30 @@ def get_user(username, without_fields=['password']):
 
 
 @time_it
+def get_user_property(username, user_property):
+    """Retrieve user property.
+    Args:
+        username (str):  Name of the user.
+        user_property (str): Property you want to retrieve.
+
+    Basic Usage:
+        >>> from vFense.user.users get_user_property
+        >>> username = 'admin'
+        >>> user_property = 'current_customer'
+        >>> get_user_property(username, user_property)
+
+    Return:
+        String
+    """
+    user_data = fetch_user(username, user_property)
+    user_key = None
+    if user_data:
+        user_key = user_data.get(user_property)
+
+    return(user_key)
+
+
+@time_it
 def get_users(customer_name=None, username=None, without_fields=None):
     """Retrieve all users that is in the database by customer_name or
         all of the customers or by regex.
