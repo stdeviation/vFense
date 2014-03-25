@@ -7,10 +7,9 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from vFense.core.decorators import check_permission
-from vFense.core.permissions._constant import *
+from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user
-from vFense.core.permissions.decorators import check_permission
+from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.agent.agent_searcher import AgentSearcher
 from vFense.core.agent.agent_handler import AgentManager
@@ -172,7 +171,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permission(Permissions.ADMINISTRATOR)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -214,7 +213,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permission(Permissions.ADMINISTRATOR)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -285,7 +284,7 @@ class AgentHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permission(Permissions.ADMINISTRATOR)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -346,7 +345,7 @@ class AgentHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
-    @check_permission(Permissions.ADMINISTRATOR)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
