@@ -1,8 +1,6 @@
-GroupsCollection = 'groups'
-GroupsPerUserCollection = 'groups_per_user'
-INSTALL_ONLY = 'Install Only'
-READ_ONLY = 'Read Only'
-ADMINISTRATOR = 'Administrator'
+class GroupCollections():
+    Groups = 'groups'
+    GroupsPerUser = 'groups_per_user'
 
 class GroupKeys():
     GroupName = 'group_name'
@@ -13,6 +11,8 @@ class GroupKeys():
 
 class GroupIndexes():
     CustomerName = 'customer_name'
+    GroupName = 'group_name'
+    Permissions = 'permissions'
 
 
 class GroupsPerUserKeys():

@@ -1,9 +1,12 @@
 import logging                                                                                                     
 
 from vFense.core.group import *
+from vFense.core.group._constants import *
 from vFense.core.user import *
+from vFense.core.user._constants import *
 from vFense.core.customer import *
-from vFense.core.permissions import *
+from vFense.core.customer._constants import *
+from vFense.core.permissions._constants import *
 from vFense.core._db import retrieve_object
 from vFense.core.group._db import insert_group, fetch_group, fetch_groups, \
     insert_group_per_user, fetch_group_by_name, delete_groups_from_user, \
@@ -269,9 +272,10 @@ def add_user_to_groups(
         }
     }
     """
+    status = add_user_to_groups.func_name + ' - '
     groups_are_valid = validate_group_ids(group_ids, customer_name)
-    user_exist = retrieve_object(username, UsersCollection)
-    customer_exist = retrieve_object(customer_name, CustomersCollection)
+    user_exist = retrieve_object(username, UserCollections.Users)
+    customer_exist = retrieve_object(customer_name, CustomerCollections.Customers)
     results = None
     if groups_are_valid[0] and user_exist and customer_exist:
         data_list = []
@@ -292,24 +296,24 @@ def add_user_to_groups(
         )
 
         results = (
-            object_status, generated_ids, 'groups per user', data_to_add,
+            object_status, generated_ids, status, data_to_add,
             error, user_name, uri, method
         )
 
     elif not groups_are_valid[0]:
         status_code = DbCodes.Errors
-        status_error = 'Group Ids are invalid: %s' % (groups_are_valid[2])
+        error = 'Group Ids are invalid: %s' % (groups_are_valid[2])
         results = (
-            status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
+            status_code, None, status + error, [],
+            error, user_name, uri, method
         )
 
     elif not user_exist:
         status_code = DbCodes.Errors
-        status_error = 'User name is invalid: %s' % (username)
+        error = 'User name is invalid: %s' % (username)
         results = (
-            status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
+            status_code, None, status + error, [],
+            error, user_name, uri, method
         )
 
     elif not customer_exist:
@@ -317,7 +321,7 @@ def add_user_to_groups(
         status_error = 'Customer name is invalid: %s' % (customer_name)
         results = (
             status_code, None, 'groups per user', [],
-            status_error, user_name, uri, method
+            error, user_name, uri, method
         )
 
     return(results)
@@ -365,9 +369,10 @@ def create_group(
         }
     """
 
+    status = create_group.func_name + ' - '
     try:
         group_exist = get_group_by_name(group_name, customer_name)
-        permissions_valid = set(permissions).issubset(set(VALID_PERMISSIONS))
+        permissions_valid = set(permissions).issubset(set(Permissions.VALID_PERMISSIONS))
         if not group_exist and permissions_valid:
             group_data = (
                 {
@@ -382,28 +387,28 @@ def create_group(
             )
 
             results = (
-                status_code, generated_ids, 'create group',
+                status_code, generated_ids, status,
                 group_data, error, user_name, uri, method
             )
 
         elif not group_exist and not permissions_valid:
             error = 'invalid permissions %s' % (permissions)
             results = (
-                DbCodes.Errors, group_name, 'create group',
+                DbCodes.Errors, group_name, status + error,
                 [], error, user_name, uri, method
             )
 
         elif group_exist:
             error = 'group %s exists' % (group_name)
             results = (
-                DbCodes.Errors, group_name, 'create group',
+                DbCodes.Errors, group_name, status + error,
                 [], error, user_name, uri, method
             )
 
     except Exception as e:
         logger.exception(e)
         results = (
-            DbCodes.Errors, group_name, 'create group',
+            DbCodes.Errors, group_name, status,
             [], e, user_name, uri, method
         )
 
@@ -442,16 +447,16 @@ def remove_groups_from_user(
             'http_status': 409
         }
     """
+    status = remove_groups_from_user.func_name + ' - '
     try:
         if group_ids:
-            msg = 'group ids: ' + ', '.join(group_ids)
+            msg = 'group ids: ' + 'and '.join(group_ids)
         else:
-            msg = 'groups'
+            msg = 'all groups'
 
         status_code, count, errors, generated_ids = (
             delete_groups_from_user(username, group_ids)
         )
-        status = remove_groups_from_user.func_name + ' - '
         results = (
             status_code, msg, status, [], None,
             user_name, uri, method
@@ -459,7 +464,6 @@ def remove_groups_from_user(
 
     except Exception as e:
         logger.exception(e)
-        status = remove_groups_from_user.func_name + ' - '
         results = (
             DbCodes.Errors, username, status, [], e,
             user_name, uri, method

@@ -13,6 +13,7 @@ operation_id = 'operation_id'
 agent_id = 'agent_id'
 new_agent = 'new_agent_id'
 check_in = 'check_in'
+generated_ids = 'generated_ids'
 
 
 class GenericResults(object):
@@ -160,16 +161,17 @@ class GenericResults(object):
             }
         )
 
-    def object_created(self, object_id, object_type, object_data):
+    def object_created(self, object_ids, object_type, object_data):
         return(
             {
                 status: 200,
                 code: GenericCodes.ObjectCreated,
                 uri: self.uri,
                 method: self.method,
+                generated_ids: object_ids,
                 message: (
                     '%s - %s %s was created'
-                    % (self.username, object_type, object_id)
+                    % (self.username, object_type, object_ids)
                 ),
                 data: object_data
             }
@@ -262,6 +264,33 @@ class GenericResults(object):
                 )
             }
         )
+
+    def permission_denied(self, username):
+        return(
+            {
+                status: 403,
+                code: GenericCodes.PermissionDenied,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission denied for user %s' % (self.username)
+                )
+            }
+        )
+
+    def invalid_permission(self, username, permission):
+        return(
+            {
+                status: 404,
+                code: GenericCodes.InvalidPermission,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission %s is invalid' % (permission)
+                )
+            }
+        )
+
 
 
 

@@ -1,5 +1,5 @@
-UsersCollection = 'users'
-ADMIN_USER = 'admin'
+class UserCollections():
+    Users = 'users'
 
 class UserKeys():
     CurrentCustomer = 'current_customer'

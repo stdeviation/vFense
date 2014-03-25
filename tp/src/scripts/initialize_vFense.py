@@ -13,15 +13,18 @@ import create_indexes as ci
 import nginx_config_creator as ncc
 from vFense import *
 from vFense.supported_platforms import *
-from vFense.utils.security import generate_pass
+from vFense.utils.security import generate_pass, check_password
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
 
-from vFense.server import hierarchy
-from vFense.server.hierarchy import *
-from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.hierarchy.manager import Hierarchy
-from vFense.server.hierarchy.permissions import Permission
+
+from vFense.core.user._constants import *
+from vFense.core.group._constants import *
+from vFense.core.customer._constants import *
+from vFense.core.permissions._constants import *
+import vFense.core.group.groups as group
+import vFense.core.customer.customers as customer
+import vFense.core.user.users as user
 
 from vFense.plugins import monit
 from vFense.plugins import cve
@@ -81,6 +84,17 @@ parser.add_argument(
 parser.set_defaults(cve_data=True)
 
 args = parser.parse_args()
+
+if args.admin_password:
+    password_validated = check_password(args.admin_password)
+    if not password_validated[0]:
+        print (
+            'Password failed to meet the minimum requirements.\n' +
+            'Uppercase, Lowercase, Numeric, Alphanumeric ' +
+            'and a total of 8 characters.\nYour password: %s is %s' %
+            (args.admin_password, password_validated[1])
+        )
+        sys.exit(1)
 
 if args.queue_ttl:
     args.queue_ttl = int(args.queue_ttl)
@@ -203,24 +217,42 @@ def initialize_db():
         ci.initialize_indexes_and_create_tables()
         conn = db_connect()
 
-        hierarchy_db.init()
-        Hierarchy.create_customer(
-            DefaultCustomer,
-            {
-                CoreProperty.NetThrottle: '0',
-                CoreProperty.CpuThrottle: 'idle',
-                CoreProperty.OperationTtl: args.queue_ttl,
-                CoreProperty.PackageUrl: url
-            }
+        customer.create_customer(
+            DefaultCustomers.DEFAULT,
+            http_application_url_location=url,
+            operation_queue_ttl=args.queue_ttl,
+            init=True
         )
-        admin_pass = args.admin_password
-        Hierarchy.create_user(
-            'admin',
-            'TopPatch Admin Account',
-            'admin@toppatch.com',
-            admin_pass,
-            groups=[DefaultGroup.Administrator]
+        group_data = group.create_group(
+            DefaultGroups.ADMIN,
+            DefaultCustomers.DEFAULT,
+            [Permissions.ADMINISTRATOR]
         )
+        admin_group_id = group_data['generated_ids']
+        print group_data
+        print admin_group_id
+        user.create_user(
+            DefaultUser.ADMIN,
+            'vFense Admin Account',
+            args.admin_password,
+            admin_group_id,
+            DefaultCustomers.DEFAULT,
+            '',
+        )
+        print 'Admin user and password = admin:%s' % (args.admin_password)
+        agent_pass = generate_pass()
+        user.create_user(
+            DefaultUser.AGENT,
+            'vFense Agent Communication Account',
+            agent_pass,
+            admin_group_id,
+            DefaultCustomers.DEFAULT,
+            '',
+        )
+        print 'Agent user and password = agent:%s' % (agent_pass)
+
+        monit.monit_initialization()
+
 
         if args.cve_data:
             print "Updating CVE's..."
@@ -233,18 +265,6 @@ def initialize_db():
             begin_usn_home_page_processing(full_parse=True)
             print "Done Updating Ubuntu Security Bulletin Ids..."
 
-        print 'Admin user and password = admin:%s' % (admin_pass)
-        agent_pass = generate_pass()
-        agent = Hierarchy.create_user(
-            'agent',
-            'TopPatch Agent Communication Account',
-            'admin@toppatch.com',
-            agent_pass,
-            groups=[DefaultGroup.Administrator]
-        )
-        print 'Agent user and password = agent:%s' % (agent_pass)
-
-        monit.monit_initialization()
 
         conn.close()
         completed = True
