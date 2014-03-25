@@ -16,6 +16,8 @@ from vFense.errorz.status_codes import PackageCodes
 from vFense.core.agent import *
 from vFense.operations import *
 from vFense.core.tag.tagManager import *
+from vFense.core.customer.customers import get_customer_property
+from vFense.core.customer import *
 
 from vFense.server.hierarchy import CoreProperty
 from vFense.server.hierarchy.manager import Hierarchy
@@ -494,11 +496,7 @@ def update_all_app_data_for_agent(agent_id, data):
 
 
 def get_base_url(customer_name):
-
-    return Hierarchy.get_customer_property(
-        customer_name,
-        CoreProperty.PackageUrl
-    )
+    return (get_customer_property(customer_name, CustomerKeys.OperationTtl))
 
 
 #@db_create_close
