@@ -39,11 +39,11 @@ define(
                 },
                 '#description': {
                     name: 'Description',
-                    keys: {name: 'cve_descriptions', title: 'CVE Description:', cveDescription: [
+                    keys: [{name: 'cve_descriptions', title: 'CVE Description:', cveDescription: [
                             {name: 'description', title: 'Description:'},
                             {name: 'source', title: 'Source:'}
                           ]
-                    }
+                    }]
                 },
                 '#vulnerabilities': {
                     name: 'Vulnerabilities',
@@ -148,18 +148,25 @@ define(
                         data = this.cveModel.get('data'),
                         keys = tabNames[tab].keys;
                     $content.empty();
-                    if (keys.length) {
+                    if (keys.length)
+                    {
                         var that = this;
-                        _.each(keys, function (object) {
+                        _.each(keys, function (object)
+                        {
                             var content = data[object.name];
-                            if (_.isUndefined(content)) {
+                            if (_.isUndefined(content))
+                            {
                                 return false;
-                            } else if (typeof content === 'string') {
+                            }
+                            else if (typeof content === 'string')
+                            {
                                 $dl.append(
                                     crel('dt', object.title),
                                     crel('dd', data[object.name] || 'N/A')
                                 );
-                            } else if (content.length) {
+                            }
+                            else if (content.length)
+                            {
                                 $dl.append(
                                     crel('dt', object.title)
                                 );
@@ -178,10 +185,20 @@ define(
                                 {
                                     innerContent = object.references;
                                     _.each(innerContent, function (obj) {
-                                        $dl.append(
-                                            crel('dt', obj.title),
-                                            crel('dd', content[0][obj.name] || 'N/A')
-                                        );
+                                        if(obj.name !== 'source')
+                                        {
+                                            $dl.append(
+                                                crel('dt', obj.title),
+                                                crel('dd', crel('a', {href: content[0][obj.name]}, content[0][obj.name]) || 'N/A')
+                                            );
+                                        }
+                                        else
+                                        {
+                                            $dl.append(
+                                                crel('dt', obj.title),
+                                                crel('dd', content[0][obj.name] || 'N/A')
+                                            );
+                                        }
                                     });
                                 }
                                 else if(object.hasOwnProperty('cveDescription'))
@@ -196,18 +213,22 @@ define(
                                 }
                                 else
                                 {
-                                    _.each(content, function (cveId) {
+                                    _.each(content, function (vulnerability) {
                                         $dl.append(
-                                            crel('dd', {class: 'cveId'}, crel('a', {href: '#'}, cveId + ',') || 'N/A')
+                                            crel('dd', vulnerability || 'N/A')
                                         );
                                     });
                                 }
-                            } else if(typeof content === "number") {
+                            }
+                            else if(typeof content === "number")
+                            {
                                 $dl.append(
                                     crel('dt', object.title),
                                     crel('dd', that.formatDate(data[object.name]))
                                 );
-                            } else {
+                            }
+                            else
+                            {
                                 $dl.append(
                                     crel('dt', object.title),
                                     crel('dd', 'No data to display')
