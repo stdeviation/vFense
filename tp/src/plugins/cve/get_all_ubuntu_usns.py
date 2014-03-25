@@ -1,5 +1,4 @@
 from BeautifulSoup import BeautifulSoup
-from time import sleep
 import requests
 import re
 import sys
