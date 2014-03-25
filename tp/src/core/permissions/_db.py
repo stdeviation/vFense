@@ -9,13 +9,14 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 @db_create_close
-def validate_permission_for_user(username, permission, conn=None):
+def validate_permission_for_user(username, customer_name, permission, conn=None):
     permission_exist = False
     try:
         is_empty = (
             r
             .table(GroupCollections.GroupsPerUser)
             .get_all(username, index=GroupsPerUserIndexes.UserName)
+            .filter({GroupsPerUserKeys.CustomerName: customer_name})
             .eq_join(
                 lambda group: group[GroupsPerUserKeys.GroupName],
                 r.table(GroupCollections.Groups),
@@ -34,6 +35,7 @@ def validate_permission_for_user(username, permission, conn=None):
                 r
                 .table(GroupCollections.GroupsPerUser)
                 .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .filter({GroupsPerUserKeys.CustomerName: customer_name})
                 .eq_join(
                     lambda group: group[GroupsPerUserKeys.GroupName],
                     r.table(GroupCollections.Groups),

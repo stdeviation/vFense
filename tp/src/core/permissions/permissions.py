@@ -3,10 +3,13 @@ import logging.config
 
 from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
+
+from vFense.core.user import *
+from vFense.core.user.users import get_user
+
 from vFense.core.permissions import *
 from vFense.core.permissions._constants import *
 from vFense.core.permissions._db import validate_permission_for_user
-from vFense.core.user.users import get_user
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -65,14 +68,14 @@ def return_results_for_permissions(
 def verify_permission_for_user(username, permission):
     """Verify if a user has permission to this resource.
     Args:
-        username (str): The name of the user
+        username (str): The name of the user.
         permission (str): The permission to be verified.
 
     Basic Usage:
         >>> from vFense.core.permissions.permissions import verify_permission_for_user
         >>> username = 'admin'
         >>> permission = 'install'
-        >>> verify_permission_for_user(username, permission)
+        >>> verify_permission_for_user(username, customer_name, permission)
 
     Returns:
         Returns a Tuple (Boolean, status_code)
@@ -83,7 +86,12 @@ def verify_permission_for_user(username, permission):
     try:
         user_exist = get_user(username)
         if permission in Permissions().VALID_PERMISSIONS and user_exist:
-            granted = validate_permission_for_user(username, permission)
+            customer_name = user_exist.get(UserKeys.CurrentCustomer)
+            granted = (
+                validate_permission_for_user(
+                    username, customer_name, permission
+                )
+            )
             if granted:
                 status_code = GenericCodes.PermissionGranted
 
