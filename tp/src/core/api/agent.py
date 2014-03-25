@@ -9,6 +9,8 @@ import logging.config
 
 from vFense.core.decorators import check_permission
 from vFense.core.permissions._constant import *
+from vFense.core.permissions.permissions import verify_permission_for_user
+from vFense.core.permissions.decorators import check_permission
 from vFense.core.agent import *
 from vFense.core.agent.agent_searcher import AgentSearcher
 from vFense.core.agent.agent_handler import AgentManager
@@ -20,7 +22,7 @@ from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_st
 from vFense.operations import *
 from vFense.server.hierarchy.permissions import Permission
 from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy.decorators import authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
 
@@ -388,7 +390,7 @@ class AgentHandler(BaseHandler):
             )
             if reboot:
                 granted, status_code = (
-                    validate_permission_for_user(
+                    verify_permission_for_user(
                         username, Permissions.REBOOT
                     )
                 )
@@ -407,7 +409,7 @@ class AgentHandler(BaseHandler):
 
             elif shutdown:
                 granted, status_code = (
-                    validate_permission_for_user(
+                    verify_permission_for_user(
                         username, Permissions.SHUTDOWN
                     )
                 )

@@ -2,11 +2,9 @@ from datetime import datetime
 import logging
 import logging.config
 from functools import wraps
-from json import dumps
 
-from vFense.errorz.status_codes import DbCodes, GenericCodes
+from vFense.errorz.status_codes import DbCodes
 from vFense.errorz.error_messages import GenericResults
-import vFense.core.permissions.permissions
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -138,55 +136,3 @@ def time_it(fn):
         return(output)
 
     return wraps(fn)(db_wrapper)
-
-
-def check_permissions(permission):
-    def wrapper(fn):
-        def wrapped(*args):
-            granted = False
-            tornado_handler = args[0]
-            username = tornado_handler.get_current_user()
-            uri = tornado_handler.request.uri
-            method = tornado_handler.request.method
-            granted, status_code = (
-                vFense.core.permissions.permissions.verify_permission_for_user(
-                    username, permission
-                )
-            )
-            if granted and status_code == GenericCodes.PermissionGranted:
-                fn(*args)
-
-            elif not granted and status_code == GenericCodes.PermissionDenied:
-                results = (
-                    GenericResults(
-                        username, uri, method
-                    ).permission_denied(username)
-                )
-
-                tornado_handler.set_header('Content-Type', 'application/json')
-
-                tornado_handler.write(dumps(results, indent=4))
-
-            elif not granted and status_code == GenericCodes.InvalidPermission:
-                results = (
-                    GenericResults(
-                        username, uri, method
-                    ).invalid_permission(username, permission)
-                )
-
-                tornado_handler.set_header('Content-Type', 'application/json')
-                tornado_handler.write(dumps(results, indent=4))
-
-            elif not granted and status_code == GenericCodes.InvalidId:
-                results = (
-                    GenericResults(
-                        username, uri, method
-                    ).invalid_id(username, 'permissions')
-                )
-
-                tornado_handler.set_header('Content-Type', 'application/json')
-                tornado_handler.write(dumps(results, indent=4))
-
-        return wraps(fn)(wrapper)
-
-    return(wrapper)
