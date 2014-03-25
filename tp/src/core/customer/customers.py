@@ -199,20 +199,20 @@ def add_user_to_customers(
 
         elif not user_exist:
             status_code = DbCodes.Errors
-            status = status + 'User name is invalid: %s' % (username)
+            error = 'User name is invalid: %s' % (username)
             results = (
                 status_code, username, status,
-                ', '.join(customer_names), status_error, user_name, uri, method
+                ', '.join(customer_names), error, user_name, uri, method
             )
 
     elif not customers_are_valid[0]:
         status_code = DbCodes.Errors
-        status = status + (
+        error = (
             'Customer names are invalid: %s' % (customers_are_valid[2])
         )
         results = (
             status_code, customer_names, status,
-            ', '.join(customer_names), status_error, user_name, uri, method
+            ', '.join(customer_names), error, user_name, uri, method
         )
 
     return(results)
