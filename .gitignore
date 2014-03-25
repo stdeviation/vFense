@@ -11,7 +11,7 @@ tp/src
 *.adb
 *.last_uptime
 *.log
-agent/logs/
+agent/
 *.oqd
 *.rqd
 *.xml
