@@ -7,6 +7,8 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.decorators import check_permission
+from vFense.core.permissions._constant import *
 from vFense.core.agent import *
 from vFense.core.agent.agent_searcher import AgentSearcher
 from vFense.core.agent.agent_handler import AgentManager
@@ -168,6 +170,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
+    @check_permission(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -209,6 +212,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
+    @check_permission(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -279,6 +283,7 @@ class AgentHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
+    @check_permission(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -339,6 +344,7 @@ class AgentHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
+    @check_permission(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -366,7 +372,6 @@ class AgentHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @permission_check(permission=Permission.Reboot)
     def post(self, agent_id):
         username = self.get_current_user()
         customer_name = get_current_customer_name(username)
@@ -382,17 +387,48 @@ class AgentHandler(BaseHandler):
                 )
             )
             if reboot:
-                results = (
-                    operation.reboot([agent_id])
+                granted, status_code = (
+                    validate_permission_for_user(
+                        username, Permissions.REBOOT
+                    )
                 )
+                if granted:
+                    results = (
+                        operation.reboot([agent_id])
+                    )
+
+                else:
+                    results = (
+                        return_results_for_permissions(
+                            username, granted, status_code,
+                            Permissions.REBOOT, uri, method
+                        )
+                    )
+
             elif shutdown:
-                results = (
-                    operation.shutdown([agent_id])
+                granted, status_code = (
+                    validate_permission_for_user(
+                        username, Permissions.SHUTDOWN
+                    )
                 )
+                if granted:
+                    results = (
+                        operation.shutdown([agent_id])
+                    )
+
+                else:
+                    results = (
+                        return_results_for_permissions(
+                            username, granted, status_code,
+                            Permissions.SHUTDOWN, uri, method
+                        )
+                    )
+
             elif apps_refresh:
                 results = (
                     operation.apps_refresh([agent_id])
                 )
+
             else:
                 results = (
                     GenericResults(
@@ -414,9 +450,6 @@ class AgentHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
-
-
-
 
 '''
 class NodeWolHandler(BaseHandler):

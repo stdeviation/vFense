@@ -265,6 +265,33 @@ class GenericResults(object):
             }
         )
 
+    def permission_denied(self, username):
+        return(
+            {
+                status: 403,
+                code: GenericCodes.PermissionDenied,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission denied for user %s' % (self.username)
+                )
+            }
+        )
+
+    def invalid_permission(self, username, permission):
+        return(
+            {
+                status: 404,
+                code: GenericCodes.InvalidPermission,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission %s is invalid' % (permission)
+                )
+            }
+        )
+
+
 
 
 class AgentResults(object):

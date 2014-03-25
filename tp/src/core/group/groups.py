@@ -274,8 +274,8 @@ def add_user_to_groups(
     """
     status = add_user_to_groups.func_name + ' - '
     groups_are_valid = validate_group_ids(group_ids, customer_name)
-    user_exist = retrieve_object(username, UsersCollection)
-    customer_exist = retrieve_object(customer_name, CustomersCollection)
+    user_exist = retrieve_object(username, UserCollections.Users)
+    customer_exist = retrieve_object(customer_name, CustomerCollections.Customers)
     results = None
     if groups_are_valid[0] and user_exist and customer_exist:
         data_list = []

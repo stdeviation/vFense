@@ -16,6 +16,9 @@ class GenericCodes(object):
     FileFailedToUpload = 1015
     FileDoesntExist = 1016
     ObjectUnchanged = 1017
+    PermissionGranted = 1018
+    PermissionDenied = 1019
+    InvalidPermission = 1020
 
 
 class DbCodes(object):

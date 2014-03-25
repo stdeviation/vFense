@@ -52,7 +52,7 @@ def fetch_user(username, without_fields=None, conn=None):
         else:
             data = (
                 r
-                .table(UserCollection.Users)
+                .table(UserCollections.Users)
                 .get_all(username)
                 .without(without_fields)
                 .run(conn)

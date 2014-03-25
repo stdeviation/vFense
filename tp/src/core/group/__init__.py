@@ -11,6 +11,8 @@ class GroupKeys():
 
 class GroupIndexes():
     CustomerName = 'customer_name'
+    GroupName = 'group_name'
+    Permissions = 'permissions'
 
 
 class GroupsPerUserKeys():
