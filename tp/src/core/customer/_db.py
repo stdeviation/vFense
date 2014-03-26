@@ -254,10 +254,10 @@ def users_exists_in_customer(username, customer_name, conn=None):
         customer_name:  Name of the customer.
 
     Basic Usage:
-        >>> from vFense.core.customer._db import user_exists_in_customers
+        >>> from vFense.core.customer._db import users_exists_in_customers
         >>> username = 'admin'
         >>> customer_name = 'default'
-        >>> user_exists_in_customers(username, customer_name)
+        >>> users_exists_in_customers(username, customer_name)
 
     Return:
         Boolean
@@ -269,6 +269,7 @@ def users_exists_in_customer(username, customer_name, conn=None):
             r
             .table(CustomerCollections.CustomersPerUser)
             .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+            .filter({CustomerPerUserKeys.UserName: username})
             .is_empty()
             .run(conn)
         )

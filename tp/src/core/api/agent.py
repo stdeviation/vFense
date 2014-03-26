@@ -1,6 +1,3 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 from vFense.server.handlers import BaseHandler

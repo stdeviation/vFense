@@ -5,7 +5,8 @@ from vFense.core.user._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
-    delete_user, update_user
+    delete_user, update_user, fetch_user_and_all_properties, \
+    fetch_users_and_all_properties
 from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user
 from vFense.core.customer.customers import get_customer, \
@@ -63,12 +64,89 @@ def get_user_property(username, user_property):
     Return:
         String
     """
-    user_data = fetch_user(username, user_property)
+    user_data = fetch_user(username)
     user_key = None
     if user_data:
         user_key = user_data.get(user_property)
 
     return(user_key)
+
+@time_it
+def get_user_properties(username):
+    """Retrieve a user and all of its properties by username.
+    Args:
+        username (str): Name of the user.
+
+    Basic Usage:
+        >>> from vFense.user.user import get_user_and_all_properties
+        >>> username = 'admin'
+        >>> get_user_and_all_properties(username')
+
+    Return:
+        Dictionary of user properties.
+        {
+            "current_customer": "default", 
+            "customers": [
+                {
+                    "admin": true, 
+                    "name": "default"
+                }
+            ], 
+            "groups": [
+                {
+                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                    "group_name": "Administrator"
+                }
+            ], 
+                "default_customer": "default", 
+                "user_name": "admin", 
+                "permissions": [
+                    "administrator"
+                ]
+        }
+    """
+    user_data = fetch_user_and_all_properties(username)
+    return(user_data)
+
+
+@time_it
+def get_properties_for_all_users(customer_name=None):
+    """Retrieve users and all of its properties by customer_name.
+    Kwargs:
+        customer_name (str): Name of the customer.
+
+    Basic Usage:
+        >>> from vFense.user.user import get_properties_for_all_users
+        >>> customer_name = 'default'
+        >>> get_properties_for_all_users(customer_name')
+
+    Return:
+        List of users and their properties.
+        [
+            {
+                "current_customer": "default", 
+                "customers": [
+                    {
+                        "admin": true, 
+                        "name": "default"
+                    }
+                ], 
+                "groups": [
+                    {
+                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                        "group_name": "Administrator"
+                    }
+                ], 
+                    "default_customer": "default", 
+                    "user_name": "admin", 
+                    "permissions": [
+                        "administrator"
+                    ]
+            }
+        ]
+    """
+    user_data = fetch_users_and_all_properties(customer_name)
+    return(user_data)
 
 
 @time_it
@@ -412,7 +490,7 @@ def change_password(
 
 @time_it
 @results_message
-def update_user_properties(username, **kwargs):
+def edit_user_properties(username, **kwargs):
     """ Edit the properties of a customer. 
     Args:
         username (str): Name of the user you are editing.
@@ -431,7 +509,7 @@ def update_user_properties(username, **kwargs):
             'rv_status_code': 1008,
             'http_method': None,
             'http_status': 200,
-            'message': 'None-update_user_properties-adminwasupdated',
+            'message': 'None - edit_user_properties - admin was updated',
             'data': {
                 'full_name': 'vFense Admin'
             }
@@ -457,7 +535,7 @@ def update_user_properties(username, **kwargs):
         kwargs.pop(UserKeys.Password)
 
     user_exist = get_user(username, without_fields=None)
-    status = update_user_properties.func_name + ' - '
+    status = edit_user_properties.func_name + ' - '
     try:
         if user_exist:
             object_status, object_count, error, generated_ids = (

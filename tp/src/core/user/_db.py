@@ -5,6 +5,7 @@ from vFense.core.user._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.customer import *
+from vFense.core.permissions._constants import *
 from vFense.core.customer._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
@@ -64,6 +65,259 @@ def fetch_user(username, without_fields=None, conn=None):
         logger.exception(e)
 
     return(data)
+
+
+@time_it
+@db_create_close
+def fetch_user_and_all_properties(username, conn=None):
+    """Retrieve a user and all of its properties
+        This query is beautiful :)
+    Args:
+        username (str): Name of the user.
+
+    Basic Usage:
+        >>> from vFense.user._db import fetch_user_and_all_properties
+        >>> username = 'admin'
+        >>> fetch_user_and_all_properties(username')
+
+    Return:
+        Dictionary of user properties.
+        {
+            "current_customer": "default", 
+            "customers": [
+                {
+                    "admin": true, 
+                    "name": "default"
+                }
+            ], 
+            "groups": [
+                {
+                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                    "group_name": "Administrator"
+                }
+            ], 
+                "default_customer": "default", 
+                "user_name": "admin", 
+                "permissions": [
+                    "administrator"
+                ]
+        }
+    """
+    data = {}
+    map_hash = (
+        {
+            UserKeys.DefaultCustomer: r.row[UserKeys.DefaultCustomer],
+            UserKeys.CurrentCustomer: r.row[UserKeys.CurrentCustomer],
+            UserKeys.UserName: r.row[UserKeys.UserName],
+            UserKeys.Groups: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .coerce_to('array')
+                .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
+            ),
+            UserKeys.Customers: (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .coerce_to('array')
+                .map(lambda x:
+                    {
+                        Permissions.ADMINISTRATOR: r.branch(
+                            r
+                            .table(GroupCollections.GroupsPerUser)
+                            .get_all(username, index=GroupsPerUserIndexes.UserName)
+                            .coerce_to('array')
+                            .eq_join(lambda y:
+                                y[GroupKeys.GroupName],
+                                r.table(GroupCollections.Groups),
+                                index=GroupsPerUserIndexes.GroupName
+                            )
+                            .zip()
+                            .filter(
+                                lambda z:
+                                z[GroupKeys.Permissions]
+                                .contains(Permissions.ADMINISTRATOR)
+                            ),
+                            True,
+                            False
+                        ),
+                        CustomerPerUserKeys.CustomerName: x[CustomerPerUserKeys.CustomerName]
+                    }
+                )
+            ),
+            UserKeys.Permissions: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .coerce_to('array')
+                .eq_join(lambda x:
+                    x[GroupKeys.GroupName],
+                    r.table(GroupCollections.Groups),
+                    index=GroupsPerUserIndexes.GroupName
+                )
+                .zip()
+                .map(lambda x: x[GroupKeys.Permissions])[0]
+            )
+        }
+    )
+
+    try:
+        data = (
+            r
+            .table(UserCollections.Users)
+            .get_all(username)
+            .map(map_hash)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+def fetch_users_and_all_properties(customer_name=None, conn=None):
+    """Retrieve a user and all of its properties
+        This query is beautiful :)
+    Kwargs:
+        customer_name (str): Name of the customer, where the users belong to.
+
+    Basic Usage:
+        >>> from vFense.user._db import fetch_users_and_all_properties
+        >>> customer_name = 'default'
+        >>> fetch_user_and_all_properties(username')
+
+    Return:
+        List of users and their properties.
+        [
+            {
+                "current_customer": "default", 
+                "customers": [
+                    {
+                        "admin": true, 
+                        "name": "default"
+                    }
+                ], 
+                "groups": [
+                    {
+                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                        "group_name": "Administrator"
+                    }
+                ], 
+                    "default_customer": "default", 
+                    "user_name": "admin", 
+                    "permissions": [
+                        "administrator"
+                    ]
+            }
+        ]
+    """
+    data = []
+    map_hash = (lambda x:
+        {
+            UserKeys.DefaultCustomer: x[UserKeys.DefaultCustomer],
+            UserKeys.CurrentCustomer: x[UserKeys.CurrentCustomer],
+            UserKeys.UserName: x[UserKeys.UserName],
+            UserKeys.Groups: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(x
+                    [GroupsPerUserKeys.UserName],
+                    index=GroupsPerUserIndexes.UserName
+                )
+                .coerce_to('array')
+                .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
+            ),
+            UserKeys.Customers: (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    x[CustomerPerUserKeys.UserName],
+                    index=CustomerPerUserIndexes.UserName
+                )
+                .coerce_to('array')
+                .map(lambda y:
+                    {
+                        Permissions.ADMINISTRATOR: r.branch(
+                            r
+                            .table(GroupCollections.GroupsPerUser)
+                            .get_all(
+                                y[GroupsPerUserKeys.UserName],
+                                index=GroupsPerUserIndexes.UserName
+                            )
+                            .coerce_to('array')
+                            .eq_join(lambda z:
+                                z[GroupKeys.GroupName],
+                                r.table(GroupCollections.Groups),
+                                index=GroupsPerUserIndexes.GroupName
+                            )
+                            .zip()
+                            .filter({GroupsPerUserKeys.UserName: y[GroupsPerUserKeys.UserName]})
+                            .filter(
+                                lambda a:
+                                a[GroupKeys.Permissions]
+                                .contains(Permissions.ADMINISTRATOR)
+                            ).distinct(),
+                            True,
+                            False
+                        ),
+                        CustomerPerUserKeys.CustomerName: y[CustomerPerUserKeys.CustomerName]
+                    }
+                )
+            ),
+            UserKeys.Permissions: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(x[GroupsPerUserKeys.UserName], index=GroupsPerUserIndexes.UserName)
+                .coerce_to('array')
+                .eq_join(lambda b:
+                    b[GroupKeys.GroupName],
+                    r.table(GroupCollections.Groups),
+                    index=GroupsPerUserIndexes.GroupName
+                )
+                .zip()
+                .map(lambda b: b[GroupKeys.Permissions])[0]
+            )
+        }
+    )
+
+    try:
+        if customer_name:
+            data = list(
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                )
+                .pluck(CustomerPerUserKeys.CustomerName, CustomerPerUserKeys.UserName)
+                .distinct()
+                .eq_join(lambda x:
+                    x[UserKeys.UserName],
+                    r.table(UserCollections.Users)
+                )
+                .zip()
+                .map(map_hash)
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .table(UserCollections.Users)
+                .map(map_hash)
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
 
 @time_it
 @db_create_close
