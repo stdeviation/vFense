@@ -7,6 +7,7 @@ class GroupKeys():
     CustomerName = 'customer_name'
     Permissions = 'permissions'
     GroupId = 'id'
+    Users = 'users' #Mapped Keys
 
 
 class GroupIndexes():

@@ -65,17 +65,22 @@ def return_results_for_permissions(
     return(results)
 
 
-def verify_permission_for_user(username, permission):
+def verify_permission_for_user(
+    username, permission,
+    customer_name=None, all_customers=False):
     """Verify if a user has permission to this resource.
     Args:
         username (str): The name of the user.
         permission (str): The permission to be verified.
 
+    Kwargs:
+        customer_name (str): Name of the customer that is being verified.
+
     Basic Usage:
         >>> from vFense.core.permissions.permissions import verify_permission_for_user
         >>> username = 'admin'
         >>> permission = 'install'
-        >>> verify_permission_for_user(username, customer_name, permission)
+        >>> verify_permission_for_user(username, permission)
 
     Returns:
         Returns a Tuple (Boolean, status_code)
@@ -86,12 +91,15 @@ def verify_permission_for_user(username, permission):
     try:
         user_exist = get_user(username)
         if permission in Permissions().VALID_PERMISSIONS and user_exist:
-            customer_name = user_exist.get(UserKeys.CurrentCustomer)
+            if not customer_name:
+                customer_name = user_exist.get(UserKeys.CurrentCustomer)
+
             granted = (
                 validate_permission_for_user(
                     username, customer_name, permission
                 )
             )
+
             if granted:
                 status_code = GenericCodes.PermissionGranted
 

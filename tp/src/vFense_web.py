@@ -58,6 +58,7 @@ from vFense.server.api.customer_api import *
 from vFense.server.api.permissions_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.user import UserHandler, UsersHandler
+from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.scripts.create_indexes import initialize_indexes_and_create_tables
 
 from tornado.options import define, options
@@ -103,6 +104,9 @@ class Application(tornado.web.Application):
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_]+)?", UserHandler),
             (r"/api/v1/users?", UsersHandler),
+            ##### New Group API
+            (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
+            (r"/api/v1/groups?", GroupsHandler),
 
             ##### Notification API
             (r"/api/v1/notifications?", NotificationsHandler),

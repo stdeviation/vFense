@@ -9,7 +9,6 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-@time_it
 @db_create_close
 def fetch_group(group_id, conn=None):
     """Retrieve a group from the database
@@ -40,6 +39,144 @@ def fetch_group(group_id, conn=None):
             .get(group_id)
             .run(conn)
         )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@db_create_close
+def fetch_group_properties(group_id, conn=None):
+    """Retrieve a group and all of its properties.
+    Args:
+        group_id: 36 Character UUID.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_group_properties
+        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
+        >>> fetch_group_properties(group_id)
+
+    Returns:
+        Returns a Dict of the properties of a group
+        {
+            "users": [
+                {
+                    "user_name": "admin"
+                }, 
+                {
+                    "user_name": "agent_api"
+                }
+            ], 
+            "permissions": [
+                "administrator"
+            ], 
+            "group_name": "Administrator", 
+            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+            "customer_name": "default"
+        }
+    """
+    map_hash = (lambda x:
+        {
+            GroupKeys.GroupId: x[GroupKeys.GroupId],
+            GroupKeys.GroupName: x[GroupKeys.GroupName],
+            GroupKeys.CustomerName: x[GroupKeys.CustomerName],
+            GroupKeys.Permissions: x[GroupKeys.Permissions],
+            GroupKeys.Users: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
+                .coerce_to('array')
+                .pluck(GroupsPerUserKeys.UserName)
+            )
+        }
+    )
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get_all(group_id)
+            .map(map_hash)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@db_create_close
+def fetch_properties_for_all_groups(customer_name=None, conn=None):
+    """Retrieve properties for all groupcs.
+    Kwargs:
+        customer_name: Name of the customer, which the group is part of.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_properties_for_all_groups
+        >>> customer_name = 'test'
+        >>> fetch_properties_for_all_groups(customer_name)
+
+    Returns:
+        Returns a List of a groups and their properties.
+        [
+            {
+                "users": [
+                    {
+                        "user_name": "admin"
+                    }, 
+                    {
+                        "user_name": "agent_api"
+                    }
+                ], 
+                "permissions": [
+                    "install", 
+                    "uninstall"
+                ], 
+                "group_name": "JR ADMIN", 
+                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7", 
+                "customer_name": "Test"
+            }, 
+        ]
+    """
+    map_hash = (lambda x:
+        {
+            GroupKeys.GroupId: x[GroupKeys.GroupId],
+            GroupKeys.GroupName: x[GroupKeys.GroupName],
+            GroupKeys.CustomerName: x[GroupKeys.CustomerName],
+            GroupKeys.Permissions: x[GroupKeys.Permissions],
+            GroupKeys.Users: (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(
+                    x[GroupKeys.GroupId],
+                    index=GroupsPerUserIndexes.GroupId
+                )
+                .coerce_to('array')
+                .pluck(GroupsPerUserKeys.UserName)
+            )
+        }
+    )
+    data = {}
+    try:
+        if customer_name:
+            data = list(
+                r
+                .table(GroupCollections.Groups)
+                .get_all(customer_name, index=GroupsPerUserIndexes.CustomerName)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .table(GroupCollections.Groups)
+                .map(map_hash)
+                .run(conn)
+            )
 
     except Exception as e:
         logger.exception(e)
