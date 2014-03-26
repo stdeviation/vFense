@@ -16,8 +16,7 @@ define(
                 '#cvssvector': {
                     name: 'CVSS Vector',
                     keys: [{name: 'cvss_vector', title: 'CVSS Vector:', cvssVector: [
-                        {name: 'metric', title: 'Metric:'},
-                        {name: 'value', title: 'Value:'}
+                        {name: 'metric', value: 'value'}
                     ]
                     }]
                 },
@@ -34,15 +33,15 @@ define(
                         {name: 'url', title: 'URL:'},
                         {name: 'source', title: 'Source:'},
                         {name: 'id', title: 'ID:'}
-                        ]
+                    ]
                     }]
                 },
                 '#description': {
                     name: 'Description',
                     keys: [{name: 'cve_descriptions', title: 'CVE Description:', cveDescription: [
-                            {name: 'description', title: 'Description:'},
-                            {name: 'source', title: 'Source:'}
-                          ]
+                        {name: 'description', title: 'Description:'},
+                        {name: 'source', title: 'Source:'}
+                    ]
                     }]
                 },
                 '#vulnerabilities': {
@@ -144,7 +143,7 @@ define(
                 },
                 renderTab: function (tab) {
                     var $content = this.$el.find('.tab-content'),
-                        $dl = $(crel('dl', {class: 'inline'})),
+                        $dl = $(crel('table', {class: 'table cve-table'})),
                         data = this.cveModel.get('data'),
                         keys = tabNames[tab].keys;
                     $content.empty();
@@ -161,77 +160,70 @@ define(
                             else if (typeof content === 'string')
                             {
                                 $dl.append(
-                                    crel('dt', object.title),
-                                    crel('dd', data[object.name] || 'N/A')
+                                    crel('tr', crel('th', object.title), crel('td', data[object.name] || 'N/A'))
                                 );
                             }
                             else if (content.length)
                             {
                                 $dl.append(
-                                    crel('dt', object.title)
+                                    crel('tr', crel('th', object.title))
                                 );
                                 var innerContent;
-                                if(object.hasOwnProperty('cvssVector'))
-                                {
-                                    innerContent = object.cvssVector;
-                                    _.each(innerContent, function (obj) {
-                                        $dl.append(
-                                            crel('dt', obj.title),
-                                            crel('dd', content[0][obj.name] || 'N/A')
-                                        );
-                                    });
-                                }
-                                else if(object.hasOwnProperty('references'))
-                                {
-                                    innerContent = object.references;
-                                    _.each(innerContent, function (obj) {
-                                        if(obj.name !== 'source')
-                                        {
+                                _.each(content, function(innerObj) {
+                                    if(object.hasOwnProperty('cvssVector'))
+                                    {
+                                        innerContent = object.cvssVector;
+                                        _.each(innerContent, function (obj) {
                                             $dl.append(
-                                                crel('dt', obj.title),
-                                                crel('dd', crel('a', {href: content[0][obj.name]}, content[0][obj.name]) || 'N/A')
+                                                crel('tr', crel('th', innerObj[obj.name] + ':'), crel('td', innerObj[obj.value] || 'N/A'))
                                             );
-                                        }
-                                        else
-                                        {
+                                        });
+                                    }
+                                    else if(object.hasOwnProperty('references'))
+                                    {
+                                        innerContent = object.references;
+                                        _.each(innerContent, function (obj) {
+                                            if(obj.name !== 'source')
+                                            {
+                                                $dl.append(
+                                                    crel('tr', crel('th', obj.title), crel('td', innerObj[obj.name]=== null ? 'N/A' : crel('a', {href: innerObj[obj.name]}, innerObj[obj.name])))
+                                                );
+                                            }
+                                            else
+                                            {
+                                                $dl.append(
+                                                    crel('tr', crel('th', obj.title), crel('td', innerObj[obj.name] || 'N/A'))
+                                                );
+                                            }
+                                        });
+                                    }
+                                    else if(object.hasOwnProperty('cveDescription'))
+                                    {
+                                        innerContent = object.cveDescription;
+                                        _.each(innerContent, function (obj) {
                                             $dl.append(
-                                                crel('dt', obj.title),
-                                                crel('dd', content[0][obj.name] || 'N/A')
+                                                crel('tr', crel('th', obj.title), crel('td', innerObj[obj.name] || 'N/A'))
                                             );
-                                        }
-                                    });
-                                }
-                                else if(object.hasOwnProperty('cveDescription'))
-                                {
-                                    innerContent = object.cveDescription;
-                                    _.each(innerContent, function (obj) {
+                                        });
+                                    }
+                                    else
+                                    {
                                         $dl.append(
-                                            crel('dt', obj.title),
-                                            crel('dd', content[0][obj.name] || 'N/A')
+                                            crel('tr', crel('td', innerObj || 'N/A'))
                                         );
-                                    });
-                                }
-                                else
-                                {
-                                    _.each(content, function (vulnerability) {
-                                        $dl.append(
-                                            crel('dd', vulnerability || 'N/A')
-                                        );
-                                    });
-                                }
+                                    }
+                                });
                             }
                             else if(typeof content === "number")
                             {
                                 $dl.append(
-                                    crel('dt', object.title),
-                                    crel('dd', that.formatDate(data[object.name]))
+                                    crel('tr', crel('th', object.title), crel('td', that.formatDate(data[object.name])))
                                 );
                             }
                             else
                             {
                                 $dl.append(
-                                    crel('dt', object.title),
-                                    crel('dd', 'No data to display')
+                                    crel('tr', crel('th', object.title),  crel('td', 'No data to display'))
                                 );
                             }
                         });
