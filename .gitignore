@@ -6,7 +6,6 @@ var/scheduler
 var/redis
 var/packages
 var/tmp
-tp/src
 .idea/
 *.adb
 *.last_uptime
