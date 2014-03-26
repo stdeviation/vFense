@@ -7,10 +7,9 @@ from vFense.receiver import *
 from vFense.receiver._db import insert_into_agent_queue, \
     get_next_avail_order_id_in_agent_queue, get_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
-from vFense.server._hierarchy import *
-from vFense.server.hierarchy import *
-from vFense.server.hierarchy import CoreProperty
-from vFense.server.hierarchy.manager import Hierarchy
+
+from vFense.core.customer.customers import get_customer_property
+from vFense.core.customer import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -52,10 +51,8 @@ class AgentQueue(object):
         """Return the global ttl property for a customer. ttl is in minutes"""
 
         ttl = (
-            Hierarchy
-            .get_customer_property(
-                self.customer_name,
-                CoreProperty.OperationTtl
+            get_customer_property(
+                self.customer_name, CustomerKeys.OperationTtl
             )
         )
 

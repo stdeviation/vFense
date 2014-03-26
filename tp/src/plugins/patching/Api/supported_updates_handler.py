@@ -7,12 +7,14 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.permissions._constants import *
+from vFense.core.permissions.permissions import verify_permission_for_user
+from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import authenticated_request, permission_check
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from vFense.server.hierarchy.permissions import Permission
 
 from vFense.plugins.patching.store_operations import StoreOperation
 from vFense.plugins.patching import *
@@ -100,8 +102,8 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -168,8 +170,8 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -300,8 +302,8 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -367,8 +369,8 @@ class TagIdSupportedAppsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -452,6 +454,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -500,8 +503,8 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -569,8 +572,8 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -680,8 +683,8 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -747,8 +750,8 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
 
     @authenticated_request
-    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
+    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -891,6 +894,7 @@ class SupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)

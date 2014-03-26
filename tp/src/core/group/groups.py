@@ -10,7 +10,8 @@ from vFense.core.permissions._constants import *
 from vFense.core._db import retrieve_object
 from vFense.core.group._db import insert_group, fetch_group, fetch_groups, \
     insert_group_per_user, fetch_group_by_name, delete_groups_from_user, \
-    fetch_users_in_group, fetch_groups_for_user, delete_group
+    fetch_users_in_group, fetch_groups_for_user, delete_group, \
+    fetch_properties_for_all_groups, fetch_group_properties
 
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz.status_codes import DbCodes
@@ -42,6 +43,79 @@ def get_group(group_id):
         }
     """
     data = fetch_group(group_id)
+    return(data)
+
+
+@time_it
+def get_group_properties(group_id):
+    """Retrieve a group and all of its properties.
+    Args:
+        group_id: 36 Character UUID.
+
+    Basic Usage:
+        >>> from vFense.group.groups import get_group_properties
+        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
+        >>> get_group_properties(group_id)
+
+    Returns:
+        Returns a Dict of the properties of a group
+        {
+            "users": [
+                {
+                    "user_name": "admin"
+                }, 
+                {
+                    "user_name": "agent_api"
+                }
+            ], 
+            "permissions": [
+                "administrator"
+            ], 
+            "group_name": "Administrator", 
+            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+            "customer_name": "default"
+        }
+    """
+
+    data = fetch_group_properties(group_id)
+    return(data)
+
+
+@time_it
+def get_properties_for_all_groups(customer_name=None):
+    """Retrieve properties for all groupcs.
+    Kwargs:
+        customer_name: Name of the customer, which the group is part of.
+
+    Basic Usage:
+        >>> from vFense.group.groups import get_properties_for_all_groups
+        >>> customer_name = 'test'
+        >>> get_properties_for_all_groups(customer_name)
+
+    Returns:
+        Returns a List of a groups and their properties.
+        [
+            {
+                "users": [
+                    {
+                        "user_name": "admin"
+                    }, 
+                    {
+                        "user_name": "agent_api"
+                    }
+                ], 
+                "permissions": [
+                    "install", 
+                    "uninstall"
+                ], 
+                "group_name": "JR ADMIN", 
+                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7", 
+                "customer_name": "Test"
+            }, 
+        ]
+    """
+
+    data = fetch_properties_for_all_groups(customer_name)
     return(data)
 
 

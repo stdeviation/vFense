@@ -1,6 +1,3 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 from vFense.server.handlers import BaseHandler
@@ -8,9 +5,12 @@ import logging
 import logging.config
 
 from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
+from vFense.core.permissions.permissions import verify_permission_for_user, \
+    return_results_for_permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
+from vFense.core.user import *
+from vFense.core.user.users import get_user_property
 from vFense.core.agent.agent_searcher import AgentSearcher
 from vFense.core.agent.agent_handler import AgentManager
 from vFense.errorz.error_messages import GenericResults
@@ -19,8 +19,6 @@ from vFense.plugins.patching.store_operations import StoreOperation
 from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
 from vFense.operations import *
-from vFense.server.hierarchy.permissions import Permission
-from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
@@ -33,7 +31,9 @@ class FetchValidProductionLevels(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -63,7 +63,9 @@ class FetchSupportedOperatingSystems(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -110,7 +112,9 @@ class AgentsHandler(BaseHandler):
             filter_val = self.get_argument('filter_val', None)
             customer_name = self.get_argument('customer_name', None)
             if not customer_name:
-                customer_name = get_current_customer_name(username)
+                customer_name = (
+                    get_user_property(username, UserKeys.CurrentCustomer)
+                )
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
             sort = self.get_argument('sort', 'asc')
@@ -174,7 +178,9 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -216,7 +222,9 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -262,7 +270,9 @@ class AgentHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -287,7 +297,9 @@ class AgentHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -348,7 +360,9 @@ class AgentHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -375,7 +389,9 @@ class AgentHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

@@ -26,7 +26,7 @@ def get_customer(customer_name, keys_to_pluck=None):
         keys_to_pluck (list):  list of keys you want to retreive from the db.
 
     Basic Usage:
-        >>> from vFense.customer._db import fetch_customer
+        >>> from vFense.customer.customers get_customer
         >>> customer_name = 'default'
         >>> get_customer(customer_name)
 
@@ -47,6 +47,32 @@ def get_customer(customer_name, keys_to_pluck=None):
         customer_data = fetch_customer(customer_name)
 
     return(customer_data)
+
+
+@time_it
+def get_customer_property(customer_name, customer_property):
+    """Retrieve customer property.
+    Args:
+        customer_name (str):  Name of the customer.
+
+    Kwargs:
+        customer_property (str): Property you want to retrieve.
+
+    Basic Usage:
+        >>> from vFense.customer.customers get_customer_property
+        >>> customer_name = 'default'
+        >>> customer_property = 'operation_ttl'
+        >>> get_customer(customer_name)
+
+    Return:
+        String
+    """
+    customer_data = fetch_customer(customer_name)
+    customer_key = None
+    if customer_data:
+        customer_key = customer_data.get(customer_property)
+
+    return(customer_key)
 
 
 @time_it
