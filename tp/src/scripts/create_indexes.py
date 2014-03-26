@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from vFense.db.client import db_connect, r
 
 from vFense.core.agent import *
