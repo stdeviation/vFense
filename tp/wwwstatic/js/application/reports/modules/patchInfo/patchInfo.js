@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'underscore', 'backbone', 'crel', 'modals/panel', 'h5f'],
-    function ($, _, Backbone, crel, Panel, h5f) {
+    ['jquery', 'underscore', 'backbone', 'crel', 'modals/panel', 'h5f', 'moment'],
+    function ($, _, Backbone, crel, Panel, h5f, moment) {
         'use strict';
         var exports = {}, Modal,
             tabNames = {
@@ -145,10 +145,12 @@ define(
                         keys = tabNames[tab].keys;
                     $content.empty();
                     if (keys.length) {
+                        var that = this;
                         _.each(keys, function (object) {
                             var content = data[object.name];
+
                             if (_.isUndefined(content)) {
-                                return;
+                                return false;
                             } else if (typeof content === 'string') {
                                 if (object.edit) {
                                     $dl.append(
@@ -179,7 +181,13 @@ define(
                                         crel('dd', file.file_size || 'N/A')
                                     );
                                 });
-                            } else {
+                            } else if(typeof content === "number") {
+                                $dl.append(
+                                    crel('dt', object.title),
+                                    crel('dd', that.formatDate(data[object.name]))
+                                );
+                            }
+                            else {
                                 $dl.append(
                                     crel('dt', object.title),
                                     crel('dd', 'No data to display')
@@ -188,6 +196,9 @@ define(
                         });
                     }
                     $content.append($dl);
+                },
+                formatDate: function (date) {
+                    return date ? moment(date * 1000).format('L') : 'N/A';
                 },
                 toggleModal: function (event) {
                     event.preventDefault();
