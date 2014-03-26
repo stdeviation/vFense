@@ -32,7 +32,7 @@ require.config({
         'rangy'           : 'libs/rangy/rangy-core',
         'highcharts'      : 'libs/highcharts/highcharts.src',
         'highcharts-more' : 'libs/highcharts/highcharts-more.src',
-        'highstocks'      : 'libs/highstocks/highstock',
+        'highstocks'      : 'libs/highstocks/highstock.src',
         'crel'            : 'libs/crel/crel',
         'moment'          : 'libs/moment/moment',
         'livestamp'       : 'libs/livestamp/livestamp',
