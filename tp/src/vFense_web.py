@@ -92,7 +92,7 @@ class Application(tornado.web.Application):
             (r"/adminForm", AdminHandler),
 
             ##### User and Groups API
-            (r"/api/user/?", UserHandler),
+            (r"/api/user/?", GetUserApi),
             (r"/api/users/?", GetUsersApi),
 
             (r"/api/groups/?", GetGroupApi),

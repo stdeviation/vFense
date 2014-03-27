@@ -6,3 +6,10 @@ var/scheduler
 var/redis
 var/packages
 var/tmp
+.idea/
+*.adb
+*.last_uptime
+*.log
+agent/
+*.oqd
+*.rqd

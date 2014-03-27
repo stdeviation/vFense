@@ -22,6 +22,7 @@ define(
                 'patches/:type/'         : 'showPatches',
                 'patches/:type?:query'  : 'showPatches',
                 'patches/:type/:id'     : 'showPatch',
+                'patches/vulnerability/cve/:id'     : 'showCVEInfo',
 
                 'tags'          : 'showTags',
                 'tags?:query'   : 'showTags',
@@ -173,6 +174,9 @@ define(
             },
             showPatch: function (type, id) {
                 this.show({hash: '#patches', title: 'Patch', view: 'modules/patch', viewOptions: {templateParams: {id: id, type: type}}});
+            },
+            showCVEInfo: function (id) {
+                this.show({hash: '#patches', title: 'CVEInfo', view: 'modules/cve', viewOptions: {templateParams: {id: id}}});
             },
             showTags: function (query) {
                 var that = this,
