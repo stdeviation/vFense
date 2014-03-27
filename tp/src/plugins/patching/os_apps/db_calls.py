@@ -45,7 +45,8 @@ def get_all_stats_by_appid(username, customer_name,
                 [app_id, customer_name],
                 index=CurrentAppsPerAgentIndexes.AppIdAndCustomer
             )
-            .group_by(CurrentAppsPerAgentKey.Status, r.count)
+            .group(CurrentAppsPerAgentKey.Status)
+            .count()
             .run(conn)
         )
         if apps:
@@ -53,9 +54,9 @@ def get_all_stats_by_appid(username, customer_name,
                 new_data = i['reduction']
                 new_data = (
                     {
-                        CurrentAppsPerAgentKey.Status: i['group'][CurrentAppsPerAgentKey.Status],
+                        CurrentAppsPerAgentKey.Status: i['group'],
                         COUNT: i['reduction'],
-                        NAME: i['group'][CurrentAppsPerAgentKey.Status].capitalize()
+                        NAME: i['group'].capitalize()
                     }
                 )
                 data.append(new_data)
@@ -206,7 +207,8 @@ def get_all_stats_by_agentid(username, customer_name,
             r
             .table(CurrentAppsPerAgentCollection)
             .get_all(agent_id, index=CurrentAppsPerAgentKey.AgentId)
-            .group_by(CurrentAppsPerAgentKey.Status, r.count)
+            .group(CurrentAppsPerAgentKey.Status)
+            .count()
             .run(conn)
         )
         if apps:

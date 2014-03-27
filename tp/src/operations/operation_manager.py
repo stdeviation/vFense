@@ -518,7 +518,8 @@ class Operation(object):
                     [operation_id, agent_id],
                     index=OperationPerAppIndexes.OperationIdAndAgentId
                 )
-                .group_by(OperationPerAppKey.Results, r.count)
+                .group(OperationPerAppKey.Results)
+                .count()
                 .run(conn)
             )
 

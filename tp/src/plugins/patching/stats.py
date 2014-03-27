@@ -17,7 +17,7 @@ def app_stats_by_os(stats):
         for i in xrange(len(stats)):
             stats[i] = (
                 {
-                    'os': stats[i]['group'][AgentKey.OsString],
+                    'os': stats[i]['group'],
                     'count': stats[i]['reduction']
                 }
             )
@@ -47,12 +47,13 @@ def customer_stats_by_os(username, customer_name,
             )
             .pluck(AppsKey.AppId, AgentKey.OsString)
             .distinct()
-            .group_by(AgentKey.OsString, r.count)
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .limit(count)
             .run(conn)
         )
-
         data = []
         if stats:
             data = app_stats_by_os(stats)
@@ -97,7 +98,9 @@ def tag_stats_by_os(username, customer_name,
             .zip()
             .pluck(APP_ID, AgentKey.OsString)
             .distinct()
-            .group_by(AgentKey.OsString, r.count)
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .limit(count)
             .run(conn)
@@ -153,7 +156,8 @@ def bar_chart_for_appid_by_status(app_id=None, customer_name='default',
             r
             .table(AppsPerAgentCollection, use_outdated=True)
             .get_all([app_id, customer_name], index=AppsPerAgentIndexes.AppIdAndCustomer)
-            .group_by('status', r.count)
+            .group('status')
+            .count()
             .run(conn)
         )
 
@@ -185,7 +189,7 @@ def app_stats_by_severity(sevs):
         for i in xrange(len(sevs)):
             sevs[i] = (
                 {
-                    'severity': sevs[i]['group'][AppsKey.RvSeverity],
+                    'severity': sevs[i]['group'],
                     'count': sevs[i]['reduction']
                 }
             )
@@ -240,7 +244,9 @@ def get_severity_bar_chart_stats_for_customer(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.asc('group'))
             .run(conn)
         )
@@ -281,7 +287,9 @@ def get_severity_bar_chart_stats_for_agent(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -333,7 +341,9 @@ def get_severity_bar_chart_stats_for_tag(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -370,7 +380,9 @@ def top_packages_needed(username, customer_name,
                 [AVAILABLE, customer_name],
                 index=AppsPerAgentIndexes.StatusAndCustomer
             )
-            .group_by(AppsPerAgentKey.AppId, r.count)
+            .group(AppsPerAgentKey.AppId)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -380,7 +392,7 @@ def top_packages_needed(username, customer_name,
                 r
                 .table(AppsCollection)
                 .get_all(
-                    appid_needed[i]['group'][AppsPerAgentKey.AppId],
+                    appid_needed[i]['group'],
                     index=AppsIndexes.AppId)
                 .pluck(
                     AppsKey.Name, AppsKey.AppId,
