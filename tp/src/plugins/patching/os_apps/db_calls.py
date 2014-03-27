@@ -1,6 +1,6 @@
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
-from vFense.agent import *
+from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 import logging
@@ -45,7 +45,9 @@ def get_all_stats_by_appid(username, customer_name,
                 [app_id, customer_name],
                 index=CurrentAppsPerAgentIndexes.AppIdAndCustomer
             )
-            .group_by(CurrentAppsPerAgentKey.Status, r.count)
+            .group(CurrentAppsPerAgentKey.Status)
+            .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
@@ -53,9 +55,9 @@ def get_all_stats_by_appid(username, customer_name,
                 new_data = i['reduction']
                 new_data = (
                     {
-                        CurrentAppsPerAgentKey.Status: i['group'][CurrentAppsPerAgentKey.Status],
+                        CurrentAppsPerAgentKey.Status: i['group'],
                         COUNT: i['reduction'],
-                        NAME: i['group'][CurrentAppsPerAgentKey.Status].capitalize()
+                        NAME: i['group'].capitalize()
                     }
                 )
                 data.append(new_data)
@@ -121,9 +123,12 @@ def get_all_agents_per_appid(username, customer_name,
             .get_all(app_id, index=CurrentAppsPerAgentKey.AppId)
             .eq_join(CurrentAppsPerAgentKey.AgentId, r.table(CurrentAgentsCollection))
             .zip()
-            .grouped_map_reduce(
-                lambda x: x[CurrentAppsPerAgentKey.Status],
-                lambda x: {
+            .group(
+                lambda x: x[CurrentAppsPerAgentKey.Status]
+            )
+            .map(
+                lambda x:
+                {
                     AGENTS:
                     [
                         {
@@ -133,12 +138,16 @@ def get_all_agents_per_appid(username, customer_name,
                         }
                     ],
                     COUNT: 1
-                },
-                lambda x, y: {
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     AGENTS: x[AGENTS] + y[AGENTS],
                     COUNT: x[COUNT] + y[COUNT]
                 }
             )
+            .ungroup()
             .run(conn)
         )
         if agents:
@@ -206,7 +215,9 @@ def get_all_stats_by_agentid(username, customer_name,
             r
             .table(CurrentAppsPerAgentCollection)
             .get_all(agent_id, index=CurrentAppsPerAgentKey.AgentId)
-            .group_by(CurrentAppsPerAgentKey.Status, r.count)
+            .group(CurrentAppsPerAgentKey.Status)
+            .count()
+            .ungroup()
             .run(conn)
         )
         if apps:

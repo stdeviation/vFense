@@ -250,8 +250,8 @@ def initialize_db():
         completed = True
 
         msg = 'Rethink Initialization and Table creation is now complete'
-        rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
-        rql_msg = 'Rethink stopped successfully\n'
+        #rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
+        rql_msg = 'Rethink successfully\n'
 
         return completed, msg
     else:

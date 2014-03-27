@@ -3,8 +3,8 @@ import logging
 from vFense.db.client import db_create_close, r
 from time import mktime
 from datetime import datetime, timedelta
-from vFense.tagging import *
-from vFense.agent import *
+from vFense.core.tag import *
+from vFense.core.agent import *
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_customer
 from vFense.errorz.error_messages import GenericResults
@@ -17,7 +17,7 @@ def app_stats_by_os(stats):
         for i in xrange(len(stats)):
             stats[i] = (
                 {
-                    'os': stats[i]['group'][AgentKey.OsString],
+                    'os': stats[i]['group'],
                     'count': stats[i]['reduction']
                 }
             )
@@ -47,12 +47,13 @@ def customer_stats_by_os(username, customer_name,
             )
             .pluck(AppsKey.AppId, AgentKey.OsString)
             .distinct()
-            .group_by(AgentKey.OsString, r.count)
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .limit(count)
             .run(conn)
         )
-
         data = []
         if stats:
             data = app_stats_by_os(stats)
@@ -97,7 +98,9 @@ def tag_stats_by_os(username, customer_name,
             .zip()
             .pluck(APP_ID, AgentKey.OsString)
             .distinct()
-            .group_by(AgentKey.OsString, r.count)
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .limit(count)
             .run(conn)
@@ -153,7 +156,8 @@ def bar_chart_for_appid_by_status(app_id=None, customer_name='default',
             r
             .table(AppsPerAgentCollection, use_outdated=True)
             .get_all([app_id, customer_name], index=AppsPerAgentIndexes.AppIdAndCustomer)
-            .group_by('status', r.count)
+            .group('status')
+            .count()
             .run(conn)
         )
 
@@ -185,7 +189,7 @@ def app_stats_by_severity(sevs):
         for i in xrange(len(sevs)):
             sevs[i] = (
                 {
-                    'severity': sevs[i]['group'][AppsKey.RvSeverity],
+                    'severity': sevs[i]['group'],
                     'count': sevs[i]['reduction']
                 }
             )
@@ -240,7 +244,9 @@ def get_severity_bar_chart_stats_for_customer(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.asc('group'))
             .run(conn)
         )
@@ -281,7 +287,9 @@ def get_severity_bar_chart_stats_for_agent(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -333,7 +341,9 @@ def get_severity_bar_chart_stats_for_tag(username, customer_name,
                     AppsKey.RvSeverity: r.row['right'][AppsKey.RvSeverity]
                 }
             )
-            .group_by(AppsKey.RvSeverity, r.count)
+            .group(AppsKey.RvSeverity)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -370,7 +380,9 @@ def top_packages_needed(username, customer_name,
                 [AVAILABLE, customer_name],
                 index=AppsPerAgentIndexes.StatusAndCustomer
             )
-            .group_by(AppsPerAgentKey.AppId, r.count)
+            .group(AppsPerAgentKey.AppId)
+            .count()
+            .ungroup()
             .order_by(r.desc('reduction'))
             .run(conn)
         )
@@ -380,7 +392,7 @@ def top_packages_needed(username, customer_name,
                 r
                 .table(AppsCollection)
                 .get_all(
-                    appid_needed[i]['group'][AppsPerAgentKey.AppId],
+                    appid_needed[i]['group'],
                     index=AppsIndexes.AppId)
                 .pluck(
                     AppsKey.Name, AppsKey.AppId,
@@ -522,50 +534,63 @@ def get_os_apps_history(username, customer_name, uri, method, status,
                 AppsKey.AppId, AppsKey.Name, AppsKey.Version,
                 AppsKey.RvSeverity, AppsKey.ReleaseDate
             )
-            .grouped_map_reduce(
-                lambda x: x[AppsKey.ReleaseDate].to_epoch_time(),
+            .group(
+                lambda x: x[AppsKey.ReleaseDate].to_epoch_time()
+            )
+            .map(
                 lambda x:
-                    {
-                        'details':
-                            [
-                                {
-                                    AppsKey.AppId: x[AppsKey.AppId],
-                                    AppsKey.Name: x[AppsKey.Name],
-                                    AppsKey.Version: x[AppsKey.Version],
-                                    AppsKey.RvSeverity: x[AppsKey.RvSeverity]
-                                }
-                            ],
-                        COUNT: 1,
-                    },
-                lambda x, y: {
+                {
+                    'details':
+                        [
+                            {
+                                AppsKey.AppId: x[AppsKey.AppId],
+                                AppsKey.Name: x[AppsKey.Name],
+                                AppsKey.Version: x[AppsKey.Version],
+                                AppsKey.RvSeverity: x[AppsKey.RvSeverity]
+                            }
+                        ],
+                    COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     "count": x["count"] + y["count"],
                     "details": x["details"] + y["details"],
                 }
             )
+            .ungroup()
             .map(
                 {
                     'timestamp': r.row['group'],
                     'total_count': r.row['reduction']['count'],
                     'details': (
-                        r.row['reduction']['details'].grouped_map_reduce(
-                            lambda a: a['rv_severity'],
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
                             lambda a:
-                                {
-                                    'apps':
-                                        [
-                                            {
-                                                AppsKey.AppId: a[AppsKey.AppId],
-                                                AppsKey.Name: a[AppsKey.Name],
-                                                AppsKey.Version: a[AppsKey.Version],
-                                            }
-                                        ],
-                                    COUNT: 1
-                                },
-                            lambda a, b: {
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            AppsKey.AppId: a[AppsKey.AppId],
+                                            AppsKey.Name: a[AppsKey.Name],
+                                            AppsKey.Version: a[AppsKey.Version],
+                                        }
+                                    ],
+                                COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
                                 "count": a["count"] + b["count"],
                                 "apps": a["apps"] + b["apps"],
                             }
                         )
+                        .ungroup()
                     )
                 }
             )
@@ -621,50 +646,63 @@ def get_os_apps_history_for_agent(username, customer_name, uri, method,
                 AppsKey.AppId, AppsKey.Name, AppsKey.Version,
                 AppsKey.RvSeverity, AppsKey.ReleaseDate
             )
-             .grouped_map_reduce(
-                lambda x: x[AppsKey.ReleaseDate].to_epoch_time(),
+             .group(
+                lambda x: x[AppsKey.ReleaseDate].to_epoch_time()
+            )
+            .map(
                 lambda x:
-                    {
-                        'details':
-                            [
-                                {
-                                    AppsKey.AppId: x[AppsKey.AppId],
-                                    AppsKey.Name: x[AppsKey.Name],
-                                    AppsKey.Version: x[AppsKey.Version],
-                                    AppsKey.RvSeverity: x[AppsKey.RvSeverity]
-                                }
-                            ],
-                        COUNT: 1,
-                    },
-                lambda x, y: {
+                {
+                    'details':
+                        [
+                            {
+                                AppsKey.AppId: x[AppsKey.AppId],
+                                AppsKey.Name: x[AppsKey.Name],
+                                AppsKey.Version: x[AppsKey.Version],
+                                AppsKey.RvSeverity: x[AppsKey.RvSeverity]
+                            }
+                        ],
+                    COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     "count": x["count"] + y["count"],
                     "details": x["details"] + y["details"],
                 }
             )
+            .ungroup()
             .map(
                 {
                     'timestamp': r.row['group'],
                     'total_count': r.row['reduction']['count'],
                     'details': (
-                        r.row['reduction']['details'].grouped_map_reduce(
-                            lambda a: a['rv_severity'],
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
                             lambda a:
-                                {
-                                    'apps':
-                                        [
-                                            {
-                                                AppsKey.AppId: a[AppsKey.AppId],
-                                                AppsKey.Name: a[AppsKey.Name],
-                                                AppsKey.Version: a[AppsKey.Version],
-                                            }
-                                        ],
-                                    COUNT: 1
-                                },
-                            lambda a, b: {
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            AppsKey.AppId: a[AppsKey.AppId],
+                                            AppsKey.Name: a[AppsKey.Name],
+                                            AppsKey.Version: a[AppsKey.Version],
+                                        }
+                                    ],
+                                COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
                                 "count": a["count"] + b["count"],
                                 "apps": a["apps"] + b["apps"],
                             }
                         )
+                        .ungroup()
                     )
                 }
             )
@@ -727,50 +765,63 @@ def get_os_apps_history_for_tag(username, customer_name, uri, method,
                 AppsKey.AppId, AppsKey.Name, AppsKey.Version,
                 AppsKey.RvSeverity, AppsKey.ReleaseDate
             )
-             .grouped_map_reduce(
-                lambda x: x[AppsKey.ReleaseDate].to_epoch_time(),
+             .group(
+                lambda x: x[AppsKey.ReleaseDate].to_epoch_time()
+            )
+            .map(
                 lambda x:
-                    {
-                        'details':
-                            [
-                                {
-                                    AppsKey.AppId: x[AppsKey.AppId],
-                                    AppsKey.Name: x[AppsKey.Name],
-                                    AppsKey.Version: x[AppsKey.Version],
-                                    AppsKey.RvSeverity: x[AppsKey.RvSeverity]
-                                }
-                            ],
-                        COUNT: 1,
-                    },
-                lambda x, y: {
+                {
+                    'details':
+                        [
+                            {
+                                AppsKey.AppId: x[AppsKey.AppId],
+                                AppsKey.Name: x[AppsKey.Name],
+                                AppsKey.Version: x[AppsKey.Version],
+                                AppsKey.RvSeverity: x[AppsKey.RvSeverity]
+                            }
+                        ],
+                    COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     "count": x["count"] + y["count"],
                     "details": x["details"] + y["details"],
                 }
             )
+            .ungroup()
             .map(
                 {
                     'timestamp': r.row['group'],
                     'total_count': r.row['reduction']['count'],
                     'details': (
-                        r.row['reduction']['details'].grouped_map_reduce(
-                            lambda a: a['rv_severity'],
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
                             lambda a:
-                                {
-                                    'apps':
-                                        [
-                                            {
-                                                AppsKey.AppId: a[AppsKey.AppId],
-                                                AppsKey.Name: a[AppsKey.Name],
-                                                AppsKey.Version: a[AppsKey.Version],
-                                            }
-                                        ],
-                                    COUNT: 1
-                                },
-                            lambda a, b: {
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            AppsKey.AppId: a[AppsKey.AppId],
+                                            AppsKey.Name: a[AppsKey.Name],
+                                            AppsKey.Version: a[AppsKey.Version],
+                                        }
+                                    ],
+                                COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
                                 "count": a["count"] + b["count"],
                                 "apps": a["apps"] + b["apps"],
                             }
                         )
+                        .ungroup()
                     )
                 }
             )

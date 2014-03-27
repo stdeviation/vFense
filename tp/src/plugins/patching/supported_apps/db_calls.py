@@ -1,7 +1,7 @@
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
-from vFense.agent import *
-from vFense.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.core.agent import *
+from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.plugins.patching.rv_db_calls import \
     apps_to_insert_per_agent, get_apps_data, get_app_data,\
@@ -60,7 +60,9 @@ def get_all_stats_by_appid(username, customer_name,
                 [app_id, customer_name],
                 index=SupportedAppsPerAgentIndexes.AppIdAndCustomer
             )
-            .group_by(SupportedAppsPerAgentKey.Status, r.count)
+            .group(SupportedAppsPerAgentKey.Status)
+            .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
@@ -117,9 +119,12 @@ def get_all_agents_per_appid(username, customer_name,
             .get_all(app_id, index=SupportedAppsPerAgentKey.AppId)
             .eq_join(SupportedAppsPerAgentKey.AgentId, r.table(AgentsCollection))
             .zip()
-            .grouped_map_reduce(
-                lambda x: x[SupportedAppsPerAgentKey.Status],
-                lambda x: {
+            .group(
+                lambda x: x[SupportedAppsPerAgentKey.Status]
+            )
+            .map(
+                lambda x:
+                {
                     AGENTS:
                     [
                         {
@@ -129,12 +134,17 @@ def get_all_agents_per_appid(username, customer_name,
                         }
                     ],
                     COUNT: 1
-                },
-                lambda x, y: {
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     AGENTS: x[AGENTS] + y[AGENTS],
                     COUNT: x[COUNT] + y[COUNT]
                 }
-            ).run(conn)
+            )
+            .ungroup()
+            .run(conn)
         )
         if agents:
             for i in agents:
@@ -182,7 +192,9 @@ def get_all_stats_by_agentid(username, customer_name,
             r
             .table(SupportedAppsPerAgentCollection)
             .get_all(agent_id, index=SupportedAppsPerAgentKey.AgentId)
-            .group_by(SupportedAppsPerAgentKey.Status, r.count)
+            .group(SupportedAppsPerAgentKey.Status)
+            .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
@@ -235,7 +247,9 @@ def get_all_stats_by_tagid(username, customer_name,
             r
             .table(SupportedAppsPerTagCollection)
             .get_all(tag_id, index=SupportedAppsPerTagKey.TagId)
-            .group_by(SupportedAppsPerTagKey.Status, r.count)
+            .group(SupportedAppsPerTagKey.Status)
+            .count()
+            .ungroup()
             .run(conn)
         )
         if apps:

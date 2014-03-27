@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-2150-1: Firefox vulnerabilities | Ubuntu</title>
+        <title>USN-2152-1: Apache HTTP Server vulnerabilities | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,15 +66,15 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-2150-1: Firefox vulnerabilities</h1>
+                    <h1>USN-2152-1: Apache HTTP Server vulnerabilities</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-2150-1</h2>
-<p><em>18th March, 2014</em></p>
-<h3>firefox vulnerabilities</h3>
+<h2>Ubuntu Security Notice USN-2152-1</h2>
+<p><em>24th March, 2014</em></p>
+<h3>apache2 vulnerabilities</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
@@ -85,12 +85,14 @@ dd span {
 
     <li>Ubuntu 12.04 LTS</li>
 
+    <li>Ubuntu 10.04 LTS</li>
+
 </ul>
 
 
 <h3>Summary</h3>
-<p>Firefox could be made to crash or run programs as your login if it
-opened a malicious website.
+<p>Apache HTTP server could be made to crash if it received specially crafted
+network traffic.
 </p>
 
 
@@ -99,10 +101,12 @@ opened a malicious website.
 <ul>
 
   
-    <li>firefox 
-    - Mozilla Open Source web browser
+    <li>apache2 
+    - Apache HTTP server
     
     </li>
+  
+
   
 
   
@@ -113,33 +117,9 @@ opened a malicious website.
 
 
 <h3>Details</h3>
-<p>Benoit Jacob, Olli Pettay, Jan Varga, Jan de Mooij, Jesse Ruderman, Dan<br />Gohman, Christoph Diehl, Gregor Wagner, Gary Kwong, Luke Wagner, Rob<br />Fletcher and Makoto Kato discovered multiple memory safety issues in<br />Firefox. If a user were tricked in to opening a specially crafted website,<br />an attacker could potentially exploit these to cause a denial of service<br />via application crash, or execute arbitrary code with the privileges of<br />the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1493">CVE-2014-1493</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1494">CVE-2014-1494</a>)</p>
+<p>Ning Zhang &amp; Amin Tora discovered that the mod_dav module incorrectly<br />handled whitespace characters in CDATA sections. A remote attacker could<br />use this issue to cause the server to stop responding, resulting in a<br />denial of service. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2013-6438">CVE-2013-6438</a>)</p>
 
-<p>Atte Kettunen discovered an out-of-bounds read during WAV file decoding.<br />An attacker could potentially exploit this to cause a denial of service<br />via application crash. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1497">CVE-2014-1497</a>)</p>
-
-<p>David Keeler discovered that crypto.generateCRFMRequest did not correctly<br />validate all arguments. An attacker could potentially exploit this to<br />cause a denial of service via application crash. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1498">CVE-2014-1498</a>)</p>
-
-<p>Ehsan Akhgari discovered that the WebRTC permission dialog can display<br />the wrong originating site information under some circumstances. An<br />attacker could potentially exploit this by tricking a user in order to<br />gain access to their webcam or microphone. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1499">CVE-2014-1499</a>)</p>
-
-<p>Tim Philipp Schäfers and Sebastian Neef discovered that onbeforeunload<br />events used with page navigations could make the browser unresponsive<br />in some circumstances. An attacker could potentially exploit this to<br />cause a denial of service. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1500">CVE-2014-1500</a>)</p>
-
-<p>Jeff Gilbert discovered that WebGL content could manipulate content from<br />another sites WebGL context. An attacker could potentially exploit this<br />to conduct spoofing attacks. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1502">CVE-2014-1502</a>)</p>
-
-<p>Nicolas Golubovic discovered that CSP could be bypassed for data:<br />documents during session restore. An attacker could potentially exploit<br />this to conduct cross-site scripting attacks. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1504">CVE-2014-1504</a>)</p>
-
-<p>Robert O&#39;Callahan discovered a mechanism for timing attacks involving<br />SVG filters and displacements input to feDisplacementMap. An attacker<br />could potentially exploit this to steal confidential information across<br />domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>)</p>
-
-<p>Tyson Smith and Jesse Schwartzentruber discovered an out-of-bounds read<br />during polygon rendering in MathML. An attacker could potentially exploit<br />this to steal confidential information across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1508">CVE-2014-1508</a>)</p>
-
-<p>John Thomson discovered a memory corruption bug in the Cairo graphics<br />library. If a user had a malicious extension installed, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash, or execute arbitrary code with the privileges of the user invoking<br />Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1509">CVE-2014-1509</a>)</p>
-
-<p>Mariusz Mlynski discovered that web content could open a chrome privileged<br />page and bypass the popup blocker in some circumstances. An attacker could<br />potentially exploit this to execute arbitrary code with the privileges<br />of the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1510">CVE-2014-1510</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1511">CVE-2014-1511</a>)</p>
-
-<p>It was discovered that memory pressure during garbage collection resulted<br />in memory corruption in some circumstances. An attacker could potentially<br />exploit this to cause a denial of service via application crash or execute<br />arbitrary code with the privileges of the user invoking Firefox.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1512">CVE-2014-1512</a>)</p>
-
-<p>Jüri Aedla discovered out-of-bounds reads and writes with TypedArrayObject<br />in some circumstances. An attacker could potentially exploit this to<br />cause a denial of service via application crash or execute arbitrary code<br />with the privileges of the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1513">CVE-2014-1513</a>)</p>
-
-<p>George Hotz discovered an out-of-bounds write with TypedArrayObject. An<br />attacker could potentially exploit this to cause a denial of service via<br />application crash or execute arbitrary code with the privileges of the<br />user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1514">CVE-2014-1514</a>)<br /></p>
+<p>Rainer M Canavan discovered that the mod_log_config module incorrectly<br />handled certain cookies. A remote attacker could use this issue to cause<br />the server to stop responding, resulting in a denial of service. This issue<br />only affected Ubuntu 12.04 LTS, Ubuntu 12.10 and Ubuntu 13.10.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0098">CVE-2014-0098</a>)<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
@@ -150,9 +130,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/apache2">apache2.2-bin</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.13.10.1">28.0+build2-0ubuntu0.13.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/apache2/2.4.6-2ubuntu2.2">2.4.6-2ubuntu2.2</a>
     </span>
   </dd>
     
@@ -162,9 +142,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/apache2">apache2.2-bin</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.12.10.1">28.0+build2-0ubuntu0.12.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/apache2/2.2.22-6ubuntu2.4">2.2.22-6ubuntu2.4</a>
     </span>
   </dd>
     
@@ -174,9 +154,21 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/apache2">apache2.2-bin</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.12.04.1">28.0+build2-0ubuntu0.12.04.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/apache2/2.2.22-1ubuntu1.5">2.2.22-1ubuntu1.5</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/apache2">apache2.2-bin</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/apache2/2.2.14-5ubuntu8.13">2.2.14-5ubuntu8.13</a>
     </span>
   </dd>
     
@@ -186,46 +178,16 @@ package version:</p>
 <p>To update your system, please follow these instructions:
 <a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
 </p>
-<p>After a standard system update you need to restart Firefox to make<br />all the necessary changes.<br /></p>
+<p>In general, a standard system update will make all the necessary changes.<br /></p>
 
 
 
 <h3>References</h3>
 <p>
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1493">CVE-2014-1493</a>, 
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2013-6438">CVE-2013-6438</a>, 
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1494">CVE-2014-1494</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1497">CVE-2014-1497</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1498">CVE-2014-1498</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1499">CVE-2014-1499</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1500">CVE-2014-1500</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1502">CVE-2014-1502</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1504">CVE-2014-1504</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1508">CVE-2014-1508</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1509">CVE-2014-1509</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1510">CVE-2014-1510</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1511">CVE-2014-1511</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1512">CVE-2014-1512</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1513">CVE-2014-1513</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1514">CVE-2014-1514</a>, 
-
-        <a href="https://launchpad.net/bugs/1291982">LP: 1291982</a>
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0098">CVE-2014-0098</a>
         
 
 </p>

@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-2150-1: Firefox vulnerabilities | Ubuntu</title>
+        <title>USN-2151-1: Thunderbird vulnerabilities | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,15 +66,15 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-2150-1: Firefox vulnerabilities</h1>
+                    <h1>USN-2151-1: Thunderbird vulnerabilities</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-2150-1</h2>
-<p><em>18th March, 2014</em></p>
-<h3>firefox vulnerabilities</h3>
+<h2>Ubuntu Security Notice USN-2151-1</h2>
+<p><em>21st March, 2014</em></p>
+<h3>thunderbird vulnerabilities</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
@@ -89,8 +89,7 @@ dd span {
 
 
 <h3>Summary</h3>
-<p>Firefox could be made to crash or run programs as your login if it
-opened a malicious website.
+<p>Several security issues were fixed in Thunderbird.
 </p>
 
 
@@ -99,8 +98,8 @@ opened a malicious website.
 <ul>
 
   
-    <li>firefox 
-    - Mozilla Open Source web browser
+    <li>thunderbird 
+    - Mozilla Open Source mail and newsgroup client
     
     </li>
   
@@ -113,33 +112,23 @@ opened a malicious website.
 
 
 <h3>Details</h3>
-<p>Benoit Jacob, Olli Pettay, Jan Varga, Jan de Mooij, Jesse Ruderman, Dan<br />Gohman, Christoph Diehl, Gregor Wagner, Gary Kwong, Luke Wagner, Rob<br />Fletcher and Makoto Kato discovered multiple memory safety issues in<br />Firefox. If a user were tricked in to opening a specially crafted website,<br />an attacker could potentially exploit these to cause a denial of service<br />via application crash, or execute arbitrary code with the privileges of<br />the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1493">CVE-2014-1493</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1494">CVE-2014-1494</a>)</p>
+<p>Benoit Jacob, Olli Pettay, Jan Varga, Jan de Mooij, Jesse Ruderman, Dan<br />Gohman and Christoph Diehl discovered multiple memory safety issues in<br />Thunderbird. If a user were tricked in to opening a specially crafted<br />message with scripting enabled, an attacker could potentially exploit<br />these to cause a denial of service via application crash, or execute<br />arbitrary code with the privileges of the user invoking Thunderbird.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1493">CVE-2014-1493</a>)</p>
 
-<p>Atte Kettunen discovered an out-of-bounds read during WAV file decoding.<br />An attacker could potentially exploit this to cause a denial of service<br />via application crash. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1497">CVE-2014-1497</a>)</p>
+<p>Atte Kettunen discovered an out-of-bounds read during WAV file decoding.<br />If a user had enabled audio, an attacker could potentially exploit this<br />to cause a denial of service via application crash. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1497">CVE-2014-1497</a>)</p>
 
-<p>David Keeler discovered that crypto.generateCRFMRequest did not correctly<br />validate all arguments. An attacker could potentially exploit this to<br />cause a denial of service via application crash. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1498">CVE-2014-1498</a>)</p>
+<p>Robert O&#39;Callahan discovered a mechanism for timing attacks involving<br />SVG filters and displacements input to feDisplacementMap. If a user had<br />enabled scripting, an attacker could potentially exploit this to steal<br />confidential information across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>)</p>
 
-<p>Ehsan Akhgari discovered that the WebRTC permission dialog can display<br />the wrong originating site information under some circumstances. An<br />attacker could potentially exploit this by tricking a user in order to<br />gain access to their webcam or microphone. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1499">CVE-2014-1499</a>)</p>
+<p>Tyson Smith and Jesse Schwartzentruber discovered an out-of-bounds read<br />during polygon rendering in MathML. If a user had enabled scripting, an<br />attacker could potentially exploit this to steal confidential information<br />across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1508">CVE-2014-1508</a>)</p>
 
-<p>Tim Philipp Schäfers and Sebastian Neef discovered that onbeforeunload<br />events used with page navigations could make the browser unresponsive<br />in some circumstances. An attacker could potentially exploit this to<br />cause a denial of service. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1500">CVE-2014-1500</a>)</p>
+<p>John Thomson discovered a memory corruption bug in the Cairo graphics<br />library. If a user had a malicious extension installed, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash, or execute arbitrary code with the privileges of the user invoking<br />Thunderbird. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1509">CVE-2014-1509</a>)</p>
 
-<p>Jeff Gilbert discovered that WebGL content could manipulate content from<br />another sites WebGL context. An attacker could potentially exploit this<br />to conduct spoofing attacks. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1502">CVE-2014-1502</a>)</p>
+<p>Mariusz Mlynski discovered that web content could open a chrome privileged<br />page and bypass the popup blocker in some circumstances. If a user had<br />enabled scripting, an attacker could potentially exploit this to execute<br />arbitrary code with the privileges of the user invoking Thunderbird.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1510">CVE-2014-1510</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1511">CVE-2014-1511</a>)</p>
 
-<p>Nicolas Golubovic discovered that CSP could be bypassed for data:<br />documents during session restore. An attacker could potentially exploit<br />this to conduct cross-site scripting attacks. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1504">CVE-2014-1504</a>)</p>
+<p>It was discovered that memory pressure during garbage collection resulted<br />in memory corruption in some circumstances. If a user had enabled<br />scripting, an attacker could potentially exploit this to cause a denial<br />of service via application crash or execute arbitrary code with the<br />privileges of the user invoking Thunderbird. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1512">CVE-2014-1512</a>)</p>
 
-<p>Robert O&#39;Callahan discovered a mechanism for timing attacks involving<br />SVG filters and displacements input to feDisplacementMap. An attacker<br />could potentially exploit this to steal confidential information across<br />domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>)</p>
+<p>Jüri Aedla discovered out-of-bounds reads and writes with TypedArrayObject<br />in some circumstances. If a user had enabled scripting, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash or execute arbitrary code with the privileges of the user invoking<br />Thunderbird. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1513">CVE-2014-1513</a>)</p>
 
-<p>Tyson Smith and Jesse Schwartzentruber discovered an out-of-bounds read<br />during polygon rendering in MathML. An attacker could potentially exploit<br />this to steal confidential information across domains. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1508">CVE-2014-1508</a>)</p>
-
-<p>John Thomson discovered a memory corruption bug in the Cairo graphics<br />library. If a user had a malicious extension installed, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash, or execute arbitrary code with the privileges of the user invoking<br />Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1509">CVE-2014-1509</a>)</p>
-
-<p>Mariusz Mlynski discovered that web content could open a chrome privileged<br />page and bypass the popup blocker in some circumstances. An attacker could<br />potentially exploit this to execute arbitrary code with the privileges<br />of the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1510">CVE-2014-1510</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1511">CVE-2014-1511</a>)</p>
-
-<p>It was discovered that memory pressure during garbage collection resulted<br />in memory corruption in some circumstances. An attacker could potentially<br />exploit this to cause a denial of service via application crash or execute<br />arbitrary code with the privileges of the user invoking Firefox.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1512">CVE-2014-1512</a>)</p>
-
-<p>Jüri Aedla discovered out-of-bounds reads and writes with TypedArrayObject<br />in some circumstances. An attacker could potentially exploit this to<br />cause a denial of service via application crash or execute arbitrary code<br />with the privileges of the user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1513">CVE-2014-1513</a>)</p>
-
-<p>George Hotz discovered an out-of-bounds write with TypedArrayObject. An<br />attacker could potentially exploit this to cause a denial of service via<br />application crash or execute arbitrary code with the privileges of the<br />user invoking Firefox. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1514">CVE-2014-1514</a>)<br /></p>
+<p>George Hotz discovered an out-of-bounds write with TypedArrayObject. If a<br />user had enabled scripting, an attacker could potentially exploit this to<br />cause a denial of service via application crash or execute arbitrary code<br />with the privileges of the user invoking Thunderbird. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1514">CVE-2014-1514</a>)<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
@@ -150,9 +139,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/thunderbird">thunderbird</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.13.10.1">28.0+build2-0ubuntu0.13.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/thunderbird/1:24.4.0+build1-0ubuntu0.13.10.2">1:24.4.0+build1-0ubuntu0.13.10.2</a>
     </span>
   </dd>
     
@@ -162,9 +151,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/thunderbird">thunderbird</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.12.10.1">28.0+build2-0ubuntu0.12.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/thunderbird/1:24.4.0+build1-0ubuntu0.12.10.1">1:24.4.0+build1-0ubuntu0.12.10.1</a>
     </span>
   </dd>
     
@@ -174,9 +163,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <a href="https://launchpad.net/ubuntu/+source/thunderbird">thunderbird</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/firefox/28.0+build2-0ubuntu0.12.04.1">28.0+build2-0ubuntu0.12.04.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/thunderbird/1:24.4.0+build1-0ubuntu0.12.04.1">1:24.4.0+build1-0ubuntu0.12.04.1</a>
     </span>
   </dd>
     
@@ -186,7 +175,7 @@ package version:</p>
 <p>To update your system, please follow these instructions:
 <a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
 </p>
-<p>After a standard system update you need to restart Firefox to make<br />all the necessary changes.<br /></p>
+<p>After a standard system update you need to restart Thunderbird to make<br />all the necessary changes.<br /></p>
 
 
 
@@ -195,19 +184,7 @@ package version:</p>
 
         <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1493">CVE-2014-1493</a>, 
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1494">CVE-2014-1494</a>, 
-
         <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1497">CVE-2014-1497</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1498">CVE-2014-1498</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1499">CVE-2014-1499</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1500">CVE-2014-1500</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1502">CVE-2014-1502</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1504">CVE-2014-1504</a>, 
 
         <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1505">CVE-2014-1505</a>, 
 
@@ -225,7 +202,7 @@ package version:</p>
 
         <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1514">CVE-2014-1514</a>, 
 
-        <a href="https://launchpad.net/bugs/1291982">LP: 1291982</a>
+        <a href="https://launchpad.net/bugs/1293851">LP: 1293851</a>
         
 
 </p>
