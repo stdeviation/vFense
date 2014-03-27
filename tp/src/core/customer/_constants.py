@@ -1,0 +1,2 @@
+class DefaultCustomers():
+    DEFAULT = 'default'
