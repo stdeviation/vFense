@@ -2,6 +2,7 @@ import logging
 
 from vFense.core.customer import *
 from vFense.core.group._constants import *
+from vFense.core.group import *
 from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
@@ -143,6 +144,175 @@ def fetch_customers(match=None, keys_to_pluck=None, conn=None):
 
 @time_it
 @db_create_close
+def fetch_properties_for_customer(customer_name, conn=None):
+    """Retrieve a customer and all its properties.
+    Args:
+        customer_name (str): Name of the customer
+
+    Returns:
+        Returns a Dictionary of customers
+
+    Basic Usage::
+        >>> from vFense.customer._db import fetch_properties_for_customer
+        >>> fetch_properties_for_customer()
+
+    Return:
+        Dictionary of customer properties.
+    """
+    map_hash = (lambda x:
+        {
+            CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
+            CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
+            CustomerKeys.NetThrottle: x[CustomerKeys.NetThrottle],
+            CustomerKeys.OperationTtl: x[CustomerKeys.OperationTtl],
+            CustomerKeys.Users: (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    x[CustomerPerUserKeys.CustomerName],
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .coerce_to('array')
+                .pluck(CustomerPerUserKeys.UserName)
+            ),
+            CustomerKeys.Groups: (
+                r
+                .table(GroupCollections.Groups)
+                .get_all(
+                    x[GroupKeys.CustomerName],
+                    index=GroupIndexes.CustomerName
+                )
+                .coerce_to('array')
+                .pluck(GroupKeys.GroupName, GroupKeys.GroupId)
+            )
+        }
+    )
+
+    data = []
+    try:
+        data = list(
+            r
+            .table(CustomerCollections.Customers)
+            .get_all(customer_name)
+            .map(map_hash)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+def fetch_properties_for_all_customers(username=None, conn=None):
+    """Retrieve all customers or retrieve all customers that user has
+        access to.
+    Kwargs:
+        user_name (str): Name of the username,
+
+    Returns:
+        Returns a List of customers
+
+    Basic Usage::
+        >>> from vFense.customer._db import fetch_properties_for_all_customers
+        >>> fetch_properties_for_all_customers()
+
+    Return:
+        List of customer properties.
+        [
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'default'
+            },
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'TopPatch'
+            }
+        ]
+    """
+    map_hash = (lambda x:
+        {
+            CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
+            CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
+            CustomerKeys.NetThrottle: x[CustomerKeys.NetThrottle],
+            CustomerKeys.OperationTtl: x[CustomerKeys.OperationTtl],
+            CustomerKeys.Users: (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    x[CustomerPerUserKeys.CustomerName],
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .coerce_to('array')
+                .pluck(CustomerPerUserKeys.UserName)
+            ),
+            CustomerKeys.Groups: (
+                r
+                .table(GroupCollections.Groups)
+                .get_all(
+                    x[GroupKeys.CustomerName],
+                    index=GroupIndexes.CustomerName
+                )
+                .coerce_to('array')
+                .pluck(GroupKeys.GroupName, GroupKeys.GroupId)
+            )
+        }
+    )
+
+    data = []
+    try:
+        if username:
+            data = list(
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .filter(
+                    {
+                        CustomerPerUserKeys.UserName: username
+                    }
+                )
+                .eq_join(
+                    lambda x:
+                    x[CustomerKeys.CustomerName],
+                    r.table(CustomerCollections.Customers)
+                )
+                .zip()
+                .map(map_hash)
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .table(CustomerCollections.Customers)
+                .eq_join(
+                    lambda x:
+                    x[CustomerPerUserKeys.CustomerName],
+                    r.table(CustomerCollections.CustomersPerUser),
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .zip()
+                .map(map_hash)
+                .run(conn)
+            )
+
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+
+@time_it
+@db_create_close
 def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
     """Retrieve all the users for a customer
     Args:
@@ -176,19 +346,19 @@ def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
     try:
         if customer_name and keys_to_pluck:
             data = list(
-                r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
+                    r
+                    .table(CustomerCollections.CustomersPerUser)
+                    .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+                    .pluck(keys_to_pluck)
+                    .run(conn)
+                    )
         elif customer_name and not keys_to_pluck:
             data = list(
-                r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-                .run(conn)
-            )
+                    r
+                    .table(CustomerCollections.CustomersPerUser)
+                    .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+                    .run(conn)
+                    )
 
     except Exception as e:
         logger.exception(e)
@@ -225,19 +395,19 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
     try:
         if username and keys_to_pluck:
             data = list(
-                r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(username, index=CustomerPerUserIndexes.UserName)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
+                    r
+                    .table(CustomerCollections.CustomersPerUser)
+                    .get_all(username, index=CustomerPerUserIndexes.UserName)
+                    .pluck(keys_to_pluck)
+                    .run(conn)
+                    )
         elif username and not keys_to_pluck:
             data = list(
-                r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(username, index=CustomerPerUserIndexes.UserName)
-                .run(conn)
-            )
+                    r
+                    .table(CustomerCollections.CustomersPerUser)
+                    .get_all(username, index=CustomerPerUserIndexes.UserName)
+                    .run(conn)
+                    )
 
     except Exception as e:
         logger.exception(e)
@@ -266,13 +436,13 @@ def users_exists_in_customer(username, customer_name, conn=None):
     exist = False
     try:
         empty = (
-            r
-            .table(CustomerCollections.CustomersPerUser)
-            .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-            .filter({CustomerPerUserKeys.UserName: username})
-            .is_empty()
-            .run(conn)
-        )
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+                .filter({CustomerPerUserKeys.UserName: username})
+                .is_empty()
+                .run(conn)
+                )
         if not empty:
             exist = True
 
@@ -303,11 +473,11 @@ def insert_customer(customer_data, conn=None):
     data = {}
     try:
         data = (
-            r
-            .table(CustomerCollections.Customers)
-            .insert(customer_data)
-            .run(conn)
-        )
+                r
+                .table(CustomerCollections.Customers)
+                .insert(customer_data)
+                .run(conn)
+                )
 
     except Exception as e:
         logger.exception(e)
@@ -337,12 +507,12 @@ def update_customer(customer_name, customer_data, conn=None):
     data = {}
     try:
         data = (
-            r
-            .table(CustomerCollections.Customers)
-            .get(customer_name)
-            .update(customer_data)
-            .run(conn)
-        )
+                r
+                .table(CustomerCollections.Customers)
+                .get(customer_name)
+                .update(customer_data)
+                .run(conn)
+                )
 
     except Exception as e:
         logger.exception(e)

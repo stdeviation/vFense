@@ -55,10 +55,12 @@ from vFense.server.api.tag_api import *
 from vFense.server.api.users_api import *
 from vFense.server.api.groups_api import *
 from vFense.server.api.customer_api import *
-from vFense.server.api.permissions_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
+from vFense.core.api.customer import CustomerHandler, CustomersHandler
+from vFense.core.api.permission import RetrieveValidPermissionsHandler
+
 from vFense.scripts.create_indexes import initialize_indexes_and_create_tables
 
 from tornado.options import define, options
@@ -92,34 +94,27 @@ class Application(tornado.web.Application):
             ##### User and Groups API
             (r"/api/user/?", UserHandler),
             (r"/api/users/?", GetUsersApi),
-            (r"/api/users/create/?", CreateUserApi),
-            (r"/api/users/delete/?", DeleteUserApi),
-            (r"/api/users/edit/?", ModifyUserApi),
 
             (r"/api/groups/?", GetGroupApi),
-            (r"/api/groups/create", AddGroupApi),
-            (r"/api/groups/delete", DeleteGroupApi),
-            (r"/api/groups/edit", ModifyGroupApi),
 
             ##### New User API
-            (r"/api/v1/user/([a-zA-Z0-9_]+)?", UserHandler),
+            (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
             (r"/api/v1/users?", UsersHandler),
+
             ##### New Group API
             (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
             (r"/api/v1/groups?", GroupsHandler),
+
+            ##### New Customer API
+            (r"/api/v1/customer/([a-zA-Z0-9_ ]+)?", CustomerHandler),
+            (r"/api/v1/customers?", CustomersHandler),
 
             ##### Notification API
             (r"/api/v1/notifications?", NotificationsHandler),
             (r"/api/v1/notification/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", NotificationHandler),
             (r"/api/v1/notifications/get_valid_fields/?",
                 GetAllValidFieldsForNotifications),
-            (r"/api/permissions/?", GetPermissionsApi),
-
-            ##### Customers API
-            (r"/api/customers/?", GetCustomerHandler),
-            (r"/api/customers/create/?", AddCustomerHandler),
-            (r"/api/customers/delete/?", DeleteCustomerHandler),
-            (r"/api/customers/edit/?", ModifyCustomerHandler),
+            (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
             ##### Monitoring Api
             (r"/api/monitor/memory/?", GetMemoryStats),

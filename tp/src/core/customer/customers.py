@@ -7,7 +7,8 @@ from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.customer._db import insert_customer, fetch_customer, \
     insert_user_per_customer, delete_user_in_customers , delete_customer, \
-    users_exists_in_customer, update_customer, fetch_users_for_customer
+    users_exists_in_customer, update_customer, fetch_users_for_customer, \
+    fetch_properties_for_all_customers, fetch_properties_for_customer
 
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz.status_codes import DbCodes
@@ -123,6 +124,63 @@ def get_customers(match=None, keys_to_pluck=None):
         customer_data = fetch_customers()
 
     return(customer_data)
+
+
+@time_it
+def get_properties_for_customer(customer_name):
+    """Retrieve a customer and all its properties
+    Args:
+        customer_name (str): Name of the customer
+
+    Returns:
+        Returns a Dictionary of customers
+
+    Basic Usage::
+        >>> from vFense.customer.customer import get_properties_for_customer
+        >>> get_properties_for_customer(customer_name)
+
+    Return:
+        Dictionary of customer properties.
+    """
+    data = fetch_properties_for_customer(customer_name)
+    return(data)
+
+
+@time_it
+def get_properties_for_all_customers(username=None):
+    """Retrieve all customers or retrieve all customers that user has
+        access to.
+    Kwargs:
+        user_name (str): Name of the username, w
+
+    Returns:
+        Returns a List of customers
+
+    Basic Usage::
+        >>> from vFense.customer.customer import get_properties_for_all_customers
+        >>> fetch_properties_for_all_customers()
+
+    Return:
+        List of customer properties.
+        [
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'default'
+            },
+            {
+                u'cpu_throttle': u'normal',
+                u'package_download_url_base': u'http: //10.0.0.21/packages/',
+                u'operation_ttl': 10,
+                u'net_throttle': 0,
+                u'customer_name': u'TopPatch'
+            }
+        ]
+    """
+    data = fetch_properties_for_all_customers(username)
+    return(data)
 
 
 @time_it
@@ -333,6 +391,19 @@ def create_customer(
             )
 
             if username != DefaultCustomers.DEFAULT:
+                add_user_to_customers(
+                    DefaultCustomers.DEFAULT, customer_name, user_name, uri, method
+                )
+
+        #The admin user should be part of every group
+        elif object_status == DbCodes.Inserted and username != DefaultUser.ADMIN:
+            admin_exist = (
+                retrieve_object(
+                    DefaultCustomers.DEFAULT, UserCollections.Users
+                )
+            )
+            
+            if admin_exist:
                 add_user_to_customers(
                     DefaultCustomers.DEFAULT, customer_name, user_name, uri, method
                 )

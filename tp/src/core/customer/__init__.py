@@ -9,6 +9,8 @@ class CustomerKeys():
     CpuThrottle = 'cpu_throttle'
     PackageUrl = 'package_download_url_base'
     OperationTtl = 'operation_ttl'
+    Users = 'users' #Mapped Keys
+    Groups = 'groups' #Mapped Keys
 
 class CustomerPerUserKeys():
     CustomerName = 'customer_name'
