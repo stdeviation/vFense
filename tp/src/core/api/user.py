@@ -149,10 +149,11 @@ class UserHandler(BaseHandler):
             ###Disable or Enable a User###
             enabled = self.arguments.get('enabled', None)
             if enabled:
-                data_dict[UserKeys.Enabled] = enabled
-                results = (
-                    edit_user_properties(username, **data_dict)
-                )
+                if enabled == 'true' or enabled == 'false':
+                    data_dict[UserKeys.Enabled] = enabled
+                    results = (
+                        edit_user_properties(username, **data_dict)
+                    )
 
             if results:
                 self.set_status(results['http_status'])
