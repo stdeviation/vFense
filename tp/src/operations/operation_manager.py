@@ -520,17 +520,18 @@ class Operation(object):
                 )
                 .group(OperationPerAppKey.Results)
                 .count()
+                .ungroup()
                 .run(conn)
             )
 
             for i in app_stats_count:
-                if i['group']['results'] == OperationCodes.ResultsPending:
+                if i['group'] == OperationCodes.ResultsPending:
                     pending_count = i['reduction']
 
-                elif i['group']['results'] == OperationCodes.ResultsReceived:
+                elif i['group'] == OperationCodes.ResultsReceived:
                     completed_count = i['reduction']
 
-                elif i['group']['results'] == OperationCodes.ResultsReceivedWithErrors:
+                elif i['group'] == OperationCodes.ResultsReceivedWithErrors:
                     failed_count = i['reduction']
 
             (

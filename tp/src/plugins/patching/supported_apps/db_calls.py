@@ -62,6 +62,7 @@ def get_all_stats_by_appid(username, customer_name,
             )
             .group(SupportedAppsPerAgentKey.Status)
             .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
@@ -185,6 +186,7 @@ def get_all_stats_by_agentid(username, customer_name,
             .get_all(agent_id, index=SupportedAppsPerAgentKey.AgentId)
             .group(SupportedAppsPerAgentKey.Status)
             .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
@@ -239,6 +241,7 @@ def get_all_stats_by_tagid(username, customer_name,
             .get_all(tag_id, index=SupportedAppsPerTagKey.TagId)
             .group(SupportedAppsPerTagKey.Status)
             .count()
+            .ungroup()
             .run(conn)
         )
         if apps:
