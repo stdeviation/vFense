@@ -123,9 +123,12 @@ def get_all_agents_per_appid(username, customer_name,
             .get_all(app_id, index=CurrentAppsPerAgentKey.AppId)
             .eq_join(CurrentAppsPerAgentKey.AgentId, r.table(CurrentAgentsCollection))
             .zip()
-            .grouped_map_reduce(
-                lambda x: x[CurrentAppsPerAgentKey.Status],
-                lambda x: {
+            .group(
+                lambda x: x[CurrentAppsPerAgentKey.Status]
+            )
+            .map(
+                lambda x:
+                {
                     AGENTS:
                     [
                         {
@@ -135,12 +138,16 @@ def get_all_agents_per_appid(username, customer_name,
                         }
                     ],
                     COUNT: 1
-                },
-                lambda x, y: {
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
                     AGENTS: x[AGENTS] + y[AGENTS],
                     COUNT: x[COUNT] + y[COUNT]
                 }
             )
+            .ungroup()
             .run(conn)
         )
         if agents:
