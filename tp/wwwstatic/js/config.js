@@ -32,7 +32,7 @@ require.config({
         'rangy'           : 'libs/rangy/rangy-core',
         'highcharts'      : 'libs/highcharts/highcharts.src',
         'highcharts-more' : 'libs/highcharts/highcharts-more.src',
-        'highstocks'      : 'libs/highstocks/highstock',
+        'highstocks'      : 'libs/highstocks/highstock.src',
         'crel'            : 'libs/crel/crel',
         'moment'          : 'libs/moment/moment',
         'livestamp'       : 'libs/livestamp/livestamp',
@@ -161,6 +161,7 @@ require.config({
         'jquery.ui.slider'      : {exports: 'jQuery.ui.slider',       deps: ['jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse']},
         'jquery.ui.spinner'     : {exports: 'jQuery.ui.spinner',      deps: ['jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.button']},
         'jquery.ui.tabs'        : {exports: 'jQuery.ui.tabs',         deps: ['jquery.ui.core', 'jquery.ui.widget']},
+
 
         // Plugins
         'jquery.ui.timepicker'  : {exports: 'jQuery.ui.timepicker', deps: ['jquery.ui.core', 'jquery.ui.datepicker', 'jquery.ui.slider']},
