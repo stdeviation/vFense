@@ -3,25 +3,25 @@ import tornado.web
 
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from server.handlers import BaseHandler
 import logging
 import logging.config
 
-from vFense.agent import *
-from vFense.agent.agent_searcher import AgentSearcher
-from vFense.agent.agent_handler import AgentManager
-from vFense.errorz.error_messages import GenericResults
+from agent import *
+from agent.agent_searcher import AgentSearcher
+from agent.agent_handler import AgentManager
+from errorz.error_messages import GenericResults
 
-from vFense.plugins.patching.store_operations import StoreOperation
-from vFense.agent.agents import get_supported_os_codes, get_supported_os_strings, \
+from plugins.patching.store_operations import StoreOperation
+from agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
-from vFense.operations import *
-from vFense.server.hierarchy.permissions import Permission
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from operations import *
+from server.hierarchy.permissions import Permission
+from server.hierarchy.manager import get_current_customer_name
+from server.hierarchy.decorators import authenticated_request, permission_check
+from server.hierarchy.decorators import convert_json_to_arguments
 
-from vFense.scheduler.jobManager import job_scheduler
+from scheduler.jobManager import job_scheduler
 
 
 #from server.handlers import *

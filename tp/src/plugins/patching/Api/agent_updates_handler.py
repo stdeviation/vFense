@@ -3,28 +3,25 @@ import tornado.web
 
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from server.handlers import BaseHandler
 import logging
 import logging.config
 
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from errorz.error_messages import GenericResults, PackageResults
 
-from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
-from vFense.core.permissions.decorators import check_permissions
+from server.hierarchy.manager import get_current_customer_name
+from server.hierarchy.decorators import authenticated_request, permission_check
+from server.hierarchy.decorators import convert_json_to_arguments
+from server.hierarchy.permissions import Permission
 
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-
-from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import update_agent_app, \
+from plugins.patching import *
+from plugins.patching.rv_db_calls import update_agent_app, \
     update_hidden_status
-from vFense.plugins.patching.store_operations import StoreOperation
-from vFense.plugins.patching.search.search import RetrieveAgentApps
-from vFense.plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
-from vFense.plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId
-from vFense.plugins.patching.search.search_by_appid import RetrieveAgentAppsByAppId, \
+from plugins.patching.store_operations import StoreOperation
+from plugins.patching.search.search import RetrieveAgentApps
+from plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
+from plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId
+from plugins.patching.search.search_by_appid import RetrieveAgentAppsByAppId, \
     RetrieveAgentsByAgentAppId
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -103,7 +100,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @check_permissions(Permissions.INSTALL)
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
@@ -170,8 +167,8 @@ class AgentIdAgentAppsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -302,8 +299,8 @@ class TagIdAgentAppsHandler(BaseHandler):
 
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -368,8 +365,8 @@ class TagIdAgentAppsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -453,7 +450,6 @@ class AppIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -502,8 +498,8 @@ class AppIdAgentAppsHandler(BaseHandler):
 
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -570,8 +566,8 @@ class AppIdAgentAppsHandler(BaseHandler):
 
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -680,8 +676,8 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -747,8 +743,8 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
 
     @authenticated_request
+    @permission_check(permission=Permission.Install)
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -892,7 +888,6 @@ class AgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)

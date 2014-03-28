@@ -4,23 +4,22 @@ from hashlib import sha256
 from time import mktime
 from datetime import datetime
 import urllib
-from vFense.db.client import db_create_close, r, db_connect
-from vFense.plugins.patching import *
-from vFense.plugins.mightymouse import *
-from vFense.plugins.cve import *
-from vFense.plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
-    get_vulnerability_categories, get_ubuntu_cveids
-from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
-from vFense.errorz.error_messages import GenericResults, PackageResults
-from vFense.errorz.status_codes import PackageCodes
-from vFense.core.agent import *
-from vFense.operations import *
-from vFense.core.tag.tagManager import *
-from vFense.core.customer.customers import get_customer_property
-from vFense.core.customer import *
+from db.client import db_create_close, r, db_connect
+from plugins.patching import *
+from plugins.mightymouse import *
+from plugins.cve import *
+from plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
+    get_vulnerability_categories
+from plugins.mightymouse.mouse_db import get_mouse_addresses
+from errorz.error_messages import GenericResults, PackageResults, \
+        MightyMouseResults
+from errorz.status_codes import PackageCodes, MightyMouseCodes
+from agent import *
+from operations import *
+from tagging.tagManager import *
 
-from vFense.server.hierarchy import CoreProperty
-from vFense.server.hierarchy.manager import Hierarchy
+from server.hierarchy import CoreProperty
+from server.hierarchy.manager import Hierarchy
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -496,7 +495,11 @@ def update_all_app_data_for_agent(agent_id, data):
 
 
 def get_base_url(customer_name):
-    return (get_customer_property(customer_name, CustomerKeys.OperationTtl))
+
+    return Hierarchy.get_customer_property(
+        customer_name,
+        CoreProperty.PackageUrl
+    )
 
 
 #@db_create_close
@@ -817,58 +820,41 @@ def update_agent_app(app_id, data, table=AgentAppsCollection):
 
 
 
-def update_vulnerability_info_app(
-    app_id, app, exists, os_string,
-    table=AppsCollection
-    ):
+def update_vulnerability_info_app(app_id, app, exists, table=AppsCollection):
+    if not app.has_key(AppsKey.CveIds):
+        if app.has_key(AppsKey.AppId):
+            app.pop(AppsKey.AppId)
+        app[AppsKey.CveIds] = []
+        app[AppsKey.VulnerabilityId] = ""
+        app[AppsKey.VulnerabilityCategories] = []
 
-    vuln_info = None
-    if app.has_key(AppsKey.AppId):
-        app.pop(AppsKey.AppId)
-    app[AppsKey.CveIds] = []
-    app[AppsKey.VulnerabilityId] = ""
-    app[AppsKey.VulnerabilityCategories] = []
+        if app[AppsKey.Kb] != "":
+            vuln_info = get_windows_bulletinid_and_cveids(app[AppsKey.Kb])
 
-    if app[AppsKey.Kb] != "" and os_string.find('Windows') == 0:
-        vuln_info = get_windows_bulletinid_and_cveids(app[AppsKey.Kb])
+            if vuln_info:
+                app[AppsKey.CveIds] = vuln_info[WindowsSecurityBulletinKey.CveIds]
+                for cve_id in app[AppsKey.CveIds]:
+                    cve_id = cve_id.replace('CVE-', '')
+                    app[AppsKey.VulnerabilityCategories] += get_vulnerability_categories(cve_id)
 
-    elif os_string.find('Ubuntu') == 0:
-        vuln_info = (
-            get_ubuntu_cveids(
-                app[AppsKey.Name],
-                app[AppsKey.Version],
-                os_string
-            )
-        )
-    if vuln_info:
-        app[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
-        for cve_id in app[AppsKey.CveIds]:
-            cve_id = cve_id.replace('CVE-', '')
-            app[AppsKey.VulnerabilityCategories] += (
-                get_vulnerability_categories(cve_id)
-            )
+                app[AppsKey.VulnerabilityCategories] = list(set(app[AppsKey.VulnerabilityCategories]))
 
-        app[AppsKey.VulnerabilityCategories] = (
-            list(set(app[AppsKey.VulnerabilityCategories]))
-        )
-        app[AppsKey.VulnerabilityId] = (
-                vuln_info[SecurityBulletinKey.BulletinId]
-        )
+                app[AppsKey.VulnerabilityId] = vuln_info[WindowsSecurityBulletinKey.BulletinId]
 
         if exists:
             update_os_app(app_id, app, table)
 
-    app[AppsKey.AppId] = app_id
+        app[AppsKey.AppId] = app_id
 
     return(app)
 
 
 @db_create_close
-def unique_application_updater(customer_name, app, os_string, conn=None):
+def unique_application_updater(customer_name, app, conn=None):
 
     table = AppsCollection
 
-    exists = None
+    exists = []
     try:
         exists = (
             r
@@ -887,9 +873,7 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
     if exists:
         update_file_data(app[AppsKey.AppId], agent_id, file_data)
         update_customers_in_app(customer_name, app[AppsKey.AppId])
-        update_vulnerability_info_app(
-            exists[AppsKey.AppId], exists, True, os_string
-        )
+        update_vulnerability_info_app(exists[AppsKey.AppId], exists, True)
 
     else:
         update_file_data(app[AppsKey.AppId], agent_id, file_data)
@@ -905,11 +889,7 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
         elif len(file_data) == 0 and status == INSTALLED:
             app[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
-        app = (
-            update_vulnerability_info_app(
-                app[AppsKey.AppId], app, False, os_string
-            )
-        )
+        app = update_vulnerability_info_app(app[AppsKey.AppId], app, False)
 
         try:
             (
@@ -1862,18 +1842,3 @@ def delete_app_from_rv(
         completed = False
 
     return(completed)
-
-
-def update_app_status(agent_id, app_id, oper_type, data):
-    if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
-        update_os_app_per_agent(agent_id, app_id, data)
-
-    elif oper_type == INSTALL_CUSTOM_APPS:
-        update_custom_app_per_agent(agent_id, app_id, data)
-
-    elif oper_type == INSTALL_SUPPORTED_APPS:
-        update_supported_app_per_agent(agent_id, app_id, data)
-
-    elif oper_type == INSTALL_AGENT_UPDATE:
-        update_agent_app_per_agent(agent_id, app_id, data)
-
