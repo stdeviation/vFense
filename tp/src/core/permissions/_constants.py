@@ -1,6 +1,5 @@
 class Permissions():
     ADMINISTRATOR = 'administrator'
-    ADMIN = 'admin'
     INSTALL = 'install'
     UNINSTALL = 'uninstall'
     REBOOT = 'reboot'
@@ -9,6 +8,6 @@ class Permissions():
     REMOVE_TAG = 'remove tag'
     REMOTE_ASSISTANCE = 'remote assistance'
     VALID_PERMISSIONS = (
-        ADMINISTRATOR, ADMIN, INSTALL, UNINSTALL, REBOOT,
+        ADMINISTRATOR, INSTALL, UNINSTALL, REBOOT,
         SHUTDOWN, CREATE_TAG, REMOVE_TAG, REMOTE_ASSISTANCE
     )

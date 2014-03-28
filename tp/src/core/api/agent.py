@@ -175,7 +175,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMIN)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
         customer_name = (
@@ -219,7 +219,7 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMIN)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
         customer_name = (
@@ -294,7 +294,7 @@ class AgentHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMIN)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
         customer_name = (
@@ -357,7 +357,7 @@ class AgentHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @authenticated_request
-    @check_permissions(Permissions.ADMIN)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
         customer_name = (
