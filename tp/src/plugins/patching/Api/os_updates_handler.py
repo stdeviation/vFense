@@ -111,6 +111,7 @@ class AgentIdOsAppsHandler(BaseHandler):
 
     @authenticated_request
     @permission_check(permission=Permission.Install)
+    @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
