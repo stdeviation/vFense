@@ -3,18 +3,18 @@ import tornado.web
 
 import simplejson as json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
-from db.client import *
+from vFense.db.client import *
 from utils.common import *
 from jsonpickle import encode
 
-from errorz.error_messages import GenericResults
-from plugins.patching.rv_db_calls import *
-from plugins.patching.stats import *
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request
+from vFense.errorz.error_messages import GenericResults
+from vFense.plugins.patching.rv_db_calls import *
+from vFense.plugins.patching.stats import *
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

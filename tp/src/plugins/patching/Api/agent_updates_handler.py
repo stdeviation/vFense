@@ -3,25 +3,25 @@ import tornado.web
 
 import simplejson as json
 
-from server.handlers import BaseHandler
+from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from errorz.error_messages import GenericResults, PackageResults
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from server.hierarchy.manager import get_current_customer_name
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.hierarchy.decorators import convert_json_to_arguments
-from server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.server.hierarchy.permissions import Permission
 
-from plugins.patching import *
-from plugins.patching.rv_db_calls import update_agent_app, \
+from vFense.plugins.patching import *
+from vFense.plugins.patching.rv_db_calls import update_agent_app, \
     update_hidden_status
-from plugins.patching.store_operations import StoreOperation
-from plugins.patching.search.search import RetrieveAgentApps
-from plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
-from plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId
-from plugins.patching.search.search_by_appid import RetrieveAgentAppsByAppId, \
+from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.search.search import RetrieveAgentApps
+from vFense.plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
+from vFense.plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId
+from vFense.plugins.patching.search.search_by_appid import RetrieveAgentAppsByAppId, \
     RetrieveAgentsByAgentAppId
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
