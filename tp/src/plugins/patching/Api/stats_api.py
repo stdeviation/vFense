@@ -7,7 +7,7 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 from vFense.db.client import *
-from utils.common import *
+from vFense.utils.common import *
 from jsonpickle import encode
 
 from vFense.errorz.error_messages import GenericResults
