@@ -1,15 +1,16 @@
-from agent import *
 import logging
 import logging.config
-from utils.common import *
-from agent.agents import *
-from plugins.RemediationVault import * 
-from time import ctime
-from tagging.tagManager import get_agent_ids_from_tag
 
-from db.client import db_create_close, r
-from plugins.RemediationVault.rv_db_calls import get_all_app_stats_by_agentid
-from errorz.error_messages import GenericResults
+from vFense.core.agent import *
+from vFense.utils.common import *
+from vFense.core.agent.agents import *
+from vFense.plugins.patching import * 
+from time import ctime
+from vFense.core.tag.tagManager import get_agent_ids_from_tag
+
+from vFense.db.client import db_create_close, r
+from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
+from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

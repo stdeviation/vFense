@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-=======
-from agent import *
->>>>>>> c53b0db1a21501bf9767637a5f3d7a2fefbe2d30
+from vFense.core.agent import *
 import logging
 import logging.config
-
-from vFense.core.agent import *
 from vFense.utils.common import *
 from vFense.core.agent.agents import *
 from vFense.plugins.patching import * 
+from time import ctime
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
 from vFense.db.client import db_create_close, r
@@ -174,7 +170,7 @@ def systems_os_details(username, customer_name, os_code=None,
     systems_os_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid)
+        agent_info=get_agent_info(agentid=agentid)
         system_detail=system_os_details(agent_info=agent_info)
         if system_detail:
             systems_os_details.append(system_detail)
@@ -202,16 +198,10 @@ def systems_hardware_details (username, customer_name, os_code=None,
     systems_hardware_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-<<<<<<< HEAD
-        agent_info=get_agent_info(agentid)
-        hardware_detail=system_hardware_details(agent_info=agent_info)
-        systems_hardware_details.append(hardware_detail)
-=======
         agent_info=get_agent_info(agentid=agentid)
         hardware_details=system_hardware_details(agent_info=agent_info)
         if hardware_details:
             systems_hardware_details.append(hardware_details)
->>>>>>> c53b0db1a21501bf9767637a5f3d7a2fefbe2d30
 
     try:
         data = systems_hardware_details
@@ -236,7 +226,7 @@ def systems_cpu_details (username, customer_name, os_code=None,
     systems_cpu_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid)
+        agent_info=get_agent_info(agentid=agentid)
         cpu_stats=system_cpu_stats(agent_info)
         if cpu_stats:
             systems_cpu_details.append(cpu_stats)
@@ -263,7 +253,7 @@ def systems_memory_stats(username, customer_name, os_code=None,
     systems_memory_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid)
+        agent_info=get_agent_info(agentid=agentid)
         memory_stats=system_memory_stats(agent_info)
         if memory_stats:
             systems_memory_details.append(memory_stats)
@@ -291,7 +281,7 @@ def systems_disk_stats(username, customer_name, os_code=None,
     systems_disk_details=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid)
+        agent_info=get_agent_info(agentid=agentid)
         disk_stats=system_disk_stats(agent_info)
         if disk_stats:
             systems_disk_details.append(disk_stats)
@@ -318,7 +308,7 @@ def systems_network_details(username, customer_name, os_code=None,
     systems_network_infos=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
-        agent_info=get_agent_info(agentid)
+        agent_info=get_agent_info(agentid=agentid)
         network_details=system_network_details(agent_info)
         if network_details:
             systems_network_infos.append(network_details)
