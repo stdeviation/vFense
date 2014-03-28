@@ -452,7 +452,6 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)

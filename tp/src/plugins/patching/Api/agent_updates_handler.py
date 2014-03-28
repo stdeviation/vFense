@@ -11,7 +11,6 @@ from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user
-from vFense.core.permissions.decorators import check_permissions
 
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import authenticated_request, permission_check
