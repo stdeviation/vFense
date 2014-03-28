@@ -1,13 +1,16 @@
 import logging
 
+from vFense.core.user import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.permissions._constants import *
 from vFense.db.client import r, db_create_close
+from vFense.core.decorators import time_it
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
+@time_it
 @db_create_close
 def validate_permission_for_user(username, customer_name, permission, conn=None):
     permission_exist = False
@@ -58,3 +61,4 @@ def validate_permission_for_user(username, customer_name, permission, conn=None)
         logger.exception(e)
 
     return(permission_exist)
+

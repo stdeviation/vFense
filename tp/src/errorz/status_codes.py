@@ -19,6 +19,10 @@ class GenericCodes(object):
     PermissionGranted = 1018
     PermissionDenied = 1019
     InvalidPermission = 1020
+    AuthorizationGranted = 1021
+    AuthorizationDenied = 1022
+    MissingUsername = 1023
+    MissingPassword = 1024
 
 
 class DbCodes(object):

@@ -4,12 +4,17 @@ import logging.config
 from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
 
+from vFense.core._constants import *
 from vFense.core.user import *
 from vFense.core.user.users import get_user
 
 from vFense.core.permissions import *
 from vFense.core.permissions._constants import *
 from vFense.core.permissions._db import validate_permission_for_user
+
+from vFense.core._db import retrieve_object
+from vFense.core.decorators import time_it
+from vFense.utils.security import Crypto
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -113,3 +118,26 @@ def verify_permission_for_user(
         logger.exception(e)
 
     return(granted, status_code)
+
+
+@time_it
+def authenticate_user(username, password):
+    authenticated = False
+    try:
+        user_exist = retrieve_object(username, UserCollections.Users)
+        if user_exist and user_exist[UserKeys.Enabled] == CommonKeys.YES:
+            original_encrypted_password = (
+                user_exist[UserKeys.Password].encode('utf-8')
+            )
+            password_verified = (
+                Crypto().verify_bcrypt_hash(
+                    password, original_encrypted_password
+                )
+            )
+            if password_verified:
+                authenticated = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(authenticated)

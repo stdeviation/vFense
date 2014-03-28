@@ -292,6 +292,57 @@ class GenericResults(object):
         )
 
 
+    def user_authenticated(self):
+        return(
+            {
+                status: 200,
+                code: GenericCodes.AuthorizationGranted,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Authorization granted for user %s' % (self.username)
+                )
+            }
+        )
+
+    def user_denied(self):
+        return(
+            {
+                status: 401,
+                code: GenericCodes.AuthorizationDenied,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Authorization denied for user %s' % (self.username)
+                )
+            }
+        )
+
+    def missing_password(self):
+        return(
+            {
+                status: 400,
+                code: GenericCodes.MissingPassword,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Password is required to authenticate'
+                )
+            }
+        )
+
+    def missing_username(self):
+        return(
+            {
+                status: 400,
+                code: GenericCodes.MissingUsername,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Username is required to authenticate'
+                )
+            }
+        )
 
 
 class AgentResults(object):

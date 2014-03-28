@@ -1,5 +1,6 @@
 import logging
 
+from vFense.core._constants import *
 from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.group import *
@@ -317,6 +318,33 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
         logger.exception(e)
 
     return(data)
+
+@time_it
+@db_create_close
+def status_toggle(username, conn=None):
+    try:
+        toggled = (
+            r
+            .table(UserCollections.Users)
+            .get(username)
+            .update(
+                {
+                    UserKeys.Enabled: (
+                        r.branch(
+                            r.row[UserKeys.Enabled] == CommonKeys.YES,
+                            CommonKeys.NO,
+                            CommonKeys.YES
+                        )
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(toggled)
 
 
 @time_it

@@ -1,7 +1,10 @@
-from datetime import datetime
 import logging
 import logging.config
+import json
+from datetime import datetime
 from functools import wraps
+
+from tornado.web import HTTPError
 
 from vFense.errorz.status_codes import DbCodes
 from vFense.errorz.error_messages import GenericResults
@@ -136,3 +139,83 @@ def time_it(fn):
         return(output)
 
     return wraps(fn)(db_wrapper)
+
+
+def authenticated_request(method):
+    """ Decorator that handles authenticating the request. Uses secure cookies.
+    In the spirit of the tornado.web.authenticated decorator.
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+
+        # Get the access token argument. If nothing is provided, string will be
+        # "Invalid". Chose this way instead of using "try" and catching
+        # HttpError 400 which get_argument throws
+        #access_token = str(self.get_argument("access_token", default="Invalid"))
+
+        # Check if an access token is legit.
+        # if access_token != "Invalid":
+        #     return method(self, *args, **kwargs)
+
+        # If the access token is not provided, assumes is the main ui client.
+        if not self.current_user:     
+            if self.request.method in ("GET", "HEAD", "POST"):
+                url = self.get_login_url()
+                # if "?" not in url:
+                #     if urlparse.urlsplit(url).scheme:
+                #         if login url is absolute, make next absolute too
+                        # next_url = {'next': self.request.full_url()}
+                    # else:
+                    #     next_url = {'next': self.request.uri}
+                    # url += "?" + urllib.urlencode(next_url)
+                self.redirect(url)
+                return
+            raise HTTPError(403)
+
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+def agent_authenticated_request(method):
+    """ Decorator that handles authenticating the request. Uses secure cookies.
+    In the spirit of the tornado.web.authenticated decorator.
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+
+        # Get the access token argument. If nothing is provided, string will be
+        # "Invalid". Chose this way instead of using "try" and catching
+        # HttpError 400 which get_argument throws
+        #access_token = str(self.get_argument("access_token", default="Invalid"))
+
+        # Check if an access token is legit.
+        # if access_token != "Invalid":
+        #     return method(self, *args, **kwargs)
+
+        # If the access token is not provided, assumes is the main ui client.
+        if not self.current_user:
+            raise HTTPError(403)
+
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
+
+def convert_json_to_arguments(fn):
+
+    @wraps(fn)
+    def wrapper(self, *args, **kwargs):
+
+        content_type = self.request.headers.get("Content-Type", "")
+
+        if content_type.startswith("application/json"):
+            self.arguments = json.loads(self.request.body)
+            return fn(self, *args, **kwargs)
+
+        else:
+
+            self.set_status(415)
+            self.write("Content-type application/json is expected.")
+
+    return wrapper

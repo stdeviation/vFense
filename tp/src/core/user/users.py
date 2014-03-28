@@ -1,5 +1,6 @@
 import logging                                                                                                     
 
+from vFense.core._constants import *
 from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.group import *
@@ -190,7 +191,7 @@ def get_users(customer_name=None, username=None, without_fields=None):
 @results_message
 def create_user(
     username, fullname, password, group_ids,
-    customer_name, email, enabled=True, user_name=None,
+    customer_name, email, enabled='no', user_name=None,
     uri=None, method=None
     ):
     """Add a new user into vFense
@@ -201,8 +202,8 @@ def create_user(
         group_ids (list): List of vFense group ids to add the user too.
         customer_name (str): The customer, this user will be part of.
         email (str): Email address of the user.
-        enabled (boolean): True or False
-            Default=True
+        enabled (str): yes or no
+            Default=no
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -217,9 +218,10 @@ def create_user(
         >>> group_ids = ['8757b79c-7321-4446-8882-65457f28c78b']
         >>> customer_name = 'default'
         >>> email = 'test@test.org'
+        >>> enabled = 'yes'
         >>> create_user(
                 username, fullname, password,
-                group_ids, customer_name, email
+                group_ids, customer_name, email, enabled
             )
 
     Return:
@@ -236,7 +238,7 @@ def create_user(
                 'default_customer': 'default',
                 'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
                 'user_name': 'testing123',
-                'enabled': True,
+                'enabled': 'yes',
                 'email': 'test@test.org'
             }
         }
@@ -245,11 +247,14 @@ def create_user(
     user_exist = get_user(username)
     pass_strength = check_password(password)
     status = create_user.func_name + ' - '
+    if enabled != CommonKeys.YES or enabled != CommonKeys.NO:
+        enabled = CommonKeys.NO
     try:
         if not user_exist and pass_strength[0]:
             encrypted_password = Crypto().hash_bcrypt(password)
             customer_is_valid = get_customer(customer_name)
             groups_are_valid = validate_group_ids(group_ids, customer_name)
+
             if customer_is_valid and groups_are_valid[0]:
                 user_data = (
                     {

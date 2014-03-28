@@ -149,7 +149,8 @@ class UserHandler(BaseHandler):
             ###Disable or Enable a User###
             enabled = self.arguments.get('enabled', None)
             if enabled:
-                if enabled == 'true' or enabled == 'false':
+                enabled.lower()
+                if enabled == 'toggle':
                     data_dict[UserKeys.Enabled] = enabled
                     results = (
                         edit_user_properties(username, **data_dict)
@@ -268,7 +269,7 @@ class UsersHandler(BaseHandler):
         customer_context = self.arguments.get('customer_context')
         fullname = self.arguments.get('fullname', None)
         email = self.arguments.get('email', None)
-        enabled = self.arguments.get('enabled', False)
+        enabled = self.arguments.get('enabled', 'no')
         try:
             if not isinstance(group_ids, list):
                 group_ids = group_ids.split()
