@@ -1842,3 +1842,17 @@ def delete_app_from_rv(
         completed = False
 
     return(completed)
+
+
+def update_app_status(agent_id, app_id, oper_type, data):
+    if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
+        update_os_app_per_agent(agent_id, app_id, data)
+
+    elif oper_type == INSTALL_CUSTOM_APPS:
+        update_custom_app_per_agent(agent_id, app_id, data)
+
+    elif oper_type == INSTALL_SUPPORTED_APPS:
+        update_supported_app_per_agent(agent_id, app_id, data)
+
+    elif oper_type == INSTALL_AGENT_UPDATE:
+        update_agent_app_per_agent(agent_id, app_id, data)
