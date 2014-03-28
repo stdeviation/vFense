@@ -1,30 +1,18 @@
-<<<<<<< HEAD
-=======
 from agent import *
->>>>>>> c53b0db1a21501bf9767637a5f3d7a2fefbe2d30
 import logging
 import logging.config
+from utils.common import *
+from agent.agents import *
+from plugins.RemediationVault import * 
+from time import ctime
+from tagging.tagManager import get_agent_ids_from_tag
 
-from vFense.core.agent import *
-from vFense.utils.common import *
-from vFense.core.agent.agents import *
-from vFense.plugins.patching import * 
-from vFense.core.tag.tagManager import get_agent_ids_from_tag
-
-from vFense.db.client import db_create_close, r
-from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
-from vFense.errorz.error_messages import GenericResults
+from db.client import db_create_close, r
+from plugins.RemediationVault.rv_db_calls import get_all_app_stats_by_agentid
+from errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-
-
-def get_agentids(os_code=None, customer_name=None, tag_id=None):
-    agentids=[]
-    agent_ids_for_tag_id= get_agent_ids_from_tag(tag_id=tag_id)
-    agent_ids_for_os_customer=get_all_agent_ids(agent_os=os_code,customer_name=customer_name)
-    agentids=list(set(agent_ids_for_tag_id + agent_ids_for_os_customer))
-    return(agentids)
 
 
 @db_create_close
@@ -75,17 +63,84 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
                 )
         return(status)
 
-def system_os_details(agent_info):
-    if agent_info:
-        data={
-                "computer-name":agent_info.get(AgentKey.ComputerName),
-                "os-type":agent_info.get(AgentKey.OsCode), 
-                "os-name":agent_info.get(AgentKey.OsString),
-                "system-arch":agent_info.get('bit_type'),
-                "machine-type":agent_info.get(AgentKey.MachineType),
-                }
-        return(data)
 
+@db_create_close
+def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.ComputerName,
+        count=30, offset=0, query=None, uri=None, method=None, conn=None):
+    
+    print key
+    print query
+    if query:
+        count = (
+                r
+               .table(AgentsCollection)
+               .get_all(customer_name, index=AgentKey.CustomerName)
+               .filter(
+                   (r.row[AgentKey.ComputerName].match("(?i)"+query))
+                   )
+               .count()
+               .run(conn)
+               )
+
+        data = list(
+                r
+                .table(AgentsCollection)
+                .get_all(customer_name, index=AgentKey.CustomerName)
+                .filter(
+                    (r.row[key].match("(?i)"+query))
+                    )
+                .pluck(keys_to_pluck)
+                .skip(offset)
+                .limit(count)
+                .run(conn)
+                )
+    else:
+        
+        count = (
+                r
+                .table(AgentsCollection)
+                .get_all(customer_name, index=AgentKey.CustomerName)
+                .count()
+                .run(conn)
+                )
+        
+        data = list(
+                r
+                .table(AgentsCollection)
+                .get_all(customer_name, index=AgentKey.CustomerName)
+                .pluck(keys_to_pluck)
+                .skip(offset)
+                .limit(count)
+                .run(conn)
+                )
+    return(data)
+
+
+
+def systems_os_details(username, customer_name, key, query, uri=None, method=None):
+   
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.OsCode, 
+            AgentKey.OsString, AgentKey.MachineType, AgentKey.SysArch]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query,keys_to_pluck=keys_to_pluck)
+
+    try:
+        data = data
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results)
 
 def system_hardware_details(agent_info):
     if agent_info:
@@ -99,47 +154,141 @@ def system_hardware_details(agent_info):
                 } 
         return(data)
 
+def systems_hardware_details (username, customer_name, key, query,  uri=None, method=None):
 
-def system_network_details(agent_info):
-    if agent_info:
-        hardware_info=agent_info.get(AgentKey.Hardware)
-        data={
-                "computer-name":agent_info.get(AgentKey.ComputerName),
-                "network":hardware_info.get('nic'),
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.Hardware]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query,keys_to_pluck=keys_to_pluck)
+
+    try:
+        data = data
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results) 
+
+
+def systems_network_details(username, customer_name, key, query,
+        uri=None, method=None):
+
+    network_stats=[]
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.Hardware]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query,keys_to_pluck=keys_to_pluck)
+
+    for d in data:
+        network_data= {
+                "computer_name" : d[AgentKey.ComputerName],
+                "network" : d['hardware']['nic']
                 }
-        return(data)
+        network_stats.append(network_data)
+    
+    try:
+        data = network_stats
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
 
 
-def system_cpu_stats(agent_info):
-    if agent_info:
-        monit_stats=agent_info.get('monit_stats')
-        if monit_stats:
-            cpu_stats=monit_stats.get('cpu')
-            data = {
-                    "computer-name": agent_info.get(AgentKey.ComputerName),
-                    "last-updated-at":time.ctime(monit_stats['timestamp']),
-                    "idle":cpu_stats.get('idle'),
-                    "user":cpu_stats.get('user'),
-                    "system":cpu_stats.get('system'),
-                    }
-            return(data)
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results) 
 
 
-def system_memory_stats(agent_info):
-    if agent_info:
-        monit_stats=agent_info.get('monit_stats')
-        if monit_stats:
-            memory_stats=monit_stats.get('memory')
-            data = {
-                    "computer-name": agent_info.get(AgentKey.ComputerName),
-                    "last-updated-at":time.ctime(monit_stats['timestamp']),
-                    "total":memory_stats.get('total'),
-                    "used":memory_stats.get('used'),
-                    "used-percentage":memory_stats.get('used_percent'),
-                    "free":memory_stats.get('free'),
-                    "free-percent":memory_stats.get('free_percent'),
-                    }
-            return(data)
+def systems_cpu_details (username, customer_name, key, query, 
+        uri=None, method=None):
+    
+    cpu_stats=[]
+
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query,keys_to_pluck=keys_to_pluck)
+    for d in data:
+        cpu_data = {
+                "computer-name" : d[AgentKey.ComputerName],
+                "last-updated-at": time.ctime(d[AgentKey.MonitStats]['timestamp']),
+                "idle": d[AgentKey.MonitStats]['cpu']['idle'],
+                "user":d[AgentKey.MonitStats]['cpu']['user'],
+                "system":d[AgentKey.MonitStats]['cpu']['system']
+                }
+        cpu_stats.append(cpu_data)
+
+    try:
+        data = cpu_stats
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results) 
+            
+
+def systems_memory_stats(username, customer_name, key, query, 
+        uri=None, method=None):
+
+    memory_stats = []
+
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query, keys_to_pluck=keys_to_pluck)
+    for d in data:
+        memory_data = {
+                "computer-name": d[AgentKey.ComputerName],
+                "last-updated-at": time.ctime(d[AgentKey.MonitStats]['timestamp']),
+                "total" : d[AgentKey.MonitStats]['memory']['total'],
+                "used" : d[AgentKey.MonitStats]['memory']['used'],
+                "used-percentage": d[AgentKey.MonitStats]['memory']['used_percent'],
+                "free":d[AgentKey.MonitStats]['memory']['free'],
+                "free-percent": d[AgentKey.MonitStats]['memory']['free_percent'],
+                }
+        memory_stats.append(memory_data)
+
+    try:
+        data = memory_stats
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results) 
 
 
 def system_disk_stats(agent_info):
@@ -153,6 +302,41 @@ def system_disk_stats(agent_info):
                         "disk-usage":file_system,
                         }
                 return(data)
+
+
+def systems_disk_stats(username, customer_name, key, query, 
+        uri=None, method=None):
+    fs_stats =[]
+
+    keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
+    
+    data = filter_by_and_query(username=username, customer_name=customer_name,
+            key=key, query=query,keys_to_pluck=keys_to_pluck)
+
+    for d in data:
+        fs_data = {
+                "computer-name": d[AgentKey.ComputerName],
+                "disk-usage": d[AgentKey.MonitStats]['file_system'],
+                }
+        fs_stats.append(fs_data)
+    
+    try:
+        data = fs_stats
+        results = (
+                GenericResults(
+                    username, uri, method,
+                    ).information_retrieved(data, len(data))
+                )
+    
+    except Exception as e:
+        logger.exception(e)
+        results = (
+                GenericResults(
+                    username, uri, method
+                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
+                )
+    return(results) 
+
 
 def agent_last_updated(agent_info):
     if agent_info:
@@ -168,180 +352,9 @@ def agent_status(agent_info):
         agent_status = agent_info.get('agent_status')
         return(agent_status)
 
-
-def systems_os_details(username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_os_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-        agent_info=get_agent_info(agentid)
-        system_detail=system_os_details(agent_info=agent_info)
-        if system_detail:
-            systems_os_details.append(system_detail)
-
-    try:
-        data = systems_os_details
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
-
-def systems_hardware_details (username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_hardware_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-<<<<<<< HEAD
-        agent_info=get_agent_info(agentid)
-        hardware_detail=system_hardware_details(agent_info=agent_info)
-        systems_hardware_details.append(hardware_detail)
-=======
-        agent_info=get_agent_info(agentid=agentid)
-        hardware_details=system_hardware_details(agent_info=agent_info)
-        if hardware_details:
-            systems_hardware_details.append(hardware_details)
->>>>>>> c53b0db1a21501bf9767637a5f3d7a2fefbe2d30
-
-    try:
-        data = systems_hardware_details
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_hardware_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
-
-def systems_cpu_details (username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_cpu_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-        agent_info=get_agent_info(agentid)
-        cpu_stats=system_cpu_stats(agent_info)
-        if cpu_stats:
-            systems_cpu_details.append(cpu_stats)
-    
-    try:
-        data = systems_cpu_details
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_cpu_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
-def systems_memory_stats(username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_memory_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-        agent_info=get_agent_info(agentid)
-        memory_stats=system_memory_stats(agent_info)
-        if memory_stats:
-            systems_memory_details.append(memory_stats)
-    
-    try:
-        data = systems_memory_details
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
-
-def systems_disk_stats(username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_disk_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-        agent_info=get_agent_info(agentid)
-        disk_stats=system_disk_stats(agent_info)
-        if disk_stats:
-            systems_disk_details.append(disk_stats)
-    
-    try:
-        data = systems_disk_details
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
-def systems_network_details(username, customer_name, os_code=None, 
-        tag_id=None, uri=None, method=None):
-    systems_network_infos=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
-    for agentid in agentids:
-        agent_info=get_agent_info(agentid)
-        network_details=system_network_details(agent_info)
-        if network_details:
-            systems_network_infos.append(network_details)
-    
-    try:
-        data = systems_network_infos
-        results = (
-                GenericResults(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
-    
-    except Exception as e:
-        logger.exception(e)
-        results = (
-                GenericResults(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
-    return(results)
-
 def agents_last_updated(username, customer_name, os_code=None, 
         tag_id=None, uri=None, method=None):
+
     agents_uptime_info=[]
     agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
     for agentid in agentids:
