@@ -1,5 +1,5 @@
 from vFense.errorz.status_codes import *
-from vFense.agent import *
+from vFense.core.agent import *
 
 status = 'http_status'
 code = 'rv_status_code'
@@ -13,6 +13,7 @@ operation_id = 'operation_id'
 agent_id = 'agent_id'
 new_agent = 'new_agent_id'
 check_in = 'check_in'
+generated_ids = 'generated_ids'
 
 
 class GenericResults(object):
@@ -160,16 +161,17 @@ class GenericResults(object):
             }
         )
 
-    def object_created(self, object_id, object_type, object_data):
+    def object_created(self, object_ids, object_type, object_data):
         return(
             {
                 status: 200,
-                code: GenericCodes.ObjectUpdated,
+                code: GenericCodes.ObjectCreated,
                 uri: self.uri,
                 method: self.method,
+                generated_ids: object_ids,
                 message: (
                     '%s - %s %s was created'
-                    % (self.username, object_type, object_id)
+                    % (self.username, object_type, object_ids)
                 ),
                 data: object_data
             }
@@ -186,6 +188,22 @@ class GenericResults(object):
                     '%s - %s %s was deleted'
                     % (self.username, object_type, object_id)
                 ),
+            }
+
+       )
+
+    def object_unchanged(self, object_id, object_type, object_data=[]):
+        return(
+            {
+                status: 200,
+                code: GenericCodes.ObjectUnchanged,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    '%s - %s %s unchanged'
+                    % (self.username, object_type, object_id)
+                ),
+                data: object_data
             }
         )
 
@@ -246,6 +264,33 @@ class GenericResults(object):
                 )
             }
         )
+
+    def permission_denied(self, username):
+        return(
+            {
+                status: 403,
+                code: GenericCodes.PermissionDenied,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission denied for user %s' % (self.username)
+                )
+            }
+        )
+
+    def invalid_permission(self, username, permission):
+        return(
+            {
+                status: 404,
+                code: GenericCodes.InvalidPermission,
+                uri: self.uri,
+                method: self.method,
+                message: (
+                    'Permission %s is invalid' % (permission)
+                )
+            }
+        )
+
 
 
 
@@ -787,7 +832,7 @@ class SchedulerResults(object):
                 uri: self.uri,
                 method: self.method,
                 message: (
-                    '%s - Scchedule removed: %s'
+                    '%s - Schedule removed: %s'
                     % (self.username, job_name)
                 ),
             }
@@ -801,7 +846,7 @@ class SchedulerResults(object):
                 uri: self.uri,
                 method: self.method,
                 message: (
-                    '%s - Scchedule %s failed to remove'
+                    '%s - Schedule %s failed to remove'
                     % (self.username, job_name)
                 ),
             }
