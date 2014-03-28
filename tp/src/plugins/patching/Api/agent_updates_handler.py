@@ -103,7 +103,6 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
 
     @authenticated_request
-    @check_permissions(Permissions.INSTALL)
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
@@ -171,7 +170,6 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -303,7 +301,6 @@ class TagIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -369,7 +366,6 @@ class TagIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -453,7 +449,6 @@ class AppIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -503,7 +498,6 @@ class AppIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -571,7 +565,6 @@ class AppIdAgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -681,7 +674,6 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -748,7 +740,6 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -892,7 +883,6 @@ class AgentAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)

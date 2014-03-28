@@ -7,9 +7,6 @@ from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
-from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
-from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.server.hierarchy.manager import get_current_customer_name
@@ -25,6 +22,7 @@ from vFense.plugins.patching.search.search_by_agentid import RetrieveSupportedAp
 from vFense.plugins.patching.search.search_by_tagid import RetrieveSupportedAppsByTagId
 from vFense.plugins.patching.search.search_by_appid import RetrieveSupportedAppsByAppId, \
     RetrieveAgentsBySupportedAppId
+from server.hierarchy.permissions import Permission
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -103,7 +101,7 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
+    @permission_check(permission=Permission.Install)
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -171,7 +169,7 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
+    @permission_check(permission=Permission.Install)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -303,7 +301,7 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
+    @permission_check(permission=Permission.Install)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -370,7 +368,7 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
+    @permission_check(permission=Permission.Install)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -504,7 +502,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
+    @permission_check(permission=Permission.Install)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -573,7 +571,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
+    @permission_check(permission=Permission.Install)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -684,7 +682,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
+    @permission_check(permission=Permission.Install)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -751,7 +749,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.UNINSTALL)
+    @permission_check(permission=Permission.Install)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
@@ -894,7 +892,7 @@ class SupportedAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
+    @permission_check(permission=Permission.Install)
     def put(self):
         username = self.get_current_user().encode('utf-8')
         customer_name = get_current_customer_name(username)
