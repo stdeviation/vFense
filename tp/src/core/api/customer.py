@@ -70,14 +70,14 @@ class CustomersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         all_customers = self.get_argument('all_customers', None)
-        customer_name = self.get_argument('customer_name', None)
+        customer_context = self.get_argument('customer_context', None)
         count = 0
         customer_data = {}
         try:
-            if customer_name:
+            if customer_context:
                 granted, status_code = (
                     verify_permission_for_user(
-                        active_user, Permissions.ADMINISTRATOR, customer_name
+                        active_user, Permissions.ADMINISTRATOR, customer_context
                     )
                 )
             else:
@@ -87,14 +87,14 @@ class CustomersHandler(BaseHandler):
                     )
                 )
 
-            if granted and not all_customers and not customer_name:
+            if granted and not all_customers and not customer_context:
                 customer_data = get_properties_for_all_customers(active_user)
 
-            elif granted and all_customers and not customer_name:
+            elif granted and all_customers and not customer_context:
                 customer_data = get_properties_for_all_customers()
 
-            elif granted and customer_name and not all_customers:
-                customer_data = get_properties_for_customer(customer_name)
+            elif granted and customer_context and not all_customers:
+                customer_data = get_properties_for_customer(customer_context)
 
             elif not granted:
                 results = (

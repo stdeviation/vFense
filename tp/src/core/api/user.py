@@ -94,8 +94,8 @@ class UserHandler(BaseHandler):
         method = self.request.method
         results = None
         try:
-            customer_name = (
-                self.arguments.get('customer_name', active_customer)
+            customer_context = (
+                self.arguments.get('customer_context', active_customer)
             )
             ###Password Changer###
             password = self.arguments.get('password', None)
@@ -112,7 +112,7 @@ class UserHandler(BaseHandler):
             if group_ids and isinstance(group_ids, list):
                 results = (
                     add_user_to_groups(
-                        active_user, customer_name, group_ids,
+                        active_user, customer_context, group_ids,
                         active_user, uri, method
                     )
                 )
@@ -196,7 +196,7 @@ class UsersHandler(BaseHandler):
         active_customer = (
             get_user_property(active_user, UserKeys.CurrentCustomer)
         )
-        customer_name = self.get_argument('customer_name', None)
+        customer_context = self.get_argument('customer_context', None)
         all_customers = self.get_argument('all_customers', None)
         user_name = self.get_argument('user_name', None)
         count = 0
@@ -207,23 +207,23 @@ class UsersHandler(BaseHandler):
                     active_user, Permissions.ADMINISTRATOR
                 )
             )
-            if granted and not customer_name and not all_customers and not user_name:
+            if granted and not customer_context and not all_customers and not user_name:
                 user_data = get_properties_for_all_users(active_customer)
 
-            elif granted and customer_name and not all_customers and not user_name:
+            elif granted and customer_context and not all_customers and not user_name:
                 user_data = get_properties_for_all_users(customer_name)
 
-            elif granted and all_customers and not customer_name and not user_name:
+            elif granted and all_customers and not customer_context and not user_name:
                 user_data = get_properties_for_all_users()
 
-            elif granted and user_name and not customer_name and not all_customers:
+            elif granted and user_name and not customer_context and not all_customers:
                 user_data = get_properties_for_user(user_name)
                 if user_data:
                     user_data = [user_data]
                 else:
                     user_data = []
 
-            elif customer_name and not granted or all_customers and not granted:
+            elif customer_context and not granted or all_customers and not granted:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
@@ -253,6 +253,7 @@ class UsersHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -263,7 +264,8 @@ class UsersHandler(BaseHandler):
         username = self.arguments.get('username')
         password = self.arguments.get('password')
         group_ids = self.arguments.get('group_ids')
-        customer_names = self.arguments.get('customer_names')
+        customer_names = self.arguments.get('customer_names', None)
+        customer_context = self.arguments.get('customer_context')
         fullname = self.arguments.get('fullname', None)
         email = self.arguments.get('email', None)
         enabled = self.arguments.get('enabled', False)
@@ -271,20 +273,21 @@ class UsersHandler(BaseHandler):
             if not isinstance(group_ids, list):
                 group_ids = group_ids.split()
 
-            if not isinstance(customer_names, list()):
-                customer_names = customer_names.split(',')
+            if customer_names:
+                if not isinstance(customer_names, list):
+                    customer_names = customer_names.split(',')
 
-            customer_name = customer_names.pop(0)
             results = create_user(
                 username, fullname, password,
-                group_ids, customer_name, email,
+                group_ids, customer_context, email,
                 enabled, active_user, uri, method
             )
             if results['rv_status_code'] == GenericCodes.ObjectCreated:
-                add_user_to_customers(
-                    username, customer_names,
-                    active_user, uri, method
-                )
+                if customer_names:
+                    add_user_to_customers(
+                        username, customer_names,
+                        active_user, uri, method
+                    )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

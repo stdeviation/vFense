@@ -496,7 +496,7 @@ def update_all_app_data_for_agent(agent_id, data):
 
 
 def get_base_url(customer_name):
-    return (get_customer_property(customer_name, CustomerKeys.OperationTtl))
+    return (get_customer_property(customer_name, CustomerKeys.PackageUrl))
 
 
 #@db_create_close

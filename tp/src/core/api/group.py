@@ -67,7 +67,7 @@ class GroupsHandler(BaseHandler):
         active_customer = (
             get_user_property(active_user, UserKeys.CurrentCustomer)
         )
-        customer_name = self.get_argument('customer_name', None)
+        customer_context = self.get_argument('customer_context', None)
         group_id = self.get_argument('group_id', None)
         all_customers = self.get_argument('all_customers', None)
         count = 0
@@ -75,26 +75,26 @@ class GroupsHandler(BaseHandler):
         try:
             granted, status_code = (
                 verify_permission_for_user(
-                    active_user, Permissions.ADMINISTRATOR, customer_name
+                    active_user, Permissions.ADMINISTRATOR, customer_context
                 )
             )
-            if granted and not customer_name and not all_customers and not group_id:
+            if granted and not customer_context and not all_customers and not group_id:
                 group_data = get_properties_for_all_groups(active_customer)
 
-            elif granted and customer_name and not all_customers and not group_id:
+            elif granted and customer_context and not all_customers and not group_id:
                 group_data = get_properties_for_all_groups(customer_name)
 
-            elif granted and all_customers and not customer_name and not group_id:
+            elif granted and all_customers and not customer_context and not group_id:
                 group_data = get_properties_for_all_groups()
 
-            elif granted and group_id and not customer_name and not all_customers:
+            elif granted and group_id and not customer_context and not all_customers:
                 group_data = get_group_properties(group_id)
                 if group_data:
                     group_data = [group_data]
                 else:
                     group_data = []
 
-            elif customer_name and not granted or all_customers and not granted:
+            elif customer_context and not granted or all_customers and not granted:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
@@ -112,6 +112,7 @@ class GroupsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
 
         except Exception as e:
             results = (
