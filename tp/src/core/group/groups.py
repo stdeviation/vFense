@@ -378,15 +378,11 @@ def add_user_to_groups(
                 users_group_exist.append(user_in_group.get(GroupName))
 
         if len(data_list) == len(group_ids):
-            object_status, object_count, error, generated_ids = (
+            status_code, object_count, error, generated_ids = (
                 insert_group_per_user(data_to_add)
             )
-            if object_status == DbCodes.Inserted:
-                msg = (
-                    'user %s add to groups' % (
-                        username, ' and '.join(generated_ids)
-                    )
-                )
+            if status_code == DbCodes.Inserted:
+                msg = 'user %s add to groups' % (username)
                 generic_status_code = GenericCodes.ObjectCreated
                 vfense_status_code = GroupCodes.GroupCreated
 
@@ -397,6 +393,7 @@ def add_user_to_groups(
                     username, ' and '.join(users_group_exist)
                 )
             )
+            status_code = DbCodes.Skipped
             generic_status_code = GenericCodes.ObjectExists
             vfense_status_code = GroupFailureCodes.GroupExistForUser
 
@@ -427,10 +424,9 @@ def add_user_to_groups(
         ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-        ApiResultKeys.USERNAME: username,
         ApiResultKeys.GENERATED_IDS: generated_ids,
         ApiResultKeys.MESSAGE: status + msg,
-        ApiResultKeys.DATA: group_data,
+        ApiResultKeys.DATA: [],
         ApiResultKeys.USERNAME: user_name,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method
@@ -503,7 +499,8 @@ def create_group(
                 status_code, generated_ids, status,
                 group_data, error, user_name, uri, method
             )
-            if object_status == DbCodes.Inserted:
+            if status_code == DbCodes.Inserted:
+                msg = 'group %s created' % (group_name)
                 generic_status_code = GenericCodes.ObjectCreated
                 vfense_status_code = GroupCodes.GroupCreated
 
@@ -518,13 +515,12 @@ def create_group(
             msg = 'group %s exists' % (group_name)
             status_code = DbCodes.Unchanged
             generic_status_code = GenericCodes.ObjectExists
-            vfense_status_code = GroupCodes.GroupIdExists
+            vfense_status_code = GroupFailureCodes.GroupIdExists
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.USERNAME: username,
             ApiResultKeys.GENERATED_IDS: generated_ids,
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: group_data,

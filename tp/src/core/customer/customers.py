@@ -273,7 +273,7 @@ def add_user_to_customers(
             status_code, object_count, error, generated_ids = (
                 insert_user_per_customer(data_list)
             )
-            if status_code_status == DbCodes.Inserted:
+            if status_code == DbCodes.Inserted:
                 msg = (
                     'user :%s added to %s' % (
                         username, ', '.join(customer_names)

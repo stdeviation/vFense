@@ -291,13 +291,13 @@ def create_user(
 
             elif not customer_is_valid and groups_are_valid[0]:
                 msg = 'customer name %s does not exist' % (customer_name)
-                object_status = GenericFailureCodes.FailedToCreateObject
+                object_status = DbCodes.Skipped
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = CustomerFailureCodes.CustomerDoesNotExists
 
             elif not groups_are_valid[0] and customer_is_valid:
                 msg = 'group ids %s does not exist' % (groups_are_valid[2])
-                object_status = GenericCodes.FailedToCreateObject
+                object_status = DbCodes.Skipped
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = GroupFailureCodes.InvalidGroupId
 
@@ -309,9 +309,9 @@ def create_user(
                     'customer name %s does not exist' % (customer_name)
                 )
                 msg = group_error + ' and ' + customer_error
-                object_status = GenericFailureCodes.FailedToCreateObject
+                object_status = DbCodes.Errors
                 generic_status_code = GenericFailureCodes.FailedToCreateObject
-                vfense_status_code = UserFailureCodes.UserNameExists
+                vfense_status_code = UserFailureCodes.FailedToCreateUser
 
         elif user_exist:
             msg = 'username %s already exists' % (username)
