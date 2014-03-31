@@ -607,7 +607,7 @@ def delete_user(username, conn=None):
 def delete_users(usernames, conn=None):
     """ Delete a user and all of its properties
     Args:
-        username (str): username of the user you are deleteing.
+        usernames (list): username of the user you are deleteing.
 
     Basic Usage::
         >>> from vFense.user._db import delete_users
@@ -622,9 +622,14 @@ def delete_users(usernames, conn=None):
     try:
         data = (
             r
-            .table(UserCollections.Users)
-            .get_all(usernames)
-            .delete()
+            .expr(usernames)
+            .for_each(
+                lambda username:
+                r
+                .table(UserCollections.Users)
+                .get(username)
+                .delete()
+            )
             .run(conn)
         )
 

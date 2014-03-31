@@ -8,7 +8,7 @@ from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
     delete_user, update_user, fetch_user_and_all_properties, \
-    fetch_users_and_all_properties
+    fetch_users_and_all_properties, delete_users
 from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user
 from vFense.core.customer.customers import get_customer, \
@@ -392,7 +392,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
                 delete_user(username)
             )
 
-            if object_status == DbCodes.Inserted:
+            if object_status == DbCodes.Deleted:
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = UserCodes.UserDeleted
                 msg = 'User removed %s' % (username)
@@ -469,6 +469,7 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
     usernames_to_delete = []
     generic_status_code = 0
     vfense_status_code = 0
+    msg = ''
     try:
         if not isinstance(usernames, list):
             usernames = usernames.split(',')
@@ -485,22 +486,29 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
                 usernames_not_to_delete.append(username)
                 generic_status_code = GenericCodes.CouldNotBeDeleted
                 vfense_status_code = UserFailureCodes.AdminUserCanNotBeDeleted
+                object_status = DbCodes.Skipped
 
             else:
                 msg = 'User does not exist %s' % (username)
                 usernames_not_to_delete.append(username)
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+                object_status = DbCodes.Skipped
 
         if len(usernames_to_delete) > 0:
             object_status, object_count, error, generated_ids = (
                 delete_users(usernames_to_delete)
             )
 
-            if object_status == DbCodes.Inserted:
+            if object_status == DbCodes.Deleted:
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = UserCodes.UserDeleted
                 msg = 'Users removed %s' % (' and '.join(usernames_to_delete))
+
+            if object_status == DbCodes.DoesntExist:
+                generic_status_code = GenericCodes.DoesNotExists
+                vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+                msg = 'Users  %s do not exist' % (' and '.join(usernames_to_delete))
 
         else:
             object_status = DbCodes.Unchanged

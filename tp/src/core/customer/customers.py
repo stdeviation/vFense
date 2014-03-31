@@ -600,7 +600,7 @@ def remove_customers_from_user(
             delete_user_in_customers(username, customer_names)
         )
         if status_code == DbCodes.Deleted:
-            msg = 'removed customers %s from user %s' % (username)
+            msg = 'removed customers from user %s' % (username)
             generic_status_code = GenericCodes.ObjectDeleted
             vfense_status_code = CustomerCodes.CustomersRemovedFromUser
 
@@ -694,7 +694,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
                 status_code, customer_name, status, [], errors,
                 user_name, uri, method
             )
-            if status_code == DbCodes.Inserted:
+            if status_code == DbCodes.Deleted:
                 msg = 'customer %s removed' % customer_name
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = CustomerCodes.CustomerDeleted
@@ -727,7 +727,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
 
     except Exception as e:
         logger.exception(e)
-        msg = 'Failed to remove customer %s: e' % (customer_name, str(e))
+        msg = 'Failed to remove customer %s: %s' % (customer_name, str(e))
         status_code = DbCodes.Errors
         generic_status_code = GenericFailureCodes.FailedToDeleteObject
         vfense_status_code = CustomerFailureCodes.FailedToRemoveCustomer

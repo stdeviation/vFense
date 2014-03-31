@@ -51,6 +51,7 @@ class GroupFailureCodes(object):
     InvalidGroupName = 12507
     InvalidGroupId = 12508
     GroupExistForUser = 12509
+    GroupDoesNotExistForUser = 12510
 
 
 class UserCodes(object):
