@@ -14,9 +14,12 @@ from vFense.core.agent import *
 from vFense.core.agent.agents import change_customer_for_agents, \
     remove_all_agents_for_customer
 from vFense.core.user import *
-from vFense.core.customer import  CustomerKeys, CustomerPerUserKeys
+from vFense.core.customer import  CustomerKeys 
+
 from vFense.core.customer.customers import get_properties_for_customer, \
-    get_properties_for_all_customers, get_customer
+    get_properties_for_all_customers, get_customer, remove_customer, \
+    remove_customers
+
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import CustomerFailureCodes
@@ -319,14 +322,19 @@ class CustomersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            customer_names = self.get_argument(ApiArguments.CUSTOMER_NAMES, None)
-            if isinstance(customer_names, list):
-                results = (
-                    remove_customer(
-                        customer_name,
-                        username, active_user, uri, method
-                    )
+            customer_names = (
+                self.get_argument(ApiArguments.CUSTOMER_NAMES)
+            )
+
+            if not isinstance(customer_names, list):
+                customer_names = customer_names.split(',')
+
+            results = (
+                remove_customers(
+                    customer_names,
+                    active_user, uri, method
                 )
+            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

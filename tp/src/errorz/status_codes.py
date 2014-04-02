@@ -94,6 +94,7 @@ class CustomerFailureCodes(object):
     InvalidCustomerName = 14506
     UsersExistForCustomer = 14507
     UsersDoNotExistForCustomer = 14508
+    CantDeleteDefaultCustomer = 124509
 
 
 class DbCodes(object):

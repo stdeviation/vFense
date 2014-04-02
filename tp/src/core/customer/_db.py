@@ -424,10 +424,10 @@ def users_exists_in_customer(username, customer_name, conn=None):
         customer_name:  Name of the customer.
 
     Basic Usage:
-        >>> from vFense.core.customer._db import users_exists_in_customers
+        >>> from vFense.core.customer._db import users_exists_in_customer
         >>> username = 'admin'
         >>> customer_name = 'default'
-        >>> users_exists_in_customers(username, customer_name)
+        >>> users_exists_in_customer(username, customer_name)
 
     Return:
         Boolean
@@ -450,6 +450,55 @@ def users_exists_in_customer(username, customer_name, conn=None):
         logger.exception(e)
 
     return(exist)
+
+
+@time_it
+@db_create_close
+def users_exists_in_customers(customer_names, conn=None):
+    """Verify if username is part of customer
+    Args:
+        customer_names (list):  List of the customer names.
+
+    Basic Usage:
+        >>> from vFense.core.customer._db import users_exists_in_customers
+        >>> customer_names = ['default', 'test']
+        >>> users_exists_in_customers(customer_names)
+
+    Return:
+        Tuple (Boolean, [customers_with_users], [customers_without_users])
+        (True, ['default'], ['tester'])
+
+    """
+    exist = False
+    users_exist = []
+    users_not_exist = []
+    results = (exist, users_exist, users_not_exist)
+    try:
+        for customer_name in customer_names:
+            empty = (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    customer_name,
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .is_empty()
+                .run(conn)
+            )
+
+            if not empty:
+                users_exist.append(customer_name)
+                exist = True
+
+            else:
+                users_not_exist.append(customer_name)
+
+        results = (exist, users_exist, users_not_exist)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(results)
 
 
 @time_it
@@ -636,6 +685,39 @@ def delete_customer(customer_name, conn=None):
             r
             .table(CustomerCollections.Customers)
             .get(customer_name)
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_customers(customer_names, conn=None):
+    """Delete a customer from the database.
+    Args:
+        customer_name: Name of the customer
+
+    Basic Usage::
+        >>> from vFense.customer._db delete_customers
+        >>> customer_names = ['test', 'foo']
+        >>> delete_customers(customer_names)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(CustomerCollections.Customers)
+            .get_all(customer_names)
             .delete()
             .run(conn)
         )
