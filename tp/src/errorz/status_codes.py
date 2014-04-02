@@ -120,6 +120,16 @@ class AgentCodes(object):
     InstallSupportedAppResults = 3008
     InstallCustomAppResults = 3009
     InstallAgentAppResults = 3010
+    AgentsDeleted = 3011
+    AgentsUpdated = 3012
+
+
+class AgentFailureCodes(object):
+    AgentsFailedToDelete = 3500
+    AgentsFailedToUpdate = 3501
+    AgentsDoNotExist = 3502
+    AgentsDoesNotExist = 3503
+    AgentsExist = 3504
 
 
 class TagCodes(object):
