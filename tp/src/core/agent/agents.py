@@ -11,7 +11,9 @@ from vFense.db.client import r
 from vFense.db.hardware import Hardware
 from vFense.errorz.error_messages import AgentResults, GenericResults
 from vFense.errorz.results import Results 
-from vFense.errorz.status_codes import DbCodes
+from vFense.errorz._constants import ApiResultKeys 
+from vFense.errorz.status_codes import DbCodes, GenericCodes,\
+    AgentCodes, AgentFailureCodes, GenericFailureCodes
 from vFense.plugins.patching import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -513,9 +515,39 @@ def remove_all_agents_for_customer(
         >>> customer_name = 'tester'
         >>> remove_all_agents_for_customer(customer_name)
     """
-    results = (
+    status = remove_all_agents_for_customer.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
         delete_all_agents_for_customer(customer_name)
     )
+    msg = 'total number of agents deleted: %s' % (str(count))
+    if status_code == DbCodes.Deleted:
+        generic_status_code = GenericCodes.ObjectDeleted
+        vfense_status_code = AgentCodes.AgentsDeleted
+
+    elif status_code == DbCodes.Skipped:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToDeleteObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToDelete
+
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 
@@ -540,8 +572,37 @@ def change_customer_for_agents(
         >>> customer_name = 'tester'
         >>> change_customer_for_agents(customer_name)
     """
-    results = (
+    status = change_customer_for_agents.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
         move_all_agents_to_customer(customer_name)
     )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
