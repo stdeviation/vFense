@@ -15,8 +15,8 @@ import tornado.options
 from redis import StrictRedis
 from rq import Connection, Queue
 
-from vFense.server.handlers import RootHandler, LoginHandler, LogoutHandler
-from vFense.server.handlers import WebSocketHandler, AdminHandler
+from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
+    WebSocketHandler, AdminHandler
 from vFense.server.api.scheduler_api import ScheduleListerHandler
 #from server.api.scheduler_api import ScheduleRemoveHandler
 from vFense.server.api.scheduler_api import ScheduleAppDetailHandler

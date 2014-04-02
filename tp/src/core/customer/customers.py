@@ -257,6 +257,7 @@ def add_user_to_customers(
     status_code = 0
     generic_status_code = 0
     vfense_status_code = 0
+    generated_ids = []
     if customers_are_valid[0]:
         data_list = []
         for customer_name in customer_names:
@@ -275,8 +276,8 @@ def add_user_to_customers(
             )
             if status_code == DbCodes.Inserted:
                 msg = (
-                    'user :%s added to %s' % (
-                        username, ', '.join(customer_names)
+                    'user %s added to %s' % (
+                        username, ' and '.join(customer_names)
                     )
                 )
                 generic_status_code = GenericCodes.ObjectCreated
@@ -308,6 +309,7 @@ def add_user_to_customers(
         ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.GENERATED_IDS: generated_ids,
         ApiResultKeys.MESSAGE: status + msg,
         ApiResultKeys.DATA: [],
         ApiResultKeys.USERNAME: user_name,
@@ -388,6 +390,7 @@ def create_customer(
     generic_status_code = 0
     vfense_status_code = 0
     data = {}
+    generated_ids = []
     if not customer_exist:
         if not http_application_url_location:
             http_application_url_location = (
@@ -408,6 +411,7 @@ def create_customer(
             insert_customer(data)
         )
         if object_status == DbCodes.Inserted:
+            generated_ids.append(customer_name)
             msg = 'customer %s created - ' % (customer_name)
             generic_status_code = GenericCodes.ObjectCreated
             vfense_status_code = CustomerCodes.CustomerCreated

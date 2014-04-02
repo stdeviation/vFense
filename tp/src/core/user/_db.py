@@ -321,7 +321,21 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
 
 @time_it
 @db_create_close
-def status_toggle(username, conn=None):
+@return_status_tuple
+def user_status_toggle(username, conn=None):
+    """Enable or disable a user
+    Args:
+        username (str): The username you are enabling or disabling
+
+    Basic Usage:
+        >>> from vFense.user._db import status_toggle
+        >>> username = 'tester'
+        >>> status_toggle(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
     try:
         toggled = (
             r

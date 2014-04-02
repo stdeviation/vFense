@@ -377,11 +377,11 @@ def add_user_to_groups(
 
             else:
                 users_group_exist.append(group_id)
-
         if len(data_list) == len(group_ids):
             status_code, object_count, error, generated_ids = (
-                insert_group_per_user(data_to_add)
+                insert_group_per_user(data_list)
             )
+
             if status_code == DbCodes.Inserted:
                 msg = 'user %s add to groups' % (username)
                 generic_status_code = GenericCodes.ObjectCreated
@@ -582,7 +582,6 @@ def remove_groups_from_user(
     """
     status = remove_groups_from_user.func_name + ' - '
     user_does_not_exist_in_group = False
-    group_ids = []
     try:
         if group_ids:
             msg = 'group ids: ' + 'and '.join(group_ids)
