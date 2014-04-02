@@ -2,19 +2,26 @@ import json
 import logging
 import logging.config
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.core.api._constants import ApiArguments, ApiValues
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import authenticated_request, convert_json_to_arguments
 
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
+from vFense.core.agent.agents import change_customer_for_agents, \
+    remove_all_agents_for_customer
 from vFense.core.user import *
-from vFense.core.customer import *
+from vFense.core.customer import  CustomerKeys, CustomerPerUserKeys
 from vFense.core.customer.customers import get_properties_for_customer, \
-    get_properties_for_all_customers
+    get_properties_for_all_customers, get_customer
+from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import CustomerFailureCodes
+from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
+    update_all_apps_for_customer
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -48,6 +55,184 @@ class CustomerHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'User', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def post(self, customer_name):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        results = None
+        try:
+            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+            ### Add Users to this customer
+            username = self.arguments.get(ApiArguments.USERNAME, None)
+            if username:
+                if action == ApiValues.ADD:
+                    results = (
+                        add_user_to_customers(
+                            username_to_add, [customer_name],
+                            active_user, uri, method
+                        )
+                    )
+
+                elif action == ApiValues.DELETE:
+                    results = (
+                        remove_customers_from_user(
+                            username_to_add, [customer_name],
+                            active_user, uri, method
+                        )
+                    )
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'Customers', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def put(self, customer_name):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        results = None
+        try:
+            data_to_send = {
+                ApiResultKeys.HTTP_METHOD: method,
+                ApiResultKeys.URI: uri,
+                ApiResultKeys.USERNAME: active_user
+            }
+            ### Update Download URL for this customer
+            download_url = self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
+            if download_url:
+                data_to_send[CustomerKeys.PackageUrl] = download_url
+
+            ### Update Operation TTL for this customer
+            operation_ttl = self.arguments.get(ApiArguments.OPERATION_TTL, None)
+            if operation_ttl:
+                data_to_send[CustomerKeys.OperationTtl] = int(operation_ttl)
+
+            ### Update Network Throttling for this customer
+            net_throttle = self.arguments.get(ApiArguments.NET_THROTTLE, None)
+            if net_throttle:
+                data_to_send[CustomerKeys.NetThrottle] = int(net_throttle)
+
+            ### Update CPU Throttling for this customer
+            cpu_throttle = self.arguments.get(ApiArguments.CPU_THROTTLE, None)
+            if cpu_throttle:
+                data_to_send[CustomerKeys.CpuThrottle] = int(cpu_throttle)
+
+            results = (
+                edit_customer(
+                    Customer_name, **data_to_send
+                )
+            )
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'Customers', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def delete(self, customer_name):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            deleted_agents = (
+                self.arguments.get(
+                    ApiArguments.DELETE_ALL_AGENTS, ApiValues.YES
+                )
+            )
+            move_agents_to_customer = (
+                self.arguments.get(
+                    ApiArguments.MOVE_AGENTS_TO_CUSTOMER, None
+                )
+            )
+
+            if move_agents_to_customer:
+                customer_exist = get_customer(move_agents_to_customer)
+                if not customer_exist:
+                    msg = 'customer %s does not exist' % (move_agents_to_customer)
+                    data = {
+                        ApiResultKeys.INVALID_ID: move_agents_to_customer,
+                        ApiResultKeys.MESSAGE: msg,
+                        ApiResultKeys.VFENSE_STATUS_CODE: CustomerFailureCodes.CustomerDoesNotExists
+                    }
+                    results = (
+                        Results(
+                            active_user, uri, method
+                        ).invalid_id(**data)
+                    ) 
+                    self.set_status(results['http_status'])
+                    self.set_header('Content-Type', 'application/json')
+                    self.write(json.dumps(results, indent=4))
+
+                else:
+                    results = (
+                        remove_customer(
+                            customer_name,
+                            username, active_user, uri, method
+                        )
+                    )
+                    self.set_status(results['http_status'])
+                    self.set_header('Content-Type', 'application/json')
+                    self.write(json.dumps(results, indent=4))
+
+                    change_customer_for_agents(move_agents_to_customer)
+                    update_all_apps_for_customer(move_agents_to_customer)
+
+            elif deleted_agents == ApiValues.YES:
+                results = (
+                    remove_customer(
+                        customer_name,
+                        username, active_user, uri, method
+                    )
+                )
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                remove_all_agents_for_customer(customer_name)
+                remove_all_apps_for_customer(customer_name)
+
+            elif deleted_agents == ApiValues.NO:
+                results = (
+                    remove_customer(
+                        customer_name,
+                        username, active_user, uri, method
+                    )
+                )
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
 
         except Exception as e:
             results = (
@@ -126,4 +311,34 @@ class CustomersHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+
+    @authenticated_request
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def delete(self):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            customer_names = self.get_argument(ApiArguments.CUSTOMER_NAMES, None)
+            if isinstance(customer_names, list):
+                results = (
+                    remove_customer(
+                        customer_name,
+                        username, active_user, uri, method
+                    )
+                )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'User', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
 

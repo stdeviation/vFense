@@ -10,15 +10,10 @@ from vFense.core.decorators import time_it, results_message
 from vFense.db.client import r
 from vFense.db.hardware import Hardware
 from vFense.errorz.error_messages import AgentResults, GenericResults
+from vFense.errorz.results import Results 
 from vFense.errorz.status_codes import DbCodes
 from vFense.plugins.patching import *
-import redis
-from rq import Queue
 
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-rq_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
@@ -432,12 +427,18 @@ def add_agent(system_info, hardware, username=None,
 def update_agent(agent_id, system_info, hardware, rebooted,
                  username=None, customer_name=None,
                  uri=None, method=None):
-    """
-    Update various aspects of agent
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param system_info: Dictionary with system related info
-    :param hardware:  List of dictionaries that rpresent the hardware
-    :param rebooted: yes or no
+    """Update various aspects of agent
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating
+        system_info (dict): Dictionary with system related info
+        hardware (dict):  List of dictionaries that rpresent the hardware
+        rebooted (str): yes or no
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        customer_name (str): The name of the customer.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
     """
     agent_data = {}
 
@@ -491,3 +492,56 @@ def update_agent(agent_id, system_info, hardware, rebooted,
         logger.exception(status)
 
     return(status)
+
+@time_it
+@results_message
+def remove_all_agents_for_customer(
+    customer_name, user_name=None,
+    uri=None, method=None
+    ):
+    """Remove all agents from the system, filtered by customer_name
+    Args:
+        customer_name (str): The name of the customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import remove_all_agents_for_customer
+        >>> customer_name = 'tester'
+        >>> remove_all_agents_for_customer(customer_name)
+    """
+    results = (
+        delete_all_agents_for_customer(customer_name)
+    )
+
+    return(results)
+
+
+@time_it
+@results_message
+def change_customer_for_agents(
+    customer_name, user_name=None,
+    uri=None, method=None
+    ):
+    """Move all agents from one customer to another 
+    Args:
+        customer_name (str): The name of the customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agents
+        >>> customer_name = 'tester'
+        >>> change_customer_for_agents(customer_name)
+    """
+    results = (
+        move_all_agents_to_customer(customer_name)
+    )
+
+    return(results)

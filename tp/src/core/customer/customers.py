@@ -12,7 +12,7 @@ from vFense.core.customer._db import insert_customer, fetch_customer, \
 
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz.status_codes import *
-from vFense.errorz._constants import *
+from vFense.errorz._constants import ApiResultKeys
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -499,20 +499,20 @@ def edit_customer(customer_name, **kwargs):
         }
     """
 
-    if not kwargs.get('user_name'):
+    if not kwargs.get(ApiResultKeys.USERNAME):
         user_name = None
     else:
-        user_name = kwargs.pop('user_name')
+        user_name = kwargs.pop(ApiResultKeys.USERNAME)
 
-    if not kwargs.get('uri'):
+    if not kwargs.get(ApiResultKeys.URI):
         uri = None
     else:
-        uri = kwargs.pop('uri')
+        uri = kwargs.pop(ApiResultKeys.URI)
 
-    if not kwargs.get('method'):
+    if not kwargs.get(ApiResultKeys.HTTP_METHOD):
         method = None
     else:
-        method = kwargs.pop('method')
+        method = kwargs.pop(ApiResultKeys.HTTP_METHOD)
 
     status = edit_customer.func_name + ' - '
     try:

@@ -271,8 +271,6 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-
-
 class UsersHandler(BaseHandler):
 
     @authenticated_request
