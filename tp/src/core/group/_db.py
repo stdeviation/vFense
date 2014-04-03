@@ -376,7 +376,7 @@ def user_exist_in_group(username, group_id, conn=None):
         >>> from vFense.group._db import user_exist_in_group
         >>> username = 'alien'
         >>> group_id = '0834e656-27a5-4b13-ba56-635797d0d1fc'
-        >>> user_exist_in_group(username)
+        >>> user_exist_in_group(username, group_id)
 
     Returns:
         Returns a boolean True or False
@@ -394,6 +394,43 @@ def user_exist_in_group(username, group_id, conn=None):
 
         if not is_empty:
             exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(exist)
+
+
+@time_it
+@db_create_close
+def usernames_exist_in_group_id(usernames, group_id, conn=None):
+    """Return True if and user is part of group_id
+    Args:
+        usernames (list): List of usernames.
+        group_id (str): 36 Character UUID
+
+    Basic Usage:
+        >>> from vFense.group._db import users_exist_in_group
+        >>> usernames = ['alien', 'tester']
+        >>> group_id = '0834e656-27a5-4b13-ba56-635797d0d1fc'
+        >>> users_exist_in_group(usernames, group_id)
+
+    Returns:
+        Returns a boolean True or False
+    """
+    exist = False
+    try:
+        for username in usernames:
+            is_empty = (
+                r
+                .table(GroupCollections.GroupsPerUser)
+                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .filter({GroupsPerUserKeys.GroupId: group_id})
+                .is_empty()
+                .run(conn)
+            )
+            if not is_empty:
+                exist = True
 
     except Exception as e:
         logger.exception(e)

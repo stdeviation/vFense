@@ -2,6 +2,7 @@ class ApiArguments():
     ACTION = 'action'
     USERNAME = 'username'
     USERNAMES = 'usernames'
+    CUSTOMER_CONTEXT = 'customer_context'
     CUSTOMERNAME = 'customername'
     CUSTOMER_NAME = 'customer_name'
     CUSTOMER_NAMES = 'customer_names'

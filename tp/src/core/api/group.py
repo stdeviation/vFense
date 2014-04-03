@@ -2,14 +2,17 @@ import json
 import logging
 import logging.config
 
-from vFense.utils.security import check_password
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.decorators import authenticated_request
 
+from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
-from vFense.core.permissions.decorators import check_permissions
+
+from vFense.core.permissions.decorators import check_permissions, \
+    convert_json_to_arguments
+
 from vFense.core.agent import *
 from vFense.core.user import *
 from vFense.core.user.users import get_user_property
@@ -54,6 +57,63 @@ class GroupHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def post(self, group_id):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        results = None
+        try:
+            action = self.arguments.get(ApiArguments.ACTION)
+            ###Add Users###
+            usernames = self.arguments.get(ApiArguments.USERNAMES)
+            if usernames and isinstance(usernames, list):
+                if action == ApiValues.ADD:
+                    results = (
+                        add_users_to_group(
+                            group_id, usernames,
+                            active_user, uri, method
+                        )
+                    )
+                if action == ApiValues.DELETE:
+                    results = (
+                        remove_users_from_group(
+                            group_id, usernames,
+                            username, uri, method
+                        )
+                    )
+
+            if results:
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+            else:
+                results = (
+                    GenericResults(
+                        active_user, uri, method
+                    ).incorrect_arguments()
+                )
+
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'User', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
 
 
 class GroupsHandler(BaseHandler):
