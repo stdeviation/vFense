@@ -53,12 +53,12 @@ define(
         });
         User = Backbone.Model.extend({
             defaults: {
-                username: 'John Doe'
+                user_name: 'John Doe'
             },
-            url: '/api/user',
+            url: '/api/v1/user/admin',
             parse: function (response) {
                 this.apiMessage = response.message;
-                this.apiPass = response.pass;
+                this.apiPass = response.rv_status_code === 1001;
                 return response.data;
             },
             hasPermission: function (need) {

@@ -3,12 +3,12 @@ define(
     function ($, _, Backbone, app, crel, DeleteModal) {
         'use strict';var exports = {
             Collection: Backbone.Collection.extend({
-                baseUrl: '/api/customers',
+                baseUrl: '/api/v1/customers',
                 url: function () {
                     return this.baseUrl;
                 },
                 parse: function (response) {
-                    return response.pass ? response.data : [];
+                    return response.rv_status_code === 1001 ? response.data : [];
                 }
             }),
             View: Backbone.View.extend({
@@ -57,15 +57,13 @@ define(
                 },
                 submitCustomer: function () {
                     var customer = this.$('#customerInput').val(),
-                        url = '/api/customers/create',
+                        url = '/api/v1/customers',
                         that = this,
                         params = {
                             name: customer
                         };
-                    console.log(params);
                     $.post(url, params, function (json) {
-                        console.log(json);
-                        if (json.pass) {
+                        if (json.rv_status_code) {
                             app.vent.trigger('customer:change', null);
                             that.collection.fetch();
                         } else {
@@ -90,15 +88,14 @@ define(
                 deleteCustomer: function () {
                     var $button = this.$('button.btn-danger'),
                         customer = this.name,
-                        url = '/api/customers/delete',
+                        url = '/api/v1/customers',
                         that = this,
                         params = {
                             name: customer
                         };
                     if (!$button.hasClass('disabled')) {
                         $.post(url, params, function (json) {
-                            console.log(json);
-                            if (json.pass) {
+                            if (json.rv_status_code) {
                                 app.vent.trigger('customer:change', null);
                                 that.collection.fetch();
                             } else {
@@ -137,9 +134,9 @@ define(
                     if (data.length) {
                         _.each(data, function (item) {
                             $list.append(
-                                crel('div', {class: 'item row-fluid'}, item.name,
+                                crel('div', {class: 'item row-fluid'}, item.customer_name,
                                     crel('span', {class: 'pull-right'},
-                                        crel('button', {class: 'btn btn-link noPadding', 'data-id': 'toggleDelete', 'data-customer_name': item.name},
+                                        crel('button', {class: 'btn btn-link noPadding', 'data-id': 'toggleDelete', 'data-customer_name': item.customer_name},
                                             crel('i', {class: 'icon-remove', style: 'color: red'})
                                         ),
                                         crel('button', {class: 'btn btn-mini btn-danger hide', 'data-id': 'deleteCustomer'}, 'Delete'), ' ',
