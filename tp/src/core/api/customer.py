@@ -28,7 +28,7 @@ from vFense.core.user.users import add_users_to_customer, \
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import CustomerFailureCodes
+from vFense.errorz.status_codes import CustomerFailureCodes, CustomerCodes
 from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
     update_all_apps_for_customer
 
@@ -190,7 +190,7 @@ class CustomerHandler(BaseHandler):
         try:
             deleted_agents = (
                 self.arguments.get(
-                    ApiArguments.DELETE_ALL_AGENTS, ApiValues.YES
+                    ApiArguments.DELETE_ALL_AGENTS
                 )
             )
             move_agents_to_customer = (
@@ -221,37 +221,44 @@ class CustomerHandler(BaseHandler):
                     results = (
                         remove_customer(
                             customer_name,
-                            username, active_user, uri, method
+                            active_user, uri, method
                         )
                     )
                     self.set_status(results['http_status'])
                     self.set_header('Content-Type', 'application/json')
                     self.write(json.dumps(results, indent=4))
+                    if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
+                            CustomerCodes.CustomerDeleted):
 
-                    change_customer_for_agents(move_agents_to_customer)
-                    update_all_apps_for_customer(move_agents_to_customer)
+                        change_customer_for_agents(move_agents_to_customer)
+                        update_all_apps_for_customer(move_agents_to_customer)
 
             elif deleted_agents == ApiValues.YES:
                 results = (
                     remove_customer(
                         customer_name,
-                        username, active_user, uri, method
+                        active_user, uri, method
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
-                remove_all_agents_for_customer(customer_name)
-                remove_all_apps_for_customer(customer_name)
+                self.write(json.dumps(results, indent=4))
+                if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
+                        CustomerCodes.CustomerDeleted):
+
+                    remove_all_agents_for_customer(customer_name)
+                    remove_all_apps_for_customer(customer_name)
 
             elif deleted_agents == ApiValues.NO:
                 results = (
                     remove_customer(
                         customer_name,
-                        username, active_user, uri, method
+                        active_user, uri, method
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             results = (
@@ -380,6 +387,7 @@ class CustomersHandler(BaseHandler):
 
 
     @authenticated_request
+    @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         active_user = self.get_current_user()
@@ -387,7 +395,7 @@ class CustomersHandler(BaseHandler):
         method = self.request.method
         try:
             customer_names = (
-                self.get_argument(ApiArguments.CUSTOMER_NAMES)
+                self.arguments.get(ApiArguments.CUSTOMER_NAMES)
             )
 
             if not isinstance(customer_names, list):
@@ -402,6 +410,12 @@ class CustomersHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
+                    CustomerCodes.CustomerDeleted):
+
+                remove_all_agents_for_customer(customer_name)
+                remove_all_apps_for_customer(customer_name)
 
         except Exception as e:
             results = (

@@ -756,9 +756,14 @@ def delete_customers(customer_names, conn=None):
     try:
         data = (
             r
-            .table(CustomerCollections.Customers)
-            .get_all(customer_names)
-            .delete()
+            .expr(customer_names)
+            .for_each(
+                lambda customer_name:
+                r
+                .table(CustomerCollections.Customers)
+                .get(customer_name)
+                .delete()
+            )
             .run(conn)
         )
 

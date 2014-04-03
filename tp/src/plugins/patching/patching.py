@@ -12,7 +12,6 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 @time_it
-@results_message
 def remove_all_apps_for_customer(customer_name):
     delete_os_apps_for_agent_by_customer(customer_name)
     delete_supported_apps_for_agent_by_customer(customer_name)
@@ -21,7 +20,6 @@ def remove_all_apps_for_customer(customer_name):
 
 
 @time_it
-@results_message
 def update_all_apps_for_customer(customer_name):
     app_data = {CommonAppKeys.CustomerName: customer_name}
     update_os_apps_for_agent_by_customer(customer_name, app_data)

@@ -816,6 +816,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
     status_code = 0
     generic_status_code = 0
     vfense_status_code = 0
+    customers_deleted = []
     try:
         customer_exist = get_customer(customer_name)
         users_exist = fetch_users_for_customer(customer_name)
@@ -830,6 +831,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
                 msg = 'customer %s removed' % customer_name
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = CustomerCodes.CustomerDeleted
+                customers_deleted.append(customer_name)
 
 
         elif customer_exist and users_exist and not default_in_list:
@@ -856,6 +858,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
             ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.DELETED_IDS: customers_deleted,
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: [],
             ApiResultKeys.USERNAME: user_name,
@@ -874,6 +877,7 @@ def remove_customer(customer_name, user_name=None, uri=None, method=None):
             ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.DELETED_IDS: customers_deleted,
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: [],
             ApiResultKeys.USERNAME: user_name,
@@ -916,6 +920,7 @@ def remove_customers(customer_names, user_name=None, uri=None, method=None):
     status_code = 0
     generic_status_code = 0
     vfense_status_code = 0
+    customers_deleted = []
     try:
         customers_are_valid = validate_customer_names(customer_names)
         users_exist = users_exists_in_customers(customer_names)
@@ -924,11 +929,11 @@ def remove_customers(customer_names, user_name=None, uri=None, method=None):
             status_code, count, errors, generated_ids = (
                 delete_customers(customer_names)
             )
-
             if status_code == DbCodes.Deleted:
-                msg = 'customer %s removed' % customer_name
+                msg = 'customers %s removed' % customer_names
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = CustomerCodes.CustomerDeleted
+                customers_deleted = customer_names
 
 
         elif users_exist[0] and not default_in_list:
@@ -957,6 +962,7 @@ def remove_customers(customer_names, user_name=None, uri=None, method=None):
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
+            ApiResultKeys.DELETED_IDS: customers_deleted,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
             ApiResultKeys.MESSAGE: status + msg,
@@ -968,7 +974,7 @@ def remove_customers(customer_names, user_name=None, uri=None, method=None):
 
     except Exception as e:
         logger.exception(e)
-        msg = 'Failed to remove customer %s: %s' % (customer_name, str(e))
+        msg = 'Failed to remove customer %s: %s' % (customer_names, str(e))
         status_code = DbCodes.Errors
         generic_status_code = GenericFailureCodes.FailedToDeleteObject
         vfense_status_code = CustomerFailureCodes.FailedToRemoveCustomer
@@ -977,6 +983,7 @@ def remove_customers(customer_names, user_name=None, uri=None, method=None):
             ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.DELETED_IDS: customers_deleted,
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: [],
             ApiResultKeys.USERNAME: user_name,
