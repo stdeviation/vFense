@@ -186,6 +186,49 @@ def get_properties_for_all_customers(username=None):
     data = fetch_properties_for_all_customers(username)
     return(data)
 
+def _validate_customer_data(**kwargs):
+    data_validated = False
+    if kwargs.get(CustomerKeys.NetThrottle):
+        valid_net_throttle = True
+        net_throttle = kwargs.get(CustomerKeys.NetThrottle)
+        if not isinstance(net_throttle, int):
+            try:
+                net_throttle = int(net_throttle)
+
+            except ValueError:
+                valid_net_throttle = False
+
+        return(valid_net_throttle)
+
+    if kwargs.get(CustomerKeys.CpuThrottle):
+        cpu_throttle = kwargs.get(CustomerKeys.CpuThrottle)
+        valid_cpu_throttle = cpu_throttle in CPUThrottleValues.VALID_VALUES
+
+        return(valid_cpu_throttle)
+
+    if kwargs.get(CustomerKeys.PackageUrl):
+        valid_pkg_url = False
+        pkg_url = kwargs.get(CustomerKeys.PackageUrl)
+        if re.search(r'^http(s)?://', pkg_url):
+            valid_pkg_url = True
+
+        return(valid_pkg_url)
+
+
+    if kwargs.get(CustomerKeys.OperationTtl):
+        valid_operation_ttl = True
+        operation_queue_ttl = kwargs.get(CustomerKeys.OperationTtl)
+        if not isinstance(operation_queue_ttl, int):
+            try:
+                operation_queue_ttl = int(operation_queue_ttl)
+
+            except ValueError:
+                valid_operation_ttl = False
+
+        return(valid_operation_ttl)
+
+    return(data_validated)
+
 
 @time_it
 def validate_customer_names(customer_names):
@@ -251,6 +294,9 @@ def add_user_to_customers(
 
         }
     """
+    if isinstance(customer_names, str):
+        customer_names = customer_names.split(',')
+
     customers_are_valid = validate_customer_names(customer_names)
     results = None
     user_exist = retrieve_object(username, UserCollections.Users)
@@ -583,24 +629,40 @@ def edit_customer(customer_name, **kwargs):
         method = kwargs.pop(ApiResultKeys.HTTP_METHOD)
 
     status = edit_customer.func_name + ' - '
-    try:
-        status_code, count, error, generated_ids = (
-            update_customer(customer_name, kwargs)
-        )
-        if status_code == DbCodes.Replaced:
-            msg = 'customer %s updated - ' % (customer_name)
-            generic_status_code = GenericCodes.ObjectUpdated
-            vfense_status_code = CustomerCodes.CustomerUpdated
 
-        elif status_code == DbCodes.Unchanged:
-            msg = 'customer %s unchanged - ' % (customer_name)
+    try:
+        invalid_data = []
+        for key, val in kwargs.items():
+            if not _validate_customer_data(**{key:val}):
+                invalid_data.append({key:val})
+
+        if invalid_data:
+            msg = (
+                'data was invalid for customer %s: %s- ' %
+                (customer_name, invalid_data)
+            )
+            status_code = DbCodes.Unchanged
             generic_status_code = GenericCodes.ObjectUnchanged
             vfense_status_code = CustomerCodes.CustomerUnchanged
 
-        elif status_code == DbCodes.Skipped:
-            msg = 'customer %s does not exist - ' % (customer_name)
-            generic_status_code = GenericCodes.Invalid
-            vfense_status_code = CustomerFailureCodes.InvalidCustomerName
+        else:
+            status_code, count, error, generated_ids = (
+                update_customer(customer_name, kwargs)
+            )
+            if status_code == DbCodes.Replaced:
+                msg = 'customer %s updated - ' % (customer_name)
+                generic_status_code = GenericCodes.ObjectUpdated
+                vfense_status_code = CustomerCodes.CustomerUpdated
+
+            elif status_code == DbCodes.Unchanged:
+                msg = 'customer %s unchanged - ' % (customer_name)
+                generic_status_code = GenericCodes.ObjectUnchanged
+                vfense_status_code = CustomerCodes.CustomerUnchanged
+
+            elif status_code == DbCodes.Skipped:
+                msg = 'customer %s does not exist - ' % (customer_name)
+                generic_status_code = GenericCodes.Invalid
+                vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,

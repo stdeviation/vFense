@@ -156,7 +156,7 @@ class CustomerHandler(BaseHandler):
             ### Update CPU Throttling for this customer
             cpu_throttle = self.arguments.get(ApiArguments.CPU_THROTTLE, None)
             if cpu_throttle:
-                data_to_send[CustomerKeys.CpuThrottle] = int(cpu_throttle)
+                data_to_send[CustomerKeys.CpuThrottle] = cpu_throttle
 
             results = (
                 edit_customer(
@@ -290,7 +290,6 @@ class CustomersHandler(BaseHandler):
                         active_user, Permissions.ADMINISTRATOR
                     )
                 )
-
             if granted and not all_customers and not customer_context:
                 customer_data = get_properties_for_all_customers(active_user)
 
