@@ -534,6 +534,7 @@ def edit_customer(customer_name, **kwargs):
             msg = 'customer %s does not exist - ' % (customer_name)
             generic_status_code = GenericCodes.Invalid
             vfense_status_code = CustomerFailureCodes.InvalidCustomerName
+
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,

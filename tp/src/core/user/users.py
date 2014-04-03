@@ -6,6 +6,7 @@ from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
+from vFense.core.customer import *
 
 from vFense.core.customer._db import users_exists_in_customer, \
     insert_user_per_customer, delete_users_in_customer
@@ -18,7 +19,8 @@ from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user
 
 from vFense.core.customer.customers import get_customer, \
-    add_user_to_customers, remove_customers_from_user
+    add_user_to_customers, remove_customers_from_user, \
+    validate_customer_names
 
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import results_message, time_it
@@ -260,7 +262,7 @@ def add_users_to_customer(
 
         }
     """
-    users_are_valid = validate_user_names(user_names)
+    users_are_valid = validate_user_names(usernames)
     customer_is_valid = validate_customer_names([customer_name])
     results = None
     data_list = []
@@ -272,7 +274,7 @@ def add_users_to_customer(
     generated_ids = []
     data_list = []
     if users_are_valid[0] and customer_is_valid[0]:
-        for username in user_names:
+        for username in usernames:
             if not users_exists_in_customer(username, customer_name):
                 data_to_add = (
                     {
@@ -282,7 +284,7 @@ def add_users_to_customer(
                 )
                 data_list.append(data_to_add)
 
-        if len(data_list) == len(user_names):
+        if len(data_list) == len(usernames):
             status_code, object_count, error, generated_ids = (
                 insert_user_per_customer(data_list)
             )
@@ -290,7 +292,7 @@ def add_users_to_customer(
             if status_code == DbCodes.Inserted:
                 msg = (
                     'user %s added to %s' % (
-                       ' and '.join(user_names), customer_name
+                       ' and '.join(usernames), customer_name
                     )
                 )
                 generic_status_code = GenericCodes.ObjectCreated
@@ -300,7 +302,7 @@ def add_users_to_customer(
             status_code = DbCodes.Unchanged
             msg = (
                 'user names %s existed for customer %s' %
-                (' and '.join(user_names), customer_name)
+                (' and '.join(usernames), customer_name)
             )
             generic_status_code = GenericCodes.ObjectExists
             vfense_status_code = CustomerFailureCodes.UsersExistForCustomer

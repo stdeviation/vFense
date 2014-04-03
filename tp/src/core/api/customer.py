@@ -18,7 +18,7 @@ from vFense.core.customer import  CustomerKeys
 
 from vFense.core.customer.customers import get_properties_for_customer, \
     get_properties_for_all_customers, get_customer, remove_customer, \
-    remove_customers
+    remove_customers, edit_customer
 
 from vFense.core.user.users import add_users_to_customer, \
     remove_users_from_customer
@@ -86,7 +86,7 @@ class CustomerHandler(BaseHandler):
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             ### Add Users to this customer
             usernames = self.arguments.get(ApiArguments.USERNAMES, None)
-            if not isinstance(usernames, list):
+            if not isinstance(usernames, list) and isinstance(usernames, str):
                 usernames = usernames.split(',')
 
             if usernames:
@@ -105,6 +105,9 @@ class CustomerHandler(BaseHandler):
                             active_user, uri, method
                         )
                     )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             results = (
@@ -154,9 +157,13 @@ class CustomerHandler(BaseHandler):
 
             results = (
                 edit_customer(
-                    Customer_name, **data_to_send
+                    customer_name, **data_to_send
                 )
             )
+
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             results = (
