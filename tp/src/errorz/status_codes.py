@@ -26,10 +26,10 @@ class GenericCodes(object):
 
 
 class GenericFailureCodes(object):
-    FailedToCreateObject = 11000
-    FailedToUpdateObject = 11001
-    FailedToDeleteObject = 11002
-    FailedToRetrieveObject = 11003
+    FailedToCreateObject = 1500
+    FailedToUpdateObject = 1501
+    FailedToDeleteObject = 1502
+    FailedToRetrieveObject = 1503
 
 class GroupCodes(object):
     GroupCreated = 12000
@@ -66,7 +66,7 @@ class UserCodes(object):
 
 
 class UserFailureCodes(object):
-    UserNameExists = 13000
+    UserNameExists = 13500
     UserNameDoesNotExists = 13501
     FailedToCreateUser = 13502
     FailedToRemoveUser = 13503
@@ -92,7 +92,7 @@ class CustomerCodes(object):
 
 
 class CustomerFailureCodes(object):
-    CustomerExists = 14000
+    CustomerExists = 14500
     CustomerDoesNotExists = 14501
     FailedToCreateCustomer = 14502
     FailedToRemoveCustomer = 14503
@@ -102,6 +102,9 @@ class CustomerFailureCodes(object):
     UsersExistForCustomer = 14507
     UsersDoNotExistForCustomer = 14508
     CantDeleteDefaultCustomer = 124509
+    InvalidNetworkThrottle = 124509
+    InvalidCpuThrottle = 124510
+    InvalidOperationTTL = 124511
 
 
 class DbCodes(object):

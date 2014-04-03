@@ -2,6 +2,7 @@ import json
 import logging
 import logging.config
 
+from vFense.core._constants import CPUThrottleValues
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request, convert_json_to_arguments
@@ -9,16 +10,18 @@ from vFense.core.decorators import authenticated_request, convert_json_to_argume
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
+
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.agent.agents import change_customer_for_agents, \
     remove_all_agents_for_customer
+
 from vFense.core.user import *
 from vFense.core.customer import  CustomerKeys 
 
 from vFense.core.customer.customers import get_properties_for_customer, \
     get_properties_for_all_customers, get_customer, remove_customer, \
-    remove_customers, edit_customer
+    remove_customers, edit_customer, create_customer
 
 from vFense.core.user.users import add_users_to_customer, \
     remove_users_from_customer
@@ -85,7 +88,7 @@ class CustomerHandler(BaseHandler):
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             ### Add Users to this customer
-            usernames = self.arguments.get(ApiArguments.USERNAMES, None)
+            usernames = self.arguments.get(ApiArguments.USERNAMES)
             if not isinstance(usernames, list) and isinstance(usernames, str):
                 usernames = usernames.split(',')
 
@@ -321,6 +324,55 @@ class CustomersHandler(BaseHandler):
                 GenericResults(
                     active_user, uri, method
                 ).something_broke(active_user, 'Customers', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def post(self):
+        active_user = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            customer_name = (
+                self.arguments.get(ApiArguments.CUSTOMER_NAME)
+            )
+            pkg_url = (
+                self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
+            )
+            net_throttle = (
+                self.arguments.get(ApiArguments.NET_THROTTLE, 0)
+            )
+            cpu_throttle = (
+                self.arguments.get(
+                    ApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
+                )
+            )
+            operation_ttl = (
+                self.arguments.get(ApiArguments.OPERATION_TTL, 10)
+            )
+
+            results = (
+                create_customer(
+                    customer_name, active_user, pkg_url,
+                    net_throttle, cpu_throttle, operation_ttl,
+                    user_name=active_user, uri=uri, method=method
+                )
+            )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])

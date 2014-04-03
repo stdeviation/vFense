@@ -1,5 +1,7 @@
 import logging
+import re
 
+from vFense.core._constants import CPUThrottleValues, DefaultStringLength
 from vFense.core._db import retrieve_object
 from vFense.core.customer import *
 from vFense.core.customer._constants import DefaultCustomers
@@ -332,7 +334,9 @@ def create_customer(
     ):
     """Create a new customer inside of vFense
     Args:
-        customer_name (str): Name of the customer you are createing.
+        customer_name (str): Name of the customer you are creating.
+            The customer name can be a total length of 36 characters,
+            with a combination of characters, numbers, - _ and spaces.
 
     Kwargs:
         username (str): Name of the user that you are adding to this customer.
@@ -392,7 +396,33 @@ def create_customer(
     vfense_status_code = 0
     data = {}
     generated_ids = []
-    if not customer_exist:
+    valid_net_throttle = True
+    valid_operation_ttl = True
+    valid_cpu_throttle = cpu_throttle in CPUThrottleValues.VALID_VALUES
+    valid_customer_name = (
+        re.search('((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})', customer_name)
+    )
+    valid_customer_length = (
+        len(customer_name) <= DefaultStringLength.CUSTOMER_NAME
+    )
+    if not isinstance(net_throttle, int):
+        try:
+            net_throttle = int(net_throttle)
+
+        except ValueError:
+            valid_net_throttle = False
+
+    if not isinstance(operation_queue_ttl, int):
+        try:
+            operation_queue_ttl = int(operation_queue_ttl)
+
+        except ValueError:
+            valid_operation_ttl = False
+
+    if (not customer_exist and valid_operation_ttl and
+        valid_net_throttle and valid_cpu_throttle and
+        valid_customer_name and valid_customer_length):
+
         if not http_application_url_location:
             http_application_url_location = (
                 get_customer(
@@ -441,11 +471,48 @@ def create_customer(
                 )
 
 
-    else:
+    elif customer_exist:
         status_code = DbCodes.Unchanged
         msg = 'customer_name %s already exists' % (customer_name)
         generic_status_code = GenericCodes.ObjectExists
         vfense_status_code = CustomerFailureCodes.CustomerExists
+
+    elif not valid_net_throttle:
+        status_code = DbCodes.Errors
+        msg = (
+            'network throttle was not given a valid integer :%s' %
+            (net_throttle)
+        )
+        generic_status_code = GenericCodes.InvalidId
+        vfense_status_code = CustomerFailureCodes.InvalidNetworkThrottle
+
+    elif not valid_cpu_throttle:
+        status_code = DbCodes.Errors
+        msg = (
+            'cpu throttle was not given a valid value :%s' %
+            (cpu_throttle)
+        )
+        generic_status_code = GenericCodes.InvalidId
+        vfense_status_code = CustomerFailureCodes.InvalidCpuThrottle
+
+    elif not valid_operation_ttl:
+        status_code = DbCodes.Errors
+        msg = (
+            'operation ttl was not given a valid value :%s' %
+            (operation_queue_ttl)
+        )
+        generic_status_code = GenericCodes.InvalidId
+        vfense_status_code = CustomerFailureCodes.InvalidOperationTTL
+
+    elif not valid_customer_length or not valid_customer_name:
+        status_code = DbCodes.Errors
+        msg = (
+            'customer name is not within the 36 character range '+
+            'or contains unsupported characters :%s' %
+            (customer_name)
+        )
+        generic_status_code = GenericCodes.InvalidId
+        vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,

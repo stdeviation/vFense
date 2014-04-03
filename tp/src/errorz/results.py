@@ -231,7 +231,7 @@ class Results(object):
         )
         return(
             {
-                ApiResultKeys.HTTP_STATUS_CODE: 304,
+                ApiResultKeys.HTTP_STATUS_CODE: 200,
                 ApiResultKeys.VFENSE_STATUS_CODE: status_code,
                 ApiResultKeys.URI: self.uri,
                 ApiResultKeys.HTTP_METHOD: self.method,

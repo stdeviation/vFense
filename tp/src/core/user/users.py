@@ -442,9 +442,6 @@ def remove_users_from_customer(
     return(results)
 
 
-
-
-
 @time_it
 @results_message
 def toggle_user_status(username, user_name=None, uri=None, method=None):

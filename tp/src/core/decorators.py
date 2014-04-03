@@ -64,7 +64,7 @@ def results_message(fn):
         data = fn(*args, **kwargs)
         status_code = data.get(ApiResultKeys.DB_STATUS_CODE, None)
         generic_status_code = data.get(ApiResultKeys.GENERIC_STATUS_CODE, None)
-        uri = data.get(ApiResultKeys.HTTP_METHOD)
+        uri = data.get(ApiResultKeys.URI)
         method = data.get(ApiResultKeys.HTTP_METHOD)
         username = data.get(ApiResultKeys.USERNAME)
         status = None
