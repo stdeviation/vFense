@@ -292,13 +292,6 @@ def fetch_properties_for_all_customers(username=None, conn=None):
             data = list(
                 r
                 .table(CustomerCollections.Customers)
-                .eq_join(
-                    lambda x:
-                    x[CustomerPerUserKeys.CustomerName],
-                    r.table(CustomerCollections.CustomersPerUser),
-                    index=CustomerPerUserIndexes.CustomerName
-                )
-                .zip()
                 .map(map_hash)
                 .run(conn)
             )
@@ -655,6 +648,53 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
                 .delete()
                 .run(conn)
             )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_users_in_customer(usernames, customer_name, conn=None):
+    """Remove users from a customer.
+    Args:
+        username (list): List of usernames you want
+            to remove from the customer.
+        customer_name (str): The name of the customer,
+            you want to remove the user from.
+
+    Basic Usage::
+        >>> from vFense.customer._db delete_users_in_customer
+        >>> username = ['tester1', 'tester2']
+        >>> customer_name = ['Tester']
+        >>> delete_users_in_customer(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(usernames)
+            .for_each(
+                lambda username:
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .filter(
+                    {
+                        CustomerPerUserKeys.UserName: username,
+                        CustomerPerUserKeys.CustomerName: customer_name
+                    }
+                )
+                .delete()
+            )
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)

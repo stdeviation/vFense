@@ -20,6 +20,9 @@ from vFense.core.customer.customers import get_properties_for_customer, \
     get_properties_for_all_customers, get_customer, remove_customer, \
     remove_customers
 
+from vFense.core.user.users import add_users_to_customer, \
+    remove_users_from_customer
+
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import CustomerFailureCodes
@@ -82,20 +85,23 @@ class CustomerHandler(BaseHandler):
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             ### Add Users to this customer
-            username = self.arguments.get(ApiArguments.USERNAME, None)
-            if username:
+            usernames = self.arguments.get(ApiArguments.USERNAMES, None)
+            if not isinstance(usernames, list):
+                usernames = usernames.split(',')
+
+            if usernames:
                 if action == ApiValues.ADD:
                     results = (
-                        add_user_to_customers(
-                            username_to_add, [customer_name],
+                        add_users_to_customer(
+                            usernames, customer_name,
                             active_user, uri, method
                         )
                     )
 
                 elif action == ApiValues.DELETE:
                     results = (
-                        remove_customers_from_user(
-                            username_to_add, [customer_name],
+                        remove_users_from_customer(
+                            usernames, customer_name,
                             active_user, uri, method
                         )
                     )

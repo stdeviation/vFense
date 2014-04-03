@@ -52,6 +52,7 @@ class GroupFailureCodes(object):
     InvalidGroupId = 12508
     GroupExistForUser = 12509
     GroupDoesNotExistForUser = 12510
+    CantRemoveAdminFromGroup = 12511
 
 
 class UserCodes(object):
@@ -60,6 +61,8 @@ class UserCodes(object):
     UserDeleted = 13002
     UserUnchanged = 13003
     PasswordChanged = 13004
+    UsersAddedToCustomer = 13005
+    UsersRemovedFromCustomer = 13006
 
 
 class UserFailureCodes(object):
@@ -73,6 +76,10 @@ class UserFailureCodes(object):
     WeakPassword = 13507
     NewPasswordSameAsOld = 13508
     AdminUserCanNotBeDeleted = 13509
+    FailedToAddUsersToCustomer = 13510
+    FailedToRemoveUsersFromCustomer = 13511
+    CantDeleteAdminFromCustomer = 13512
+    CantDeleteAdminUser = 13513
 
 
 class CustomerCodes(object):
