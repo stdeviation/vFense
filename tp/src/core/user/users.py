@@ -495,10 +495,10 @@ def add_users_to_group(
             if not user_exist_in_group(username, group_id):
                 data_to_add = (
                     {
-                        GroupPerUserKeys.GroupId: group_id,
-                        GroupPerUserKeys.GroupName: group[GroupKeys.GroupName],
-                        GroupPerUserKeys.CustomerName: group[GroupKeys.CustomerName],
-                        GroupPerUserKeys.UserName: username,
+                        GroupsPerUserKeys.GroupId: group_id,
+                        GroupsPerUserKeys.GroupName: group[GroupKeys.GroupName],
+                        GroupsPerUserKeys.CustomerName: group[GroupKeys.CustomerName],
+                        GroupsPerUserKeys.UserName: username,
                     }
                 )
                 data_list.append(data_to_add)
