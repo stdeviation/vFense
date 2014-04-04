@@ -799,8 +799,17 @@ def create_user(
     )
     if enabled != CommonKeys.YES or enabled != CommonKeys.NO:
         enabled = CommonKeys.NO
+
+
+    valid_user_name = (
+        re.search('([A-Za-z0-9_-]{1,24})', username)
+    )
+    valid_user_length = (
+        len(group_name) <= DefaultStringLength.USER_NAME
+    )
     try:
-        if not user_exist and pass_strength[0]:
+        if (not user_exist and pass_strength[0] and
+                valid_user_length and valid_user_name):
             encrypted_password = Crypto().hash_bcrypt(password)
             user_data[UserKeys.Password] = encrypted_password
             customer_is_valid = get_customer(customer_name)
@@ -865,6 +874,16 @@ def create_user(
             object_status = GenericFailureCodes.FailedToCreateObject
             generic_status_code = GenericFailureCodes.FailedToCreateObject
             vfense_status_code = UserFailureCodes.WeakPassword
+
+        elif not valid_group_length or not valid_group_name:
+            status_code = DbCodes.Errors
+            msg = (
+                'user name is not within the 24 character range '+
+                'or contains unsupported characters :%s' %
+                (username)
+            )
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = UserFailureCodes.InvalidUserName
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: object_status,

@@ -534,6 +534,7 @@ def create_group(
                 (group_name)
             )
             generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = GroupFailureCodes.InvalidGroupName
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
