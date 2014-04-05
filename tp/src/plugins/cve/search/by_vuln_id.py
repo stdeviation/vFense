@@ -29,12 +29,12 @@ class RetrieveByVulnerabilityId(object):
         self.__os_director()
 
     def __os_director(self):
-        if re.search('^MS', self.vuln_id):
+        if re.search('^MS', self.vuln_id, re.IGNORECASE):
             self.Collection = WindowsSecurityBulletinCollection
             self.Keys = WindowsSecurityBulletinKey
             self.get_vuln_by_id = get_win_vulnerability_data_by_vuln_id
 
-        elif re.search('^USN-', self.vuln_id):
+        elif re.search('^USN-', self.vuln_id, re.IGNORECASE):
             self.Collection = UbuntuSecurityBulletinCollection
             self.Keys = UbuntuSecurityBulletinKey
             self.get_vuln_by_id = get_ubu_vulnerability_data_by_vuln_id
