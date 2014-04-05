@@ -63,6 +63,11 @@ def start_nvd_xml_download():
         if not os.path.exists(full_nvd):
             xml_status = cve_downloader(full_url, full_nvd)
             log_status(xml_status[0], xml_status[1], full_url, full_nvd)
+
+        elif iter_year == current_year:
+            xml_status = cve_downloader(full_url, full_nvd)
+            log_status(xml_status[0], xml_status[1], full_url, full_nvd)
+
         else:
             msg = "%s already exists at %s" % ( nvd, full_nvd )
             logger.info(msg)
