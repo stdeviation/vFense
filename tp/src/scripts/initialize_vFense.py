@@ -119,7 +119,7 @@ ncc.nginx_config_builder(
 def initialize_db():
     os.umask(0)
     if not os.path.exists('/opt/TopPatch/var/tmp'):
-        os.mkdir('/opt/TopPatch/var/tmp', mode=0755)
+        os.mkdir('/opt/TopPatch/var/tmp', 0755)
     if not os.path.exists(RETHINK_CONF):
         subprocess.Popen(
             [
@@ -137,21 +137,21 @@ def initialize_db():
         )
 
     if not os.path.exists('/opt/TopPatch/var/log'):
-        os.mkdir('/opt/TopPatch/var/log', mode=0755)
+        os.mkdir('/opt/TopPatch/var/log', 0755)
     if not os.path.exists('/opt/TopPatch/var/scheduler'):
-        os.mkdir('/opt/TopPatch/var/scheduler', mode=0755)
+        os.mkdir('/opt/TopPatch/var/scheduler', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages'):
-        os.mkdir('/opt/TopPatch/var/packages', mode=0755)
+        os.mkdir('/opt/TopPatch/var/packages', 0755)
     if not os.path.exists('/opt/TopPatch/logs'):
-        os.mkdir('/opt/TopPatch/logs', mode=0755)
+        os.mkdir('/opt/TopPatch/logs', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages/tmp'):
-        os.mkdir('/opt/TopPatch/var/packages/tmp', mode=0775)
+        os.mkdir('/opt/TopPatch/var/packages/tmp', 0775)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xls'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/xls', mode=0755)
+        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/xls', 0755)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xml'):
-        os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', mode=0755)
+        os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0755)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', mode=0755)
+        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', )
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
