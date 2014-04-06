@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-1422-1: Linux kernel vulnerabilities | Ubuntu</title>
+        <title>USN-1197-3: Firefox and Xulrunner vulnerability | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,26 +66,30 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-1422-1: Linux kernel vulnerabilities</h1>
+                    <h1>USN-1197-3: Firefox and Xulrunner vulnerability</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-1422-1</h2>
-<p><em>12th April, 2012</em></p>
-<h3>linux vulnerabilities</h3>
+<h2>Ubuntu Security Notice USN-1197-3</h2>
+<p><em>6th September, 2011</em></p>
+<h3>firefox, xulrunner-1.9.2 vulnerability</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
 
     <li>Ubuntu 11.04</li>
 
+    <li>Ubuntu 10.10</li>
+
+    <li>Ubuntu 10.04 LTS</li>
+
 </ul>
 
 
 <h3>Summary</h3>
-<p>Several security issues were fixed in the kernel.
+<p>A certificate authority issued fraudulent certificates.
 </p>
 
 
@@ -94,23 +98,34 @@ dd span {
 <ul>
 
   
-    <li>linux 
-    - Linux kernel
+    <li>firefox 
+    - Mozilla Open Source web browser
     
     </li>
+  
+
+  
+
+  
+
+  
+    <li>xulrunner-1.9.2 
+    - Mozilla Gecko runtime environment
+    
+    </li>
+  
+
   
 
 </ul>
 
 
 <h3>Details</h3>
-<p>Sasha Levin discovered a flaw in the permission checking for device<br />assignments requested via the kvm ioctl in the Linux kernel. A local user<br />could use this flaw to crash the system causing a denial of service.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2011-4347">CVE-2011-4347</a>)</p>
+<p>USN-1197-1 partially addressed an issue with Dutch Certificate Authority<br />DigiNotar mis-issuing fraudulent certificates. This update actively<br />distrusts the DigiNotar root certificate as well as several intermediary<br />certificates. Also included in this list of distrusted certificates are the<br />&quot;PKIOverheid&quot; (PKIGovernment) intermediates under DigiNotar&#39;s control that<br /> did not chain to DigiNotar&#39;s root and were not previously blocked.</p>
 
-<p>Stephan Bärwolf discovered a flaw in the KVM (kernel-based virtual<br />machine) subsystem of the Linux kernel. A local unprivileged user can crash<br />use this flaw to crash VMs causing a deny of service. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-0045">CVE-2012-0045</a>)</p>
+<p>Original advisory details:</p>
 
-<p>H. Peter Anvin reported a flaw in the Linux kernel that could crash the<br />system. A local user could exploit this flaw to crash the system.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-1097">CVE-2012-1097</a>)</p>
-
-<p>A flaw was discovered in the Linux kernel&#39;s cgroups subset. A local<br />attacker could use this flaw to crash the system. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-1146">CVE-2012-1146</a>)<br /></p>
+<p> It was discovered that Dutch Certificate Authority DigiNotar, had<br /> mis-issued multiple fraudulent certificates. These certificates could allow<br /> an attacker to perform a &quot;man in the middle&quot; (MITM) attack which would make<br /> the user believe their connection is secure, but is actually being<br /> monitored.<br /> <br /> For the protection of its users, Mozilla has removed the DigiNotar<br /> certificate. Sites using certificates issued by DigiNotar will need to seek<br /> another certificate vendor.<br /> <br /> We are currently aware of a regression that blocks one of two Staat der<br /> Nederlanden root certificates which are believed to still be secure. This<br /> regression is being tracked at https://launchpad.net/bugs/838322.<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
@@ -121,81 +136,51 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-generic</a>
+    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
+        <a href="https://launchpad.net/ubuntu/+source/firefox/6.0.2+build2+nobinonly-0ubuntu0.11.04.1">6.0.2+build2+nobinonly-0ubuntu0.11.04.1</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.10:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/firefox/3.6.22+build2+nobinonly-0ubuntu0.10.10.1">3.6.22+build2+nobinonly-0ubuntu0.10.10.1</a>
     </span>
   </dd>
     
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-powerpc-smp</a>
+    <a href="https://launchpad.net/ubuntu/+source/xulrunner-1.9.2">xulrunner-1.9.2</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
+        <a href="https://launchpad.net/ubuntu/+source/xulrunner-1.9.2/1.9.2.22+build2+nobinonly-0ubuntu0.10.10.1">1.9.2.22+build2+nobinonly-0ubuntu0.10.10.1</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/firefox">firefox</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/firefox/3.6.22+build2+nobinonly-0ubuntu0.10.04.1">3.6.22+build2+nobinonly-0ubuntu0.10.04.1</a>
     </span>
   </dd>
     
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-virtual</a>
+    <a href="https://launchpad.net/ubuntu/+source/xulrunner-1.9.2">xulrunner-1.9.2</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-omap</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-server</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-generic-pae</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-powerpc</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-powerpc64-smp</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
-    </span>
-  </dd>
-    
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-2.6.38-14-versatile</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/linux/2.6.38-14.58">2.6.38-14.58</a>
+        <a href="https://launchpad.net/ubuntu/+source/xulrunner-1.9.2/1.9.2.22+build2+nobinonly-0ubuntu0.10.04.1">1.9.2.22+build2+nobinonly-0ubuntu0.10.04.1</a>
     </span>
   </dd>
     
@@ -205,22 +190,14 @@ package version:</p>
 <p>To update your system, please follow these instructions:
 <a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
 </p>
-<p>After a standard system update you need to reboot your computer to make<br />all the necessary changes.</p>
-
-<p>ATTENTION: Due to an unavoidable ABI change the kernel updates have<br />been given a new version number, which requires you to recompile and<br />reinstall all third party kernel modules you might have installed. If<br />you use linux-restricted-modules, you have to update that package as<br />well to get modules which work with the new kernel version. Unless you<br />manually uninstalled the standard kernel metapackages (e.g. linux-generic,<br />linux-server, linux-powerpc), a standard system upgrade will automatically<br />perform this as well.<br /></p>
+<p>After a standard system upgrade you need to restart Firefox and any<br />applications that use Xulrunner to effect the necessary changes.<br /></p>
 
 
 
 <h3>References</h3>
 <p>
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2011-4347">CVE-2011-4347</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-0045">CVE-2012-0045</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-1097">CVE-2012-1097</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-1146">CVE-2012-1146</a>
+        <a href="https://launchpad.net/bugs/838322">LP: 838322</a>
         
 
 </p>

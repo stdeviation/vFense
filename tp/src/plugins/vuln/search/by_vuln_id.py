@@ -1,14 +1,12 @@
 import re
-import sys
 import logging
 import logging.config
 
-from vFense.db.client import db_create_close, r, db_connect
-from vFense.errorz.error_messages import GenericResults, PackageResults
-from vFense.plugins.cve import *
-from vFense.plugins.cve.cve_constants import *
-from vFense.plugins.cve.search._db import get_ubu_vulnerability_data_by_vuln_id, \
-    get_win_vulnerability_data_by_vuln_id
+from vFense.errorz.error_messages import GenericResults
+from vFense.plugins.vuln.cve import *
+from vFense.plugins.vuln.cve._constants import *
+import vFense.plugins.vuln.ubuntu.usn as usn
+import vFense.plugins.vuln.windows.ms as ms
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -30,14 +28,10 @@ class RetrieveByVulnerabilityId(object):
 
     def __os_director(self):
         if re.search('^MS', self.vuln_id, re.IGNORECASE):
-            self.Collection = WindowsSecurityBulletinCollection
-            self.Keys = WindowsSecurityBulletinKey
-            self.get_vuln_by_id = get_win_vulnerability_data_by_vuln_id
+            self.get_vuln_by_id = ms.get_vuln_data
 
         elif re.search('^USN-', self.vuln_id, re.IGNORECASE):
-            self.Collection = UbuntuSecurityBulletinCollection
-            self.Keys = UbuntuSecurityBulletinKey
-            self.get_vuln_by_id = get_ubu_vulnerability_data_by_vuln_id
+            self.get_vuln_by_id = usn.get_vuln_data
 
     def get_vuln(self):
         data = self.get_vuln_by_id(self.vuln_id)

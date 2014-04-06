@@ -27,10 +27,9 @@ import vFense.core.customer.customers as customer
 import vFense.core.user.users as user
 
 from vFense.plugins import monit
-from vFense.plugins import cve
-from vFense.plugins.cve.cve_parser import load_up_all_xml_into_db
-from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
-from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
+from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
+from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
+from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -146,12 +145,12 @@ def initialize_db():
         os.mkdir('/opt/TopPatch/logs', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages/tmp'):
         os.mkdir('/opt/TopPatch/var/packages/tmp', 0775)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xls'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/xls', 0755)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xml'):
-        os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0755)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', )
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls'):
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls', 0755)
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml'):
+        os.mkdir('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml', 0755)
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html'):
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html', )
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [

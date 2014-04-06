@@ -1,5 +1,4 @@
-from BeautifulSoup import BeautifulSoup
-import requests
+import os
 import re
 import gc
 import sys
@@ -7,18 +6,17 @@ import logging
 import logging.config
 from time import mktime
 from datetime import datetime
+
 from vFense.db.client import r
 
 from vFense.utils.common import month_to_num_month
-from vFense.plugins.cve import *
-from vFense.plugins.cve.cve_constants import *
-from vFense.plugins.cve.bulletin_parser import build_bulletin_id
-from vFense.plugins.cve.cve_db import insert_into_bulletin_collection_for_ubuntu
+from vFense.plugins.vuln.common import build_bulletin_id
+from vFense.plugins.vuln.ubuntu import *
+from vFense.plugins.vuln.ubuntu._constants import *
+from vFense.plugins.vuln.ubuntu._db import insert_bulletin_data
 
-MAIN_URL = 'http://www.ubuntu.com'
-MAIN_USN_URL = 'http://www.ubuntu.com/usn'
-USR_URI = '/usn/usn-[0-9]+[0-9]+'
-NEXT_PAGE = '\?page=[0-9]+'
+import requests
+from BeautifulSoup import BeautifulSoup
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -27,6 +25,18 @@ def format_data_to_insert_into_db(
     usn_id, details, cve_ids,
     apps_data, date_posted
     ):
+    """Parse the ubuntu data and place it into a array
+    Args:
+        usn_id (str): The Ubuntu Bulletin Id.
+        details (str): The description of the bulletin.
+        cve_ids (list): List of cve ids.
+        apps_data (list): List of dictionaries, containing
+            the app name and version.
+        date_posted (str) The time in epoch
+    Returns:
+        Dictionary inside of a list
+
+    """
 
     data_to_insert = []
     for data in apps_data:
@@ -61,6 +71,11 @@ def format_data_to_insert_into_db(
 
 
 def get_cve_info(cve_references):
+    """Parse and retreive  cve ids
+    Args:
+        cve_references (str): 
+    
+    """
     cve_ids = []
     for reference in cve_references:
         cve_ids.append(reference.text)
@@ -149,7 +164,7 @@ def get_details(soup_details):
             break
         soup_details = tag
 
-    #details = unicode(details).encode(sys.stdout.encoding, 'replace')
+    details = unicode(details).encode(sys.stdout.encoding, 'replace')
     return(details)
 
 def write_content_to_file(file_location, url):
@@ -172,9 +187,15 @@ def write_content_to_file(file_location, url):
 
 
 def get_url_content(usn_uri):
+    if re.search('^http', usn_uri):
+        usn_uri = re.sub('^', '/', usn_uri.split('/',3)[-1])
     def get_usn_uri(usn_uri):
         try:
-            usn_page = requests.get(MAIN_URL + usn_uri, timeout=1)
+            usn_page = (
+                requests.get(
+                    UbuntuUSNStrings.MAIN_URL + usn_uri, timeout=2
+                )
+            )
             usn_page.close()
             if usn_page.ok:
                 content = usn_page.content
@@ -190,8 +211,7 @@ def get_url_content(usn_uri):
     content = None
     completed = False
     usn = usn_uri.split('/')[-2]
-    usn_file_location = HTML_DIR_UBUNTU + usn
-    #print usn_file_location, usn_uri
+    usn_file_location = os.path.join(UbuntuDataDir.HTML_DIR, usn)
     if os.path.exists(usn_file_location):
         if os.stat(usn_file_location).st_size > 0:
             content = open(usn_file_location, 'r').read()
@@ -205,7 +225,7 @@ def get_url_content(usn_uri):
         completed, content = get_usn_uri(usn_uri)
         content, completed = (
             write_content_to_file(
-                usn_file_location, MAIN_URL + usn_uri
+                usn_file_location, UbuntuUSNStrings.MAIN_URL + usn_uri
             )
         )
 
@@ -262,7 +282,7 @@ def process_usn_page(usn_uri):
 
 def begin_usn_home_page_processing(next_page=None, full_parse=False):
     if next_page:
-        url = MAIN_USN_URL + '/' + next_page
+        url = UbuntuUSNStrings.MAIN_USN_URL + '/' + next_page
         #print begin_usn_home_page_processing.func_name, url
         try:
             main_page = requests.get(url, timeout=1)
@@ -271,7 +291,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
     else:
         #print begin_usn_home_page_processing.func_name, MAIN_USN_URL
         try:
-            main_page = requests.get(MAIN_USN_URL)
+            main_page = requests.get(UbuntuUSNStrings.MAIN_USN_URL)
         except Exception as e:
             return(begin_usn_home_page_processing(full_parse=True))
 
@@ -288,7 +308,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
                 ).find(
                     'a',
                     {
-                        'href': re.compile(NEXT_PAGE)
+                        'href': re.compile(UbuntuUSNStrings.NEXT_PAGE)
                     },
                     text=re.compile('Next'),
                 )
@@ -302,7 +322,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
                 ).findAll(
                     'a',
                     {
-                        'href': re.compile(USR_URI)
+                        'href': re.compile(UbuntuUSNStrings.USR_URI)
                     }
                 )
             )
@@ -312,7 +332,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
                     data_to_update, ok = process_usn_page(usn_uri['href'])
                     if ok:
                         data = data + data_to_update
-                insert_into_bulletin_collection_for_ubuntu(data)
+                insert_bulletin_data(data)
 
             if full_parse:
                 if next_page:

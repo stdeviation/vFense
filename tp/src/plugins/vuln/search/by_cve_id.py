@@ -5,9 +5,9 @@ import logging.config
 
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.errorz.error_messages import GenericResults, PackageResults
-from vFense.plugins.cve import *
-from vFense.plugins.cve.cve_constants import *
-from vFense.plugins.cve.search._db import get_cve_data_by_cve_id
+from vFense.plugins.vuln.cve import *
+from vFense.plugins.vuln.cve._constants import *
+from vFense.plugins.vuln.cve.cve import get_cve_data
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -27,7 +27,7 @@ class RetrieveByCveId(object):
         self.offset = offset
 
     def get_cve(self):
-        data = get_cve_data_by_cve_id(self.cve_id)
+        data = get_cve_data(self.cve_id)
         if data:
             status = (
                 GenericResults(
