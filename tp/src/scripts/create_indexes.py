@@ -12,7 +12,9 @@ from vFense.notifications import *
 from vFense.operations import *
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
-from vFense.plugins.cve import *
+from vFense.plugins.vuln.cve import *
+from vFense.plugins.vuln.ubuntu import *
+from vFense.plugins.vuln.windows import *
 from vFense.receiver import *
 
 Id = 'id'
@@ -26,9 +28,9 @@ def initialize_indexes_and_create_tables():
         (CustomAppsPerAgentCollection, Id),
         (AgentAppsCollection, AgentAppsKey.AppId),
         (AgentAppsPerAgentCollection, Id),
-        (CveCollection, CveKey.CveId),
-        (WindowsSecurityBulletinCollection, WindowsSecurityBulletinKey.Id),
-        (UbuntuSecurityBulletinCollection, UbuntuSecurityBulletinKey.Id),
+        (CVECollections.CVE, CveKey.CveId),
+        (WindowsSecurityCollection.Bulletin, WindowsSecurityBulletinKey.Id),
+        (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.Id),
         ('downloaded_status', Id),
         (FilesCollection, FilesKey.FileName),
         (HardwarePerAgentCollection, Id),
@@ -65,9 +67,9 @@ def initialize_indexes_and_create_tables():
     app_list = r.table(AppsPerAgentCollection).index_list().run(conn)
     unique_app_list = r.table(AppsCollection).index_list().run(conn)
     downloaded_list = r.table('downloaded_status').index_list().run(conn)
-    cve_list = r.table(CveCollection).index_list().run(conn)
-    windows_bulletin_list = r.table(WindowsSecurityBulletinCollection).index_list().run(conn)
-    ubuntu_bulletin_list = r.table(UbuntuSecurityBulletinCollection).index_list().run(conn)
+    cve_list = r.table(CVECollections.CVE).index_list().run(conn)
+    windows_bulletin_list = r.table(WindowsSecurityCollection.Bulletin).index_list().run(conn)
+    ubuntu_bulletin_list = r.table(UbuntuSecurityCollection.Bulletin).index_list().run(conn)
     files_list = r.table(FilesCollection).index_list().run(conn)
     tags_list = r.table(TagsCollection).index_list().run(conn)
     agents_list = r.table(AgentsCollection).index_list().run(conn)
@@ -643,19 +645,19 @@ def initialize_indexes_and_create_tables():
 
 #################################### Windows Bulletin Indexes ###################################################
     if not WindowsSecurityBulletinIndexes.BulletinId in windows_bulletin_list:
-        r.table(WindowsSecurityBulletinCollection).index_create(WindowsSecurityBulletinIndexes.BulletinId).run(conn)
+        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.BulletinId).run(conn)
 
     if not WindowsSecurityBulletinIndexes.ComponentKb in windows_bulletin_list:
-        r.table(WindowsSecurityBulletinCollection).index_create(WindowsSecurityBulletinIndexes.ComponentKb).run(conn)
+        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.ComponentKb).run(conn)
 
     if not WindowsSecurityBulletinIndexes.CveIds in windows_bulletin_list:
-        r.table(WindowsSecurityBulletinCollection).index_create(WindowsSecurityBulletinIndexes.CveIds, multi=True).run(conn)
+        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.CveIds, multi=True).run(conn)
 #################################### Ubuntu Bulletin Indexes ###################################################
     if not UbuntuSecurityBulletinIndexes.BulletinId in ubuntu_bulletin_list:
-        r.table(UbuntuSecurityBulletinCollection).index_create(UbuntuSecurityBulletinIndexes.BulletinId).run(conn)
+        r.table(UbuntuSecurityCollection.Bulletin).index_create(UbuntuSecurityBulletinIndexes.BulletinId).run(conn)
 
     if not UbuntuSecurityBulletinIndexes.NameAndVersion in ubuntu_bulletin_list:
-        r.table(UbuntuSecurityBulletinCollection).index_create(
+        r.table(UbuntuSecurityCollection.Bulletin).index_create(
             UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x: 
                 x[UbuntuSecurityBulletinKey.Apps].map(lambda y:
                     [y['name'], y['version']]), multi=True).run(conn)
