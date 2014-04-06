@@ -8,7 +8,7 @@ from vFense.plugins.patching import *
 from vFense.operations import *
 from vFense.operations.operation_manager import Operation
 from vFense.plugins.patching.rv_db_calls import update_app_status
-from vFense.receiver._db import get_all_expired_jobs, delete_all_expired_jobs
+from vFense.core.queue._db import get_all_expired_jobs, delete_all_expired_jobs
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('admin_scheduler')

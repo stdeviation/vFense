@@ -2,7 +2,7 @@ import logging
 import logging.config
 
 from vFense.db.client import r, db_create_close
-from vFense.receiver import *
+from vFense.core.queue import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -14,13 +14,16 @@ def insert_into_agent_queue(operation, conn=None):
         operation[AgentQueueKey.CreatedTime] = (
             r.epoch_time(operation[AgentQueueKey.CreatedTime])
         )
-        operation[AgentQueueKey.ExpireTime] = (
-            r.epoch_time(operation[AgentQueueKey.ExpireTime])
+        operation[AgentQueueKey.ServerQueueTTL] = (
+            r.epoch_time(operation[AgentQueueKey.ServerQueueTTL])
+        )
+        operation[AgentQueueKey.AgentQueueTTL] = (
+            r.epoch_time(operation[AgentQueueKey.AgentQueueTTL])
         )
 
         insert = (
             r
-            .table(AgentQueueCollection)
+            .table(QueueCollections.Agent)
             .insert(operation)
             .run(conn)
         )
@@ -39,7 +42,7 @@ def get_next_avail_order_id_in_agent_queue(agent_id, conn=None):
     try:
         last_num_in_queue = (
             r
-            .table(AgentQueueCollection)
+            .table(QueueCollections.Agent)
             .get_all(agent_id, index=AgentQueueIndexes.AgentId)
             .count()
             .run(conn)
@@ -56,11 +59,20 @@ def get_agent_queue(agent_id, conn=None):
     try:
         agent_queue = list(
             r
-            .table(AgentQueueCollection)
+            .table(QueueCollections.Agent)
             .get_all(agent_id, index=AgentQueueIndexes.AgentId)
-            .without(
-                AgentQueueKey.CreatedTime,
-                AgentQueueKey.ExpireTime
+            .merge(
+                {
+                    AgentQueueKey.CreatedTime: (
+                        r.row[AgentQueueKey.CreatedTime].to_epoch_time()
+                    ),
+                    AgentQueueKey.ServerQueueTTL: (
+                        r.row[AgentQueueKey.ServerQueueTTL].to_epoch_time()
+                    ),
+                    AgentQueueKey.AgentQueueTTL: (
+                        r.row[AgentQueueKey.AgentQueueTTL].to_epoch_time()
+                    ),
+                }
             )
             .order_by(AgentQueueKey.OrderId)
             .run(conn)
@@ -77,7 +89,7 @@ def delete_job_in_queue(job_id, conn=None):
     try:
         job_deleted = (
             r
-            .table(AgentQueueCollection)
+            .table(QueueCollections.Agent)
             .get(job_id)
             .delete()
             .run(conn)
@@ -97,9 +109,9 @@ def get_all_expired_jobs(now=None, conn=None):
         if not now:
             expired_jobs = list(
                 r
-                .table(AgentQueueCollection)
+                .table(QueueCollections.Agent)
                 .filter(
-                    lambda x: x[AgentQueueKey.ExpireTime] <= r.now()
+                    lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now()
                 )
                 .run(conn)
             )
@@ -107,10 +119,10 @@ def get_all_expired_jobs(now=None, conn=None):
         else:
             expired_jobs = list(
                 r
-                .table(AgentQueueCollection)
+                .table(QueueCollections.Agent)
                 .filter(
                     lambda x:
-                        x[AgentQueueKey.ExpireTime].to_epoch_time() <= now
+                        x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
                 )
                 .run(conn)
             )
@@ -127,9 +139,9 @@ def delete_all_expired_jobs(now=None, conn=None):
         if not now:
             expired_jobs = (
                 r
-                .table(AgentQueueCollection)
+                .table(QueueCollections.Agent)
                 .filter(
-                    lambda x: x[AgentQueueKey.ExpireTime] <= r.now()
+                    lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now()
                 )
                 .delete()
                 .run(conn)
@@ -142,7 +154,7 @@ def delete_all_expired_jobs(now=None, conn=None):
                 .table(AgentQueueCollection)
                 .filter(
                     lambda x:
-                        x[AgentQueueKey.ExpireTime].to_epoch_time() <= now
+                        x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
                 )
                 .delete()
                 .run(conn)
@@ -161,7 +173,7 @@ def delete_multiple_jobs(job_ids, conn=None):
         if isinstance(job_ids, list):
             jobs = (
                 r
-                .table(AgentQueueCollection)
+                .table(QueueCollections.Agent)
                 .get_all(*job_ids)
                 .delete()
                 .run(conn)
@@ -171,7 +183,7 @@ def delete_multiple_jobs(job_ids, conn=None):
         else:
             jobs = (
                 r
-                .table(AgentQueueCollection)
+                .table(QueueCollections.Agent)
                 .get(job_ids)
                 .delete()
                 .run(conn)

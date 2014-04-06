@@ -219,7 +219,7 @@ def initialize_db():
         customer.create_customer(
             DefaultCustomers.DEFAULT,
             http_application_url_location=url,
-            operation_queue_ttl=args.queue_ttl,
+            server_queue_ttl=args.queue_ttl,
             init=True
         )
         group_data = group.create_group(

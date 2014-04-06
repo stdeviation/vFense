@@ -15,7 +15,7 @@ from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve import *
 from vFense.plugins.vuln.ubuntu import *
 from vFense.plugins.vuln.windows import *
-from vFense.receiver import *
+from vFense.core.queue import *
 
 Id = 'id'
 def initialize_indexes_and_create_tables():
@@ -48,7 +48,7 @@ def initialize_indexes_and_create_tables():
         (SupportedAppsPerAgentCollection, Id),
         (TagsCollection, TagsKey.TagId),
         (TagsPerAgentCollection, Id),
-        (AgentQueueCollection, Id),
+        (QueueCollections.Agent, Id),
         (AppsCollection, AppsKey.AppId),
         (UserCollections.Users, UserKeys.UserName),
         (GroupCollections.Groups, GroupKeys.GroupId),
@@ -87,7 +87,7 @@ def initialize_indexes_and_create_tables():
     supported_app_per_agent_list = r.table(SupportedAppsPerAgentCollection).index_list().run(conn)
     agent_app_list = r.table(AgentAppsCollection).index_list().run(conn)
     agent_app_per_agent_list = r.table(AgentAppsPerAgentCollection).index_list().run(conn)
-    agent_queue_list = r.table(AgentQueueCollection).index_list().run(conn)
+    agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
     groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
     groups_per_user_list = r.table(GroupCollections.GroupsPerUser).index_list().run(conn)
     customer_per_user_list = r.table(CustomerCollections.CustomersPerUser).index_list().run(conn)
@@ -641,7 +641,7 @@ def initialize_indexes_and_create_tables():
 
 #################################### Cve Indexes ###################################################
     if not CveIndexes.CveCategories in cve_list:
-        r.table(CveCollection).index_create(CveIndexes.CveCategories, multi=True).run(conn)
+        r.table(CVECollections.CVE).index_create(CveIndexes.CveCategories, multi=True).run(conn)
 
 #################################### Windows Bulletin Indexes ###################################################
     if not WindowsSecurityBulletinIndexes.BulletinId in windows_bulletin_list:
@@ -664,7 +664,7 @@ def initialize_indexes_and_create_tables():
 
 #################################### Agent Queue Indexes ###################################################
     if not AgentQueueIndexes.AgentId in agent_queue_list:
-        r.table(AgentQueueCollection).index_create(AgentQueueIndexes.AgentId).run(conn)
+        r.table(QueueCollections.Agent).index_create(AgentQueueIndexes.AgentId).run(conn)
 
 #################################### Group Indexes ###################################################
     if not GroupIndexes.CustomerName in groups_list:
