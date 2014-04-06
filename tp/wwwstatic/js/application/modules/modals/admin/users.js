@@ -72,18 +72,32 @@ define(
                     var $deleteButton = $(event.currentTarget),
                         $userRow = $deleteButton.parents('.item'),
                         $alert = this.$el.find('div.alert'),
-                        user = $deleteButton.val(),
-                        params = {
+                        user = $deleteButton.val();
+                       /* params = {
                             username: user
-                        };
-                    $.post('api/v1/users', params, function (json) {
+                        };*/
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/v1/user/' + user,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response){
+                            if (response.rv_status_code) {
+                                $userRow.remove();
+                                $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(response.message);
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    });
+                   /* $.post('api/v1/users', params, function (json) {
                         if (json.rv_status_code) {
                             $userRow.remove();
                             $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(json.message);
                         } else {
                             $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(json.message);
                         }
-                    });
+                    });*/
                 },
                 verifyForm: function (event) {
                     var form = document.getElementById('newUserDiv');
@@ -104,40 +118,74 @@ define(
                             fullname: fullName,
                             email: email,
                             username: username,
-                            password: password
+                            password: password,
+                            customer_context: this.customerContext
                         },
                         that = this;
+
                     if (group && group.length) {
-                        params.group_id = group;
+                        params.group_ids = group;
                     }
                     if (customers && customers.length) {
-                        params.customer_id = customers;
+                        var customerArray = [];
+                        customerArray.push(customers)
+                        params.customer_names = customerArray;
                     }
-                    $.post('/api/v1/users', params, function (json) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/v1/users',
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code) {
+                                that.collection.fetch();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').html(response.message).show();
+                            }
+                        }
+                    }).error(function (e) { window.console.log(e.statusText); });
+                    /*$.post('/api/v1/users', params, function (json) {
                         if (json.rv_status_code) {
                             that.collection.fetch();
                         } else {
                             $alert.removeClass('alert-success').addClass('alert-error').html(json.message).show();
                         }
-                    }).error(function (e) { window.console.log(e.statusText); });
+                    }).error(function (e) { window.console.log(e.statusText); });*/
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         user = $input.data('user'),
-                        url = $input.data('url') + '/edit',
+                        groupId = $input.data('id'),
+                        url = $input.data('url') + '/' + groupId,
                         $alert = this.$el.find('div.alert'),
-                        params = {
-                            user: user,
-                            name: event.added ? event.added.text : event.removed.text,
-                            customer_name: this.customerContext
-                        };
-                    $.post(url, params, function (response) {
+                        params, groups = [];
+                    groups.push(groupId);
+                    params = {
+                        usernames: groups,//event.added ? event.added.text : event.removed.text,
+                        action: event.added ? 'add' : 'delete'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code) {
+                                $alert.hide();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    }).error(function (e) { window.console.log(e.responseText); });
+                    /*$.post(url, params, function (response) {
                         if (response.rv_status_code) {
                             $alert.hide();
                         } else {
                             $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
                         }
-                    }).error(function (e) { window.console.log(e.responseText); });
+                    }).error(function (e) { window.console.log(e.responseText); });*/
                 },
                 beforeRender: $.noop,
                 onRender: function () {
@@ -200,9 +248,18 @@ define(
                                     if (options.length) {
                                         _.each(options, function (option) {
                                             if (_.isUndefined(option.administrator) || option.administrator) {
-                                                attributes = {value: option.id || option.customer_name};
-                                                if (selected && option.customer_name === selected) {attributes.selected = selected;}
-                                                select.appendChild(crel('option', attributes, option.customer_name));
+                                                if(option.group_name)
+                                                {
+                                                    attributes = {value: option.group_name};
+                                                    if (selected && option.group_name === selected) {attributes.selected = selected;}
+                                                    select.appendChild(crel('option', attributes, option.group_name));
+                                                }
+                                                else if(option.customer_name)
+                                                {
+                                                    attributes = {value: option.id || option.customer_name};
+                                                    if (selected && option.customer_name === selected) {attributes.selected = selected;}
+                                                    select.appendChild(crel('option', attributes, option.customer_name));
+                                                }
                                             }
                                         });
                                     }
@@ -217,7 +274,7 @@ define(
                                                 crel('i', {class: 'icon-remove', style: 'color: red'}))
                                         );
                                         return fragment.innerHTML;
-                                    }
+                                    }i
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');
