@@ -8,6 +8,7 @@ from vFense.db.client import db_create_close, r, db_connect
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
 
+from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
@@ -847,7 +848,7 @@ def update_vulnerability_info_app(
         for cve_id in app[AppsKey.CveIds]:
             #cve_id = cve_id.replace('CVE-', '')
             app[AppsKey.VulnerabilityCategories] += (
-                get_vulnerability_categories(cve_id)
+                cve.get_vulnerability_categories(cve_id)
             )
 
         app[AppsKey.VulnerabilityCategories] = (

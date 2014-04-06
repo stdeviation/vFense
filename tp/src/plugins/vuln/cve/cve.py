@@ -1,10 +1,11 @@
 import sys
 import logging
 import logging.config
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import time_it
 
 from vFense.plugins.vuln.cve import *
-from vFense.plugins.vuln.cve._db import fetch_cve_data
+from vFense.plugins.vuln.cve._db import fetch_cve_data, \
+    fetch_vulnerability_categories
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -92,6 +93,6 @@ def get_vulnerability_categories(cve_id):
 
     data = fetch_vulnerability_categories(cve_id)
     if data:
-        info = data
+        info = data[CveKey.CveCategories]
         
     return(info)

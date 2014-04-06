@@ -13,7 +13,7 @@ logger = logging.getLogger('cve')
 
 @time_it
 @db_create_close
-def fetch_vulnerability_categories(cve_id):
+def fetch_vulnerability_categories(cve_id, conn=None):
     """Retrieve CVE Categories
     Args:
         cve_id (str): The CVE ID - CVE-2014-2525
@@ -34,8 +34,6 @@ def fetch_vulnerability_categories(cve_id):
             .pluck(CveKey.CveCategories)
             .run(conn)
         )
-        if info:
-            info = info[CveKey.CveCategories]
 
     except Exception as e:
         logger.exception(e)
