@@ -10,13 +10,10 @@ import logging.config
 
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from vFense.plugins.cve.search.by_cve_id import RetrieveByCveId
-from vFense.plugins.cve import *
+from vFense.plugins.vuln.search.by_cve_id import RetrieveByCveId
 
 from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from vFense.server.hierarchy.permissions import Permission
+from vFense.server.hierarchy.decorators import authenticated_request
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

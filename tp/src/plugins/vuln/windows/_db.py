@@ -108,7 +108,7 @@ def fetch_vuln_data(vuln_id, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def insert_into_bulletin_collection(bulletin_data, conn=None):
+def insert_bulletin_data(bulletin_data, conn=None):
     """Insert Windows Bulletin data into the Windows Security Bulletin Collection
         DO NOT CALL DIRECTLY
     Args:
