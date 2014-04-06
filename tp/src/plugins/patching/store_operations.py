@@ -45,8 +45,7 @@ class StoreOperation(object):
 
         results = (
             operation.create_operation(
-                oper_type, oper_plugin, agentids,
-                tag_id
+                oper_type, oper_plugin, agentids, tag_id
             )
         )
 

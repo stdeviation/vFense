@@ -13,6 +13,8 @@ class AgentQueueKey():
     Expired = 'expired'
     CustomerName = 'customer_name'
     OperationId = 'OperationId'
+    RequestMethod = 'request_method'
+    ResponseURI = 'response_uri'
 
 
 class AgentQueueIndexes():

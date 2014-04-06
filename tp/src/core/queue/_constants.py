@@ -11,10 +11,12 @@ class ListenerURIs():
     UNINSTALL = '/rv/results/uninstall?'
     REBOOT =  '/core/results/reboot/?'
     SHUTDOWN =  '/core/results/shutdown/?'
-    APPS_REFRESH = '/core/results/updatesapplications/'
-    START_UP = '/core/results/startup/'
-    CHECKIN = '/core/results/checkin/'
-    NEWAGENT = '/core/newagent/'
+    APPS_REFRESH = '/core/results/updatesapplications/?'
+    START_UP = '/core/results/startup/?'
+    CHECKIN = '/core/results/checkin/?'
+    NEWAGENT = '/core/newagent/?'
+    RA = '/ra/rd/results/?'
+    MONIOR_DATA = '/monitoring/monitordata/?'
 
 class ValidOperations():
     NEWAGENT = 'newagent'
@@ -25,10 +27,8 @@ class ValidOperations():
     INSTALL_CUSTOM_APPS = 'install_custom_apps'
     INSTALL_SUPPORTED_APPS = 'install_agent_apps'
     INSTALL_AGENT_APPS = 'install_agent_apps'
-    UNINSTALL_OS_APPS = 'uninstall_os_apps'
-    UNINSTALL_CUSTOM_APPS = 'uninstall_custom_apps'
-    UNINSTALL_SUPPORTED_APPS = 'uninstall_agent_apps'
-    UNINSTALL_AGENT_APPS = 'uninstall_agent_apps'
+    UNINSTALL  = 'uninstall'
+    UNINSTALL_AGENT = 'uninstall_agent'
     REBOOT = 'reboot'
     SHUTDOWN = 'shutdown'
     RA = 'ra'
@@ -36,8 +36,8 @@ class ValidOperations():
         NEWAGENT, APPS_REFRESH, CHECKIN,
         STARTUP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
         INSTALL_SUPPORTED_APPS, INSTALL_AGENT_APPS,
-        UNINSTALL_OS_APPS, UNINSTALL_CUSTOM_APPS,
-        UNINSTALL_SUPPORTED_APPS, UNINSTALL_AGENT_APPS,
+        UNINSTALL, UNINSTALL_AGENT,
         REBOOT, SHUTDOWN, RA
     )
+
 

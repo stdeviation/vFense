@@ -8,8 +8,11 @@ from vFense.core.queue._db import insert_into_agent_queue, \
     get_next_avail_order_id_in_agent_queue, get_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
-from vFense.core.customer.customers import get_customer_property
 from vFense.core.customer import *
+from vFense.core.customer.customers import get_customer_property
+
+from vFense.core.queue.uris import get_agent_results_uri
+from vFense.operations import OperationKey
 
 from vFense.errorz.status_codes import DbCodes
 
@@ -78,9 +81,16 @@ class AgentQueue(object):
                         agent_expire_mins
                     )
                 )
-
+        request_method, response_uri = (
+            get_agent_results_uri(
+                self.agent_id,
+                operation[OperationKey.Operation]
+            )
+        )
         operation[AgentQueueKey.AgentId] = self.agent_id
         operation[AgentQueueKey.CustomerName] = self.customer_name
+        operation[AgentQueueKey.RequestMethod] = request_method
+        operation[AgentQueueKey.ResponseURI] = response_uri
         operation[AgentQueueKey.OrderId] = self._get_next_avail_order()
         operation[AgentQueueKey.CreatedTime] = self.epoch_time_now
         operation[AgentQueueKey.ExpireMinutes] = expire_mins
