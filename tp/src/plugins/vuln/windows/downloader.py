@@ -10,20 +10,9 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
 
 
-def log_status(status, size, url_path, nvd_path):
-    if status == True and size > 0:
-        msg = '%s Downloaded to %s' % ( url_path, nvd_path )
-        logger.info(msg)
-    elif status == False:
-        msg =  '%s Could not be downloaded' % ( url_path )
-        logger.warn(msg)
-    else:
-        msg = '%s Was downloaded to %s, but the size is %d' \
-                % ( url_path, nvd_path, size )
-        logger.error(msg)
-
-
 def get_msft_bulletin_url():
+    """Hack to retrieve the Microsoft XLSX url and name of the file.
+    """
     xls_url = None
     xls_file_name = None
 
@@ -37,6 +26,11 @@ def get_msft_bulletin_url():
 
 
 def download_latest_xls_from_msft():
+    """Download the lates Microsoft Security Bulletin excel spreadsheet
+        and than store it on disk
+    Returns:
+        Tuple (Boolen, file_location)
+    """
     downloaded = True
     xls_file_location = None
     if not os.path.exists(WindowsDataDir.XLS_DIR):

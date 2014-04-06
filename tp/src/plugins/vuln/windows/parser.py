@@ -13,6 +13,7 @@ from datetime import datetime
 from xlrd import open_workbook, xldate_as_tuple
 
 from vFense.plugins.vuln.common import build_bulletin_id
+from vFense.plugins.vuln.windows import *
 from vFense.plugins.vuln.windows._constants import *
 from vFense.plugins.vuln.windows._db import insert_bulletin_data
 from vFense.plugins.vuln.windows.downloader import download_latest_xls_from_msft
@@ -23,8 +24,11 @@ logger = logging.getLogger('cve')
 
 def parse_spread_sheet(bulletin_file):
     """Parse the entire microsoft excel bulleting data and 
-        insert it into the db
-
+        return the data, ready to be inserted into the database.
+    Args:
+        bulletin_file (str): The file location on disk
+    Returns:
+        List of dictionairies
     """
     bulletin_list = []
     workbook = open_workbook(bulletin_file)
@@ -88,9 +92,11 @@ def parse_spread_sheet(bulletin_file):
     return(bulletin_list)
 
 def parse_bulletin_and_updatedb():
+    """Download the Bulletin and parse it and insert into the database
+    """
     logger.info('starting microsoft security bulletin update process')
     if not os.path.exists(WindowsDataDir.XLS_DIR):
-        os.makedirs(WindowsDataDir.XLS_DIR)
+        os.makedirs(WindowsDataDir.XLS_DIR, 0755)
     downloaded, xls_file = download_latest_xls_from_msft()
     if downloaded:
         bulletin_data = parse_spread_sheet(xls_file)
