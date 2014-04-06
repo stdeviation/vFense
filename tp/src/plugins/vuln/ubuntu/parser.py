@@ -74,7 +74,6 @@ def get_cve_info(cve_references):
     """Parse and retreive  cve ids
     Args:
         cve_references (str): 
-    
     """
     cve_ids = []
     for reference in cve_references:
@@ -83,6 +82,10 @@ def get_cve_info(cve_references):
 
 
 def parse_multiple_dd_tags(info):
+    """Parse dt, dl, and dd tags, to retrieve the app data.
+    Args:
+        info (str): 
+    """
     app_info = []
     while True:
         if 'name' in dir(info):
@@ -112,6 +115,12 @@ def parse_multiple_dd_tags(info):
 
 
 def get_app_info(info):
+    """Parse dt, dl, and dd tags, to retrieve the app data
+        and os_string.
+    Args:
+        info (str): 
+    """
+    app_info = []
     app_info = []
     while True:
         app_data = {}
@@ -138,6 +147,11 @@ def get_app_info(info):
     return(app_info)
 
 def get_date_posted(date_em):
+    """Parse em tags, to retrieve the date posted 
+        and convert it to epoch.
+    Args:
+        date_em (str): 
+    """
     date_posted = u''
     try:
         day, month, year = date_em.text.split()
@@ -153,6 +167,10 @@ def get_date_posted(date_em):
     return(date_posted)
 
 def get_details(soup_details):
+    """Parse the description in the ubuntu usn html file.
+    Args:
+        soup_details (str)
+    """
     details = u''
     while True:
         tag = soup_details.findNext()
@@ -167,18 +185,29 @@ def get_details(soup_details):
     details = unicode(details).encode(sys.stdout.encoding, 'replace')
     return(details)
 
-def write_content_to_file(file_location, url):
+def write_content_to_file(file_location, url, content=None):
+    """Write the html data to  file, so we can load this data from
+        disk anytime we need to read from it.
+    Args:
+        file_location (str): The location of the file on disk.
+        url (str): The url you will retreive.
+
+    Returns:
+        Tuple (content_of_file, boolean)
+    """
     usn_file = open(file_location, 'wb')
-    try:
-        #print write_content_to_file.func_name, file_location, url
-        usn_page = requests.get(url)
-        usn_page.close()
-    except Exception as e:
-        write_content_to_file(file_location,url)
+    if not content:
+        try:
+            #print write_content_to_file.func_name, file_location, url
+            usn_page = requests.get(url)
+            content = usn_page.content
+            usn_page.close()
+
+        except Exception as e:
+            write_content_to_file(file_location,url)
+
     completed = False
-    content = None
-    if usn_page.ok:
-        content = usn_page.content
+    if content:
         #content = unicode(usn_page.text).encode(sys.stdout.encoding, 'replace').decode('utf-8')
         completed = True
         usn_file.write(content)
@@ -187,7 +216,16 @@ def write_content_to_file(file_location, url):
 
 
 def get_url_content(usn_uri):
+    """Retreive the content of the usn url
+    Args:
+        usn_uri (str): The uri you will retreive the content from.
+
+    Returns:
+        Tuple (content_of_file, boolean)
+    """
     if re.search('^http', usn_uri):
+        #Major hack, since some of the pages have the full url
+        #insetad of the uri
         usn_uri = re.sub('^', '/', usn_uri.split('/',3)[-1])
     def get_usn_uri(usn_uri):
         try:
@@ -213,6 +251,8 @@ def get_url_content(usn_uri):
     usn = usn_uri.split('/')[-2]
     usn_file_location = os.path.join(UbuntuDataDir.HTML_DIR, usn)
     if os.path.exists(usn_file_location):
+        #Read html off of disk and check if the size is greater than 0
+        #If it isn't grater than 0, than re get the file.
         if os.stat(usn_file_location).st_size > 0:
             content = open(usn_file_location, 'r').read()
             completed = True
@@ -221,11 +261,14 @@ def get_url_content(usn_uri):
             completed, content = get_usn_uri(usn_uri)
 
     elif not os.path.exists(usn_file_location):
+        #If the file doesn't exist, than retriev it and write it to file.
         #print get_url_content.func_name, usn_uri
         completed, content = get_usn_uri(usn_uri)
         content, completed = (
             write_content_to_file(
-                usn_file_location, UbuntuUSNStrings.MAIN_URL + usn_uri
+                usn_file_location,
+                UbuntuUSNStrings.MAIN_URL + usn_uri,
+                content
             )
         )
 
@@ -233,6 +276,14 @@ def get_url_content(usn_uri):
 
 
 def process_usn_page(usn_uri):
+    """Process the entire USN page, for the data
+        that we will parse in order to store into the 
+        database.
+    Args:
+        usn_uri (str): The uri, that you want to retreive
+            from disk or from the usn page.
+
+    """
     content, completed = get_url_content(usn_uri)
     details = ''
     date_posted = ''
@@ -281,6 +332,14 @@ def process_usn_page(usn_uri):
 
 
 def begin_usn_home_page_processing(next_page=None, full_parse=False):
+    """Process the entire USN HOME page, for the data
+        that we will parse in order to store into the 
+    Kwargs:
+        next_page (str): The next page tp follow, to retrieve usn data from.
+        full_parse (bool): The default is False, which means,
+            just get the latest data from the home page
+
+    """
     if next_page:
         url = UbuntuUSNStrings.MAIN_USN_URL + '/' + next_page
         #print begin_usn_home_page_processing.func_name, url
