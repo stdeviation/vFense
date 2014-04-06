@@ -11,6 +11,8 @@ from vFense.core.queue._db import insert_into_agent_queue, \
 from vFense.core.customer.customers import get_customer_property
 from vFense.core.customer import *
 
+from vFense.errorz.status_codes import DbCodes
+
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
@@ -43,12 +45,14 @@ class AgentQueue(object):
             >>> from vFense.receiver.agent_queue import AgentQueue
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
             >>> customer_name = 'default'
+            >>> operation = {'valid_operation': 'data'}
             >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue.add(operation)
 
         Returns:
             Boolean
         """
-
+        success = False
         if not expire_mins:
             expire_mins = self.global_server_queue_expire_minutes
 
@@ -82,12 +86,29 @@ class AgentQueue(object):
         operation[AgentQueueKey.ExpireMinutes] = expire_mins
         operation[AgentQueueKey.ServerQueueTTL] = server_queue_ttl
         operation[AgentQueueKey.AgentQueueTTL] = agent_process_time
-        success = insert_into_agent_queue(operation)
+        status_code, count, error, generated_ids = (
+            insert_into_agent_queue(operation)
+        )
+
+        if status_code == DbCodes.Inserted:
+            success = True
 
         return(success)
 
     def _get_next_avail_order(self):
-        """return the next available order_id from the database"""
+        """return the next available order_id from the database
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue._get_next_avail_order()
+        
+        Returns:
+            Integer
+        """
 
         last_id = get_next_avail_order_id_in_agent_queue(self.agent_id)
 
@@ -96,6 +117,17 @@ class AgentQueue(object):
     def get_global_server_queue_ttl(self):
         """Return the global server ttl property for a customer.
             TTL is in minutes.
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue.get_global_server_queue_ttl()
+
+        Returns:
+            Integer
         """
 
         ttl = (
@@ -109,6 +141,17 @@ class AgentQueue(object):
     def get_global_agent_queue_ttl(self):
         """Return the global agent ttl property for a customer.
             TTL is in minutes.
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue.get_global_agent_queue_ttl()
+
+        Returns:
+            Integer
         """
 
         ttl = (
@@ -123,6 +166,16 @@ class AgentQueue(object):
         """return the expire_time, which is the current time + minutes
         Args:
             expire_mins (int): Minutes until operation is considered expired.
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> expire_mins = 10
+            >>> queue.get_queue_expire_time(expire_mins)
+
         Returns:
             float (expired time in epoch)
         """
@@ -137,6 +190,15 @@ class AgentQueue(object):
 
     def get_agent_queue(self):
         """Return a list of jobs for an agent
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue.get_agent_queue()
+
         Returns:
             List of dictionairies
             [
@@ -161,6 +223,15 @@ class AgentQueue(object):
     def pop_agent_queue(self):
         """Return a list of jobs for an agent and then
             remove them from the queue
+
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue.pop_agent_queue()
+
         Returns:
             List of dictionairies
             [
@@ -192,6 +263,25 @@ class AgentQueue(object):
         return(agent_queue)
 
     def remove_job(self, job_id):
-        """job_id is the primary key of the job you want to remove"""
+        """Delete a job in the queue
+        Args:
+            job_id (str): The 36 character job UUID.
 
-        return(delete_job_in_queue(job_id))
+        Basic Usage:
+            >>> from vFense.queue.queue import AgentQueue
+            >>> agent = AgentQueue()
+            >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
+            >>> customer_name = 'default'
+            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> job_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e02'
+            >>> queue.remove_job(job_id)
+
+        """
+        success = False
+        status_code, count, error, generated_ids = (
+            delete_job_in_queue(job_id)
+        )
+        if status_code == DbCodes.Deleted:
+            success = True
+
+        return(success)

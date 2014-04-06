@@ -16,7 +16,10 @@ logger = logging.getLogger('admin_scheduler')
 def remove_expired_jobs_and_update_operations():
     epoch_time_now = mktime(datetime.now().timetuple())
     expired_jobs = get_all_expired_jobs(epoch_time_now)
-    jobs_deleted = delete_all_expired_jobs(epoch_time_now)
+    status_code, count, error, generated_ids = (
+        delete_all_expired_jobs(epoch_time_now)
+    )
+    jobs_deleted = count
     msg = 'number of jobs expired: %s' % (str(jobs_deleted))
     logger.info(msg)
     for job in expired_jobs:
