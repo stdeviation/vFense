@@ -148,7 +148,7 @@ def initialize_db():
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls'):
         os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls', 0755)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml'):
-        os.mkdir('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml', 0755)
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml', 0755)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html'):
         os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html', 0755)
     if get_distro() in DEBIAN_DISTROS:
