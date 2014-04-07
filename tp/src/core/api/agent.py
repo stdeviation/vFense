@@ -37,7 +37,7 @@ class AgentResultURIs(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            results = get_result_uris(agent_id)
+            results = get_result_uris(agent_id, username, uri, method)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
