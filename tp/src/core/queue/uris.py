@@ -176,6 +176,14 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
     status_code = 0
     status = get_result_uris.func_name + ' - '
     result_uris = {
+        AuthenticationOperations.LOGIN: {
+            CommonKeys.REQUEST_METHOD: HTTPMethods.POST,
+            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGIN
+        },
+        AuthenticationOperations.LOGOUT: {
+            CommonKeys.REQUEST_METHOD: HTTPMethods.GET,
+            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT
+        },
         ValidOperations.NEWAGENT: {
             CommonKeys.REQUEST_METHOD: HTTPMethods.POST,
             CommonKeys.RESPONSE_URI: BaseURIs.LISTENER[:-1] + ListenerURIs.NEWAGENT
