@@ -87,7 +87,7 @@ class GroupHandler(BaseHandler):
                     results = (
                         remove_users_from_group(
                             group_id, usernames,
-                            username, uri, method
+                            active_user, uri, method
                         )
                     )
 
