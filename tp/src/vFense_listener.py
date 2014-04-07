@@ -12,14 +12,12 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
-from redis import StrictRedis
-from rq import Connection, Queue
-
 from vFense.server.handlers import RootHandler, RvlLoginHandler, RvlLogoutHandler
 from vFense.server.handlers import WebSocketHandler, AdminHandler
 from vFense.receiver.api.core.newagent import NewAgentV1
 from vFense.receiver.api.core.checkin import CheckInV1
 from vFense.receiver.api.core.startup import StartUpV1
+from vFense.receiver.api.core.result_uris import ResultURIs
 from vFense.receiver.api.rv.results import *
 from vFense.receiver.api.core.results import *
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
@@ -27,7 +25,6 @@ from vFense.receiver.api.ra.results import RemoteDesktopResults
 from vFense.receiver.api.monitoring.monitoringdata import UpdateMonitoringStatsV1
 
 from vFense.db.client import *
-from vFense.scheduler.jobManager import start_scheduler
 
 from tornado.options import define, options
 
@@ -56,6 +53,7 @@ class Application(tornado.web.Application):
             #Operations for the New Core Plugin
             (r"/rvl/v1/core/newagent/?", NewAgentV1),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIs),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?", CheckInV1),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/updatesapplications/?", UpdateApplicationsV1),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV1),

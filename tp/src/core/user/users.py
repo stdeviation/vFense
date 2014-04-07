@@ -1332,7 +1332,6 @@ def edit_user_properties(username, **kwargs):
             ApiResultKeys.DB_STATUS_CODE: DbCodes.Errors,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.USERNAME: username,
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: [kwargs],
             ApiResultKeys.USERNAME: user_name,

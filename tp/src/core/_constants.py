@@ -10,7 +10,7 @@ class CommonKeys():
     URI = 'uri'
     METHOD = 'method'
     RESPONSE_URI = 'response_uri'
-    RESPONSE_METHOD = 'request_method'
+    REQUEST_METHOD = 'request_method'
 
 class DefaultStringLength():
     CUSTOMER_NAME = 36
@@ -18,11 +18,11 @@ class DefaultStringLength():
     USER_NAME = 24
 
 class HTTPMethods():
-    PUT = 'put'
-    POST = 'post'
-    DELETE = 'delete'
-    GET = 'get'
-    HEAD = 'head'
+    PUT = 'PUT'
+    POST = 'POST'
+    DELETE = 'DELETE'
+    GET = 'GET'
+    HEAD = 'HEAD'
 
 class CPUThrottleValues():
     IDLE = 'idle'

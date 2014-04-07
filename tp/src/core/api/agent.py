@@ -1,30 +1,54 @@
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
+
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user import *
 from vFense.core.user.users import get_user_property
 from vFense.core.agent.agent_searcher import AgentSearcher
 from vFense.core.agent.agent_handler import AgentManager
+from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.patching.store_operations import StoreOperation
 from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
+
 from vFense.operations import *
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import authenticated_request, \
+    convert_json_to_arguments
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
+
+
+class AgentResultURIs(BaseHandler):
+    @authenticated_request
+    def get(self, agent_id):
+        username = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            results = get_result_uris(agent_id)
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            status = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('uris', 'refresh_response_uris', e)
+            )
+            logger.exception(e)
+            self.write(json.dumps(status, indent=4))
 
 
 class FetchValidProductionLevels(BaseHandler):

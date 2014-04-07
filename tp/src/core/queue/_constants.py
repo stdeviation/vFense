@@ -1,9 +1,17 @@
+from vFense.core._constants import CommonKeys, HTTPMethods
+
+
 class BaseURIs():
     LISTENER = '/rvl/v1/'
     API = '/api/v1/'
 
 
 class ListenerURIs():
+    NEWAGENT = '/core/newagent/?'
+    RA = '/ra/rd/results/?'
+
+
+class AgentListenerURIs():
     INSTALL_OS_APPS = '/rv/results/install/apps/os?'
     INSTALL_CUSTOM_APPS = '/rv/results/install/apps/custom?'
     INSTALL_SUPPORTED_APPS = '/rv/results/install/apps/supported?'
@@ -12,11 +20,10 @@ class ListenerURIs():
     REBOOT =  '/core/results/reboot/?'
     SHUTDOWN =  '/core/results/shutdown/?'
     APPS_REFRESH = '/core/results/updatesapplications/?'
-    START_UP = '/core/results/startup/?'
+    STARTUP = '/core/results/startup/?'
     CHECKIN = '/core/results/checkin/?'
-    NEWAGENT = '/core/newagent/?'
-    RA = '/ra/rd/results/?'
     MONIOR_DATA = '/monitoring/monitordata/?'
+
 
 class ValidOperations():
     NEWAGENT = 'newagent'
@@ -39,5 +46,5 @@ class ValidOperations():
         UNINSTALL, UNINSTALL_AGENT,
         REBOOT, SHUTDOWN, RA
     )
-
+    
 
