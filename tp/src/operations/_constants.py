@@ -15,6 +15,7 @@ class ListenerURIs():
     START_UP = '/core/results/startup/'
     CHECKIN = '/core/results/checkin/'
     NEWAGENT = '/core/newagent/'
+    REFRESH_RESPONSE_URIS = '/core/uris/response'
 
 class ValidOperations():
     NEWAGENT = 'newagent'
@@ -32,12 +33,13 @@ class ValidOperations():
     REBOOT = 'reboot'
     SHUTDOWN = 'shutdown'
     RA = 'ra'
+    REFRESH_RESPONSE_URIS = 'refresh_response_uris'
     OPERATIONS = (
         NEWAGENT, APPS_REFRESH, CHECKIN,
         STARTUP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
         INSTALL_SUPPORTED_APPS, INSTALL_AGENT_APPS,
         UNINSTALL_OS_APPS, UNINSTALL_CUSTOM_APPS,
         UNINSTALL_SUPPORTED_APPS, UNINSTALL_AGENT_APPS,
-        REBOOT, SHUTDOWN, RA
+        REBOOT, SHUTDOWN, RA, REFRESH_RESPONSE_URIS
     )
 

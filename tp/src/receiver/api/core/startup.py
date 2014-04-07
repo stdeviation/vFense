@@ -1,19 +1,19 @@
 import logging
-import tornado.httpserver
-import tornado.web
 
 from json import dumps
 
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments
 
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.core.agent.agents import update_agent
 from vFense.core.queue.uris import get_result_uris
-from vFense.db.hardware import Hardware
+
+from vFense.operations._constants import ValidOperations
+from vFense.operations import OperationKey
 
 from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff
@@ -47,7 +47,10 @@ class StartUpV1(BaseHandler):
                     uri, method,
                 )
             )
-            uris = get_result_uris(agent_id, username, uri, method)['data']
+            uris = get_result_uris(agent_id, username, uri, method)
+            uris[OperationKey.Operation] = (
+                ValidOperations.REFRESH_RESPONSE_URIS
+            )
             agent_data.pop('data')
             agent_data['data'] = [uris]
             self.set_status(agent_data['http_status'])
