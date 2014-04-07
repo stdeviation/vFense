@@ -10,7 +10,12 @@ class Results(object):
         self.username = username
 
     def data_retrieved(self, **kwargs):
-        msg = '%s - data was retrieved' % (self.username)
+        msg = (
+            kwargs.get(
+                ApiResultKeys.MESSAGE,
+                '%s - data was retrieved' % (self.username)
+            )
+        )
         data = kwargs.get(ApiResultKeys.DATA, [])
         count = kwargs.get(ApiResultKeys.COUNT, 0)
         status_code = (
