@@ -249,3 +249,4 @@ CVSS_ENVIRONMENTAL_AR_VALUES = (
         'ND': 'Not Defined',
     }
 )
+

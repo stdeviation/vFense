@@ -12,6 +12,7 @@ from vFense.server.hierarchy.decorators import convert_json_to_arguments
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.core.agent.agents import update_agent
+from vFense.core.queue.uris import get_result_uris
 from vFense.db.hardware import Hardware
 
 from vFense.receiver.rvhandler import RvHandOff
@@ -46,9 +47,9 @@ class StartUpV1(BaseHandler):
                     uri, method,
                 )
             )
+            uris = get_result_uris(agent_id, username, uri, method)['data']
             agent_data.pop('data')
-            agent_data['data'] = []
-            logger.info(agent_data)
+            agent_data['data'] = [uris]
             self.set_status(agent_data['http_status'])
 
             if agent_data['http_status'] == 200:
