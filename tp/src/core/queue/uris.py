@@ -30,7 +30,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.INSTALL_OS_APPS
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.INSTALL_OS_APPS
             )
         )
 
@@ -38,7 +38,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.INSTALL_CUSTOM_APPS
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.INSTALL_CUSTOM_APPS
             )
         )
 
@@ -46,7 +46,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.INSTALL_SUPPORTED_APPS
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.INSTALL_SUPPORTED_APPS
             )
         )
 
@@ -54,7 +54,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.INSTALL_AGENT_APPS
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.INSTALL_AGENT_APPS
             )
         )
 
@@ -62,7 +62,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.UNINSTALL
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.UNINSTALL
             )
         )
 
@@ -70,7 +70,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.UNINSTALL
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.UNINSTALL
             )
         )
 
@@ -78,7 +78,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.REBOOT
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.REBOOT
             )
         )
 
@@ -86,7 +86,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.SHUTDOWN
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.SHUTDOWN
             )
         )
 
@@ -94,7 +94,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.GET
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.CHECKIN
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.CHECKIN
             )
         )
 
@@ -102,7 +102,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.START_UP
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.START_UP
             )
         )
 
@@ -110,7 +110,7 @@ def get_agent_results_uri(agent_id, operation):
         request_method = HTTPMethods.PUT
         response_uri = (
             os.path.join(
-                BaseURIs.LISTENER, agent_id + ListenerURIs.APPS_REFRESH
+                BaseURIs.LISTENER, agent_id + AgentListenerURIs.APPS_REFRESH
             )
         )
 
