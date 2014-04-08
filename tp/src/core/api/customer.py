@@ -13,6 +13,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
+from vFense.core.user._constants import DefaultUser
 from vFense.core.agent.agents import change_customer_for_agents, \
     remove_all_agents_for_customer
 
@@ -289,6 +290,9 @@ class CustomersHandler(BaseHandler):
         customer_context = self.get_argument('customer_context', None)
         count = 0
         customer_data = {}
+        if not customer_context and active_user == DefaultUser.ADMIN:
+            all_customers = True
+
         try:
             if customer_context:
                 granted, status_code = (
