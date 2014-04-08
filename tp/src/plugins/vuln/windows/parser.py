@@ -57,6 +57,7 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
             r.epoch_time(epoch_time)
         )
+        #Need to see if I can pull the column names and use that instead of using the row number
         bulletin_dict[WindowsSecurityBulletinKey.BulletinId] = row[1]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
@@ -67,8 +68,8 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentImpact] = row[9]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentSeverity] = row[10]
-        if row[12] != '':
-            info = row[12].split(',')
+        if row[11] != '':
+            info = row[11].split(',')
             for j in info:
                 bulletin_data = j.split('[')
                 if len(bulletin_data) > 1:
@@ -85,8 +86,8 @@ def parse_spread_sheet(bulletin_file):
                     }
                 )
         bulletin_dict[WindowsSecurityBulletinKey.Supersedes] = supercede_list
-        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = row[13]
-        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = row[14].split(',')
+        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = row[12]
+        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = row[13].split(',')
         bulletin_list.append(bulletin_dict)
 
     return(bulletin_list)
