@@ -1,6 +1,9 @@
 TagsCollection = 'tags'
 TagsPerAgentCollection = 'tag_per_agent'
 
+class TagCollections():
+    Tags = 'tags'
+    TagsPerAgent = 'tag_per_agent'
 
 
 class TagsKey():
