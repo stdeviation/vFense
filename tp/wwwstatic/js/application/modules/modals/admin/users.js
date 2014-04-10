@@ -250,7 +250,7 @@ define(
                                             if (_.isUndefined(option.administrator) || option.administrator) {
                                                 if(option.group_name)
                                                 {
-                                                    attributes = {value: option.group_name};
+                                                    attributes = {value: option.id};
                                                     if (selected && option.group_name === selected) {attributes.selected = selected;}
                                                     select.appendChild(crel('option', attributes, option.group_name));
                                                 }
