@@ -364,15 +364,19 @@ class CustomersHandler(BaseHandler):
                     ApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
                 )
             )
-            operation_ttl = (
-                self.arguments.get(ApiArguments.OPERATION_TTL, 10)
+            server_queue_ttl = (
+                self.arguments.get(ApiArguments.SERVER_QUEUE_TTL, 10)
+            )
+            agent_queue_ttl = (
+                self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
             )
 
             results = (
                 create_customer(
                     customer_name, active_user, pkg_url,
-                    net_throttle, cpu_throttle, operation_ttl,
-                    user_name=active_user, uri=uri, method=method
+                    net_throttle, cpu_throttle, server_queue_ttl,
+                    agent_queue_ttl, user_name=active_user, uri=uri,
+                    method=method
                 )
             )
             self.set_status(results['http_status'])
