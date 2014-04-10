@@ -521,12 +521,12 @@ def create_customer(
 
         if object_status == DbCodes.Inserted and not init and username:
             add_user_to_customers(
-                username, customer_name, user_name, uri, method
+                username, [customer_name], user_name, uri, method
             )
 
             if username != DefaultUser.ADMIN:
                 add_user_to_customers(
-                    DefaultUser.ADMIN, customer_name, user_name, uri, method
+                    DefaultUser.ADMIN, [customer_name], user_name, uri, method
                 )
 
         #The admin user should be part of every group
@@ -539,7 +539,7 @@ def create_customer(
             
             if admin_exist:
                 add_user_to_customers(
-                    DefaultUser.ADMIN, customer_name, user_name, uri, method
+                    DefaultUser.ADMIN, [customer_name], user_name, uri, method
                 )
 
 
