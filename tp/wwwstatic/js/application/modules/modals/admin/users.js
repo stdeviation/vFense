@@ -235,6 +235,7 @@ define(
                         groups = this.groupCollection.toJSON()[0],
                         customers = app.user.toJSON(),
                         payload;
+                    console.log(data);
                     if (data && data.rv_status_code === 1001 && groups && groups.rv_status_code === 1001) {
                         payload = {
                             data: data.data,
@@ -274,7 +275,7 @@ define(
                                                 crel('i', {class: 'icon-remove', style: 'color: red'}))
                                         );
                                         return fragment.innerHTML;
-                                    }i
+                                    }
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');

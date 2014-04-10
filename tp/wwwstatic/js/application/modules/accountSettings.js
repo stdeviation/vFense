@@ -28,6 +28,9 @@ define(
                         $alert = $form.find('span[data-name=result]'),
                         $inputs = $form.find('[data-id=input]'),
                         url = 'api/v1/user/' + this.username,
+                        fullName = this.$el.find('input[name=fullname]').parents('form').data('id'),
+                        inputFullName = this.$el.find('input[name=fullname]'),
+                        fullNameId = this.$el.find('#fullName'),
                         params = {},
                         valid = true;
                     $inputs.each(function (index, input) {
@@ -60,7 +63,16 @@ define(
                             success: function(response) {
                                 if (response.rv_status_code === 13001) {
                                     if (reset) {
-                                        app.user.fetch();
+                                        if(fullName === 'name')
+                                        {
+                                            this.render(response);
+//                                           inputFullName.val(response.data[0].full_name);
+//                                           fullNameId.text(response.data[0].full_name);
+                                        }
+                                        else
+                                        {
+                                            app.user.fetch();
+                                        }
                                     } else {
                                         $alert.removeClass('alert-error alert-info').addClass('alert-success').html(response.message);
                                         $form[0].reset();
@@ -149,6 +161,7 @@ define(
                             }
                         };
                     this.$el.empty().html(template(payload));
+                    console.log(payload);
                     this.$el.find('select[name=default_customer_id]').select2({width: '100%'});
 
                     return this;
