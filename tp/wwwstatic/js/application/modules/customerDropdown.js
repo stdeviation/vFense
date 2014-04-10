@@ -36,10 +36,10 @@ define(
                             renderCustomers: function (customers, currentCustomer) {
                                 var fragment = crel('div');
                                 _.each(customers, function (customer) {
-                                    if (customer.name !== currentCustomer) {
+                                    if (customer.customer_name !== currentCustomer) {
                                         fragment.appendChild(
                                             crel('li',
-                                                crel('a', {href: '#customer/' + customer.name}, customer.name)
+                                                crel('a', {href: '#customer/' + customer.customer_name}, customer.customer_name)
                                             )
                                         );
                                     }
@@ -52,6 +52,7 @@ define(
                     if (app.user.apiPass) {
                         this.$el.empty();
                         this.$el.html(template(data));
+                        console.log(data);
                     }
 
                     if (this.onRender !== $.noop) { this.onRender(); }

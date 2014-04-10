@@ -25,7 +25,7 @@ define(
                     return this;
                 },
                 events: {
-                    'click button[name=toggleAcl]'          :   'toggleAclAccordion',
+                    'click a[name=toggleAcl]'          :   'toggleAclAccordion',
                     'click button[name=toggleDelete]'       :   'confirmDelete',
                     'click button[name=deleteCustomer]'     :   'deleteCustomer',
                     'click button[data-id=toggleCustomer]'  :   'createCustomer',
@@ -59,6 +59,7 @@ define(
                         $customerRow = $deleteButton.parents('.item'),
                         $alert = this.$el.find('div.alert'),
                         customer = $deleteButton.val();
+                    console.log(customer);
                     /* params = {
                      username: user
                      };*/
@@ -193,7 +194,7 @@ define(
                                     var fragment = crel('div');
                                     if (customer.customer_name !== 'administrator') {
                                         fragment.appendChild(
-                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                            crel('a', {name: 'toggleAcl', href: '#' + customer.customer_name, 'data-toggle': 'collapse', 'data-parent': '#accordion', class: 'accordion-toggle btn btn-link noPadding'},
                                                 crel('i', {class: 'icon-circle-arrow-down'}, ' '),
                                                 crel('span', customer.customer_name)
                                             )
