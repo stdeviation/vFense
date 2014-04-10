@@ -577,7 +577,7 @@ def remove_users_from_group(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.customer.customers remove_users_from_group
+        >>> from vFense.user.users remove_users_from_group
         >>> usernames = ['tester1', 'tester2']
         >>> group_id = '57095e37-e8b7-4cc9-89c1-f49621886548'
         >>> remove_users_from_group(usernames, group_id)
@@ -597,30 +597,30 @@ def remove_users_from_group(
     try:
         if not admin_in_list:
             status_code, count, errors, generated_ids = (
-                delete_users_in_group(usernames, customer_name)
+                delete_users_in_group(usernames, group_id)
             )
             if status_code == DbCodes.Deleted:
                 msg = (
-                    'removed users %s from customer %s' %
-                    (' and '.join(usernames), customer_name)
+                    'removed users %s from group_id %s' %
+                    (' and '.join(usernames), group_id)
                 )
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = UserCodes.UsersRemovedFromGroup
 
             elif status_code == DbCodes.Skipped:
-                msg = 'invalid customer name or invalid username'
+                msg = 'invalid group id or invalid username'
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = GroupFailureCodes.InvalidGroupId
 
             elif status_code == DbCodes.DoesntExist:
-                msg = 'customer name or username does not exist'
+                msg = 'group id or username does not exist'
                 generic_status_code = GenericCodes.DoesNotExists
-                vfense_status_code = GroupFailureCodes.UsersDoNotExistForGroupId
+                vfense_status_code = GroupFailureCodes.UsersDoNotExistForGroup
 
         else:
-            msg = 'can not remove the admin user from any customer'
+            msg = 'can not remove the admin user from any group_id'
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.CantDeleteAdminFromCustomer
+            vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
 
 
         results = {
@@ -637,12 +637,12 @@ def remove_users_from_group(
     except Exception as e:
         logger.exception(e)
         msg = (
-            'Failed to remove users %s from customer %s: %s' % 
-            (' and '.join(usernames), customer_name, str(e))
+            'Failed to remove users %s from group %s: %s' % 
+            (' and '.join(usernames), group_id, str(e))
         )
         status_code = DbCodes.Errors
         generic_status_code = GenericFailureCodes.FailedToDeleteObject
-        vfense_status_code = UserFailureCodes.FailedToRemoveUsersFromCustomer
+        vfense_status_code = GroupFailureCodes.FailedToRemoveGroupFromUser
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
