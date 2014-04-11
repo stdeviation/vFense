@@ -25,7 +25,7 @@ define(
                     return this;
                 },
                 events: {
-                    'click a[name=toggleAcl]'          :   'toggleAclAccordion',
+                    'click button[name=toggleAcl]'               :   'toggleAclAccordion',
                     'click button[name=toggleDelete]'       :   'confirmDelete',
                     'click button[name=deleteCustomer]'     :   'deleteCustomer',
                     'click button[data-id=toggleCustomer]'  :   'createCustomer',
@@ -37,11 +37,11 @@ define(
                     var $href = $(event.currentTarget),
                         $icon = $href.find('i'),
                         $accordionParent = $href.parents('.accordion-group'),
-                        $accordionBody = $accordionParent.find('.accordion-body').first(),
-                        editCustomerForm = this.$el.find('#newCustomerDiv');
+                        $accordionBody = $accordionParent.find('.accordion-body').first();
+//                        editCustomerForm = this.$('#newCustomerDiv');
                     $icon.toggleClass('icon-circle-arrow-down icon-circle-arrow-up');
-                    editCustomerForm.removeClass('hide');
-                    $accordionBody.html(editCustomerForm);
+//                    editCustomerForm.removeClass('hide');
+//                    $accordionBody.html(editCustomerForm);
 //                    editCustomerForm.toggle();
                     $accordionBody.unbind().collapse('toggle');
                     $accordionBody.on('hidden', function (event) {
@@ -194,7 +194,7 @@ define(
                                     var fragment = crel('div');
                                     if (customer.customer_name !== 'administrator') {
                                         fragment.appendChild(
-                                            crel('a', {name: 'toggleAcl', href: '#' + customer.customer_name, 'data-toggle': 'collapse', 'data-parent': '#accordion', class: 'accordion-toggle btn btn-link noPadding'},
+                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
                                                 crel('i', {class: 'icon-circle-arrow-down'}, ' '),
                                                 crel('span', customer.customer_name)
                                             )
@@ -223,7 +223,7 @@ define(
                     this.renderList();*/
 
                     return this;
-                },
+                }
                /* layout: function () {
                     var fragment = document.createDocumentFragment();
                     fragment.appendChild(

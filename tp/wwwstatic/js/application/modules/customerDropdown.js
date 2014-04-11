@@ -52,7 +52,6 @@ define(
                     if (app.user.apiPass) {
                         this.$el.empty();
                         this.$el.html(template(data));
-                        console.log(data);
                     }
 
                     if (this.onRender !== $.noop) { this.onRender(); }

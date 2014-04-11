@@ -56,7 +56,7 @@ define(
                         parentView: that
                     });
                     this.customerModal.setHeaderHTML(crel('h4', 'Change Customer for Agents'));
-                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer.name));
+                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer));
                 },
                 events: function () {
                     return _.extend({}, _.result(Pager.View.prototype, 'events'), {
@@ -217,9 +217,11 @@ define(
                         ),
                         crel('span', {class: 'span2'}, 'Operating System'),
                         crel('span', {class: 'span2'}, 'OS Code'),
-                        crel('span', {class: 'span1 need alignLeft'}, 'OS'),
+                        crel('span', {class: 'span1'}, 'Updates'),
+                        crel('span', {class: 'span2'}, 'Vulnerabilities')
+                        /*crel('span', {class: 'span1 need alignLeft'}, 'OS'),
                         crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
-                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')
+                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')*/
                     );
                     return this;
                 },
@@ -227,12 +229,14 @@ define(
                     if (_.has(item.attributes, 'http_status') && item.get('http_status') === 500) {
                         return crel('div',  {class: 'item linked clearfix'}, 'No Data.');
                     }
-                    var fragment    = document.createDocumentFragment(),
-                        id          = item.get('agent_id'),
-                        osIcon      = this.printOsIcon(item.get('os_string')),
-                        displayName = this.displayName(item),
-                        status      = this.getStatus(item),
-                        stats       = helpers.sortStats(item.get('basic_rv_stats'));
+                    var fragment        = document.createDocumentFragment(),
+                        id              = item.get('agent_id'),
+                        osIcon          = this.printOsIcon(item.get('os_string')),
+                        displayName     = this.displayName(item),
+                        status          = this.getStatus(item),
+                        updates         = item.get('available_updates'),
+                        vulnerabilities = item.get('available_vulnerabilities');
+//                        stats       = helpers.sortStats(item.get('basic_rv_stats'));
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
                             crel('a', {href: '#nodes/' + id},
@@ -246,9 +250,11 @@ define(
                                 ),
                                 crel('span', {class: 'span2'}, item.get('os_string')),
                                 crel('span', {class: 'span2'}, item.get('os_code')),
-                                crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
+                                crel('span', {class: 'span1'}, item.get('available_updates')),
+                                crel('span', {class: 'span2'}, item.get('available_vulnerabilities'))
+                                /*crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
                                 crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
-                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)
+                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)*/
                             )
                         )
                     );
@@ -365,7 +371,7 @@ define(
                 customerPanelLayout: function (customers, current) {
                     var select =  crel('select', {'required': 'required'});
                     _.each(customers, function (customer) {
-                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.name, current), customer.name));
+                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.customer_name, current), customer.customer_name));
                     });
                     return crel('form', {id: 'changeCustomer', class: 'form-horizontal'},
                             crel('div', {class: 'control-group noMargin'},
