@@ -3,6 +3,7 @@ class CommonKeys():
     NO = 'no'
     COUNT = 'count'
     DETAILS = 'details'
+    GROUP = 'group'
     REDUCTION = 'reduction'
     USERNAME = 'username'
     PASSWORD = 'password'
@@ -37,3 +38,14 @@ class RebootValues():
     NEEDED = 'needed' #Reboot only if the system is asking for a reboot
     FORCE = 'force'   #Force the reboot
     VALID_VALUES = (NONE, NEEDED, FORCE)
+
+
+class SortValues():
+    ASC = 'asc'
+    DESC = 'desc'
+
+
+class DefaultQueryValues():
+    COUNT = 30
+    OFFSET = 0
+    SORT = SortValues.ASC

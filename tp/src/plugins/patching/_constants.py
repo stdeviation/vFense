@@ -23,6 +23,7 @@ class CommonAppKeys():
     YES = 'yes'
     NO = 'no'
     ValidHiddenVals = (YES, NO)
+    UPDATES = 'Updates'
 
 class CommonFileKeys():
     PKG_NAME = 'file_name'

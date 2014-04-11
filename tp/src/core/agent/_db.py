@@ -2,6 +2,7 @@ import logging
 
 from vFense.db.client import db_create_close, r
 from vFense.core.agent import *
+from vFense.core.tag import *
 from vFense.plugins.patching import *
 from vFense.core.decorators import return_status_tuple, time_it
 
@@ -190,6 +191,28 @@ def fetch_agents(
                 r
                 .table(AgentsCollection)
                 .filter({filter_key: filter_val})
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .run(conn)
             )
 
@@ -199,6 +222,28 @@ def fetch_agents(
                 .table(AgentsCollection)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .run(conn)
             )
 
@@ -207,6 +252,28 @@ def fetch_agents(
                 r
                 .table(AgentsCollection)
                 .filter({filter_key: filter_val})
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -217,6 +284,28 @@ def fetch_agents(
                 .table(AgentsCollection)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -226,6 +315,28 @@ def fetch_agents(
             data = list(
                 r
                 .table(AgentsCollection)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -236,6 +347,28 @@ def fetch_agents(
                 r
                 .table(AgentsCollection)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -245,6 +378,28 @@ def fetch_agents(
             data = list(
                 r
                 .table(AgentsCollection)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .run(conn)
             )
 
@@ -254,6 +409,28 @@ def fetch_agents(
                 r
                 .table(AgentsCollection)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .run(conn)
             )
 
@@ -295,6 +472,28 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
                 r
                 .table(AgentsCollection)
                 .get(agent_id)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -304,6 +503,28 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
                 r
                 .table(AgentsCollection)
                 .get(agent_id)
+                .merge(
+                    {
+                        TagCollections.Tags: (
+                            r
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(
+                                r.row[TagsPerAgentKey.AgentId],
+                                index=TagsPerAgentIndexes.AgentId
+                            )
+                            .eq_join(
+                                TagsKey.TagId,
+                                r.table(TagCollections.Tags)
+                            )
+                            .zip()
+                            .pluck(
+                                TagsPerAgentKey.TagId,
+                                TagsPerAgentKey.TagName
+                            )
+                            .coerce_to('array')
+                        )
+                    }
+                )
                 .run(conn)
             )
 

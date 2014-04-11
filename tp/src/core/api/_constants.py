@@ -20,6 +20,15 @@ class ApiArguments():
     AGENT_QUEUE_TTL = 'agent_queue_ttl'
     DELETE_ALL_AGENTS = 'delete_all_agents'
     MOVE_AGENTS_TO_CUSTOMER = 'move_agents_to_customer'
+    COUNT = 'count'
+    OFFSET = 'offset'
+    QUERY = 'query'
+    FILTER_KEY = 'filter_key'
+    FILTER_VAL = 'filter_val'
+    IP = 'ip'
+    MAC = 'mac'
+    SORT = 'sort'
+    SORT_BY = 'sort_by'
 
 
 class ApiValues():

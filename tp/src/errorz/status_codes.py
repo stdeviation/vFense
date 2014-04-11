@@ -30,6 +30,9 @@ class GenericFailureCodes(object):
     FailedToUpdateObject = 1501
     FailedToDeleteObject = 1502
     FailedToRetrieveObject = 1503
+    DataIsEmpty = 1504
+    InvalidSortKey = 1505
+    InvalidFilterKey = 1506
 
 class GroupCodes(object):
     GroupCreated = 12000
