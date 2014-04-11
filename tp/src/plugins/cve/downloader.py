@@ -74,7 +74,12 @@ def get_msft_bulletin_url():
 
     main_url = requests.get(MICRSOFT_BULLETIN_XLS)
     if main_url.status_code == 200:
-        xls_url = re.search('http.*.xlsx', main_url.content).group()
+        xls_url = (
+            re.search(
+                '"(http://download.microsoft.com/download.*.xlsx)",',
+                main_url.content
+            ).group(1)
+        )
         if xls_url:
             xls_file_name = xls_url.split('/')[-1]
 
