@@ -63,7 +63,7 @@ def _get_result_uris_dict(agent_id):
                 base, ListenerURIs.REBOOT
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-         },
+        },
         ValidOperations.SHUTDOWN: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.SHUTDOWN
@@ -126,7 +126,7 @@ def get_agent_results_uri(agent_id, operation):
 
     Returns:
         Tuple
-        ('put', 'rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/results/reboot')
+        ('PUT', 'rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/results/reboot')
 
     """
 
@@ -138,7 +138,7 @@ def get_agent_results_uri(agent_id, operation):
             result_uri_dict[CommonKeys.REQUEST_METHOD]
         )
 
-    return ()
+    return ('', '')
 
 
 
