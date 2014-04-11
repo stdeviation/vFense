@@ -99,6 +99,12 @@ def _get_result_uris_dict(agent_id):
                 base, ListenerURIs.UNINSTALL
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.UNINSTALL_AGENT: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.UNINSTALL_AGENT
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         }
     }
 

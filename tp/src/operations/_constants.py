@@ -22,6 +22,7 @@ class ListenerURIs():
     INSTALL_SUPPORTED_APPS = 'rv/results/install/apps/supported'
     INSTALL_AGENT_APPS = 'rv/results/install/apps/agent'
     UNINSTALL = 'rv/results/uninstall'
+    UNINSTALL_AGENT = 'rv/results/uninstall'
     REBOOT = 'core/results/reboot'
     SHUTDOWN = 'core/results/shutdown'
     APPS_REFRESH = 'core/results/updatesapplications'
