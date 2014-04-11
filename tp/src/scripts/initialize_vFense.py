@@ -14,6 +14,7 @@ import nginx_config_creator as ncc
 from vFense import *
 from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass
+from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
 
@@ -94,6 +95,7 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
+generate_generic_certs()
 ncc.nginx_config_builder(
     nginx_server_name,
     args.server_cert,
