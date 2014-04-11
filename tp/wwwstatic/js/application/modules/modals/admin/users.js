@@ -235,6 +235,7 @@ define(
                         groups = this.groupCollection.toJSON()[0],
                         customers = app.user.toJSON(),
                         payload;
+                    console.log(data);
                     if (data && data.rv_status_code === 1001 && groups && groups.rv_status_code === 1001) {
                         payload = {
                             data: data.data,
@@ -250,7 +251,7 @@ define(
                                             if (_.isUndefined(option.administrator) || option.administrator) {
                                                 if(option.group_name)
                                                 {
-                                                    attributes = {value: option.group_name};
+                                                    attributes = {value: option.id};
                                                     if (selected && option.group_name === selected) {attributes.selected = selected;}
                                                     select.appendChild(crel('option', attributes, option.group_name));
                                                 }
@@ -274,7 +275,7 @@ define(
                                                 crel('i', {class: 'icon-remove', style: 'color: red'}))
                                         );
                                         return fragment.innerHTML;
-                                    }i
+                                    }
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');

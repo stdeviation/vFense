@@ -58,14 +58,20 @@ define(
                             dataType: 'json',
                             contentType: 'application/json',
                             success: function(response) {
-                                if (response.rv_status_code === 13001) {
-                                    if (reset) {
+                                if (response.rv_status_code === 13001)
+                                {
+                                    if (reset)
+                                    {
                                         app.user.fetch();
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         $alert.removeClass('alert-error alert-info').addClass('alert-success').html(response.message);
                                         $form[0].reset();
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     $alert.removeClass('alert-info alert-success').addClass('alert-error').html(response.message);
                                 }
                             }

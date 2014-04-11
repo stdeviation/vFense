@@ -1,0 +1,173 @@
+<article class="row-fluid">
+    <section class="span12 list">
+        <header class="clearfix">
+            <span class="pull-right">
+                <button class="btn btn-mini" data-id="toggleCustomer">
+                    <i class="icon-plus" style="color: green"></i>
+                    <strong>Create Customer</strong>
+                </button>
+            </span>
+        </header>
+        <div class="accordion items">
+            <form id="newCustomerDiv" class="item hide row-fluid">
+                <div class="span12">
+                    <table style="width: 100%">
+                        <tr>
+                            <td class="control-group" style="width: 50%; max-width: 50%;">
+                                <label class="control-label">Customer Name:</label>
+                                <div class="controls">
+                                    <input id="customerName" name="customerName" type="text" style="width: 100%" required />
+                                </div>
+                            </td>
+                            <td class="control-group" style="width: 50%">
+                                <label class="control-label">Download URL:</label>
+                                <div class="controls">
+                                    <input id="downloadURL" name="downloadURL" type="text" style="width: 100%" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="control-group">
+                                <label class="control-label">Net Throttle:</label>
+                                <div class="controls">
+                                    <input id="netThrottle" name="netThrottle" type="text" value="0" style="width: 100%" />
+                                </div>
+                            </td>
+                            <td class="control-group">
+                                <label class="control-label">CPU Throttle:</label>
+                                <div class="controls">
+                                    <select id="cpuThrottle" name="cpuThrottle" style="width: 100%" required>
+                                        <option value="normal">Normal</option>
+                                        <option value="idle">Idle</option>
+                                        <option value="high">High</option>
+                                        <option value="below normal">Below Normal</option>
+                                        <option value="above normal">Above Normal</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="control-group">
+                                <label class="control-label">Server Queue TTL:</label>
+                                <div class="controls">
+                                    <input id="serverQueueTTL" name="serverQueueTTL" type="text" value="10" style="width: 100%" />
+                                </div>
+                            </td>
+                            <td class="control-group">
+                                <label class="control-label">Agent Queue TTL:</label>
+                                <div class="controls">
+                                    <input id="agentQueueTTL" name="agentQueueTTL" type="text" value="10" style="width: 100%" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span class="help-online hide"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="control-group alignRight">
+                                <button id="cancelNewCustomer" class="btn btn-mini">Cancel</button>
+                                <button id="submitCustomer" class="btn btn-mini btn-primary">Confirm</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+            <% if (data.length) { %>
+            <% _.each(data, function (customer) { %>
+            <div class="accordion-group item clearfix">
+                <div class="accordion-heading row-fluid">
+                    <div class="span9">
+                        <div class="pull-left">
+                            <%= viewHelpers.renderCustomerLink(customer) %>
+                        </div>
+                    </div>
+                    <div class="span3 alignRight">
+                        <%= viewHelpers.renderDeleteButton(customer) %>
+                        <button name="deleteCustomer" class="btn btn-mini btn-danger hide" value="<%= customer.customer_name %>">Delete</button>
+                        <button name="toggleDelete" class="btn btn-mini hide">Cancel</button>
+                    </div>
+                </div>
+                <div class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <form id="editCustomerDiv" class="item row-fluid">
+                            <div class="span12">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td class="control-group" style="width: 50%; max-width: 50%;">
+                                            <label class="control-label">Customer Name:</label>
+                                            <div class="controls">
+                                                <input id="editCustomerName" name="customerName" type="text" style="width: 100%" required />
+                                            </div>
+                                        </td>
+                                        <td class="control-group" style="width: 50%">
+                                            <label class="control-label">Download URL:</label>
+                                            <div class="controls">
+                                                <input id="editDownloadURL" name="downloadURL" type="text" style="width: 100%" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="control-group">
+                                            <label class="control-label">Net Throttle:</label>
+                                            <div class="controls">
+                                                <input id="editNetThrottle" name="netThrottle" type="text" value="0" style="width: 100%" />
+                                            </div>
+                                        </td>
+                                        <td class="control-group">
+                                            <label class="control-label">CPU Throttle:</label>
+                                            <div class="controls">
+                                                <select id="editCPUThrottle" name="cpuThrottle" style="width: 100%" required>
+                                                    <option value="normal">Normal</option>
+                                                    <option value="idle">Idle</option>
+                                                    <option value="high">High</option>
+                                                    <option value="below normal">Below Normal</option>
+                                                    <option value="above normal">Above Normal</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="control-group">
+                                            <label class="control-label">Server Queue TTL:</label>
+                                            <div class="controls">
+                                                <input id="editServerQueueTTL" name="serverQueueTTL" type="text" value="10" style="width: 100%" />
+                                            </div>
+                                        </td>
+                                        <td class="control-group">
+                                            <label class="control-label">Agent Queue TTL:</label>
+                                            <div class="controls">
+                                                <input id="editAgentQueueTTL" name="agentQueueTTL" type="text" value="10" style="width: 100%" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <span class="help-online hide"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="control-group alignRight">
+                                            <button id="cancelEditCustomer" class="btn btn-mini">Cancel</button>
+                                            <button id="submitEditCustomer" class="btn btn-mini btn-primary">Confirm</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+            <% } else { %>
+            <div class="item row-fluid">
+                <div class="span9"><em>No customers available.</em></div>
+            </div>
+            <% } %>
+            <div class="alert alert-block fade in hide">
+                <span class="help-inline"></span>
+            </div>
+        </div>
+    </section>
+</article>

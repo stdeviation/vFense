@@ -14,13 +14,13 @@
                     <strong>Full Name:</strong>
                 </span>
                  <div class="span10" data-type="content">
-                    <span><%= user.full_name || 'N/A' %></span>
+                    <span><%= user.full_name%></span>
                      <button class="btn btn-link noPadding pull-right" data-id="options">
                         <i class="icon-pencil" style="color: #daa520"></i>
                     </button>
                 </div>
                 <div class="span10 hide" data-type="editor">
-                    <form  data-reset="true" data-id="name">
+                    <form data-reset="true" data-id="name">
                         <div class="control-group">
                             <div class="controls">
                                 <input type="text" name="fullname" value="<%= user.full_name %>" data-id="input"/>
