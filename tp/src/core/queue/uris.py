@@ -34,9 +34,9 @@ def _get_result_uris_dict(agent_id):
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.POST
         },
-        ValidOperations.APPS_REFRESH: {
+        ValidOperations.REFRESH_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.APPS_REFRESH
+                base, ListenerURIs.REFRESH_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
