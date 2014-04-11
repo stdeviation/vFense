@@ -109,6 +109,8 @@ def fetch_user_and_all_properties(username, conn=None):
         {
             UserKeys.DefaultCustomer: r.row[UserKeys.DefaultCustomer],
             UserKeys.CurrentCustomer: r.row[UserKeys.CurrentCustomer],
+            UserKeys.Email: r.row[UserKeys.Email],
+            UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
             UserKeys.Groups: (
                 r
