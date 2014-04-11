@@ -68,26 +68,34 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentImpact] = row[9]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentSeverity] = row[10]
-        if row[11] != '':
-            info = row[11].split(',')
-            for j in info:
-                bulletin_data = j.split('[')
-                if len(bulletin_data) > 1:
-                    bulletin_id = bulletin_data[0]
-                    bulletin_kb = re.sub('^', 'KB', bulletin_data[1][:-1])
-                else:
-                    bulletin_id = bulletin_data[0]
-                    bulletin_kb = None
+        if len(row) == 15:
+            supercedes = row[12]
+            reboot = row[13]
+            cve_ids = row[14]
+        else:
+            supercedes = row[11]
+            reboot = row[12]
+            cve_ids = row[13]
 
-                supercede_list.append(
-                    {
-                        WindowsSecurityBulletinKey.SupersedesBulletinId: bulletin_id,
-                        WindowsSecurityBulletinKey.SupersedesBulletinKb: bulletin_kb
-                    }
-                )
+        info = supercedes.split(',')
+        for j in info:
+            bulletin_data = j.split('[')
+            if len(bulletin_data) > 1:
+                bulletin_id = bulletin_data[0]
+                bulletin_kb = re.sub('^', 'KB', bulletin_data[1][:-1])
+            else:
+                bulletin_id = bulletin_data[0]
+                bulletin_kb = None
+
+            supercede_list.append(
+                {
+                    WindowsSecurityBulletinKey.SupersedesBulletinId: bulletin_id,
+                    WindowsSecurityBulletinKey.SupersedesBulletinKb: bulletin_kb
+                }
+            )
         bulletin_dict[WindowsSecurityBulletinKey.Supersedes] = supercede_list
-        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = row[12]
-        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = row[13].split(',')
+        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = reboot
+        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = cve_ids.split(',')
         bulletin_list.append(bulletin_dict)
 
     return(bulletin_list)
