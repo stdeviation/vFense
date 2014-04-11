@@ -4,7 +4,8 @@ import sys
 
 REDHAT_DISTROS = [
     'fedora', 'centos', 'centos linux',
-    'redhat', 'red hat enterprise linux server'
+    'redhat', 'red hat enterprise linux server',
+    'scientific linux'
 ]
 
 DEBIAN_DISTROS = ['debian', 'ubuntu', 'linuxmint']
