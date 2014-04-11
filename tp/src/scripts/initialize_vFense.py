@@ -14,6 +14,7 @@ import nginx_config_creator as ncc
 from vFense import *
 from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass, check_password
+from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
 
@@ -107,6 +108,7 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
+generate_generic_certs()
 ncc.nginx_config_builder(
     nginx_server_name,
     args.server_cert,
@@ -141,8 +143,6 @@ def initialize_db():
         os.mkdir('/opt/TopPatch/var/scheduler', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages'):
         os.mkdir('/opt/TopPatch/var/packages', 0755)
-    if not os.path.exists('/opt/TopPatch/logs'):
-        os.mkdir('/opt/TopPatch/logs', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages/tmp'):
         os.mkdir('/opt/TopPatch/var/packages/tmp', 0775)
     if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls'):
