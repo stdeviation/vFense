@@ -262,6 +262,11 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
         generic_status_code = GenericFailureCodes.FailedToUpdateObject
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
+
     elif status_code == DbCodes.Errors:
         msg = 'agent_id %s could not be updated'
         generic_status_code = GenericFailureCodes.FailedToUpdateObject
@@ -317,6 +322,11 @@ def update_agent_fields(agent_id, agent_data, username=None,
         msg = 'agent_id %s does not exist'
         generic_status_code = GenericFailureCodes.FailedToUpdateObject
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
 
     elif status_code == DbCodes.Errors:
         msg = 'agent_id %s could not be updated'
