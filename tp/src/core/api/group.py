@@ -179,7 +179,7 @@ class GroupsHandler(BaseHandler):
                 group_data = get_properties_for_all_groups(active_customer)
 
             elif granted and customer_context and not all_customers and not group_id:
-                group_data = get_properties_for_all_groups(customer_name)
+                group_data = get_properties_for_all_groups(customer_context)
 
             elif granted and all_customers and not customer_context and not group_id:
                 group_data = get_properties_for_all_groups()
