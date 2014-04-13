@@ -175,6 +175,7 @@ class GroupsHandler(BaseHandler):
                     active_user, Permissions.ADMINISTRATOR, customer_context
                 )
             )
+            print granted, status_code
             if granted and not customer_context and not all_customers and not group_id:
                 group_data = get_properties_for_all_groups(active_customer)
 
@@ -199,13 +200,12 @@ class GroupsHandler(BaseHandler):
                     )
                 )
 
-            if group_data:
-                count = len(group_data)
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).information_retrieved(group_data, count)
-                ) 
+            count = len(group_data)
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).information_retrieved(group_data, count)
+            ) 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -239,7 +239,7 @@ class GroupsHandler(BaseHandler):
             group_name = self.arguments.get(ApiArguments.GROUP_NAME)
             permissions = self.arguments.get(ApiArguments.PERMISSIONS)
             customer_context = (
-                    self.get_argument(
+                    self.arguments.get(
                         ApiArguments.CUSTOMER_CONTEXT,
                         active_customer
                     )
