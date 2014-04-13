@@ -6,7 +6,7 @@ from datetime import datetime
 
 from vFense.plugins.patching import *
 from vFense.operations import *
-from vFense.operations.operation_manager import Operation
+from vFense.operations.agent_operations import AgentOperation
 from vFense.plugins.patching.rv_db_calls import update_app_status
 from vFense.core.queue._db import get_all_expired_jobs, delete_all_expired_jobs
 
@@ -24,7 +24,7 @@ def remove_expired_jobs_and_update_operations():
     logger.info(msg)
     for job in expired_jobs:
         operation = (
-            Operation('admin', job[OperationKey.CustomerName], None, None)
+            AgentOperation('admin', job[OperationKey.CustomerName], None, None)
         )
 
         operation.update_operation_expire_time(

@@ -1,4 +1,4 @@
-#!/usr/bin/env pyt)
+#!/usr/bin/env python
 
 import logging
 import logging.config
@@ -6,8 +6,15 @@ from datetime import datetime
 from time import mktime
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.operations import *
+from vFense.operations._constants import vFenseObjects
+from vFense.operations._db import fetch_agent_operation, \
+    operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
+    insert_into_agent_operations
+
 from vFense.errorz.error_messages import GenericResults, OperationResults
-from vFense.errorz.status_codes import OperationCodes
+
+from vFense.errorz.status_codes import DbCodes, GenericCodes,\
+    AgentCodes, AgentFailureCodes, GenericFailureCodes, OperationCodes
 
 from vFense.plugins import ra
 
@@ -15,61 +22,88 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-@db_create_close
-def get_oper_info(operid, conn=None):
-    oper_info = (
-        r
-        .table(OperationsCollection)
-        .get(operid)
-        .run(conn)
+def get_agent_operation(operation_id):
+    """Get an operation by id and all of it's information
+    Args:
+        operation_id (str): 36 character UUID
+
+    Basic Usage:
+        >>> from vFense.operations.agent_operations import get_agent_operation
+        >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+        >>> get_agent_operation(operation_id)
+
+    Results:
+        Dictionary
+        {
+            "agents_expired_count": 0, 
+            "cpu_throttle": "normal", 
+            "agents_total_count": 1, 
+            "plugin": "rv", 
+            "tag_id": null, 
+            "agents_completed_with_errors_count": 0, 
+            "created_by": "admin", 
+            "agents_pending_pickup_count": 0, 
+            "completed_time": 1397246851, 
+            "operation_status": 6006, 
+            "agents_completed_count": 1, 
+            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22", 
+            "created_time": 1397246674, 
+            "agents_pending_results_count": 0, 
+            "operation": "install_os_apps", 
+            "updated_time": 1397246851, 
+            "net_throttle": 0,
+            "agents_failed_count": 0, 
+            "restart": "none", 
+            "customer_name": "default"
+        }
+    """
+    return(fetch_agent_operation(operation_id))
+
+
+def operation_for_agent_exist(operation_id, agent_id):
+    """Verify if the operation exists by operation id and agent id.
+    Args:
+        operation_id (str): 36 character UUID
+        agent_id (str): 36 character UUID
+
+    Basic Usage:
+        >>> from vFense.operations.agent_operations import operation_for_agent_exist
+        >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+        >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
+        >>> operation_with_agentid_exists(operation_id, agent_id)
+
+    Results:
+        Boolean True or False
+    """
+
+    return(operation_with_agentid_exists(operation_id, agent_id))
+
+
+def operation_for_agent_and_app_exist(oper_id, agent_id, app_id):
+    """Verify if the operation exists by operation id, agent id and app id.
+    Args:
+        operation_id (str): 36 character UUID
+        agent_id (str): 36 character UUID
+        app_id (str): 36 character UUID
+
+    Basic Usage:
+        >>> from vFense.operations._db import operation_for_agent_and_app_exist
+        >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+        >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
+        >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
+        >>> operation_for_agent_and_app_exist(operation_id, agent_id, app_id)
+
+    Results:
+        Boolean True or False
+    """
+    return(
+        operation_with_agentid_and_appid_exists(
+            operation_id, agent_id, app_id
+        )
     )
 
-    return(oper_info)
 
-
-def oper_with_agentid_exists(oper_id, agent_id):
-    conn = db_connect()
-    exists = None
-    try:
-        exists = (
-            r
-            .table(OperationsPerAgentCollection)
-            .get_all(
-                [oper_id, agent_id],
-                index=OperationPerAgentIndexes.OperationIdAndAgentId
-            )
-            .pluck(OperationPerAppKey.AgentId)
-            .run(conn)
-        )
-        conn.close()
-    except Exception as e:
-        logger.exception(e)
-
-    return(exists)
-
-
-def oper_with_appid_exists(oper_id, agent_id, app_id):
-    conn = db_connect()
-    exists = None
-    try:
-        exists = (
-            r
-            .table(OperationsPerAppCollection)
-            .get_all(
-                [oper_id, agent_id, app_id],
-                index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
-            )
-            .pluck(OperationPerAppKey.AppId)
-            .run(conn)
-        )
-        conn.close()
-    except Exception as e:
-        logger.exception(e)
-
-    return(exists)
-
-
-class Operation(object):
+class AgentOperation(object):
     def __init__(self, username, customer_name, uri, method):
         self.username = username
         self.customer_name = customer_name
@@ -79,10 +113,10 @@ class Operation(object):
         self.db_time = r.epoch_time(self.now)
         self.INIT_COUNT = 0
 
-    @db_create_close
     def create_operation(self, operation, plugin, agent_ids,
                          tag_id, cpu_throttle=None, net_throttle=None,
-                         restart=None, conn=None):
+                         restart=None, performed_on=vFenseObjects.AGENT,
+                         conn=None):
 
         number_of_agents = len(agent_ids)
         keys_to_insert = (
@@ -92,6 +126,7 @@ class Operation(object):
                 OperationKey.OperationStatus: OperationCodes.ResultsIncomplete,
                 OperationKey.CustomerName: self.customer_name,
                 OperationKey.CreatedBy: self.username,
+                OperationKey.ActionPerformedOn: performed_on,
                 OperationKey.TagId: tag_id,
                 OperationKey.AgentsTotalCount: number_of_agents,
                 OperationKey.AgentsExpiredCount: self.INIT_COUNT,
@@ -108,35 +143,16 @@ class Operation(object):
                 OperationKey.NetThrottle: net_throttle,
             }
         )
-        try:
-            added = (
-                r
-                .table(OperationsCollection)
-                .insert(keys_to_insert)
-                .run(conn)
-            )
-            if 'inserted' in added:
-                operation_id = added.get('generated_keys')[0]
-                keys_to_insert[OperationKey.CreatedTime] = self.now
-                keys_to_insert[OperationKey.UpdatedTime] = self.now
-                keys_to_insert[OperationKey.CompletedTime] = self.now
-                keys_to_insert[OperationKey.OperationId] = operation_id
-                results = (
-                    OperationResults(
-                        self.username, self.uri, self.method
-                    ).operation_created(operation_id, operation, keys_to_insert)
-                )
-                logger.info(results)
+        status_code, count, errors, generated_ids = (
+            insert_into_agent_operations(keys_to_insert)
+        )
+        if status_code == DbCodes.Inserted:
+            operation_id = generated_ids[0]
 
-        except Exception as e:
-            results = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(operation_id, operation, e)
-            )
-            logger.exception(results)
+        else:
+            operation_id = None
 
-        return(results)
+        return(operation_id)
 
     @db_create_close
     def add_agent_to_operation(self, agent_id, operation_id, conn=None):

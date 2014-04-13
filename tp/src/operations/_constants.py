@@ -1,3 +1,23 @@
+class AdminActions():
+    CREATE = 'create'
+    UPDATE = 'update'
+    REMOVE = 'remove'
+    VALID_ACTIONS = (CREATE, UPDATE, REMOVE)
+
+
+class vFenseObjects():
+    AGENT = 'agent'
+    TAG = 'tag'
+    SCHEDULE = 'schedule'
+    USER = 'user'
+    GROUP = 'group'
+    CUSTOMER = 'customer'
+    VALID_OBJECTS = (
+        AGENT, TAG, SCHEDULE,
+        USER, GROUP, CUSTOMER
+    )
+
+
 class BaseURIs():
     LISTENER = 'rvl/v1'
     API = 'api/v1'
@@ -32,7 +52,7 @@ class ListenerURIs():
     REFRESH_RESPONSE_URIS = 'core/uris/response'
 
 
-class ValidOperations():
+class AgentOperations():
     NEWAGENT = 'new_agent'
     REFRESH_APPS = 'updatesapplications'
     CHECK_IN = 'check_in'

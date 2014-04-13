@@ -2,12 +2,15 @@ import logging
 
 from vFense.db.client import db_create_close, r
 from vFense.core.agent import *
+from vFense.core.agent._db_sub_queries import Merge
 from vFense.core.tag import *
 from vFense.plugins.patching import *
 from vFense.core.decorators import return_status_tuple, time_it
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
+
+
 
 @time_it
 @db_create_close
@@ -32,7 +35,7 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollections.Agent)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .pluck(AgentKey.ProductionLevel)
             .distinct()
@@ -71,7 +74,7 @@ def fetch_supported_os_strings(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollections.Agent)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .pluck(AgentKey.OsString)
             .distinct()
@@ -112,7 +115,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         if customer_name and agent_os:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollections.Agent)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({AgentKey.OsCode: agent_os})
                 .map(lambda x: x[AgentKey.AgentId])
@@ -122,7 +125,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif customer_name and not agent_os:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
@@ -131,7 +134,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif agent_os and not customer_name:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .filter({AgentKey.OsCode: agent_os})
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
@@ -140,7 +143,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif not agent_os and not customer_name:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
             )
@@ -189,91 +192,28 @@ def fetch_agents(
         if filter_key and filter_val and not customer_name and not keys_to_pluck:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .filter({filter_key: filter_val})
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .run(conn)
             )
 
         elif filter_key and filter_val and customer_name and not keys_to_pluck:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .run(conn)
             )
 
         elif filter_key and filter_val and keys_to_pluck and not customer_name:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .filter({filter_key: filter_val})
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -281,31 +221,10 @@ def fetch_agents(
         elif filter_key and filter_val and keys_to_pluck and customer_name:
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -314,29 +233,8 @@ def fetch_agents(
                 and not customer_name and keys_to_pluck):
             data = list(
                 r
-                .table(AgentsCollection)
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .table(AgentCollection.Agents)
+                .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -345,30 +243,9 @@ def fetch_agents(
                 and customer_name and keys_to_pluck):
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -377,29 +254,8 @@ def fetch_agents(
                 and not customer_name and not keys_to_pluck):
             data = list(
                 r
-                .table(AgentsCollection)
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .table(AgentCollection.Agents)
+                .merge(Merge.TAGS)
                 .run(conn)
             )
 
@@ -407,30 +263,9 @@ def fetch_agents(
                 and customer_name and not keys_to_pluck):
             data = list(
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .run(conn)
             )
 
@@ -470,31 +305,9 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
         if agent_id and keys_to_pluck:
             data = (
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get(agent_id)
-                .merge(
-                    lambda x:
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                x[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -502,30 +315,9 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
         elif agent_id and not keys_to_pluck:
             data = (
                 r
-                .table(AgentsCollection)
+                .table(AgentCollection.Agents)
                 .get(agent_id)
-                .merge(
-                    {
-                        TagCollections.Tags: (
-                            r
-                            .table(TagCollections.TagsPerAgent)
-                            .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
-                                index=TagsPerAgentIndexes.AgentId
-                            )
-                            .eq_join(
-                                TagsKey.TagId,
-                                r.table(TagCollections.Tags)
-                            )
-                            .zip()
-                            .pluck(
-                                TagsPerAgentKey.TagId,
-                                TagsPerAgentKey.TagName
-                            )
-                            .coerce_to('array')
-                        )
-                    }
-                )
+                .merge(Merge.TAGS)
                 .run(conn)
             )
 
@@ -558,7 +350,7 @@ def update_agent_data(agent_id, agent_data, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollection.Agents)
             .get(agent_id)
             .update(agent_data)
             .run(conn)
@@ -593,7 +385,7 @@ def insert_agent_data(agent_data, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollection.Agents)
             .insert(agent_data)
             .run(conn)
         )
@@ -624,7 +416,7 @@ def delete_all_agents_for_customer(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollection.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .delete()
             .run(conn)
@@ -657,7 +449,7 @@ def move_all_agents_to_customer(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentsCollection)
+            .table(AgentCollection.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .update(
                 {

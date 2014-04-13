@@ -1,6 +1,6 @@
 import os
 from vFense.core._constants import HTTPMethods, CommonKeys
-from vFense.operations._constants import ValidOperations, ListenerURIs, \
+from vFense.operations._constants import AgentOperations, ListenerURIs, \
     AuthenticationOperations, AuthenticationURIs, BaseURIs
 
 from vFense.core.agent import AgentKey
@@ -22,85 +22,85 @@ def _get_result_uris_dict(agent_id):
             CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT,
             CommonKeys.REQUEST_METHOD: HTTPMethods.GET
         },
-        ValidOperations.NEWAGENT: {
+        AgentOperations.NEWAGENT: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 BaseURIs.LISTENER, ListenerURIs.NEWAGENT
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.POST
         },
-        ValidOperations.RA: {
+        AgentOperations.RA: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 BaseURIs.LISTENER, ListenerURIs.RA
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.POST
         },
-        ValidOperations.REFRESH_APPS: {
+        AgentOperations.REFRESH_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.REFRESH_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.CHECK_IN: {
+        AgentOperations.CHECK_IN: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.CHECK_IN
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.GET
         },
-        ValidOperations.MONITOR_DATA: {
+        AgentOperations.MONITOR_DATA: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.MONITOR_DATA
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.POST
         },
-        ValidOperations.START_UP: {
+        AgentOperations.START_UP: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.START_UP
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.REBOOT: {
+        AgentOperations.REBOOT: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.REBOOT
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.SHUTDOWN: {
+        AgentOperations.SHUTDOWN: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.SHUTDOWN
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.INSTALL_OS_APPS: {
+        AgentOperations.INSTALL_OS_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.INSTALL_OS_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.INSTALL_CUSTOM_APPS: {
+        AgentOperations.INSTALL_CUSTOM_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.INSTALL_CUSTOM_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.INSTALL_SUPPORTED_APPS: {
+        AgentOperations.INSTALL_SUPPORTED_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.INSTALL_SUPPORTED_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.INSTALL_AGENT_APPS: {
+        AgentOperations.INSTALL_AGENT_APPS: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.INSTALL_AGENT_APPS
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.UNINSTALL: {
+        AgentOperations.UNINSTALL: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.UNINSTALL
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        ValidOperations.UNINSTALL_AGENT: {
+        AgentOperations.UNINSTALL_AGENT: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.UNINSTALL_AGENT
             ),

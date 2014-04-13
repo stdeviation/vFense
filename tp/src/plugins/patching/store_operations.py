@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense.utils.common import *
-from vFense.operations.operation_manager import Operation
+from vFense.operations.agent_operations import AgentOperation
 from vFense.operations import *
 from vFense.core.agent import *
 from vFense.core.queue.queue import AgentQueue
@@ -37,7 +37,7 @@ class StoreOperation(object):
                           agentids=None, tag_id=None):
 
         operation = (
-            Operation(
+            AgentOperation(
                 self.username, self.customer_name,
                 self.uri, self.method
             )
@@ -224,7 +224,7 @@ class StoreOperation(object):
                 agentids += get_agent_ids_from_tag(tag_id)
 
         operation = (
-            Operation(
+            AgentOperation(
                 self.username, self.customer_name,
                 self.uri, self.method
             )
