@@ -9,8 +9,7 @@ from vFense.operations import OperationCollections, \
     OperationPerAgentIndexes, OperationPerAppIndexes, \
     AgentOperationKey, OperationPerAppKey
 
-from vFense.operations._db_sub_queries import OperationMerge, \
-    OperationPerAgentMerge
+from vFense.operations._db_sub_queries import OperationPerAgentMerge
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.errorz.status_codes import AgentOperationCodes

@@ -1,29 +1,27 @@
 #!/usr/bin/env python
-from json import loads
 import logging
 import logging.config
 from time import time
 
 from vFense.core._constants import CommonKeys
+from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
-from vFense.core.errorz._constants import ApiResultKeys
-from vFense.core.agent.agents import get_agent_info, update_agent_field
-from vFense.operations._constants import AgentOperations
+from vFense.errorz._constants import ApiResultKeys
+from vFense.core.agent.agents import get_agent_info
+from vFense.operations._db_constants import DbTime
 from vFense.operations.agent_operations import AgentOperation, \
-    operation_for_agent_and_app_exist, operation_for_agent_exist, \
-    get_agent_operation
+    operation_for_agent_exist, get_agent_operation
 
 from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
-
-from vFense.errorz.results import Results
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
-class AgentOperationResults(object):
-    """Update an operation for an agent, based on the results received."""
+class OperationResults(object):
+    """Update an operation for an agent, based on the results received.
+        This is the base class for adding results to an aegnt operation"""
     def __init__(
         self, username, agent_id, operation_id,
         success, error=None, status_code=None,
@@ -49,8 +47,10 @@ class AgentOperationResults(object):
         self.uri = uri
         self.method = method
         self.agent_data = get_agent_info(self.agent_id)
+        self.operation_data = get_agent_operation(self.operation_id)
         self.customer_name = self.agent_data[AgentKey.CustomerName]
-        self.date_now = int(time())
+        self.date_now = DbTime.time_now
+        self.begining_of_time = DbTime.begining_of_time
         self.error = error
         self.success = success
         self.status_code = status_code
@@ -61,27 +61,27 @@ class AgentOperationResults(object):
             )
         )
 
-    def reboot(self):
-        oper_type = AgentOperations.REBOOT
-        results = self._update_operation(oper_type)
 
-        if self.success == CommonKeys.TRUE:
-            update_agent_field(
-                self.agent_id,
-                AgentKey.NeedsReboot,
-                CommonKeys.NO, self.username,
-                self.uri, self.method
-            )
+    @results_message 
+    def update_operation(self, oper_type):
+        """Update an agent operation
+        Args:
+            oper_type (str): This is the operation type, such as
+                reboot, shutdown, install_os_apps, etc...
 
-        return(results)
+        Basic Usage:
+            >>> from vFense.operations.results import OperationResults
+            >>> username = 'admin'
+            >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+            >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
+            >>> success = 'true'
+            >>> results = OperationResults(
+                    username, agent_id, operation_id, success
+                )
+            >>> results.update_operation('reboot')
 
-    def shutdown(self):
-        oper_type = AgentOperations.SHUTDOWN
-        results = self._update_operation(oper_type)
-        return(results)
-
-
-    def _update_operation(self, oper_type):
+        Returns:
+        """
 
         results = {
             ApiResultKeys.DATA: [],
@@ -160,6 +160,5 @@ class AgentOperationResults(object):
             )
 
             results[ApiResultKeys.MESSAGE] = msg
-
 
         return(results)

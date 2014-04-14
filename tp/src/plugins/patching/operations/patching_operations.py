@@ -11,6 +11,14 @@ from vFense.errorz.status_codes import DbCodes,AgentOperationCodes
 
 class PatchingOperation(AgentOperation):
     """Creates the operations for the patching plugin."""
+    def __init__(self):
+        super(PatchingOperation, self).__init__()
+        self.patching_operation = (
+            PatchingOperation(
+                self.username, self.customer_name,
+                self.uri, self.method
+            )
+        )
 
     def add_agent_to_install_operation(
         self, agent_id, operation_id, applications

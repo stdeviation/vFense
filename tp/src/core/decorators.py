@@ -127,7 +127,10 @@ def results_message(fn):
             )
 
 
-        elif generic_status_code == GenericCodes.InvalidId:
+        elif (
+                generic_status_code == GenericCodes.InvalidId or
+                generic_status_code == GenericFailureCodes.InvalidId):
+
             status = (
                 Results(
                     username, uri, method
