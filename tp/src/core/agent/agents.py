@@ -245,20 +245,43 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
             'data': {'needs_reboot': 'no'}
         }
     """
-    try:
-        data = {field: value}
-        update_status = update_agent_data(agent_id, data)
-        results = (
-            update_status[0], agent_id, 'agent', data, update_status[2],
-            username, uri, method
+    agent_data = {field: value}
+    status = update_agent_field.func_name + ' - '
+    status_code, count, errors, generated_ids = (
+        update_agent_data(
+            agent_id, agent_data
         )
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'agent_id %s updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
 
-    except Exception as e:
-        results = (
-            update_status[0], agent_id, 'agent', data, update_status[e],
-            username, uri, method
-        )
-        logger.exception(results)
+    elif status_code == DbCodes.Skipped:
+        msg = 'agent_id %s does not exist'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
+
+    elif status_code == DbCodes.Errors:
+        msg = 'agent_id %s could not be updated'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [agent_data],
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 
@@ -284,19 +307,42 @@ def update_agent_fields(agent_id, agent_data, username=None,
             'data': {'needs_reboot': 'no'}
         }
     """
-    try:
-        update_status = update_agent_data(agent_id, agent_data)
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[2],
-            username, uri, method
+    status = update_agent_fields.func_name + ' - '
+    status_code, count, errors, generated_ids = (
+        update_agent_data(
+            agent_id, agent_data
         )
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'agent_id %s updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
 
-    except Exception as e:
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[e],
-            username, uri, method
-        )
-        logger.exception(e)
+    elif status_code == DbCodes.Skipped:
+        msg = 'agent_id %s does not exist'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
+
+    elif status_code == DbCodes.Errors:
+        msg = 'agent_id %s could not be updated'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [agent_data],
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 

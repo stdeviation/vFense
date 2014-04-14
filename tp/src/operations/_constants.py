@@ -22,9 +22,10 @@ class ListenerURIs():
     INSTALL_SUPPORTED_APPS = 'rv/results/install/apps/supported'
     INSTALL_AGENT_APPS = 'rv/results/install/apps/agent'
     UNINSTALL = 'rv/results/uninstall'
+    UNINSTALL_AGENT = 'rv/results/uninstall'
     REBOOT = 'core/results/reboot'
     SHUTDOWN = 'core/results/shutdown'
-    APPS_REFRESH = 'core/results/updatesapplications'
+    REFRESH_APPS = 'rv/updatesapplications'
     START_UP = 'core/results/startup'
     CHECK_IN = 'core/checkin'
     MONITOR_DATA = 'monitoring/monitordata'
@@ -33,7 +34,7 @@ class ListenerURIs():
 
 class ValidOperations():
     NEWAGENT = 'new_agent'
-    APPS_REFRESH = 'updatesapplications'
+    REFRESH_APPS = 'updatesapplications'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
     START_UP = 'startup'
@@ -49,7 +50,7 @@ class ValidOperations():
     REFRESH_RESPONSE_URIS = 'refresh_response_uris'
 
     OPERATIONS = (
-        NEWAGENT, APPS_REFRESH, CHECK_IN, MONITOR_DATA,
+        NEWAGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
         START_UP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
         INSTALL_SUPPORTED_APPS, INSTALL_AGENT_APPS,
         UNINSTALL, UNINSTALL_AGENT,

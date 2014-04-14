@@ -9,6 +9,108 @@ from vFense.core.decorators import results_message, time_it
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import *
 
+
+def _get_result_uris_dict(agent_id):
+    base = os.path.join(BaseURIs.LISTENER, agent_id)
+
+    result_uris = {
+        AuthenticationOperations.LOGIN: {
+            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGIN,
+            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
+        },
+        AuthenticationOperations.LOGOUT: {
+            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT,
+            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
+        },
+        ValidOperations.NEWAGENT: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                BaseURIs.LISTENER, ListenerURIs.NEWAGENT
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
+        },
+        ValidOperations.RA: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                BaseURIs.LISTENER, ListenerURIs.RA
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
+        },
+        ValidOperations.REFRESH_APPS: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.REFRESH_APPS
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.CHECK_IN: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.CHECK_IN
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
+        },
+        ValidOperations.MONITOR_DATA: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.MONITOR_DATA
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
+        },
+        ValidOperations.START_UP: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.START_UP
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.REBOOT: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.REBOOT
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.SHUTDOWN: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.SHUTDOWN
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.INSTALL_OS_APPS: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.INSTALL_OS_APPS
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.INSTALL_CUSTOM_APPS: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.INSTALL_CUSTOM_APPS
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.INSTALL_SUPPORTED_APPS: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.INSTALL_SUPPORTED_APPS
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.INSTALL_AGENT_APPS: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.INSTALL_AGENT_APPS
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.UNINSTALL: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.UNINSTALL
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
+        ValidOperations.UNINSTALL_AGENT: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.UNINSTALL_AGENT
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        }
+    }
+
+    return result_uris
+
+
 @time_it
 def get_agent_results_uri(agent_id, operation):
     """Return back the http method and response uri for an operation.
@@ -24,110 +126,20 @@ def get_agent_results_uri(agent_id, operation):
 
     Returns:
         Tuple
-        ('put', 'rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/results/reboot')
+        ('PUT', 'rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/results/reboot')
 
     """
 
-    result_uris = {
+    result_uri_dict = _get_result_uris_dict(agent_id).get(operation, {})
 
-        ValidOperations.INSTALL_OS_APPS: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.INSTALL_OS_APPS
-            )
-        ),
-
-        ValidOperations.INSTALL_CUSTOM_APPS: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.INSTALL_CUSTOM_APPS
-            )
-        ),
-
-        ValidOperations.INSTALL_SUPPORTED_APPS: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.INSTALL_SUPPORTED_APPS
-            )
-        ),
-
-        ValidOperations.INSTALL_AGENT_APPS: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.INSTALL_AGENT_APPS
-            )
-        ),
-
-        ValidOperations.UNINSTALL: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.UNINSTALL
-            )
-        ),
-
-        ValidOperations.UNINSTALL_AGENT: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.UNINSTALL
-            )
-        ),
-
-        ValidOperations.REBOOT: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.REBOOT
-            )
-        ),
-
-        ValidOperations.SHUTDOWN: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.SHUTDOWN
-            )
-        ),
-
-        ValidOperations.CHECK_IN: (
-            HTTPMethods.GET,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.CHECK_IN
-            )
-        ),
-
-        ValidOperations.MONITOR_DATA: (
-            HTTPMethods.GET,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.MONITOR_DATA
-            )
-        ),
-
-        ValidOperations.START_UP: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.START_UP
-            )
-        ),
-
-        ValidOperations.APPS_REFRESH: (
-            HTTPMethods.PUT,
-            os.path.join(
-                BaseURIs.LISTENER, agent_id, ListenerURIs.APPS_REFRESH
-            )
-        ),
-
-        ValidOperations.NEWAGENT: (
-            HTTPMethods.POST,
-            os.path.join(
-                BaseURIs.LISTENER, ListenerURIs.NEWAGENT
-            )
-        ),
-
-        ValidOperations.RA: (
-            HTTPMethods.POST,
-            os.path.join(BaseURIs.LISTENER, ListenerURIs.RA)
+    if result_uri_dict:
+        return (
+            result_uri_dict[CommonKeys.RESPONSE_URI],
+            result_uri_dict[CommonKeys.REQUEST_METHOD]
         )
-    }
 
-    return result_uris.get(operation, ())
+    return ('', '')
+
 
 
 @time_it
@@ -172,91 +184,9 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
             }
         }
     """
-    base = os.path.join(BaseURIs.LISTENER, agent_id)
     status_code = 0
     status = get_result_uris.func_name + ' - '
-    result_uris = {
-        AuthenticationOperations.LOGIN: {
-            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGIN,
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        AuthenticationOperations.LOGOUT: {
-            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT,
-            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
-        },
-        ValidOperations.NEWAGENT: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                BaseURIs.LISTENER, ListenerURIs.NEWAGENT
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        ValidOperations.RA: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                BaseURIs.LISTENER, ListenerURIs.RA
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        ValidOperations.APPS_REFRESH: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.APPS_REFRESH
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.CHECK_IN: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.CHECK_IN
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
-        },
-        ValidOperations.START_UP: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.START_UP
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.REBOOT: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.REBOOT
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-         },
-        ValidOperations.SHUTDOWN: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.SHUTDOWN
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.INSTALL_OS_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_OS_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.INSTALL_CUSTOM_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_CUSTOM_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.INSTALL_SUPPORTED_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_SUPPORTED_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.INSTALL_AGENT_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_AGENT_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        ValidOperations.UNINSTALL: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.UNINSTALL
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        }
-    }
+    result_uris = _get_result_uris_dict(agent_id)
 
     agent_exist = get_agent_info(agent_id, AgentKey.AgentId)
     if agent_exist:
@@ -266,7 +196,7 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
               (agent_id)
         count = 1
 
-    elif agent_exist:
+    else:
         generic_status_code = GenericCodes.InvalidId
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
         result_uris = {}

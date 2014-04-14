@@ -1,9 +1,6 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
 
@@ -14,8 +11,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user
 from vFense.core.permissions.decorators import check_permissions
 
 from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_custom_app, \
@@ -80,6 +76,7 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
 
 class ThirdPartyUploadHandler(BaseHandler):
     @authenticated_request
+    @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         username = self.get_current_user()

@@ -473,12 +473,13 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
                 .table(AgentsCollection)
                 .get(agent_id)
                 .merge(
+                    lambda x:
                     {
                         TagCollections.Tags: (
                             r
                             .table(TagCollections.TagsPerAgent)
                             .get_all(
-                                r.row[TagsPerAgentKey.AgentId],
+                                x[TagsPerAgentKey.AgentId],
                                 index=TagsPerAgentIndexes.AgentId
                             )
                             .eq_join(
