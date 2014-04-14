@@ -53,7 +53,7 @@ class NewAgentV1(BaseHandler):
                 json_msg = {
                     AgentOperationKey.Operation: "new_agent_id",
                     AgentOperationKey.OperationId: "",
-                    AgentOperationPerAgentKey.AgentId: agent_id
+                    OperationPerAgentKey.AgentId: agent_id
                 }
                 new_agent['data'] = [json_msg, uris]
                 self.set_header('Content-Type', 'application/json')
