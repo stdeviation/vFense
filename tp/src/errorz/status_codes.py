@@ -192,7 +192,7 @@ class PackageCodes(object):
     PackagesDeletionFailed = 518
 
 
-class OperationCodes(object):
+class AgentOperationCodes(object):
     Created = 6000
     Updated = 6001
     #Apps Results Codes For Operations

@@ -5,7 +5,7 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.operations import *
 from vFense.core.agent import *
-from vFense.errorz.error_messages import GenericResults, OperationResults, OperationCodes
+from vFense.errorz.error_messages import GenericResults, OperationResults, AgentOperationCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.utils.common import *
@@ -594,7 +594,7 @@ class OperationRetriever(object):
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
                                 )
-                                .filter(lambda y: y[OperationPerAppKey.Results] == OperationCodes.ResultsReceivedWithErrors)
+                                .filter(lambda y: y[OperationPerAppKey.Results] == AgentOperationCodes.ResultsReceivedWithErrors)
                                 .coerce_to('array')
                                 .map(lambda y:
                                     {
@@ -614,7 +614,7 @@ class OperationRetriever(object):
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
                                 )
-                                .filter(lambda y: y[OperationPerAppKey.Results] == OperationCodes.ResultsReceived)
+                                .filter(lambda y: y[OperationPerAppKey.Results] == AgentOperationCodes.ResultsReceived)
                                 .coerce_to('array')
                                 .map(lambda y:
                                     {

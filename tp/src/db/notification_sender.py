@@ -7,7 +7,6 @@ from vFense.operations import *
 from vFense.operations.agent_operations import get_agent_operation
 from vFense.operations.retriever import OperationRetriever
 from vFense.notifications import *
-from vFense.errorz.error_messages import OperationCodes, GenericResults
 from emailer.mailer import MailClient
 
 from tornado.template import Loader

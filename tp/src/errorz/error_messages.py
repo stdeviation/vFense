@@ -700,7 +700,7 @@ class OperationResults(object):
         return(
             {
                 status: 200,
-                code: OperationCodes.Created,
+                code: AgentOperationCodes.Created,
                 uri: self.uri,
                 method: self.method,
                 message: (
@@ -715,7 +715,7 @@ class OperationResults(object):
         return(
             {
                 status: 200,
-                code: OperationCodes.Updated,
+                code: AgentOperationCodes.Updated,
                 uri: self.uri,
                 method: self.method,
                 message: (
@@ -730,7 +730,7 @@ class OperationResults(object):
         return(
             {
                 status: 404,
-                code: OperationCodes.InvalidOperationType,
+                code: AgentOperationCodes.InvalidOperationType,
                 uri: self.uri,
                 method: self.method,
                 message: (
