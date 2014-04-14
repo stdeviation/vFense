@@ -175,7 +175,6 @@ class GroupsHandler(BaseHandler):
                     active_user, Permissions.ADMINISTRATOR, customer_context
                 )
             )
-            print granted, status_code
             if granted and not customer_context and not all_customers and not group_id:
                 group_data = get_properties_for_all_groups(active_customer)
 

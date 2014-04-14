@@ -286,7 +286,7 @@ class UsersHandler(BaseHandler):
         all_customers = self.get_argument('all_customers', None)
         user_name = self.get_argument('user_name', None)
         count = 0
-        user_data = {}
+        user_data = []
         try:
             granted, status_code = (
                 verify_permission_for_user(
@@ -317,13 +317,12 @@ class UsersHandler(BaseHandler):
                     )
                 )
 
-            if user_data:
-                count = len(user_data)
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).information_retrieved(user_data, count)
-                ) 
+            count = len(user_data)
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).information_retrieved(user_data, count)
+            ) 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
