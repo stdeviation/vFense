@@ -60,7 +60,7 @@ class AdminOperationKey():
     IdsRemoved = 'ids_removed'
 
 
-class OperationKey():
+class AgentOperationKey():
     OperationId = 'operation_id'
     Operation = 'operation'
     OperationStatus = 'operation_status'
@@ -86,7 +86,7 @@ class OperationKey():
     NetThrottle = 'net_throttle'
 
 
-class OperationIndexes():
+class AgentOperationIndexes():
     TagId = 'tag_id'
     CustomerName = 'customer_name'
     Operation = 'operation'

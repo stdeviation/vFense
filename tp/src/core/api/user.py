@@ -404,9 +404,16 @@ class UsersHandler(BaseHandler):
             if not isinstance(usernames, list):
                 usernames = usernames.split()
 
-            results = remove_users(
-                usernames, active_user, uri, method
-            )
+            if not active_user in usernames:
+                results = remove_users(
+                    usernames, active_user, uri, method
+                )
+            else:
+                results = (
+                    GenericResults(
+                        active_user, uri, method
+                    ).something_broke(active_user, 'User', 'can not delete yourself')
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

@@ -33,7 +33,7 @@ class OperationRetriever(object):
     def __init__(self, username, customer_name,
                  uri, method, count=30,
                  offset=0, sort='desc',
-                 sort_key=OperationKey.CreatedTime):
+                 sort_key=AgentOperationKey.CreatedTime):
         self.username = username
         self.customer_name = customer_name
         self.uri = uri
@@ -42,61 +42,61 @@ class OperationRetriever(object):
         self.count = count
         self.pluck_list = (
             [
-                OperationKey.OperationId,
-                OperationKey.TagId,
-                OperationKey.Operation,
-                OperationKey.CreatedTime,
-                OperationKey.UpdatedTime,
-                OperationKey.CompletedTime,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedBy,
-                OperationKey.CustomerName,
-                OperationKey.AgentsTotalCount,
-                OperationKey.AgentsExpiredCount,
-                OperationKey.AgentsPendingResultsCount,
-                OperationKey.AgentsPendingPickUpCount,
-                OperationKey.AgentsFailedCount,
-                OperationKey.AgentsCompletedCount,
-                OperationKey.AgentsCompletedWithErrorsCount,
+                AgentOperationKey.OperationId,
+                AgentOperationKey.TagId,
+                AgentOperationKey.Operation,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.UpdatedTime,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.CustomerName,
+                AgentOperationKey.AgentsTotalCount,
+                AgentOperationKey.AgentsExpiredCount,
+                AgentOperationKey.AgentsPendingResultsCount,
+                AgentOperationKey.AgentsPendingPickUpCount,
+                AgentOperationKey.AgentsFailedCount,
+                AgentOperationKey.AgentsCompletedCount,
+                AgentOperationKey.AgentsCompletedWithErrorsCount,
 
             ]
         )
         self.map_hash = (
             {
-                OperationKey.OperationId: r.row[OperationKey.OperationId],
-                OperationKey.OperationStatus: r.row[OperationKey.OperationStatus],
-                OperationKey.TagId: r.row[OperationKey.TagId],
-                OperationKey.Operation: r.row[OperationKey.Operation],
-                OperationKey.CreatedTime: r.row[OperationKey.CreatedTime].to_epoch_time(),
-                OperationKey.UpdatedTime: r.row[OperationKey.UpdatedTime].to_epoch_time(),
-                OperationKey.CompletedTime: r.row[OperationKey.CompletedTime].to_epoch_time(),
-                OperationKey.CreatedBy: r.row[OperationKey.CreatedBy],
-                OperationKey.CustomerName: r.row[OperationKey.CustomerName],
-                OperationKey.AgentsTotalCount: r.row[OperationKey.AgentsTotalCount],
-                OperationKey.AgentsExpiredCount: r.row[OperationKey.AgentsExpiredCount],
-                OperationKey.AgentsPendingResultsCount: r.row[OperationKey.AgentsPendingResultsCount],
-                OperationKey.AgentsPendingPickUpCount: r.row[OperationKey.AgentsPendingPickUpCount],
-                OperationKey.AgentsFailedCount: r.row[OperationKey.AgentsFailedCount],
-                OperationKey.AgentsCompletedCount: r.row[OperationKey.AgentsCompletedCount],
-                OperationKey.AgentsCompletedWithErrorsCount: r.row[OperationKey.AgentsCompletedWithErrorsCount],
+                AgentOperationKey.OperationId: r.row[AgentOperationKey.OperationId],
+                AgentOperationKey.OperationStatus: r.row[AgentOperationKey.OperationStatus],
+                AgentOperationKey.TagId: r.row[AgentOperationKey.TagId],
+                AgentOperationKey.Operation: r.row[AgentOperationKey.Operation],
+                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
+                AgentOperationKey.UpdatedTime: r.row[AgentOperationKey.UpdatedTime].to_epoch_time(),
+                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_epoch_time(),
+                AgentOperationKey.CreatedBy: r.row[AgentOperationKey.CreatedBy],
+                AgentOperationKey.CustomerName: r.row[AgentOperationKey.CustomerName],
+                AgentOperationKey.AgentsTotalCount: r.row[AgentOperationKey.AgentsTotalCount],
+                AgentOperationKey.AgentsExpiredCount: r.row[AgentOperationKey.AgentsExpiredCount],
+                AgentOperationKey.AgentsPendingResultsCount: r.row[AgentOperationKey.AgentsPendingResultsCount],
+                AgentOperationKey.AgentsPendingPickUpCount: r.row[AgentOperationKey.AgentsPendingPickUpCount],
+                AgentOperationKey.AgentsFailedCount: r.row[AgentOperationKey.AgentsFailedCount],
+                AgentOperationKey.AgentsCompletedCount: r.row[AgentOperationKey.AgentsCompletedCount],
+                AgentOperationKey.AgentsCompletedWithErrorsCount: r.row[AgentOperationKey.AgentsCompletedWithErrorsCount],
 
             }
         )
         order_by_list = (
             [
-                OperationKey.Operation,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedTime,
-                OperationKey.UpdatedTime,
-                OperationKey.CompletedTime,
-                OperationKey.CreatedBy,
-                OperationKey.CustomerName,
+                AgentOperationKey.Operation,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.UpdatedTime,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.CustomerName,
             ]
         )
         if sort_key in order_by_list:
             self.sort_key = sort_key
         else:
-            self.sort_key = OperationKey.CreatedTime
+            self.sort_key = AgentOperationKey.CreatedTime
 
         if sort == 'asc':
             self.sort = r.asc
@@ -111,7 +111,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     self.customer_name,
-                    index=OperationIndexes.CustomerName
+                    index=AgentOperationIndexes.CustomerName
                 )
                 .count()
                 .run(conn)
@@ -121,7 +121,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     self.customer_name,
-                    index=OperationIndexes.CustomerName
+                    index=AgentOperationIndexes.CustomerName
                 )
                 .pluck(self.pluck_list)
                 .order_by(self.sort(self.sort_key))
@@ -169,7 +169,7 @@ class OperationRetriever(object):
                     index=OperationPerAgentIndexes.AgentIdAndCustomer
                 )
                 .eq_join(
-                    OperationKey.OperationId,
+                    AgentOperationKey.OperationId,
                     r.table(OperationsCollection)
                 )
                 .zip()
@@ -205,7 +205,7 @@ class OperationRetriever(object):
             count = (
                 r
                 .table(OperationsCollection)
-                .get_all(tag_id, index=OperationKey.TagId)
+                .get_all(tag_id, index=AgentOperationKey.TagId)
                 .count()
                 .run(conn)
             )
@@ -213,7 +213,7 @@ class OperationRetriever(object):
             operations = list(
                 r
                 .table(OperationsCollection)
-                .get_all(tag_id, index=OperationKey.TagId)
+                .get_all(tag_id, index=AgentOperationKey.TagId)
                 .pluck(self.pluck_list)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -249,7 +249,7 @@ class OperationRetriever(object):
                     .table(OperationsCollection)
                     .get_all(
                         [oper_type, self.customer_name],
-                        index=OperationIndexes.OperationAndCustomer
+                        index=AgentOperationIndexes.OperationAndCustomer
                     )
                     .count()
                     .run(conn)
@@ -260,7 +260,7 @@ class OperationRetriever(object):
                     .table(OperationsCollection)
                     .get_all(
                         [oper_type, self.customer_name],
-                        index=OperationIndexes.OperationAndCustomer
+                        index=AgentOperationIndexes.OperationAndCustomer
                     )
                     .pluck(self.pluck_list)
                     .order_by(self.sort(self.sort_key))
@@ -300,21 +300,21 @@ class OperationRetriever(object):
     def get_install_operation_by_id(self, oper_id, conn=None):
         pluck_list = (
             [
-                OperationKey.OperationId,
-                OperationKey.Operation,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedTime,
-                OperationKey.CreatedBy,
-                OperationKey.UpdatedTime,
-                OperationKey.CompletedTime,
-                OperationKey.CustomerName,
-                OperationKey.AgentsTotalCount,
-                OperationKey.AgentsExpiredCount,
-                OperationKey.AgentsPendingResultsCount,
-                OperationKey.AgentsPendingPickUpCount,
-                OperationKey.AgentsFailedCount,
-                OperationKey.AgentsCompletedCount,
-                OperationKey.AgentsCompletedWithErrorsCount,
+                AgentOperationKey.OperationId,
+                AgentOperationKey.Operation,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.UpdatedTime,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CustomerName,
+                AgentOperationKey.AgentsTotalCount,
+                AgentOperationKey.AgentsExpiredCount,
+                AgentOperationKey.AgentsPendingResultsCount,
+                AgentOperationKey.AgentsPendingPickUpCount,
+                AgentOperationKey.AgentsFailedCount,
+                AgentOperationKey.AgentsCompletedCount,
+                AgentOperationKey.AgentsCompletedWithErrorsCount,
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.AppsTotalCount,
@@ -334,26 +334,26 @@ class OperationRetriever(object):
         )
         map_list = (
             {
-                OperationKey.OperationId: r.row[OperationKey.OperationId],
-                OperationKey.Operation: r.row[OperationKey.Operation],
-                OperationKey.OperationStatus: r.row[OperationKey.OperationStatus],
-                OperationKey.CreatedTime: r.row[OperationKey.CreatedTime].to_epoch_time(),
-                OperationKey.CreatedBy: r.row[OperationKey.CreatedBy],
-                OperationKey.UpdatedTime: r.row[OperationKey.UpdatedTime].to_epoch_time(),
-                OperationKey.CompletedTime: r.row[OperationKey.CompletedTime].to_epoch_time(),
-                OperationKey.CustomerName: r.row[OperationKey.CustomerName],
-                OperationKey.AgentsTotalCount: r.row[OperationKey.AgentsTotalCount],
-                OperationKey.AgentsExpiredCount: r.row[OperationKey.AgentsExpiredCount],
-                OperationKey.AgentsPendingResultsCount: r.row[OperationKey.AgentsPendingResultsCount],
-                OperationKey.AgentsPendingPickUpCount: r.row[OperationKey.AgentsPendingPickUpCount],
-                OperationKey.AgentsFailedCount: r.row[OperationKey.AgentsFailedCount],
-                OperationKey.AgentsCompletedCount: r.row[OperationKey.AgentsCompletedCount],
-                OperationKey.AgentsCompletedWithErrorsCount: r.row[OperationKey.AgentsCompletedWithErrorsCount],
+                AgentOperationKey.OperationId: r.row[AgentOperationKey.OperationId],
+                AgentOperationKey.Operation: r.row[AgentOperationKey.Operation],
+                AgentOperationKey.OperationStatus: r.row[AgentOperationKey.OperationStatus],
+                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
+                AgentOperationKey.CreatedBy: r.row[AgentOperationKey.CreatedBy],
+                AgentOperationKey.UpdatedTime: r.row[AgentOperationKey.UpdatedTime].to_epoch_time(),
+                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_epoch_time(),
+                AgentOperationKey.CustomerName: r.row[AgentOperationKey.CustomerName],
+                AgentOperationKey.AgentsTotalCount: r.row[AgentOperationKey.AgentsTotalCount],
+                AgentOperationKey.AgentsExpiredCount: r.row[AgentOperationKey.AgentsExpiredCount],
+                AgentOperationKey.AgentsPendingResultsCount: r.row[AgentOperationKey.AgentsPendingResultsCount],
+                AgentOperationKey.AgentsPendingPickUpCount: r.row[AgentOperationKey.AgentsPendingPickUpCount],
+                AgentOperationKey.AgentsFailedCount: r.row[AgentOperationKey.AgentsFailedCount],
+                AgentOperationKey.AgentsCompletedCount: r.row[AgentOperationKey.AgentsCompletedCount],
+                AgentOperationKey.AgentsCompletedWithErrorsCount: r.row[AgentOperationKey.AgentsCompletedWithErrorsCount],
                 "agents": (
                     r
                     .table(OperationsPerAgentCollection)
                     .get_all(
-                        r.row[OperationKey.OperationId],
+                        r.row[AgentOperationKey.OperationId],
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
@@ -378,7 +378,7 @@ class OperationRetriever(object):
                                 .table(OperationsPerAppCollection)
                                 .get_all(
                                     [
-                                        x[OperationKey.OperationId],
+                                        x[AgentOperationKey.OperationId],
                                         x[OperationPerAgentKey.AgentId]
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
@@ -405,7 +405,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     oper_id,
-                    index=OperationIndexes.OperationId
+                    index=AgentOperationIndexes.OperationId
                 )
                 .pluck(pluck_list)
                 .map(map_list)
@@ -435,21 +435,21 @@ class OperationRetriever(object):
     def get_operation_by_id(self, oper_id, conn=None):
         pluck_list = (
             [
-                OperationKey.OperationId,
-                OperationKey.Operation,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedTime,
-                OperationKey.CreatedBy,
-                OperationKey.UpdatedTime,
-                OperationKey.CompletedTime,
-                OperationKey.CustomerName,
-                OperationKey.AgentsTotalCount,
-                OperationKey.AgentsExpiredCount,
-                OperationKey.AgentsPendingResultsCount,
-                OperationKey.AgentsPendingPickUpCount,
-                OperationKey.AgentsFailedCount,
-                OperationKey.AgentsCompletedCount,
-                OperationKey.AgentsCompletedWithErrorsCount,
+                AgentOperationKey.OperationId,
+                AgentOperationKey.Operation,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.UpdatedTime,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CustomerName,
+                AgentOperationKey.AgentsTotalCount,
+                AgentOperationKey.AgentsExpiredCount,
+                AgentOperationKey.AgentsPendingResultsCount,
+                AgentOperationKey.AgentsPendingPickUpCount,
+                AgentOperationKey.AgentsFailedCount,
+                AgentOperationKey.AgentsCompletedCount,
+                AgentOperationKey.AgentsCompletedWithErrorsCount,
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.ExpiredTime,
@@ -462,26 +462,26 @@ class OperationRetriever(object):
         )
         map_list = (
             {
-                OperationKey.OperationId: r.row[OperationKey.OperationId],
-                OperationKey.Operation: r.row[OperationKey.Operation],
-                OperationKey.OperationStatus: r.row[OperationKey.OperationStatus],
-                OperationKey.CreatedTime: r.row[OperationKey.CreatedTime].to_epoch_time(),
-                OperationKey.CreatedBy: r.row[OperationKey.CreatedBy],
-                OperationKey.UpdatedTime: r.row[OperationKey.UpdatedTime].to_epoch_time(),
-                OperationKey.CompletedTime: r.row[OperationKey.CompletedTime].to_epoch_time(),
-                OperationKey.CustomerName: r.row[OperationKey.CustomerName],
-                OperationKey.AgentsTotalCount: r.row[OperationKey.AgentsTotalCount],
-                OperationKey.AgentsExpiredCount: r.row[OperationKey.AgentsExpiredCount],
-                OperationKey.AgentsPendingResultsCount: r.row[OperationKey.AgentsPendingResultsCount],
-                OperationKey.AgentsPendingPickUpCount: r.row[OperationKey.AgentsPendingPickUpCount],
-                OperationKey.AgentsFailedCount: r.row[OperationKey.AgentsFailedCount],
-                OperationKey.AgentsCompletedCount: r.row[OperationKey.AgentsCompletedCount],
-                OperationKey.AgentsCompletedWithErrorsCount: r.row[OperationKey.AgentsCompletedWithErrorsCount],
+                AgentOperationKey.OperationId: r.row[AgentOperationKey.OperationId],
+                AgentOperationKey.Operation: r.row[AgentOperationKey.Operation],
+                AgentOperationKey.OperationStatus: r.row[AgentOperationKey.OperationStatus],
+                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
+                AgentOperationKey.CreatedBy: r.row[AgentOperationKey.CreatedBy],
+                AgentOperationKey.UpdatedTime: r.row[AgentOperationKey.UpdatedTime].to_epoch_time(),
+                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_epoch_time(),
+                AgentOperationKey.CustomerName: r.row[AgentOperationKey.CustomerName],
+                AgentOperationKey.AgentsTotalCount: r.row[AgentOperationKey.AgentsTotalCount],
+                AgentOperationKey.AgentsExpiredCount: r.row[AgentOperationKey.AgentsExpiredCount],
+                AgentOperationKey.AgentsPendingResultsCount: r.row[AgentOperationKey.AgentsPendingResultsCount],
+                AgentOperationKey.AgentsPendingPickUpCount: r.row[AgentOperationKey.AgentsPendingPickUpCount],
+                AgentOperationKey.AgentsFailedCount: r.row[AgentOperationKey.AgentsFailedCount],
+                AgentOperationKey.AgentsCompletedCount: r.row[AgentOperationKey.AgentsCompletedCount],
+                AgentOperationKey.AgentsCompletedWithErrorsCount: r.row[AgentOperationKey.AgentsCompletedWithErrorsCount],
                 "agents": (
                     r
                     .table(OperationsPerAgentCollection)
                     .get_all(
-                        r.row[OperationKey.OperationId],
+                        r.row[AgentOperationKey.OperationId],
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
@@ -509,7 +509,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     oper_id,
-                    index=OperationIndexes.OperationId
+                    index=AgentOperationIndexes.OperationId
                 )
                 .pluck(pluck_list)
                 .map(map_list)
@@ -540,13 +540,13 @@ class OperationRetriever(object):
     def get_install_operation_for_email_alert(self, oper_id, conn=None):
         pluck_list = (
             [
-                OperationKey.OperationId,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedTime,
-                OperationKey.CreatedBy,
-                OperationKey.UpdatedTime,
-                OperationKey.CompletedTime,
-                OperationKey.CustomerName,
+                AgentOperationKey.OperationId,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.UpdatedTime,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CustomerName,
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.Errors,
@@ -560,17 +560,17 @@ class OperationRetriever(object):
         )
         map_list = (
             {
-                OperationKey.OperationStatus: r.row[OperationKey.OperationStatus],
-                OperationKey.CreatedTime: r.row[OperationKey.CreatedTime].to_iso8601(),
-                OperationKey.CreatedBy: r.row[OperationKey.CreatedBy],
-                OperationKey.UpdatedTime: r.row[OperationKey.UpdatedTime].to_iso8601(),
-                OperationKey.CompletedTime: r.row[OperationKey.CompletedTime].to_iso8601(),
-                OperationKey.CustomerName: r.row[OperationKey.CustomerName],
+                AgentOperationKey.OperationStatus: r.row[AgentOperationKey.OperationStatus],
+                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_iso8601(),
+                AgentOperationKey.CreatedBy: r.row[AgentOperationKey.CreatedBy],
+                AgentOperationKey.UpdatedTime: r.row[AgentOperationKey.UpdatedTime].to_iso8601(),
+                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_iso8601(),
+                AgentOperationKey.CustomerName: r.row[AgentOperationKey.CustomerName],
                 "agents": (
                     r
                     .table(OperationsPerAgentCollection)
                     .get_all(
-                        r.row[OperationKey.OperationId],
+                        r.row[AgentOperationKey.OperationId],
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
@@ -589,7 +589,7 @@ class OperationRetriever(object):
                                 .table(OperationsPerAppCollection)
                                 .get_all(
                                     [
-                                        x[OperationKey.OperationId],
+                                        x[AgentOperationKey.OperationId],
                                         x[OperationPerAgentKey.AgentId]
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
@@ -609,7 +609,7 @@ class OperationRetriever(object):
                                 .table(OperationsPerAppCollection)
                                 .get_all(
                                     [
-                                        x[OperationKey.OperationId],
+                                        x[AgentOperationKey.OperationId],
                                         x[OperationPerAgentKey.AgentId]
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
@@ -635,7 +635,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     oper_id,
-                    index=OperationIndexes.OperationId
+                    index=AgentOperationIndexes.OperationId
                 )
                 .pluck(pluck_list)
                 .map(map_list)
@@ -655,17 +655,17 @@ class OperationRetriever(object):
     def get_base_operation_for_email_alert(self, oper_id, conn=None):
         pluck_list = (
             [
-                OperationKey.OperationId,
-                OperationKey.Operation,
-                OperationKey.OperationStatus,
-                OperationKey.CreatedTime,
-                OperationKey.CreatedBy,
-                OperationKey.CompletedTime,
-                OperationKey.CustomerName,
-                OperationKey.AgentsTotalCount,
-                OperationKey.AgentsFailedCount,
-                OperationKey.AgentsCompletedCount,
-                OperationKey.AgentsCompletedWithErrorsCount,
+                AgentOperationKey.OperationId,
+                AgentOperationKey.Operation,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CustomerName,
+                AgentOperationKey.AgentsTotalCount,
+                AgentOperationKey.AgentsFailedCount,
+                AgentOperationKey.AgentsCompletedCount,
+                AgentOperationKey.AgentsCompletedWithErrorsCount,
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.Errors,
@@ -677,22 +677,22 @@ class OperationRetriever(object):
         )
         map_list = (
             {
-                OperationKey.OperationId: r.row[OperationKey.OperationId],
-                OperationKey.Operation: r.row[OperationKey.Operation],
-                OperationKey.OperationStatus: r.row[OperationKey.OperationStatus],
-                OperationKey.CreatedTime: r.row[OperationKey.CreatedTime].to_epoch_time(),
-                OperationKey.CreatedBy: r.row[OperationKey.CreatedBy],
-                OperationKey.CompletedTime: r.row[OperationKey.CompletedTime].to_epoch_time(),
-                OperationKey.CustomerName: r.row[OperationKey.CustomerName],
-                OperationKey.AgentsTotalCount: r.row[OperationKey.AgentsTotalCount],
-                OperationKey.AgentsFailedCount: r.row[OperationKey.AgentsFailedCount],
-                OperationKey.AgentsCompletedCount: r.row[OperationKey.AgentsCompletedCount],
-                OperationKey.AgentsCompletedWithErrorsCount: r.row[OperationKey.AgentsCompletedWithErrorsCount],
+                AgentOperationKey.OperationId: r.row[AgentOperationKey.OperationId],
+                AgentOperationKey.Operation: r.row[AgentOperationKey.Operation],
+                AgentOperationKey.OperationStatus: r.row[AgentOperationKey.OperationStatus],
+                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
+                AgentOperationKey.CreatedBy: r.row[AgentOperationKey.CreatedBy],
+                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_epoch_time(),
+                AgentOperationKey.CustomerName: r.row[AgentOperationKey.CustomerName],
+                AgentOperationKey.AgentsTotalCount: r.row[AgentOperationKey.AgentsTotalCount],
+                AgentOperationKey.AgentsFailedCount: r.row[AgentOperationKey.AgentsFailedCount],
+                AgentOperationKey.AgentsCompletedCount: r.row[AgentOperationKey.AgentsCompletedCount],
+                AgentOperationKey.AgentsCompletedWithErrorsCount: r.row[AgentOperationKey.AgentsCompletedWithErrorsCount],
                 "agents": (
                     r
                     .table(OperationsPerAgentCollection)
                     .get_all(
-                        r.row[OperationKey.OperationId],
+                        r.row[AgentOperationKey.OperationId],
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
@@ -718,7 +718,7 @@ class OperationRetriever(object):
                 .table(OperationsCollection)
                 .get_all(
                     oper_id,
-                    index=OperationIndexes.OperationId
+                    index=AgentOperationIndexes.OperationId
                 )
                 .pluck(pluck_list)
                 .map(map_list)

@@ -35,7 +35,7 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentCollections.Agent)
+            .table(AgentCollections.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .pluck(AgentKey.ProductionLevel)
             .distinct()
@@ -74,7 +74,7 @@ def fetch_supported_os_strings(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentCollections.Agent)
+            .table(AgentCollections.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .pluck(AgentKey.OsString)
             .distinct()
@@ -115,7 +115,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         if customer_name and agent_os:
             data = list(
                 r
-                .table(AgentCollections.Agent)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({AgentKey.OsCode: agent_os})
                 .map(lambda x: x[AgentKey.AgentId])
@@ -125,7 +125,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif customer_name and not agent_os:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
@@ -134,7 +134,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif agent_os and not customer_name:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .filter({AgentKey.OsCode: agent_os})
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
@@ -143,7 +143,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
         elif not agent_os and not customer_name:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
             )
@@ -192,7 +192,7 @@ def fetch_agents(
         if filter_key and filter_val and not customer_name and not keys_to_pluck:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
                 .run(conn)
@@ -201,7 +201,7 @@ def fetch_agents(
         elif filter_key and filter_val and customer_name and not keys_to_pluck:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
@@ -211,7 +211,7 @@ def fetch_agents(
         elif filter_key and filter_val and keys_to_pluck and not customer_name:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
@@ -221,7 +221,7 @@ def fetch_agents(
         elif filter_key and filter_val and keys_to_pluck and customer_name:
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
@@ -233,7 +233,7 @@ def fetch_agents(
                 and not customer_name and keys_to_pluck):
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -243,7 +243,7 @@ def fetch_agents(
                 and customer_name and keys_to_pluck):
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
@@ -254,7 +254,7 @@ def fetch_agents(
                 and not customer_name and not keys_to_pluck):
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .merge(Merge.TAGS)
                 .run(conn)
             )
@@ -263,7 +263,7 @@ def fetch_agents(
                 and customer_name and not keys_to_pluck):
             data = list(
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .merge(Merge.TAGS)
                 .run(conn)
@@ -305,7 +305,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
         if agent_id and keys_to_pluck:
             data = (
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get(agent_id)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
@@ -315,7 +315,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
         elif agent_id and not keys_to_pluck:
             data = (
                 r
-                .table(AgentCollection.Agents)
+                .table(AgentCollections.Agents)
                 .get(agent_id)
                 .merge(Merge.TAGS)
                 .run(conn)
@@ -350,7 +350,7 @@ def update_agent_data(agent_id, agent_data, conn=None):
     try:
         data = (
             r
-            .table(AgentCollection.Agents)
+            .table(AgentCollections.Agents)
             .get(agent_id)
             .update(agent_data)
             .run(conn)
@@ -385,7 +385,7 @@ def insert_agent_data(agent_data, conn=None):
     try:
         data = (
             r
-            .table(AgentCollection.Agents)
+            .table(AgentCollections.Agents)
             .insert(agent_data)
             .run(conn)
         )
@@ -416,7 +416,7 @@ def delete_all_agents_for_customer(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentCollection.Agents)
+            .table(AgentCollections.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .delete()
             .run(conn)
@@ -449,7 +449,7 @@ def move_all_agents_to_customer(customer_name, conn=None):
     try:
         data = (
             r
-            .table(AgentCollection.Agents)
+            .table(AgentCollections.Agents)
             .get_all(customer_name, index=AgentIndexes.CustomerName)
             .update(
                 {

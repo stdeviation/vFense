@@ -24,7 +24,7 @@ class GetTransactionsHandler(BaseHandler):
             count = int(self.get_argument('count', 20))
             offset = int(self.get_argument('offset', 0))
             sort = self.get_argument('sort', 'desc')
-            sort_by = self.get_argument('sort_by', OperationKey.CreatedTime)
+            sort_by = self.get_argument('sort_by', AgentOperationKey.CreatedTime)
             oper_type = self.get_argument('opertype', None)
             operations = (
                 OperationRetriever(
@@ -70,7 +70,7 @@ class AgentOperationsHandler(BaseHandler):
             count = int(self.get_argument('count', 20))
             offset = int(self.get_argument('offset', 0))
             sort = self.get_argument('sort', 'desc')
-            sort_by = self.get_argument('sort_by', OperationKey.CreatedTime)
+            sort_by = self.get_argument('sort_by', AgentOperationKey.CreatedTime)
             operations = (
                 OperationRetriever(
                     username, customer_name,
@@ -108,7 +108,7 @@ class TagOperationsHandler(BaseHandler):
             count = int(self.get_argument('count', 20))
             offset = int(self.get_argument('offset', 0))
             sort = self.get_argument('sort', 'desc')
-            sort_by = self.get_argument('sort_by', OperationKey.CreatedTime)
+            sort_by = self.get_argument('sort_by', AgentOperationKey.CreatedTime)
             operations = (
                 OperationRetriever(
                     username, customer_name,
@@ -145,7 +145,7 @@ class OperationHandler(BaseHandler):
             count = int(self.get_argument('count', 20))
             offset = int(self.get_argument('offset', 0))
             sort = self.get_argument('sort', 'desc')
-            sort_by = self.get_argument('sort_by', OperationKey.CreatedTime)
+            sort_by = self.get_argument('sort_by', AgentOperationKey.CreatedTime)
             oper = oper_exists(oper_id)
             operations = (
                 OperationRetriever(
@@ -155,7 +155,7 @@ class OperationHandler(BaseHandler):
                 )
             )
             if oper:
-                if re.search('install', oper[OperationKey.Operation]):
+                if re.search('install', oper[AgentOperationKey.Operation]):
                     results = operations.get_install_operation_by_id(oper_id)
                 else:
                     results = operations.get_operation_by_id(oper_id)
