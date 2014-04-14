@@ -33,6 +33,7 @@ class GenericFailureCodes(object):
     DataIsEmpty = 1504
     InvalidSortKey = 1505
     InvalidFilterKey = 1506
+    InvalidId = 1507
 
 class GroupCodes(object):
     GroupCreated = 12000
@@ -146,10 +147,19 @@ class AgentCodes(object):
 
 class AgentResultCodes(object):
     NewAgentSucceeded = 3200
+    CheckInSucceeded = 3201
+    StartUpSucceeded = 3202
+    ResultsUpdated = 3203
 
 
 class AgentFailureResultCodes(object):
     NewAgentFailed = 3300
+    CheckInFailed = 3301
+    StartupFailed = 3302
+    InvalidOperationId = 3303
+    InvalidOperationIdWithAgentId = 3304
+    ResultsFailedToUpdate = 3305
+    InvalidSuccessValue = 3306
 
 
 class AgentFailureCodes(object):
@@ -214,6 +224,9 @@ class OperationPerAgentCodes(object):
     PendingPickUp = 6501
     PickedUp = 6502
     OperationExpired = 6503
+    OperationFailed = 6504
+    OperationCompleted = 6505
+    OperationCompletedWithErrors = 6506
 
 
 class UpdatesApplications(object):

@@ -106,7 +106,6 @@ class UserHandler(BaseHandler):
             group_ids = self.arguments.get('group_ids', None)
             if group_ids and isinstance(group_ids, list):
                 if action == 'add':
-                    print group_ids
                     results = (
                         add_user_to_groups(
                             username, customer_context, group_ids,
@@ -114,7 +113,6 @@ class UserHandler(BaseHandler):
                         )
                     )
                 if action == 'delete':
-                    print group_ids
                     results = (
                         remove_groups_from_user(
                             username, group_ids,

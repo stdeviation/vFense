@@ -5,48 +5,6 @@ class OperationCollections():
     Admin = 'admin_operations'
 
 
-OperationsCollection = 'operations'
-OperationsPerAgentCollection = 'operation_per_agent'
-OperationsPerAppCollection = 'operation_per_app'
-
-CHECKIN = 'checkin'
-PICKEDUP = 'picked_up'
-PENDINGPICKUP = 'pending_pick_up'
-OPERATION_EXPIRED = 'operation_expired'
-FAILED = 'completed_with_errors'
-SUCCESS = 'completed_successfully'
-DATA = "data"
-AGENT = 'Agent'
-TAG = 'Tag'
-
-INSTALL_OS_APPS = 'install_os_apps'
-INSTALL_CUSTOM_APPS = 'install_custom_apps'
-INSTALL_SUPPORTED_APPS = 'install_supported_apps'
-INSTALL_AGENT_UPDATE = 'install_agent_update'
-INSTALL_AGENT_APPS = 'install_agent_update'
-UNINSTALL = 'uninstall'
-UNINSTALL_AGENT = 'uninstall_agent'
-UPDATES_APPLICATIONS = 'updatesapplications'
-REBOOT = 'reboot'
-SHUTDOWN = 'shutdown'
-
-RV_PLUGIN = 'rv'
-CORE_PLUGIN = 'core'
-RA_PLUGIN = 'ra'
-MONITORING_PLUGIN = 'monitoring'
-
-VALID_PLUGINS = (RV_PLUGIN, CORE_PLUGIN, RA_PLUGIN, MONITORING_PLUGIN)
-
-VALID_OPERATIONS = (
-    INSTALL_OS_APPS,
-    INSTALL_CUSTOM_APPS,
-    INSTALL_SUPPORTED_APPS,
-    UNINSTALL,
-    UNINSTALL_AGENT,
-    REBOOT, SHUTDOWN,
-    UPDATES_APPLICATIONS
-)
-
 class AdminOperationKey():
     OperationId = 'operation_id'
     CreatedBy = 'created_by'

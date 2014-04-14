@@ -17,13 +17,11 @@ from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core.agent import *
-from vFense.operations import *
+from vFense.operations._constants import AgentOperations
 from vFense.core.tag.tagManager import *
 from vFense.core.customer.customers import get_customer_property
 from vFense.core.customer import *
 
-from vFense.server.hierarchy import CoreProperty
-from vFense.server.hierarchy.manager import Hierarchy
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -504,12 +502,12 @@ def get_base_url(customer_name):
 
 #@db_create_close
 def get_download_urls(customer_name, app_id, file_data,
-                      oper_type=INSTALL_OS_APPS):
+                      oper_type=AgentOperations.INSTALL_OS_APPS):
     uris = []
     url_base = get_base_url(customer_name)
     file_uris_base = None
     logger.info(url_base)
-    if oper_type == INSTALL_CUSTOM_APPS:
+    if oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
         url_base = url_base + 'tmp/' + app_id + '/'
         file_uris_base = 'packages/tmp/' + app_id + '/'
 
@@ -1868,15 +1866,15 @@ def delete_app_from_rv(
 
 
 def update_app_status(agent_id, app_id, oper_type, data):
-    if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
+    if oper_type == AgentOperations.INSTALL_OS_APPS or oper_type == UNINSTALL:
         update_os_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_CUSTOM_APPS:
+    elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
         update_custom_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_SUPPORTED_APPS:
+    elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
         update_supported_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_AGENT_UPDATE:
+    elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
         update_agent_app_per_agent(agent_id, app_id, data)
 
