@@ -4,7 +4,7 @@
             <div class="pull-left span6">
                 <strong class="span5">Edit customers for user: </strong>
                 <span class="span6">
-                    <select id="userInfo" name="users">
+                    <select id="customerContext" name="users">
                         <%= viewHelpers.getOptions(users) %>
                     </select>
                 </span>
@@ -99,7 +99,11 @@
                 </div>
                 <div class="accordion-body collapse">
                     <div class="accordion-inner">
-                        <form id="editCustomer<%= customer.customer_name%>" class="item row-fluid">
+                        <label><small>Groups for customer <%= customer.customer_name %>:</small></label>
+                        <input type="hidden" name="groupSelect" data-id="<%= customer.groups[0]%>" data-customer="<%= customer.users[0].user_name %>" data-placeholder="Select a group" data-url="/api/v1/group" value='<% print(JSON.stringify(customer.groups)); %>'>
+                        <label><small>Users part of:</small></label>
+                        <input type="hidden" name="userSelect" data-customer="<%= customer.users[0].user_name %>" data-placeholder="Select a user" data-url="/api/v1/user" value='<% print (JSON.stringify(customer.users)); %>'>
+                       <!-- <form id="editCustomer<%= customer.customer_name%>" class="item row-fluid">
                             <div class="span12">
                                 <table style="width: 100%">
                                     <tr>
@@ -189,7 +193,7 @@
                                     </tr>
                                 </table>
                             </div>
-                        </form>
+                        </form>-->
                     </div>
                 </div>
             </div>

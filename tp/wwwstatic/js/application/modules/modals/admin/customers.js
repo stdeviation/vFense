@@ -39,9 +39,17 @@ define(
                     'click button[name=deleteCustomer]'     :   'deleteCustomer',
                     'click button[data-id=toggleCustomer]'  :   'createCustomer',
                     'click #cancelNewCustomer'              :   'createCustomer',
+                    'change input[name=groupSelect]'        :   'toggle',
+                    'change input[name=userSelect]'         :   'toggle',
                     'click button[name=cancelEditCustomer]' :   'toggleAclAccordion',
                     'click #submitCustomer'                 :   'verifyForm',
-                    'click button[name=submitEditCustomer]' :   'verifyForm'
+                    'click button[name=submitEditCustomer]' :   'verifyForm',
+                    'change #customerContext'               :   'changeCustomerContext'
+                },
+                changeCustomerContext: function (event) {
+                    this.collection.params.customer_name = this.customerContext = event.val;
+                    this.collection.fetch();
+                    return this;
                 },
                 toggleAclAccordion: function (event) {
                     event.preventDefault();
@@ -127,6 +135,38 @@ define(
                         this.submitCustomer(event);
                     }
                 },
+                toggle: function (event) {
+                    var $input = $(event.currentTarget),
+                        customername = $input.data('customer'),
+                        groupId = $input.data('id'),
+                        url = $input.data('url') + '/' + customername,
+                        $alert = this.$el.find('div.alert'),
+                        params,
+                        customers = [],
+                        groups = [];
+                    customers.push(customername);
+                    groups.push(groupId);
+                    params = {
+                        customer_names: customers,//event.added ? event.added.text : event.removed.text,
+                        action: event.added ? 'add' : 'delete'
+                    };
+                    console.log(customername);
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code) {
+                                $alert.hide();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    }).error(function (e) { window.console.log(e.responseText); });
+                    return this;
+                },
                 submitCustomer: function (event) {
                     event.preventDefault();
                     var customerName = this.$el.find('#customerName').val(),
@@ -170,7 +210,46 @@ define(
                      });*/
                 },
                 beforeRender: $.noop,
-                onRender: $.noop,
+                onRender: function () {
+                    var $users = this.$('select[name=users]'),
+//                        $customers = this.$('select[name=customers]'),
+                        $select = this.$el.find('input[name=groupSelect], input[name=userSelect]'),
+                        that = this;
+                    $users.select2({width: '100%'});
+//                    $customers.select2({width: '100%'});
+                    $select.select2({
+                        width: '100%',
+                        multiple: true,
+                        initSelection: function (element, callback) {
+                            var data = JSON.parse(element.val()),
+                                results = [];
+
+                            _.each(data, function (object) {
+                                results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
+                            });
+                            callback(results);
+                        },
+                        ajax: {
+                            url: function () {
+                                return $(that).data('url');
+                            },
+                            data: function () {
+                                return {
+                                    customer_name: that.customerContext
+                                };
+                            },
+                            results: function (data) {
+                                var results = [];
+                                if (data.rv_status_code === 1001) {
+                                    _.each(data.data, function (object) {
+                                        results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
+                                    });
+                                    return {results: results, more: false, context: results};
+                                }
+                            }
+                        }
+                    });
+                },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
 
@@ -205,18 +284,24 @@ define(
                                 },
                                 renderDeleteButton: function (customer) {
                                     var fragment;
-                                    if (customer.customer_name !== 'administrator') {
+//                                    if (customer.customer_name !== 'default') {
                                         fragment = crel('div');
                                         fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
                                                 crel('i', {class: 'icon-remove', style: 'color: red'}))
                                         );
                                         return fragment.innerHTML;
-                                    }
+//                                    }
                                 },
                                 renderCustomerLink: function (customer) {
                                     var fragment = crel('div');
-                                    if (customer.customer_name !== 'administrator') {
+                                    fragment.appendChild(
+                                        crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                            crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                            crel('span', customer.customer_name)
+                                        )
+                                    );
+                                   /* if (customer.customer_name !== 'default') {
                                         fragment.appendChild(
                                             crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
                                                 crel('i', {class: 'icon-circle-arrow-down'}, ' '),
@@ -227,7 +312,7 @@ define(
                                         fragment.appendChild(
                                             crel('strong', customer.customer_name)
                                         );
-                                    }
+                                    }*/
                                     return fragment.innerHTML;
                                 }
                             }

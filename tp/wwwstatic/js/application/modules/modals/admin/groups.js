@@ -37,8 +37,9 @@ define(
                     'change #customerContext':              'changeCustomerContext'
                 },
                 changeCustomerContext: function (event) {
-                    this.collection.params.customer_context = this.customerContext = event.val;
+                    this.collection.params.customer_name = this.customerContext = event.val;
                     this.collection.fetch();
+                    return this;
                 },
                 toggleDelete: function (event) {
                     var $button = $(event.currentTarget),

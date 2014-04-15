@@ -45,8 +45,9 @@ define(
                     'submit form':                      'submit'
                 },
                 changeCustomerContext: function (event) {
-                    this.collection.params.customer_name = this.customerContext = event.val;
+                    this.collection.params.customer_context = this.customerContext = event.val;
                     this.collection.fetch();
+                    return this;
                 },
                 toggleAclAccordion: function (event) {
                     var $href = $(event.currentTarget),
@@ -58,6 +59,7 @@ define(
                     $accordionBody.on('hidden', function (event) {
                         event.stopPropagation();
                     });
+                    return this;
                 },
                 displayAddUser: function (event) {
                     event.preventDefault();
@@ -271,7 +273,7 @@ define(
                                 },
                                 renderDeleteButton: function (user) {
                                     var fragment;
-                                    if (user.user_name !== 'administrator') {
+                                    if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
@@ -282,7 +284,13 @@ define(
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');
-                                    if (user.user_name !== 'administrator') {
+                                    fragment.appendChild(
+                                        crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                            crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                            crel('span', user.user_name)
+                                        )
+                                    );
+                                    /*if (user.user_name !== 'admin') {
                                         fragment.appendChild(
                                             crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
                                                 crel('i', {class: 'icon-circle-arrow-down'}, ' '),
@@ -293,7 +301,7 @@ define(
                                         fragment.appendChild(
                                             crel('strong', user.user_name)
                                         );
-                                    }
+                                    }*/
                                     return fragment.innerHTML;
                                 }
                             }

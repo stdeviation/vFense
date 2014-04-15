@@ -31,7 +31,7 @@ define(
                 },
                 renderDeleteContent: function () {
                     return crel('div', {class: 'customerRemovalDiv'},
-                               crel('label', {for: 'deleteAllAgents'}, 'Type Yes to Delete All the Agents'),
+                               crel('label', {for: 'deleteAllAgents'}, 'Type yes to Delete All the Agents'),
                                crel('input', {type: 'text', id: 'deleteAllAgents', required: 'required'}),
                                crel('label', {for: 'moveAgents'}, 'Select a Customer to Move All the Agents to it'),
                                crel('select', {id: 'moveAgents'}, this.getCustomers())
