@@ -155,16 +155,20 @@ define(
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
-                        user = $input.data('user'),
+                        username = $input.data('user'),
                         groupId = $input.data('id'),
                         url = $input.data('url') + '/' + groupId,
                         $alert = this.$el.find('div.alert'),
-                        params, groups = [];
+                        params,
+                        users = [],
+                        groups = [];
+                    users.push(username);
                     groups.push(groupId);
                     params = {
-                        usernames: groups,//event.added ? event.added.text : event.removed.text,
+                        usernames: users,//event.added ? event.added.text : event.removed.text,
                         action: event.added ? 'add' : 'delete'
                     };
+                    console.log(groupId);
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -235,7 +239,6 @@ define(
                         groups = this.groupCollection.toJSON()[0],
                         customers = app.user.toJSON(),
                         payload;
-                    console.log(data);
                     if (data && data.rv_status_code === 1001 && groups && groups.rv_status_code === 1001) {
                         payload = {
                             data: data.data,

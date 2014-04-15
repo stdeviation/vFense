@@ -197,7 +197,7 @@ define(
                     $filterValueSelect.append(
                         crel('option', {value: ''}, 'Loading..')
                     ).attr('disabled','disabled');
-                    return this;
+                    return this;33
                 },
                 fetchFilterError: function(){
                     var $header = this.$el.find('header');
