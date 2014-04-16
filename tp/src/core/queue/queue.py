@@ -12,7 +12,7 @@ from vFense.core.customer import *
 from vFense.core.customer.customers import get_customer_property
 
 from vFense.core.queue.uris import get_agent_results_uri
-from vFense.operations import OperationKey
+from vFense.operations import AgentOperationKey
 
 from vFense.errorz.status_codes import DbCodes
 
@@ -84,7 +84,7 @@ class AgentQueue(object):
         request_method, response_uri = (
             get_agent_results_uri(
                 self.agent_id,
-                operation[OperationKey.Operation]
+                operation[AgentOperationKey.Operation]
             )
         )
         operation[AgentQueueKey.AgentId] = self.agent_id

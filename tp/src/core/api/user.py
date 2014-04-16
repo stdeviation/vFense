@@ -286,7 +286,7 @@ class UsersHandler(BaseHandler):
         all_customers = self.get_argument('all_customers', None)
         user_name = self.get_argument('user_name', None)
         count = 0
-        user_data = {}
+        user_data = []
         try:
             granted, status_code = (
                 verify_permission_for_user(
@@ -297,7 +297,8 @@ class UsersHandler(BaseHandler):
                 user_data = get_properties_for_all_users(active_customer)
 
             elif granted and customer_context and not all_customers and not user_name:
-                user_data = get_properties_for_all_users(customer_name = customer_context)
+
+                user_data = get_properties_for_all_users(customer_context)
 
             elif granted and all_customers and not customer_context and not user_name:
                 user_data = get_properties_for_all_users()
@@ -317,13 +318,12 @@ class UsersHandler(BaseHandler):
                     )
                 )
 
-            if user_data:
-                count = len(user_data)
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).information_retrieved(user_data, count)
-                ) 
+            count = len(user_data)
+            results = (
+                GenericResults(
+                    active_user, uri, method
+                ).information_retrieved(user_data, count)
+            ) 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -404,9 +404,16 @@ class UsersHandler(BaseHandler):
             if not isinstance(usernames, list):
                 usernames = usernames.split()
 
-            results = remove_users(
-                usernames, active_user, uri, method
-            )
+            if not active_user in usernames:
+                results = remove_users(
+                    usernames, active_user, uri, method
+                )
+            else:
+                results = (
+                    GenericResults(
+                        active_user, uri, method
+                    ).something_broke(active_user, 'User', 'can not delete yourself')
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

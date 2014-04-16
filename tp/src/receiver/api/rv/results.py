@@ -14,7 +14,6 @@ from vFense.server.hierarchy.decorators import convert_json_to_arguments
 from vFense.db.update_table import AddAppResults
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import OperationCodes
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

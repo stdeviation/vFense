@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense.db.client import db_create_close, r
-from vFense.errorz.status_codes import OperationCodes
+from vFense.errorz.status_codes import AgentOperationCodes
 from vFense.operations import *
 from vFense.notifications import *
 from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
@@ -12,11 +12,11 @@ logger = logging.getLogger('rvapi')
 
 def translate_opercodes_to_notif_threshold(oper_codes):
     threshold = None
-    if oper_codes == OperationCodes.ResultsCompleted:
+    if oper_codes == AgentOperationCodes.ResultsCompleted:
         threshold = 'pass'
-    elif oper_codes == OperationCodes.ResultsCompletedFailed:
+    elif oper_codes == AgentOperationCodes.ResultsCompletedFailed:
         threshold = 'fail'
-    elif oper_codes == OperationCodes.ResultsCompletedWithErrors:
+    elif oper_codes == AgentOperationCodes.ResultsCompletedWithErrors:
         threshold = 'fail'
 
     return(threshold)

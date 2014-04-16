@@ -698,12 +698,12 @@ class FetchAgents(object):
     def _set_agent_base_query(self):
         base_filter = (
             r
-            .table(AgentCollections.Agent)
+            .table(AgentCollections.Agents)
         )
         if self.customer_name:
             base_filter = (
                 r
-                .table(AgentCollections.Agent)
+                .table(AgentCollections.Agents)
                 .get_all(
                     self.customer_name,
                     index=AgentKey.CustomerName
@@ -745,7 +745,7 @@ class FetchAgents(object):
                 )
                 .eq_join(
                     HardwarePerAgentKey.AgentId,
-                    r.table(AgentCollections.Agent)
+                    r.table(AgentCollections.Agents)
                 )
                 .zip()
             )

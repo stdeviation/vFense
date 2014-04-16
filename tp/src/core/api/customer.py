@@ -266,6 +266,16 @@ class CustomerHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
+            else:
+                results = (
+                    GenericResults(
+                        active_user, uri, method
+                    ).incorrect_arguments()
+                )
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
         except Exception as e:
             results = (
                 GenericResults(

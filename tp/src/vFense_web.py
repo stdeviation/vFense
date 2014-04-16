@@ -92,12 +92,6 @@ class Application(tornado.web.Application):
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
 
-            ##### User and Groups API
-            #(r"/api/user/?", GetUserApi),
-            #(r"/api/users/?", GetUsersApi),
-
-            #(r"/api/groups/?", GetGroupApi),
-
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
             (r"/api/v1/users?", UsersHandler),
@@ -108,8 +102,6 @@ class Application(tornado.web.Application):
 
             ##### New Customer API
             (r'/api/v1/customer/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', CustomerHandler),
-            #(r'/api/v1/customer/((?:\w(?!\s+")+|\s(?!\s*"))+\w)?', CustomerHandler),
-            #(r"/api/v1/customer/([a-zA-Z0-9_ ]+)?", CustomerHandler),
             (r"/api/v1/customers?", CustomersHandler),
 
             ##### Notification API

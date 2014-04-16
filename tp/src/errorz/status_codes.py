@@ -144,6 +144,14 @@ class AgentCodes(object):
     AgentsUpdated = 3012
 
 
+class AgentResultCodes(object):
+    NewAgentSucceeded = 3200
+
+
+class AgentFailureResultCodes(object):
+    NewAgentFailed = 3300
+
+
 class AgentFailureCodes(object):
     AgentsFailedToDelete = 3500
     AgentsFailedToUpdate = 3501
@@ -184,7 +192,7 @@ class PackageCodes(object):
     PackagesDeletionFailed = 518
 
 
-class OperationCodes(object):
+class AgentOperationCodes(object):
     Created = 6000
     Updated = 6001
     #Apps Results Codes For Operations

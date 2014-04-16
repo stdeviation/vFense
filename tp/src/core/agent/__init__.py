@@ -1,5 +1,5 @@
 class AgentCollections():
-    Agent = 'agents'
+    Agents = 'agents'
     Hardware = 'hardware_per_agent'
 
 

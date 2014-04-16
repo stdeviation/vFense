@@ -7,7 +7,7 @@ from time import mktime
 
 from vFense.db.client import r
 from vFense.db.notificationhandler import *
-from vFense.errorz.error_messages import GenericResults, OperationCodes
+from vFense.errorz.error_messages import GenericResults, AgentOperationCodes
 from vFense.utils.common import *
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agent_info, update_agent_field
@@ -17,11 +17,10 @@ from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching.os_apps.incoming_updates import \
     incoming_packages_from_agent
 from vFense.operations import *
-from vFense.operations.operation_manager import Operation, \
-    oper_with_appid_exists, oper_with_agentid_exists
-from vFense.operations.operation_manager import get_oper_info
+from vFense.operations.agent_operations import AgentOperation, \
+    operation_for_agent_and_app_exist, operation_for_agent_exist, \
+    get_agent_operation
 
-from vFense.plugins import ra
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -42,7 +41,7 @@ class AddResults(object):
         self.error = error
         self.success = success
         self.operation = (
-            Operation(
+            AgentOperation(
                 self.username, self.customer_name,
                 self.uri, self.method
             )
@@ -80,7 +79,7 @@ class AddResults(object):
     def _update_operation(self, oper_type):
         try:
             oper_exists = (
-                oper_with_agentid_exists(
+                operation_for_agent_exist(
                     self.operation_id, self.agent_id
                 )
             )
@@ -90,7 +89,7 @@ class AddResults(object):
                     results = (
                         self.operation.update_operation_results(
                             self.operation_id, self.agent_id,
-                            OperationCodes.ResultsReceived,
+                            AgentOperationCodes.ResultsReceived,
                             oper_type, self.error
                         )
                     )
@@ -99,7 +98,7 @@ class AddResults(object):
                     results = (
                         self.operation.update_operation_results(
                             self.operation_id, self.agent_id,
-                            OperationCodes.ResultsReceivedWithErrors,
+                            AgentOperationCodes.ResultsReceivedWithErrors,
                             oper_type, self.error
                         )
                     )
@@ -143,7 +142,7 @@ class AddAppResults(object):
         self.apps_to_delete = apps_to_delete
         self.apps_to_add = apps_to_add
         self.app_id = app_id
-        self.oper_info=get_oper_info(operid=self.operation_id)
+        self.oper_info=get_agent_operation(self.operation_id)
         self.operation = (
             Operation(
                 self.username, self.customer_name,
@@ -214,7 +213,7 @@ class AddAppResults(object):
 
             app_exist = get_app_data(self.app_id, table=self.CurrentAppsCollection)
             oper_app_exists = (
-                oper_with_appid_exists(
+                operation_for_agent_and_app_exist(
                     self.operation_id, self.agent_id, self.app_id
                 )
             )
@@ -223,7 +222,7 @@ class AddAppResults(object):
                     results = (
                         self.operation.update_app_results(
                             self.operation_id, self.agent_id,
-                            self.app_id, OperationCodes.ResultsReceived,
+                            self.app_id, AgentOperationCodes.ResultsReceived,
                             errors=self.error
                         )
                     )
@@ -257,7 +256,7 @@ class AddAppResults(object):
                     results = (
                         self.operation.update_app_results(
                             self.operation_id, self.agent_id,
-                            self.app_id, OperationCodes.ResultsReceivedWithErrors,
+                            self.app_id, AgentOperationCodes.ResultsReceivedWithErrors,
                             errors=self.error
                         )
                     )

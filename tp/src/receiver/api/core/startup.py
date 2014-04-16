@@ -12,8 +12,8 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.core.agent.agents import update_agent
 from vFense.core.queue.uris import get_result_uris
 
-from vFense.operations._constants import ValidOperations
-from vFense.operations import OperationKey
+from vFense.operations._constants import AgentOperations
+from vFense.operations import AgentOperationKey
 
 from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff
@@ -48,8 +48,8 @@ class StartUpV1(BaseHandler):
                 )
             )
             uris = get_result_uris(agent_id, username, uri, method)
-            uris[OperationKey.Operation] = (
-                ValidOperations.REFRESH_RESPONSE_URIS
+            uris[AgentOperationKey.Operation] = (
+                AgentOperations.REFRESH_RESPONSE_URIS
             )
             agent_data.pop('data')
             agent_data['data'] = [uris]

@@ -3,9 +3,9 @@ import logging.config
 
 from vFense.core.queue.queue import AgentQueue
 from vFense.settings import Default
-from vFense.operations.operation_manager import Operation
+from vFense.operations.agent_operations import AgentOperation
 
-from vFense.errorz.error_messages import OperationCodes
+from vFense.errorz.error_messages import AgentOperationCodes
 
 from vFense.plugins import ra
 from vFense.plugins.ra import DesktopProtocol
@@ -17,7 +17,7 @@ logger = logging.getLogger('raapi')
 def save_operation(operation):
 
     _oper = (
-        Operation(
+        AgentOperation(
             operation.username, operation.customer,
             operation.uri, operation.method
         )
@@ -64,7 +64,7 @@ def save_result(
     operation_type
 ):
     try:
-        operation = Operation(
+        operation = AgentOperation(
             Default.User,
             None,
             uri,
@@ -76,7 +76,7 @@ def save_result(
             results = operation.update_operation_results(
                 operation_id,
                 agent_id,
-                OperationCodes.ResultsReceived,
+                AgentOperationCodes.ResultsReceived,
                 operation_type,
                 error
             )
@@ -86,7 +86,7 @@ def save_result(
             results = operation.update_operation_results(
                 operation_id,
                 agent_id,
-                OperationCodes.ResultsReceivedWithErrors,
+                AgentOperationCodes.ResultsReceivedWithErrors,
                 operation_type,
                 error
             )

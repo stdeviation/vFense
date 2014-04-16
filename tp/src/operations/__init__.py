@@ -1,3 +1,10 @@
+class OperationCollections():
+    Agent = 'agent_operations'
+    OperationPerAgent = 'operation_per_agent'
+    OperationPerApp = 'operation_per_app'
+    Admin = 'admin_operations'
+
+
 OperationsCollection = 'operations'
 OperationsPerAgentCollection = 'operation_per_agent'
 OperationsPerAppCollection = 'operation_per_app'
@@ -40,10 +47,24 @@ VALID_OPERATIONS = (
     UPDATES_APPLICATIONS
 )
 
-class OperationKey():
+class AdminOperationKey():
+    OperationId = 'operation_id'
+    CreatedBy = 'created_by'
+    CreatedTime = 'created_time'
+    StatusMessage = 'status_message'
+    StatusCode = 'status_code'
+    Action = 'action'
+    ActionPerformedOn = 'action_performed_on'
+    IdsCreated = 'ids_created'
+    IdsUpdated = 'ids_updated'
+    IdsRemoved = 'ids_removed'
+
+
+class AgentOperationKey():
     OperationId = 'operation_id'
     Operation = 'operation'
     OperationStatus = 'operation_status'
+    ActionPerformedOn = 'action_performed_on'
     CreatedTime = 'created_time'
     UpdatedTime = 'updated_time'
     CompletedTime = 'completed_time'
@@ -65,7 +86,7 @@ class OperationKey():
     NetThrottle = 'net_throttle'
 
 
-class OperationIndexes():
+class AgentOperationIndexes():
     TagId = 'tag_id'
     CustomerName = 'customer_name'
     Operation = 'operation'
