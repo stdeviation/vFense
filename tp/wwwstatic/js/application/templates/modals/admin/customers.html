@@ -5,7 +5,7 @@
                 <strong class="span5">Edit customers for user: </strong>
                 <span class="span6">
                     <select id="customerContext" name="users">
-                        <%= viewHelpers.getOptions(users) %>
+                        <%= viewHelpers.getOptions(users, loggedInUser) %>
                     </select>
                 </span>
             </div>

@@ -31,6 +31,7 @@ define(
                     this.groupCollection.fetch();
 
                     $.ajaxSetup({traditional: true});
+                    return this;
                 },
                 events: {
                     'click button[name=toggleAcl]':     'toggleAclAccordion',
@@ -65,19 +66,18 @@ define(
                     event.preventDefault();
                     var $addUserDiv = this.$('#newUserDiv');
                     $addUserDiv.toggle();
+                    return this;
                 },
                 confirmDelete: function (event) {
                     var $parentDiv = $(event.currentTarget).parent();
                     $parentDiv.children().toggle();
+                    return this;
                 },
                 deleteUser: function (event) {
                     var $deleteButton = $(event.currentTarget),
                         $userRow = $deleteButton.parents('.item'),
                         $alert = this.$el.find('div.alert'),
                         user = $deleteButton.val();
-                       /* params = {
-                            username: user
-                        };*/
                     $.ajax({
                         type: 'DELETE',
                         url: '/api/v1/user/' + user,
@@ -92,20 +92,14 @@ define(
                             }
                         }
                     });
-                   /* $.post('api/v1/users', params, function (json) {
-                        if (json.rv_status_code) {
-                            $userRow.remove();
-                            $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(json.message);
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(json.message);
-                        }
-                    });*/
+                    return this;
                 },
                 verifyForm: function (event) {
                     var form = document.getElementById('newUserDiv');
                     if (form.checkValidity()) {
                         this.submitNewUser(event);
                     }
+                    return this;
                 },
                 submitNewUser: function (event) {
                     event.preventDefault();
@@ -147,19 +141,13 @@ define(
                             }
                         }
                     }).error(function (e) { window.console.log(e.statusText); });
-                    /*$.post('/api/v1/users', params, function (json) {
-                        if (json.rv_status_code) {
-                            that.collection.fetch();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').html(json.message).show();
-                        }
-                    }).error(function (e) { window.console.log(e.statusText); });*/
+                    return this;
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         username = $input.data('user'),
                         groupId = $input.data('id'),
-                        url = $input.data('url') + '/' + groupId,
+                        url = $input.data('url') + '/' + username,
                         $alert = this.$el.find('div.alert'),
                         params,
                         users = [],
@@ -167,13 +155,12 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
-                        usernames: users,//event.added ? event.added.text : event.removed.text,
+                        group_ids: groups,//event.added ? event.added.text : event.removed.text,
                         action: event.added ? 'add' : 'delete'
                     };
-                    console.log(groupId);
                     $.ajax({
                         type: 'POST',
-                        url: url,
+                        url: url + '?' + $.param(params),
                         data: JSON.stringify(params),
                         dataType: 'json',
                         contentType: 'application/json',
@@ -185,13 +172,7 @@ define(
                             }
                         }
                     }).error(function (e) { window.console.log(e.responseText); });
-                    /*$.post(url, params, function (response) {
-                        if (response.rv_status_code) {
-                            $alert.hide();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
-                        }
-                    }).error(function (e) { window.console.log(e.responseText); });*/
+                    return this;
                 },
                 beforeRender: $.noop,
                 onRender: function () {
@@ -201,37 +182,77 @@ define(
                         that = this;
                     $groups.select2({width: '100%'});
                     $customers.select2({width: '100%'});
-                    $select.select2({
-                        width: '100%',
-                        multiple: true,
-                        initSelection: function (element, callback) {
-                            var data = JSON.parse(element.val()),
-                                results = [];
-                            _.each(data, function (object) {
-                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                    _.each($select, function(select) {
+                        if($(select).data('user') === 'admin')
+                        {
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
+                                        results.push({locked: true, id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                    });
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(that).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            customer_name: that.customerContext
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
+                                }
                             });
-                            callback(results);
-                        },
-                        ajax: {
-                            url: function () {
-                                return $(that).data('url');
-                            },
-                            data: function () {
-                                return {
-                                    customer_name: that.customerContext
-                                };
-                            },
-                            results: function (data) {
-                                var results = [];
-                                if (data.rv_status_code === 1001) {
-                                    _.each(data.data, function (object) {
+                        }
+                        else
+                        {
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
                                         results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
                                     });
-                                    return {results: results, more: false, context: results};
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(that).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            customer_name: that.customerContext
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
                                 }
-                            }
+                            });
                         }
                     });
+                    return this;
                 },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }

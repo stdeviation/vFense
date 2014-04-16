@@ -8,12 +8,6 @@ define(
                 url: function () {
                     return this.baseUrl + '?' + $.param(this.params);
                 }
-                /*url: function () {
-                    return this.baseUrl;
-                },
-                parse: function (response) {
-                    return response.rv_status_code === 1001 ? response.data : [];
-                }*/
             }),
             UserCollection: Backbone.Collection.extend({
                 baseUrl: 'api/v1/users',
@@ -68,10 +62,6 @@ define(
                         $icon = $href.parents('.accordion-group').find('.accordion-heading').find('i');
                         $icon.toggleClass('icon-circle-arrow-down icon-circle-arrow-up');
                     }
-
-//                    editCustomerForm.removeClass('hide');
-//                    $accordionBody.html(editCustomerForm);
-//                    editCustomerForm.toggle();
                     $accordionBody.unbind().collapse('toggle');
                     $accordionBody.on('hidden', function (event) {
                         event.stopPropagation();
@@ -99,28 +89,6 @@ define(
                         url: 'api/v1/customer',
                         customers: app.user.toJSON().customers
                     }).open();
-                    /*var $deleteButton = $(event.currentTarget),
-                        $customerRow = $deleteButton.parents('.item'),
-                        $alert = this.$el.find('div.alert'),
-                        customer = $deleteButton.val();
-                    console.log(customer);
-                    *//* params = {
-                     username: user
-                     };*//*
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/api/v1/customer/' + customer,
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        success: function(response){
-                            if (response.rv_status_code) {
-                                $customerRow.remove();
-                                $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(response.message);
-                            } else {
-                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
-                            }
-                        }
-                    });*/
                     return this;
                 },
                 createCustomer: function (event) {
@@ -134,6 +102,7 @@ define(
                     if (form.checkValidity()) {
                         this.submitCustomer(event);
                     }
+                    return this;
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
@@ -200,14 +169,7 @@ define(
                             }
                         }
                     });
-                    /*$.post(url, params, function (json) {
-                     if (json.rv_status_code) {
-                     app.vent.trigger('customer:change', null);
-                     that.collection.fetch();
-                     } else {
-                     app.notifyOSD.createNotification('!', 'Error', json.message);
-                     }
-                     });*/
+                    return this;
                 },
                 beforeRender: $.noop,
                 onRender: function () {
@@ -249,6 +211,7 @@ define(
                             }
                         }
                     });
+                    return this;
                 },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
@@ -264,6 +227,7 @@ define(
                             data: data.data,
                             users: users.data,
                             customers: customers.customers,
+                            loggedInUser: customers.user_name,
                             viewHelpers: {
                                 getOptions: function (options, selected) {
                                     var select = crel('select'), attributes;
@@ -271,12 +235,12 @@ define(
                                     if (options.length) {
                                         _.each(options, function (option) {
                                             if (_.isUndefined(option.administrator) || option.administrator) {
-                                                if(option.user_name)
-                                                {
+//                                                if(option.user_name)
+//                                                {
                                                     attributes = {value: option.user_name};
                                                     if (selected && option.user_name === selected) {attributes.selected = selected;}
                                                     select.appendChild(crel('option', attributes, option.user_name));
-                                                }
+//                                                }
                                             }
                                         });
                                     }
@@ -319,97 +283,11 @@ define(
                         };
                         this.$el.empty();
                         this.$el.html(template(payload));
+                        console.log(payload);
                         if (this.onRender !== $.noop) { this.onRender(); }
                     }
-
-
-                   /* var $el = this.$el;
-                    if ($el.children().length === 0) {
-                        $el.html(this.layout());
-                    }
-                    this.renderHeader();
-                    this.renderList();*/
-
                     return this;
                 }
-               /* layout: function () {
-                    var fragment = document.createDocumentFragment();
-                    fragment.appendChild(
-                        crel('section', {class: 'list'},
-                            crel('header', {class: 'row-fluid clearfix', id: 'header'}),
-                            crel('header', {class: 'row-fluid clearfix hide', id: 'toggleDiv'}),
-                            crel('div', {class: 'items'})
-                        )
-                    );
-                    return fragment;
-                },*/
-                /*,
-                deleteCustomer: function () {
-                    var $button = this.$('button.btn-danger'),
-                        customer = this.name,
-                        url = '/api/v1/customers',
-                        that = this,
-                        params = {
-                            name: customer
-                        };
-                    if (!$button.hasClass('disabled')) {
-                        $.post(url, params, function (json) {
-                            if (json.rv_status_code) {
-                                app.vent.trigger('customer:change', null);
-                                that.collection.fetch();
-                            } else {
-                                app.notifyOSD.createNotification('!', 'Error', json.message);
-                            }
-                        });
-                    }
-                },
-                renderHeader: function () {
-                    var $header = this.$('#header'),
-                        $toggleDiv = this.$('#toggleDiv');
-                    $header.empty();
-                    $toggleDiv.empty();
-                    $header.append(
-                        crel('span', {class: 'pull-right'},
-                            crel('button', {class: 'btn btn-mini', 'data-id': 'toggleCustomer'},
-                                crel('i', {class : 'icon-plus', style: 'color: green'}),
-                                crel('strong', ' Create Customer')
-                            )
-                        )
-                    );
-                    $toggleDiv.append(
-                        crel('span',
-                            crel('input', {type: 'text', placeholder: 'New Customer', id: 'customerInput'})
-                        ),
-                        crel('span', {class: 'pull-right'},
-                            crel('button', {class: 'btn btn-mini btn-danger', 'data-id': 'toggleCustomer'}, 'Cancel'),  ' ',
-                            crel('button', {class: 'btn btn-mini btn-primary', 'data-id': 'submitCustomer'}, 'Submit')
-                        )
-                    );
-                },
-                renderList: function () {
-                    var $list = this.$('.items'),
-                        data = this.collection.toJSON();
-                    $list.empty();
-                    if (data.length) {
-                        _.each(data, function (item) {
-                            $list.append(
-                                crel('div', {class: 'item row-fluid'}, item.customer_name,
-                                    crel('span', {class: 'pull-right'},
-                                        crel('button', {class: 'btn btn-link noPadding', 'data-id': 'toggleDelete', 'data-customer_name': item.customer_name},
-                                            crel('i', {class: 'icon-remove', style: 'color: red'})
-                                        ),
-                                        crel('button', {class: 'btn btn-mini btn-danger hide', 'data-id': 'deleteCustomer'}, 'Delete'), ' ',
-                                        crel('button', {class: 'btn btn-mini hide', 'data-id': 'toggleDelete'}, 'Cancel')
-                                    )
-                                )
-                            );
-                        });
-                    } else {
-                        $list.append(
-                            crel('div', {class: 'item row-fluid'}, 'No Customers Available')
-                        );
-                    }
-                }*/
             })
         };
         return exports;

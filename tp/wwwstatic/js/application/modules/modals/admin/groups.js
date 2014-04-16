@@ -24,6 +24,7 @@ define(
                     this.listenTo(this.collection, 'sync', this.render);
                     this.collection.fetch();
                     this.permissions.fetch();
+                    return this;
                 },
                 events: {
                     'click button[name=addGroup]':          'toggleCreateGroup',
@@ -37,7 +38,7 @@ define(
                     'change #customerContext':              'changeCustomerContext'
                 },
                 changeCustomerContext: function (event) {
-                    this.collection.params.customer_name = this.customerContext = event.val;
+                    this.collection.params.customer_context = this.customerContext = event.val;
                     this.collection.fetch();
                     return this;
                 },
@@ -50,6 +51,7 @@ define(
                     }
                     $span.toggle();
                     $button.toggle();
+                    return this;
                 },
                 deleteGroup: function (event) {
                     var $button = $(event.currentTarget),
@@ -57,10 +59,6 @@ define(
                         $groupRow = $button.parents('.item'),
                         groupId = $button.attr('value'),
                         url = 'api/v1/groups',
-                        /*params = {
-                            id: groupId,
-                            customer_context: this.customerContext
-                        },*/
                         that = this;
                     $.ajax({
                         type: 'DELETE',
@@ -78,15 +76,12 @@ define(
                             }
                         }
                     });
-                   /* $.post(url, params, function (json) {
-                        if (json.rv_status_code) {
-                            that.collection.fetch();
-                        }
-                    });*/
+                    return this;
                 },
                 toggleCreateGroup: function () {
                     var $newGroupDiv = this.$el.find('#newGroupDiv');
                     $newGroupDiv.toggle();
+                    return this;
                 },
                 submitGroup: function (event) {
                     var params, that = this,
@@ -123,14 +118,7 @@ define(
                             }
                         }
                     });
-                    /*$.post(url, params, function (json) {
-                        if (json.rv_status_code) {
-                            $alert.hide();
-                            that.collection.fetch();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().html(json.message);
-                        }
-                    });*/
+                    return this;
                 },
                 toggleAccordion: function (event) {
                     var $href = $(event.currentTarget),
@@ -143,6 +131,7 @@ define(
                     $body.on('hidden', function (event) {
                         event.stopPropagation();
                     });
+                    return this;
                 },
                 toggleUser: function (event) {
                     var url = 'api/v1/groups',
@@ -160,6 +149,7 @@ define(
                             $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
                         }
                     }).error(function (e) { window.console.log(e.responseText); });
+                    return this;
                 },
                 togglePermission: function (event) {
                     var $input = $(event.currentTarget),
@@ -179,6 +169,7 @@ define(
                             $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
                         }
                     });
+                    return this;
                 },
                 beforeRender: $.noop,
                 onRender: $.noop,
@@ -186,6 +177,7 @@ define(
                     this.$el.find('label').show();
                     var $customers = this.$('select[name="customers"]');
                     $customers.select2({width: '100%'});
+                    return this;
                 },
                 renderPermissions: function () {
                     var permissions = this.permissions.toJSON()[0],
@@ -211,6 +203,7 @@ define(
                         });
                         this.checkPermissions();
                     }
+                    return this;
                 },
                 checkPermissions: function () {
                     var groups = this.collection.toJSON()[0],
@@ -227,6 +220,7 @@ define(
                             }
                         });
                     }
+                    return this;
                 },
                 renderItems: function () {
                     var $items = this.$el.find('.items'),
@@ -267,6 +261,7 @@ define(
                         $items.append(fragment);
                         this.initSelect();
                     }
+                    return this;
                 },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
