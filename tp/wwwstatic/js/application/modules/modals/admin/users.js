@@ -147,7 +147,7 @@ define(
                     var $input = $(event.currentTarget),
                         username = $input.data('user'),
                         groupId = $input.data('id'),
-                        url = $input.data('url') + '/' + username,
+                        url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
                         params,
                         users = [],
@@ -198,7 +198,7 @@ define(
                                 },
                                 ajax: {
                                     url: function () {
-                                        return $(that).data('url');
+                                        return $(select).data('url');
                                     },
                                     data: function () {
                                         return {
@@ -232,7 +232,7 @@ define(
                                 },
                                 ajax: {
                                     url: function () {
-                                        return $(that).data('url');
+                                        return $(select).data('url');
                                     },
                                     data: function () {
                                         return {
@@ -312,17 +312,17 @@ define(
                                         )
                                     );
                                     /*if (user.user_name !== 'admin') {
-                                        fragment.appendChild(
-                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
-                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
-                                                crel('span', user.user_name)
-                                            )
-                                        );
-                                    } else {
-                                        fragment.appendChild(
-                                            crel('strong', user.user_name)
-                                        );
-                                    }*/
+                                     fragment.appendChild(
+                                     crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                     crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                     crel('span', user.user_name)
+                                     )
+                                     );
+                                     } else {
+                                     fragment.appendChild(
+                                     crel('strong', user.user_name)
+                                     );
+                                     }*/
                                     return fragment.innerHTML;
                                 }
                             }

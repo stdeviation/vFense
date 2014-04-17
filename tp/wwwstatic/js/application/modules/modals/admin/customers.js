@@ -108,7 +108,7 @@ define(
                     var $input = $(event.currentTarget),
                         customername = $input.data('customer'),
                         groupId = $input.data('id'),
-                        url = $input.data('url') + '/' + customername,
+                        url = 'api/v1/customer/' + customername,
                         $alert = this.$el.find('div.alert'),
                         params,
                         customers = [],
@@ -179,37 +179,40 @@ define(
                         that = this;
                     $users.select2({width: '100%'});
 //                    $customers.select2({width: '100%'});
-                    $select.select2({
-                        width: '100%',
-                        multiple: true,
-                        initSelection: function (element, callback) {
-                            var data = JSON.parse(element.val()),
-                                results = [];
+                    _.each($select, function(select) {
+                        $(select).select2({
+                            width: '100%',
+                            multiple: true,
+                            initSelection: function (element, callback) {
+                                var data = JSON.parse(element.val()),
+                                    results = [];
 
-                            _.each(data, function (object) {
-                                results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
-                            });
-                            callback(results);
-                        },
-                        ajax: {
-                            url: function () {
-                                return $(that).data('url');
+                                _.each(data, function (object) {
+                                    results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
+                                });
+                                callback(results);
                             },
-                            data: function () {
-                                return {
-                                    customer_name: that.customerContext
-                                };
-                            },
-                            results: function (data) {
-                                var results = [];
-                                if (data.rv_status_code === 1001) {
-                                    _.each(data.data, function (object) {
-                                        results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
-                                    });
-                                    return {results: results, more: false, context: results};
+                            ajax: {
+                                url: function () {
+                                    console.log(select);
+                                    return $(select).data('url');
+                                },
+                                data: function () {
+                                    return {
+                                        customer_name: that.customerContext
+                                    };
+                                },
+                                results: function (data) {
+                                    var results = [];
+                                    if (data.rv_status_code === 1001) {
+                                        _.each(data.data, function (object) {
+                                            results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
+                                        });
+                                        return {results: results, more: false, context: results};
+                                    }
                                 }
                             }
-                        }
+                        });
                     });
                     return this;
                 },
@@ -237,9 +240,9 @@ define(
                                             if (_.isUndefined(option.administrator) || option.administrator) {
 //                                                if(option.user_name)
 //                                                {
-                                                    attributes = {value: option.user_name};
-                                                    if (selected && option.user_name === selected) {attributes.selected = selected;}
-                                                    select.appendChild(crel('option', attributes, option.user_name));
+                                                attributes = {value: option.user_name};
+                                                if (selected && option.user_name === selected) {attributes.selected = selected;}
+                                                select.appendChild(crel('option', attributes, option.user_name));
 //                                                }
                                             }
                                         });
@@ -249,12 +252,12 @@ define(
                                 renderDeleteButton: function (customer) {
                                     var fragment;
 //                                    if (customer.customer_name !== 'default') {
-                                        fragment = crel('div');
-                                        fragment.appendChild(
-                                            crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
-                                                crel('i', {class: 'icon-remove', style: 'color: red'}))
-                                        );
-                                        return fragment.innerHTML;
+                                    fragment = crel('div');
+                                    fragment.appendChild(
+                                        crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
+                                            crel('i', {class: 'icon-remove', style: 'color: red'}))
+                                    );
+                                    return fragment.innerHTML;
 //                                    }
                                 },
                                 renderCustomerLink: function (customer) {
@@ -265,25 +268,24 @@ define(
                                             crel('span', customer.customer_name)
                                         )
                                     );
-                                   /* if (customer.customer_name !== 'default') {
-                                        fragment.appendChild(
-                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
-                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
-                                                crel('span', customer.customer_name)
-                                            )
-                                        );
-                                    } else {
-                                        fragment.appendChild(
-                                            crel('strong', customer.customer_name)
-                                        );
-                                    }*/
+                                    /* if (customer.customer_name !== 'default') {
+                                     fragment.appendChild(
+                                     crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                     crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                     crel('span', customer.customer_name)
+                                     )
+                                     );
+                                     } else {
+                                     fragment.appendChild(
+                                     crel('strong', customer.customer_name)
+                                     );
+                                     }*/
                                     return fragment.innerHTML;
                                 }
                             }
                         };
                         this.$el.empty();
                         this.$el.html(template(payload));
-                        console.log(payload);
                         if (this.onRender !== $.noop) { this.onRender(); }
                     }
                     return this;
@@ -293,3 +295,4 @@ define(
         return exports;
     }
 );
+
