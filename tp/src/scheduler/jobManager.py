@@ -511,7 +511,7 @@ def scheduled_install_operation(job_info, customer_name,
             oper = (
                 store_operation.install_os_apps(
                     job_info['app_ids'],
-                    agentids=job_info['agent_ids'],
+                    agentids=agent_ids,
                     tag_id=job_info['tag_ids'],
                     restart=None
                 )
@@ -522,7 +522,7 @@ def scheduled_install_operation(job_info, customer_name,
             oper = (
                 store_operation.install_custom_apps(
                     job_info['app_ids'],
-                    agentids=job_info['agent_ids'],
+                    agentids=agent_ids,
                     tag_id=job_info['tag_ids'],
                     restart=None
                 )
@@ -533,7 +533,7 @@ def scheduled_install_operation(job_info, customer_name,
             oper = (
                 store_operation.install_supported_apps(
                     job_info['app_ids'],
-                    agentids=job_info['agent_ids'],
+                    agentids= agent_ids,
                     tag_id=job_info['tag_ids'],
                     restart=None
                 )
