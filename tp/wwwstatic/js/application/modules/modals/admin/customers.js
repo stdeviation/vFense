@@ -19,6 +19,7 @@ define(
                 initialize: function () {
                     var that = this;
                     this.template = _.template(CustomersTemplate);
+                    this.customerContext = app.user.toJSON().current_customer;
                     this.collection = new exports.Collection();
                     this.listenTo(this.collection, 'sync', this.render);
                     this.collection.fetch();
@@ -38,10 +39,11 @@ define(
                     'click button[name=cancelEditCustomer]' :   'toggleAclAccordion',
                     'click #submitCustomer'                 :   'verifyForm',
                     'click button[name=submitEditCustomer]' :   'verifyForm',
-                    'change #customerContext'               :   'changeCustomerContext'
+                    'change #userContext'                   :   'changeUserContext'
                 },
-                changeCustomerContext: function (event) {
-                    this.collection.params.customer_name = this.customerContext = event.val;
+                changeUserContext: function (event) {
+                    this.collection.params.user_name = this.userContext = event.val;
+                    console.log(this.collection.params.user_name);
                     this.collection.fetch();
                     return this;
                 },
@@ -119,7 +121,6 @@ define(
                         customer_names: customers,//event.added ? event.added.text : event.removed.text,
                         action: event.added ? 'add' : 'delete'
                     };
-                    console.log(customername);
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -194,7 +195,6 @@ define(
                             },
                             ajax: {
                                 url: function () {
-                                    console.log(select);
                                     return $(select).data('url');
                                 },
                                 data: function () {
@@ -230,9 +230,10 @@ define(
                             data: data.data,
                             users: users.data,
                             customers: customers.customers,
-                            loggedInUser: customers.user_name,
+                            userContext: this.userContext,
                             viewHelpers: {
                                 getOptions: function (options, selected) {
+                                    console.log(selected);
                                     var select = crel('select'), attributes;
                                     selected = selected || false;
                                     if (options.length) {
