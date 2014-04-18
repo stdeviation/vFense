@@ -34,16 +34,26 @@ define(
                     return this;
                 },
                 events: {
-                    'click button[name=toggleAcl]':     'toggleAclAccordion',
-                    'click button[name=toggleDelete]':  'confirmDelete',
-                    'change input[name=groupSelect]':   'toggle',
-                    'change input[name=customerSelect]':'toggle',
-                    'click button[name=deleteUser]':    'deleteUser',
-                    'click #cancelNewUser':             'displayAddUser',
-                    'click #submitUser':                'verifyForm',
-                    'click #addUser':                   'displayAddUser',
-                    'change #customerContext':          'changeCustomerContext',
-                    'submit form':                      'submit'
+                    'click button[name=toggleAcl]'      :   'toggleAclAccordion',
+                    'click button[name=toggleDelete]'   :   'confirmDelete',
+                    'change input[name=groupSelect]'    :   'toggle',
+                    'change input[name=customerSelect]' :   'toggle',
+                    'change select[name=groups]'        :   'retrieveGroups',
+                    'change select[name=customers]'     :   'retrieveCustomers',
+                    'click button[name=deleteUser]'     :   'deleteUser',
+                    'click #cancelNewUser'              :   'displayAddUser',
+                    'click #submitUser'                 :   'verifyForm',
+                    'click #addUser'                    :   'displayAddUser',
+                    'change #customerContext'           :   'changeCustomerContext',
+                    'submit form'                       :   'submit'
+                },
+                retrieveGroups: function(event) {
+                    this.groupsArray = event.val;
+                    return this;
+                },
+                retrieveCustomers: function(event) {
+                    this.customersArray = event.val;
+                    return this;
                 },
                 changeCustomerContext: function (event) {
                     this.collection.params.customer_context = this.customerContext = event.val;
@@ -107,8 +117,8 @@ define(
                         email = this.$el.find('#email').val(),
                         username = this.$el.find('#username').val(),
                         password = this.$el.find('#password').val(),
-                        group = this.$el.find('select[name=groups]').val(),
-                        customers = this.$el.find('select[name=customers]').val(),
+                        group = this.$el.find('select[name=groups]').select2('val'),
+                        customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
                             fullname: fullName,
@@ -119,14 +129,9 @@ define(
                         },
                         that = this;
 
-                    if (group && group.length) {
-                        params.group_ids = group;
-                    }
-                    if (customers && customers.length) {
-                        var customerArray = [];
-                        customerArray.push(customers)
-                        params.customer_names = customerArray;
-                    }
+                    params.group_ids = this.groupsArray;
+                    params.customer_names = this.customersArray;
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/v1/users',
