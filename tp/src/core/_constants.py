@@ -1,6 +1,8 @@
 class CommonKeys():
     YES = 'yes'
     NO = 'no'
+    TRUE = 'true'
+    FALSE = 'false'
     COUNT = 'count'
     DETAILS = 'details'
     GROUP = 'group'

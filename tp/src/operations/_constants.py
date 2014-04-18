@@ -1,3 +1,24 @@
+class vFensePlugins():
+    RV_PLUGIN = 'rv'
+    CORE_PLUGIN = 'core'
+    RA_PLUGIN = 'ra'
+    MONITORING_PLUGIN = 'monitoring'
+    VULNERABILITY = 'vulnerability'
+    PATCHING = 'patching'
+    VALID_PLUGINS = (
+        RV_PLUGIN, CORE_PLUGIN, RA_PLUGIN, MONITORING_PLUGIN,
+        VULNERABILITY, PATCHING
+    )
+
+
+class OperationErrors():
+    EXPIRED = 'Operation expired'
+    PICKEDUP = 'Operation was picked up by the agent'
+    PENDINGPICKUP = 'Operation has not been picked up by the agent'
+    COMPLETED = 'Operation was completed successfully'
+    FAILED = 'Operation completed with errors'
+
+
 class AdminActions():
     CREATE = 'create'
     UPDATE = 'update'

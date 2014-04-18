@@ -1,17 +1,14 @@
 import logging
-import tornado.httpserver
-import tornado.web
 
-import simplejson as json
 from json import dumps
 
-from vFense.receiver.rvhandler import RvHandOff
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from vFense.db.update_table import AddAppResults
+from vFense.plugins.patching.operations.patching_results import PatchingOperationResults
+
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
 
@@ -30,27 +27,34 @@ class InstallOsAppsResults(BaseHandler):
         method = self.request.method
         try:
             logger.info(self.request.body)
-            oper_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data')
+            operation_id = self.arguments.get('operation_id')
+            data = self.arguments.get('data', None)
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
             reboot_required = self.arguments.get('reboot_required')
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
+            status_code = self.arguments.get('status_code', None)
+            print self.arguments
             results = (
-                AddAppResults(
-                    username, uri, method, agent_id,
-                    app_id, oper_id, reboot_required,
-                    success, data, apps_to_delete,
-                    apps_to_add, error
+                PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
             )
-            results_data = results.install_os_apps(data)
+            results_data = (
+                results.install_os_apps(
+                    app_id, reboot_required,
+                    apps_to_delete, apps_to_add
+                )
+            )
+            print results_data
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -74,7 +78,7 @@ class InstallCustomAppsResults(BaseHandler):
         method = self.request.method
         try:
             logger.info(self.request.body)
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
@@ -82,21 +86,26 @@ class InstallCustomAppsResults(BaseHandler):
             reboot_required = self.arguments.get('reboot_required')
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
+            status_code = self.arguments.get('status_code', None)
+            print self.arguments
             results = (
-                AddAppResults(
-                    username, uri, method, agent_id,
-                    app_id, oper_id, reboot_required,
-                    success, data, apps_to_delete,
-                    apps_to_add, error
+                PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
             )
-
-            data = results.install_custom_apps(data)
-
+            results_data = (
+                results.install_custom_apps(
+                    app_id, reboot_required,
+                    apps_to_delete, apps_to_add
+                )
+            )
+            print results_data
             self.set_status(data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -119,7 +128,7 @@ class InstallSupportedAppsResults(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
@@ -127,22 +136,27 @@ class InstallSupportedAppsResults(BaseHandler):
             reboot_required = self.arguments.get('reboot_required')
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
+            status_code = self.arguments.get('status_code', None)
+            print self.arguments
             results = (
-                AddAppResults(
-                    username, uri, method, agent_id,
-                    app_id, oper_id, reboot_required,
-                    success, data, apps_to_delete,
-                    apps_to_add, error
+                PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
             )
-
-            data = results.install_supported_apps(data)
-
+            results_data = (
+                results.install_supported_apps(
+                    app_id, reboot_required,
+                    apps_to_delete, apps_to_add
+                )
+            )
+            print results_data
             self.set_status(data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -166,7 +180,7 @@ class InstallAgentAppsResults(BaseHandler):
         method = self.request.method
         try:
             logger.info(self.request.body)
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
@@ -174,22 +188,29 @@ class InstallAgentAppsResults(BaseHandler):
             reboot_required = self.arguments.get('reboot_required')
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
+            status_code = self.arguments.get('status_code', None)
+            print self.arguments
             results = (
-                AddAppResults(
-                    username, uri, method, agent_id,
-                    app_id, oper_id, reboot_required,
-                    success, data, apps_to_delete,
-                    apps_to_add, error
+                PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
             )
-
+            results_data = (
+                results.install_agent_apps(
+                    app_id, reboot_required,
+                    apps_to_delete, apps_to_add
+                )
+            )
+            print results_data
             data = results.install_agent_update(data)
 
             self.set_status(data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -213,7 +234,7 @@ class UnInstallAppsResults(BaseHandler):
         method = self.request.method
         try:
             logger.info(self.request.body)
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
@@ -221,19 +242,26 @@ class UnInstallAppsResults(BaseHandler):
             reboot_required = self.arguments.get('reboot_required')
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
+            status_code = self.arguments.get('status_code', None)
+            print self.arguments
             results = (
-                AddAppResults(
-                    username, uri, method, agent_id,
-                    app_id, oper_id, reboot_required,
-                    success, data, apps_to_delete,
-                    apps_to_add, error
+                PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
             )
-            results_data = results.install_os_apps(data)
+            results_data = (
+                results.install_os_apps(
+                    app_id, reboot_required,
+                    apps_to_delete, apps_to_add
+                )
+            )
+            print results_data
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(

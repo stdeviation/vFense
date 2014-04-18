@@ -13,22 +13,6 @@ from vFense.utils.common import *
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
-@db_create_close
-def oper_exists(oper_id, conn=None):
-    try:
-        oper_exists = (
-            r
-            .table(OperationsCollection)
-            .get(oper_id)
-            .run(conn)
-        )
-    except Exception as e:
-        logger.exception(e)
-        oper_exists = None
-
-    return(oper_exists)
-
-
 class OperationRetriever(object):
     def __init__(self, username, customer_name,
                  uri, method, count=30,

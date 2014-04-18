@@ -49,7 +49,6 @@ from vFense.plugins.ra.api.status import RDStatusQueue
 from vFense.plugins.ra.api.rdsession import RDSession
 from vFense.plugins.ra.api.settings import SetPassword
 from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.api.transactions_api import *
 from vFense.server.api.log_api import *
 from vFense.server.api.email_api import *
 from vFense.server.api.tag_api import *
@@ -57,10 +56,13 @@ from vFense.server.api.tag_api import *
 #from vFense.server.api.groups_api import *
 #from vFense.server.api.customer_api import *
 from vFense.server.api.monit_api import *
+from vFense.core.api.test import Testies
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.customer import CustomerHandler, CustomersHandler
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
+from vFense.operations.api.agent_operations import GetTransactionsHandler, \
+    AgentOperationsHandler, TagOperationsHandler, OperationHandler
 
 from vFense.scripts.create_indexes import initialize_indexes_and_create_tables
 
@@ -91,6 +93,7 @@ class Application(tornado.web.Application):
             (r"/logout/?", LogoutHandler),
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
+            (r"/testies", Testies),
 
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),

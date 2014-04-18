@@ -9,8 +9,7 @@ from vFense.operations import OperationCollections, \
     OperationPerAgentIndexes, OperationPerAppIndexes, \
     AgentOperationKey, OperationPerAppKey
 
-from vFense.operations._db_sub_queries import OperationMerge, \
-    OperationPerAgentMerge
+from vFense.operations._db_sub_queries import OperationPerAgentMerge
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.errorz.status_codes import AgentOperationCodes
@@ -68,6 +67,40 @@ def fetch_agent_operation(operation_id, conn=None):
         logger.exception(e)
 
     return(data)
+
+
+@time_it
+@db_create_close
+def operation_exist(operation_id, conn=None):
+    """Verify if the operation exists by operation id.
+    Args:
+        operation_id (str): 36 character UUID
+
+    Basic Usage:
+        >>> from vFense.operations._db import operation_exist
+        >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+        >>> operation_exist(operation_id)
+
+    Returns:
+        Boolean True or False
+    """
+    exists = False
+    try:
+        is_empty = (
+            r
+            .table(OperationCollections.Agent)
+            .get_all(operation_id)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exists = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(exists)
+
 
 @time_it
 @db_create_close
@@ -421,7 +454,7 @@ def update_operation_per_agent(
         data = (
             r
             .table(OperationCollections.OperationPerAgent)
-            .get(
+            .get_all(
                 [operation_id, agent_id],
                 index=OperationPerAgentIndexes.OperationIdAndAgentId
             )
@@ -467,7 +500,7 @@ def update_operation_per_app(
         data = (
             r
             .table(OperationCollections.OperationPerApp)
-            .get(
+            .get_all(
                 [operation_id, agent_id, app_id],
                 index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
             )
@@ -485,8 +518,7 @@ def update_operation_per_app(
 @db_create_close
 @return_status_tuple
 def update_agent_operation_expire_time(
-    operation_id, agent_id,
-    operation_data, db_time, conn=None
+    operation_id, agent_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
@@ -544,8 +576,7 @@ def update_agent_operation_expire_time(
 @db_create_close
 @return_status_tuple
 def update_agent_operation_pickup_time(
-    operation_id, agent_id,
-    operation_data, db_time, conn=None
+    operation_id, agent_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY

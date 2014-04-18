@@ -446,44 +446,44 @@ def initialize_indexes_and_create_tables():
 
 #################################### OperationsPerAgentCollection Indexes ###################################################
     if not OperationPerAgentIndexes.OperationId in operations_per_agent_list:
-        r.table(OperationsPerAgentCollection).index_create(OperationPerAgentKey.OperationId).run(conn)
+        r.table(OperationCollections.OperationPerAgent).index_create(OperationPerAgentKey.OperationId).run(conn)
 
     if not OperationPerAgentIndexes.AgentIdAndCustomer in operations_per_agent_list:
-        r.table(OperationsPerAgentCollection).index_create(
+        r.table(OperationCollections.OperationPerAgent).index_create(
             OperationPerAgentIndexes.AgentIdAndCustomer, lambda x: [
                 x[OperationPerAgentKey.AgentId],
                 x[OperationPerAgentKey.CustomerName]]).run(conn)
 
     if not OperationPerAgentIndexes.TagIdAndCustomer in operations_per_agent_list:
-        r.table(OperationsPerAgentCollection).index_create(
+        r.table(OperationCollections.OperationPerAgent).index_create(
             OperationPerAgentIndexes.TagIdAndCustomer, lambda x: [
                 x[OperationPerAgentKey.TagId],
                 x[OperationPerAgentKey.CustomerName]]).run(conn)
 
     if not OperationPerAgentIndexes.StatusAndCustomer in operations_per_agent_list:
-        r.table(OperationsPerAgentCollection).index_create(
+        r.table(OperationCollections.OperationPerAgent).index_create(
             OperationPerAgentIndexes.StatusAndCustomer, lambda x: [
                 x[OperationPerAgentKey.Status],
                 x[OperationPerAgentKey.CustomerName]]).run(conn)
 
     if not OperationPerAgentIndexes.OperationIdAndAgentId in operations_per_agent_list:
-        r.table(OperationsPerAgentCollection).index_create(
+        r.table(OperationCollections.OperationPerAgent).index_create(
             OperationPerAgentIndexes.OperationIdAndAgentId, lambda x: [
                 x[OperationPerAgentKey.OperationId],
                 x[OperationPerAgentKey.AgentId]]).run(conn)
 
 #################################### OperationsPerAppCollection Indexes ###################################################
     if not OperationPerAppIndexes.OperationId in operations_per_app_list:
-        r.table(OperationsPerAppCollection).index_create(OperationPerAppKey.OperationId).run(conn)
+        r.table(OperationCollections.OperationPerApp).index_create(OperationPerAppKey.OperationId).run(conn)
 
     if not OperationPerAppIndexes.OperationIdAndAgentId in operations_per_app_list:
-        r.table(OperationsPerAppCollection).index_create(
+        r.table(OperationCollections.OperationPerApp).index_create(
             OperationPerAppIndexes.OperationIdAndAgentId, lambda x: [
                 x[OperationPerAppKey.OperationId],
                 x[OperationPerAppKey.AgentId]]).run(conn)
 
     if not OperationPerAppIndexes.OperationIdAndAgentIdAndAppId in operations_per_app_list:
-        r.table(OperationsPerAppCollection).index_create(
+        r.table(OperationCollections.OperationPerApp).index_create(
             OperationPerAppIndexes.OperationIdAndAgentIdAndAppId, lambda x: [
                 x[OperationPerAppKey.OperationId],
                 x[OperationPerAppKey.AgentId],

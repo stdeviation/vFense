@@ -1,17 +1,12 @@
 import logging
-import tornado.httpserver
-import tornado.web
 
 import simplejson as json
-from json import dumps
 
 from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
 
-from vFense.db.update_table import AddResults
-from vFense.errorz.error_messages import AgentResults
+from vFense.plugins.ra.operations.ra_results import RaOperationResults
 
 from vFense.plugins.ra.processor import Processor
 
@@ -26,11 +21,13 @@ class RemoteDesktopResults(BaseHandler):
     def post(self):
 
         username = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
         agent_id = self.arguments.get('agent_id')
         operation_id = self.arguments.get('operation_id')
-        operation_type = self.arguments.get('operation')
         success = self.arguments.get('success')
         error = self.arguments.get('error', None)
+        status_code = self.arguments.get('status_code', None)
 
         logger.info(
             'Data received on remote desktop results: %s' %
@@ -41,22 +38,18 @@ class RemoteDesktopResults(BaseHandler):
         processor.handle(self.arguments)
 
         print self.arguments
+        results = (
+            RaOperationResults(
+                username, agent_id,
+                operation_id, success, error,
+                status_code, uri, method
+            )
+        )
+        results_data = results.ra()
 
-#        results = AddResults(
-#            username,
-#            self.request.uri,
-#            self.request.method,
-#            agent_id,
-#            operation_id,
-#            success,
-#            error
-#        )
-#        results.ra(operation_type)
-
-        #agent_queue = get_agent_queue(agent_id)
-        result = AgentResults(
-            username, self.request.uri, "POST"
-        ).ra_results(agent_id)
+        #result = AgentResults(
+        #    username, self.request.uri, "POST"
+        #).ra_results(agent_id)
 
         self.set_header('Content-Type', 'application/json')
-        self.write(result)
+        self.write(json.dumps(results_data))

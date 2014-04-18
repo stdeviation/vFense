@@ -17,7 +17,8 @@ from vFense.core.agent.agent_handler import AgentManager
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.store_operations import StorePatchingOperation
+from vFense.core.operations.store_agent_operations import StoreAgentOperations
 from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
 
@@ -279,7 +280,7 @@ class AgentsHandler(BaseHandler):
                 results = agent.delete_agent(uri, method)
                 if results['http_status'] == 200:
                     delete_oper = (
-                        StoreOperation(
+                        StorePatchingOperation(
                             username, customer_name, uri, method
                         )
                     )
@@ -361,7 +362,6 @@ class AgentHandler(BaseHandler):
             elif (prod_level and not hostname and not displayname
                     and not new_customer):
                 results = agent.production_state_changer(prod_level, uri, method)
-                print results
 
             elif prod_level and hostname and displayname and not new_customer:
                 agent_data = {
@@ -408,7 +408,7 @@ class AgentHandler(BaseHandler):
         method = self.request.method
         try:
             agent = AgentManager(agent_id, customer_name=customer_name)
-            delete_oper = StoreOperation(username, customer_name, uri, method)
+            delete_oper = StorePatchingOperation(username, customer_name, uri, method)
             delete_oper.uninstall_agent(agent_id)
             results = agent.delete_agent(uri, method)
             self.set_status(results['http_status'])
@@ -440,7 +440,7 @@ class AgentHandler(BaseHandler):
             shutdown = self.arguments.get('shutdown', None)
             apps_refresh = self.arguments.get('apps_refresh', None)
             operation = (
-                StoreOperation(
+                StoreAgentOperations(
                     username, customer_name, uri, method
                 )
             )
@@ -483,6 +483,11 @@ class AgentHandler(BaseHandler):
                     )
 
             elif apps_refresh:
+                operation = (
+                    StorePatchingOperation(
+                        username, customer_name, uri, method
+                    )
+                )
                 results = (
                     operation.apps_refresh([agent_id])
                 )
