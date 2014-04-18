@@ -187,13 +187,27 @@ define(
                             var $inner = $(item).find('.accordion-inner'),
                                 groupName = $(item).data('name'),
                                 $div = $(crel('div', {class: 'span12'}));
-                            if (groupName !== 'Administrator') {
+                            if (groupName === 'Administrator') {
                                 _.each(permissions.data, function (permission) {
                                     $div.append(
                                         crel('div', {class: 'span3 noMargin'},
                                             crel('label', {class: 'checkbox'},
                                                 crel('small', permission),
-                                                crel('input', {type: 'checkbox', name: permission.replace(' ', '_'), value: permission, 'data-id': 'toggle'})
+                                                crel('input', {type: 'checkbox', disabled: 'disabled', checked: 'checked', name: permission.replace(' ', '_'), value: permission, 'data-id': 'toggle'})
+                                            )
+                                        )
+                                    );
+                                });
+                                $inner.prepend($div);
+                            }
+                            else
+                            {
+                                _.each(permissions.data, function (permission) {
+                                    $div.append(
+                                        crel('div', {class: 'span3 noMargin'},
+                                            crel('label', {class: 'checkbox'},
+                                                crel('small', permission),
+                                                crel('input', {type: 'checkbox', disabled: 'disabled', name: permission.replace(' ', '_'), value: permission, 'data-id': 'toggle'})
                                             )
                                         )
                                     );
