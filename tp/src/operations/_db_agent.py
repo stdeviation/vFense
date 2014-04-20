@@ -68,6 +68,40 @@ def fetch_agent_operation(operation_id, conn=None):
 
     return(data)
 
+
+@time_it
+@db_create_close
+def operation_exist(operation_id, conn=None):
+    """Verify if the operation exists by operation id.
+    Args:
+        operation_id (str): 36 character UUID
+
+    Basic Usage:
+        >>> from vFense.operations._db import operation_exist
+        >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+        >>> operation_exist(operation_id)
+
+    Returns:
+        Boolean True or False
+    """
+    exists = False
+    try:
+        is_empty = (
+            r
+            .table(OperationCollections.Agent)
+            .get_all(operation_id)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exists = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(exists)
+
+
 @time_it
 @db_create_close
 def operation_with_agentid_exists(operation_id, agent_id, conn=None):

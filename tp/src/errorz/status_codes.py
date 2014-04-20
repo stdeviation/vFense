@@ -34,6 +34,7 @@ class GenericFailureCodes(object):
     InvalidSortKey = 1505
     InvalidFilterKey = 1506
     InvalidId = 1507
+    InvalidPlugin = 1508
 
 class GroupCodes(object):
     GroupCreated = 12000
