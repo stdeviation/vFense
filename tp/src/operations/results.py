@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import logging
 import logging.config
-from time import time
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message

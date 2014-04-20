@@ -1,15 +1,15 @@
 import logging
-import tornado.httpserver
-import tornado.web
 
 from json import dumps
 
-from vFense.db.update_table import AddResults
 from vFense.errorz.error_messages import GenericResults, UpdateApplicationsResults
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
 from vFense.server.hierarchy.decorators import convert_json_to_arguments
+
+from vFense.plugins.patching.operations.patching_results import PatchingOperationResults
+
 
 from vFense.receiver.rvhandler import RvHandOff
 
@@ -28,21 +28,26 @@ class UpdateApplicationsV1(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            oper_id = self.arguments.get('operation_id', None)
+            operation_id = self.arguments.get('operation_id', None)
             error = self.arguments.get('error', None)
             success = self.arguments.get('success', 'true')
             app_data = self.arguments.get('data')
+            status_code = self.arguments.get('status_code', None)
             RvHandOff(
                username, customer_name, uri, method, agent_id,
                app_data, oper_type='updates_applications'
             )
-            if oper_id:
+            if operation_id:
+                print self.arguments
                 results = (
-                    AddResults(
-                        username, uri, method, agent_id,
-                        oper_id, success, error
+                    PatchingOperationResults(
+                        username, agent_id,
+                        operation_id, success, error,
+                        status_code, uri, method
                     )
                 )
+                results_data = results.apps_refresh()
+                print results_data
                 results_apps_refresh = results.apps_refresh()
                 self.set_status(results_apps_refresh['http_status'])
                 self.write(dumps(results_apps_refresh))
