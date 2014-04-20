@@ -18,7 +18,7 @@ from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import \
     get_appids_by_agentid_and_status, get_app_data, get_app_data_by_appids
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.errorz.error_messages import GenericResults, SchedulerResults
 from vFense.server.hierarchy import *
 
@@ -475,7 +475,7 @@ def scheduled_install_operation(job_info, customer_name,
     jobname = job_info['job_name']
 
     store_operation = (
-        StoreOperation(
+        StoreAgentOperation(
             customer_name=customer_name,
             username=username, uri=uri, method=method
         )
@@ -553,7 +553,7 @@ def scheduled_reboot_operation(job_info, customer_name, username,
                                uri=None, method=None, conn=None):
 
     store_operation = (
-        StoreOperation(
+        StoreAgentOperation(
             customer_name=customer_name,
             username=username, uri=uri, method=method
         )
@@ -577,7 +577,7 @@ def scheduled_shutdown_operation(job_info, customer_name, username,
                                uri=None, method=None, conn=None):
 
     store_operation = (
-        StoreOperation(
+        StoreAgentOperation(
             customer_name=customer_name,
             username=username, uri=uri, method=method
         )

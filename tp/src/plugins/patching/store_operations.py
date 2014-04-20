@@ -3,10 +3,11 @@ import logging.config
 from vFense.utils.common import *
 from vFense.operations.agent_operations import AgentOperation
 from vFense.operations._constants import AgentOperations, vFensePlugins
+from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.operations import *
 from vFense.core.agent import *
 from vFense.core.decorators import results_message
-from vFense.core.queue.queue import AgentQueue
+from vFense.core._constants import CPUThrottleValues, RebootValues
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching import *
 from vFense.core.tag.tagManager import *
@@ -18,133 +19,32 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-class StoreOperation(object):
-    def __init__(self, username, customer_name,
-                 uri, method, server_queue_ttl=None,
-                 agent_queue_ttl=None):
-        self.customer_name = customer_name
-        self.username = username
-        self.uri = uri
-        self.method = method
-        self.server_queue_ttl = server_queue_ttl
-        self.agent_queue_ttl = agent_queue_ttl
-
-    def _store_in_agent_queue(self, operation):
-        agent_queue = (
-            AgentQueue(
-                operation[OperationPerAgentKey.AgentId],
-                self.customer_name
-            )
-        )
-        agent_queue.add(operation, self.server_queue_ttl, self.agent_queue_ttl)
-
-    @results_message
-    def generic_operation(self, oper_type, oper_plugin,
-                          agentids=None, tag_id=None):
-        results = {
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: self.username,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
-        }
-
-        operation = (
-            AgentOperation(
-                self.username, self.customer_name,
-            )
-        )
-
-        operation_id = (
-            operation.create_operation(
-                oper_type, oper_plugin, agentids, tag_id
-            )
-        )
-
-        if operation_id:
-            msg = 'operation created'
-            status_code = GenericCodes.ObjectCreated
-            vfense_status_code = AgentOperationCodes.Created
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
-
-            for agent_id in agentids:
-                operation_data = {
-                    AgentOperationKey.Operation: oper_type,
-                    AgentOperationKey.OperationId: operation_id,
-                    AgentOperationKey.Plugin: oper_plugin,
-                    OperationPerAgentKey.AgentId: agent_id,
-                }
-                self._store_in_agent_queue(operation_data)
-                operation.add_agent_to_operation(agent_id, operation_id)
-
-        else:
-            msg = 'operation failed to create'
-            status_code = GenericFailureCodes.FailedToCreateObject
-            vfense_status_code = AgentOperationFailureCodes.FailedToCreateOperation
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id],
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
-
-        return(results)
-
-    def reboot(self, agentids=None, tag_id=None):
-        if tag_id:
-            if not agentids:
-                agentids = get_agent_ids_from_tag(tag_id)
-            elif agentids:
-                agentids += get_agent_ids_from_tag(tag_id)
-
-        results = (
-            self.generic_operation(REBOOT, CORE_PLUGIN, agentids, tag_id)
-        )
-
-        return(results)
-
-    def shutdown(self, agentids=None, tag_id=None):
-        if tag_id:
-            if not agentids:
-                agentids = get_agent_ids_from_tag(tag_id)
-            elif agentids:
-                agentids += get_agent_ids_from_tag(tag_id)
-
-        results = (
-            self.generic_operation(SHUTDOWN, CORE_PLUGIN, agentids, tag_id)
-        )
-
-        return(results)
-
+class StorePatchingOperation(StoreAgentOperation):
     def apps_refresh(self, agentids=None, tag_id=None):
-        if tag_id:
-            if not agentids:
-                agentids = get_agent_ids_from_tag(tag_id)
-            elif agentids:
-                agentids += get_agent_ids_from_tag(tag_id)
-
         results = (
             self.generic_operation(
                 AgentOperations.REFRESH_APPS,
-                vFensePlugins.RV_PLUGIN, agentids, tag_id)
+                vFensePlugins.RV_PLUGIN,
+                agentids, tag_id
+            )
         )
 
         return(results)
 
     def uninstall_agent(self, agent_id):
         operation_data = {
-            OperationKey.Operation: UNINSTALL_AGENT,
-            OperationKey.Plugin: RV_PLUGIN,
+            OperationKey.Operation: AgentOperations.UNINSTALL,
+            OperationKey.Plugin: vFensePlugins.RV_PLUGIN,
             OperationPerAgentKey.AgentId: agent_id,
         }
         self._store_in_agent_queue(operation_data)
 
-    def install_os_apps(self, appids, cpu_throttle='normal',
-                        net_throttle=0, restart=None,
+    def install_os_apps(self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+                        net_throttle=0, restart=RebootValues.NONE,
                         agentids=None, tag_id=None):
 
-        oper_type = INSTALL_OS_APPS
-        oper_plugin = RV_PLUGIN
+        oper_type = AgentOperations.INSTALL_OS_APPS
+        oper_plugin = vFensePlugins.RV_PLUGIN
 
         return(
             self.install_apps(
@@ -154,43 +54,14 @@ class StoreOperation(object):
             )
         )
 
-    def install_custom_apps(self, appids, cpu_throttle='normal',
-                            net_throttle=0, restart=None,
-                            agentids=None, tag_id=None):
+    def install_custom_apps(
+        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None
+        ):
 
-        oper_type = INSTALL_CUSTOM_APPS
-        oper_plugin = RV_PLUGIN
-
-        return(
-            self.install_apps(
-                oper_type, oper_plugin, appids,
-                cpu_throttle, net_throttle,
-                restart, agentids, tag_id
-            )
-        )
-
-
-    def install_supported_apps(self, appids, cpu_throttle='normal',
-                               net_throttle=0, restart=None,
-                               agentids=None, tag_id=None):
-
-        oper_type = INSTALL_SUPPORTED_APPS
-        oper_plugin = RV_PLUGIN
-
-        return(
-            self.install_apps(
-                oper_type, oper_plugin, appids,
-                cpu_throttle, net_throttle,
-                restart, agentids, tag_id
-            )
-        )
-
-    def install_agent_apps(self, appids, cpu_throttle='normal',
-                            net_throttle=0, restart=None,
-                            agentids=None, tag_id=None):
-
-        oper_type = INSTALL_AGENT_APPS
-        oper_plugin = RV_PLUGIN
+        oper_type = AgentOperations.INSTALL_CUSTOM_APPS
+        oper_plugin = vFensePlugins.RV_PLUGIN
 
         return(
             self.install_apps(
@@ -201,12 +72,31 @@ class StoreOperation(object):
         )
 
 
-    def uninstall_apps(self, appids, cpu_throttle='normal',
-                       net_throttle=0, restart=None,
-                       agentids=None, tag_id=None):
+    def install_supported_apps(
+        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None
+        ):
 
-        oper_type = UNINSTALL
-        oper_plugin = RV_PLUGIN
+        oper_type = AgentOperations.INSTALL_SUPPORTED_APPS
+        oper_plugin = vFensePlugins.RV_PLUGIN
+
+        return(
+            self.install_apps(
+                oper_type, oper_plugin, appids,
+                cpu_throttle, net_throttle,
+                restart, agentids, tag_id
+            )
+        )
+
+    def install_agent_apps(
+        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None
+        ):
+
+        oper_type = AgentOperations.INSTALL_AGENT_APPS
+        oper_plugin = vFensePlugins.RV_PLUGIN
 
         return(
             self.install_apps(
@@ -217,10 +107,30 @@ class StoreOperation(object):
         )
 
 
-    def install_apps(self, oper_type, oper_plugin,
-                     appids, cpu_throttle='normal',
-                     net_throttle=0, restart=None,
-                     agentids=None, tag_id=None):
+    def uninstall_apps(
+        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None
+        ):
+
+        oper_type = AgentOperations.UNINSTALL
+        oper_plugin = vFensePlugins.RV_PLUGIN
+
+        return(
+            self.install_apps(
+                oper_type, oper_plugin, appids,
+                cpu_throttle, net_throttle,
+                restart, agentids, tag_id
+            )
+        )
+
+
+    def install_apps(
+        self, oper_type, oper_plugin,
+        appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None
+        ):
 
         if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
             CurrentAppsCollection = AppsCollection
@@ -258,14 +168,13 @@ class StoreOperation(object):
             )
         )
 
-        results = (
+        operation_id = (
             operation.create_operation(
                 oper_type, oper_plugin, agentids,
                 tag_id, cpu_throttle,
                 net_throttle, restart
             )
         )
-        operation_id = results['data'].get('operation_id', None)
         if operation_id:
             for agent_id in agentids:
                 valid_appids = (
