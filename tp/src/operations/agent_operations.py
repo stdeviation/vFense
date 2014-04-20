@@ -258,7 +258,7 @@ class AgentOperation(object):
         if status_code == DbCodes.Replaced:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_expire_time(
-                    operation_id, operation_data, self.db_time
+                    operation_id, agent_id, self.db_time
                 )
             )
             if status_code == DbCodes.Replaced:
@@ -298,7 +298,7 @@ class AgentOperation(object):
         if status_code == DbCodes.Replaced:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_pickup_time(
-                    operation_id, operation_data, self.db_time
+                    operation_id, agent_id, self.db_time
                 )
             )
             if status_code == DbCodes.Replaced:

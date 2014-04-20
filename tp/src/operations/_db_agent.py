@@ -454,7 +454,7 @@ def update_operation_per_agent(
         data = (
             r
             .table(OperationCollections.OperationPerAgent)
-            .get(
+            .get_all(
                 [operation_id, agent_id],
                 index=OperationPerAgentIndexes.OperationIdAndAgentId
             )
@@ -500,7 +500,7 @@ def update_operation_per_app(
         data = (
             r
             .table(OperationCollections.OperationPerApp)
-            .get(
+            .get_all(
                 [operation_id, agent_id, app_id],
                 index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
             )
@@ -518,8 +518,7 @@ def update_operation_per_app(
 @db_create_close
 @return_status_tuple
 def update_agent_operation_expire_time(
-    operation_id, agent_id,
-    operation_data, db_time, conn=None
+    operation_id, agent_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
@@ -577,8 +576,7 @@ def update_agent_operation_expire_time(
 @db_create_close
 @return_status_tuple
 def update_agent_operation_pickup_time(
-    operation_id, agent_id,
-    operation_data, db_time, conn=None
+    operation_id, agent_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY

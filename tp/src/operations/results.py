@@ -56,7 +56,6 @@ class OperationResults(object):
         self.operation = (
             AgentOperation(
                 self.username, self.customer_name,
-                self.uri, self.method
             )
         )
 
@@ -84,7 +83,7 @@ class OperationResults(object):
 
         results = {
             ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: self.user_name,
+            ApiResultKeys.USERNAME: self.username,
             ApiResultKeys.URI: self.uri,
             ApiResultKeys.HTTP_METHOD: self.method
         }
