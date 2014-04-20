@@ -253,7 +253,7 @@ class AgentOperation(object):
         )
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, operation_data)
+            update_operation_per_agent(operation_id, agent_id, operation_data)
         )
         if status_code == DbCodes.Replaced:
             status_code, count, errors, generated_ids = (
@@ -293,7 +293,7 @@ class AgentOperation(object):
         )
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, operation_data)
+            update_operation_per_agent(operation_id, agent_id, operation_data)
         )
         if status_code == DbCodes.Replaced:
             status_code, count, errors, generated_ids = (
@@ -346,7 +346,7 @@ class AgentOperation(object):
         )
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, operation_data)
+            update_operation_per_agent(operation_id, agent_id, operation_data)
         )
 
         if status_code == DbCodes.Replaced:

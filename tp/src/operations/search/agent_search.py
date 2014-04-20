@@ -78,7 +78,7 @@ class AgentOperationRetriever(object):
         return(results)
 
     @results_message
-    def get_all_operations_by_agentid(self, agent_id, conn=None):
+    def get_all_by_agentid(self, agent_id, conn=None):
         count, data = self.agent_operations.fetch_all_by_agentid(agent_id)
         generic_status_code = GenericCodes.InformationRetrieved
 

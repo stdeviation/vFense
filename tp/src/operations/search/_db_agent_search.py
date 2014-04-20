@@ -5,15 +5,11 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.operations import *
 from vFense.operations.search._constants import OperationSearchValues
-from vFense.core.decorators import time_it
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.utils.common import *
-from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.agent._constants import AgentCommonKeys
-from vFense.plugins.patching import AppCollections, AppsKey, \
-     AppsPerAgentIndexes
+from vFense.core.agent import AgentKey, AgentCollections
 
 from vFense.operations import AgentOperationKey, AgentOperationIndexes, \
     OperationCollections, OperationPerAgentKey, OperationPerAgentIndexes, \
@@ -217,7 +213,7 @@ class FetchAgentOperations(object):
     def fetch_install_operation_by_id(self, operation_id, conn=None):
         count = 0
         data = []
-        merge = _set_install_operation_merge()
+        merge = self._set_install_operation_merge()
         try:
             data = list(
                 r
@@ -226,6 +222,7 @@ class FetchAgentOperations(object):
                     operation_id,
                     index=AgentOperationIndexes.OperationId
                 )
+                .pluck
                 .merge(merge)
                 .run(conn)
             )
@@ -243,7 +240,7 @@ class FetchAgentOperations(object):
     def fetch_operation_by_id(self, operation_id, conn=None):
         count = 0
         data = []
-        merge = _set_operation_per_agent_merge()
+        merge = self._set_operation_per_agent_merge()
         try:
             data = list(
                 r
@@ -317,6 +314,7 @@ class FetchAgentOperations(object):
 
 
     def _set_operation_for_email_alert_merge(self, oper_id, conn=None):
+        agent_pluck = self._set_agent_collection_pluck()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
@@ -329,8 +327,9 @@ class FetchAgentOperations(object):
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentsCollection))
+                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
                     .zip()
+                    .pluck(agent_pluck)
                     .map(lambda x:
                         {
                             OperationPerAgentKey.PickedUpTime: x[OperationPerAgentKey.PickedUpTime].to_epoch_time(),
@@ -362,6 +361,7 @@ class FetchAgentOperations(object):
 
 
     def _set_install_operation_email_alert_merge(self):
+        agent_pluck = self._set_agent_collection_pluck()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_iso8601(),
@@ -375,8 +375,9 @@ class FetchAgentOperations(object):
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentsCollection))
+                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
                     .zip()
+                    .pluck(agent_pluck)
                     .merge(lambda x:
                         {
                             OperationPerAgentKey.PickedUpTime: x[OperationPerAgentKey.PickedUpTime].to_iso8601(),
@@ -426,6 +427,7 @@ class FetchAgentOperations(object):
 
 
     def _set_operation_per_agent_merge(self):
+        agent_pluck = self._set_agent_collection_pluck()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
@@ -439,8 +441,9 @@ class FetchAgentOperations(object):
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentsCollection))
+                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
                     .zip()
+                    .pluck(agent_pluck)
                     .merge(lambda x:
                         {
                             OperationPerAgentKey.PickedUpTime: x[OperationPerAgentKey.PickedUpTime].to_epoch_time(),
@@ -455,6 +458,7 @@ class FetchAgentOperations(object):
         return(merge)
 
     def _set_install_operation_merge(self):
+        agent_pluck = self._set_agent_collection_pluck()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
@@ -468,8 +472,9 @@ class FetchAgentOperations(object):
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentsCollection))
+                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
                     .zip()
+                    .pluck(agent_pluck)
                     .merge(
                         lambda x:
                         {
@@ -535,3 +540,29 @@ class FetchAgentOperations(object):
             )
 
         return(base_filter)
+    
+    def _set_agent_collection_pluck(self):
+        pluck = (
+            [
+                AgentOperationKey.OperationId,
+                AgentOperationKey.Operation,
+                AgentOperationKey.OperationStatus,
+                AgentOperationKey.CreatedTime,
+                AgentOperationKey.CreatedBy,
+                AgentOperationKey.CompletedTime,
+                AgentOperationKey.CustomerName,
+                AgentOperationKey.AgentsTotalCount,
+                AgentOperationKey.AgentsFailedCount,
+                AgentOperationKey.AgentsCompletedCount,
+                AgentOperationKey.AgentsCompletedWithErrorsCount,
+                OperationPerAgentKey.PickedUpTime,
+                OperationPerAgentKey.CompletedTime,
+                OperationPerAgentKey.ExpiredTime,
+                OperationPerAgentKey.Errors,
+                OperationPerAgentKey.Status,
+                OperationPerAgentKey.AgentId,
+                AgentKey.ComputerName,
+                AgentKey.DisplayName,
+            ]
+        )
+        return(pluck)

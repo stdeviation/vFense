@@ -220,6 +220,11 @@ class AgentOperationCodes(object):
     OperationExpired = 6011
 
 
+class AgentOperationFailureCodes(object):
+    FailedToCreateOperation = 6200
+    FailedToUpdateOperation = 6203
+
+
 class OperationPerAgentCodes(object):
     Checkin = 6500
     PendingPickUp = 6501

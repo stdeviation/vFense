@@ -51,7 +51,6 @@ class StoreAgentOperation(object):
         operation = (
             AgentOperation(
                 self.username, self.customer_name,
-                self.uri, self.method
             )
         )
 
@@ -65,9 +64,9 @@ class StoreAgentOperation(object):
         if operation_id:
             for agent_id in self.agent_ids:
                 operation_data = {
-                    OperationKey.Operation: oper_type,
-                    OperationKey.OperationId: operation_id,
-                    OperationKey.Plugin: oper_plugin,
+                    AgentOperationKey.Operation: oper_type,
+                    AgentOperationKey.OperationId: operation_id,
+                    AgentOperationKey.Plugin: oper_plugin,
                     OperationPerAgentKey.AgentId: agent_id,
                 }
                 self._store_in_agent_queue(operation_data)

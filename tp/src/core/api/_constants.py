@@ -29,6 +29,7 @@ class ApiArguments():
     MAC = 'mac'
     SORT = 'sort'
     SORT_BY = 'sort_by'
+    OPERATION = 'operation'
 
 
 class ApiValues():
