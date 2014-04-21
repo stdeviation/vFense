@@ -1115,7 +1115,6 @@ def delete_app_from_agent(
             .run(conn)
         )
         if app_agent_id:
-            print app_agent_id
             (
                 r
                 .table(per_agent_table)

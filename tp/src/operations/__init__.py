@@ -39,6 +39,7 @@ class AgentOperationKey():
     Agents = 'agents'
     Restart = 'restart'
     TagId = 'tag_id'
+    AgentIds = 'agent_ids'
     Plugin = 'plugin'
     CpuThrottle = 'cpu_throttle'
     NetThrottle = 'net_throttle'
@@ -46,6 +47,7 @@ class AgentOperationKey():
 
 class AgentOperationIndexes():
     TagId = 'tag_id'
+    AgentIds = 'agent_ids'
     CustomerName = 'customer_name'
     Operation = 'operation'
     OperationId = 'operation_id'
@@ -84,6 +86,8 @@ class OperationPerAppKey():
     AgentId = 'agent_id'
     AppId = 'app_id'
     AppName = 'app_name'
+    AppVersion = 'app_version'
+    AppsRemoved = 'apps_removed'
     OperationId = 'operation_id'
     CustomerName = 'customer_name'
     Results = 'results'

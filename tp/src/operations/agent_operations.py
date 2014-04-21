@@ -113,6 +113,12 @@ class AgentOperation(object):
         Args:
             username (str): the name of the user who created the operation.
             customer_name (str): the name of the customer this user is part of.
+
+        Basic Usage:
+            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> oper = AgentOperation(username, customer_name)
         """
         self.username = username
         self.customer_name = customer_name
@@ -139,8 +145,21 @@ class AgentOperation(object):
             restart (str): The default is none, do not restart.
             performed_on (str): The default is agent.
 
+        Basic Usage:
+            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> oper = AgentOperation(username, customer_name)
+            >>> operation = 'reboot'
+            >>> plugin = 'core'
+            >>> agent_ids = ['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2']
+            >>> tag_id = None
+            >>> performed_on = 'agent'
+            >>> oper.create_operation(operation, plugin, agent_ids, tag_id)
+
         Returns:
             String The 36 character UUID of the operation that was created.
+            6c0209d5-b350-48b7-808a-158ddacb6940
         """
 
         number_of_agents = len(agent_ids)
@@ -153,6 +172,7 @@ class AgentOperation(object):
                 AgentOperationKey.CreatedBy: self.username,
                 AgentOperationKey.ActionPerformedOn: performed_on,
                 AgentOperationKey.TagId: tag_id,
+                AgentOperationKey.AgentIds: agent_ids,
                 AgentOperationKey.AgentsTotalCount: number_of_agents,
                 AgentOperationKey.AgentsExpiredCount: self.INIT_COUNT,
                 AgentOperationKey.AgentsPendingResultsCount: self.INIT_COUNT,

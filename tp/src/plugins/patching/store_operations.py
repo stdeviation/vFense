@@ -3,7 +3,8 @@ import logging.config
 from vFense.utils.common import *
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
-from vFense.operations._constants import AgentOperations, vFensePlugins
+from vFense.operations._constants import AgentOperations, vFensePlugins, \
+    vFenseObjects
 from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.operations import *
 from vFense.core.agent import *
@@ -165,8 +166,10 @@ class StorePatchingOperation(StoreAgentOperation):
             CurrentAppsKey = AgentAppsKey
             CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
             CurrentAppsPerAgentKey = AgentAppsPerAgentKey
-
+    
+        performed_on = vFenseObjects.AGENT
         if tag_id:
+            performed_on = vFenseObjects.TAG
             if not agentids:
                 agentids = get_agent_ids_from_tag(tag_id)
             else:
@@ -182,7 +185,8 @@ class StorePatchingOperation(StoreAgentOperation):
             operation.create_operation(
                 oper_type, oper_plugin, agentids,
                 tag_id, cpu_throttle,
-                net_throttle, restart
+                net_throttle, restart,
+                performed_on=performed_on
             )
         )
         if operation_id:
@@ -259,7 +263,7 @@ class StorePatchingOperation(StoreAgentOperation):
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AppsKey.Name]
+                    fields_to_pluck=[AppsKey.Name, AppsKey.Version]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -273,6 +277,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[AppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id
                 }
@@ -281,12 +286,13 @@ class StorePatchingOperation(StoreAgentOperation):
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AppsKey.Name]
+                    fields_to_pluck=[AppsKey.Name, AppsKey.Version]
                 )
             )
             pkg_data = (
                 {
                     APP_NAME: pkg[AppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_ID: app_id
                 }
             )
@@ -297,7 +303,7 @@ class StorePatchingOperation(StoreAgentOperation):
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[CustomAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[CustomAppsKey.Name, CustomAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -312,6 +318,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[CustomAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]
@@ -323,7 +330,7 @@ class StorePatchingOperation(StoreAgentOperation):
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[SupportedAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[SupportedAppsKey.Name, SupportedAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -337,6 +344,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[SupportedAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]
@@ -348,7 +356,7 @@ class StorePatchingOperation(StoreAgentOperation):
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AgentAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[AgentAppsKey.Name, AgentAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -362,6 +370,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[AgentAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]

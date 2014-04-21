@@ -74,6 +74,8 @@ class PatchingOperation(AgentOperation):
                         OperationPerAppKey.ResultsReceivedTime: DbTime.begining_of_time,
                         OperationPerAppKey.AppId: app[OperationPerAppKey.AppId],
                         OperationPerAppKey.AppName: app[OperationPerAppKey.AppName],
+                        OperationPerAppKey.AppVersion: app[OperationPerAppKey.AppVersion],
+                        OperationPerAppKey.AppsRemoved: [],
                         OperationPerAppKey.Errors: None
                     }
                 )
@@ -90,17 +92,22 @@ class PatchingOperation(AgentOperation):
     def update_app_results(
         self, operation_id, agent_id, app_id,
         status=AgentOperationCodes.ResultsReceived,
-        errors=None
+        errors=None, apps_removed=None
         ):
         """Update the results for an application.
         Args:
             operation_id (str): The operation id.
             agent_id (str): The agent id.
             app_id (str): The application id.
-            status (int): The operation status code.
         
         Kwargs:
-            errors (str): The error message, default is None.
+            status (int): The operation status code.
+                default = 6002
+            errors (str): The error message.
+                default = None.
+            apps_removed (list): list of dictionaries
+                of the app name and app version
+                default = None.
 
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
@@ -119,10 +126,13 @@ class PatchingOperation(AgentOperation):
             Boolean
         """
         completed = False
+        if not apps_removed:
+            apps_removed = []
         operation_data = (
             {
                 OperationPerAppKey.Results: status,
                 OperationPerAppKey.ResultsReceivedTime: self.db_time,
+                OperationPerAppKey.AppsRemoved: apps_removed,
                 OperationPerAppKey.Errors: errors
             }
         )

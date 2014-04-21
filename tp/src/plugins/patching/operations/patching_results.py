@@ -248,7 +248,7 @@ class PatchingOperationResults(OperationResults):
                     self.operation.update_app_results(
                         self.operation_id, self.agent_id,
                         self.app_id, status_code,
-                        errors=self.error
+                        errors=self.error, apps_removed=self.apps_to_delete
                     )
                 )
                 if operation_updated:

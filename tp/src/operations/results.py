@@ -27,17 +27,27 @@ class OperationResults(object):
         uri=None, method=None
         ):
         """
-            Args:
-                username (str): The name of the user who made this api call
-                agent_id (str): 36 character UUID of the agent.
-                operation_id (str): 36 character UUID of the operation.
-                success (str): true or false.
+        Args:
+            username (str): The name of the user who made this api call
+            agent_id (str): 36 character UUID of the agent.
+            operation_id (str): 36 character UUID of the operation.
+            success (str): true or false.
 
-            Kwargs:
-                error (str): The error message, if the operation failed.
-                status_code (int): The exact status of this operation.
-                uri (str): The uri which was called for the results.
-                method (str): The method used to call this api.
+        Kwargs:
+            error (str): The error message, if the operation failed.
+            status_code (int): The exact status of this operation.
+            uri (str): The uri which was called for the results.
+            method (str): The method used to call this api.
+
+        Basic Usage:
+            >>> from vFense.operations.results import OperationResults
+            >>> username = 'admin'
+            >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+            >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
+            >>> success = 'true'
+            >>> results = OperationResults(
+                    username, agent_id, operation_id, success
+                )
         """
 
         self.agent_id = agent_id
