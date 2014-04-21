@@ -79,6 +79,19 @@ class OperationResults(object):
             >>> results.update_operation('reboot')
 
         Returns:
+            Dictionary
+            {
+                "rv_status_code": 3203, 
+                "http_method": PUT,
+                "updated_ids": [
+                    "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
+                ], 
+                "http_status": 200, 
+                "unchanged_ids": [], 
+                "message": "Results updated for operation id d5fb023c-82a0-4552-adc1-b3f83de7ae8a", 
+                "data": [], 
+                "uri": "rvl/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/core/results/reboot"
+            }
         """
 
         results = {
@@ -112,7 +125,10 @@ class OperationResults(object):
                 )
 
                 if operation_updated:
-                    msg = 'Results updated'
+                    msg = (
+                        'Results updated for operation id %s' %
+                        (self.operation_id)
+                    )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericCodes.ObjectUpdated
                     )
@@ -123,8 +139,15 @@ class OperationResults(object):
 
                     results[ApiResultKeys.MESSAGE] = msg
 
+                    results[ApiResultKeys.UPDATED_IDS] = (
+                        [self.operation_id]
+                    )
+
                 else:
-                    msg = 'Results failed to update'
+                    msg = (
+                        'Results failed to update operation id %s' %
+                        (self.operation_id)
+                    )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
@@ -135,8 +158,15 @@ class OperationResults(object):
 
                     results[ApiResultKeys.MESSAGE] = msg
 
+                    results[ApiResultKeys.UNCHANGED_IDS] = (
+                        [self.operation_id]
+                    )
+
             else:
-                msg = 'Invalid success value'
+                msg = (
+                    'Invalid operation id %s' %
+                    (self.operation_id)
+                )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
@@ -146,6 +176,10 @@ class OperationResults(object):
                 )
 
                 results[ApiResultKeys.MESSAGE] = msg
+
+                results[ApiResultKeys.UNCHANGED_IDS] = (
+                    [self.operation_id]
+                )
 
         else:
             msg = 'Invalid operation id'
@@ -158,5 +192,9 @@ class OperationResults(object):
             )
 
             results[ApiResultKeys.MESSAGE] = msg
+
+            results[ApiResultKeys.UNCHANGED_IDS] = (
+                [self.operation_id]
+            )
 
         return(results)

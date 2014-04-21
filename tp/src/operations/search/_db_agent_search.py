@@ -215,19 +215,14 @@ class FetchAgentOperations(object):
         data = []
         merge = self._set_install_operation_merge()
         try:
-            data = list(
+            data = (
                 r
                 .table(OperationCollections.Agent)
-                .get_all(
-                    operation_id,
-                    index=AgentOperationIndexes.OperationId
-                )
-                .pluck
+                .get(operation_id)
                 .merge(merge)
                 .run(conn)
             )
             if data:
-                data = data[0]
                 count = 1
 
         except Exception as e:
@@ -558,6 +553,10 @@ class FetchAgentOperations(object):
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.ExpiredTime,
+                OperationPerAgentKey.AppsTotalCount,
+                OperationPerAgentKey.AppsPendingCount,
+                OperationPerAgentKey.AppsFailedCount,
+                OperationPerAgentKey.AppsCompletedCount,
                 OperationPerAgentKey.Errors,
                 OperationPerAgentKey.Status,
                 OperationPerAgentKey.AgentId,

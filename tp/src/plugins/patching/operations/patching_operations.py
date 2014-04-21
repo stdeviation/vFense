@@ -1,24 +1,18 @@
 from vFense.operations import *
-from vFense.operations.agent_operation import AgentOperation
+from vFense.operations.agent_operations import AgentOperation
 from vFense.operations._db_constants import DbTime
 from vFense.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
     update_errors_and_pending_count,update_failed_and_pending_count, \
-    update_completed_and_pending_count
+    update_completed_and_pending_count, insert_agent_into_agent_operations, \
+    insert_app_into_agent_operations
 
-from vFense.errorz.status_codes import DbCodes,AgentOperationCodes
+from vFense.errorz.status_codes import DbCodes, AgentOperationCodes, \
+    OperationPerAgentCodes
 
 
 class PatchingOperation(AgentOperation):
     """Creates the operations for the patching plugin."""
-    def __init__(self):
-        super(PatchingOperation, self).__init__()
-        self.patching_operation = (
-            PatchingOperation(
-                self.username, self.customer_name,
-                self.uri, self.method
-            )
-        )
 
     def add_agent_to_install_operation(
         self, agent_id, operation_id, applications
@@ -54,7 +48,7 @@ class PatchingOperation(AgentOperation):
             OperationPerAgentKey.AgentId: agent_id,
             OperationPerAgentKey.OperationId: operation_id,
             OperationPerAgentKey.CustomerName: self.customer_name,
-            OperationPerAgentKey.Status: PENDINGPICKUP,
+            OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
             OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time,
             OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time,
             OperationPerAgentKey.CompletedTime: DbTime.begining_of_time,
@@ -127,17 +121,18 @@ class PatchingOperation(AgentOperation):
         completed = False
         operation_data = (
             {
-                OperationPerAppKey.Results: results,
+                OperationPerAppKey.Results: status,
                 OperationPerAppKey.ResultsReceivedTime: self.db_time,
                 OperationPerAppKey.Errors: errors
             }
         )
-
         status_code, count, errors, generated_ids = (
-            update_operation_per_app(operation_id, operation_data)
+            update_operation_per_app(
+                operation_id, agent_id, app_id, operation_data
+            )
         )
         
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_app_stats(operation_id, agent_id, app_id, results)
             completed = True
 
@@ -155,7 +150,6 @@ class PatchingOperation(AgentOperation):
                 operation_id, agent_id
             )
         )
-
         operation_data = {
             OperationPerAgentKey.AppsCompletedCount: completed_count,
             OperationPerAgentKey.AppsFailedCount: failed_count,
@@ -163,10 +157,10 @@ class PatchingOperation(AgentOperation):
         }
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, operation_data)
+            update_operation_per_agent(operation_id, agent_id, operation_data)
         )
 
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_agent_stats_by_app_stats(
                 operation_id, agent_id, completed_count,
                 failed_count, pending_count
@@ -213,7 +207,8 @@ class PatchingOperation(AgentOperation):
                 update_completed_and_pending_count(operation_id, self.db_time)
             )
 
-            if status_code == DbCodes.Replaced:
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
                 self._update_completed_time_on_agents(operation_id, agent_id)
                 self._update_operation_status_code(operation_id)
                 completed = True
@@ -223,7 +218,8 @@ class PatchingOperation(AgentOperation):
                 update_failed_and_pending_count(operation_id, self.db_time)
             )
 
-            if status_code == DbCodes.Replaced:
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
                 self._update_completed_time_on_agents(operation_id, agent_id)
                 self._update_operation_status_code(operation_id)
                 completed = True
@@ -233,7 +229,8 @@ class PatchingOperation(AgentOperation):
                 update_errors_and_pending_count(operation_id, self.db_time)
             )
 
-            if status_code == DbCodes.Replaced:
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
                 self._update_completed_time_on_agents(operation_id, agent_id)
                 self._update_operation_status_code(operation_id)
                 completed = True

@@ -10,17 +10,16 @@ import logging.config
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
 from vFense.core.permissions.decorators import check_permissions
 
 from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, \
+    authenticated_request
 
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_agent_app, \
     update_hidden_status
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveAgentApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
 from vFense.plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId
@@ -119,7 +118,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -186,7 +185,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -318,7 +317,7 @@ class TagIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -384,7 +383,7 @@ class TagIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -518,7 +517,7 @@ class AppIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -586,7 +585,7 @@ class AppIdAgentAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -696,7 +695,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -763,7 +762,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )

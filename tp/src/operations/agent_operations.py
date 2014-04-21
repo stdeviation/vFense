@@ -198,7 +198,7 @@ class AgentOperation(object):
                 )
 
         Returns:
-            Boolean
+            36 character UUID of the operation that was created for the agent.
         """
         data_to_insert = {
             OperationPerAgentKey.AgentId: agent_id,
@@ -255,14 +255,13 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_expire_time(
                     operation_id, agent_id, self.db_time
                 )
             )
-            if status_code == DbCodes.Replaced:
-                completed = True
+            completed = True
 
         return(completed)
 
@@ -295,14 +294,13 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_pickup_time(
                     operation_id, agent_id, self.db_time
                 )
             )
-            if status_code == DbCodes.Replaced:
-                completed = True
+            completed = True
 
         return(completed)
 
@@ -348,8 +346,7 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_agent_stats(operation_id, agent_id)
             self._update_operation_status_code(operation_id)
             completed = True
@@ -390,7 +387,9 @@ class AgentOperation(object):
                         operation_id, self.db_time
                     )
                 )
-                if status_code == DbCodes.Replaced:
+                if (status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged):
+
                     completed = True
 
             elif (operation[OperationPerAgentKey.Status] ==
@@ -402,7 +401,9 @@ class AgentOperation(object):
                         operation_id, self.db_time
                     )
                 )
-                if status_code == DbCodes.Replaced:
+                if (status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged):
+
                     completed = True
 
         return(completed)
@@ -431,7 +432,7 @@ class AgentOperation(object):
             update_operation_per_agent(operation_id, agent_id, data)
         )
 
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             completed = True
 
         return(completed)
@@ -537,7 +538,9 @@ class AgentOperation(object):
             status_code, count, errors, generated_ids = (
                 update_agent_operation(operation_id, operation_data)
             )
-            if status_code == DbCodes.Replaced:
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
+
                 completed = True
 
         return(completed)
