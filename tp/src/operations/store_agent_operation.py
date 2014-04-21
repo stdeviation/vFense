@@ -39,6 +39,14 @@ class StoreAgentOperation(object):
             method
             server_queue_ttl
             agent_queue_ttl
+
+        Basic Usage:
+            >>> from vFense.operations.store_agent_operation import StoreAgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
+            >>> method = 'POST'
+            >>> store = StoreAgentOperation(username, customer_name, uri, method)
         """
         self.customer_name = customer_name
         self.username = username
@@ -78,6 +86,18 @@ class StoreAgentOperation(object):
             agentids (list): List of agent ids, this operation will
                 be performed on.
             tag_id (str): The tag id that this operation will be performed on.
+
+        Basic Usage:
+            >>> from vFense.operations.store_agent_operation import StoreAgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
+            >>> method = 'POST'
+            >>> store = StoreAgentOperation(username, customer_name, uri, method)
+            >>> store.generic_operation(
+                    'reboot', 'core',
+                    agentids=['33ba8521-b2e5-47dc-9bdc-0f1e3384049d']
+                )
 
         Returns:
             Dictionary

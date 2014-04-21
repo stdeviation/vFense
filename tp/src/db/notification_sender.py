@@ -1,11 +1,10 @@
 import logging
 import logging.config
-from vFense.db.client import db_create_close, r
 from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
 from vFense.operations import *
 from vFense.operations.agent_operations import get_agent_operation
-from vFense.operations.retriever import OperationRetriever
+from vFense.operations.search.agent_search import AgentOperationRetriever
 from vFense.notifications import *
 from emailer.mailer import MailClient
 
@@ -97,7 +96,7 @@ def send_notifications(username, customer_name, operation_id, agent_id):
                 sender_addresses = (
                     notif_handler.get_sending_emails(notif_rules)
                 )
-                oper = OperationRetriever(username, customer_name, None, None)
+                oper = AgentOperationRetriever(username, customer_name, None, None)
                 oper_data = oper.get_install_operation_for_email_alert(operation_id)
 
                 if sender_addresses:
