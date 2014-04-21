@@ -39,11 +39,74 @@ define(
                     'click button[name=cancelEditCustomer]' :   'toggleAclAccordion',
                     'click #submitCustomer'                 :   'verifyForm',
                     'click button[name=submitEditCustomer]' :   'verifyForm',
-                    'change #userContext'                   :   'changeUserContext'
+                    'change #userContext'                   :   'changeUserContext',
+                    'click button[data-id=options]'         :   'openOptions',
+                    'submit form[name=editCustomer]'        :   'submit'
+                },
+                openOptions: function (event) {
+                    event.preventDefault();
+                    var $item = $(event.currentTarget).parents('.item.row-fluid'),
+                        $content = $item.find('div[data-type=content], div[data-type=editor]');
+                    $content.toggle();
+                    return this;
+                },
+                submit: function (event) {
+                    event.preventDefault();
+                    var $form = $(event.currentTarget),
+                        formId = $form.data('id'),
+                        reset = $form.data('reset'),
+                        $alert = $form.find('span[data-name=result]'),
+                        $inputs = $form.find('[data-id=input]'),
+                        customerName = $form.parents('.accordion-group').find('button[name=toggleAcl]').find('span').text(),
+                        url = 'api/v1/customer/' + customerName,
+                        params = {},
+                        valid = true;
+                    $inputs.each(function (index, input) {
+                        var $control = $(this).parents('.control-group'),
+                            $message = $control.find('span[data-name=message]');
+                        if (input.value) {
+                            params[input.name] = input.value;
+                            $control.removeClass('error');
+                            $message.html('');
+                        } else {
+                            $control.addClass('error');
+                            $message.html(' Field can\'t be empty.');
+                            valid = false;
+                        }
+                    });
+                    if (valid) {
+                        $alert.removeClass('alert-error alert-success').addClass('alert-info').html('Submitting...');
+                        console.log(JSON.stringify(params));
+                        var that = this;
+                        $.ajax({
+                            type: 'PUT',
+                            url: url,
+                            data: JSON.stringify(params),
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            success: function(response) {
+                                if (response.rv_status_code === 14001)
+                                {
+                                    if (reset)
+                                    {
+                                        that.collection.fetch();
+                                    }
+                                    else
+                                    {
+                                        $alert.removeClass('alert-error alert-info').addClass('alert-success').html(response.message);
+                                        $form[0].reset();
+                                    }
+                                }
+                                else
+                                {
+                                    $alert.removeClass('alert-info alert-success').addClass('alert-error').html(response.message);
+                                }
+                            }
+                        });
+                    }
                 },
                 changeUserContext: function (event) {
                     this.collection.params.user_name = this.userContext = event.val;
-                    console.log(this.collection.params.user_name);
                     this.collection.fetch();
                     return this;
                 },
@@ -233,7 +296,6 @@ define(
                             userContext: this.userContext,
                             viewHelpers: {
                                 getOptions: function (options, selected) {
-                                    console.log(selected);
                                     var select = crel('select'), attributes;
                                     selected = selected || false;
                                     if (options.length) {
@@ -249,6 +311,19 @@ define(
                                         });
                                     }
                                     return select.innerHTML;
+                                },
+                                controlButtons: function (options) {
+                                    var template = crel('div', crel('hr'));
+                                    $(template).append(
+                                        crel('div', {class: 'control-group'},
+                                            crel('div', {class: 'controls'},
+                                                crel('button', {type: 'submit', class: 'btn btn-mini btn-primary'}, 'Save'), ' ',
+                                                crel('button', {class: 'btn btn-mini btn-danger', 'data-id': 'options'}, 'Cancel'), ' ',
+                                                crel('span', {class: 'alert', 'data-name': 'result'})
+                                            )
+                                        )
+                                    );
+                                    return template.innerHTML;
                                 },
                                 renderDeleteButton: function (customer) {
                                     var fragment;
