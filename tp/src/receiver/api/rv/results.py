@@ -5,7 +5,8 @@ from json import dumps
 from vFense.server.handlers import BaseHandler
 from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments
+from vFense.core._constants import CommonKeys
 
 from vFense.plugins.patching.operations.patching_results import PatchingOperationResults
 
@@ -36,7 +37,12 @@ class InstallOsAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
-            print self.arguments
+            if not isinstance(reboot_required, bool):
+                if reboot_required == CommonKeys.TRUE:
+                    reboot_required = True
+                else:
+                    reboot_required = False
+
             results = (
                 PatchingOperationResults(
                     username, agent_id,
@@ -50,7 +56,6 @@ class InstallOsAppsResults(BaseHandler):
                     apps_to_delete, apps_to_add
                 )
             )
-            print results_data
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))

@@ -113,11 +113,17 @@ class AgentOperation(object):
         Args:
             username (str): the name of the user who created the operation.
             customer_name (str): the name of the customer this user is part of.
+
+        Basic Usage:
+            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> oper = AgentOperation(username, customer_name)
         """
         self.username = username
         self.customer_name = customer_name
         self.now = mktime(datetime.now().timetuple())
-        self.db_time = DbTime.time_now
+        self.db_time = DbTime.time_now()
         self.INIT_COUNT = 0
 
     def create_operation(
@@ -139,8 +145,21 @@ class AgentOperation(object):
             restart (str): The default is none, do not restart.
             performed_on (str): The default is agent.
 
+        Basic Usage:
+            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> oper = AgentOperation(username, customer_name)
+            >>> operation = 'reboot'
+            >>> plugin = 'core'
+            >>> agent_ids = ['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2']
+            >>> tag_id = None
+            >>> performed_on = 'agent'
+            >>> oper.create_operation(operation, plugin, agent_ids, tag_id)
+
         Returns:
             String The 36 character UUID of the operation that was created.
+            6c0209d5-b350-48b7-808a-158ddacb6940
         """
 
         number_of_agents = len(agent_ids)
@@ -153,6 +172,7 @@ class AgentOperation(object):
                 AgentOperationKey.CreatedBy: self.username,
                 AgentOperationKey.ActionPerformedOn: performed_on,
                 AgentOperationKey.TagId: tag_id,
+                AgentOperationKey.AgentIds: agent_ids,
                 AgentOperationKey.AgentsTotalCount: number_of_agents,
                 AgentOperationKey.AgentsExpiredCount: self.INIT_COUNT,
                 AgentOperationKey.AgentsPendingResultsCount: self.INIT_COUNT,
@@ -162,7 +182,7 @@ class AgentOperation(object):
                 AgentOperationKey.AgentsCompletedWithErrorsCount: self.INIT_COUNT,
                 AgentOperationKey.CreatedTime: self.db_time,
                 AgentOperationKey.UpdatedTime: self.db_time,
-                AgentOperationKey.CompletedTime: DbTime.begining_of_time,
+                AgentOperationKey.CompletedTime: DbTime.begining_of_time(),
                 AgentOperationKey.Restart: restart,
                 AgentOperationKey.CpuThrottle: cpu_throttle,
                 AgentOperationKey.NetThrottle: net_throttle,
@@ -198,16 +218,16 @@ class AgentOperation(object):
                 )
 
         Returns:
-            Boolean
+            36 character UUID of the operation that was created for the agent.
         """
         data_to_insert = {
             OperationPerAgentKey.AgentId: agent_id,
             OperationPerAgentKey.OperationId: operation_id,
             OperationPerAgentKey.CustomerName: self.customer_name,
             OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
-            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time,
-            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time,
-            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time,
+            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
+            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
+            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time(),
             OperationPerAgentKey.Errors: None
         }
 
@@ -255,14 +275,13 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_expire_time(
                     operation_id, agent_id, self.db_time
                 )
             )
-            if status_code == DbCodes.Replaced:
-                completed = True
+            completed = True
 
         return(completed)
 
@@ -295,14 +314,13 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_pickup_time(
                     operation_id, agent_id, self.db_time
                 )
             )
-            if status_code == DbCodes.Replaced:
-                completed = True
+            completed = True
 
         return(completed)
 
@@ -348,8 +366,7 @@ class AgentOperation(object):
         status_code, count, errors, generated_ids = (
             update_operation_per_agent(operation_id, agent_id, operation_data)
         )
-
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_agent_stats(operation_id, agent_id)
             self._update_operation_status_code(operation_id)
             completed = True
@@ -390,7 +407,9 @@ class AgentOperation(object):
                         operation_id, self.db_time
                     )
                 )
-                if status_code == DbCodes.Replaced:
+                if (status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged):
+
                     completed = True
 
             elif (operation[OperationPerAgentKey.Status] ==
@@ -402,7 +421,9 @@ class AgentOperation(object):
                         operation_id, self.db_time
                     )
                 )
-                if status_code == DbCodes.Replaced:
+                if (status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged):
+
                     completed = True
 
         return(completed)
@@ -431,7 +452,7 @@ class AgentOperation(object):
             update_operation_per_agent(operation_id, agent_id, data)
         )
 
-        if status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             completed = True
 
         return(completed)
@@ -537,7 +558,9 @@ class AgentOperation(object):
             status_code, count, errors, generated_ids = (
                 update_agent_operation(operation_id, operation_data)
             )
-            if status_code == DbCodes.Replaced:
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
+
                 completed = True
 
         return(completed)

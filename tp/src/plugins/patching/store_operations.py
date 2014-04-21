@@ -1,8 +1,10 @@
 import logging
 import logging.config
 from vFense.utils.common import *
-from vFense.operations.agent_operations import AgentOperation
-from vFense.operations._constants import AgentOperations, vFensePlugins
+from vFense.plugins.patching.operations.patching_operations import \
+    PatchingOperation
+from vFense.operations._constants import AgentOperations, vFensePlugins, \
+    vFenseObjects
 from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.operations import *
 from vFense.core.agent import *
@@ -33,8 +35,8 @@ class StorePatchingOperation(StoreAgentOperation):
 
     def uninstall_agent(self, agent_id):
         operation_data = {
-            OperationKey.Operation: AgentOperations.UNINSTALL,
-            OperationKey.Plugin: vFensePlugins.RV_PLUGIN,
+            AgentOperationKey.Operation: AgentOperations.UNINSTALL,
+            AgentOperationKey.Plugin: vFensePlugins.RV_PLUGIN,
             OperationPerAgentKey.AgentId: agent_id,
         }
         self._store_in_agent_queue(operation_data)
@@ -125,6 +127,7 @@ class StorePatchingOperation(StoreAgentOperation):
         )
 
 
+    @results_message
     def install_apps(
         self, oper_type, oper_plugin,
         appids, cpu_throttle=CPUThrottleValues.NORMAL,
@@ -132,38 +135,48 @@ class StorePatchingOperation(StoreAgentOperation):
         agentids=None, tag_id=None
         ):
 
-        if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
+        results = {
+            ApiResultKeys.DATA: [],
+            ApiResultKeys.USERNAME: self.username,
+            ApiResultKeys.URI: self.uri,
+            ApiResultKeys.HTTP_METHOD: self.method
+        }
+
+        if (oper_type == AgentOperations.INSTALL_OS_APPS or
+                oper_type == AgentOperations.UNINSTALL):
             CurrentAppsCollection = AppsCollection
             CurrentAppsKey = AppsKey
             CurrentAppsPerAgentCollection = AppsPerAgentCollection
             CurrentAppsPerAgentKey = AppsPerAgentKey
 
-        elif oper_type == INSTALL_CUSTOM_APPS:
+        elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
             CurrentAppsCollection = CustomAppsCollection
             CurrentAppsKey = CustomAppsKey
             CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
             CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
-        elif oper_type == INSTALL_SUPPORTED_APPS:
+        elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
             CurrentAppsCollection = SupportedAppsCollection
             CurrentAppsKey = SupportedAppsKey
             CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
             CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
-        elif oper_type == INSTALL_AGENT_APPS:
+        elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
             CurrentAppsCollection = AgentAppsCollection
             CurrentAppsKey = AgentAppsKey
             CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
             CurrentAppsPerAgentKey = AgentAppsPerAgentKey
-
+    
+        performed_on = vFenseObjects.AGENT
         if tag_id:
+            performed_on = vFenseObjects.TAG
             if not agentids:
                 agentids = get_agent_ids_from_tag(tag_id)
             else:
                 agentids += get_agent_ids_from_tag(tag_id)
 
         operation = (
-            AgentOperation(
+            PatchingOperation(
                 self.username, self.customer_name,
             )
         )
@@ -172,10 +185,18 @@ class StorePatchingOperation(StoreAgentOperation):
             operation.create_operation(
                 oper_type, oper_plugin, agentids,
                 tag_id, cpu_throttle,
-                net_throttle, restart
+                net_throttle, restart,
+                performed_on=performed_on
             )
         )
         if operation_id:
+            msg = 'operation created'
+            status_code = GenericCodes.ObjectCreated
+            vfense_status_code = AgentOperationCodes.Created
+            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
             for agent_id in agentids:
                 valid_appids = (
                     self._return_valid_app_ids_for_agent(
@@ -190,16 +211,17 @@ class StorePatchingOperation(StoreAgentOperation):
                             CurrentAppsPerAgentKey.Status: PENDING
                         }
                     )
-                    if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
+                    if (oper_type == AgentOperations.INSTALL_OS_APPS or
+                            oper_type == AgentOperations.UNINSTALL):
                         update_os_app_per_agent(agent_id, app_id, data_to_update)
 
-                    elif oper_type == INSTALL_CUSTOM_APPS:
+                    elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
                         update_custom_app_per_agent(agent_id, app_id, data_to_update)
 
-                    elif oper_type == INSTALL_SUPPORTED_APPS:
+                    elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
                         update_supported_app_per_agent(agent_id, app_id, data_to_update)
 
-                    elif oper_type == INSTALL_AGENT_APPS:
+                    elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
                         update_agent_app_per_agent(agent_id, app_id, data_to_update)
 
                     pkg_data.append(
@@ -211,28 +233,37 @@ class StorePatchingOperation(StoreAgentOperation):
                     )
 
                 operation_data = {
-                    OperationKey.Operation: oper_type,
-                    OperationKey.OperationId: operation_id,
-                    OperationKey.Plugin: oper_plugin,
-                    OperationKey.Restart: restart,
+                    AgentOperationKey.Operation: oper_type,
+                    AgentOperationKey.OperationId: operation_id,
+                    AgentOperationKey.Plugin: oper_plugin,
+                    AgentOperationKey.Restart: restart,
                     PKG_FILEDATA: pkg_data,
                     OperationPerAgentKey.AgentId: agent_id,
-                    OperationKey.CpuThrottle: cpu_throttle,
-                    OperationKey.NetThrottle: net_throttle,
+                    AgentOperationKey.CpuThrottle: cpu_throttle,
+                    AgentOperationKey.NetThrottle: net_throttle,
                 }
                 self._store_in_agent_queue(operation_data)
                 operation.add_agent_to_install_operation(agent_id, operation_id, pkg_data)
+
+        else:
+            msg = 'operation failed to create'
+            status_code = GenericFailureCodes.FailedToCreateObject
+            vfense_status_code = AgentOperationFailureCodes.FailedToCreateOperation
+            results[ApiResultKeys.GENERATED_IDS] = [operation_id],
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
 
         return(results)
 
     def _get_apps_data(self, app_id, agent_id, oper_type,
                        table=AppsCollection, app_key=AppsKey.AppId):
 
-        if oper_type == INSTALL_OS_APPS:
+        if oper_type == AgentOperations.INSTALL_OS_APPS:
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AppsKey.Name]
+                    fields_to_pluck=[AppsKey.Name, AppsKey.Version]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -246,31 +277,33 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[AppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id
                 }
 
-        elif oper_type == UNINSTALL:
+        elif oper_type == AgentOperations.UNINSTALL:
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AppsKey.Name]
+                    fields_to_pluck=[AppsKey.Name, AppsKey.Version]
                 )
             )
             pkg_data = (
                 {
                     APP_NAME: pkg[AppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_ID: app_id
                 }
             )
 
-        elif oper_type == INSTALL_CUSTOM_APPS:
+        elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
             table = CustomAppsCollection
             app_key = CustomAppsKey.AppId
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[CustomAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[CustomAppsKey.Name, CustomAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -279,24 +312,25 @@ class StorePatchingOperation(StoreAgentOperation):
                 uris = (
                     get_download_urls(
                         self.customer_name, app_id,
-                        pkg[PKG_FILEDATA], INSTALL_CUSTOM_APPS
+                        pkg[PKG_FILEDATA], AgentOperations.INSTALL_CUSTOM_APPS
                     )
                 )
 
                 pkg_data = {
                     APP_NAME: pkg[CustomAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]
                 }
 
-        elif oper_type == INSTALL_SUPPORTED_APPS:
+        elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
             table = SupportedAppsCollection
             app_key = SupportedAppsKey.AppId
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[SupportedAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[SupportedAppsKey.Name, SupportedAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -310,18 +344,19 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[SupportedAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]
                 }
 
-        elif oper_type == INSTALL_AGENT_APPS:
+        elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
             table = AgentAppsCollection
             app_key = AgentAppsKey.AppId
             pkg = (
                 get_app_data(
                     app_id, table, app_key,
-                    fields_to_pluck=[AgentAppsKey.Name, PKG_CLI_OPTIONS]
+                    fields_to_pluck=[AgentAppsKey.Name, AgentAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
             pkg[PKG_FILEDATA] = get_file_data(app_id, agent_id)
@@ -335,6 +370,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
                 pkg_data = {
                     APP_NAME: pkg[AgentAppsKey.Name],
+                    APP_VERSION: pkg[AppsKey.Version],
                     APP_URIS: uris,
                     APP_ID: app_id,
                     PKG_CLI_OPTIONS: pkg[PKG_CLI_OPTIONS]

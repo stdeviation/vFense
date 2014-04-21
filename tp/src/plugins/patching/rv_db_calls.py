@@ -1101,7 +1101,7 @@ def delete_app_from_agent(
         conn=None
         ):
     try:
-        app_agent_id = (
+        app_agent_id = list(
             r
             .table(table)
             .get_all([app_name, app_version], index=index_to_use)

@@ -244,7 +244,6 @@ class OperationHandler(BaseHandler):
                     results = operations.get_install_operation_by_id(operation_id)
                 else:
                     results = operations.get_operation_by_id(operation_id)
-            print results
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

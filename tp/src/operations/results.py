@@ -27,17 +27,27 @@ class OperationResults(object):
         uri=None, method=None
         ):
         """
-            Args:
-                username (str): The name of the user who made this api call
-                agent_id (str): 36 character UUID of the agent.
-                operation_id (str): 36 character UUID of the operation.
-                success (str): true or false.
+        Args:
+            username (str): The name of the user who made this api call
+            agent_id (str): 36 character UUID of the agent.
+            operation_id (str): 36 character UUID of the operation.
+            success (str): true or false.
 
-            Kwargs:
-                error (str): The error message, if the operation failed.
-                status_code (int): The exact status of this operation.
-                uri (str): The uri which was called for the results.
-                method (str): The method used to call this api.
+        Kwargs:
+            error (str): The error message, if the operation failed.
+            status_code (int): The exact status of this operation.
+            uri (str): The uri which was called for the results.
+            method (str): The method used to call this api.
+
+        Basic Usage:
+            >>> from vFense.operations.results import OperationResults
+            >>> username = 'admin'
+            >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
+            >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
+            >>> success = 'true'
+            >>> results = OperationResults(
+                    username, agent_id, operation_id, success
+                )
         """
 
         self.agent_id = agent_id
@@ -48,8 +58,8 @@ class OperationResults(object):
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
         self.customer_name = self.agent_data[AgentKey.CustomerName]
-        self.date_now = DbTime.time_now
-        self.begining_of_time = DbTime.begining_of_time
+        self.date_now = DbTime.time_now()
+        self.begining_of_time = DbTime.begining_of_time()
         self.error = error
         self.success = success
         self.status_code = status_code
@@ -79,6 +89,19 @@ class OperationResults(object):
             >>> results.update_operation('reboot')
 
         Returns:
+            Dictionary
+            {
+                "rv_status_code": 3203, 
+                "http_method": PUT,
+                "updated_ids": [
+                    "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
+                ], 
+                "http_status": 200, 
+                "unchanged_ids": [], 
+                "message": "Results updated for operation id d5fb023c-82a0-4552-adc1-b3f83de7ae8a", 
+                "data": [], 
+                "uri": "rvl/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/core/results/reboot"
+            }
         """
 
         results = {
@@ -112,7 +135,10 @@ class OperationResults(object):
                 )
 
                 if operation_updated:
-                    msg = 'Results updated'
+                    msg = (
+                        'Results updated for operation id %s' %
+                        (self.operation_id)
+                    )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericCodes.ObjectUpdated
                     )
@@ -123,8 +149,15 @@ class OperationResults(object):
 
                     results[ApiResultKeys.MESSAGE] = msg
 
+                    results[ApiResultKeys.UPDATED_IDS] = (
+                        [self.operation_id]
+                    )
+
                 else:
-                    msg = 'Results failed to update'
+                    msg = (
+                        'Results failed to update operation id %s' %
+                        (self.operation_id)
+                    )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
@@ -135,8 +168,15 @@ class OperationResults(object):
 
                     results[ApiResultKeys.MESSAGE] = msg
 
+                    results[ApiResultKeys.UNCHANGED_IDS] = (
+                        [self.operation_id]
+                    )
+
             else:
-                msg = 'Invalid success value'
+                msg = (
+                    'Invalid operation id %s' %
+                    (self.operation_id)
+                )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
@@ -146,6 +186,10 @@ class OperationResults(object):
                 )
 
                 results[ApiResultKeys.MESSAGE] = msg
+
+                results[ApiResultKeys.UNCHANGED_IDS] = (
+                    [self.operation_id]
+                )
 
         else:
             msg = 'Invalid operation id'
@@ -158,5 +202,9 @@ class OperationResults(object):
             )
 
             results[ApiResultKeys.MESSAGE] = msg
+
+            results[ApiResultKeys.UNCHANGED_IDS] = (
+                [self.operation_id]
+            )
 
         return(results)

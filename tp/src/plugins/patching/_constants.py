@@ -3,6 +3,7 @@ class CommonAppKeys():
     Id = 'id'
     APP_ID = 'app_id'
     APP_NAME = 'app_name'
+    APP_VERSION = 'app_version'
     APP_URIS = 'app_uris'
     AGENTID = 'agent_id'
     COUNT = 'count'

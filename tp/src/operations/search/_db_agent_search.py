@@ -29,39 +29,29 @@ class FetchAgentOperations(object):
         ):
         """
         Kwargs:
-            customer_name (str): Fetch all operations in this customer.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
+            customer_name (str): Name of the current customer.
+                default = None
+            count (int): Maximum number of results to return.
+                default = 30
+            offset (int): Retrieve operations after this number. Pagination.
+                default = 0
+            sort (str): Sort either by asc or desc.
+                default = desc
+            sort_key (str): Sort by a valid field.
+                examples... operation, status, created_time, updated_time,
+                completed_time, and created_by.
+                default = created_time
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
         """
 
         self.customer_name = customer_name
         self.count = count
         self.offset = offset
         self.sort_key = sort_key
-
-        self.pluck_list = (
-            [
-                AgentOperationKey.OperationId,
-                AgentOperationKey.TagId,
-                AgentOperationKey.Operation,
-                AgentOperationKey.CreatedTime,
-                AgentOperationKey.UpdatedTime,
-                AgentOperationKey.CompletedTime,
-                AgentOperationKey.OperationStatus,
-                AgentOperationKey.CreatedBy,
-                AgentOperationKey.CustomerName,
-                AgentOperationKey.AgentsTotalCount,
-                AgentOperationKey.AgentsExpiredCount,
-                AgentOperationKey.AgentsPendingResultsCount,
-                AgentOperationKey.AgentsPendingPickUpCount,
-                AgentOperationKey.AgentsFailedCount,
-                AgentOperationKey.AgentsCompletedCount,
-                AgentOperationKey.AgentsCompletedWithErrorsCount,
-
-            ]
-        )
 
         if sort == SortValues.ASC:
             self.sort = r.asc
@@ -70,6 +60,35 @@ class FetchAgentOperations(object):
 
     @db_create_close
     def fetch_all(self, conn=None):
+        """Fetch all operations
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation.fetch_all()
+        Returns:
+            List
+            [
+                {
+                    "agents_expired_count": 0,
+                    "agents_total_count": 1,
+                    "tag_id": null,
+                    "agents_completed_with_errors_count": 0,
+                    "created_by": "admin",
+                    "agents_pending_pickup_count": 0,
+                    "completed_time": 1398092303, 
+                    "operation_status": 6006, 
+                    "agents_completed_count": 1, 
+                    "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
+                    "created_time": 1398092302,
+                    "agents_pending_results_count": 0,
+                    "operation": "install_os_apps",
+                    "updated_time": 1398092303,
+                    "agents_failed_count": 0,
+                    "customer_name": "default"
+                }
+            ]
+        """
         count = 0
         data = []
         base_filter = self._set_agent_operation_base_query()
@@ -83,7 +102,6 @@ class FetchAgentOperations(object):
 
             data = list(
                 base_filter
-                .pluck(self.pluck_list)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
@@ -98,16 +116,46 @@ class FetchAgentOperations(object):
 
     @db_create_close
     def fetch_all_by_agentid(self, agent_id, conn=None):
+        """Fetch all operations by agent id
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> agent_id = '6c0209d5-b350-48b7-808a-158ddacb6940'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation.fetch_all_by_agentid(agent_id)
+        Returns:
+            List
+            [
+                {
+                    "agents_expired_count": 0,
+                    "agents_total_count": 1,
+                    "tag_id": null,
+                    "agents_completed_with_errors_count": 0,
+                    "created_by": "admin",
+                    "agents_pending_pickup_count": 0,
+                    "completed_time": 1398092303, 
+                    "operation_status": 6006, 
+                    "agents_completed_count": 1, 
+                    "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
+                    "created_time": 1398092302,
+                    "agents_pending_results_count": 0,
+                    "operation": "install_os_apps",
+                    "updated_time": 1398092303,
+                    "agents_failed_count": 0,
+                    "customer_name": "default"
+                }
+            ]
+        """
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
         try:
             count = (
                 r
-                .table(OperationCollections.OperationPerAgent)
+                .table(OperationCollections.Agent)
                 .get_all(
-                    [agent_id, self.customer_name],
-                    index=OperationPerAgentIndexes.AgentIdAndCustomer
+                    agent_id,
+                    index=AgentOperationIndexes.AgentIds
                 )
                 .count()
                 .run(conn)
@@ -115,17 +163,11 @@ class FetchAgentOperations(object):
 
             data = list(
                 r
-                .table(OperationCollections.OperationPerAgent)
+                .table(OperationCollections.Agent)
                 .get_all(
-                    [agent_id, self.customer_name],
-                    index=OperationPerAgentIndexes.AgentIdAndCustomer
+                    agent_id,
+                    index=AgentOperationIndexes.AgentIds
                 )
-                .eq_join(
-                    AgentOperationKey.OperationId,
-                    r.table(OperationCollections.Agent)
-                )
-                .zip()
-                .pluck(self.pluck_list)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
@@ -141,6 +183,45 @@ class FetchAgentOperations(object):
 
     @db_create_close
     def fetch_all_by_tagid(self, tag_id, conn=None):
+        """Fetch all operations by tag id
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation.fetch_all_by_tagid(tag_id)
+        Returns:
+            List [count, data]
+            [
+                1, 
+                [
+                    {
+                        "agents_expired_count": 0, 
+                        "cpu_throttle": "normal", 
+                        "agents_total_count": 2, 
+                        "plugin": "rv", 
+                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297", 
+                        "agents_completed_with_errors_count": 0, 
+                        "action_performed_on": "tag", 
+                        "created_by": "admin", 
+                        "agents_pending_pickup_count": 0, 
+                        "completed_time": 1398110835, 
+                        "operation_status": 6006, 
+                        "agents_completed_count": 2, 
+                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88", 
+                        "created_time": 1398110770, 
+                        "agents_pending_results_count": 0, 
+                        "operation": "install_os_apps", 
+                        "updated_time": 1398110835, 
+                        "net_throttle": 0, 
+                        "agents_failed_count": 0, 
+                        "restart": "none", 
+                        "customer_name": "default"
+                    }
+                ]
+            ]
+        """
+
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
@@ -157,7 +238,6 @@ class FetchAgentOperations(object):
                 r
                 .table(OperationCollections.Agent)
                 .get_all(tag_id, index=AgentOperationKey.TagId)
-                .pluck(self.pluck_list)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
@@ -172,7 +252,50 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_all_by_operation(self, operation, conn=None):
+    def fetch_all_by_operation(self, action, conn=None):
+        """Fetch all operations by action
+        Args:
+            action (str) The action the operation will perform.
+                examples... reboot, shutdown, install_os_apps
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> action = 'install_os_apps'
+            >>> operation.fetch_all_by_operation(action)
+        Returns:
+            List of dictionaries
+            [
+                {
+                    "agents_expired_count": 0, 
+                    "created_time": 1398126651, 
+                    "agents_pending_results_count": 0, 
+                    "operation": "install_os_apps", 
+                    "net_throttle": 0, 
+                    "customer_name": "default", 
+                    "cpu_throttle": "normal", 
+                    "agents_total_count": 1, 
+                    "agents_completed_with_errors_count": 0, 
+                    "action_performed_on": "agent", 
+                    "agent_ids": [
+                        "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                    ], 
+                    "created_by": "admin", 
+                    "tag_id": null, 
+                    "completed_time": 0, 
+                    "agents_completed_count": 0, 
+                    "agents_pending_pickup_count": 1, 
+                    "restart": "none", 
+                    "plugin": "rv", 
+                    "updated_time": 1398126651, 
+                    "operation_status": 6009, 
+                    "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                    "agents_failed_count": 0
+                }
+            ]
+        """
+
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
@@ -194,13 +317,12 @@ class FetchAgentOperations(object):
                 .get_all(
                         [operation, self.customer_name],
                         index=AgentOperationIndexes.OperationAndCustomer
-                    )
-                    .pluck(self.pluck_list)
-                    .order_by(self.sort(self.sort_key))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .merge(base_time_merge)
-                    .run(conn)
+                )
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .merge(base_time_merge)
+                .run(conn)
                 )
 
         except Exception as e:
@@ -211,23 +333,91 @@ class FetchAgentOperations(object):
 
     @db_create_close
     def fetch_install_operation_by_id(self, operation_id, conn=None):
+        """Fetch install operation by operation id
+        Args:
+            operation_id (str) 36 character UUID.
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
+            >>> operation.fetch_install_operation_by_id(operation_id)
+
+        Returns:
+            Dictionary
+            {
+                "agents_expired_count": 0,
+                "agents": [
+                    {
+                        "status": 6502,
+                        "picked_up_time": 1398118321,
+                        "errors": null,
+                        "display_name": null,
+                        "apps_failed_count": 0,
+                        "apps_completed_count": 1,
+                        "completed_time": 1398118775,
+                        "applications": [
+                            {
+                                "errors": null,
+                                "app_name": "libssl1.0.0",
+                                "results": 6002,
+                                "app_id": "c5fc13cb20b231eb03b225cc0cb1371240450afaf151ed63ef12df77766ca1cf",
+                                "apps_removed": [
+                                    {
+                                        "version": "1.0.1-4ubuntu5.10",
+                                        "name": "libssl1.0.0"
+                                    }
+                                ],
+                                "app_version": "1.0.1-4ubuntu5.12",
+                                "results_received_time": 1398118775
+                            }
+                        ],
+                        "apps_pending_count": 0,
+                        "agent_id": "33ba8521-b2e5-47dc-9bdc-0f1e3384049d",
+                        "computer_name": "ubuntu",
+                        "apps_total_count": 1,
+                        "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
+                        "expired_time": 0
+                    }
+                ],
+                "created_time": 1398118321,
+                "agents_pending_results_count": 0,
+                "operation": "install_os_apps",
+                "net_throttle": 0,
+                "customer_name": "default",
+                "cpu_throttle": "normal",
+                "agents_total_count": 1,
+                "agents_completed_with_errors_count": 0,
+                "action_performed_on": "agent",
+                "agent_ids": [
+                    "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                ],
+                "created_by": "admin",
+                "tag_id": null,
+                "completed_time": 1398118775,
+                "agents_completed_count": 1,
+                "agents_pending_pickup_count": 0,
+                "restart": "none",
+                "plugin": "rv",
+                "updated_time": 1398118775,
+                "operation_status": 6006,
+                "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
+                "agents_failed_count": 0
+            }
+        """
         count = 0
         data = []
         merge = self._set_install_operation_merge()
         try:
-            data = list(
+            data = (
                 r
                 .table(OperationCollections.Agent)
-                .get_all(
-                    operation_id,
-                    index=AgentOperationIndexes.OperationId
-                )
-                .pluck
+                .get(operation_id)
                 .merge(merge)
                 .run(conn)
             )
             if data:
-                data = data[0]
                 count = 1
 
         except Exception as e:
@@ -238,6 +428,55 @@ class FetchAgentOperations(object):
  
     @db_create_close
     def fetch_operation_by_id(self, operation_id, conn=None):
+        """Fetch operation by operation id
+        Args:
+            operation_id (str) 36 character UUID.
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
+            >>> operation.fetch_operation_by_id(operation_id)
+
+        Returns:
+            Dictionary
+            {
+                "agents_expired_count": 0,
+                "agents": [
+                    {
+                        "status": 6501,
+                        "picked_up_time": 0,
+                        "errors": null,
+                        "display_name": null,
+                        "expired_time": 0,
+                        "completed_time": 0,
+                        "agent_id": "33ba8521-b2e5-47dc-9bdc-0f1e3384049d",
+                        "computer_name": "ubuntu",
+                    }
+                ],
+                "created_time": 1398110770,
+                "agents_pending_results_count": 0,
+                "operation": "updatesapplications",
+                "net_throttle": null,
+                "customer_name": "default",
+                "cpu_throttle": null,
+                "agents_total_count": 1,
+                "agents_completed_with_errors_count": 0,
+                "action_performed_on": "agent",
+                "created_by": "admin",
+                "tag_id": null,
+                "completed_time": 0,
+                "agents_completed_count": 0,
+                "agents_pending_pickup_count": 1,
+                "restart": null,
+                "plugin": "rv",
+                "updated_time": 1398110770,
+                "operation_status": 6009,
+                "operation_id": "58d37cf8-c1a9-460d-a7c6-0c8f896970b4",
+                "agents_failed_count": 0
+            }
+        """
         count = 0
         data = []
         merge = self._set_operation_per_agent_merge()
@@ -359,9 +598,34 @@ class FetchAgentOperations(object):
 
         return(merge)
 
+    def _set_base_time_joined_agent_merge(self):
+        merge = (
+            {
+                AgentOperationKey.CreatedTime: (
+                    r.row[AgentOperationKey.CreatedTime].to_epoch_time()
+                ),
+                AgentOperationKey.UpdatedTime: (
+                    r.row[AgentOperationKey.UpdatedTime].to_epoch_time()
+                ),
+                AgentOperationKey.CompletedTime: (
+                    r.row[AgentOperationKey.CompletedTime].to_epoch_time()
+                ),
+                OperationPerAgentKey.PickedUpTime: (
+                    r.row[OperationPerAgentKey.PickedUpTime].to_epoch_time()
+                ),
+                OperationPerAgentKey.ExpiredTime: (
+                    r.row[OperationPerAgentKey.ExpiredTime].to_epoch_time()
+                ),
+            }
+        )
+
+        return(merge)
+
+
 
     def _set_install_operation_email_alert_merge(self):
         agent_pluck = self._set_agent_collection_pluck()
+        app_without = self._set_app_collection_without()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_iso8601(),
@@ -399,6 +663,7 @@ class FetchAgentOperations(object):
                                         OperationPerAppKey.ResultsReceivedTime: y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
                                     }
                                 )
+                                .without(app_without)
                             ),
                             OperationSearchValues.APPLICATIONS_PASSED: (
                                 r
@@ -417,6 +682,7 @@ class FetchAgentOperations(object):
                                         OperationPerAppKey.ResultsReceivedTime: y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
                                     }
                                 )
+                                .without(app_without)
                             )
                         }
                     )
@@ -459,6 +725,7 @@ class FetchAgentOperations(object):
 
     def _set_install_operation_merge(self):
         agent_pluck = self._set_agent_collection_pluck()
+        app_without = self._set_app_collection_without()
         merge = (
             {
                 AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
@@ -492,6 +759,7 @@ class FetchAgentOperations(object):
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
                                 )
                                 .coerce_to('array')
+                                .without(app_without)
                                 .merge(lambda y:
                                     {
                                         OperationPerAppKey.ResultsReceivedTime: y[OperationPerAppKey.ResultsReceivedTime].to_epoch_time()
@@ -550,7 +818,6 @@ class FetchAgentOperations(object):
                 AgentOperationKey.CreatedTime,
                 AgentOperationKey.CreatedBy,
                 AgentOperationKey.CompletedTime,
-                AgentOperationKey.CustomerName,
                 AgentOperationKey.AgentsTotalCount,
                 AgentOperationKey.AgentsFailedCount,
                 AgentOperationKey.AgentsCompletedCount,
@@ -558,6 +825,10 @@ class FetchAgentOperations(object):
                 OperationPerAgentKey.PickedUpTime,
                 OperationPerAgentKey.CompletedTime,
                 OperationPerAgentKey.ExpiredTime,
+                OperationPerAgentKey.AppsTotalCount,
+                OperationPerAgentKey.AppsPendingCount,
+                OperationPerAgentKey.AppsFailedCount,
+                OperationPerAgentKey.AppsCompletedCount,
                 OperationPerAgentKey.Errors,
                 OperationPerAgentKey.Status,
                 OperationPerAgentKey.AgentId,
@@ -566,3 +837,14 @@ class FetchAgentOperations(object):
             ]
         )
         return(pluck)
+
+    def _set_app_collection_without(self):
+        without = (
+            [
+                OperationPerAppKey.AgentId,
+                OperationPerAppKey.CustomerName,
+                OperationPerAppKey.Id,
+                OperationPerAppKey.OperationId,
+            ]
+        )
+        return(without)

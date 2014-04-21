@@ -426,6 +426,9 @@ def initialize_indexes_and_create_tables():
     if not AgentOperationIndexes.Operation in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(AgentOperationKey.Operation).run(conn)
 
+    if not AgentOperationIndexes.AgentIds in agent_operations_list:
+        r.table(OperationCollections.Agent).index_create(AgentOperationIndexes.AgentIds, multi=True).run(conn)
+
     if not AgentOperationIndexes.OperationAndCustomer in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(
             AgentOperationIndexes.OperationAndCustomer, lambda x: [

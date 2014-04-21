@@ -7,7 +7,6 @@ import logging.config
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
 from vFense.core.permissions.decorators import check_permissions
 
 from vFense.server.hierarchy.manager import get_current_customer_name
@@ -16,7 +15,7 @@ from vFense.core.decorators import convert_json_to_arguments, authenticated_requ
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_custom_app, \
     update_hidden_status, delete_app_from_rv
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
 from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByTagId
@@ -201,7 +200,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -268,7 +267,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -400,7 +399,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -467,7 +466,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -624,7 +623,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and agent_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -692,7 +691,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -802,7 +801,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -870,7 +869,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
