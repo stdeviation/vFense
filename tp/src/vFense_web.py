@@ -56,7 +56,6 @@ from vFense.server.api.tag_api import *
 #from vFense.server.api.groups_api import *
 #from vFense.server.api.customer_api import *
 from vFense.server.api.monit_api import *
-from vFense.core.api.test import Testies
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.customer import CustomerHandler, CustomersHandler
@@ -93,7 +92,6 @@ class Application(tornado.web.Application):
             (r"/logout/?", LogoutHandler),
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
-            (r"/testies", Testies),
 
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
