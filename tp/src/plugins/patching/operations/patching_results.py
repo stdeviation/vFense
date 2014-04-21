@@ -2,6 +2,7 @@
 import re
 import logging
 import logging.config
+from json import dumps
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
@@ -188,19 +189,19 @@ class PatchingOperationResults(OperationResults):
                     re.search(r'^uninstall', self.operation_type)):
 
                 status = CommonAppKeys.AVAILABLE
-                install_date = self.begining_of_time()
+                install_date = self.begining_of_time
 
             elif (self.success == CommonKeys.FALSE and
                     re.search(r'^install', self.operation_type)):
 
                 status = CommonAppKeys.AVAILABLE
-                install_date = self.begining_of_time()
+                install_date = self.begining_of_time
 
             elif (self.success == CommonKeys.FALSE and
                     re.search(r'^uninstall', self.operation_type)):
 
                 status = CommonAppKeys.INSTALLED
-                install_date = self.begining_of_time()
+                install_date = self.begining_of_time
 
 
             data_to_update = (
