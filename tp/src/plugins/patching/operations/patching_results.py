@@ -6,6 +6,7 @@ import logging.config
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
+from vFense.core.agent.agents import update_agent_field
 from vFense.errorz._constants import ApiResultKeys
 from vFense.operations import AgentOperationKey
 from vFense.operations._constants import AgentOperations
