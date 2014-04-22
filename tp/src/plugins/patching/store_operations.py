@@ -37,7 +37,7 @@ class StorePatchingOperation(StoreAgentOperation):
         operation_data = {
             AgentOperationKey.Operation: AgentOperations.UNINSTALL,
             AgentOperationKey.Plugin: vFensePlugins.RV_PLUGIN,
-            AgentOperationPerAgentKey.AgentId: agent_id,
+            OperationPerAgentKey.AgentId: agent_id,
         }
         self._store_in_agent_queue(operation_data)
 
