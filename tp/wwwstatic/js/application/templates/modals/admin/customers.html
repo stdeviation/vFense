@@ -100,9 +100,9 @@
         <div class="accordion-body collapse">
             <div class="accordion-inner">
                 <label><small>Groups for customer <%= customer.customer_name %>:</small></label>
-                <input type="hidden" name="groupSelect" data-id="<%= customer.groups[0]%>" data-customer="<%= customer.users[0].user_name %>" data-placeholder="Select a group" data-url="/api/v1/groups" value='<% print(JSON.stringify(customer.groups)); %>'>
-                <label><small>Users part of:</small></label>
-                <input type="hidden" name="userSelect" data-customer="<%= customer.users[0].user_name %>" data-placeholder="Select a user" data-url="/api/v1/users" value='<% print (JSON.stringify(customer.users)); %>'>
+                <input type="hidden" name="groupSelect" data-id="<%= customer.groups[0]%>" data-customer="<%= customer.customer_name%>" data-placeholder="Select a group" data-url="/api/v1/groups" value='<% print(JSON.stringify(customer.groups)); %>'>
+                <label><small>Users accessible by customer <%= customer.customer_name%>:</small></label>
+                <input type="hidden" name="userSelect" data-customer="<%= customer.customer_name%>" data-placeholder="Select a user" data-url="/api/v1/users" value='<% print (JSON.stringify(customer.users)); %>'>
                 <div class="customer-info">
                     <div class="customer-heading">
                         <p>Customer Info:</p>

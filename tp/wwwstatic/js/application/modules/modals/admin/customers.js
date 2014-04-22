@@ -76,7 +76,6 @@ define(
                     });
                     if (valid) {
                         $alert.removeClass('alert-error alert-success').addClass('alert-info').html('Submitting...');
-                        console.log(JSON.stringify(params));
                         var that = this;
                         $.ajax({
                             type: 'PUT',
@@ -152,6 +151,7 @@ define(
                         name: $(event.currentTarget).val(),
                         type: 'customer',
                         url: 'api/v1/customer',
+                        data: this.collection.toJSON()[0].data,
                         customers: app.user.toJSON().customers
                     }).open();
                     return this;
@@ -172,16 +172,17 @@ define(
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         customername = $input.data('customer'),
+                        username = event.added ? event.added.text : event.removed.text,
                         groupId = $input.data('id'),
                         url = 'api/v1/customer/' + customername,
                         $alert = this.$el.find('div.alert'),
                         params,
-                        customers = [],
+                        users = [],
                         groups = [];
-                    customers.push(customername);
+                    users.push(username);
                     groups.push(groupId);
                     params = {
-                        customer_names: customers,//event.added ? event.added.text : event.removed.text,
+                        usernames: users,//event.added ? event.added.text : event.removed.text,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({

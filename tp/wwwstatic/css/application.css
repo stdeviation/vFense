@@ -1732,6 +1732,14 @@ dl.inline dd.cveId {
 }
 
 .customer-heading {
-   font-weight: bold;
-   font-size: 18px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.no-border-radius {
+    border-radius: 0;
+}
+
+input#deleteAllAgents {
+    border-radius: 0;
 }
