@@ -148,14 +148,14 @@ class FetchAgentOperations(object):
         """
         count = 0
         data = []
-        base_time_merge = self._set_base_time_joined_agent_merge()
+        base_time_merge = self._set_base_time_merge()
         try:
             count = (
                 r
-                .table(OperationCollections.OperationPerAgent)
+                .table(OperationCollections.Agent)
                 .get_all(
-                    [agent_id, self.customer_name],
-                    index=OperationPerAgentIndexes.AgentIdAndCustomer
+                    agent_id,
+                    index=AgentOperationIndexes.AgentIds
                 )
                 .count()
                 .run(conn)
@@ -163,16 +163,11 @@ class FetchAgentOperations(object):
 
             data = list(
                 r
-                .table(OperationCollections.OperationPerAgent)
+                .table(OperationCollections.Agent)
                 .get_all(
-                    [agent_id, self.customer_name],
-                    index=OperationPerAgentIndexes.AgentIdAndCustomer
+                    agent_id,
+                    index=AgentOperationIndexes.AgentIds
                 )
-                .eq_join(
-                    AgentOperationKey.OperationId,
-                    r.table(OperationCollections.Agent)
-                )
-                .zip()
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
