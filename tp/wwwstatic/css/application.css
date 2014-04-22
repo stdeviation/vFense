@@ -1726,3 +1726,20 @@ dl.inline dd.cveId {
 .cve-table th, .cve-table td, .vulnerability-table th, .vulnerability-table td {
     border-top: none;
 }
+
+.customer-info {
+    margin: 20px 0;
+}
+
+.customer-heading {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.no-border-radius {
+    border-radius: 0;
+}
+
+input#deleteAllAgents {
+    border-radius: 0;
+}

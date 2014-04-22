@@ -31,22 +31,34 @@ define(
                     this.groupCollection.fetch();
 
                     $.ajaxSetup({traditional: true});
+                    return this;
                 },
                 events: {
-                    'click button[name=toggleAcl]':     'toggleAclAccordion',
-                    'click button[name=toggleDelete]':  'confirmDelete',
-                    'change input[name=groupSelect]':   'toggle',
-                    'change input[name=customerSelect]':'toggle',
-                    'click button[name=deleteUser]':    'deleteUser',
-                    'click #cancelNewUser':             'displayAddUser',
-                    'click #submitUser':                'verifyForm',
-                    'click #addUser':                   'displayAddUser',
-                    'change #customerContext':          'changeCustomerContext',
-                    'submit form':                      'submit'
+                    'click button[name=toggleAcl]'      :   'toggleAclAccordion',
+                    'click button[name=toggleDelete]'   :   'confirmDelete',
+                    'change input[name=groupSelect]'    :   'toggle',
+                    'change input[name=customerSelect]' :   'toggle',
+                    'change select[name=groups]'        :   'retrieveGroups',
+                    'change select[name=customers]'     :   'retrieveCustomers',
+                    'click button[name=deleteUser]'     :   'deleteUser',
+                    'click #cancelNewUser'              :   'displayAddUser',
+                    'click #submitUser'                 :   'verifyForm',
+                    'click #addUser'                    :   'displayAddUser',
+                    'change #customerContext'           :   'changeCustomerContext',
+                    'submit form'                       :   'submit'
+                },
+                retrieveGroups: function(event) {
+                    this.groupsArray = event.val;
+                    return this;
+                },
+                retrieveCustomers: function(event) {
+                    this.customersArray = event.val;
+                    return this;
                 },
                 changeCustomerContext: function (event) {
-                    this.collection.params.customer_name = this.customerContext = event.val;
+                    this.collection.params.customer_context = this.customerContext = event.val;
                     this.collection.fetch();
+                    return this;
                 },
                 toggleAclAccordion: function (event) {
                     var $href = $(event.currentTarget),
@@ -58,24 +70,24 @@ define(
                     $accordionBody.on('hidden', function (event) {
                         event.stopPropagation();
                     });
+                    return this;
                 },
                 displayAddUser: function (event) {
                     event.preventDefault();
                     var $addUserDiv = this.$('#newUserDiv');
                     $addUserDiv.toggle();
+                    return this;
                 },
                 confirmDelete: function (event) {
                     var $parentDiv = $(event.currentTarget).parent();
                     $parentDiv.children().toggle();
+                    return this;
                 },
                 deleteUser: function (event) {
                     var $deleteButton = $(event.currentTarget),
                         $userRow = $deleteButton.parents('.item'),
                         $alert = this.$el.find('div.alert'),
                         user = $deleteButton.val();
-                       /* params = {
-                            username: user
-                        };*/
                     $.ajax({
                         type: 'DELETE',
                         url: '/api/v1/user/' + user,
@@ -90,20 +102,14 @@ define(
                             }
                         }
                     });
-                   /* $.post('api/v1/users', params, function (json) {
-                        if (json.rv_status_code) {
-                            $userRow.remove();
-                            $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(json.message);
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(json.message);
-                        }
-                    });*/
+                    return this;
                 },
                 verifyForm: function (event) {
                     var form = document.getElementById('newUserDiv');
                     if (form.checkValidity()) {
                         this.submitNewUser(event);
                     }
+                    return this;
                 },
                 submitNewUser: function (event) {
                     event.preventDefault();
@@ -111,8 +117,8 @@ define(
                         email = this.$el.find('#email').val(),
                         username = this.$el.find('#username').val(),
                         password = this.$el.find('#password').val(),
-                        group = this.$el.find('select[name=groups]').val(),
-                        customers = this.$el.find('select[name=customers]').val(),
+                        group = this.$el.find('select[name=groups]').select2('val'),
+                        customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
                             fullname: fullName,
@@ -123,14 +129,9 @@ define(
                         },
                         that = this;
 
-                    if (group && group.length) {
-                        params.group_ids = group;
-                    }
-                    if (customers && customers.length) {
-                        var customerArray = [];
-                        customerArray.push(customers)
-                        params.customer_names = customerArray;
-                    }
+                    params.group_ids = this.groupsArray;
+                    params.customer_names = this.customersArray;
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/v1/users',
@@ -145,29 +146,26 @@ define(
                             }
                         }
                     }).error(function (e) { window.console.log(e.statusText); });
-                    /*$.post('/api/v1/users', params, function (json) {
-                        if (json.rv_status_code) {
-                            that.collection.fetch();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').html(json.message).show();
-                        }
-                    }).error(function (e) { window.console.log(e.statusText); });*/
+                    return this;
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
-                        user = $input.data('user'),
+                        username = $input.data('user'),
                         groupId = $input.data('id'),
-                        url = $input.data('url') + '/' + groupId,
+                        url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
-                        params, groups = [];
+                        params,
+                        users = [],
+                        groups = [];
+                    users.push(username);
                     groups.push(groupId);
                     params = {
-                        usernames: groups,//event.added ? event.added.text : event.removed.text,
+                        group_ids: groups,//event.added ? event.added.text : event.removed.text,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({
                         type: 'POST',
-                        url: url,
+                        url: url + '?' + $.param(params),
                         data: JSON.stringify(params),
                         dataType: 'json',
                         contentType: 'application/json',
@@ -179,13 +177,7 @@ define(
                             }
                         }
                     }).error(function (e) { window.console.log(e.responseText); });
-                    /*$.post(url, params, function (response) {
-                        if (response.rv_status_code) {
-                            $alert.hide();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
-                        }
-                    }).error(function (e) { window.console.log(e.responseText); });*/
+                    return this;
                 },
                 beforeRender: $.noop,
                 onRender: function () {
@@ -195,37 +187,77 @@ define(
                         that = this;
                     $groups.select2({width: '100%'});
                     $customers.select2({width: '100%'});
-                    $select.select2({
-                        width: '100%',
-                        multiple: true,
-                        initSelection: function (element, callback) {
-                            var data = JSON.parse(element.val()),
-                                results = [];
-                            _.each(data, function (object) {
-                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                    _.each($select, function(select) {
+                        if($(select).data('user') === 'admin')
+                        {
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
+                                        results.push({locked: true, id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                    });
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(select).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            customer_name: that.customerContext
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
+                                }
                             });
-                            callback(results);
-                        },
-                        ajax: {
-                            url: function () {
-                                return $(that).data('url');
-                            },
-                            data: function () {
-                                return {
-                                    customer_name: that.customerContext
-                                };
-                            },
-                            results: function (data) {
-                                var results = [];
-                                if (data.rv_status_code === 1001) {
-                                    _.each(data.data, function (object) {
+                        }
+                        else
+                        {
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
                                         results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
                                     });
-                                    return {results: results, more: false, context: results};
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(select).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            customer_name: that.customerContext
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
                                 }
-                            }
+                            });
                         }
                     });
+                    return this;
                 },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
@@ -235,7 +267,6 @@ define(
                         groups = this.groupCollection.toJSON()[0],
                         customers = app.user.toJSON(),
                         payload;
-                    console.log(data);
                     if (data && data.rv_status_code === 1001 && groups && groups.rv_status_code === 1001) {
                         payload = {
                             data: data.data,
@@ -268,7 +299,7 @@ define(
                                 },
                                 renderDeleteButton: function (user) {
                                     var fragment;
-                                    if (user.user_name !== 'administrator') {
+                                    if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
@@ -279,18 +310,24 @@ define(
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');
-                                    if (user.user_name !== 'administrator') {
-                                        fragment.appendChild(
-                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
-                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
-                                                crel('span', user.user_name)
-                                            )
-                                        );
-                                    } else {
-                                        fragment.appendChild(
-                                            crel('strong', user.user_name)
-                                        );
-                                    }
+                                    fragment.appendChild(
+                                        crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                            crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                            crel('span', user.user_name)
+                                        )
+                                    );
+                                    /*if (user.user_name !== 'admin') {
+                                     fragment.appendChild(
+                                     crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                     crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                     crel('span', user.user_name)
+                                     )
+                                     );
+                                     } else {
+                                     fragment.appendChild(
+                                     crel('strong', user.user_name)
+                                     );
+                                     }*/
                                     return fragment.innerHTML;
                                 }
                             }

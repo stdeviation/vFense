@@ -74,34 +74,34 @@
                 </div>
             </form>
             <% if (data.length) { %>
-                <% _.each(data, function (user) { %>
-                    <div class="accordion-group item clearfix">
-                        <div class="accordion-heading row-fluid">
-                            <div class="span9">
-                                <div class="pull-left">
-                                    <%= viewHelpers.renderUserLink(user) %>
-                                </div>
-                            </div>
-                            <div class="span3 alignRight">
-                                <%= viewHelpers.renderDeleteButton(user) %>
-                                <button name="deleteUser" class="btn btn-mini btn-danger hide" value="<%= user.user_name %>">Delete</button>
-                                <button name="toggleDelete" class="btn btn-mini hide">Cancel</button>
-                            </div>
-                        </div>
-                        <div class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <label><small>Groups for customer <%= currentCustomer %>:</small></label>
-                                <input type="hidden" name="groupSelect" data-id="<%= user.groups[0].group_id%>" data-user="<%= user.user_name %>" data-placeholder="Select a group" data-url="/api/v1/group" value='<% print(JSON.stringify(user.groups)); %>'>
-                                <label><small>Customers part of:</small></label>
-                                <input type="hidden" name="customerSelect" data-user="<%= user.user_name %>" data-placeholder="Select a customer" data-url="/api/v1/customer" value='<% print (JSON.stringify(user.customers)); %>'>
-                            </div>
+            <% _.each(data, function (user) { %>
+            <div class="accordion-group item clearfix">
+                <div class="accordion-heading row-fluid">
+                    <div class="span9">
+                        <div class="pull-left">
+                            <%= viewHelpers.renderUserLink(user) %>
                         </div>
                     </div>
-                <% }); %>
-            <% } else { %>
-                <div class="item row-fluid">
-                    <div class="span9"><em>No users available.</em></div>
+                    <div class="span3 alignRight">
+                        <%= viewHelpers.renderDeleteButton(user) %>
+                        <button name="deleteUser" class="btn btn-mini btn-danger hide" value="<%= user.user_name %>">Delete</button>
+                        <button name="toggleDelete" class="btn btn-mini hide">Cancel</button>
+                    </div>
                 </div>
+                <div class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <label><small>Groups for user <%= user.user_name %>:</small></label>
+                        <input type="hidden" name="groupSelect" data-id="<%= user.groups[0].group_id%>" data-user="<%= user.user_name %>" data-placeholder="Select a group" data-url="/api/v1/groups" value='<% print(JSON.stringify(user.groups)); %>'>
+                        <label><small>Customers accessible by user <%= user.user_name%>:</small></label>
+                        <input type="hidden" name="customerSelect" data-user="<%= user.user_name %>" data-placeholder="Select a customer" data-url="/api/v1/customers" value='<% print (JSON.stringify(user.customers)); %>'>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+            <% } else { %>
+            <div class="item row-fluid">
+                <div class="span9"><em>No users available.</em></div>
+            </div>
             <% } %>
             <div class="alert alert-block fade in hide">
                 <span class="help-inline"></span>
