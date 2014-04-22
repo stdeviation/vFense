@@ -58,8 +58,8 @@ class OperationResults(object):
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
         self.customer_name = self.agent_data[AgentKey.CustomerName]
-        self.date_now = DbTime.time_now
-        self.begining_of_time = DbTime.begining_of_time
+        self.date_now = DbTime.time_now()
+        self.begining_of_time = DbTime.begining_of_time()
         self.error = error
         self.success = success
         self.status_code = status_code

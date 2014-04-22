@@ -362,7 +362,7 @@ class AgentOperationRetriever(object):
             Dictionary
             {
                 "count": 1,
-                "uri": "/api/v1/operation/d6956a46-165f-49b6-a3df-872a1453ab88",
+                "uri": "/api/v1/operation/48854d9d-a705-45d2-bab6-a448bc75f7d2",
                 "rv_status_code": 1001,
                 "http_method": "GET",
                 "http_status": 200,
@@ -372,71 +372,62 @@ class AgentOperationRetriever(object):
                     "agents": [
                         {
                             "status": 6502,
-                            "picked_up_time": 1398110835,
+                            "picked_up_time": 1398118321,
                             "errors": null,
                             "display_name": null,
-                            "expired_time": 0,
                             "apps_failed_count": 0,
                             "apps_completed_count": 1,
-                            "completed_time": 1398110835,
+                            "completed_time": 1398118775,
                             "applications": [
                                 {
                                     "errors": null,
-                                    "app_name": "apt-transport-https",
-                                    "app_id": "2f3135524d671824878cfec18b037e175be41da8cf46f907bb07111c5192c07c",
+                                    "app_name": "libssl1.0.0",
                                     "results": 6002,
-                                    "results_received_time": 1398110835,
+                                    "app_id": "c5fc13cb20b231eb03b225cc0cb1371240450afaf151ed63ef12df77766ca1cf",
+                                    "apps_removed": [
+                                        {
+                                            "version": "1.0.1-4ubuntu5.10",
+                                            "name": "libssl1.0.0"
+                                        }
+                                    ],
+                                    "app_version": "1.0.1-4ubuntu5.12",
+                                    "results_received_time": 1398118775
                                 }
                             ],
                             "apps_pending_count": 0,
                             "agent_id": "33ba8521-b2e5-47dc-9bdc-0f1e3384049d",
                             "computer_name": "ubuntu",
                             "apps_total_count": 1,
-                        },
-                        {
-                            "status": 6502,
-                            "picked_up_time": 1398110835,
-                            "errors": null,
-                            "display_name": null,
-                            "expired_time": 0,
-                            "apps_failed_count": 0,
-                            "apps_completed_count": 1,
-                            "completed_time": 1398110835,
-                            "applications": [
-                                {
-                                    "errors": null,
-                                    "app_name": "apt-transport-https",
-                                    "app_id": "2f3135524d671824878cfec18b037e175be41da8cf46f907bb07111c5192c07c",
-                                    "results": 6002,
-                                    "results_received_time": 1398110835,
-                                }
-                            ],
-                            "apps_pending_count": 0,
-                            "agent_id": "272ce70a-6cb1-4903-b395-bba4386a5171",
-                            "computer_name": "ubuntu",
-                            "apps_total_count": 1,
+                            "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
+                            "expired_time": 0
+                            
                         }
+                        
                     ],
-                    "created_time": 1398110770,
+                    "created_time": 1398118321,
                     "agents_pending_results_count": 0,
                     "operation": "install_os_apps",
                     "net_throttle": 0,
                     "customer_name": "default",
                     "cpu_throttle": "normal",
-                    "agents_total_count": 2,
+                    "agents_total_count": 1,
                     "agents_completed_with_errors_count": 0,
                     "action_performed_on": "agent",
+                    "agent_ids": [
+                        "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                    ],
                     "created_by": "admin",
-                    "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297",
-                    "completed_time": 1398110835,
-                    "agents_completed_count": 2,
+                    "tag_id": null,
+                    "completed_time": 1398118775,
+                    "agents_completed_count": 1,
                     "agents_pending_pickup_count": 0,
                     "restart": "none",
                     "plugin": "rv",
-                    "updated_time": 1398110835,
+                    "updated_time": 1398118775,
                     "operation_status": 6006,
-                    "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88",
+                    "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
                     "agents_failed_count": 0
+                }
             }
         """
         generic_status_code = GenericCodes.InformationRetrieved

@@ -123,7 +123,7 @@ class AgentOperation(object):
         self.username = username
         self.customer_name = customer_name
         self.now = mktime(datetime.now().timetuple())
-        self.db_time = DbTime.time_now
+        self.db_time = DbTime.time_now()
         self.INIT_COUNT = 0
 
     def create_operation(
@@ -182,7 +182,7 @@ class AgentOperation(object):
                 AgentOperationKey.AgentsCompletedWithErrorsCount: self.INIT_COUNT,
                 AgentOperationKey.CreatedTime: self.db_time,
                 AgentOperationKey.UpdatedTime: self.db_time,
-                AgentOperationKey.CompletedTime: DbTime.begining_of_time,
+                AgentOperationKey.CompletedTime: DbTime.begining_of_time(),
                 AgentOperationKey.Restart: restart,
                 AgentOperationKey.CpuThrottle: cpu_throttle,
                 AgentOperationKey.NetThrottle: net_throttle,
@@ -225,9 +225,9 @@ class AgentOperation(object):
             OperationPerAgentKey.OperationId: operation_id,
             OperationPerAgentKey.CustomerName: self.customer_name,
             OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
-            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time,
-            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time,
-            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time,
+            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
+            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
+            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time(),
             OperationPerAgentKey.Errors: None
         }
 
