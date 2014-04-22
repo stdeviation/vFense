@@ -166,22 +166,30 @@ class AgentOperationRetriever(object):
                 "message": "dataset retrieved",
                 "data": [
                     {
-                        "agents_expired_count": 0,
-                        "agents_total_count": 1,
-                        "tag_id": null,
-                        "agents_completed_with_errors_count": 0,
-                        "created_by": "admin",
-                        "agents_pending_pickup_count": 0,
-                        "completed_time": 1398092303, 
-                        "operation_status": 6006, 
-                        "agents_completed_count": 1, 
-                        "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
-                        "created_time": 1398092302,
-                        "agents_pending_results_count": 0,
-                        "operation": "install_os_apps",
-                        "updated_time": 1398092303,
-                        "agents_failed_count": 0,
-                        "customer_name": "default"
+                        "agents_expired_count": 0, 
+                        "created_time": 1398126651, 
+                        "agents_pending_results_count": 0, 
+                        "operation": "install_os_apps", 
+                        "net_throttle": 0, 
+                        "customer_name": "default", 
+                        "cpu_throttle": "normal", 
+                        "agents_total_count": 1, 
+                        "agents_completed_with_errors_count": 0, 
+                        "action_performed_on": "agent", 
+                        "agent_ids": [
+                            "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                        ], 
+                        "created_by": "admin", 
+                        "tag_id": null, 
+                        "completed_time": 0, 
+                        "agents_completed_count": 0, 
+                        "agents_pending_pickup_count": 1, 
+                        "restart": "none", 
+                        "plugin": "rv", 
+                        "updated_time": 1398126651, 
+                        "operation_status": 6009, 
+                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                        "agents_failed_count": 0
                     }
                 ]
             }
@@ -296,29 +304,37 @@ class AgentOperationRetriever(object):
                 "data": [
                     {
                         "agents_expired_count": 0, 
-                        "agents_total_count": 2, 
-                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297", 
-                        "agents_completed_with_errors_count": 0, 
-                        "created_by": "admin", 
-                        "agents_pending_pickup_count": 0, 
-                        "completed_time": 1398110835, 
-                        "operation_status": 6006, 
-                        "agents_completed_count": 2, 
-                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88", 
-                        "created_time": 1398110770, 
+                        "created_time": 1398126651, 
                         "agents_pending_results_count": 0, 
                         "operation": "install_os_apps", 
-                        "updated_time": 1398110835, 
-                        "agents_failed_count": 0, 
-                        "customer_name": "default"
+                        "net_throttle": 0, 
+                        "customer_name": "default", 
+                        "cpu_throttle": "normal", 
+                        "agents_total_count": 1, 
+                        "agents_completed_with_errors_count": 0, 
+                        "action_performed_on": "agent", 
+                        "agent_ids": [
+                            "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                        ], 
+                        "created_by": "admin", 
+                        "tag_id": null, 
+                        "completed_time": 0, 
+                        "agents_completed_count": 0, 
+                        "agents_pending_pickup_count": 1, 
+                        "restart": "none", 
+                        "plugin": "rv", 
+                        "updated_time": 1398126651, 
+                        "operation_status": 6009, 
+                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                        "agents_failed_count": 0
                     }
                 ]
             }
         """
-        if operation in AgentOperations.OPERATIONS:
+        if action in AgentOperations.OPERATIONS:
             generic_status_code = GenericCodes.InformationRetrieved
             count, data = (
-                self.agent_operations.fetch_all_by_operation(operation)
+                self.agent_operations.fetch_all_by_operation(action)
             )
             if count == 0:
                 vfense_status_code = GenericFailureCodes.DataIsEmpty

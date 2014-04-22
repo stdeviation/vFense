@@ -252,7 +252,50 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_all_by_operation(self, operation, conn=None):
+    def fetch_all_by_operation(self, action, conn=None):
+        """Fetch all operations by action
+        Args:
+            action (str) The action the operation will perform.
+                examples... reboot, shutdown, install_os_apps
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> action = 'install_os_apps'
+            >>> operation.fetch_all_by_operation(action)
+        Returns:
+            List of dictionaries
+            [
+                {
+                    "agents_expired_count": 0, 
+                    "created_time": 1398126651, 
+                    "agents_pending_results_count": 0, 
+                    "operation": "install_os_apps", 
+                    "net_throttle": 0, 
+                    "customer_name": "default", 
+                    "cpu_throttle": "normal", 
+                    "agents_total_count": 1, 
+                    "agents_completed_with_errors_count": 0, 
+                    "action_performed_on": "agent", 
+                    "agent_ids": [
+                        "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                    ], 
+                    "created_by": "admin", 
+                    "tag_id": null, 
+                    "completed_time": 0, 
+                    "agents_completed_count": 0, 
+                    "agents_pending_pickup_count": 1, 
+                    "restart": "none", 
+                    "plugin": "rv", 
+                    "updated_time": 1398126651, 
+                    "operation_status": 6009, 
+                    "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                    "agents_failed_count": 0
+                }
+            ]
+        """
+
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
@@ -290,6 +333,79 @@ class FetchAgentOperations(object):
 
     @db_create_close
     def fetch_install_operation_by_id(self, operation_id, conn=None):
+        """Fetch install operation by operation id
+        Args:
+            operation_id (str) 36 character UUID.
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
+            >>> operation.fetch_install_operation_by_id(operation_id)
+
+        Returns:
+            Dictionary
+            {
+                "agents_expired_count": 0,
+                "agents": [
+                    {
+                        "status": 6502,
+                        "picked_up_time": 1398118321,
+                        "errors": null,
+                        "display_name": null,
+                        "apps_failed_count": 0,
+                        "apps_completed_count": 1,
+                        "completed_time": 1398118775,
+                        "applications": [
+                            {
+                                "errors": null,
+                                "app_name": "libssl1.0.0",
+                                "results": 6002,
+                                "app_id": "c5fc13cb20b231eb03b225cc0cb1371240450afaf151ed63ef12df77766ca1cf",
+                                "apps_removed": [
+                                    {
+                                        "version": "1.0.1-4ubuntu5.10",
+                                        "name": "libssl1.0.0"
+                                    }
+                                ],
+                                "app_version": "1.0.1-4ubuntu5.12",
+                                "results_received_time": 1398118775
+                            }
+                        ],
+                        "apps_pending_count": 0,
+                        "agent_id": "33ba8521-b2e5-47dc-9bdc-0f1e3384049d",
+                        "computer_name": "ubuntu",
+                        "apps_total_count": 1,
+                        "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
+                        "expired_time": 0
+                    }
+                ],
+                "created_time": 1398118321,
+                "agents_pending_results_count": 0,
+                "operation": "install_os_apps",
+                "net_throttle": 0,
+                "customer_name": "default",
+                "cpu_throttle": "normal",
+                "agents_total_count": 1,
+                "agents_completed_with_errors_count": 0,
+                "action_performed_on": "agent",
+                "agent_ids": [
+                    "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
+                ],
+                "created_by": "admin",
+                "tag_id": null,
+                "completed_time": 1398118775,
+                "agents_completed_count": 1,
+                "agents_pending_pickup_count": 0,
+                "restart": "none",
+                "plugin": "rv",
+                "updated_time": 1398118775,
+                "operation_status": 6006,
+                "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
+                "agents_failed_count": 0
+            }
+        """
         count = 0
         data = []
         merge = self._set_install_operation_merge()
@@ -312,6 +428,55 @@ class FetchAgentOperations(object):
  
     @db_create_close
     def fetch_operation_by_id(self, operation_id, conn=None):
+        """Fetch operation by operation id
+        Args:
+            operation_id (str) 36 character UUID.
+
+        Basic Usage:
+            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> customer_name = 'default'
+            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
+            >>> operation.fetch_operation_by_id(operation_id)
+
+        Returns:
+            Dictionary
+            {
+                "agents_expired_count": 0,
+                "agents": [
+                    {
+                        "status": 6501,
+                        "picked_up_time": 0,
+                        "errors": null,
+                        "display_name": null,
+                        "expired_time": 0,
+                        "completed_time": 0,
+                        "agent_id": "33ba8521-b2e5-47dc-9bdc-0f1e3384049d",
+                        "computer_name": "ubuntu",
+                    }
+                ],
+                "created_time": 1398110770,
+                "agents_pending_results_count": 0,
+                "operation": "updatesapplications",
+                "net_throttle": null,
+                "customer_name": "default",
+                "cpu_throttle": null,
+                "agents_total_count": 1,
+                "agents_completed_with_errors_count": 0,
+                "action_performed_on": "agent",
+                "created_by": "admin",
+                "tag_id": null,
+                "completed_time": 0,
+                "agents_completed_count": 0,
+                "agents_pending_pickup_count": 1,
+                "restart": null,
+                "plugin": "rv",
+                "updated_time": 1398110770,
+                "operation_status": 6009,
+                "operation_id": "58d37cf8-c1a9-460d-a7c6-0c8f896970b4",
+                "agents_failed_count": 0
+            }
+        """
         count = 0
         data = []
         merge = self._set_operation_per_agent_merge()
