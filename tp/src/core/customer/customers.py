@@ -6,7 +6,7 @@ from vFense.core._db import retrieve_object
 from vFense.core.customer import *
 from vFense.core.customer._constants import DefaultCustomers
 from vFense.core.user import *
-from vFense.core.user._constants import DefaultUser
+from vFense.core.user._constants import DefaultUsers
 from vFense.core.customer._db import insert_customer, fetch_customer, \
     insert_user_per_customer, delete_user_in_customers , delete_customer, \
     users_exists_in_customer, update_customer, fetch_users_for_customer, \
@@ -524,22 +524,22 @@ def create_customer(
                 username, [customer_name], user_name, uri, method
             )
 
-            if username != DefaultUser.ADMIN:
+            if username != DefaultUsers.ADMIN:
                 add_user_to_customers(
-                    DefaultUser.ADMIN, [customer_name], user_name, uri, method
+                    DefaultUsers.ADMIN, [customer_name], user_name, uri, method
                 )
 
         #The admin user should be part of every group
-        elif object_status == DbCodes.Inserted and username != DefaultUser.ADMIN:
+        elif object_status == DbCodes.Inserted and username != DefaultUsers.ADMIN:
             admin_exist = (
                 retrieve_object(
-                    DefaultUser.ADMIN, UserCollections.Users
+                    DefaultUsers.ADMIN, UserCollections.Users
                 )
             )
             
             if admin_exist:
                 add_user_to_customers(
-                    DefaultUser.ADMIN, [customer_name], user_name, uri, method
+                    DefaultUsers.ADMIN, [customer_name], user_name, uri, method
                 )
 
 
