@@ -128,6 +128,7 @@ class PatchingOperation(AgentOperation):
         completed = False
         if not apps_removed:
             apps_removed = []
+
         operation_data = (
             {
                 OperationPerAppKey.Results: status,
@@ -143,16 +144,35 @@ class PatchingOperation(AgentOperation):
         )
         
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
-            self._update_app_stats(operation_id, agent_id, app_id, results)
+            self._update_app_stats(operation_id, agent_id, app_id)
             completed = True
 
         return(completed)
 
 
-    def _update_app_stats(
-        self, operation_id, agent_id,
-        app_id, results
-        ):
+    def _update_app_stats(self, operation_id, agent_id, app_id):
+
+        """Update the total counts based on the status code.
+        Args:
+            operation_id (str): The operation id.
+            agent_id (str): The agent id.
+            app_id (str): The application id.
+
+        Basic Usage:
+            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> oper = AgentOperation(username, customer_name)
+            >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
+            >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
+            >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
+            >>> oper._update_app_stats(
+                    operation_id, agent_id, app_id,
+                )
+
+        Returns:
+            Boolean
+        """
 
         completed = False
         pending_count, completed_count, failed_count = (
