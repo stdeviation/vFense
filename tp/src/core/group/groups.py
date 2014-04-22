@@ -604,15 +604,20 @@ def remove_groups_from_user(
     """
     status = remove_groups_from_user.func_name + ' - '
     user_does_not_exist_in_group = False
+    admin_user = False
+    admin_group_id = None
+    admin_group_id_exists_in_group_ids = False
+    if username == DefaultUsers.ADMIN:
+        admin_user = True
+        admin_group_id = (
+            fetch_group_by_name(
+                DefaultGroups.ADMIN, DefaultCustomers.DEFAULT,
+                GroupKeys.GroupId
+            )[GroupKeys.GroupId]
+        )
+
     try:
-        if group_ids:
-            msg = 'group ids: ' + 'and '.join(group_ids)
-            for gid in group_ids:
-                user_in_group = user_exist_in_group(username, gid)
-                if not user_in_group:
-                    user_does_not_exist_in_group = True
-        else:
-            msg = 'all groups removed from user %s' %(username)
+        if not group_ids:
             group_ids = (
                 map(lambda x:
                     x[GroupsPerUserKeys.GroupId],
@@ -620,15 +625,25 @@ def remove_groups_from_user(
                 )
             )
 
-            if group_ids:
+        if group_ids:
+            if not admin_group_id in group_ids:
+                msg = 'group ids: ' + 'and '.join(group_ids)
                 for gid in group_ids:
                     user_in_group = user_exist_in_group(username, gid)
                     if not user_in_group:
                         user_does_not_exist_in_group = True
             else:
-                user_does_not_exist_in_group = True
+                admin_group_id_exists_in_group_ids = True
+                msg = (
+                    'Cannot remove the %s group from the %s user' %
+                    (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
+                )
+        else:
+            user_does_not_exist_in_group = True
 
-        if not user_does_not_exist_in_group:
+        if (not user_does_not_exist_in_group and
+            not admin_group_id_exists_in_group_ids):
+
             status_code, count, errors, generated_ids = (
                 delete_groups_from_user(username, group_ids)
             )
@@ -643,6 +658,11 @@ def remove_groups_from_user(
             elif status_code == DbCodes.Skipped:
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = GroupFailureCodes.InvalidGroupId
+
+        elif admin_group_id_exists_in_group_ids:
+            status_code = DbCodes.Skipped
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
 
         else:
             msg = (

@@ -381,7 +381,7 @@ def remove_users_from_customer(
     }
     """
     status = remove_users_from_customer.func_name + ' - '
-    admin_in_list = DefaultUser.ADMIN in usernames
+    admin_in_list = DefaultUsers.ADMIN in usernames
     try:
         if not admin_in_list:
             status_code, count, errors, generated_ids = (
@@ -593,7 +593,7 @@ def remove_users_from_group(
     }
     """
     status = remove_users_from_group.func_name + ' - '
-    admin_in_list = DefaultUser.ADMIN in usernames
+    admin_in_list = DefaultUsers.ADMIN in usernames
     try:
         if not admin_in_list:
             status_code, count, errors, generated_ids = (
@@ -941,7 +941,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
     usernames_not_to_delete = []
     usernames_to_delete = []
     try:
-        if user_exist and username != DefaultUser.ADMIN:
+        if user_exist and username != DefaultUsers.ADMIN:
             remove_groups_from_user(username)
             remove_customers_from_user(username)
             usernames_to_delete.append(username)
@@ -955,7 +955,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
                 vfense_status_code = UserCodes.UserDeleted
                 msg = 'User removed %s' % (username)
 
-        elif username == DefaultUser.ADMIN:
+        elif username == DefaultUsers.ADMIN:
             msg = 'Can not delete the %s user' % (username)
             usernames_not_to_delete.append(username)
             object_status = DbCodes.Skipped
@@ -1034,12 +1034,12 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
         for username in usernames:
             user_exist = get_user(username)
             status = remove_users.func_name + ' - '
-            if user_exist and username != DefaultUser.ADMIN:
+            if user_exist and username != DefaultUsers.ADMIN:
                 remove_groups_from_user(username)
                 remove_customers_from_user(username)
                 usernames_to_delete.append(username)
 
-            elif username == DefaultUser.ADMIN:
+            elif username == DefaultUsers.ADMIN:
                 msg = 'Can not delete the %s user' % (username)
                 usernames_not_to_delete.append(username)
                 generic_status_code = GenericCodes.CouldNotBeDeleted
