@@ -1,20 +1,16 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
-
-from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.api.base import BaseHandler
 from vFense.plugins.patching import *
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.patching.rv_db_calls import get_all_file_data
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from vFense.server.hierarchy.permissions import Permission
+from vFense.core.decorators import authenticated_request
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -24,7 +20,9 @@ class FileInfoHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

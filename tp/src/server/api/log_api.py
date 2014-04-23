@@ -1,18 +1,13 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 import logging
 import logging.config
-from vFense.server.handlers import BaseHandler, LoginHandler
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
 from vFense.logger.rvlogger import RvLogger
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.core.decorators import authenticated_request
 
-from jsonpickle import encode
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

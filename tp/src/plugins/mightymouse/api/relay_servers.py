@@ -1,6 +1,6 @@
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
 
@@ -10,9 +10,10 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
 from vFense.operations import *
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import authenticated_request, convert_json_to_arguments
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 
 
@@ -25,7 +26,9 @@ class RelayServersHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -51,7 +54,9 @@ class RelayServersHandler(BaseHandler):
     @authenticated_request
     def delete(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -78,7 +83,9 @@ class RelayServersHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -107,7 +114,9 @@ class RelayServerHandler(BaseHandler):
     @authenticated_request
     def get(self, mouse_name):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -137,7 +146,9 @@ class RelayServerHandler(BaseHandler):
     @convert_json_to_arguments
     def put(self, mouse_name):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -163,7 +174,9 @@ class RelayServerHandler(BaseHandler):
     @authenticated_request
     def delete(self, mouse_name):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

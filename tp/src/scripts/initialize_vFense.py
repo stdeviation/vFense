@@ -241,7 +241,7 @@ def initialize_db():
         print 'Admin user and password = admin:%s' % (args.admin_password)
         agent_pass = generate_pass()
         user.create_user(
-            DefaultUser.AGENT,
+            DefaultUsers.AGENT,
             'vFense Agent Communication Account',
             agent_pass,
             admin_group_id,

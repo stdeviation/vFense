@@ -1,8 +1,8 @@
 import json
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.permissions import Permission
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.core.api.base import BaseHandler
+from vFense.core.permissions._constants import *
+from vFense.core.permissions.decorators import check_permissions, authenticated_request
 
 from vFense.plugins import ra
 from vFense.plugins.ra import creator
@@ -10,7 +10,8 @@ from vFense.plugins.ra import creator
 
 class RDSession(BaseHandler):
 
-    @permission_check(permission=Permission.RemoteAssistance)
+    @authenticated_request
+    @check_permissions(Permissions.REMOTE_ASSISTANCE)
     def post(self):
 
         current_user = self.get_current_user()
@@ -25,7 +26,8 @@ class RDSession(BaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
 
-    @permission_check(permission=Permission.RemoteAssistance)
+    @authenticated_request
+    @check_permissions(Permissions.REMOTE_ASSISTANCE)
     def delete(self):
 
         current_user = self.get_current_user()

@@ -1,6 +1,6 @@
 import json
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 
 from vFense.plugins.ra import creator
 

@@ -1,10 +1,8 @@
 import logging
-
 from json import dumps
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import agent_authenticated_request
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core._constants import CommonKeys
 
@@ -12,6 +10,9 @@ from vFense.plugins.patching.operations.patching_results import PatchingOperatio
 
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -23,7 +24,9 @@ class InstallOsAppsResults(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -78,7 +81,9 @@ class InstallCustomAppsResults(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -129,7 +134,9 @@ class InstallSupportedAppsResults(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -180,7 +187,9 @@ class InstallAgentAppsResults(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -234,7 +243,9 @@ class UnInstallAppsResults(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

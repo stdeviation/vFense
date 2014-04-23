@@ -1,23 +1,18 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 import logging
 import logging.config
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import GenericCodes
 from vFense.scheduler.jobManager import *
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.permissions import Permission
+from vFense.core.decorators import authenticated_request, convert_json_to_arguments
 from vFense.utils.common import *
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
 from datetime import datetime
 
-from jsonpickle import encode
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
+
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -27,7 +22,9 @@ class ScheduleListerHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -59,7 +56,9 @@ class ScheduleAppDetailHandler(BaseHandler):
     @authenticated_request
     def get(self, jobname):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -89,7 +88,9 @@ class ScheduleAppDetailHandler(BaseHandler):
     @authenticated_request
     def delete(self, jobname):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -125,7 +126,9 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -178,7 +181,9 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -234,7 +239,9 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -287,7 +294,9 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -340,7 +349,9 @@ class SchedulerDateBasedJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -391,7 +402,9 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
