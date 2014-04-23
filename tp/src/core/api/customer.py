@@ -29,6 +29,7 @@ from vFense.core.user.users import add_users_to_customer, \
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.results import Results
 from vFense.errorz.status_codes import CustomerFailureCodes, CustomerCodes
 from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
     update_all_apps_for_customer

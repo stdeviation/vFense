@@ -45,7 +45,8 @@ class FetchAgents(object):
             AgentKey.DisplayName, AgentKey.OsCode, AgentKey.Tags,
             AgentKey.OsString, AgentKey.AgentId, AgentKey.AgentStatus,
             AgentKey.NeedsReboot, AgentKey.ProductionLevel,
-            AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN
+            AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN,
+            AgentKey.LastAgentUpdate
         ]
 
         if sort == SortValues.ASC:
@@ -689,6 +690,9 @@ class FetchAgents(object):
                         z[AppsKey.VulnerabilityId] != ''
                     )
                     .count()
+                ),
+                AgentKey.LastAgentUpdate: (
+                    x[AgentKey.LastAgentUpdate].to_epoch_time()
                 )
             }
         )

@@ -206,6 +206,20 @@ class UserHandler(BaseHandler):
                     edit_user_properties(username, **data_dict)
                 )
 
+            current_customer = self.arguments.get('current_customer', None)
+            if current_customer:
+                data_dict[UserKeys.CurrentCustomer] = current_customer
+                results = (
+                    edit_user_properties(username, **data_dict)
+                )
+
+            default_customer = self.arguments.get('default_customer', None)
+            if default_customer:
+                data_dict[UserKeys.DefaultCustomer] = default_customer
+                results = (
+                    edit_user_properties(username, **data_dict)
+                )
+
             ###Disable or Enable a User###
             enabled = self.arguments.get('enabled', None)
             if enabled:

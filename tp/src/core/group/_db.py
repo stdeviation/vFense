@@ -889,3 +889,37 @@ def delete_groups(group_ids, conn=None):
         logger.exception(e)
 
     return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_groups_from_customer(customer_name, conn=None):
+    """Delete groups that belong to a customer.
+    Args:
+        customer_name (str): the name of the customer, that the groups belong too.
+
+    Basic Usage::
+        >>> from vFense.group._db import delete_groups_from_customer
+        >>> customer_name = 'test'
+        >>> delete_groups_from_customer(customer_name)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get_all(customer_name, index=GroupIndexes.CustomerName)
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)

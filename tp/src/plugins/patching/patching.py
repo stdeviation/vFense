@@ -2,11 +2,15 @@ import logging
 
 from vFense.core._constants import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.core.decorators import time_it, results_message
+from vFense.core.decorators import time_it 
 from vFense.plugins.patching._db import delete_os_apps_for_agent_by_customer, \
     delete_supported_apps_for_agent_by_customer, \
     delete_custom_apps_for_agent_by_customer, \
-    delete_agent_apps_for_agent_by_customer
+    delete_agent_apps_for_agent_by_customer, \
+    update_os_apps_for_agent_by_customer, \
+    update_supported_apps_for_agent_by_customer, \
+    update_custom_apps_for_agent_by_customer, \
+    update_agent_apps_for_agent_by_customer
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

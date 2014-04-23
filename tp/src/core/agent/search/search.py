@@ -37,7 +37,7 @@ class RetrieveAgents(object):
             AgentKey.DisplayName, AgentKey.OsCode,
             AgentKey.OsString, AgentKey.AgentId, AgentKey.AgentStatus,
             AgentKey.NeedsReboot, AgentKey.BasicStats,
-            AgentKey.ProductionLevel
+            AgentKey.ProductionLevel, AgentKey.LastAgentUpdate
         ]
 
         self.valid_keys_to_filter_by = (
@@ -60,6 +60,7 @@ class RetrieveAgents(object):
                 AgentKey.ProductionLevel,
                 AgentCommonKeys.AVAIL_VULN,
                 AgentCommonKeys.AVAIL_UPDATES,
+                AgentKey.LastAgentUpdate,
             ]
         )
         if sort_key in valid_keys_to_sort_by:
