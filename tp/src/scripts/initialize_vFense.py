@@ -231,7 +231,7 @@ def initialize_db():
         print group_data
         print admin_group_id
         user.create_user(
-            DefaultUser.ADMIN,
+            DefaultUsers.ADMIN,
             'vFense Admin Account',
             args.admin_password,
             admin_group_id,
