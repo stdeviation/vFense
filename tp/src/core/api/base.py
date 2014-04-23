@@ -75,12 +75,7 @@ class LoginHandler(BaseHandler):
 
     @convert_json_to_arguments
     def _response_authorized(self):
-        username = (
-            self.arguments.get(
-                CommonKeys.USERNAME, self.get_current_user()
-            )
-        )
-        result = api.User.get(username, username)
+        result = {'pass': True, 'message': 'authenticated'}
         self.set_status(200)
         self.write(json.dumps(result))
 
