@@ -49,7 +49,7 @@ class TagSearcher():
                 .table(TagsCollection)
                 .get_all(self.customer_name,
                     index=TagsIndexes.CustomerName)
-                .filter(lambda x: x[self.sort_key].match(query))
+                .filter(lambda x: x[self.sort_key].match("(?i)"+query))
                 .order_by(self.sort(self.sort_key))
                 .run(conn)
                 )
