@@ -190,6 +190,9 @@ define(
                     _.each($select, function(select) {
                         if($(select).data('user') === 'admin')
                         {
+                            $('select[name=groups]').on('select2-open', function(event){
+                                console.log(event);
+                            });
                             $(select).select2({
                                 width: '100%',
                                 multiple: true,
@@ -207,7 +210,7 @@ define(
                                     },
                                     data: function () {
                                         return {
-                                            customer_name: that.customerContext
+                                            customer_name: $(select).data('user')
                                         };
                                     },
                                     results: function (data) {
