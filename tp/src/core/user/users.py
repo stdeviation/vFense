@@ -407,6 +407,7 @@ def remove_users_from_customer(
 
         else:
             msg = 'can not remove the admin user from any customer'
+            status_code = DbCodes.Skipped
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = UserFailureCodes.CantDeleteAdminFromCustomer
 

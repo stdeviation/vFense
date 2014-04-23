@@ -643,7 +643,7 @@ def change_customer_for_agents(
         generic_status_code = GenericCodes.ObjectUpdated
         vfense_status_code = AgentCodes.AgentsUpdated
 
-    elif status_code == DbCodes.Skipped:
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
         generic_status_code = GenericCodes.DoesNotExists
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
