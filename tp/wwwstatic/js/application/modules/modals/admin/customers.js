@@ -151,6 +151,7 @@ define(
                         name: $(event.currentTarget).val(),
                         type: 'customer',
                         url: 'api/v1/customer',
+                        redirect: '#admin/customers',
                         data: this.collection.toJSON()[0].data,
                         customers: app.user.toJSON().customers
                     }).open();

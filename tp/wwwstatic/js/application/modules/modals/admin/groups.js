@@ -198,7 +198,7 @@ define(
                                         )
                                     );
                                 });
-                                $inner.prepend($div);
+                                $inner.append($div);
                             }
                             else
                             {
@@ -212,7 +212,7 @@ define(
                                         )
                                     );
                                 });
-                                $inner.prepend($div);
+                                $inner.append($div);
                             }
                         });
                         this.checkPermissions();
@@ -267,7 +267,12 @@ define(
                                         )
                                     ),
                                     crel('div', {class: 'accordion-body collapse'},
-                                        crel('div', {class: 'accordion-inner'})
+                                        crel('div', {class: 'accordion-inner'},
+                                            crel('label',
+                                                crel('small', 'Users for group ' + group.group_name)
+                                            ),
+                                            crel('input', {type: 'hidden', name: 'userSelect', 'data-user': group.users.user_name, 'data-url': 'api/v1/users', value: JSON.stringify(group.users)})
+                                        )
                                     )
                                 )
                             );

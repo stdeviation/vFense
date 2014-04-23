@@ -34,6 +34,7 @@ define(
                     return this;
                 },
                 events: {
+                    'click button[name=toggleDisable]'  :   'toggleDisable',
                     'click button[name=toggleAcl]'      :   'toggleAclAccordion',
                     'click button[name=toggleDelete]'   :   'confirmDelete',
                     'change input[name=groupSelect]'    :   'toggle',
@@ -46,6 +47,48 @@ define(
                     'click #addUser'                    :   'displayAddUser',
                     'change #customerContext'           :   'changeCustomerContext',
                     'submit form'                       :   'submit'
+                },
+                toggleDisable: function(event) {
+                    var toggleUser = $(event.currentTarget),
+                        icon = toggleUser.find('i'),
+                        $alert = this.$el.find('div.alert'),
+                        username = icon.hasClass('icon-ban-circle') ? toggleUser.parents('.accordion-heading').find('button[name=toggleAcl]').find('span').text() : toggleUser.parents('.accordion-heading').find('.pull-left').find('strong').text(),
+                        params = {
+                            enabled: 'toggle'
+                        };
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'api/v1/user/' + username,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if(response.rv_status_code === 13001)
+                            {
+                                if(icon.hasClass('icon-ban-circle'))
+                                {
+                                    icon.removeClass('icon-ban-circle').addClass('icon-ok-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                }
+                                else
+                                {
+                                    icon.removeClass('icon-ok-circle').addClass('icon-ban-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty()
+                                        .append(
+                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                                crel('span', username)
+                                            )
+                                    );
+                                }
+                            }
+                            else
+                            {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    });
+                    return this;
                 },
                 retrieveGroups: function(event) {
                     this.groupsArray = event.val;
@@ -190,9 +233,10 @@ define(
                     _.each($select, function(select) {
                         if($(select).data('user') === 'admin')
                         {
-                            $('select[name=groups]').on('select2-open', function(event){
-                                console.log(event);
+                            $(select).on('select2-opening', function(event){
+                                event.preventDefault();
                             });
+
                             $(select).select2({
                                 width: '100%',
                                 multiple: true,
@@ -305,8 +349,14 @@ define(
                                     if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
+                                            crel('button', {class: 'btn btn-link noPadding', name: 'toggleDisable'},
+                                                crel('i', {class: 'icon-ban-circle'})
+                                            )
+                                        );
+                                        fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
-                                                crel('i', {class: 'icon-remove', style: 'color: red'}))
+                                                crel('i', {class: 'icon-remove', style: 'color: red'})
+                                            )
                                         );
                                         return fragment.innerHTML;
                                     }
