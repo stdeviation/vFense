@@ -134,21 +134,32 @@ define(
                     return this;
                 },
                 toggleUser: function (event) {
-                    var url = 'api/v1/groups',
-                        $input = $(event.currentTarget),
-                        group = $input.data('group'),
+                    var $input = $(event.currentTarget),
+                        groupID = $input.data('id'),
+                        username = event.added ? event.added.text : event.removed.text,
+                        url = 'api/v1/group/' + groupID,
                         $alert = this.$el.find('div.alert'),
-                        params = {
-                            id: group,
-                            user: event.added ? event.added.id : event.removed.id
-                        };
-                    $.post(url, params, function (response) {
-                        if (response.rv_status_code) {
-                            $alert.hide();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                        users = [],
+                        params;
+                    users.push(username);
+                    params = {
+                        usernames: users,
+                        action: event.added ? 'add' : 'delete'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code === 13007) {
+                                $alert.hide();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
                         }
-                    }).error(function (e) { window.console.log(e.responseText); });
+                    });
                     return this;
                 },
                 togglePermission: function (event) {
@@ -172,7 +183,6 @@ define(
                     return this;
                 },
                 beforeRender: $.noop,
-                onRender: $.noop,
                 initSelect: function () {
                     this.$el.find('label').show();
                     var $customers = this.$('select[name="customers"]');
@@ -186,6 +196,14 @@ define(
                         $items.each(function (i, item) {
                             var $inner = $(item).find('.accordion-inner'),
                                 groupName = $(item).data('name'),
+                                $permissionsDiv = $
+                                (
+                                    crel('div', {class: 'permissions-info'},
+                                        crel('div', {class: 'permissions-heading'},
+                                            crel('p', 'Permissions:')
+                                        )
+                                    )
+                                ),
                                 $div = $(crel('div', {class: 'span12'}));
                             if (groupName === 'Administrator') {
                                 _.each(permissions.data, function (permission) {
@@ -198,7 +216,6 @@ define(
                                         )
                                     );
                                 });
-                                $inner.append($div);
                             }
                             else
                             {
@@ -212,8 +229,8 @@ define(
                                         )
                                     );
                                 });
-                                $inner.append($div);
                             }
+                            $inner.append($permissionsDiv.append($div));
                         });
                         this.checkPermissions();
                     }
@@ -269,9 +286,9 @@ define(
                                     crel('div', {class: 'accordion-body collapse'},
                                         crel('div', {class: 'accordion-inner'},
                                             crel('label',
-                                                crel('small', 'Users for group ' + group.group_name)
+                                                crel('small', 'Users for group ' + group.group_name + ':')
                                             ),
-                                            crel('input', {type: 'hidden', name: 'userSelect', 'data-user': group.users.user_name, 'data-url': 'api/v1/users', value: JSON.stringify(group.users)})
+                                            crel('input', {type: 'hidden', name: 'userSelect', 'data-id': group.id, 'data-user': group.users.user_name, 'data-url': 'api/v1/users', value: JSON.stringify(group.users)})
                                         )
                                     )
                                 )
@@ -280,6 +297,44 @@ define(
                         $items.append(fragment);
                         this.initSelect();
                     }
+                    return this;
+                },
+                onRender: function () {
+                    var $userSelect = this.$el.find('input[name=userSelect]'),
+                        that = this;
+                    _.each($userSelect, function(select) {
+                        $(select).select2({
+                            width: '100%',
+                            multiple: true,
+                            initSelection: function (element, callback) {
+                                var data = JSON.parse(element.val()),
+                                    results = [];
+                                _.each(data, function (object) {
+                                    results.push({id: object.user_name, text: object.user_name});
+                                });
+                                callback(results);
+                            },
+                            ajax: {
+                                url: function () {
+                                    return $(select).data('url');
+                                },
+                                data: function () {
+                                    return {
+
+                                    };
+                                },
+                                results: function (data) {
+                                    var results = [];
+                                    if (data.rv_status_code === 1001) {
+                                        _.each(data.data, function (object) {
+                                            results.push({id: object.user_name, text: object.user_name});
+                                        });
+                                        return {results: results, more: false, context: results};
+                                    }
+                                }
+                            }
+                        });
+                    });
                     return this;
                 },
                 render: function () {

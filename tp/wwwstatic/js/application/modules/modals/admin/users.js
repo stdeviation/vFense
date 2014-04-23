@@ -203,7 +203,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
-                        group_ids: groups,//event.added ? event.added.text : event.removed.text,
+                        group_ids: groups,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({
@@ -349,7 +349,7 @@ define(
                                     if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
-                                            crel('button', {class: 'btn btn-link noPadding', name: 'toggleDisable'},
+                                            crel('button', {class: 'btn btn-link right-margin noPadding', name: 'toggleDisable'},
                                                 crel('i', {class: 'icon-ban-circle'})
                                             )
                                         );

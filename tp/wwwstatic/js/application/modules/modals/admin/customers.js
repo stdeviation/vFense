@@ -183,7 +183,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
-                        usernames: users,//event.added ? event.added.text : event.removed.text,
+                        usernames: users,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({

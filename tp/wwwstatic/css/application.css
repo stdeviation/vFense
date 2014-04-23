@@ -1727,11 +1727,11 @@ dl.inline dd.cveId {
     border-top: none;
 }
 
-.customer-info {
+.customer-info, .permissions-info {
     margin: 20px 0;
 }
 
-.customer-heading {
+.customer-heading, .permissions-heading {
     font-weight: bold;
     font-size: 18px;
 }
@@ -1742,4 +1742,8 @@ dl.inline dd.cveId {
 
 input#deleteAllAgents {
     border-radius: 0;
+}
+
+.right-margin {
+    margin-right: 8px;
 }
