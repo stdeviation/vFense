@@ -39,7 +39,7 @@ define(
                     'click button[name=toggleDelete]'   :   'confirmDelete',
                     'change input[name=groupSelect]'    :   'toggle',
                     'change input[name=customerSelect]' :   'toggle',
-                    'change select[name=groups]'        :   'retrieveGroups',
+                    'change input[name=groups]'         :   'retrieveGroups',
                     'change select[name=customers]'     :   'retrieveCustomers',
                     'click button[name=deleteUser]'     :   'deleteUser',
                     'click #cancelNewUser'              :   'displayAddUser',
@@ -160,7 +160,7 @@ define(
                         email = this.$el.find('#email').val(),
                         username = this.$el.find('#username').val(),
                         password = this.$el.find('#password').val(),
-                        group = this.$el.find('select[name=groups]').select2('val'),
+                        group = this.$el.find('input[name=groups]').select2('data'),
                         customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
