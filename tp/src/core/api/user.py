@@ -6,6 +6,8 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core.decorators import authenticated_request
 
+from vFense.core._constants import CommonKeys
+from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
@@ -98,21 +100,21 @@ class UserHandler(BaseHandler):
         results = None
         try:
             customer_context = (
-                self.arguments.get('customer_context', active_customer)
+                self.arguments.get(ApiArguments.CUSTOMER_CONTEXT, active_customer)
             )
-            action = self.arguments.get('action', 'add')
+            action = self.arguments.get(ApiArguments.ACTIONS, ApiValues.ADD)
 
             ###Update Groups###
-            group_ids = self.arguments.get('group_ids', None)
+            group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
             if group_ids and isinstance(group_ids, list):
-                if action == 'add':
+                if action == ApiValues.ADD:
                     results = (
                         add_user_to_groups(
                             username, customer_context, group_ids,
                             username, uri, method
                         )
                     )
-                if action == 'delete':
+                if action == ApiValues.DELETE:
                     results = (
                         remove_groups_from_user(
                             username, group_ids,
@@ -294,9 +296,9 @@ class UsersHandler(BaseHandler):
         active_customer = (
             get_user_property(active_user, UserKeys.CurrentCustomer)
         )
-        customer_context = self.get_argument('customer_context', None)
-        all_customers = self.get_argument('all_customers', None)
-        user_name = self.get_argument('user_name', None)
+        customer_context = self.get_argument(ApiArguments.CUSTOMER_CONTEXT, None)
+        all_customers = self.get_argument(ApiArguments.ALL_CUSTOMERS, None)
+        user_name = self.get_argument(ApiArguments.USER_NAME, None)
         count = 0
         user_data = []
         try:
@@ -358,14 +360,14 @@ class UsersHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        username = self.arguments.get('username')
-        password = self.arguments.get('password')
-        group_ids = self.arguments.get('group_ids')
-        customer_names = self.arguments.get('customer_names', None)
-        customer_context = self.arguments.get('customer_context')
-        fullname = self.arguments.get('fullname', None)
-        email = self.arguments.get('email', None)
-        enabled = self.arguments.get('enabled', 'no')
+        username = self.arguments.get(ApiArguments.USERNAME)
+        password = self.arguments.get(ApiArguments.PASSWORD)
+        group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
+        customer_names = self.arguments.get(ApiArguments.CUSTOMER_NAMES, None)
+        customer_context = self.arguments.get(ApiArguments.CUSTOMER_CONTEXT)
+        fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
+        email = self.arguments.get(ApiArguments.EMAIL, None)
+        enabled = self.arguments.get(ApiArguments.ENABLED, CommonKeys.YES)
         try:
             if group_ids:
                 if not isinstance(group_ids, list):
@@ -410,7 +412,7 @@ class UsersHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        usernames = self.arguments.get('usernames')
+        usernames = self.arguments.get(ApiArguments.USERNAMES)
         try:
             if not isinstance(usernames, list):
                 usernames = usernames.split()

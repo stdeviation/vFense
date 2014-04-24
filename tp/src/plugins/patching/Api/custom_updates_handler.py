@@ -14,7 +14,7 @@ from vFense.core.decorators import convert_json_to_arguments, authenticated_requ
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_custom_app, \
     update_hidden_status, delete_app_from_rv
-from vFense.plugins.patching.store_operations import StorePatchingOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
 from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByTagId
