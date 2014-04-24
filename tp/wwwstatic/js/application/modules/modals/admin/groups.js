@@ -22,8 +22,10 @@ define(
                     this.permissions = new exports.PermissionCollection();
                     this.listenTo(this.permissions, 'sync', this.render);
                     this.listenTo(this.collection, 'sync', this.render);
+                    this.listenTo(app.user, 'sync', this.render);
                     this.collection.fetch();
                     this.permissions.fetch();
+                    app.user.fetch();
                     return this;
                 },
                 events: {
@@ -288,7 +290,7 @@ define(
                                             crel('label',
                                                 crel('small', 'Users for group ' + group.group_name + ':')
                                             ),
-                                            crel('input', {type: 'hidden', name: 'userSelect', 'data-id': group.id, 'data-user': group.users.user_name, 'data-url': 'api/v1/users', value: JSON.stringify(group.users)})
+                                            crel('input', {type: 'hidden', name: 'userSelect', 'data-id': group.id, 'data-user': group.users.user_name, 'data-url': 'api/v1/group/' + group.id, value: JSON.stringify(group.users)})
                                         )
                                     )
                                 )
@@ -318,11 +320,11 @@ define(
                                 url: function () {
                                     return $(select).data('url');
                                 },
-                                data: function () {
+                               /* data: function () {
                                     return {
 
                                     };
-                                },
+                                },*/
                                 results: function (data) {
                                     var results = [];
                                     if (data.rv_status_code === 1001) {

@@ -224,12 +224,44 @@ define(
                 },
                 beforeRender: $.noop,
                 onRender: function () {
-                    var $groups = this.$('select[name=groups]'),
+                    var $groups = this.$('input[name=groups]'),
                         $customers = this.$('select[name=customers]'),
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
                         that = this;
-                    $groups.select2({width: '100%'});
+                    $groups.select2({
+                        width: '100%',
+                        multiple: true,
+                        initSelection: function (element, callback) {
+                            var data = JSON.parse(element.val()),
+                                results = [];
+                            _.each(data, function (object) {
+                                results.push({id: object.id, text: object.group_name});
+                            });
+                            callback(results);
+                        },
+                        ajax: {
+                            url: function () {
+                                return $groups.data('url');
+                            },
+                            data: function () {
+                                return {
+                                    customer_context: that.customerContext
+                                };
+                            },
+                            results: function (data) {
+                                var results = [];
+                                if (data.rv_status_code === 1001) {
+                                    _.each(data.data, function (object) {
+                                        results.push({id: object.id, text: object.group_name});
+                                    });
+                                    return {results: results, more: false, context: results};
+                                }
+                            }
+                        }
+                    });
+
                     $customers.select2({width: '100%'});
+
                     _.each($select, function(select) {
                         if($(select).data('user') === 'admin')
                         {
@@ -254,7 +286,7 @@ define(
                                     },
                                     data: function () {
                                         return {
-                                            customer_name: $(select).data('user')
+                                            username: $(select).data('user')
                                         };
                                     },
                                     results: function (data) {
@@ -288,7 +320,7 @@ define(
                                     },
                                     data: function () {
                                         return {
-                                            customer_name: that.customerContext
+                                            username: $(select).data('user')
                                         };
                                     },
                                     results: function (data) {
