@@ -1,12 +1,8 @@
-
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 import logging
 import logging.config
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import GenericCodes
@@ -15,10 +11,9 @@ from vFense.core.tag import *
 from vFense.core.tag.tagManager import *
 from vFense.core.tag.tag_searcher import TagSearcher
 from vFense.utils.common import *
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
+from vFense.core.decorators import authenticated_request, convert_json_to_arguments
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -28,7 +23,9 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -55,7 +52,9 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         tag_name = self.arguments.get('name', None)
         uri = self.request.uri
         method = self.request.method
@@ -78,7 +77,9 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def delete(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -114,7 +115,9 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         tag = TagSearcher(username, customer_name, uri, method)
@@ -128,7 +131,9 @@ class TagHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self, tag_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -179,7 +184,9 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def put(self, tag_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         agent_id = self.arguments.get('agent_id', None)
         uri = self.request.uri
         method = self.request.method
@@ -207,7 +214,9 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def delete(self, tag_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         agent_id = self.arguments.get('agent_id', None)
         uri = self.request.uri
         method = self.request.method
@@ -235,7 +244,9 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         name = self.get_argument('query', None)
         uri = self.request.uri
         method = self.request.method
@@ -255,7 +266,9 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         tag_name = self.arguments.get('tag_name', None)
         tag_id = self.arguments.get('tag_id', None)
         uri = self.request.uri
@@ -325,7 +338,9 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def delete(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         tag_id = self.arguments.get('tag_id', None)
         uri = self.request.uri
         method = self.request.method

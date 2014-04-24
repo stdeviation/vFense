@@ -12,8 +12,8 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
-from vFense.server.handlers import RootHandler, RvlLoginHandler, RvlLogoutHandler
-from vFense.server.handlers import WebSocketHandler, AdminHandler
+from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
+from vFense.core.api.base import WebSocketHandler, AdminHandler
 from vFense.receiver.api.core.newagent import NewAgentV1
 from vFense.receiver.api.core.checkin import CheckInV1
 from vFense.receiver.api.core.startup import StartUpV1

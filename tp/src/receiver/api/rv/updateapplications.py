@@ -3,13 +3,11 @@ import logging
 from json import dumps
 
 from vFense.errorz.error_messages import GenericResults, UpdateApplicationsResults
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import agent_authenticated_request, \
+    convert_json_to_arguments
 
 from vFense.plugins.patching.operations.patching_results import PatchingOperationResults
-
 
 from vFense.receiver.rvhandler import RvHandOff
 
@@ -24,7 +22,9 @@ class UpdateApplicationsV1(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

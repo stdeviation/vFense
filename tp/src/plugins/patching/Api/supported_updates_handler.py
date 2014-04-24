@@ -1,14 +1,12 @@
 import simplejson as json
-
-from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from vFense.server.hierarchy.manager import get_current_customer_name
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
@@ -23,6 +21,9 @@ from vFense.plugins.patching.search.search_by_tagid import RetrieveSupportedApps
 from vFense.plugins.patching.search.search_by_appid import RetrieveSupportedAppsByAppId, \
     RetrieveAgentsBySupportedAppId
 
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
+
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
@@ -31,7 +32,9 @@ class AgentIdSupportedAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -103,7 +106,9 @@ class AgentIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -171,7 +176,9 @@ class AgentIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -236,7 +243,9 @@ class TagIdSupportedAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -303,7 +312,9 @@ class TagIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -370,7 +381,9 @@ class TagIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -435,7 +448,9 @@ class AppIdSupportedAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         patches = (
@@ -454,7 +469,9 @@ class AppIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -504,7 +521,9 @@ class AppIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -573,7 +592,9 @@ class AppIdSupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -639,7 +660,9 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -684,7 +707,9 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -751,7 +776,9 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -816,7 +843,9 @@ class SupportedAppsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -894,7 +923,9 @@ class SupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

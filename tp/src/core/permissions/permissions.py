@@ -131,17 +131,18 @@ def authenticate_user(username, password):
     authenticated = False
     try:
         user_exist = retrieve_object(username, UserCollections.Users)
-        if user_exist and user_exist[UserKeys.Enabled] == CommonKeys.YES:
-            original_encrypted_password = (
-                user_exist[UserKeys.Password].encode('utf-8')
-            )
-            password_verified = (
-                Crypto().verify_bcrypt_hash(
-                    password, original_encrypted_password
+        if user_exist:
+            if user_exist[UserKeys.Enabled] == CommonKeys.YES:
+                original_encrypted_password = (
+                    user_exist[UserKeys.Password].encode('utf-8')
                 )
-            )
-            if password_verified:
-                authenticated = True
+                password_verified = (
+                    Crypto().verify_bcrypt_hash(
+                        password, original_encrypted_password
+                    )
+                )
+                if password_verified:
+                    authenticated = True
 
     except Exception as e:
         logger.exception(e)

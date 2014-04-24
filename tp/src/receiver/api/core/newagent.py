@@ -2,10 +2,9 @@ import logging
 
 from json import dumps
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.core.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, agent_authenticated_request
 from vFense.core.agent import *
 from vFense.operations import *
 from vFense.operations._constants import AgentOperations
@@ -13,6 +12,9 @@ from vFense.core.agent.agents import add_agent
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 from vFense.receiver.rvhandler import RvHandOff
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 import plugins.ra.handoff as RaHandoff
 #from server.handlers import *
@@ -26,7 +28,9 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = self.arguments.get(AgentKey.CustomerName)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         plugins = self.arguments.get(AgentKey.Plugins)
         rebooted = self.arguments.get(AgentKey.Rebooted)
         system_info = self.arguments.get(AgentKey.SystemInfo)

@@ -1,10 +1,9 @@
 import logging
-
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import authenticated_request, \
+    convert_json_to_arguments
 
 from vFense.plugins.ra.operations.ra_results import RaOperationResults
 

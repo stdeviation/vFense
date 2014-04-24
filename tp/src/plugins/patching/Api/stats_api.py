@@ -1,20 +1,18 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
-
-from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
+
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
-from jsonpickle import encode
 
 from vFense.errorz.error_messages import GenericResults
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching.stats import *
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.core.decorators import authenticated_request
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -24,7 +22,9 @@ class CustomerStatsByOsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -54,7 +54,9 @@ class TagStatsByOsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -84,7 +86,9 @@ class WidgetHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -112,7 +116,9 @@ class WidgetHandler(BaseHandler):
 class BarChartByAppIdByStatusHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         appid = self.get_argument('id', None)
         result = bar_chart_for_appid_by_status(app_id=appid,
                                               customer_name=customer_name)
@@ -124,7 +130,9 @@ class OsAppsOverTimeHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -163,7 +171,9 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -202,7 +212,9 @@ class TagOsAppsOverTimeHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -243,7 +255,9 @@ class AgentPackageSeverityOverTimeHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         available = self.get_argument('available', True)
         if not isinstance(available, bool):
             available = return_bool(available)
@@ -261,7 +275,9 @@ class TagPackageSeverityOverTimeHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         available = self.get_argument('available', True)
         if not isinstance(available, bool):
             available = return_bool(available)
@@ -280,7 +296,9 @@ class TopAppsNeededHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         count = int(self.get_argument('count', '5'))
         uri = self.request.uri
         method = self.request.method
@@ -311,7 +329,9 @@ class RecentlyReleasedHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -342,7 +362,9 @@ class CustomerSeverityHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -372,7 +394,9 @@ class AgentSeverityHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -402,7 +426,9 @@ class TagSeverityHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

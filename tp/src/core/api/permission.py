@@ -2,14 +2,9 @@ import json
 import logging
 import logging.config
 
-from vFense.utils.security import check_password
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import authenticated_request
 
-from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user, \
-    return_results_for_permissions
-from vFense.core.permissions.decorators import check_permissions
 from vFense.core.permissions._constants import *
 from vFense.core.agent import *
 from vFense.core.user import *

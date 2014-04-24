@@ -1,7 +1,9 @@
 import json
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.core.api.base import BaseHandler
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 from vFense.plugins.ra import ra_settings
 
@@ -11,7 +13,9 @@ class SetPassword(BaseHandler):
     def post(self):
 
         current_user = self.get_current_user()
-        current_customer = get_current_customer_name(current_user)
+        customer_name = (
+            get_user_property(current_user, UserKeys.CurrentCustomer)
+        )
         body = json.loads(self.request.body)
         password = body.get('password')
 

@@ -1,23 +1,15 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 import logging
 import logging.config
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import GenericCodes
 from reports.stats import *
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.permissions import Permission
+from vFense.core.decorators import authenticated_request
 from vFense.utils.common import *
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-from datetime import datetime
-
-from jsonpickle import encode
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -26,7 +18,9 @@ class AgentsOsDetailsHandler(BaseHandler):
     @authenticated_request 
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -53,7 +47,9 @@ class AgentsHardwareDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -82,7 +78,9 @@ class AgentsCPUDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -112,7 +110,9 @@ class AgentsMemoryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -142,7 +142,9 @@ class AgentsDiskDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:
@@ -172,7 +174,9 @@ class AgentsNetworkDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         uri=self.request.uri
         method=self.request.method
         try:

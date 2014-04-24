@@ -730,7 +730,7 @@ def toggle_user_status(username, user_name=None, uri=None, method=None):
 @results_message
 def create_user(
     username, fullname, password, group_ids,
-    customer_name, email, enabled='no', user_name=None,
+    customer_name, email, enabled=CommonKeys.YES, user_name=None,
     uri=None, method=None
     ):
     """Add a new user into vFense

@@ -2,8 +2,7 @@ import json
 import logging
 import logging.config
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.core.api.base import BaseHandler
 
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.permissions._constants import *
@@ -12,7 +11,8 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 
 from vFense.core.permissions.decorators import check_permissions
 
-from vFense.core.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, \
+    authenticated_request
 
 from vFense.core.agent import *
 from vFense.core.user import *

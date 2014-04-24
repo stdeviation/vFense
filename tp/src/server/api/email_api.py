@@ -1,19 +1,15 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
 import logging
 import logging.config
-import os
-from vFense.server.handlers import BaseHandler, LoginHandler
+from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
 from emailer.mailer import *
 
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request
-from jsonpickle import encode
+from vFense.core.decorators import authenticated_request
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -23,7 +19,9 @@ class GetEmailConfigHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         mail = MailClient(customer_name)
         result = {
             'host': mail.server,
@@ -42,10 +40,10 @@ class GetEmailConfigHandler(BaseHandler):
 class CreateEmailConfigHandler(BaseHandler):
     @authenticated_request
     def post(self):
-        passed = False
-        logged_in = False
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(active_user, UserKeys.CurrentCustomer)
+        )
         mail_host = self.get_argument('host', None)
         mail_user = self.get_argument('user', None)
         mail_password = self.get_argument('password', None)
@@ -99,6 +97,3 @@ class CreateEmailConfigHandler(BaseHandler):
                 }
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(result, indent=4))
-
-
-

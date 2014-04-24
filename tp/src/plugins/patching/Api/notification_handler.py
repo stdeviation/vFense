@@ -1,22 +1,18 @@
 import logging
 import logging.config
 
-import tornado.httpserver
-import tornado.web
-
 from vFense.errorz.error_messages import GenericResults, NotificationResults
 from vFense.notifications import *
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.permissions import Permission
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import authenticated_request, convert_json_to_arguments
 from vFense.notifications.search_alerts import AlertSearcher
 from vFense.notifications.alerts import Notifier, get_valid_fields, get_all_notifications
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -25,7 +21,9 @@ class GetAllValidFieldsForNotifications(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         result = (
             get_valid_fields(
                 customer_name=customer_name
@@ -39,7 +37,9 @@ class NotificationsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -69,7 +69,9 @@ class NotificationsHandler(BaseHandler):
     @authenticated_request
     def post(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -190,7 +192,9 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def get(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -215,7 +219,9 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def delete(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -249,7 +255,9 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def put(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

@@ -3,7 +3,7 @@ from json import dumps
 
 from vFense.core.api.base import BaseHandler
 
-from vFense.server.hierarchy.decorators import agent_authenticated_request
+from vFense.core.decorators import agent_authenticated_request
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
