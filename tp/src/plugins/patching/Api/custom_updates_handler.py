@@ -75,6 +75,7 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
 
 
 class ThirdPartyUploadHandler(BaseHandler):
+    @convert_json_to_arguments
     @authenticated_request
     def post(self):
         username = self.get_current_user()
