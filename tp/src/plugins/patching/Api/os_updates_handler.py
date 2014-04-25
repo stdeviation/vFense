@@ -24,7 +24,7 @@ from vFense.core.permissions._constants import *
 from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from vFense.plugins.patching.store_operations import StorePatchingOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.rv_db_calls import update_hidden_status, update_os_app
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments

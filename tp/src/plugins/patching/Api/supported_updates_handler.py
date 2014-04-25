@@ -10,7 +10,7 @@ from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
-from vFense.plugins.patching.store_operations import StorePatchingOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_supported_app, \
     update_hidden_status

@@ -14,7 +14,7 @@ from vFense.core.decorators import convert_json_to_arguments, \
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_agent_app, \
     update_hidden_status
-from vFense.plugins.patching.store_operations import StorePatchingOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveAgentApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveAgentAppsByAgentId
 from vFense.plugins.patching.search.search_by_tagid import RetrieveAgentAppsByTagId

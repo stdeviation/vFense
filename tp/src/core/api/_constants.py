@@ -1,6 +1,8 @@
 class ApiArguments():
+    ALL_CUSTOMERS = 'all_customers'
     ACTION = 'action'
     USERNAME = 'username'
+    USER_NAME = 'user_name'
     USERNAMES = 'usernames'
     CUSTOMER_CONTEXT = 'customer_context'
     CUSTOMERNAME = 'customername'
@@ -12,6 +14,7 @@ class ApiArguments():
     GROUP_IDS = 'group_ids'
     PASSWORD = 'password'
     PERMISSIONS = 'permissions'
+    NAME = 'name'
     NEW_PASSWORD = 'new_password'
     DOWNLOAD_URL = 'download_url'
     NET_THROTTLE = 'net_throttle'
@@ -30,6 +33,8 @@ class ApiArguments():
     SORT = 'sort'
     SORT_BY = 'sort_by'
     OPERATION = 'operation'
+    FULL_NAME = 'full_name'
+    EMAIL = 'email'
 
 
 class ApiValues():

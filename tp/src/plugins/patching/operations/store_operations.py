@@ -22,7 +22,29 @@ logger = logging.getLogger('rvapi')
 
 
 class StorePatchingOperation(StoreAgentOperation):
+    """Create operations for the patching plugin"""
     def apps_refresh(self, agentids=None, tag_id=None):
+        """Send the apps_refresh operation to the agent,
+            Send all installed applications and updates needed
+            to the server.
+        Kwargs:
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/os'
+            >>> method = 'PUT'
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.apps_refresh(agentids=agentids)
+
+        Returns:
+        """
         results = (
             self.generic_operation(
                 AgentOperations.REFRESH_APPS,
@@ -41,12 +63,59 @@ class StorePatchingOperation(StoreAgentOperation):
         }
         self._store_in_agent_queue(operation_data)
 
-    def install_os_apps(self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-                        net_throttle=0, restart=RebootValues.NONE,
-                        agentids=None, tag_id=None):
+    def install_os_apps(
+        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+        net_throttle=0, restart=RebootValues.NONE,
+        agentids=None, tag_id=None):
+        """Send the install_os_apps operation to the agent,
+            This will install a list of applications on n
+            number of agents or tag id.
+        Args:
+            appids (list): List of the application ids,
+                that you want to install.
+
+        Kwargs:
+            cpu_throttle (str): Throttle how much cpu to use while installing
+                the applications.
+                default = normal
+            net_throttle (int): Throttle how much bandwidth is being used,
+                while the agent is downloading the applications.
+                default = 0 (unlimited)
+            restart (str): Choose if you want to restart the system after
+                the application is installed. Examples (none, needed, forced)
+                default = 'none' (do not reboot)
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/os'
+            >>> method = 'PUT'
+            >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
+            >>> reboot = 'needed'
+            >>> cpu = 'high'
+            >>> net = 100
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.install_os_apps(
+                    appids, cpu_throttle=cpu, net_throttle=net,
+                    restart=reboot, agentids=agentids
+                )
+
+        Returns:
+        """
 
         oper_type = AgentOperations.INSTALL_OS_APPS
         oper_plugin = vFensePlugins.RV_PLUGIN
+
+        self.CurrentAppsCollection = AppCollections.UniqueApplications
+        self.CurrentAppsKey = AppsKey
+        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
+        self.CurrentAppsPerAgentKey = AppsPerAgentKey
 
         return(
             self.install_apps(
@@ -61,9 +130,53 @@ class StorePatchingOperation(StoreAgentOperation):
         net_throttle=0, restart=RebootValues.NONE,
         agentids=None, tag_id=None
         ):
+        """Send the install_custom_apps operation to the agent,
+            This will install a list of applications on n
+            number of agents or tag id.
+        Args:
+            appids (list): List of the application ids,
+                that you want to install.
+
+        Kwargs:
+            cpu_throttle (str): Throttle how much cpu to use while installing
+                the applications.
+                default = normal
+            net_throttle (int): Throttle how much bandwidth is being used,
+                while the agent is downloading the applications.
+                default = 0 (unlimited)
+            restart (str): Choose if you want to restart the system after
+                the application is installed. Examples (none, needed, forced)
+                default = 'none' (do not reboot)
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/custom'
+            >>> method = 'PUT'
+            >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
+            >>> reboot = 'needed'
+            >>> cpu = 'high'
+            >>> net = 100
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.install_custom_apps(
+                    appids, cpu_throttle=cpu, net_throttle=net,
+                    restart=reboot, agentids=agentids
+                )
+        """
 
         oper_type = AgentOperations.INSTALL_CUSTOM_APPS
         oper_plugin = vFensePlugins.RV_PLUGIN
+
+        self.CurrentAppsCollection = AppCollections.CustomApps
+        self.CurrentAppsKey = CustomAppsKey
+        self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
+        self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
         return(
             self.install_apps(
@@ -79,9 +192,53 @@ class StorePatchingOperation(StoreAgentOperation):
         net_throttle=0, restart=RebootValues.NONE,
         agentids=None, tag_id=None
         ):
+        """Send the install_supported_apps operation to the agent,
+            This will install a list of supported applications on n
+            number of agents or tag id.
+        Args:
+            appids (list): List of the application ids,
+                that you want to install.
+
+        Kwargs:
+            cpu_throttle (str): Throttle how much cpu to use while installing
+                the applications.
+                default = normal
+            net_throttle (int): Throttle how much bandwidth is being used,
+                while the agent is downloading the applications.
+                default = 0 (unlimited)
+            restart (str): Choose if you want to restart the system after
+                the application is installed. Examples (none, needed, forced)
+                default = 'none' (do not reboot)
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/supported'
+            >>> method = 'PUT'
+            >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
+            >>> reboot = 'needed'
+            >>> cpu = 'high'
+            >>> net = 100
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.install_supported_apps(
+                    appids, cpu_throttle=cpu, net_throttle=net,
+                    restart=reboot, agentids=agentids
+                )
+        """
 
         oper_type = AgentOperations.INSTALL_SUPPORTED_APPS
         oper_plugin = vFensePlugins.RV_PLUGIN
+
+        self.CurrentAppsCollection = AppCollections.SupportedApps
+        self.CurrentAppsKey = SupportedAppsKey
+        self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
+        self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
         return(
             self.install_apps(
@@ -96,9 +253,53 @@ class StorePatchingOperation(StoreAgentOperation):
         net_throttle=0, restart=RebootValues.NONE,
         agentids=None, tag_id=None
         ):
+        """Send the install_agent_apps operation to the agent,
+            This will install the agent update on n
+            number of agents or tag id.
+        Args:
+            appids (list): List of the application ids,
+                that you want to install.
+
+        Kwargs:
+            cpu_throttle (str): Throttle how much cpu to use while installing
+                the applications.
+                default = normal
+            net_throttle (int): Throttle how much bandwidth is being used,
+                while the agent is downloading the applications.
+                default = 0 (unlimited)
+            restart (str): Choose if you want to restart the system after
+                the application is installed. Examples (none, needed, forced)
+                default = 'none' (do not reboot)
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
+            >>> method = 'PUT'
+            >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
+            >>> reboot = 'needed'
+            >>> cpu = 'high'
+            >>> net = 100
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.install_agent_apps(
+                    appids, cpu_throttle=cpu, net_throttle=net,
+                    restart=reboot, agentids=agentids
+                )
+        """
 
         oper_type = AgentOperations.INSTALL_AGENT_APPS
         oper_plugin = vFensePlugins.RV_PLUGIN
+
+        self.CurrentAppsCollection = AppCollections.AgentApps
+        self.CurrentAppsKey = AgentAppsKey
+        self.CurrentAppsPerAgentCollection = AppCollections.AgentAppsPerAgent
+        self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
 
         return(
             self.install_apps(
@@ -114,9 +315,53 @@ class StorePatchingOperation(StoreAgentOperation):
         net_throttle=0, restart=RebootValues.NONE,
         agentids=None, tag_id=None
         ):
+        """Send the uninstall_apps operation to the agent,
+            This will uninstall the applications from n
+            number of agents or tag id.
+        Args:
+            appids (list): List of the application ids,
+                that you want to install.
+
+        Kwargs:
+            cpu_throttle (str): Throttle how much cpu to use while installing
+                the applications.
+                default = normal
+            net_throttle (int): Throttle how much bandwidth is being used,
+                while the agent is downloading the applications.
+                default = 0 (unlimited)
+            restart (str): Choose if you want to restart the system after
+                the application is installed. Examples (none, needed, forced)
+                default = 'none' (do not reboot)
+            agentids (str): List of agent ids.
+                default = None
+            tag_id (str): 36 character UUID of the agent.
+                default = None
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> username = 'admin'
+            >>> customer_name = 'default'
+            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
+            >>> method = 'PUT'
+            >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
+            >>> reboot = 'needed'
+            >>> cpu = 'high'
+            >>> net = 100
+            >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
+            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation.uninstall_apps(
+                    appids, cpu_throttle=cpu, net_throttle=net,
+                    restart=reboot, agentids=agentids
+                )
+        """
 
         oper_type = AgentOperations.UNINSTALL
         oper_plugin = vFensePlugins.RV_PLUGIN
+
+        self.CurrentAppsCollection = AppCollections.UniqueApplications
+        self.CurrentAppsKey = AppsKey
+        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
+        self.CurrentAppsPerAgentKey = AppsPerAgentKey
 
         return(
             self.install_apps(
@@ -141,31 +386,6 @@ class StorePatchingOperation(StoreAgentOperation):
             ApiResultKeys.URI: self.uri,
             ApiResultKeys.HTTP_METHOD: self.method
         }
-
-        if (oper_type == AgentOperations.INSTALL_OS_APPS or
-                oper_type == AgentOperations.UNINSTALL):
-            CurrentAppsCollection = AppsCollection
-            CurrentAppsKey = AppsKey
-            CurrentAppsPerAgentCollection = AppsPerAgentCollection
-            CurrentAppsPerAgentKey = AppsPerAgentKey
-
-        elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
-            CurrentAppsCollection = CustomAppsCollection
-            CurrentAppsKey = CustomAppsKey
-            CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
-            CurrentAppsPerAgentKey = CustomAppsPerAgentKey
-
-        elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
-            CurrentAppsCollection = SupportedAppsCollection
-            CurrentAppsKey = SupportedAppsKey
-            CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
-            CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
-
-        elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
-            CurrentAppsCollection = AgentAppsCollection
-            CurrentAppsKey = AgentAppsKey
-            CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
-            CurrentAppsPerAgentKey = AgentAppsPerAgentKey
     
         performed_on = vFenseObjects.AGENT
         if tag_id:
@@ -200,7 +420,7 @@ class StorePatchingOperation(StoreAgentOperation):
             for agent_id in agentids:
                 valid_appids = (
                     self._return_valid_app_ids_for_agent(
-                        agent_id, appids, table=CurrentAppsPerAgentCollection
+                        agent_id, appids, table=self.CurrentAppsPerAgentCollection
                     )
                 )
 
@@ -208,7 +428,7 @@ class StorePatchingOperation(StoreAgentOperation):
                 for app_id in valid_appids:
                     data_to_update = (
                         {
-                            CurrentAppsPerAgentKey.Status: PENDING
+                            self.CurrentAppsPerAgentKey.Status: PENDING
                         }
                     )
                     if (oper_type == AgentOperations.INSTALL_OS_APPS or
@@ -227,8 +447,8 @@ class StorePatchingOperation(StoreAgentOperation):
                     pkg_data.append(
                         self._get_apps_data(
                             app_id, agent_id, oper_type,
-                            CurrentAppsCollection,
-                            CurrentAppsKey.AppId
+                            self.CurrentAppsCollection,
+                            self.CurrentAppsKey.AppId
                         )
                     )
 
@@ -355,7 +575,6 @@ class StorePatchingOperation(StoreAgentOperation):
             app_key = AgentAppsKey.AppId
             pkg = (
                 get_app_data(
-                    app_id, table, app_key,
                     fields_to_pluck=[AgentAppsKey.Name, AgentAppsKey.Version, PKG_CLI_OPTIONS]
                 )
             )
