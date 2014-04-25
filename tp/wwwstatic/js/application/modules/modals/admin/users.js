@@ -34,11 +34,12 @@ define(
                     return this;
                 },
                 events: {
+                    'click button[name=toggleDisable]'  :   'toggleDisable',
                     'click button[name=toggleAcl]'      :   'toggleAclAccordion',
                     'click button[name=toggleDelete]'   :   'confirmDelete',
                     'change input[name=groupSelect]'    :   'toggle',
                     'change input[name=customerSelect]' :   'toggle',
-                    'change select[name=groups]'        :   'retrieveGroups',
+                    'change input[name=groups]'         :   'retrieveGroups',
                     'change select[name=customers]'     :   'retrieveCustomers',
                     'click button[name=deleteUser]'     :   'deleteUser',
                     'click #cancelNewUser'              :   'displayAddUser',
@@ -46,6 +47,48 @@ define(
                     'click #addUser'                    :   'displayAddUser',
                     'change #customerContext'           :   'changeCustomerContext',
                     'submit form'                       :   'submit'
+                },
+                toggleDisable: function(event) {
+                    var toggleUser = $(event.currentTarget),
+                        icon = toggleUser.find('i'),
+                        $alert = this.$el.find('div.alert'),
+                        username = icon.hasClass('icon-ban-circle') ? toggleUser.parents('.accordion-heading').find('button[name=toggleAcl]').find('span').text() : toggleUser.parents('.accordion-heading').find('.pull-left').find('strong').text(),
+                        params = {
+                            enabled: 'toggle'
+                        };
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'api/v1/user/' + username,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if(response.rv_status_code === 13001)
+                            {
+                                if(icon.hasClass('icon-ban-circle'))
+                                {
+                                    icon.removeClass('icon-ban-circle').addClass('icon-ok-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                }
+                                else
+                                {
+                                    icon.removeClass('icon-ok-circle').addClass('icon-ban-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty()
+                                        .append(
+                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                                crel('span', username)
+                                            )
+                                    );
+                                }
+                            }
+                            else
+                            {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    });
+                    return this;
                 },
                 retrieveGroups: function(event) {
                     this.groupsArray = event.val;
@@ -117,7 +160,7 @@ define(
                         email = this.$el.find('#email').val(),
                         username = this.$el.find('#username').val(),
                         password = this.$el.find('#password').val(),
-                        group = this.$el.find('select[name=groups]').select2('val'),
+                        group = this.$el.find('input[name=groups]').select2('data'),
                         customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
@@ -160,7 +203,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
-                        group_ids: groups,//event.added ? event.added.text : event.removed.text,
+                        group_ids: groups,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({
@@ -181,15 +224,51 @@ define(
                 },
                 beforeRender: $.noop,
                 onRender: function () {
-                    var $groups = this.$('select[name=groups]'),
+                    var $groups = this.$('input[name=groups]'),
                         $customers = this.$('select[name=customers]'),
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
                         that = this;
-                    $groups.select2({width: '100%'});
+                    $groups.select2({
+                        width: '100%',
+                        multiple: true,
+                        initSelection: function (element, callback) {
+                            var data = JSON.parse(element.val()),
+                                results = [];
+                            _.each(data, function (object) {
+                                results.push({id: object.id, text: object.group_name});
+                            });
+                            callback(results);
+                        },
+                        ajax: {
+                            url: function () {
+                                return $groups.data('url');
+                            },
+                            data: function () {
+                                return {
+                                    customer_context: that.customerContext
+                                };
+                            },
+                            results: function (data) {
+                                var results = [];
+                                if (data.rv_status_code === 1001) {
+                                    _.each(data.data, function (object) {
+                                        results.push({id: object.id, text: object.group_name});
+                                    });
+                                    return {results: results, more: false, context: results};
+                                }
+                            }
+                        }
+                    });
+
                     $customers.select2({width: '100%'});
+
                     _.each($select, function(select) {
                         if($(select).data('user') === 'admin')
                         {
+                            $(select).on('select2-opening', function(event){
+                                event.preventDefault();
+                            });
+
                             $(select).select2({
                                 width: '100%',
                                 multiple: true,
@@ -207,7 +286,7 @@ define(
                                     },
                                     data: function () {
                                         return {
-                                            customer_name: that.customerContext
+                                            username: $(select).data('user')
                                         };
                                     },
                                     results: function (data) {
@@ -241,7 +320,7 @@ define(
                                     },
                                     data: function () {
                                         return {
-                                            customer_name: that.customerContext
+                                            username: $(select).data('user')
                                         };
                                     },
                                     results: function (data) {
@@ -302,8 +381,14 @@ define(
                                     if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
+                                            crel('button', {class: 'btn btn-link right-margin noPadding', name: 'toggleDisable'},
+                                                crel('i', {class: 'icon-ban-circle'})
+                                            )
+                                        );
+                                        fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
-                                                crel('i', {class: 'icon-remove', style: 'color: red'}))
+                                                crel('i', {class: 'icon-remove', style: 'color: red'})
+                                            )
                                         );
                                         return fragment.innerHTML;
                                     }

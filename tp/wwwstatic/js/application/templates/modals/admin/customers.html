@@ -1,14 +1,14 @@
 <article class="row-fluid">
 <section class="span12 list">
 <header class="clearfix">
-    <div class="pull-left span6">
+    <!--<div class="pull-left span6">
         <strong class="span5">Edit customers for user: </strong>
                 <span class="span6">
                     <select id="userContext" name="users">
                         <%= viewHelpers.getOptions(users, userContext) %>
                     </select>
                 </span>
-    </div>
+    </div>-->
             <span class="pull-right">
                 <button class="btn btn-mini" data-id="toggleCustomer">
                     <i class="icon-plus" style="color: green"></i>
@@ -190,7 +190,7 @@
                                     <strong>Download URL:</strong>
                                 </span>
                                 <div class="span9" data-type="content">
-                                    <span>N/A</span>
+                                    <span><%= customer.package_download_url_base || N/A%></span>
                                     <button class="btn btn-link noPadding pull-right" data-id="options">
                                         <i class="icon-pencil" style="color: #daa520"></i>
                                     </button>

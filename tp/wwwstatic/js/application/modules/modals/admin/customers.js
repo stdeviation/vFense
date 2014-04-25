@@ -39,7 +39,7 @@ define(
                     'click button[name=cancelEditCustomer]' :   'toggleAclAccordion',
                     'click #submitCustomer'                 :   'verifyForm',
                     'click button[name=submitEditCustomer]' :   'verifyForm',
-                    'change #userContext'                   :   'changeUserContext',
+//                    'change #userContext'                   :   'changeUserContext',
                     'click button[data-id=options]'         :   'openOptions',
                     'submit form[name=editCustomer]'        :   'submit'
                 },
@@ -104,11 +104,11 @@ define(
                         });
                     }
                 },
-                changeUserContext: function (event) {
+               /* changeUserContext: function (event) {
                     this.collection.params.user_name = this.userContext = event.val;
                     this.collection.fetch();
                     return this;
-                },
+                },*/
                 toggleAclAccordion: function (event) {
                     event.preventDefault();
                     var $icon,
@@ -151,6 +151,7 @@ define(
                         name: $(event.currentTarget).val(),
                         type: 'customer',
                         url: 'api/v1/customer',
+                        redirect: '#admin/customers',
                         data: this.collection.toJSON()[0].data,
                         customers: app.user.toJSON().customers
                     }).open();
@@ -182,7 +183,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
-                        usernames: users,//event.added ? event.added.text : event.removed.text,
+                        usernames: users,
                         action: event.added ? 'add' : 'delete'
                     };
                     $.ajax({
@@ -238,11 +239,11 @@ define(
                 },
                 beforeRender: $.noop,
                 onRender: function () {
-                    var $users = this.$('select[name=users]'),
+//                    var $users = this.$('select[name=users]'),
 //                        $customers = this.$('select[name=customers]'),
-                        $select = this.$el.find('input[name=groupSelect], input[name=userSelect]'),
+                      var $select = this.$el.find('input[name=groupSelect], input[name=userSelect]'),
                         that = this;
-                    $users.select2({width: '100%'});
+//                    $users.select2({width: '100%'});
 //                    $customers.select2({width: '100%'});
                     _.each($select, function(select) {
                         $(select).select2({
@@ -263,7 +264,7 @@ define(
                                 },
                                 data: function () {
                                     return {
-                                        customer_name: that.customerContext
+                                        customer_context: $(select).data('customer')
                                     };
                                 },
                                 results: function (data) {

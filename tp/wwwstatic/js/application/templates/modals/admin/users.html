@@ -48,9 +48,7 @@
                         <tr>
                             <td class="control-group">
                                 <label class="control-label">Groups:</label>
-                                <select name="groups" multiple="multiple" placeholder="Add to group">
-                                    <%= viewHelpers.getOptions(groups) %>
-                                </select>
+                                <input type="hidden" name="groups" placeholder="Add to group" data-customer="" data-url="/api/v1/groups">
                             </td>
                             <td class="control-group">
                                 <label class="control-label">Customers:</label>
