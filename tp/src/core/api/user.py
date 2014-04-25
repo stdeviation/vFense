@@ -102,7 +102,7 @@ class UserHandler(BaseHandler):
             customer_context = (
                 self.arguments.get(ApiArguments.CUSTOMER_CONTEXT, active_customer)
             )
-            action = self.arguments.get(ApiArguments.ACTIONS, ApiValues.ADD)
+            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
 
             ###Update Groups###
             group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
