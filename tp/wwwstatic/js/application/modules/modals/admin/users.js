@@ -208,7 +208,7 @@ define(
                     };
                     $.ajax({
                         type: 'POST',
-                        url: url + '?' + $.param(params),
+                        url: url,
                         data: JSON.stringify(params),
                         dataType: 'json',
                         contentType: 'application/json',

@@ -160,7 +160,7 @@ define(
                     var sortFilterFragment = document.createDocumentFragment();
                     sortFilterFragment.appendChild(crel('small', 'Sort By'));
                     sortFilterFragment.appendChild(crel('span', ' '));
-                    sortFilterFragment.appendChild(crel('select', {name: 'sort', style: 'width: auto'}, crel('option',{value: 'computer_name'},'Computer Name'), crel('option',{value: 'display_name'}, 'Display Name'), crel('option',{value: 'os_code'}, 'OS Code'), crel('option',{value: 'os_string'}, 'OS String'), crel('option',{value: 'agent_status'}, 'Agent Status')));
+                    sortFilterFragment.appendChild(crel('select', {name: 'sort', style: 'width: auto'}, crel('option',{value: 'computer_name'},'Computer Name'), crel('option',{value: 'display_name'}, 'Display Name'), crel('option',{value: 'os_code'}, 'OS Code'), crel('option',{value: 'os_string'}, 'OS String'), crel('option',{value: 'agent_status'}, 'Agent Status'), crel('option',{value: 'last_agent_update'}, 'Last Updated')));
                     sortFilterFragment.appendChild(crel('span', ' '));
                     sortFilterFragment.appendChild(crel('select', {name: 'order'}, crel('option',{value: 'asc'},'Ascending'), crel('option',{value: 'desc'},'Descending')));
                     sortFilterFragment.appendChild(crel('span', ' '));
@@ -210,7 +210,6 @@ define(
                 layoutLegend: function ($legend) {
                     $legend.append(
                         crel('span', {class: 'span1'}, 'Status'),
-                        crel('span', {class: 'span2'}, 'Last Updated on'),
                         crel('strong', {class: 'span2'},
                             crel('input', {type: 'checkbox', 'data-toggle': 'all'}), ' Agent Name ',
                             crel('a', {href: '#', id: 'deleteAgents', title: 'Delete Agents'}, crel('i', {class: 'icon-trash'})), ' ',
@@ -219,7 +218,8 @@ define(
                         crel('span', {class: 'span2'}, 'Operating System'),
                         crel('span', {class: 'span2'}, 'OS Code'),
                         crel('span', {class: 'span1'}, 'Updates'),
-                        crel('span', {class: 'span2'}, 'Vulnerabilities')
+                        crel('span', {class: 'span2'}, 'Vulnerabilities'),
+                        crel('span', {class: 'span2'}, 'Last Updated on')
                         /*crel('span', {class: 'span1 need alignLeft'}, 'OS'),
                         crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
                         crel('span', {class: 'span1 pend alignRight'}, 'Supported')*/
@@ -245,7 +245,6 @@ define(
                                 crel('span', {class: 'span1'},
                                     crel('i', {class: status.className, style:'color: ' + status.color})
                                 ),
-                                crel('span', {class: 'span2'}, this.formatDate(lastAgentUpdate)),
                                 crel('span', {class: 'span2'},
                                     crel('input', {type: 'checkbox', name: 'agents', value: id}), ' ',
                                     crel('i', {class: osIcon}), ' ',
@@ -254,7 +253,8 @@ define(
                                 crel('span', {class: 'span2'}, item.get('os_string')),
                                 crel('span', {class: 'span2'}, item.get('os_code')),
                                 crel('span', {class: 'span1'}, item.get('available_updates')),
-                                crel('span', {class: 'span2'}, item.get('available_vulnerabilities'))
+                                crel('span', {class: 'span2'}, item.get('available_vulnerabilities')),
+                                crel('span', {class: 'span2'}, this.formatDate(lastAgentUpdate))
                                 /*crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
                                 crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
                                 crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)*/
