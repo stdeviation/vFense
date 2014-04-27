@@ -4,6 +4,7 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.core._constants import CommonKeys
+from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
@@ -28,12 +29,14 @@ class RetrieveApps(object):
         self.uri = uri
         self.method = method
 
-        self.set_global_properties(AppsCollection, AppsIndexes, 
-            AppsPerAgentCollection, AppsKey, AppsPerAgentKey,
+        self.set_global_properties(
+            AppCollections.UniqueApplications,
+            AppsIndexes, 
+            AppCollections.AppsPerAgent, AppsKey, AppsPerAgentKey,
             AppsPerAgentIndexes
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -93,7 +96,7 @@ class RetrieveApps(object):
     @db_create_close
     def filter_by_status(self, pkg_status, conn=None):
         try:
-            if pkg_status in ValidPackageStatuses:
+            if pkg_status in CommonAppKeys.ValidPackageStatuses:
                 base = (
                     r
                     .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
@@ -153,7 +156,7 @@ class RetrieveApps(object):
     @db_create_close
     def filter_by_severity(self, sev, conn=None):
         try:
-            if sev in ValidRvSeverities:
+            if sev in CommonSeverityKeys.ValidRvSeverities:
                 base = (
                     r
                     .table(self.CurrentAppsCollection)
@@ -208,8 +211,8 @@ class RetrieveApps(object):
     @db_create_close
     def filter_by_status_and_sev(self, pkg_status, sev, conn=None):
         try:
-            if pkg_status in ValidPackageStatuses:
-                if sev in ValidRvSeverities:
+            if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -377,7 +380,7 @@ class RetrieveApps(object):
     @db_create_close
     def filter_by_status_and_query_by_name(self, name, pkg_status, conn=None):
         try:
-            if pkg_status in ValidPackageStatuses:
+            if pkg_status in CommonAppKeys.ValidPackageStatuses:
                 base = (
                     r
                     .table(self.CurrentAppsPerAgentCollection)
@@ -439,8 +442,8 @@ class RetrieveApps(object):
     def filter_by_status_and_query_by_name_and_sev(self, name, pkg_status,
                                                    sev, conn=None):
         try:
-            if pkg_status in ValidPackageStatuses:
-                if sev in ValidRvSeverities:
+            if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -535,12 +538,14 @@ class RetrieveCustomApps(RetrieveApps):
         self.uri = uri
         self.method = method
 
-        self.set_global_properties(CustomAppsCollection, CustomAppsIndexes, 
-            CustomAppsPerAgentCollection, CustomAppsKey, CustomAppsPerAgentKey,
+        self.set_global_properties(
+            AppCollections.CustomApps, CustomAppsIndexes, 
+            AppCollections.CustomAppsPerAgent,
+            CustomAppsKey, CustomAppsPerAgentKey,
             CustomAppsPerAgentIndexes
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -572,12 +577,14 @@ class RetrieveSupportedApps(RetrieveApps):
         self.uri = uri
         self.method = method
 
-        self.set_global_properties(SupportedAppsCollection, SupportedAppsIndexes, 
-            SupportedAppsPerAgentCollection, SupportedAppsKey, SupportedAppsPerAgentKey,
+        self.set_global_properties(
+            AppCollections.SupportedApps, SupportedAppsIndexes, 
+            AppCollections.SupportedAppsPerAgent,
+            SupportedAppsKey, SupportedAppsPerAgentKey,
             SupportedAppsPerAgentIndexes
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -609,12 +616,14 @@ class RetrieveAgentApps(RetrieveApps):
         self.uri = uri
         self.method = method
 
-        self.set_global_properties(AgentAppsCollection, AgentAppsIndexes, 
-            AgentAppsPerAgentCollection, AgentAppsKey, AgentAppsPerAgentKey,
+        self.set_global_properties(
+            AppCollections.vFenseApps, AgentAppsIndexes, 
+            AppCollections.vFenseAppsPerAgent, 
+            AgentAppsKey, AgentAppsPerAgentKey,
             AgentAppsPerAgentIndexes
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO

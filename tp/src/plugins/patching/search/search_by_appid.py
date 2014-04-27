@@ -3,6 +3,7 @@ import logging.config
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
+from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.plugins.patching.os_apps.db_calls import get_all_stats_by_appid
 from vFense.plugins.patching.rv_db_calls import get_file_data
 from vFense.core.agent import *
@@ -145,7 +146,7 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     agents = list(
                         r
                         .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
@@ -290,7 +291,7 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     agents = list(
                         r
                         .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
@@ -377,8 +378,8 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if agent:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         agents = list(
                             r
                             .table(self.CurrentAppsPerAgentCollection)
@@ -477,7 +478,7 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     agents = list(
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -557,7 +558,7 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     agents = list(
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -651,8 +652,8 @@ class RetrieveAgentsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         agents = list(
                             r
                             .table(self.CurrentAppsPerAgentCollection)

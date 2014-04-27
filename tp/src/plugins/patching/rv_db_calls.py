@@ -1113,7 +1113,7 @@ def delete_app_from_agent(
                 index=per_agent_index
             )
             .zip()
-            .map(lambda x: x[Id])
+            .map(lambda x: x[CommonAppKeys.Id])
             .run(conn)
         )
         if app_agent_id:

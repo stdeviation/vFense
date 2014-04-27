@@ -10,7 +10,8 @@ from vFense.plugins.patching import AppCollections, DownloadCollections, \
     SupportedAppsPerAgentIndexes, CustomAppsKey, CustomAppsPerAgentKey, \
     CustomAppsPerAgentIndexes, AgentAppsKey, AgentAppsPerAgentKey, \
     AgentAppsPerAgentIndexes, DbCommonAppKeys, DbCommonAppPerAgentKeys, \
-    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey
+    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey, \
+    FileServerIndexes, FileServerKeys
 
 from vFense.db.client import db_create_close, r
 
