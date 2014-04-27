@@ -3,6 +3,7 @@ import logging
 from vFense.core._constants import *
 from vFense.core._db import retrieve_primary_key
 from vFense.core.decorators import return_status_tuple, time_it
+from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching import AppCollections, DownloadCollections, \
     FileCollections, AppsKey, AppsPerAgentKey, AppsIndexes, \
@@ -28,6 +29,18 @@ def fetch_all_file_data(conn=None):
 
     Returns:
         List
+        [
+            {
+                "file_hash": "f4cbc8e6a3e49001e2079bd697c91c20cd85f1a0471cdfe660ba7a4b5238f487", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/b/bluez/bluez-cups_4.98-2ubuntu7.1_amd64.deb", 
+                "file_size": 70284
+            }, 
+            {
+                "file_hash": "9259166bac143ed6ce1a224ea5b519017f8b81afbbfb0a654ea1a068ca8d8e71", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/d/deja-dup/deja-dup_22.0-0ubuntu5_amd64.deb", 
+                "file_size": 596854
+            }
+        ]
     """
     data = []
     try:
@@ -87,12 +100,20 @@ def fetch_file_data(app_id, agent_id=None, conn=None):
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_file_data
-        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
+        >>> app_id = '922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> fetch_file_data(app_id, agent_id)
 
     Return:
-        Dictionary
+        List of dictionaries
+        [
+            {
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_size": 7782
+            }
+        ]
     """
     try:
         if agent_id:
@@ -113,7 +134,7 @@ def fetch_file_data(app_id, agent_id=None, conn=None):
         else:
             data = list(
                 r
-                .table(FilesCollection)
+                .table(FileCollections.Files)
                 .filter(
                     lambda x: (
                         x[FilesKey.AppIds].contains(app_id)
@@ -141,6 +162,7 @@ def fetch_app_data(
     Kwargs:
         table (str): The name of the apps per agent collection,
             that will be used when updating the application data.
+            default = unique_applications
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_data
@@ -152,12 +174,14 @@ def fetch_app_data(
         Dictionary
     """
     data = {}
+    merge = AppsMerge.RELEASE_DATE
     try:
         if fields_to_pluck:
             data = (
                 r
                 .table(table)
                 .get(app_id)
+                .merge(merge)
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
@@ -167,6 +191,7 @@ def fetch_app_data(
                 r
                 .table(table)
                 .get(app_id)
+                .merge(merge)
                 .run(conn)
             )
 
@@ -177,7 +202,7 @@ def fetch_app_data(
 
 @db_create_close
 def fetch_app_data_by_appid_and_agentid(
-    app_id, agent_id, table=AppCollections.UniqueApplications,
+    app_id, agent_id, table=AppCollections.AppsPerAgent,
     fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
@@ -198,6 +223,30 @@ def fetch_app_data_by_appid_and_agentid(
 
     Return:
         Dictionary
+        {
+            "kb": "", 
+            "customers": [
+                "default"
+            ], 
+            "vendor_name": "", 
+            "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
+            "vulnerability_categories": [], 
+            "files_download_status": 5004, 
+            "release_date": 1394769600, 
+            "vendor_severity": "recommended", 
+            "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
+            "reboot_required": "no", 
+            "os_code": "linux", 
+            "repo": "precise-updates/main", 
+            "support_url": "", 
+            "version": "3.4.2-0ubuntu2.4", 
+            "cve_ids": [], 
+            "rv_severity": "Recommended", 
+            "hidden": "no", 
+            "uninstallable": "yes", 
+            "vulnerability_id": "", 
+            "name": "gwibber-service-facebook"
+        }
     """
 
     data = {}
@@ -219,6 +268,114 @@ def fetch_app_data_by_appid_and_agentid(
                 r
                 .table(table)
                 .get_all([agent_id, app_id], index=index_to_use)
+                .run(conn)
+            )
+            if data:
+                data = data[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@db_create_close
+def fetch_apps_data_by_os_code(
+    os_code, customer_name=None,
+    table=AppCollections.UniqueApplications,
+    fields_to_pluck=None, conn=None
+    ):
+    """Fetch application data by app id
+    Args:
+        os_code (str): linux or darwin or windows
+
+    Kwargs:
+        customer_name (str): The name of the customer you are searching on.
+        table (str): The name of the apps per agent collection,
+            that will be used when updating the application data.
+            default = unique_applications
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import fetch_app_data
+        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> table = 'unique_applications'
+        >>> fetch_app_data_by_agentid(app_id, agent_id, table)
+
+    Return:
+        Dictionary
+        {
+            "kb": "", 
+            "customers": [
+                "default"
+            ], 
+            "vendor_name": "", 
+            "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
+            "vulnerability_categories": [], 
+            "files_download_status": 5004, 
+            "release_date": 1394769600, 
+            "vendor_severity": "recommended", 
+            "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
+            "reboot_required": "no", 
+            "os_code": "linux", 
+            "repo": "precise-updates/main", 
+            "support_url": "", 
+            "version": "3.4.2-0ubuntu2.4", 
+            "cve_ids": [], 
+            "rv_severity": "Recommended", 
+            "hidden": "no", 
+            "uninstallable": "yes", 
+            "vulnerability_id": "", 
+            "name": "gwibber-service-facebook"
+        }
+    """
+
+    data = {}
+    index_to_use = DbCommonAppIndexes.Customers
+    merge = AppsMerge.RELEASE_DATE
+    try:
+        if customer_name and fields_to_pluck:
+            data = (
+                r
+                .table(table)
+                .get_all(customer_name, index=index_to_use)
+                .filter({AppsKey.OsCode: os_code})
+                .merge(merge)
+                .pluck(fields_to_pluck)
+                .run(conn)
+            )
+            if data:
+                data = data[0]
+
+        elif customer_name and not fields_to_pluck:
+            data = (
+                r
+                .table(table)
+                .get_all(customer_name, index=index_to_use)
+                .filter({AppsKey.OsCode: os_code})
+                .merge(merge)
+                .run(conn)
+            )
+            if data:
+                data = data[0]
+
+        elif not customer_name and fields_to_pluck:
+            data = (
+                r
+                .table(table)
+                .filter({AppsKey.OsCode: os_code})
+                .merge(merge)
+                .pluck(fields_to_pluck)
+                .run(conn)
+            )
+            if data:
+                data = data[0]
+
+        else:
+            data = (
+                r
+                .table(table)
+                .filter({AppsKey.OsCode: os_code})
+                .merge(merge)
                 .run(conn)
             )
             if data:
@@ -311,6 +468,68 @@ def fetch_app_data_to_send_to_agent(
         logger.exception(e)
 
     return(data)
+
+@db_create_close
+def fetch_appids_by_agentid_and_status(
+        agent_id, status, sev=None,
+        table=AppCollections.AppsPerAgent,
+        conn=None):
+
+    if table == AppCollections.AppsPerAgent:
+        join_table = AppCollections.UniqueApplications
+
+    elif table == AppCollections.CustomAppsPerAgent:
+        join_table = AppCollections.CustomApps
+
+    elif table == AppCollections.SupportedAppsPerAgent:
+        join_table = AppCollections.SupportedApps
+
+    elif table == AppCollections.vFenseAppsPerAgent:
+        join_table = AppCollections.vFenseApps
+
+
+    if sev:
+        appids = list(
+            r
+            .table(table)
+            .get_all(
+                [
+                    status, agent_id
+                ],
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .eq_join(
+                lambda x:
+                [
+                    x[DbCommonAppKeys.AppId],
+                    sev
+                ],
+                r.table(join_table),
+                index=DbCommonAppIndexes.AppIdAndRvSeverity
+            )
+            .map(
+                lambda y: y['right'][DbCommonAppKeys.AppId]
+            )
+            .run(conn)
+        )
+
+    else:
+        appids = list(
+            r
+            .table(table)
+            .get_all(
+                [
+                    status, agent_id
+                ],
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .map(
+                lambda y: y[DbCommonAppPerAgentKeys.AppId]
+            )
+            .run(conn)
+        )
+
+    return(appids)
 
 
 @time_it

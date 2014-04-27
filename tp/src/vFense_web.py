@@ -32,7 +32,6 @@ from vFense.server.api.reports_api import *
 from vFense.db.client import *
 from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
-from vFense.plugins.patching.Api.app_data import *
 from vFense.core.api.agent import *
 from vFense.plugins.patching.Api.stats_api import *
 from vFense.plugins.patching.Api.notification_handler import *
@@ -179,9 +178,6 @@ class Application(tornado.web.Application):
 
             ##### Tags API Handlers
             (r"/api/v1/tags", TagsHandler),
-
-            ##### FileData API Handlers
-            (r'/api/v1/apps/info?', FileInfoHandler),
 
             ##### MightyMouse API Handlers
             (r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),

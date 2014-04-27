@@ -1,11 +1,12 @@
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.core.agent import *
-from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.core.agent.agents import get_agent_info
+from vFense.errorz.error_messages import GenericResults
+from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
+    fetch_file_data
 from vFense.plugins.patching.rv_db_calls import \
-    apps_to_insert_per_agent, get_apps_data, get_app_data,\
-    apps_to_insert_per_tag, update_file_data, get_file_data
+    apps_to_insert_per_agent, update_file_data
 
 import logging
 import logging.config
@@ -19,16 +20,16 @@ def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=N
     if agent_id:
         agent_info = get_agent_info(agent_id)
         apps_info = (
-            get_apps_data(
+            fetch_apps_data_by_os_code(
+                agent_info[AgentKey.OsCode],
                 customer_name,
                 table=AppCollections.SupportedApps,
-                os_code=agent_info[AgentKey.OsCode]
             )
         )
         if len(apps_info) > 0:
             for app_info in apps_info:
                 app_id = app_info.get(SupportedAppsKey.AppId)
-                file_data = get_file_data(app_id)
+                file_data = fetch_file_data(app_id)
                 update_file_data(
                     app_id,
                     agent_id, file_data

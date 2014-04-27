@@ -20,6 +20,7 @@ from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
 
 from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
 from vFense.plugins.patching.rv_db_calls import *
+from vFense.plugins.patching._db import fetch_app_data
 
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
@@ -210,7 +211,7 @@ class PatchingOperationResults(OperationResults):
                     SharedAppKeys.InstallDate: install_date
                 }
             )
-            app_exist = get_app_data(self.app_id, table=self.CurrentAppsCollection)
+            app_exist = fetch_app_data(self.app_id)
 
             if app_exist:
                 if (self.operation_type == AgentOperations.INSTALL_OS_APPS or

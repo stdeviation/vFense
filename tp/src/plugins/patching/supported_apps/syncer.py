@@ -7,9 +7,11 @@ from vFense.core.agent.agents import get_agents_info, get_agent_info
 from vFense.errorz.status_codes import PackageCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.plugins.patching._db import fetch_apps_data_by_os_code
+from vFense.plugins.patching.patching import build_agent_app_id
 from vFense.plugins.patching.rv_db_calls import insert_file_data,\
-    build_agent_app_id, update_file_data,\
-    get_apps_data, delete_all_in_table, insert_data_into_table
+    update_file_data,delete_all_in_table, insert_data_into_table
+
 from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
 from vFense.db.client import db_connect, r, db_create_close
@@ -368,9 +370,9 @@ def get_supported_apps():
 def get_all_supported_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = (
-        get_apps_data(
-            table=DownloadCollections.LatestDownloadedSupported,
-            os_code=agent[AgentKey.OsCode]
+        fetch_apps_data_by_os_code(
+            agent[AgentKey.OsCode],
+            table=DownloadCollections.LatestDownloadedSupported
         )
     )
     if apps:
@@ -385,9 +387,9 @@ def get_all_supported_apps_for_agent(agent_id):
 def get_all_agent_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = (
-        get_apps_data(
-            table=DownloadCollections.LatestDownloadedAgent,
-            os_code=agent[AgentKey.OsCode]
+        fetch_apps_data_by_os_code(
+            agent[AgentKey.OsCode],
+            table=DownloadCollections.LatestDownloadedAgent
         )
     )
 
