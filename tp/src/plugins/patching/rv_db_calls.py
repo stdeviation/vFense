@@ -1,6 +1,5 @@
 import logging
 import logging.config
-from hashlib import sha256
 from time import mktime
 from datetime import datetime
 import urllib
