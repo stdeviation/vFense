@@ -3,6 +3,7 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.core._constants import CommonKeys
+from vFense.plugins.patching._constants import CommonSeverityKeys, CommonAppKeys
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agent_info
 from vFense.errorz.error_messages import GenericResults, PackageResults
@@ -73,7 +74,7 @@ class RetrieveAppsByAgentId(object):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -93,7 +94,7 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
@@ -159,7 +160,7 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -291,8 +292,8 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         base = (
                             r
                             .table(self.CurrentAppsPerAgentCollection)
@@ -380,7 +381,7 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -460,7 +461,7 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(self.CurrentAppsPerAgentCollection)
@@ -533,8 +534,8 @@ class RetrieveAppsByAgentId(object):
         try:
             agent = get_agent_info(self.agent_id)
             if agent:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         base = (
                             r
                             .table(self.CurrentAppsPerAgentCollection)
@@ -671,7 +672,7 @@ class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -750,7 +751,7 @@ class RetrieveSupportedAppsByAgentId(RetrieveAppsByAgentId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -828,7 +829,7 @@ class RetrieveAgentAppsByAgentId(RetrieveAppsByAgentId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO

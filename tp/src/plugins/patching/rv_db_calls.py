@@ -47,7 +47,7 @@ def get_all_file_data(conn=None):
     try:
         file_data = list(
             r
-            .table(FilesCollection)
+            .table(FileCollections.Files)
             .pluck(FilesKey.FileHash, FilesKey.FileSize, FilesKey.FileUri)
             .run(conn)
         )
@@ -64,7 +64,7 @@ def get_file_data(app_id, agent_id=None):
         if agent_id:
             file_data = list(
                 r
-                .table(FilesCollection)
+                .table(FileCollections.Files)
                 .filter(
                     lambda x: (
                         x[FilesKey.AppIds].contains(app_id)
@@ -78,7 +78,7 @@ def get_file_data(app_id, agent_id=None):
         else:
             file_data = list(
                 r
-                .table(FilesCollection)
+                .table(FileCollections.Files)
                 .filter(
                     lambda x: (
                         x[FilesKey.AppIds].contains(app_id)
@@ -313,7 +313,7 @@ def get_appids_by_agentid_and_status(
                     x[CurrentAppsPerAgentKey.AppId],
                     sev
                 ],
-                r.table(CurrentAppsCollection),
+                r.table(AppCollections.CustomApps),
                 index=CurrentAppsIndexes.AppIdAndRvSeverity
             )
             .map(
@@ -529,7 +529,7 @@ def get_download_urls(customer_name, app_id, file_data,
         file_uris.append(url_base + pkg[PKG_NAME])
         uris.append(
             {
-                PKG_NAME: pkg[PKG_NAME],
+                PKG_CommonAppKeys.NAME: pkg[PKG_NAME],
                 PKG_URI: url_base + pkg[PKG_NAME],
                 FILE_URIS: file_uris,
                 PKG_SIZE: pkg[PKG_SIZE],
@@ -643,14 +643,14 @@ def insert_file_data(app_id, file_data):
             for uri in file_data:
                 exists = (
                     r
-                    .table(FilesCollection)
+                    .table(FileCollections.Files)
                     .get(uri[FilesKey.FileName])
                     .run(conn)
                 )
                 if exists:
                     (
                         r
-                        .table(FilesCollection)
+                        .table(FileCollections.Files)
                         .get(uri[FilesKey.FileName])
                         .update(
                             {
@@ -666,7 +666,7 @@ def insert_file_data(app_id, file_data):
                 else:
                     (
                         r
-                        .table(FilesCollection)
+                        .table(FileCollections.Files)
                         .insert(
                             {
                                 FilesKey.AppIds: [app_id],
@@ -693,14 +693,14 @@ def update_file_data(app_id, agent_id, file_data):
             for uri in file_data:
                 exists = (
                     r
-                    .table(FilesCollection)
+                    .table(FileCollections.Files)
                     .get(uri[FilesKey.FileName])
                     .run(conn)
                 )
                 if exists:
                     (
                         r
-                        .table(FilesCollection)
+                        .table(FileCollections.Files)
                         .get(uri[FilesKey.FileName])
                         .update(
                             {
@@ -720,7 +720,7 @@ def update_file_data(app_id, agent_id, file_data):
                 else:
                     (
                         r
-                        .table(FilesCollection)
+                        .table(FileCollections.Files)
                         .insert(
                             {
                                 FilesKey.AppIds: [app_id],
@@ -1275,9 +1275,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
         )
         data.append(
             {
-                COUNT: inventory,
-                STATUS: CommonAppKeys.INSTALLED,
-                NAME: CommonAppKeys.SOFTWAREINVENTORY
+                CommonAppKeys.COUNT: inventory,
+                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
             }
         )
         os_apps_avail = (
@@ -1292,9 +1292,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
         )
         data.append(
             {
-                COUNT: os_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.OS
+                CommonAppKeys.COUNT: os_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1309,9 +1309,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
         )
         data.append(
             {
-                COUNT: custom_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.CUSTOM
+                CommonAppKeys.COUNT: custom_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1327,9 +1327,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
 
         data.append(
             {
-                COUNT: supported_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.SUPPORTED
+                CommonAppKeys.COUNT: supported_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
             }
         )
 
@@ -1346,9 +1346,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
 
         data.append(
             {
-                COUNT: agent_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.AGENT_UPDATES
+                CommonAppKeys.COUNT: agent_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1370,9 +1370,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
 
         #data.append(
         #   {
-        #       COUNT: all_pending_apps,
-        #       STATUS: CommonAppKeys.PENDING,
-        #       NAME: CommonAppKeys.PENDING.capitalize()
+        #       CommonAppKeys.COUNT: all_pending_apps,
+        #       CommonAppKeys.STATUS: CommonAppKeys.PENDING,
+        #       CommonAppKeys.NAME: CommonAppKeys.PENDING.capitalize()
         #   }
         #
 
@@ -1419,9 +1419,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: inventory,
-                STATUS: CommonAppKeys.INSTALLED,
-                NAME: CommonAppKeys.SOFTWAREINVENTORY
+                CommonAppKeys.COUNT: inventory,
+                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
             }
         )
         os_apps_avail = (
@@ -1444,9 +1444,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: os_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.OS
+                CommonAppKeys.COUNT: os_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1469,9 +1469,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: custom_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.CUSTOM
+                CommonAppKeys.COUNT: custom_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1481,7 +1481,7 @@ def get_all_app_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[SupportedAppsPerAgentKey.AgentId]
                 ],
                 r.table(AppCollections.SupportedAppsPerAgent),
@@ -1494,9 +1494,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: supported_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.SUPPORTED
+                CommonAppKeys.COUNT: supported_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
@@ -1519,9 +1519,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: agent_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.AGENT_UPDATES
+                CommonAppKeys.COUNT: agent_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1546,9 +1546,9 @@ def get_all_app_stats_by_tagid(username, customer_name,
 
        #data.append(
        #    {
-       #        COUNT: all_pending_apps,
-       #        STATUS: CommonAppKeys.PENDING,
-       #        NAME: CommonAppKeys.PENDING.capitalize()
+       #        CommonAppKeys.COUNT: all_pending_apps,
+       #        CommonAppKeys.STATUS: CommonAppKeys.PENDING,
+       #        CommonAppKeys.NAME: CommonAppKeys.PENDING.capitalize()
        #    }
        #)
 
@@ -1596,9 +1596,9 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: os_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.OS
+                CommonAppKeys.COUNT: os_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1621,9 +1621,9 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: custom_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.CUSTOM
+                CommonAppKeys.COUNT: custom_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1646,9 +1646,9 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: supported_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.SUPPORTED
+                CommonAppKeys.COUNT: supported_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
@@ -1671,9 +1671,9 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         )
         data.append(
             {
-                COUNT: agent_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.AGENT_UPDATES
+                CommonAppKeys.COUNT: agent_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1703,7 +1703,7 @@ def get_all_app_stats_by_customer(username, customer_name,
     try:
         os_apps_avail = (
             r
-            .table(AppsPerAgentCollection, use_outdated=True)
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
                 [
                     CommonAppKeys.AVAILABLE, customer_name
@@ -1717,14 +1717,14 @@ def get_all_app_stats_by_customer(username, customer_name,
         )
         data.append(
             {
-                COUNT: os_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.OS
+                CommonAppKeys.COUNT: os_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
             r
-            .table(CustomAppsPerAgentCollection, use_outdated=True)
+            .table(AppCollections.CustomAppsPerAgent, use_outdated=True)
             .get_all(
                 [
                     CommonAppKeys.AVAILABLE, customer_name
@@ -1738,14 +1738,14 @@ def get_all_app_stats_by_customer(username, customer_name,
         )
         data.append(
             {
-                COUNT: custom_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.CUSTOM
+                CommonAppKeys.COUNT: custom_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
             r
-            .table(SupportedAppsPerAgentCollection, use_outdated=True)
+            .table(AppCollections.SupportedAppsPerAgent, use_outdated=True)
             .get_all(
                 [
                     CommonAppKeys.AVAILABLE, customer_name
@@ -1759,14 +1759,14 @@ def get_all_app_stats_by_customer(username, customer_name,
         )
         data.append(
             {
-                COUNT: supported_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.SUPPORTED
+                CommonAppKeys.COUNT: supported_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
             r
-            .table(AgentAppsPerAgentCollection, use_outdated=True)
+            .table(AppCollections.vFenseAppsPerAgent, use_outdated=True)
             .get_all(
                 [
                     CommonAppKeys.AVAILABLE, customer_name
@@ -1780,22 +1780,22 @@ def get_all_app_stats_by_customer(username, customer_name,
         )
         data.append(
             {
-                COUNT: agent_apps_avail,
-                STATUS: CommonAppKeys.AVAILABLE,
-                NAME: CommonAppKeys.AGENT_UPDATES
+                CommonAppKeys.COUNT: agent_apps_avail,
+                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
         all_pending_apps = (
             r
-            .table(AppsPerAgentCollection, use_outdated=True)
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
                 [
                     CommonAppKeys.PENDING, customer_name
                 ],
                 index=AppsPerAgentIndexes.StatusAndCustomer
             )
-            .pluck(APP_ID)
+            .pluck((CommonAppKeys.APP_ID))
             .distinct()
             .count()
             .run(conn)
@@ -1803,9 +1803,9 @@ def get_all_app_stats_by_customer(username, customer_name,
 
         data.append(
             {
-                COUNT: all_pending_apps,
-                STATUS: CommonAppKeys.PENDING,
-                NAME: CommonAppKeys.PENDING.capitalize()
+                CommonAppKeys.COUNT: all_pending_apps,
+                CommonAppKeys.STATUS: CommonAppKeys.PENDING,
+                CommonAppKeys.NAME: CommonAppKeys.PENDING.capitalize()
             }
         )
 

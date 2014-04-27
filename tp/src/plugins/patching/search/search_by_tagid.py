@@ -4,6 +4,7 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.core._constants import CommonKeys
+from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.core.agent import *
 from vFense.core.tag import *
 from vFense.core.tag.tagManager import tag_exists
@@ -71,7 +72,7 @@ class RetrieveAppsByTagId(object):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -91,7 +92,7 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
@@ -169,7 +170,7 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if pkg_status in ValidPackageStatuses:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
@@ -312,8 +313,8 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         base = (
                             r
                             .table(TagsPerAgentCollection, use_outdated=True)
@@ -404,7 +405,7 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
@@ -478,7 +479,7 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if sev in ValidRvSeverities:
+                if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
@@ -561,8 +562,8 @@ class RetrieveAppsByTagId(object):
         try:
             tag = tag_exists(self.tag_id)
             if tag:
-                if pkg_status in ValidPackageStatuses:
-                    if sev in ValidRvSeverities:
+                if pkg_status in CommonAppKeys.ValidPackageStatuses:
+                    if sev in CommonSeverityKeys.ValidRvSeverities:
                         base = (
                             r
                             .table(TagsPerAgentCollection, use_outdated=True)
@@ -699,7 +700,7 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -773,7 +774,7 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO
@@ -847,7 +848,7 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
             }
         )
 
-        if show_hidden in ValidHiddenVals:
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
             self.show_hidden = CommonKeys.NO

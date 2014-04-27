@@ -452,7 +452,7 @@ class StorePatchingOperation(StoreAgentOperation):
                 for app_id in valid_appids:
                     data_to_update = (
                         {
-                            self.CurrentAppsPerAgentKey.Status: PENDING
+                            self.CurrentAppsPerAgentKey.Status: CommonAppKeys.PENDING
                         }
                     )
                     update_app_status_by_agentid_and_appid(agent_id, app_id, data_to_update)
@@ -466,7 +466,7 @@ class StorePatchingOperation(StoreAgentOperation):
                     AgentOperationKey.OperationId: operation_id,
                     AgentOperationKey.Plugin: oper_plugin,
                     AgentOperationKey.Restart: restart,
-                    PKG_FILEDATA: pkg_data,
+                    CommonFileKeys.PKG_FILEDATA: pkg_data,
                     OperationPerAgentKey.AgentId: agent_id,
                     AgentOperationKey.CpuThrottle: cpu_throttle,
                     AgentOperationKey.NetThrottle: net_throttle,
