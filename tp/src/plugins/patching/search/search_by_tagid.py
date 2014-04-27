@@ -3,6 +3,7 @@ import logging.config
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
+from vFense.core._constants import CommonKeys
 from vFense.core.agent import *
 from vFense.core.tag import *
 from vFense.core.tag.tagManager import tag_exists
@@ -19,7 +20,7 @@ class RetrieveAppsByTagId(object):
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
         """
         """
         self.count = count
@@ -29,9 +30,9 @@ class RetrieveAppsByTagId(object):
         self.uri = uri
         self.method = method
         self.tag_id = tag_id
-        self.CurrentAppsCollection = AppsCollection
+        self.CurrentAppsCollection = AppCollections.UniqueApplications
         self.CurrentAppsIndexes = AppsIndexes
-        self.CurrentAppsPerAgentCollection = AppsPerAgentCollection
+        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         self.CurrentAppsKey = AppsKey
         self.CurrentAppsPerAgentKey = AppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
@@ -73,7 +74,7 @@ class RetrieveAppsByTagId(object):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -111,8 +112,8 @@ class RetrieveAppsByTagId(object):
                         )
                         .map(self.map_hash)
                     )
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -185,8 +186,8 @@ class RetrieveAppsByTagId(object):
                         .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                         .map(self.map_hash)
                     )
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -257,8 +258,8 @@ class RetrieveAppsByTagId(object):
                     .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                     .map(self.map_hash)
                 )
-                if self.show_hidden == NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                if self.show_hidden == CommonKeys.NO:
+                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                 packages = list(
                     base
@@ -329,8 +330,8 @@ class RetrieveAppsByTagId(object):
                             .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                             .map(self.map_hash)
                         )
-                        if self.show_hidden == NO:
-                            base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                        if self.show_hidden == CommonKeys.NO:
+                            base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                         packages = list(
                             base
@@ -417,8 +418,8 @@ class RetrieveAppsByTagId(object):
                         .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                         .map(self.map_hash)
                     )
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -491,8 +492,8 @@ class RetrieveAppsByTagId(object):
                         .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                         .map(self.map_hash)
                     )
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -578,8 +579,8 @@ class RetrieveAppsByTagId(object):
                             .eq_join(lambda y: y['right'][self.CurrentAppsKey.AppId], r.table(self.CurrentAppsCollection))
                             .map(self.map_hash)
                         )
-                        if self.show_hidden == NO:
-                            base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                        if self.show_hidden == CommonKeys.NO:
+                            base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                         packages = list(
                             base
@@ -648,7 +649,7 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=CustomAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
         """
         """
         self.count = count
@@ -658,9 +659,9 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
         self.uri = uri
         self.method = method
         self.tag_id = tag_id
-        self.CurrentAppsCollection = CustomAppsCollection
+        self.CurrentAppsCollection = AppCollections.CustomApps
         self.CurrentAppsIndexes = CustomAppsIndexes
-        self.CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
+        self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         self.CurrentAppsKey = CustomAppsKey
         self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
@@ -701,7 +702,7 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -722,7 +723,7 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=SupportedAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
         """
         """
         self.count = count
@@ -732,9 +733,9 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
         self.uri = uri
         self.method = method
         self.tag_id = tag_id
-        self.CurrentAppsCollection = SupportedAppsCollection
+        self.CurrentAppsCollection = AppCollections.SupportedApps
         self.CurrentAppsIndexes = SupportedAppsIndexes
-        self.CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
+        self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         self.CurrentAppsKey = SupportedAppsKey
         self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
@@ -775,7 +776,7 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -796,7 +797,7 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AgentAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
         """
         """
         self.count = count
@@ -806,9 +807,9 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
         self.uri = uri
         self.method = method
         self.tag_id = tag_id
-        self.CurrentAppsCollection = AgentAppsCollection
+        self.CurrentAppsCollection = AppCollections.vFenseApps
         self.CurrentAppsIndexes = AgentAppsIndexes
-        self.CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
+        self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         self.CurrentAppsKey = AgentAppsKey
         self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
@@ -849,7 +850,7 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key

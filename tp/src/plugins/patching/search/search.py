@@ -3,6 +3,7 @@ import logging.config
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
+from vFense.core._constants import CommonKeys
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
@@ -17,7 +18,7 @@ class RetrieveApps(object):
     def __init__(self, username, customer_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc', sort_key=AppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
         """
         """
         self.count = count
@@ -35,7 +36,7 @@ class RetrieveApps(object):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -103,8 +104,8 @@ class RetrieveApps(object):
                     .map(self.joined_map_hash)
                 )
 
-                if self.show_hidden == NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                if self.show_hidden == CommonKeys.NO:
+                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                 packages = list(
                     base
@@ -159,8 +160,8 @@ class RetrieveApps(object):
                     .get_all(self.customer_name, sev, index=self.CurrentAppsIndexes.CustomerAndRvSeverity)
                 )
 
-                if self.show_hidden == NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                if self.show_hidden == CommonKeys.NO:
+                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                 packages = list(
                     base
@@ -223,8 +224,8 @@ class RetrieveApps(object):
                         .map(self.joined_map_hash)
                     )
 
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -287,8 +288,8 @@ class RetrieveApps(object):
                 .get_all(self.customer_name, index=self.CurrentAppsIndexes.Customers)
             )
 
-            if self.show_hidden == NO:
-                base = base.filter({self.CurrentAppsKey.Hidden: NO})
+            if self.show_hidden == CommonKeys.NO:
+                base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
             packages = list(
                 base
@@ -333,8 +334,8 @@ class RetrieveApps(object):
                 .get_all(self.customer_name, index=self.CurrentAppsIndexes.Customers)
             )
 
-            if self.show_hidden == NO:
-                base = base.filter({self.CurrentAppsKey.Hidden: NO})
+            if self.show_hidden == CommonKeys.NO:
+                base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
             packages = list(
                 base
@@ -387,8 +388,8 @@ class RetrieveApps(object):
                     .map(self.joined_map_hash)
                 )
 
-                if self.show_hidden == NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                if self.show_hidden == CommonKeys.NO:
+                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                 packages = list(
                     base
@@ -454,8 +455,8 @@ class RetrieveApps(object):
                         .map(self.joined_map_hash)
                     )
 
-                    if self.show_hidden == NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: NO})
+                    if self.show_hidden == CommonKeys.NO:
+                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
 
                     packages = list(
                         base
@@ -525,7 +526,7 @@ class RetrieveCustomApps(RetrieveApps):
     def __init__(self, username, customer_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc', sort_key=CustomAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
 
         self.count = count
         self.offset = offset
@@ -542,7 +543,7 @@ class RetrieveCustomApps(RetrieveApps):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -562,7 +563,7 @@ class RetrieveSupportedApps(RetrieveApps):
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
                  sort_key=SupportedAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
 
         self.count = count
         self.offset = offset
@@ -579,7 +580,7 @@ class RetrieveSupportedApps(RetrieveApps):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
@@ -599,7 +600,7 @@ class RetrieveAgentApps(RetrieveApps):
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
                  sort_key=AgentAppsKey.Name,
-                 show_hidden=NO):
+                 show_hidden=CommonKeys.NO):
 
         self.count = count
         self.offset = offset
@@ -616,7 +617,7 @@ class RetrieveAgentApps(RetrieveApps):
         if show_hidden in ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
-            self.show_hidden = NO
+            self.show_hidden = CommonKeys.NO
 
         if sort_key in self.pluck_list:
             self.sort_key = sort_key

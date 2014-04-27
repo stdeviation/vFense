@@ -6,6 +6,7 @@ from datetime import datetime
 import urllib
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.plugins.patching import *
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.mightymouse import *
 
 from vFense.plugins.vuln import SecurityBulletinKey
@@ -16,6 +17,7 @@ import vFense.plugins.vuln.cve.cve as cve
 from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.errorz.status_codes import PackageCodes
+from vFense.core._constants import CommonKeys
 from vFense.core.agent import *
 from vFense.operations._constants import AgentOperations
 from vFense.core.tag.tagManager import *
@@ -94,7 +96,7 @@ def get_file_data(app_id, agent_id=None):
     return(file_data)
 
 @db_create_close
-def get_app_data(app_id, table=AppsCollection, app_key=AppsKey.AppId,
+def get_app_data(app_id, table=AppCollections.UniqueApplications, app_key=AppsKey.AppId,
                  filterbykey=None, filterbyval=None,
                  fields_to_pluck=None, conn=None):
     apps = None
@@ -146,7 +148,7 @@ def get_app_data(app_id, table=AppsCollection, app_key=AppsKey.AppId,
 
 
 @db_create_close
-def get_apps_data(customer_name=None, table=CustomAppsCollection,
+def get_apps_data(customer_name=None, table=AppCollections.CustomApps,
                   fields_to_pluck=None, os_code=None, conn=None):
     apps = None
     base = r.table(table)
@@ -231,7 +233,7 @@ def get_apps_data(customer_name=None, table=CustomAppsCollection,
 
 @db_create_close
 def get_app_data_by_appids(
-        appids, table=AppsCollection,
+        appids, table=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None):
 
     if fields_to_pluck and appids:
@@ -268,29 +270,29 @@ def get_app_data_by_appids(
 def get_appids_by_agentid_and_status(
         agent_id, status,
         sev=None,
-        table=AppsPerAgentCollection,
+        table=AppCollections.AppsPerAgent,
         conn=None):
 
-    if table == AppsPerAgentCollection:
-        CurrentAppsCollection = AppsCollection
+    if table == AppCollections.AppsPerAgent:
+        CurrentAppsCollection = AppCollections.UniqueApplications
         CurrentAppsPerAgentKey = AppsPerAgentKey
         CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
         CurrentAppsIndexes = AppsIndexes
 
-    elif table == CustomAppsPerAgentCollection:
-        CurrentAppsCollection = CustomAppsCollection
+    elif table == AppCollections.CustomAppsPerAgent:
+        CurrentAppsCollection = AppCollections.CustomApps
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
         CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
         CurrentAppsIndexes = CustomAppsIndexes
 
-    elif table == SupportedAppsPerAgentCollection:
-        CurrentAppsCollection = SupportedAppsCollection
+    elif table == AppCollections.SupportedAppsPerAgent:
+        CurrentAppsCollection = AppCollections.SupportedApps
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
         CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
         CurrentAppsIndexes = SupportedAppsIndexes
 
-    elif table == AgentAppsPerAgentCollection:
-        CurrentAppsCollection = AgentAppsCollection
+    elif table == AppCollections.vFenseAppsPerAgent:
+        CurrentAppsCollection = AppCollections.vFenseApps
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
         CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
         CurrentAppsIndexes = AgentAppsIndexes
@@ -341,7 +343,7 @@ def get_appids_by_agentid_and_status(
 
 @db_create_close
 def apps_to_insert_per_agent(username, uri, method,
-                             data, table=CustomAppsPerAgentCollection,
+                             data, table=AppCollections.CustomAppsPerAgent,
                              conn=None):
     completed = True
     try:
@@ -401,7 +403,7 @@ def insert_data_into_table(data, table, conn=None):
 
 
 @db_create_close
-def delete_all_in_table(table=LatestDownloadedSupportedCollection, conn=None):
+def delete_all_in_table(table=DownloadCollections.LatestDownloadedSupported, conn=None):
     deleted = True
     try:
         (
@@ -421,7 +423,7 @@ def delete_all_in_table(table=LatestDownloadedSupportedCollection, conn=None):
 
 
 @db_create_close
-def delete_app_data(agentid, table=AppsPerAgentCollection, conn=None):
+def delete_app_data(agentid, table=AppCollections.AppsPerAgent, conn=None):
     deleted = True
     try:
         (
@@ -444,9 +446,9 @@ def delete_app_data(agentid, table=AppsPerAgentCollection, conn=None):
 def delete_all_app_data_for_agent(agent_id):
     try:
         delete_app_data(agent_id)
-        delete_app_data(agent_id, table=CustomAppsPerAgentCollection)
-        delete_app_data(agent_id, table=SupportedAppsPerAgentCollection)
-        delete_app_data(agent_id, table=AgentAppsPerAgentCollection)
+        delete_app_data(agent_id, table=AppCollections.CustomAppsPerAgent)
+        delete_app_data(agent_id, table=AppCollections.SupportedAppsPerAgent)
+        delete_app_data(agent_id, table=AppCollections.vFenseAppsPerAgent)
     except Exception as e:
         logger.exception(e)
 
@@ -455,7 +457,7 @@ def delete_all_app_data_for_agent(agent_id):
 def update_app_per_agent_data(
         agentid,
         data,
-        table=AppsPerAgentCollection,
+        table=AppCollections.AppsPerAgent,
         conn=None):
 
     updated = True
@@ -482,15 +484,15 @@ def update_all_app_data_for_agent(agent_id, data):
         update_app_per_agent_data(agent_id, data)
         update_app_per_agent_data(
             agent_id, data,
-            table=CustomAppsPerAgentCollection
+            table=AppCollections.CustomAppsPerAgent
         )
         update_app_per_agent_data(
             agent_id, data,
-            table=SupportedAppsPerAgentCollection
+            table=AppCollections.SupportedAppsPerAgent
         )
         update_app_per_agent_data(
             agent_id, data,
-            table=AgentAppsPerAgentCollection
+            table=AppCollections.vFenseAppsPerAgent
         )
     except Exception as e:
         logger.exception(e)
@@ -542,7 +544,7 @@ def get_download_urls(customer_name, app_id, file_data,
 def get_apps_by_agentid_and_appid(agent_id, app_id, conn):
     apps = (
         r
-        .table(AppsPerAgentCollection)
+        .table(AppCollections.AppsPerAgent)
         .get_all(
             [agent_id, app_id], index='by_agentid_and_appid')
         .run(conn)
@@ -738,18 +740,18 @@ def update_file_data(app_id, agent_id, file_data):
     conn.close()
 
 
-def update_customers_in_app(customer_name, app_id, table=AppsCollection):
+def update_customers_in_app(customer_name, app_id, table=AppCollections.UniqueApplications):
     conn = db_connect()
-    if table == AppsCollection:
+    if table == AppCollections.UniqueApplications:
         CurrentAppsKey = AppsKey
 
-    elif table == CustomAppsCollection:
+    elif table == AppCollections.CustomApps:
         CurrentAppsKey = CustomAppsKey
 
-    elif table == SupportedAppsCollection:
+    elif table == AppCollections.SupportedApps:
         CurrentAppsKey = SupportedAppsKey
 
-    elif table == AgentAppsCollection:
+    elif table == AppCollections.vFenseApps:
         CurrentAppsKey = AgentAppsKey
 
     try:
@@ -781,7 +783,7 @@ def update_customers_in_app(customer_name, app_id, table=AppsCollection):
     conn.close()
 
 @db_create_close
-def update_os_app(app_id, data, table=AppsCollection, conn=None):
+def update_os_app(app_id, data, table=AppCollections.UniqueApplications, conn=None):
     app_updated = None
     try:
         exists = (
@@ -805,22 +807,22 @@ def update_os_app(app_id, data, table=AppsCollection, conn=None):
     return(app_updated)
 
 
-def update_custom_app(app_id, data, table=CustomAppsCollection):
+def update_custom_app(app_id, data, table=AppCollections.CustomApps):
     return(update_os_app(app_id, data, table))
 
 
-def update_supported_app(app_id, data, table=SupportedAppsCollection):
+def update_supported_app(app_id, data, table=AppCollections.SupportedApps):
     return(update_os_app(app_id, data, table))
 
 
-def update_agent_app(app_id, data, table=AgentAppsCollection):
+def update_agent_app(app_id, data, table=AppCollections.vFenseApps):
     return(update_os_app(app_id, data, table))
 
 
 
 def update_vulnerability_info_app(
     app_id, app, exists, os_string,
-    table=AppsCollection
+    table=AppCollections.UniqueApplications
     ):
 
     vuln_info = None
@@ -867,7 +869,7 @@ def update_vulnerability_info_app(
 @db_create_close
 def unique_application_updater(customer_name, app, os_string, conn=None):
 
-    table = AppsCollection
+    table = AppCollections.UniqueApplications
 
     exists = None
     try:
@@ -896,14 +898,14 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
         update_file_data(app[AppsKey.AppId], agent_id, file_data)
         app[AppsKey.Customers] = [customer_name]
         app[AppsKey.Hidden] = 'no'
-        if (len(file_data) > 0 and status == AVAILABLE or
-                len(file_data) > 0 and status == INSTALLED):
+        if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
+                len(file_data) > 0 and status == CommonAppKeys.INSTALLED):
             app[AppsKey.FilesDownloadStatus] = PackageCodes.FilePendingDownload
 
-        elif len(file_data) == 0 and status == AVAILABLE:
+        elif len(file_data) == 0 and status == CommonAppKeys.AVAILABLE:
             app[AppsKey.FilesDownloadStatus] = PackageCodes.MissingUri
 
-        elif len(file_data) == 0 and status == INSTALLED:
+        elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
             app[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
         app = (
@@ -915,7 +917,7 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
         try:
             (
                 r
-                .table(AppsCollection)
+                .table(AppCollections.UniqueApplications)
                 .insert(app)
                 .run(conn, no_reply=True)
             )
@@ -931,7 +933,7 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
 
 
 @db_create_close
-def add_or_update_applications(table=AppsPerAgentCollection, pkg_list=[],
+def add_or_update_applications(table=AppCollections.AppsPerAgent, pkg_list=[],
                                delete_afterwards=True, conn=None):
     completed = False
     inserted_count = 0
@@ -940,19 +942,19 @@ def add_or_update_applications(table=AppsPerAgentCollection, pkg_list=[],
     deleted_count = 0
     pkg_count = len(pkg_list)
     last_modified_time = mktime(datetime.now().timetuple())
-    if table == AppsPerAgentCollection:
+    if table == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentKey = AppsPerAgentKey
         CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
 
-    elif table == CustomAppsPerAgentCollection:
+    elif table == AppCollections.CustomAppsPerAgent:
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
         CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
 
-    elif table == SupportedAppsPerAgentCollection:
+    elif table == AppCollections.SupportedAppsPerAgent:
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
         CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
 
-    elif table == AgentAppsPerAgentCollection:
+    elif table == AppCollections.vFenseAppsPerAgent:
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
         CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
 
@@ -1021,7 +1023,7 @@ def add_or_update_applications(table=AppsPerAgentCollection, pkg_list=[],
 
 @db_create_close
 def update_app_per_objectid_and_appid(object_id, app_id, data,
-                                      table=AppsPerAgentCollection,
+                                      table=AppCollections.AppsPerAgent,
                                       index_to_use=(
                                           AppsPerAgentIndexes.AgentIdAndAppId
                                       ),
@@ -1043,7 +1045,7 @@ def update_app_per_objectid_and_appid(object_id, app_id, data,
 
 @db_create_close
 def update_os_app_per_agent(agent_id, app_id, data,
-                            table=AppsPerAgentCollection,
+                            table=AppCollections.AppsPerAgent,
                             index_to_use=AppsPerAgentIndexes.AgentIdAndAppId,
                             conn=None):
 
@@ -1055,7 +1057,7 @@ def update_os_app_per_agent(agent_id, app_id, data,
 
 
 def update_custom_app_per_agent(agent_id, app_id, data,
-                                table=CustomAppsPerAgentCollection,
+                                table=AppCollections.CustomAppsPerAgent,
                                 index_to_use=(
                                     CustomAppsPerAgentIndexes.AgentIdAndAppId
                                 )):
@@ -1068,7 +1070,7 @@ def update_custom_app_per_agent(agent_id, app_id, data,
 
 def update_supported_app_per_agent(
         agent_id, app_id, data,
-        table=SupportedAppsPerAgentCollection,
+        table=AppCollections.SupportedAppsPerAgent,
         index_to_use=SupportedAppsPerAgentIndexes.AgentIdAndAppId
         ):
     return(
@@ -1080,7 +1082,7 @@ def update_supported_app_per_agent(
 
 def update_agent_app_per_agent(
         agent_id, app_id, data,
-        table=AgentAppsPerAgentCollection,
+        table=AppCollections.vFenseAppsPerAgent,
         index_to_use=AgentAppsPerAgentIndexes.AgentIdAndAppId
         ):
     return(
@@ -1094,8 +1096,8 @@ def update_agent_app_per_agent(
 @db_create_close
 def delete_app_from_agent(
         app_name, app_version, agent_id,
-        table=AppsCollection,
-        per_agent_table=AppsPerAgentCollection,
+        table=AppCollections.UniqueApplications,
+        per_agent_table=AppCollections.AppsPerAgent,
         index_to_use=AppsIndexes.NameAndVersion,
         per_agent_index=AppsPerAgentIndexes.AgentIdAndAppId,
         conn=None
@@ -1129,8 +1131,8 @@ def delete_app_from_agent(
 
 def delete_custom_app_from_agent(
         app_name, app_version, agent_id,
-        table=CustomAppsCollection,
-        per_agent_table=CustomAppsPerAgentCollection,
+        table=AppCollections.CustomApps,
+        per_agent_table=AppCollections.CustomAppsPerAgent,
         index_to_use=CustomAppsIndexes.NameAndVersion,
         per_agent_index=CustomAppsPerAgentIndexes.AgentIdAndAppId,
         ):
@@ -1145,8 +1147,8 @@ def delete_custom_app_from_agent(
 
 def delete_supported_app_from_agent(
         app_name, app_version, agent_id,
-        table=SupportedAppsCollection,
-        per_agent_table=SupportedAppsPerAgentCollection,
+        table=AppCollections.SupportedApps,
+        per_agent_table=AppCollections.SupportedAppsPerAgent,
         index_to_use=SupportedAppsIndexes.NameAndVersion,
         per_agent_index=SupportedAppsPerAgentIndexes.AgentIdAndAppId,
         ):
@@ -1164,7 +1166,7 @@ def get_packages_that_need_to_be_downloaded(conn=None):
     try:
         pkgs = (
             r
-            .table(AppsCollection)
+            .table(AppCollections.UniqueApplications)
             .filter(
                 (r.row[AppsKey.FileDownloadStatus] ==
                     PackageCodes.FilePendingDownload)
@@ -1188,21 +1190,21 @@ def get_packages_that_need_to_be_downloaded(conn=None):
 @db_create_close
 def update_hidden_status(username, customer_name,
                          uri, method, app_ids, hidden='yes',
-                         table=AppsCollection, conn=None):
-    if table == AppsCollection:
+                         table=AppCollections.UniqueApplications, conn=None):
+    if table == AppCollections.UniqueApplications:
         CurrentAppsKey = AppsKey
 
-    elif table == CustomAppsCollection:
+    elif table == AppCollections.CustomApps:
         CurrentAppsKey = CustomAppsKey
 
-    elif table == SupportedAppsCollection:
+    elif table == AppCollections.SupportedApps:
         CurrentAppsKey = SupportedAppsKey
 
-    elif table == AgentAppsPerAgentCollection:
+    elif table == AppCollections.vFenseAppsPerAgent:
         CurrentAppsKey = AgentAppsKey
 
     try:
-        if hidden == YES or hidden == NO:
+        if hidden == CommonKeys.YES or hidden == CommonKeys.NO:
             (
                 r
                 .expr(app_ids)
@@ -1229,9 +1231,9 @@ def update_hidden_status(username, customer_name,
                         {
                             CurrentAppsKey.Hidden: (
                                 r.branch(
-                                    r.row[CurrentAppsKey.Hidden] == YES,
-                                    NO,
-                                    YES
+                                    r.row[CurrentAppsKey.Hidden] == CommonKeys.YES,
+                                    CommonKeys.NO,
+                                    CommonKeys.YES
                                 )
                             )
                         }
@@ -1263,9 +1265,9 @@ def get_all_app_stats_by_agentid(username, customer_name,
     try:
         inventory = (
             r
-            .table(AppsPerAgentCollection)
+            .table(AppCollections.AppsPerAgent)
             .get_all(
-                [INSTALLED, agent_id],
+                [CommonAppKeys.INSTALLED, agent_id],
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .count()
@@ -1274,15 +1276,15 @@ def get_all_app_stats_by_agentid(username, customer_name,
         data.append(
             {
                 COUNT: inventory,
-                STATUS: INSTALLED,
-                NAME: SOFTWAREINVENTORY
+                STATUS: CommonAppKeys.INSTALLED,
+                NAME: CommonAppKeys.SOFTWAREINVENTORY
             }
         )
         os_apps_avail = (
             r
-            .table(AppsPerAgentCollection)
+            .table(AppCollections.AppsPerAgent)
             .get_all(
-                [AVAILABLE, agent_id],
+                [CommonAppKeys.AVAILABLE, agent_id],
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .count()
@@ -1291,15 +1293,15 @@ def get_all_app_stats_by_agentid(username, customer_name,
         data.append(
             {
                 COUNT: os_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: OS
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
             r
-            .table(CustomAppsPerAgentCollection)
+            .table(AppCollections.CustomAppsPerAgent)
             .get_all(
-                [AVAILABLE, agent_id],
+                [CommonAppKeys.AVAILABLE, agent_id],
                 index=CustomAppsPerAgentIndexes.StatusAndAgentId
             )
             .count()
@@ -1308,15 +1310,15 @@ def get_all_app_stats_by_agentid(username, customer_name,
         data.append(
             {
                 COUNT: custom_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: CUSTOM
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
             r
-            .table(SupportedAppsPerAgentCollection)
+            .table(AppCollections.SupportedAppsPerAgent)
             .get_all(
-                [AVAILABLE, agent_id],
+                [CommonAppKeys.AVAILABLE, agent_id],
                 index=SupportedAppsPerAgentIndexes.StatusAndAgentId
             )
             .count()
@@ -1326,16 +1328,16 @@ def get_all_app_stats_by_agentid(username, customer_name,
         data.append(
             {
                 COUNT: supported_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: SUPPORTED
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.SUPPORTED
             }
         )
 
         agent_apps_avail = (
             r
-            .table(AgentAppsPerAgentCollection)
+            .table(AppCollections.vFenseAppsPerAgent)
             .get_all(
-                [AVAILABLE, agent_id],
+                [CommonAppKeys.AVAILABLE, agent_id],
                 index=AgentAppsPerAgentIndexes.StatusAndAgentId
             )
             .count()
@@ -1345,21 +1347,21 @@ def get_all_app_stats_by_agentid(username, customer_name,
         data.append(
             {
                 COUNT: agent_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: AGENT_UPDATES
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
         #all_pending_apps = (
         #   r
-        #   .table(AppsPerAgentCollection)
-        #   .union(r.table(CustomAppsPerAgentCollection))
-        #   .union(r.table(SupportedAppsPerAgentCollection))
-        #   .union(r.table(AgentAppsPerAgentCollection))
+        #   .table(AppCollections.AppsPerAgent)
+        #   .union(r.table(AppCollections.CustomAppsPerAgent))
+        #   .union(r.table(AppCollections.SupportedAppsPerAgent))
+        #   .union(r.table(AppCollections.vFenseAppsPerAgent))
         #   .filter(
         #       {
         #           AgentKey.AgentId: agent_id,
-        #           AppsPerAgentKey.Status: PENDING
+        #           AppsPerAgentKey.Status: CommonAppKeys.PENDING
         #       }
         #   )
         #   .count()
@@ -1369,8 +1371,8 @@ def get_all_app_stats_by_agentid(username, customer_name,
         #data.append(
         #   {
         #       COUNT: all_pending_apps,
-        #       STATUS: PENDING,
-        #       NAME: PENDING.capitalize()
+        #       STATUS: CommonAppKeys.PENDING,
+        #       NAME: CommonAppKeys.PENDING.capitalize()
         #   }
         #
 
@@ -1404,10 +1406,10 @@ def get_all_app_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    INSTALLED,
+                    CommonAppKeys.INSTALLED,
                     x[AppsPerAgentKey.AgentId]
                 ],
-                r.table(AppsPerAgentCollection),
+                r.table(AppCollections.AppsPerAgent),
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1418,8 +1420,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: inventory,
-                STATUS: INSTALLED,
-                NAME: SOFTWAREINVENTORY
+                STATUS: CommonAppKeys.INSTALLED,
+                NAME: CommonAppKeys.SOFTWAREINVENTORY
             }
         )
         os_apps_avail = (
@@ -1429,10 +1431,10 @@ def get_all_app_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[AppsPerAgentKey.AgentId]
                 ],
-                r.table(AppsPerAgentCollection),
+                r.table(AppCollections.AppsPerAgent),
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1443,8 +1445,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: os_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: OS
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1454,10 +1456,10 @@ def get_all_app_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[CustomAppsPerAgentKey.AgentId]
                 ],
-                r.table(CustomAppsPerAgentCollection),
+                r.table(AppCollections.CustomAppsPerAgent),
                 index=CustomAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1468,8 +1470,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: custom_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: CUSTOM
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1482,7 +1484,7 @@ def get_all_app_stats_by_tagid(username, customer_name,
                     AVAILABLE,
                     x[SupportedAppsPerAgentKey.AgentId]
                 ],
-                r.table(SupportedAppsPerAgentCollection),
+                r.table(AppCollections.SupportedAppsPerAgent),
                 index=SupportedAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1493,8 +1495,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: supported_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: SUPPORTED
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
@@ -1504,10 +1506,10 @@ def get_all_app_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[AgentAppsPerAgentKey.AgentId]
                 ],
-                r.table(AgentAppsPerAgentCollection),
+                r.table(AppCollections.vFenseAppsPerAgent),
                 index=AgentAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1518,8 +1520,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: agent_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: AGENT_UPDATES
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1533,7 +1535,7 @@ def get_all_app_stats_by_tagid(username, customer_name,
        #            PENDING,
        #            x[AppsPerAgentKey.AgentId]
        #        ],
-       #        r.table(AppsPerAgentCollection),
+       #        r.table(AppCollections.AppsPerAgent),
        #        index=AppsPerAgentIndexes.StatusAndAgentId
        #    )
        #    .pluck({'right': AppsPerAgentKey.AppId})
@@ -1545,8 +1547,8 @@ def get_all_app_stats_by_tagid(username, customer_name,
        #data.append(
        #    {
        #        COUNT: all_pending_apps,
-       #        STATUS: PENDING,
-       #        NAME: PENDING.capitalize()
+       #        STATUS: CommonAppKeys.PENDING,
+       #        NAME: CommonAppKeys.PENDING.capitalize()
        #    }
        #)
 
@@ -1581,10 +1583,10 @@ def get_all_avail_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[AppsPerAgentKey.AgentId]
                 ],
-                r.table(AppsPerAgentCollection),
+                r.table(AppCollections.AppsPerAgent),
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1595,8 +1597,8 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: os_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: OS
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1606,10 +1608,10 @@ def get_all_avail_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[CustomAppsPerAgentKey.AgentId]
                 ],
-                r.table(CustomAppsPerAgentCollection),
+                r.table(AppCollections.CustomAppsPerAgent),
                 index=CustomAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1620,8 +1622,8 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: custom_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: CUSTOM
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1631,10 +1633,10 @@ def get_all_avail_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[SupportedAppsPerAgentKey.AgentId]
                 ],
-                r.table(SupportedAppsPerAgentCollection),
+                r.table(AppCollections.SupportedAppsPerAgent),
                 index=SupportedAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1645,8 +1647,8 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: supported_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: SUPPORTED
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
@@ -1656,10 +1658,10 @@ def get_all_avail_stats_by_tagid(username, customer_name,
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x: [
-                    AVAILABLE,
+                    CommonAppKeys.AVAILABLE,
                     x[AgentAppsPerAgentKey.AgentId]
                 ],
-                r.table(AgentAppsPerAgentCollection),
+                r.table(AppCollections.vFenseAppsPerAgent),
                 index=AgentAppsPerAgentIndexes.StatusAndAgentId
             )
             .pluck({'right': AppsPerAgentKey.AppId})
@@ -1670,8 +1672,8 @@ def get_all_avail_stats_by_tagid(username, customer_name,
         data.append(
             {
                 COUNT: agent_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: AGENT_UPDATES
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1704,7 +1706,7 @@ def get_all_app_stats_by_customer(username, customer_name,
             .table(AppsPerAgentCollection, use_outdated=True)
             .get_all(
                 [
-                    AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, customer_name
                 ],
                 index=AppsPerAgentIndexes.StatusAndCustomer
             )
@@ -1716,8 +1718,8 @@ def get_all_app_stats_by_customer(username, customer_name,
         data.append(
             {
                 COUNT: os_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: OS
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.OS
             }
         )
         custom_apps_avail = (
@@ -1725,7 +1727,7 @@ def get_all_app_stats_by_customer(username, customer_name,
             .table(CustomAppsPerAgentCollection, use_outdated=True)
             .get_all(
                 [
-                    AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, customer_name
                 ],
                 index=CustomAppsPerAgentIndexes.StatusAndCustomer
             )
@@ -1737,8 +1739,8 @@ def get_all_app_stats_by_customer(username, customer_name,
         data.append(
             {
                 COUNT: custom_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: CUSTOM
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.CUSTOM
             }
         )
         supported_apps_avail = (
@@ -1746,7 +1748,7 @@ def get_all_app_stats_by_customer(username, customer_name,
             .table(SupportedAppsPerAgentCollection, use_outdated=True)
             .get_all(
                 [
-                    AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, customer_name
                 ],
                 index=SupportedAppsPerAgentIndexes.StatusAndCustomer
             )
@@ -1758,8 +1760,8 @@ def get_all_app_stats_by_customer(username, customer_name,
         data.append(
             {
                 COUNT: supported_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: SUPPORTED
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.SUPPORTED
             }
         )
         agent_apps_avail = (
@@ -1767,7 +1769,7 @@ def get_all_app_stats_by_customer(username, customer_name,
             .table(AgentAppsPerAgentCollection, use_outdated=True)
             .get_all(
                 [
-                    AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, customer_name
                 ],
                 index=AgentAppsPerAgentIndexes.StatusAndCustomer
             )
@@ -1779,8 +1781,8 @@ def get_all_app_stats_by_customer(username, customer_name,
         data.append(
             {
                 COUNT: agent_apps_avail,
-                STATUS: AVAILABLE,
-                NAME: AGENT_UPDATES
+                STATUS: CommonAppKeys.AVAILABLE,
+                NAME: CommonAppKeys.AGENT_UPDATES
             }
         )
 
@@ -1789,7 +1791,7 @@ def get_all_app_stats_by_customer(username, customer_name,
             .table(AppsPerAgentCollection, use_outdated=True)
             .get_all(
                 [
-                    PENDING, customer_name
+                    CommonAppKeys.PENDING, customer_name
                 ],
                 index=AppsPerAgentIndexes.StatusAndCustomer
             )
@@ -1802,8 +1804,8 @@ def get_all_app_stats_by_customer(username, customer_name,
         data.append(
             {
                 COUNT: all_pending_apps,
-                STATUS: PENDING,
-                NAME: PENDING.capitalize()
+                STATUS: CommonAppKeys.PENDING,
+                NAME: CommonAppKeys.PENDING.capitalize()
             }
         )
 
@@ -1829,8 +1831,8 @@ def get_all_app_stats_by_customer(username, customer_name,
 @db_create_close
 def delete_app_from_rv(
         app_id,
-        table=AppsCollection,
-        per_agent_table=AppsPerAgentCollection,
+        table=AppCollections.UniqueApplications,
+        per_agent_table=AppCollections.AppsPerAgent,
         conn=None
         ):
     completed = True
@@ -1849,10 +1851,10 @@ def delete_app_from_rv(
             .delete()
             .run(conn)
         )
-        if table == CustomAppsCollection:
+        if table == AppCollections.CustomApps:
             (
                 r
-                .table(FilesCollection)
+                .table(FileCollections.Files)
                 .filter(lambda x: x[FilesKey.AppIds].contains(app_id))
                 .delete()
                 .run(conn)

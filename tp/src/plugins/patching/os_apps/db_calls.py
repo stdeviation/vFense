@@ -13,26 +13,26 @@ logger = logging.getLogger('rvapi')
 @db_create_close
 def get_all_stats_by_appid(username, customer_name,
                            uri, method, app_id,
-                           table=AppsPerAgentCollection,
+                           table=AppCollections.AppsPerAgent,
                            conn=None):
 
-    if table == AppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AppsPerAgentCollection
+    if table == AppCollections.AppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
         CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
 
-    elif table == SupportedAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
+    elif table == AppCollections.SupportedAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
         CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
 
-    elif table == CustomAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
+    elif table == AppCollections.CustomAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
         CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
 
-    elif table == AgentAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
+    elif table == AppCollections.vFenseAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
         CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
 
@@ -95,23 +95,23 @@ def get_all_stats_by_appid(username, customer_name,
 @db_create_close
 def get_all_agents_per_appid(username, customer_name,
                              uri, method, app_id,
-                             table=AppsPerAgentCollection,
+                             table=AppCollections.AppsPerAgent,
                              conn=None):
 
-    if table == AppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AppsPerAgentCollection
+    if table == AppCollections.AppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
 
-    elif table == SupportedAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
+    elif table == AppCollections.SupportedAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
-    elif table == CustomAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
+    elif table == AppCollections.CustomAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
-    elif table == AgentAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
+    elif table == AppCollections.vFenseAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
 
     data = []
@@ -190,23 +190,23 @@ def get_all_agents_per_appid(username, customer_name,
 @db_create_close
 def get_all_stats_by_agentid(username, customer_name,
                              uri, method, agent_id,
-                             table=AppsPerAgentCollection,
+                             table=AppCollections.AppsPerAgent,
                              conn=None):
 
-    if table == AppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AppsPerAgentCollection
+    if table == AppCollections.AppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
 
-    elif table == SupportedAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = SupportedAppsPerAgentCollection
+    elif table == AppCollections.SupportedAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
-    elif table == CustomAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = CustomAppsPerAgentCollection
+    elif table == AppCollections.CustomAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
-    elif table == AgentAppsPerAgentCollection:
-        CurrentAppsPerAgentCollection = AgentAppsPerAgentCollection
+    elif table == AppCollections.vFenseAppsPerAgent:
+        CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
 
     try:
