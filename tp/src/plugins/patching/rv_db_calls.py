@@ -28,19 +28,6 @@ from vFense.core.customer import *
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
-
-def build_app_id(app):
-    app_id = '%s%s' % (app[AppsKey.Name], app[AppsKey.Version])
-    app_id = app_id.encode('utf-8')
-
-    return (sha256(app_id).hexdigest())
-
-
-def build_agent_app_id(agent_id, appid):
-    agent_app_id = agent_id.encode('utf8') + appid.encode('utf8')
-
-    return (sha256(agent_app_id).hexdigest())
-
 @db_create_close
 def get_all_file_data(conn=None):
     file_data = []

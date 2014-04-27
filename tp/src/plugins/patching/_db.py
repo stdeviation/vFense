@@ -18,6 +18,31 @@ from vFense.db.client import db_create_close, r
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
+@time_it
+@db_create_close
+def fetch_all_file_data(conn=None):
+    """Retrieve all the files in our database
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import fetch_all_file_data
+        >>> fetch_all_file_data()
+
+    Returns:
+        List
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(FileCollections.Files)
+            .pluck(FilesKey.FileHash, FilesKey.FileSize, FilesKey.FileUri)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
 
 @time_it
 @db_create_close
