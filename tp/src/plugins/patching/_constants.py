@@ -43,6 +43,10 @@ class CommonSeverityKeys():
     ValidRvSeverities = (CRITICAL, RECOMMENDED, OPTIONAL)
 
 
+class FileLocationUris():
+    PACKAGES = 'packages'
+
+
 class SharedAppKeys():
     AppId = 'app_id'
     Id = 'id'
