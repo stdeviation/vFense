@@ -6,8 +6,8 @@ from vFense.core.user._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.customer import *
-from vFense.core.permissions._constants import *
 from vFense.core.customer._constants import *
+from vFense.core.permissions._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
@@ -30,7 +30,7 @@ def fetch_user(username, without_fields=None, conn=None):
         >>> username = 'admin'
         >>> fetch_user(username, without_fields=['password'])
 
-    Return:
+    Returns:
         Dictionary of user properties.
         {
             u'current_customer': u'default',
@@ -81,7 +81,7 @@ def fetch_user_and_all_properties(username, conn=None):
         >>> username = 'admin'
         >>> fetch_user_and_all_properties(username')
 
-    Return:
+    Returns:
         Dictionary of user properties.
         {
             "current_customer": "default", 
@@ -109,6 +109,8 @@ def fetch_user_and_all_properties(username, conn=None):
         {
             UserKeys.DefaultCustomer: r.row[UserKeys.DefaultCustomer],
             UserKeys.CurrentCustomer: r.row[UserKeys.CurrentCustomer],
+            UserKeys.Email: r.row[UserKeys.Email],
+            UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
             UserKeys.Groups: (
                 r
@@ -193,7 +195,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
         >>> customer_name = 'default'
         >>> fetch_user_and_all_properties(username')
 
-    Return:
+    Returns:
         List of users and their properties.
         [
             {
@@ -321,7 +323,21 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
 
 @time_it
 @db_create_close
-def status_toggle(username, conn=None):
+@return_status_tuple
+def user_status_toggle(username, conn=None):
+    """Enable or disable a user
+    Args:
+        username (str): The username you are enabling or disabling
+
+    Basic Usage:
+        >>> from vFense.user._db import status_toggle
+        >>> username = 'tester'
+        >>> status_toggle(username)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
     try:
         toggled = (
             r
@@ -412,7 +428,7 @@ def fetch_users(
                 .eq_join(
                     lambda x:
                     x[CustomerPerUserKeys.UserName],
-                    r.table(UsersCollection)
+                    r.table(UserCollections.Users)
                 )
                 .zip()
                 .without(without_fields)
@@ -433,7 +449,7 @@ def fetch_users(
                 .eq_join(
                     lambda x:
                     x[CustomerPerUserKeys.UserName],
-                    r.table(UsersCollection)
+                    r.table(UserCollections.Users)
                 )
                 .zip()
                 .without(without_fields)
@@ -450,7 +466,7 @@ def fetch_users(
                 .eq_join(
                     lambda x:
                     x[CustomerPerUserKeys.UserName],
-                    r.table(UsersCollection)
+                    r.table(UserCollections.Users)
                 )
                 .zip()
                 .run(conn)
@@ -466,7 +482,7 @@ def fetch_users(
                 .eq_join(
                     lambda x:
                     x[CustomerPerUserKeys.UserName],
-                    r.table(UsersCollection)
+                    r.table(UserCollections.Users)
                 )
                 .zip()
                 .without(without_fields)
@@ -487,7 +503,7 @@ def fetch_users(
                 .eq_join(
                     lambda x:
                     x[CustomerPerUserKeys.UserName],
-                    r.table(UsersCollection)
+                    r.table(UserCollections.Users)
                 )
                 .zip()
                 .run(conn)
@@ -514,7 +530,7 @@ def insert_user(user_data, conn=None):
         >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_user_data(user_data)
 
-    Return:
+    Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
@@ -548,7 +564,7 @@ def update_user(username, user_data, conn=None):
         >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
         >>> update_user(username, data)
 
-    Return:
+    Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
@@ -581,7 +597,7 @@ def delete_user(username, conn=None):
         >>> username = 'admin'
         >>> delete_user(username)
 
-    Return:
+    Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
@@ -592,6 +608,44 @@ def delete_user(username, conn=None):
             .table(UserCollections.Users)
             .get(username)
             .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_users(usernames, conn=None):
+    """ Delete a user and all of its properties
+    Args:
+        usernames (list): username of the user you are deleteing.
+
+    Basic Usage:
+        >>> from vFense.user._db import delete_users
+        >>> usernames = ['admin', 'foo', 'bar']
+        >>> delete_users(usernames)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(usernames)
+            .for_each(
+                lambda username:
+                r
+                .table(UserCollections.Users)
+                .get(username)
+                .delete()
+            )
             .run(conn)
         )
 

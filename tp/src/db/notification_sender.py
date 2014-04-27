@@ -1,13 +1,11 @@
 import logging
 import logging.config
-from vFense.db.client import db_create_close, r
 from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
 from vFense.operations import *
-from vFense.operations.operation_manager import get_oper_info
-from vFense.operations.retriever import OperationRetriever
+from vFense.operations.agent_operations import get_agent_operation
+from vFense.operations.search.agent_search import AgentOperationRetriever
 from vFense.notifications import *
-from vFense.errorz.error_messages import OperationCodes, GenericResults
 from emailer.mailer import MailClient
 
 from tornado.template import Loader
@@ -82,7 +80,7 @@ def parse_install_operation_data(oper_data, oper_type, oper_plugin, threshold):
 def send_notifications(username, customer_name, operation_id, agent_id):
     try:
         notif_handler = RvNotificationHandler(customer_name, operation_id, agent_id)
-        oper_info = get_oper_info(operation_id)
+        oper_info = get_agent_operation(operation_id)
         oper_plugin = oper_info[OperationKey.Plugin]
         oper_status = oper_info[OperationKey.OperationStatus]
         threshold = translate_opercodes_to_notif_threshold(oper_status)
@@ -98,7 +96,7 @@ def send_notifications(username, customer_name, operation_id, agent_id):
                 sender_addresses = (
                     notif_handler.get_sending_emails(notif_rules)
                 )
-                oper = OperationRetriever(username, customer_name, None, None)
+                oper = AgentOperationRetriever(username, customer_name, None, None)
                 oper_data = oper.get_install_operation_for_email_alert(operation_id)
 
                 if sender_addresses:

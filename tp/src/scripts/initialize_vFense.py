@@ -14,6 +14,7 @@ import nginx_config_creator as ncc
 from vFense import *
 from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass, check_password
+from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r
 
@@ -27,10 +28,9 @@ import vFense.core.customer.customers as customer
 import vFense.core.user.users as user
 
 from vFense.plugins import monit
-from vFense.plugins import cve
-from vFense.plugins.cve.cve_parser import load_up_all_xml_into_db
-from vFense.plugins.cve.bulletin_parser import parse_bulletin_and_updatedb
-from vFense.plugins.cve.get_all_ubuntu_usns import begin_usn_home_page_processing
+from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
+from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
+from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -108,6 +108,7 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
+generate_generic_certs()
 ncc.nginx_config_builder(
     nginx_server_name,
     args.server_cert,
@@ -119,7 +120,7 @@ ncc.nginx_config_builder(
 def initialize_db():
     os.umask(0)
     if not os.path.exists('/opt/TopPatch/var/tmp'):
-        os.mkdir('/opt/TopPatch/var/tmp')
+        os.mkdir('/opt/TopPatch/var/tmp', 0755)
     if not os.path.exists(RETHINK_CONF):
         subprocess.Popen(
             [
@@ -137,21 +138,19 @@ def initialize_db():
         )
 
     if not os.path.exists('/opt/TopPatch/var/log'):
-        os.mkdir('/opt/TopPatch/var/log')
+        os.mkdir('/opt/TopPatch/var/log', 0755)
     if not os.path.exists('/opt/TopPatch/var/scheduler'):
-        os.mkdir('/opt/TopPatch/var/scheduler')
+        os.mkdir('/opt/TopPatch/var/scheduler', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages'):
-        os.mkdir('/opt/TopPatch/var/packages')
-    if not os.path.exists('/opt/TopPatch/logs'):
-        os.mkdir('/opt/TopPatch/logs')
+        os.mkdir('/opt/TopPatch/var/packages', 0755)
     if not os.path.exists('/opt/TopPatch/var/packages/tmp'):
-        os.mkdir('/opt/TopPatch/var/packages/tmp', 0773)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xls'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/xls', 0773)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/xml'):
-        os.mkdir('/opt/TopPatch/tp/src/plugins/cve/data/xml', 0773)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/cve/data/html/ubuntu', 0773)
+        os.mkdir('/opt/TopPatch/var/packages/tmp', 0775)
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls'):
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls', 0755)
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml'):
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml', 0755)
+    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html'):
+        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html', 0755)
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
@@ -220,7 +219,7 @@ def initialize_db():
         customer.create_customer(
             DefaultCustomers.DEFAULT,
             http_application_url_location=url,
-            operation_queue_ttl=args.queue_ttl,
+            server_queue_ttl=args.queue_ttl,
             init=True
         )
         group_data = group.create_group(
@@ -232,7 +231,7 @@ def initialize_db():
         print group_data
         print admin_group_id
         user.create_user(
-            DefaultUser.ADMIN,
+            DefaultUsers.ADMIN,
             'vFense Admin Account',
             args.admin_password,
             admin_group_id,
@@ -242,7 +241,7 @@ def initialize_db():
         print 'Admin user and password = admin:%s' % (args.admin_password)
         agent_pass = generate_pass()
         user.create_user(
-            DefaultUser.AGENT,
+            DefaultUsers.AGENT,
             'vFense Agent Communication Account',
             agent_pass,
             admin_group_id,

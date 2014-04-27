@@ -4,14 +4,14 @@ define(
         'use strict';
         var exports = {
             Collection: Backbone.Collection.extend({
-                baseUrl: 'api/users',
+                baseUrl: 'api/v1/users',
                 params: {},
                 url: function () {
                     return this.baseUrl + '?' + $.param(this.params);
                 }
             }),
             GroupCollection: Backbone.Collection.extend({
-                baseUrl: 'api/groups',
+                baseUrl: 'api/v1/groups',
                 filter: '',
                 url: function () {
                     return this.baseUrl + this.filter;
@@ -20,7 +20,7 @@ define(
             View: Backbone.View.extend({
                 initialize: function () {
                     this.template = myTemplate;
-                    this.customerContext = app.user.toJSON().current_customer.name;
+                    this.customerContext = app.user.toJSON().current_customer;
                     this.collection = new exports.Collection();
                     this.collection.params = {};
                     this.listenTo(this.collection, 'sync', this.render);
@@ -31,22 +31,77 @@ define(
                     this.groupCollection.fetch();
 
                     $.ajaxSetup({traditional: true});
+                    return this;
                 },
                 events: {
-                    'click button[name=toggleAcl]':     'toggleAclAccordion',
-                    'click button[name=toggleDelete]':  'confirmDelete',
-                    'change input[name=groupSelect]':   'toggle',
-                    'change input[name=customerSelect]':'toggle',
-                    'click button[name=deleteUser]':    'deleteUser',
-                    'click #cancelNewUser':             'displayAddUser',
-                    'click #submitUser':                'verifyForm',
-                    'click #addUser':                   'displayAddUser',
-                    'change #customerContext':          'changeCustomerContext',
-                    'submit form':                      'submit'
+                    'click button[name=toggleDisable]'  :   'toggleDisable',
+                    'click button[name=toggleAcl]'      :   'toggleAclAccordion',
+                    'click button[name=toggleDelete]'   :   'confirmDelete',
+                    'change input[name=groupSelect]'    :   'toggle',
+                    'change input[name=customerSelect]' :   'toggle',
+                    'change input[name=groups]'         :   'retrieveGroups',
+                    'change select[name=customers]'     :   'retrieveCustomers',
+                    'click button[name=deleteUser]'     :   'deleteUser',
+                    'click #cancelNewUser'              :   'displayAddUser',
+                    'click #submitUser'                 :   'verifyForm',
+                    'click #addUser'                    :   'displayAddUser',
+                    'change #customerContext'           :   'changeCustomerContext',
+                    'submit form'                       :   'submit'
+                },
+                toggleDisable: function(event) {
+                    var toggleUser = $(event.currentTarget),
+                        icon = toggleUser.find('i'),
+                        $alert = this.$el.find('div.alert'),
+                        username = icon.hasClass('icon-ban-circle') ? toggleUser.parents('.accordion-heading').find('button[name=toggleAcl]').find('span').text() : toggleUser.parents('.accordion-heading').find('.pull-left').find('strong').text(),
+                        params = {
+                            enabled: 'toggle'
+                        };
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'api/v1/user/' + username,
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if(response.rv_status_code === 13001)
+                            {
+                                if(icon.hasClass('icon-ban-circle'))
+                                {
+                                    icon.removeClass('icon-ban-circle').addClass('icon-ok-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                }
+                                else
+                                {
+                                    icon.removeClass('icon-ok-circle').addClass('icon-ban-circle');
+                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty()
+                                        .append(
+                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                                crel('span', username)
+                                            )
+                                    );
+                                }
+                            }
+                            else
+                            {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
+                        }
+                    });
+                    return this;
+                },
+                retrieveGroups: function(event) {
+                    this.groupsArray = event.val;
+                    return this;
+                },
+                retrieveCustomers: function(event) {
+                    this.customersArray = event.val;
+                    return this;
                 },
                 changeCustomerContext: function (event) {
                     this.collection.params.customer_context = this.customerContext = event.val;
                     this.collection.fetch();
+                    return this;
                 },
                 toggleAclAccordion: function (event) {
                     var $href = $(event.currentTarget),
@@ -58,38 +113,46 @@ define(
                     $accordionBody.on('hidden', function (event) {
                         event.stopPropagation();
                     });
+                    return this;
                 },
                 displayAddUser: function (event) {
                     event.preventDefault();
                     var $addUserDiv = this.$('#newUserDiv');
                     $addUserDiv.toggle();
+                    return this;
                 },
                 confirmDelete: function (event) {
                     var $parentDiv = $(event.currentTarget).parent();
                     $parentDiv.children().toggle();
+                    return this;
                 },
                 deleteUser: function (event) {
                     var $deleteButton = $(event.currentTarget),
                         $userRow = $deleteButton.parents('.item'),
                         $alert = this.$el.find('div.alert'),
-                        user = $deleteButton.val(),
-                        params = {
-                            username: user
-                        };
-                    $.post('api/users/delete', params, function (json) {
-                        if (json.pass) {
-                            $userRow.remove();
-                            $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(json.message);
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(json.message);
+                        user = $deleteButton.val();
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/v1/user/' + user,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response){
+                            if (response.rv_status_code) {
+                                $userRow.remove();
+                                $alert.removeClass('alert-error').addClass('alert-success').show().find('span').html(response.message);
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
                         }
                     });
+                    return this;
                 },
                 verifyForm: function (event) {
                     var form = document.getElementById('newUserDiv');
                     if (form.checkValidity()) {
                         this.submitNewUser(event);
                     }
+                    return this;
                 },
                 submitNewUser: function (event) {
                     event.preventDefault();
@@ -97,70 +160,88 @@ define(
                         email = this.$el.find('#email').val(),
                         username = this.$el.find('#username').val(),
                         password = this.$el.find('#password').val(),
-                        group = this.$el.find('select[name=groups]').val(),
-                        customers = this.$el.find('select[name=customers]').val(),
+                        group = this.$el.find('input[name=groups]').select2('data'),
+                        customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
                             fullname: fullName,
                             email: email,
                             username: username,
-                            password: password
+                            password: password,
+                            customer_context: this.customerContext
                         },
                         that = this;
-                    if (group && group.length) {
-                        params.group_id = group;
-                    }
-                    if (customers && customers.length) {
-                        params.customer_id = customers;
-                    }
-                    $.post('/api/users/create', params, function (json) {
-                        if (json.pass) {
-                            that.collection.fetch();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').html(json.message).show();
+
+                    params.group_ids = this.groupsArray;
+                    params.customer_names = this.customersArray;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/v1/users',
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code) {
+                                that.collection.fetch();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').html(response.message).show();
+                            }
                         }
                     }).error(function (e) { window.console.log(e.statusText); });
+                    return this;
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
-                        user = $input.data('user'),
-                        url = $input.data('url') + '/edit',
+                        username = $input.data('user'),
+                        groupId = $input.data('id'),
+                        url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
-                        params = {
-                            user: user,
-                            name: event.added ? event.added.text : event.removed.text,
-                            customer_context: this.customerContext
-                        };
-                    $.post(url, params, function (response) {
-                        if (response.pass) {
-                            $alert.hide();
-                        } else {
-                            $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                        params,
+                        users = [],
+                        groups = [];
+                    users.push(username);
+                    groups.push(groupId);
+                    params = {
+                        group_ids: groups,
+                        action: event.added ? 'add' : 'delete'
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: url + '?' + $.param(params),
+                        data: JSON.stringify(params),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(response) {
+                            if (response.rv_status_code) {
+                                $alert.hide();
+                            } else {
+                                $alert.removeClass('alert-success').addClass('alert-error').show().find('span').html(response.message);
+                            }
                         }
                     }).error(function (e) { window.console.log(e.responseText); });
+                    return this;
                 },
                 beforeRender: $.noop,
                 onRender: function () {
-                    var $groups = this.$('select[name="groups"]'),
-                        $customers = this.$('select[name="customers"]'),
+                    var $groups = this.$('input[name=groups]'),
+                        $customers = this.$('select[name=customers]'),
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
                         that = this;
-                    $groups.select2({width: '100%'});
-                    $customers.select2({width: '100%'});
-                    $select.select2({
+                    $groups.select2({
                         width: '100%',
                         multiple: true,
                         initSelection: function (element, callback) {
                             var data = JSON.parse(element.val()),
                                 results = [];
                             _.each(data, function (object) {
-                                results.push({id: object.id || object.name, text: object.name});
+                                results.push({id: object.id, text: object.group_name});
                             });
                             callback(results);
                         },
                         ajax: {
                             url: function () {
-                                return $(this).data('url');
+                                return $groups.data('url');
                             },
                             data: function () {
                                 return {
@@ -169,15 +250,93 @@ define(
                             },
                             results: function (data) {
                                 var results = [];
-                                if (data.pass) {
+                                if (data.rv_status_code === 1001) {
                                     _.each(data.data, function (object) {
-                                        results.push({id: object.id || object.name, text: object.name});
+                                        results.push({id: object.id, text: object.group_name});
                                     });
                                     return {results: results, more: false, context: results};
                                 }
                             }
                         }
                     });
+
+                    $customers.select2({width: '100%'});
+
+                    _.each($select, function(select) {
+                        if($(select).data('user') === 'admin')
+                        {
+                            $(select).on('select2-opening', function(event){
+                                event.preventDefault();
+                            });
+
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
+                                        results.push({locked: true, id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                    });
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(select).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            username: $(select).data('user')
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $(select).select2({
+                                width: '100%',
+                                multiple: true,
+                                initSelection: function (element, callback) {
+                                    var data = JSON.parse(element.val()),
+                                        results = [];
+                                    _.each(data, function (object) {
+                                        results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                    });
+                                    callback(results);
+                                },
+                                ajax: {
+                                    url: function () {
+                                        return $(select).data('url');
+                                    },
+                                    data: function () {
+                                        return {
+                                            username: $(select).data('user')
+                                        };
+                                    },
+                                    results: function (data) {
+                                        var results = [];
+                                        if (data.rv_status_code === 1001) {
+                                            _.each(data.data, function (object) {
+                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                            });
+                                            return {results: results, more: false, context: results};
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    return this;
                 },
                 render: function () {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
@@ -187,7 +346,7 @@ define(
                         groups = this.groupCollection.toJSON()[0],
                         customers = app.user.toJSON(),
                         payload;
-                    if (data && data.pass && groups && groups.pass) {
+                    if (data && data.rv_status_code === 1001 && groups && groups.rv_status_code === 1001) {
                         payload = {
                             data: data.data,
                             groups: groups.data,
@@ -199,10 +358,19 @@ define(
                                     selected = selected || false;
                                     if (options.length) {
                                         _.each(options, function (option) {
-                                            if (_.isUndefined(option.admin) || option.admin) {
-                                                attributes = {value: option.id || option.name};
-                                                if (selected && option.name === selected) {attributes.selected = selected;}
-                                                select.appendChild(crel('option', attributes, option.name));
+                                            if (_.isUndefined(option.administrator) || option.administrator) {
+                                                if(option.group_name)
+                                                {
+                                                    attributes = {value: option.id};
+                                                    if (selected && option.group_name === selected) {attributes.selected = selected;}
+                                                    select.appendChild(crel('option', attributes, option.group_name));
+                                                }
+                                                else if(option.customer_name)
+                                                {
+                                                    attributes = {value: option.id || option.customer_name};
+                                                    if (selected && option.customer_name === selected) {attributes.selected = selected;}
+                                                    select.appendChild(crel('option', attributes, option.customer_name));
+                                                }
                                             }
                                         });
                                     }
@@ -210,29 +378,41 @@ define(
                                 },
                                 renderDeleteButton: function (user) {
                                     var fragment;
-                                    if (user.username !== 'admin') {
+                                    if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
+                                            crel('button', {class: 'btn btn-link right-margin noPadding', name: 'toggleDisable'},
+                                                crel('i', {class: 'icon-ban-circle'})
+                                            )
+                                        );
+                                        fragment.appendChild(
                                             crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
-                                                crel('i', {class: 'icon-remove', style: 'color: red'}))
+                                                crel('i', {class: 'icon-remove', style: 'color: red'})
+                                            )
                                         );
                                         return fragment.innerHTML;
                                     }
                                 },
                                 renderUserLink: function (user) {
                                     var fragment = crel('div');
-                                    if (user.username !== 'admin') {
-                                        fragment.appendChild(
-                                            crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
-                                                crel('i', {class: 'icon-circle-arrow-down'}, ' '),
-                                                crel('span', user.username)
-                                            )
-                                        );
-                                    } else {
-                                        fragment.appendChild(
-                                            crel('strong', user.username)
-                                        );
-                                    }
+                                    fragment.appendChild(
+                                        crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                            crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                            crel('span', user.user_name)
+                                        )
+                                    );
+                                    /*if (user.user_name !== 'admin') {
+                                     fragment.appendChild(
+                                     crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
+                                     crel('i', {class: 'icon-circle-arrow-down'}, ' '),
+                                     crel('span', user.user_name)
+                                     )
+                                     );
+                                     } else {
+                                     fragment.appendChild(
+                                     crel('strong', user.user_name)
+                                     );
+                                     }*/
                                     return fragment.innerHTML;
                                 }
                             }

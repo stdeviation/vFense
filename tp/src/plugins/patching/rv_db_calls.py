@@ -7,20 +7,21 @@ import urllib
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.plugins.patching import *
 from vFense.plugins.mightymouse import *
-from vFense.plugins.cve import *
-from vFense.plugins.cve.cve_db  import get_windows_bulletinid_and_cveids, \
-    get_vulnerability_categories, get_ubuntu_cveids
+
+from vFense.plugins.vuln import SecurityBulletinKey
+import vFense.plugins.vuln.windows.ms as ms
+import vFense.plugins.vuln.ubuntu.usn as usn
+import vFense.plugins.vuln.cve.cve as cve
+
 from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core.agent import *
-from vFense.operations import *
+from vFense.operations._constants import AgentOperations
 from vFense.core.tag.tagManager import *
 from vFense.core.customer.customers import get_customer_property
 from vFense.core.customer import *
 
-from vFense.server.hierarchy import CoreProperty
-from vFense.server.hierarchy.manager import Hierarchy
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -501,12 +502,12 @@ def get_base_url(customer_name):
 
 #@db_create_close
 def get_download_urls(customer_name, app_id, file_data,
-                      oper_type=INSTALL_OS_APPS):
+                      oper_type=AgentOperations.INSTALL_OS_APPS):
     uris = []
     url_base = get_base_url(customer_name)
     file_uris_base = None
     logger.info(url_base)
-    if oper_type == INSTALL_CUSTOM_APPS:
+    if oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
         url_base = url_base + 'tmp/' + app_id + '/'
         file_uris_base = 'packages/tmp/' + app_id + '/'
 
@@ -830,11 +831,11 @@ def update_vulnerability_info_app(
     app[AppsKey.VulnerabilityCategories] = []
 
     if app[AppsKey.Kb] != "" and os_string.find('Windows') == 0:
-        vuln_info = get_windows_bulletinid_and_cveids(app[AppsKey.Kb])
+        vuln_info = ms.get_vuln_ids(app[AppsKey.Kb])
 
     elif os_string.find('Ubuntu') == 0:
         vuln_info = (
-            get_ubuntu_cveids(
+            usn.get_vuln_ids(
                 app[AppsKey.Name],
                 app[AppsKey.Version],
                 os_string
@@ -843,9 +844,9 @@ def update_vulnerability_info_app(
     if vuln_info:
         app[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
         for cve_id in app[AppsKey.CveIds]:
-            cve_id = cve_id.replace('CVE-', '')
+            #cve_id = cve_id.replace('CVE-', '')
             app[AppsKey.VulnerabilityCategories] += (
-                get_vulnerability_categories(cve_id)
+                cve.get_vulnerability_categories(cve_id)
             )
 
         app[AppsKey.VulnerabilityCategories] = (
@@ -1100,7 +1101,7 @@ def delete_app_from_agent(
         conn=None
         ):
     try:
-        app_agent_id = (
+        app_agent_id = list(
             r
             .table(table)
             .get_all([app_name, app_version], index=index_to_use)
@@ -1865,15 +1866,15 @@ def delete_app_from_rv(
 
 
 def update_app_status(agent_id, app_id, oper_type, data):
-    if oper_type == INSTALL_OS_APPS or oper_type == UNINSTALL:
+    if oper_type == AgentOperations.INSTALL_OS_APPS or oper_type == UNINSTALL:
         update_os_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_CUSTOM_APPS:
+    elif oper_type == AgentOperations.INSTALL_CUSTOM_APPS:
         update_custom_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_SUPPORTED_APPS:
+    elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
         update_supported_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == INSTALL_AGENT_UPDATE:
+    elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
         update_agent_app_per_agent(agent_id, app_id, data)
 

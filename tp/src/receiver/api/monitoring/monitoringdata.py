@@ -1,19 +1,10 @@
 import logging
-import tornado.httpserver
-import tornado.web
-from datetime import datetime
-
-import simplejson as json
 from json import dumps
 
+from vFense.core.api.base import BaseHandler
 from vFense.errorz.error_messages import GenericResults
-from vFense.server.handlers import BaseHandler, LoginHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
-
-from vFense.core.agent.agents import update_agent, update_agent_field
-from vFense.receiver.rvhandler import RvHandOff
+from vFense.core.decorators import agent_authenticated_request, \
+    convert_json_to_arguments
 
 from vFense.plugins.monit import update_agent_monit_stats
 

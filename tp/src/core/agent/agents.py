@@ -10,15 +10,12 @@ from vFense.core.decorators import time_it, results_message
 from vFense.db.client import r
 from vFense.db.hardware import Hardware
 from vFense.errorz.error_messages import AgentResults, GenericResults
-from vFense.errorz.status_codes import DbCodes
+from vFense.errorz.results import Results 
+from vFense.errorz._constants import ApiResultKeys 
+from vFense.errorz.status_codes import DbCodes, GenericCodes,\
+    AgentCodes, AgentFailureCodes, GenericFailureCodes
 from vFense.plugins.patching import *
-import redis
-from rq import Queue
 
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-rq_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
@@ -248,20 +245,43 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
             'data': {'needs_reboot': 'no'}
         }
     """
-    try:
-        data = {field: value}
-        update_status = update_agent_data(agent_id, data)
-        results = (
-            update_status[0], agent_id, 'agent', data, update_status[2],
-            username, uri, method
+    agent_data = {field: value}
+    status = update_agent_field.func_name + ' - '
+    status_code, count, errors, generated_ids = (
+        update_agent_data(
+            agent_id, agent_data
         )
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'agent_id %s updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
 
-    except Exception as e:
-        results = (
-            update_status[0], agent_id, 'agent', data, update_status[e],
-            username, uri, method
-        )
-        logger.exception(results)
+    elif status_code == DbCodes.Skipped:
+        msg = 'agent_id %s does not exist'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
+
+    elif status_code == DbCodes.Errors:
+        msg = 'agent_id %s could not be updated'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [agent_data],
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 
@@ -287,19 +307,42 @@ def update_agent_fields(agent_id, agent_data, username=None,
             'data': {'needs_reboot': 'no'}
         }
     """
-    try:
-        update_status = update_agent_data(agent_id, agent_data)
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[2],
-            username, uri, method
+    status = update_agent_fields.func_name + ' - '
+    status_code, count, errors, generated_ids = (
+        update_agent_data(
+            agent_id, agent_data
         )
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'agent_id %s updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
 
-    except Exception as e:
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[e],
-            username, uri, method
-        )
-        logger.exception(e)
+    elif status_code == DbCodes.Skipped:
+        msg = 'agent_id %s does not exist'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Unchanged:
+        msg = 'agent_id %s was not updated, data was the same.'
+        generic_status_code = GenericCodes.ObjectUnchanged
+        vfense_status_code = GenericCodes.ObjectUnchanged
+
+    elif status_code == DbCodes.Errors:
+        msg = 'agent_id %s could not be updated'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [agent_data],
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 
@@ -322,27 +365,42 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
             'data': {'needs_reboot': 'no'}
         }
     """
-
+    status = update_agent_status.func_name + ' - '
     now = mktime(datetime.now().timetuple())
     agent_data = {
         AgentKey.LastAgentUpdate: r.epoch_time(now),
         AgentKey.AgentStatus: 'up'
     }
-    update_status = update_agent_data(agent_id, agent_data)
-    try:
-        agent_data[AgentKey.LastAgentUpdate] = now
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[2],
-            username, uri, method
-        )
+    status_code, count, error, generated_ids = (
+        update_agent_data(agent_id, agent_data)
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'agent_id %s updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
 
-    except Exception as e:
-        agent_data[AgentKey.LastAgentUpdate] = now
-        results = (
-            update_status[0], agent_id, 'agent', agent_data, update_status[e],
-            username, uri, method
-        )
-        logger.exception(e)
+    elif status_code == DbCodes.Skipped:
+        msg = 'agent_id %s does not exist'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        msg = 'agent_id %s could not be updated'
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    agent_data[AgentKey.LastAgentUpdate] = now
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 
@@ -432,12 +490,18 @@ def add_agent(system_info, hardware, username=None,
 def update_agent(agent_id, system_info, hardware, rebooted,
                  username=None, customer_name=None,
                  uri=None, method=None):
-    """
-    Update various aspects of agent
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param system_info: Dictionary with system related info
-    :param hardware:  List of dictionaries that rpresent the hardware
-    :param rebooted: yes or no
+    """Update various aspects of agent
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating
+        system_info (dict): Dictionary with system related info
+        hardware (dict):  List of dictionaries that rpresent the hardware
+        rebooted (str): yes or no
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        customer_name (str): The name of the customer.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
     """
     agent_data = {}
 
@@ -491,3 +555,115 @@ def update_agent(agent_id, system_info, hardware, rebooted,
         logger.exception(status)
 
     return(status)
+
+@time_it
+@results_message
+def remove_all_agents_for_customer(
+    customer_name, user_name=None,
+    uri=None, method=None
+    ):
+    """Remove all agents from the system, filtered by customer_name
+    Args:
+        customer_name (str): The name of the customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import remove_all_agents_for_customer
+        >>> customer_name = 'tester'
+        >>> remove_all_agents_for_customer(customer_name)
+    """
+    status = remove_all_agents_for_customer.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        delete_all_agents_for_customer(customer_name)
+    )
+    msg = 'total number of agents deleted: %s' % (str(count))
+    if status_code == DbCodes.Deleted:
+        generic_status_code = GenericCodes.ObjectDeleted
+        vfense_status_code = AgentCodes.AgentsDeleted
+
+    elif status_code == DbCodes.Skipped:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToDeleteObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToDelete
+
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return(results)
+
+
+@time_it
+@results_message
+def change_customer_for_agents(
+    customer_name, user_name=None,
+    uri=None, method=None
+    ):
+    """Move all agents from one customer to another 
+    Args:
+        customer_name (str): The name of the customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agents
+        >>> customer_name = 'tester'
+        >>> change_customer_for_agents(customer_name)
+    """
+    status = change_customer_for_agents.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        move_all_agents_to_customer(customer_name)
+    )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return(results)

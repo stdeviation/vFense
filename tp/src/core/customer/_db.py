@@ -164,7 +164,9 @@ def fetch_properties_for_customer(customer_name, conn=None):
             CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
             CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
             CustomerKeys.NetThrottle: x[CustomerKeys.NetThrottle],
-            CustomerKeys.OperationTtl: x[CustomerKeys.OperationTtl],
+            CustomerKeys.ServerQueueTTL: x[CustomerKeys.ServerQueueTTL],
+            CustomerKeys.AgentQueueTTL: x[CustomerKeys.AgentQueueTTL],
+            CustomerKeys.PackageUrl: x[CustomerKeys.PackageUrl],
             CustomerKeys.Users: (
                 r
                 .table(CustomerCollections.CustomersPerUser)
@@ -243,7 +245,9 @@ def fetch_properties_for_all_customers(username=None, conn=None):
             CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
             CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
             CustomerKeys.NetThrottle: x[CustomerKeys.NetThrottle],
-            CustomerKeys.OperationTtl: x[CustomerKeys.OperationTtl],
+            CustomerKeys.ServerQueueTTL: x[CustomerKeys.ServerQueueTTL],
+            CustomerKeys.AgentQueueTTL: x[CustomerKeys.AgentQueueTTL],
+            CustomerKeys.PackageUrl: x[CustomerKeys.PackageUrl],
             CustomerKeys.Users: (
                 r
                 .table(CustomerCollections.CustomersPerUser)
@@ -292,13 +296,6 @@ def fetch_properties_for_all_customers(username=None, conn=None):
             data = list(
                 r
                 .table(CustomerCollections.Customers)
-                .eq_join(
-                    lambda x:
-                    x[CustomerPerUserKeys.CustomerName],
-                    r.table(CustomerCollections.CustomersPerUser),
-                    index=CustomerPerUserIndexes.CustomerName
-                )
-                .zip()
                 .map(map_hash)
                 .run(conn)
             )
@@ -424,10 +421,10 @@ def users_exists_in_customer(username, customer_name, conn=None):
         customer_name:  Name of the customer.
 
     Basic Usage:
-        >>> from vFense.core.customer._db import users_exists_in_customers
+        >>> from vFense.core.customer._db import users_exists_in_customer
         >>> username = 'admin'
         >>> customer_name = 'default'
-        >>> users_exists_in_customers(username, customer_name)
+        >>> users_exists_in_customer(username, customer_name)
 
     Return:
         Boolean
@@ -450,6 +447,55 @@ def users_exists_in_customer(username, customer_name, conn=None):
         logger.exception(e)
 
     return(exist)
+
+
+@time_it
+@db_create_close
+def users_exists_in_customers(customer_names, conn=None):
+    """Verify if username is part of customer
+    Args:
+        customer_names (list):  List of the customer names.
+
+    Basic Usage:
+        >>> from vFense.core.customer._db import users_exists_in_customers
+        >>> customer_names = ['default', 'test']
+        >>> users_exists_in_customers(customer_names)
+
+    Return:
+        Tuple (Boolean, [customers_with_users], [customers_without_users])
+        (True, ['default'], ['tester'])
+
+    """
+    exist = False
+    users_exist = []
+    users_not_exist = []
+    results = (exist, users_exist, users_not_exist)
+    try:
+        for customer_name in customer_names:
+            empty = (
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    customer_name,
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .is_empty()
+                .run(conn)
+            )
+
+            if not empty:
+                users_exist.append(customer_name)
+                exist = True
+
+            else:
+                users_not_exist.append(customer_name)
+
+        results = (exist, users_exist, users_not_exist)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(results)
 
 
 @time_it
@@ -616,6 +662,53 @@ def delete_user_in_customers(username, customer_names=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
+def delete_users_in_customer(usernames, customer_name, conn=None):
+    """Remove users from a customer.
+    Args:
+        username (list): List of usernames you want
+            to remove from the customer.
+        customer_name (str): The name of the customer,
+            you want to remove the user from.
+
+    Basic Usage::
+        >>> from vFense.customer._db delete_users_in_customer
+        >>> username = ['tester1', 'tester2']
+        >>> customer_name = ['Tester']
+        >>> delete_users_in_customer(username)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(usernames)
+            .for_each(
+                lambda username:
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .filter(
+                    {
+                        CustomerPerUserKeys.UserName: username,
+                        CustomerPerUserKeys.CustomerName: customer_name
+                    }
+                )
+                .delete()
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
 def delete_customer(customer_name, conn=None):
     """Delete a customer from the database.
     Args:
@@ -637,6 +730,44 @@ def delete_customer(customer_name, conn=None):
             .table(CustomerCollections.Customers)
             .get(customer_name)
             .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_customers(customer_names, conn=None):
+    """Delete a customer from the database.
+    Args:
+        customer_name: Name of the customer
+
+    Basic Usage::
+        >>> from vFense.customer._db delete_customers
+        >>> customer_names = ['test', 'foo']
+        >>> delete_customers(customer_names)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(customer_names)
+            .for_each(
+                lambda customer_name:
+                r
+                .table(CustomerCollections.Customers)
+                .get(customer_name)
+                .delete()
+            )
             .run(conn)
         )
 

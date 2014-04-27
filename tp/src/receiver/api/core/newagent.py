@@ -1,19 +1,20 @@
 import logging
-import sys
-import tornado.httpserver
-import tornado.web
 
 from json import dumps
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, agent_authenticated_request
 from vFense.core.agent import *
 from vFense.operations import *
+from vFense.operations._constants import AgentOperations
 from vFense.core.agent.agents import add_agent
+from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 from vFense.receiver.rvhandler import RvHandOff
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 import plugins.ra.handoff as RaHandoff
 #from server.handlers import *
@@ -27,7 +28,9 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = self.arguments.get(AgentKey.CustomerName)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         plugins = self.arguments.get(AgentKey.Plugins)
         rebooted = self.arguments.get(AgentKey.Rebooted)
         system_info = self.arguments.get(AgentKey.SystemInfo)
@@ -43,17 +46,20 @@ class NewAgentV1(BaseHandler):
                 )
             )
             agent_info = new_agent['data']
-            print agent_info
             self.set_status(new_agent['http_status'])
 
             if new_agent['http_status'] == 200:
                 agent_id = agent_info[AgentKey.AgentId]
+                uris = get_result_uris(agent_id, username, uri, method)
+                uris[AgentOperationKey.Operation] = (
+                    AgentOperations.REFRESH_RESPONSE_URIS
+                )
                 json_msg = {
-                    OperationKey.Operation: "new_agent_id",
-                    OperationKey.OperationId: "",
+                    AgentOperationKey.Operation: "new_agent_id",
+                    AgentOperationKey.OperationId: "",
                     OperationPerAgentKey.AgentId: agent_id
                 }
-                new_agent['data'] = [json_msg]
+                new_agent['data'] = [json_msg, uris]
                 self.set_header('Content-Type', 'application/json')
                 try:
                     if 'rv' in plugins:

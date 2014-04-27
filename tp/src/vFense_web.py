@@ -15,8 +15,9 @@ import tornado.options
 from redis import StrictRedis
 from rq import Connection, Queue
 
-from vFense.server.handlers import RootHandler, LoginHandler, LogoutHandler
-from vFense.server.handlers import WebSocketHandler, AdminHandler
+from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
+    WebSocketHandler, AdminHandler
+
 from vFense.server.api.scheduler_api import ScheduleListerHandler
 #from server.api.scheduler_api import ScheduleRemoveHandler
 from vFense.server.api.scheduler_api import ScheduleAppDetailHandler
@@ -42,25 +43,26 @@ from vFense.plugins.patching.Api.custom_updates_handler import *
 from vFense.plugins.patching.Api.supported_updates_handler import *
 from vFense.plugins.mightymouse.api.relay_servers import *
 ##Vulnerability APIs
-from vFense.plugins.cve.api.vulnerability import *
-from vFense.plugins.cve.api.cve import *
+from vFense.plugins.vuln.api.vulnerability import *
+from vFense.plugins.vuln.api.cve import *
 
 from vFense.plugins.ra.api.status import RDStatusQueue
 from vFense.plugins.ra.api.rdsession import RDSession
 from vFense.plugins.ra.api.settings import SetPassword
 from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.api.transactions_api import *
 from vFense.server.api.log_api import *
 from vFense.server.api.email_api import *
 from vFense.server.api.tag_api import *
-from vFense.server.api.users_api import *
-from vFense.server.api.groups_api import *
-from vFense.server.api.customer_api import *
+#from vFense.server.api.users_api import *
+#from vFense.server.api.groups_api import *
+#from vFense.server.api.customer_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.customer import CustomerHandler, CustomersHandler
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
+from vFense.operations.api.agent_operations import GetTransactionsHandler, \
+    AgentOperationsHandler, TagOperationsHandler, OperationHandler
 
 from vFense.scripts.create_indexes import initialize_indexes_and_create_tables
 
@@ -92,12 +94,6 @@ class Application(tornado.web.Application):
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
 
-            ##### User and Groups API
-            (r"/api/user/?", GetUserApi),
-            (r"/api/users/?", GetUsersApi),
-
-            (r"/api/groups/?", GetGroupApi),
-
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
             (r"/api/v1/users?", UsersHandler),
@@ -107,7 +103,7 @@ class Application(tornado.web.Application):
             (r"/api/v1/groups?", GroupsHandler),
 
             ##### New Customer API
-            (r"/api/v1/customer/([a-zA-Z0-9_ ]+)?", CustomerHandler),
+            (r'/api/v1/customer/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', CustomerHandler),
             (r"/api/v1/customers?", CustomersHandler),
 
             ##### Notification API
@@ -175,6 +171,7 @@ class Application(tornado.web.Application):
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", AgentIdCustomAppsHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", AgentIdSupportedAppsHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", AgentOperationsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/uris/response?", AgentResultURIs),
 
             ##### Agents API Handlers
             (r"/api/v1/agents", AgentsHandler),

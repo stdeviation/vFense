@@ -1,7 +1,9 @@
 import re
-from vFense.operations import *
+from vFense.operations._constants import vFensePlugins
 
-VALID_NOTIFICATION_PLUGINS = (RV_PLUGIN, MONITORING_PLUGIN)
+VALID_NOTIFICATION_PLUGINS = (
+    vFensePlugins.RV_PLUGIN, vFensePlugins.MONITORING_PLUGIN
+)
 INSTALL = 'install'
 UNINSTALL = 'uninstall'
 REBOOT = 'reboot'

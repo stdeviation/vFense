@@ -1,10 +1,8 @@
 import logging
 import logging.config
 
-from datetime import datetime
-from vFense.db.client import db_create_close, r, db_connect
+from vFense.db.client import r, db_connect
 from vFense.errorz.error_messages import GenericResults, MightyMouseResults
-from vFense.errorz.status_codes import MightyMouseCodes
 
 from vFense.plugins.mightymouse import *
 

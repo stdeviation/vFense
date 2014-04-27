@@ -1,49 +1,28 @@
-OperationsCollection = 'operations'
-OperationsPerAgentCollection = 'operation_per_agent'
-OperationsPerAppCollection = 'operation_per_app'
+class OperationCollections():
+    Agent = 'agent_operations'
+    OperationPerAgent = 'operation_per_agent'
+    OperationPerApp = 'operation_per_app'
+    Admin = 'admin_operations'
 
-CHECKIN = 'checkin'
-PICKEDUP = 'picked_up'
-PENDINGPICKUP = 'pending_pick_up'
-OPERATION_EXPIRED = 'operation_expired'
-FAILED = 'completed_with_errors'
-SUCCESS = 'completed_successfully'
-DATA = "data"
-AGENT = 'Agent'
-TAG = 'Tag'
 
-INSTALL_OS_APPS = 'install_os_apps'
-INSTALL_CUSTOM_APPS = 'install_custom_apps'
-INSTALL_SUPPORTED_APPS = 'install_supported_apps'
-INSTALL_AGENT_UPDATE = 'install_agent_update'
-INSTALL_AGENT_APPS = 'install_agent_update'
-UNINSTALL = 'uninstall'
-UNINSTALL_AGENT = 'uninstall_agent'
-UPDATES_APPLICATIONS = 'updatesapplications'
-REBOOT = 'reboot'
-SHUTDOWN = 'shutdown'
+class AdminOperationKey():
+    OperationId = 'operation_id'
+    CreatedBy = 'created_by'
+    CreatedTime = 'created_time'
+    StatusMessage = 'status_message'
+    StatusCode = 'status_code'
+    Action = 'action'
+    ActionPerformedOn = 'action_performed_on'
+    IdsCreated = 'ids_created'
+    IdsUpdated = 'ids_updated'
+    IdsRemoved = 'ids_removed'
 
-RV_PLUGIN = 'rv'
-CORE_PLUGIN = 'core'
-RA_PLUGIN = 'ra'
-MONITORING_PLUGIN = 'monitoring'
 
-VALID_PLUGINS = (RV_PLUGIN, CORE_PLUGIN, RA_PLUGIN, MONITORING_PLUGIN)
-
-VALID_OPERATIONS = (
-    INSTALL_OS_APPS,
-    INSTALL_CUSTOM_APPS,
-    INSTALL_SUPPORTED_APPS,
-    UNINSTALL,
-    UNINSTALL_AGENT,
-    REBOOT, SHUTDOWN,
-    UPDATES_APPLICATIONS
-)
-
-class OperationKey():
+class AgentOperationKey():
     OperationId = 'operation_id'
     Operation = 'operation'
     OperationStatus = 'operation_status'
+    ActionPerformedOn = 'action_performed_on'
     CreatedTime = 'created_time'
     UpdatedTime = 'updated_time'
     CompletedTime = 'completed_time'
@@ -60,13 +39,15 @@ class OperationKey():
     Agents = 'agents'
     Restart = 'restart'
     TagId = 'tag_id'
+    AgentIds = 'agent_ids'
     Plugin = 'plugin'
     CpuThrottle = 'cpu_throttle'
     NetThrottle = 'net_throttle'
 
 
-class OperationIndexes():
+class AgentOperationIndexes():
     TagId = 'tag_id'
+    AgentIds = 'agent_ids'
     CustomerName = 'customer_name'
     Operation = 'operation'
     OperationId = 'operation_id'
@@ -105,6 +86,8 @@ class OperationPerAppKey():
     AgentId = 'agent_id'
     AppId = 'app_id'
     AppName = 'app_name'
+    AppVersion = 'app_version'
+    AppsRemoved = 'apps_removed'
     OperationId = 'operation_id'
     CustomerName = 'customer_name'
     Results = 'results'

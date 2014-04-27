@@ -1,14 +1,14 @@
 import logging
-import tornado.httpserver
-import tornado.web
 from json import dumps
 from vFense.core.agent.agents import update_agent_status
 from vFense.errorz.error_messages import GenericResults, AgentResults
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.manager import get_current_customer_name
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import agent_authenticated_request
 
 from vFense.receiver.corehandler import process_queue_data
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvlistener')
@@ -18,7 +18,9 @@ class CheckInV1(BaseHandler):
     @agent_authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:

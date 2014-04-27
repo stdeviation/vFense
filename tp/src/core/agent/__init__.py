@@ -1,3 +1,8 @@
+class AgentCollections():
+    Agents = 'agents'
+    Hardware = 'hardware_per_agent'
+
+
 AgentsCollection = 'agents'
 HardwarePerAgentCollection = 'hardware_per_agent'
 

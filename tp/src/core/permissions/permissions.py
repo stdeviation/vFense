@@ -6,6 +6,7 @@ from vFense.errorz.error_messages import GenericResults
 
 from vFense.core._constants import *
 from vFense.core.user import *
+from vFense.core.user._constants import DefaultUsers
 from vFense.core.user.users import get_user
 
 from vFense.core.permissions import *
@@ -93,6 +94,11 @@ def verify_permission_for_user(
     """
     granted = False
     status_code = GenericCodes.PermissionDenied
+    if username == DefaultUsers.ADMIN:
+        granted = True
+        status_code = GenericCodes.PermissionGranted
+        return(granted, status_code)
+
     try:
         user_exist = get_user(username)
         if permission in Permissions().VALID_PERMISSIONS and user_exist:
@@ -125,17 +131,18 @@ def authenticate_user(username, password):
     authenticated = False
     try:
         user_exist = retrieve_object(username, UserCollections.Users)
-        if user_exist and user_exist[UserKeys.Enabled] == CommonKeys.YES:
-            original_encrypted_password = (
-                user_exist[UserKeys.Password].encode('utf-8')
-            )
-            password_verified = (
-                Crypto().verify_bcrypt_hash(
-                    password, original_encrypted_password
+        if user_exist:
+            if user_exist[UserKeys.Enabled] == CommonKeys.YES:
+                original_encrypted_password = (
+                    user_exist[UserKeys.Password].encode('utf-8')
                 )
-            )
-            if password_verified:
-                authenticated = True
+                password_verified = (
+                    Crypto().verify_bcrypt_hash(
+                        password, original_encrypted_password
+                    )
+                )
+                if password_verified:
+                    authenticated = True
 
     except Exception as e:
         logger.exception(e)

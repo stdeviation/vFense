@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'underscore', 'backbone', 'app', 'modals/panel', 'modals/delete', 'crel', 'modules/lists/pageable'],
-    function ($, _, Backbone, app, Panel, DeletePanel, crel, Pager) {
+    ['jquery', 'underscore', 'backbone', 'app', 'moment', 'modals/panel', 'modals/delete', 'crel', 'modules/lists/pageable'],
+    function ($, _, Backbone, app, moment, Panel, DeletePanel, crel, Pager) {
         'use strict';
         var helpers = {},
             exports = {};
@@ -56,7 +56,7 @@ define(
                         parentView: that
                     });
                     this.customerModal.setHeaderHTML(crel('h4', 'Change Customer for Agents'));
-                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer.name));
+                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer));
                 },
                 events: function () {
                     return _.extend({}, _.result(Pager.View.prototype, 'events'), {
@@ -197,7 +197,7 @@ define(
                     $filterValueSelect.append(
                         crel('option', {value: ''}, 'Loading..')
                     ).attr('disabled','disabled');
-                    return this;
+                    return this;33
                 },
                 fetchFilterError: function(){
                     var $header = this.$el.find('header');
@@ -210,16 +210,19 @@ define(
                 layoutLegend: function ($legend) {
                     $legend.append(
                         crel('span', {class: 'span1'}, 'Status'),
-                        crel('strong', {class: 'span4'},
+                        crel('span', {class: 'span2'}, 'Last Updated on'),
+                        crel('strong', {class: 'span2'},
                             crel('input', {type: 'checkbox', 'data-toggle': 'all'}), ' Agent Name ',
                             crel('a', {href: '#', id: 'deleteAgents', title: 'Delete Agents'}, crel('i', {class: 'icon-trash'})), ' ',
                             crel('a', {href: '#', id: 'switchCustomer', title: 'Move agents to a different customer'}, crel('i', {class: 'icon-exchange'}))
                         ),
                         crel('span', {class: 'span2'}, 'Operating System'),
                         crel('span', {class: 'span2'}, 'OS Code'),
-                        crel('span', {class: 'span1 need alignLeft'}, 'OS'),
+                        crel('span', {class: 'span1'}, 'Updates'),
+                        crel('span', {class: 'span2'}, 'Vulnerabilities')
+                        /*crel('span', {class: 'span1 need alignLeft'}, 'OS'),
                         crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
-                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')
+                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')*/
                     );
                     return this;
                 },
@@ -227,32 +230,41 @@ define(
                     if (_.has(item.attributes, 'http_status') && item.get('http_status') === 500) {
                         return crel('div',  {class: 'item linked clearfix'}, 'No Data.');
                     }
-                    var fragment    = document.createDocumentFragment(),
-                        id          = item.get('agent_id'),
-                        osIcon      = this.printOsIcon(item.get('os_string')),
-                        displayName = this.displayName(item),
-                        status      = this.getStatus(item),
-                        stats       = helpers.sortStats(item.get('basic_rv_stats'));
+                    var fragment            = document.createDocumentFragment(),
+                        id                  = item.get('agent_id'),
+                        osIcon              = this.printOsIcon(item.get('os_string')),
+                        displayName         = this.displayName(item),
+                        status              = this.getStatus(item),
+                        updates             = item.get('available_updates'),
+                        lastAgentUpdate     = item.get('last_agent_update'),
+                        vulnerabilities     = item.get('available_vulnerabilities');
+//                        stats               = helpers.sortStats(item.get('basic_rv_stats'));
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
                             crel('a', {href: '#nodes/' + id},
                                 crel('span', {class: 'span1'},
                                     crel('i', {class: status.className, style:'color: ' + status.color})
                                 ),
-                                crel('span', {class: 'span4'},
+                                crel('span', {class: 'span2'}, this.formatDate(lastAgentUpdate)),
+                                crel('span', {class: 'span2'},
                                     crel('input', {type: 'checkbox', name: 'agents', value: id}), ' ',
                                     crel('i', {class: osIcon}), ' ',
                                     crel('strong', displayName)
                                 ),
                                 crel('span', {class: 'span2'}, item.get('os_string')),
                                 crel('span', {class: 'span2'}, item.get('os_code')),
-                                crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
+                                crel('span', {class: 'span1'}, item.get('available_updates')),
+                                crel('span', {class: 'span2'}, item.get('available_vulnerabilities'))
+                                /*crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
                                 crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
-                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)
+                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)*/
                             )
                         )
                     );
                     return fragment;
+                },
+                formatDate: function (date) {
+                    return date ? moment(date * 1000).format('L') + ' ' + moment(date * 1000).format('LT') : 'N/A';
                 },
                 displayName: function (model) {
                     return model.get('display_name') ||
@@ -365,7 +377,7 @@ define(
                 customerPanelLayout: function (customers, current) {
                     var select =  crel('select', {'required': 'required'});
                     _.each(customers, function (customer) {
-                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.name, current), customer.name));
+                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.customer_name, current), customer.customer_name));
                     });
                     return crel('form', {id: 'changeCustomer', class: 'form-horizontal'},
                             crel('div', {class: 'control-group noMargin'},

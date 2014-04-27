@@ -1,3 +1,23 @@
+class AppCollections():
+    UniqueApplications = 'unique_applications'
+    AppsPerAgent = 'apps_per_agent'
+    CustomApps = 'custom_apps'
+    CustomAppsPerAgent = 'custom_apps_per_agent'
+    SupportedApps = 'supported_apps'
+    SupportedAppsPerAgent = 'supported_apps_per_agent'
+    AgentApps = 'agent_apps'
+    AgentAppsPerAgent = 'agent_apps_per_agent'
+
+
+class DownloadCollections():
+    LatestDownloadedSupported = 'latest_downloaded_supported'
+    LatestDownloadedAgent = 'latest_downloaded_agent'
+
+
+class FileCollections():
+    Files = 'files'
+
+
 AppsCollection = 'unique_applications'
 AppsPerAgentCollection = 'apps_per_agent'
 CustomAppsCollection = 'custom_apps'
@@ -32,6 +52,7 @@ PENDING = 'pending'
 AGENT_UPDATES = 'Agent Updates'
 APP_ID = 'app_id'
 APP_NAME = 'app_name'
+APP_VERSION = 'app_version'
 APP_URIS = 'app_uris'
 PKG_NAME = 'file_name'
 PKG_SIZE = 'file_size'

@@ -1,30 +1,55 @@
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
 import logging
 import logging.config
 
+from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
+
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user import *
 from vFense.core.user.users import get_user_property
-from vFense.core.agent.agent_searcher import AgentSearcher
+from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.agent_handler import AgentManager
+from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+from vFense.core.operations.store_agent_operations import StoreAgentOperations
 from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
+
 from vFense.operations import *
-from vFense.server.hierarchy.decorators import authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import authenticated_request, \
+    convert_json_to_arguments
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
+
+
+class AgentResultURIs(BaseHandler):
+    @authenticated_request
+    def get(self, agent_id):
+        username = self.get_current_user()
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            results = get_result_uris(agent_id, username, uri, method)
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            status = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('uris', 'refresh_response_uris', e)
+            )
+            logger.exception(e)
+            self.write(json.dumps(status, indent=4))
 
 
 class FetchValidProductionLevels(BaseHandler):
@@ -101,7 +126,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
 class AgentsHandler(BaseHandler):
     @authenticated_request
     def get(self):
-        username = self.get_current_user()
+        active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
         try:
@@ -113,50 +138,67 @@ class AgentsHandler(BaseHandler):
             customer_name = self.get_argument('customer_name', None)
             if not customer_name:
                 customer_name = (
-                    get_user_property(username, UserKeys.CurrentCustomer)
+                    get_user_property(active_user, UserKeys.CurrentCustomer)
                 )
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
             sort = self.get_argument('sort', 'asc')
             sort_by = self.get_argument('sort_by', AgentKey.ComputerName)
-            agent = (
-                AgentSearcher(
-                    username, customer_name,
-                    uri, method, count, offset,
-                    sort, sort_by
+            search_agents = (
+                RetrieveAgents(
+                    customer_name,
+                    count, offset,
+                    sort, sort_by,
+                    active_user, uri, method
                 )
             )
             if (not ip and not mac and not query and
                     not filter_key and not filter_val):
-                results = agent.get_all_agents()
+                results = search_agents.all()
 
             elif (not ip and not mac and query and not
                     filter_key and not filter_val):
-                results = agent.query_agents_by_name(query)
+                results = search_agents.by_name(query)
 
             elif (ip and not mac and not query and not
                     filter_key and not filter_val):
-                results = agent.query_agents_by_ip(ip)
+                results = search_agents.by_ip(ip)
 
             elif (not ip and mac and not query and not
                     filter_key and not filter_val):
-                results = agent.query_agents_by_mac(mac)
+                results = search_agents.by_mac(mac)
 
             elif (not ip and not mac and not query and
                     filter_key and filter_val):
-                results = agent.filter_by(filter_key, filter_val)
+                results = (
+                    search_agents.by_key_and_val(
+                        filter_key, filter_val
+                    )
+                )
 
             elif (not ip and not mac and query and
                     filter_key and filter_val):
-                results = agent.filter_by_and_query(filter_key, filter_val, query)
+                results = (
+                    search_agents.by_key_and_val_and_query(
+                        filter_key, filter_val, query
+                    )
+                )
 
             elif (ip and not mac and not query and
                     filter_key and filter_val):
-                results = agent.query_agents_by_ip_and_filter(ip, filter_key, filter_val)
+                results = (
+                    search_agents.by_ip_and_filter(
+                        ip, filter_key, filter_val
+                    )
+                )
 
             elif (not ip and mac and not query and
                     filter_key and filter_val):
-                results = agent.query_agents_by_mac_and_filter(mac, filter_key, filter_val)
+                results = (
+                    search_agents.by_mac_and_filter(
+                        mac, filter_key, filter_val
+                    )
+                )
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -165,7 +207,7 @@ class AgentsHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    active_user, uri, method
                 ).something_broke('Agents Api', 'agent', e)
             )
             logger.exception(e)
@@ -238,7 +280,7 @@ class AgentsHandler(BaseHandler):
                 results = agent.delete_agent(uri, method)
                 if results['http_status'] == 200:
                     delete_oper = (
-                        StoreOperation(
+                        StorePatchingOperation(
                             username, customer_name, uri, method
                         )
                     )
@@ -320,7 +362,6 @@ class AgentHandler(BaseHandler):
             elif (prod_level and not hostname and not displayname
                     and not new_customer):
                 results = agent.production_state_changer(prod_level, uri, method)
-                print results
 
             elif prod_level and hostname and displayname and not new_customer:
                 agent_data = {
@@ -367,7 +408,7 @@ class AgentHandler(BaseHandler):
         method = self.request.method
         try:
             agent = AgentManager(agent_id, customer_name=customer_name)
-            delete_oper = StoreOperation(username, customer_name, uri, method)
+            delete_oper = StorePatchingOperation(username, customer_name, uri, method)
             delete_oper.uninstall_agent(agent_id)
             results = agent.delete_agent(uri, method)
             self.set_status(results['http_status'])
@@ -399,7 +440,7 @@ class AgentHandler(BaseHandler):
             shutdown = self.arguments.get('shutdown', None)
             apps_refresh = self.arguments.get('apps_refresh', None)
             operation = (
-                StoreOperation(
+                StoreAgentOperations(
                     username, customer_name, uri, method
                 )
             )
@@ -442,6 +483,11 @@ class AgentHandler(BaseHandler):
                     )
 
             elif apps_refresh:
+                operation = (
+                    StorePatchingOperation(
+                        username, customer_name, uri, method
+                    )
+                )
                 results = (
                     operation.apps_refresh([agent_id])
                 )

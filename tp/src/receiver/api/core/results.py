@@ -1,19 +1,16 @@
 import logging
-import tornado.httpserver
-import tornado.web
-
-import simplejson as json
 from json import dumps
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import agent_authenticated_request
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import agent_authenticated_request, \
+    convert_json_to_arguments
 
-from vFense.db.update_table import AddResults
+from vFense.core.operations.agent_results import AgentOperationResults
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import OperationCodes
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 #from server.handlers import *
 
@@ -26,24 +23,26 @@ class RebootResultsV1(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
             success = self.arguments.get('success')
             results = (
-                AddResults(
-                    username, uri, method, agent_id,
-                    oper_id, success, error
+                AgentOperationResults(
+                    username, agent_id, operation_id,
+                    success, error, uri, method
                 )
             )
             results_data = results.reboot()
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -62,24 +61,26 @@ class ShutdownResultsV1(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
-            oper_id = self.arguments.get('operation_id')
+            operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
             success = self.arguments.get('success')
             results = (
-                AddResults(
-                    username, uri, method, agent_id,
-                    oper_id, success, error
+                AgentOperationResults(
+                    username, agent_id, operation_id,
+                    success, error, uri, method
                 )
             )
             results_data = results.shutdown()
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, oper_id, agent_id)
+            send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(

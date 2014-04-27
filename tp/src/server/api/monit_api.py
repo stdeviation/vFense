@@ -2,12 +2,10 @@ import json
 import logging
 import logging.config
 
-from vFense.server.handlers import BaseHandler
-from vFense.server.hierarchy.decorators import authenticated_request
+from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import authenticated_request
 
 from vFense.plugins.monit import api
-
-from vFense.logger.rvlogger import RvLogger
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

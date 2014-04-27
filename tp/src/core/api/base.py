@@ -1,18 +1,18 @@
 from __future__ import unicode_literals
 
+from vFense.core.api._constants import ApiArguments
+
 try:
     import simplejson as json
 except ImportError:
     import json
 
-import re
 import tornado
 import tornado.gen
 import tornado.web
 import tornado.websocket
 import tornadoredis
 from vFense.db.client import *
-from vFense.errorz.error_messages import GenericResults
 from vFense.core._constants import *
 from vFense.core.permissions.permissions import authenticate_user
 
@@ -76,12 +76,7 @@ class LoginHandler(BaseHandler):
 
     @convert_json_to_arguments
     def _response_authorized(self):
-        username = (
-            self.arguments.get(
-                CommonKeys.USERNAME, self.get_current_user()
-            )
-        )
-        result = api.User.get(username, username)
+        result = {'pass': True, 'message': 'authenticated'}
         self.set_status(200)
         self.write(json.dumps(result))
 
@@ -96,14 +91,14 @@ class RvlLoginHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
 
-        username = self.arguments.get("name", None)
-        password = self.arguments.get("password", None)
+        username = self.arguments.get(ApiArguments.NAME, None)
+        password = self.arguments.get(ApiArguments.PASSWORD, None)
         username = username.encode('utf-8')
         password = password.encode('utf-8')
 
         if username and password:
 
-            authenticated = Hierarchy.authenticate_account(username, password)
+            authenticated = authenticate_user(username, password)
 
             if authenticated:
                 self.set_secure_cookie(CommonKeys.USER, username)

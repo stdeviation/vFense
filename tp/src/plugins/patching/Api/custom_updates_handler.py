@@ -1,33 +1,31 @@
-import tornado.httpserver
-import tornado.web
-
 import simplejson as json
 
-from vFense.server.handlers import BaseHandler
+from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
 
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user
 from vFense.core.permissions.decorators import check_permissions
 
-from vFense.server.hierarchy.manager import get_current_customer_name
-from vFense.server.hierarchy.decorators import authenticated_request, permission_check
-from vFense.server.hierarchy.decorators import convert_json_to_arguments
+from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
 from vFense.plugins.patching import *
 from vFense.plugins.patching.rv_db_calls import update_custom_app, \
     update_hidden_status, delete_app_from_rv
-from vFense.plugins.patching.store_operations import StoreOperation
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
 from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByTagId
 from vFense.plugins.patching.search.search_by_appid import RetrieveCustomAppsByAppId, \
     RetrieveAgentsByCustomAppId
+
 from vFense.plugins.patching.custom_apps.uploaded.uploader import gen_uuid, \
     move_packages, store_package_info_in_db
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -38,7 +36,9 @@ class GetThirdPartyUuidHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         data = {"uuid": gen_uuid()}
@@ -56,7 +56,9 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         name = self.get_argument('pkg.name')
@@ -80,10 +82,13 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
 
 class ThirdPartyUploadHandler(BaseHandler):
     @authenticated_request
+    @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         name = self.arguments.get('name', None)
@@ -120,7 +125,9 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -192,7 +199,9 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -204,7 +213,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -259,7 +268,9 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -271,7 +282,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -324,7 +335,9 @@ class TagIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -391,7 +404,9 @@ class TagIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -403,7 +418,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -458,7 +473,9 @@ class TagIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -470,7 +487,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -523,7 +540,9 @@ class AppIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         patches = (
@@ -542,7 +561,9 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -615,7 +636,9 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -627,7 +650,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and agent_ids:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -683,7 +706,9 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -695,7 +720,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -748,7 +773,9 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -793,7 +820,9 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -805,7 +834,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -861,7 +890,9 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -873,7 +904,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and app_id:
                 operation = (
-                    StoreOperation(
+                    StorePatchingOperation(
                         username, customer_name, uri, method
                     )
                 )
@@ -926,7 +957,9 @@ class CustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
@@ -1004,7 +1037,9 @@ class CustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -1039,7 +1074,9 @@ class CustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = get_current_customer_name(username)
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
