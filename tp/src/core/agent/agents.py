@@ -615,7 +615,7 @@ def remove_all_agents_for_customer(
 
 @time_it
 @results_message
-def change_customer_for_agents(
+def change_customer_for_all_agents_in_customer(
     current_customer, new_customer, user_name=None,
     uri=None, method=None
     ):
@@ -630,15 +630,130 @@ def change_customer_for_agents(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import change_customer_for_agents
+        >>> from vFense.core.agent.agents import change_customer_for_all_agents_in_customer
         >>> current_customer = 'default'
         >>> new_customer = 'tester'
-        >>> change_customer_for_agents(current_customer, new_customer)
+        >>> change_customer_for_all_agents_in_customer(current_customer, new_customer)
     """
     status = change_customer_for_agents.func_name + ' - '
 
     status_code, count, error, generated_ids = (
         move_all_agents_to_customer(current_customer, new_customer)
+    )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return(results)
+
+
+@time_it
+@results_message
+def change_customer_for_agents(
+    agent_ids, new_customer, user_name=None,
+    uri=None, method=None
+    ):
+    """Move a list of agents from one customer to another 
+    Args:
+        agent_ids (list): List of agent ids
+        new_customer (str): The name of the new customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agents
+        >>> new_customer = 'tester'
+        >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
+        >>> change_customer_for_agents(agent_ids, new_customer)
+    """
+    status = change_customer_for_agents.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        move_agents_to_customer(agent_ids, new_customer)
+    )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return(results)
+
+@time_it
+@results_message
+def change_customer_for_agent(
+    agent_id, new_customer, user_name=None,
+    uri=None, method=None
+    ):
+    """Move an agent from one customer to another 
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+        new_customer (str): The name of the new customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agent
+        >>> new_customer = 'tester'
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> change_customer_for_agent(agent_id, new_customer)
+    """
+    status = change_customer_for_agent.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        move_agent_to_customer(agent_id, new_customer)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:

@@ -622,7 +622,7 @@ def insert_app_data(
 @time_it
 @db_create_close
 @return_status_tuple
-def update_customers_in_apps(
+def update_customers_in_apps_by_customer(
     current_customer, new_customer, remove_customer=False,
     collection=AppCollections.UniqueApplications,
     conn=None
@@ -662,17 +662,14 @@ def update_customers_in_apps(
                 r
                 .table(collection)
                 .get_all(
-                    customer_name, index=index_name
+                    current_customer, index=index_name
                 )
                 .update(
                     {
                         DbCommonAppKeys.Customers: (
                             r.row[DbCommonAppKeys.Customers]
-                            .set_difference([current_customer])
-                        ),
-                        DbCommonAppKeys.Customers: (
-                            r.row[DbCommonAppKeys.Customers]
-                            .set_insert([new_customer])
+                            .difference([current_customer])
+                            .set_insert(new_customer)
                         )
                     }
                 )
@@ -684,13 +681,13 @@ def update_customers_in_apps(
                 r
                 .table(collection)
                 .get_all(
-                    customer_name, index=index_name
+                    current_customer, index=index_name
                 )
                 .update(
                     {
                         DbCommonAppKeys.Customers: (
                             r.row[DbCommonAppKeys.Customers]
-                            .set_insert([new_customer])
+                            .set_insert(new_customer)
                         )
                     }
                 )
@@ -740,6 +737,56 @@ def update_apps_per_agent_by_customer(
                 customer_name, index=index_name
             )
             .update(app_data)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_apps_per_agent_by_agentids(
+    agent_ids, app_data, collection=AppCollections.AppsPerAgent,
+    conn=None):
+    """ Update any keys for any apps collection by customer name
+        This function should not be called directly.
+    Args:
+        agent_ids (list): List of agent ids.
+        app_data (dict): Dictionary of the key and values that you are updating.
+
+    Kwargs:
+        collection (str): The Application Collection that is going to be used.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_apps_per_agent_by_agentids
+        >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
+        >>> app_data = {'customer_name': 'vFense'} 
+        >>> collection = 'apps_per_agent'
+        >>> update_apps_per_agent_by_agentids(agent_ids,_app_data, collection)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+
+    index_name = DbCommonAppPerAgentIndexes.AgentId
+    data = {}
+    try:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
+                r
+                .table(collection)
+                .get_all(
+                    agent_id, index=index_name
+                )
+                .update(app_data)
+            )
             .run(conn)
         )
 

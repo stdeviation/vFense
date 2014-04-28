@@ -51,6 +51,36 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
 
 @time_it
 @db_create_close
+def total_agents_in_customer(customer_name, conn=None):
+    """Retrieve the total number of agents in customer.
+    Args:
+        customer_name (str): Name of the customer, where the agent is located
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import total_agents_in_customer
+        >>> customer_name = 'default'
+        >>> total_agents_in_customer(customer_name)
+
+    Returns:
+        Integer
+    """
+    count = 0
+    try:
+        count = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .count()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(count)
+
+@time_it
+@db_create_close
 def fetch_supported_os_strings(customer_name, conn=None):
     """Retrieve all the operating systems that is in the database
     Args:
@@ -432,7 +462,7 @@ def delete_all_agents_for_customer(customer_name, conn=None):
 @db_create_close
 @return_status_tuple
 def move_all_agents_to_customer(current_customer, new_customer, conn=None):
-    """Retrieve a user from the database
+    """Move all agents in current customer to the new customer.
     Args:
         current_customer (str): Name of the current customer.
         new_customer (str): Name of the new customer.
@@ -453,6 +483,87 @@ def move_all_agents_to_customer(current_customer, new_customer, conn=None):
             r
             .table(AgentCollections.Agents)
             .get_all(current_customer, index=AgentIndexes.CustomerName)
+            .update(
+                {
+                    AgentKey.CustomerName: new_customer
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def move_agents_to_customer(agent_ids, new_customer, conn=None):
+    """Move a list of agents into another customer
+    Args:
+        agent_ids (list): List of agent ids
+        new_customer (str): Name of the new customer.
+
+    Basic Usage:
+        >>> from vFense.agent._db import move_agents_to_customer
+        >>> new_customer = 'test'
+        >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
+        >>> move_agents_to_customer(agent_ids, new_customer)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
+                r
+                .table(AgentCollections.Agents)
+                .get(agent_id)
+                .update(
+                    {
+                        AgentKey.CustomerName: new_customer
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def move_agent_to_customer(agent_id, new_customer, conn=None):
+    """Move an agent into another customer
+    Args:
+        agent_id (str): The 36 character UUID of an agent.
+        new_customer (str): Name of the new customer.
+
+    Basic Usage:
+        >>> from vFense.agent._db import move_agent_to_customer
+        >>> new_customer = 'test'
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> move_agent_to_customer(agent_id, new_customer)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get(agent_id)
             .update(
                 {
                     AgentKey.CustomerName: new_customer

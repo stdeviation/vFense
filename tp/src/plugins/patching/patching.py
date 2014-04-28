@@ -3,6 +3,7 @@ import logging
 
 from hashlib import sha256
 from vFense.core._constants import *
+from vFense.core.agent._db import total_agents_in_customer
 from vFense.errorz.status_codes import DbCodes
 from vFense.plugins.patching import AppsKey, AppCollections
 from vFense.plugins.patching._constants import CommonAppKeys, \
@@ -13,7 +14,7 @@ from vFense.core.customer.customers import get_customer_property
 from vFense.plugins.patching._db import fetch_file_servers_addresses, \
     delete_app_data_for_agentid, update_apps_per_agent_by_customer, \
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid, \
-    update_customers_in_apps
+    update_customers_in_apps_by_customer
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -512,7 +513,7 @@ def update_customers_in_supported_apps(
     """
     collection = AppCollections.SupportedApps
     return(
-        update_customers_in_apps(
+        update_customers_in_apps_by_customer(
             current_customer, new_customer,
             remove_customer, collection
         )
@@ -548,7 +549,7 @@ def update_customers_in_custom_apps(
     """
     collection = AppCollections.CustomApps
     return(
-        update_customers_in_apps(
+        update_customers_in_apps_by_customer(
             current_customer, new_customer,
             remove_customer, collection
         )
@@ -583,7 +584,7 @@ def update_customers_in_vfense_apps(
     """
     collection = AppCollections.vFenseApps
     return(
-        update_customers_in_apps(
+        update_customers_in_apps_by_customer(
             current_customer, new_customer,
             remove_customer, collection
         )
@@ -625,35 +626,37 @@ def remove_all_apps_for_customer(customer_name):
 
 
 @time_it
-def update_all_apps_for_customer(
-    original_customer, new_customer, remove_customer=False
+def change_customer_for_apps_in_customer(
+    original_customer, new_customer
     ):
     """Update the customer name for all apps in original customer.
     Args:
         current_customer (str): The name of the current customer.
         new_customer (str): The name of the new customer.
 
-    Kwargs:
-        remove_customer (bool): True or False
-            default = False
-
     Basic Usage:
         >>> from vFense.plugins.patching.patching import update_all_apps_for_customer
         >>> original_customer = 'default'
         >>> new_customer = 'test'
         >>> app_data = {'customer_name': 'test'}
-        >>> remove_customer = True
         >>> update_all_apps_for_customer(
-                original_customer, new_customer, app_data, remove_customer
+                original_customer, new_customer, app_data
             )
     """
+    remove_customer = False
+    agent_count = total_agents_in_customer(original_customer)
+    if agent_count == 0:
+        remove_customer = True
+
     app_data = {CommonAppKeys.CustomerName: new_customer}
 
     update_os_apps_for_agent_by_customer(
         original_customer, app_data
     )
 
-    update_customers_in_apps(original_customer, new_customer, remove_customer)
+    update_customers_in_apps_by_customer(
+        original_customer, new_customer, remove_customer
+    )
 
     update_supported_apps_for_agent_by_customer(
         original_customer, app_data
