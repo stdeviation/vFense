@@ -1,4 +1,5 @@
 from vFense.core._db_constants import DbInfoKeys
+from vFense.core.decorators import time_it, return_status_tuple
 from vFense.core.customer import *
 import logging
 from vFense.db.client import db_create_close, r
@@ -94,6 +95,75 @@ def retrieve_object(primary_key, collection, conn=None):
             .run(conn)
         )
 
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def insert_data_in_table(data, table, conn=None):
+    """Insert data in a collection
+    Args:
+        data (list|dict): List of dictionaries or a dictionary of the data
+            you are inserting.
+        table (str): The name of the collection you are removing all data from.
+
+    Basic Usage:
+        >>> from vFense.core._db import insert_data_in_table
+        >>> data = [{'name': 'foo'}]
+        >>> table = 'agents'
+        >>> insert_data_in_table(data, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+
+    results = {}
+    try:
+        results = (
+            r
+            .table(table)
+            .insert(data, upsert=True)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(results)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_all_in_table(table, conn=None):
+    """Delete all data in a collection
+        WARNING, ALL DATA INSIDE COLLECTION WILL BE DELETED!!!
+    Args:
+        table (str): The name of the collection you are removing all data from.
+
+    Basic Usage:
+        >>> from vFense.core._db import delete_all_in_table
+        >>> table = 'agents'
+        >>> delete_all_in_table(table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+
+    data = {}
+    try:
+        data = (
+            r
+            .table(table)
+            .delete()
+            .run(conn)
+        )
     except Exception as e:
         logger.exception(e)
 

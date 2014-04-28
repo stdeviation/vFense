@@ -5,10 +5,9 @@ from vFense.plugins.patching import *
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
 from vFense.plugins.patching._db import fetch_app_data, \
-    fetch_apps_data_by_os_code, fetch_file_data
+    fetch_apps_data_by_os_code, fetch_file_data, insert_app_data
 
-from vFense.plugins.patching.rv_db_calls import \
-    apps_to_insert_per_agent, update_file_data
+from vFense.plugins.patching.rv_db_calls import update_file_data
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -37,7 +36,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                apps_to_insert_per_agent(username, uri, method, agent_info_to_insert)
+                insert_app_data(agent_info_to_insert, table=AppCollections.CustomAppsPerAgent)
 
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
@@ -63,4 +62,4 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                apps_to_insert_per_agent(username, uri, method, agent_info_to_insert)
+                insert_app_data(agent_info_to_insert, table=AppCollections.CustomAppsPerAgent)

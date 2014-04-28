@@ -431,17 +431,19 @@ def delete_all_agents_for_customer(customer_name, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def move_all_agents_to_customer(customer_name, conn=None):
+def move_all_agents_to_customer(current_customer, new_customer, conn=None):
     """Retrieve a user from the database
     Args:
-        customer_name (str): Name of the customer.
+        current_customer (str): Name of the current customer.
+        new_customer (str): Name of the new customer.
 
     Basic Usage:
         >>> from vFense.agent._db import move_all_agents_to_customer
-        >>> customer_name = 'test'
-        >>> move_all_agents_to_customer(customer_nam)
+        >>> current_customer = 'default'
+        >>> new_customer = 'test'
+        >>> move_all_agents_to_customer(current_customer, new_customer)
 
-    Return:
+    Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
@@ -450,10 +452,10 @@ def move_all_agents_to_customer(customer_name, conn=None):
         data = (
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(current_customer, index=AgentIndexes.CustomerName)
             .update(
                 {
-                    AgentKey.CustomerName: customer_name
+                    AgentKey.CustomerName: new_customer
                 }
             )
             .run(conn)

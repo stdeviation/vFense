@@ -2,15 +2,17 @@ from time import mktime
 from datetime import datetime
 import logging
 import requests
+from vFense.core._db import delete_all_in_table
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info 
 from vFense.errorz.status_codes import PackageCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching._db import fetch_apps_data_by_os_code
+from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
+    insert_app_data
 from vFense.plugins.patching.patching import build_agent_app_id
 from vFense.plugins.patching.rv_db_calls import insert_file_data,\
-    update_file_data,delete_all_in_table, insert_data_into_table
+    update_file_data
 
 from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
@@ -292,7 +294,7 @@ def update_supported_and_agent_apps(json_data, table=AppCollections.SupportedApp
             json_data[i][CurrentAppsKey.ReleaseDate] = r.epoch_time(json_data[i][CurrentAppsKey.ReleaseDate])
             json_data[i][CurrentAppsKey.FilesDownloadStatus] = PackageCodes.FilePendingDownload
             json_data[i][CurrentAppsKey.Hidden] = 'no'
-            insert_data_into_table(json_data[i], LatestDownloadedCollection)
+            insert_app_data(json_data[i], LatestDownloadedCollection)
             file_data = json_data[i].get(CurrentAppsKey.FileData)
             insert_file_data(json_data[i][CurrentAppsKey.AppId], file_data)
             data_to_update = (
@@ -356,7 +358,7 @@ def get_agents_apps():
 
 
 def get_supported_apps():
-    delete_all_in_table()
+    delete_all_in_table(table=DownloadCollections.LatestDownloadedSupported)
     get_updater_data = requests.get(BASE_URL + GET_SUPPORTED_UPDATES)
     if get_updater_data.status_code == 200:
         json_data = get_updater_data.json()

@@ -616,12 +616,13 @@ def remove_all_agents_for_customer(
 @time_it
 @results_message
 def change_customer_for_agents(
-    customer_name, user_name=None,
+    current_customer, new_customer, user_name=None,
     uri=None, method=None
     ):
     """Move all agents from one customer to another 
     Args:
-        customer_name (str): The name of the customer.
+        current_customer (str): The name of the current customer.
+        new_customer (str): The name of the new customer.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -630,13 +631,14 @@ def change_customer_for_agents(
 
     Basic Usage:
         >>> from vFense.core.agent.agents import change_customer_for_agents
-        >>> customer_name = 'tester'
-        >>> change_customer_for_agents(customer_name)
+        >>> current_customer = 'default'
+        >>> new_customer = 'tester'
+        >>> change_customer_for_agents(current_customer, new_customer)
     """
     status = change_customer_for_agents.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        move_all_agents_to_customer(customer_name)
+        move_all_agents_to_customer(current_customer, new_customer)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:

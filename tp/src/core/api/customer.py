@@ -237,8 +237,12 @@ class CustomerHandler(BaseHandler):
                     if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
                             CustomerCodes.CustomerDeleted):
 
-                        change_customer_for_agents(move_agents_to_customer)
-                        update_all_apps_for_customer(move_agents_to_customer)
+                        change_customer_for_agents(
+                            customer_name, move_agents_to_customer
+                        )
+                        update_all_apps_for_customer(
+                            customer_name, move_agents_to_customer, True
+                        )
 
             elif deleted_agents == ApiValues.YES:
                 results = (
