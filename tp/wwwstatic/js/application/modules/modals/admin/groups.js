@@ -265,7 +265,7 @@ define(
                             if (group.group_name === 'Administrator') {
                                 deleteButton = '';
                             } else {
-                                deleteButton = crel('button', {class: 'btn btn-link noMargin', name: 'toggleDelete'},
+                                deleteButton = crel('button', {title: 'Delete Group', class: 'btn btn-link noMargin', name: 'toggleDelete'},
                                     crel('i', {class: 'icon-remove', style: 'color: red'})
                                 );
                             }
