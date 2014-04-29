@@ -3,6 +3,7 @@ from vFense.plugins.patching import *
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agent_info
 from vFense.errorz.error_messages import GenericResults
+from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
     fetch_file_data, insert_app_data
 from vFense.plugins.patching.rv_db_calls import update_file_data

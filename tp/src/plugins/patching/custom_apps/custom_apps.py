@@ -4,6 +4,7 @@ from vFense.db.client import r
 from vFense.plugins.patching import *
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
+from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching._db import fetch_app_data, \
     fetch_apps_data_by_os_code, fetch_file_data, insert_app_data
 

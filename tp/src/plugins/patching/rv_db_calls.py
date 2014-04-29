@@ -13,46 +13,17 @@ import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
 
-from vFense.plugins.mightymouse.mouse_db import get_mouse_addresses
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core._constants import CommonKeys
 from vFense.core.agent import *
 from vFense.operations._constants import AgentOperations
 from vFense.core.tag.tagManager import *
-from vFense.core.customer.customers import get_customer_property
 from vFense.core.customer import *
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-
-@db_create_close
-def get_severities(conn=None):
-    rv_severities = ['Critical', 'Recommended', 'Optional']
-    all_severities = []
-    try:
-        vendor_severities = (
-            r
-            .table(AppsCollection, use_outdated=True)
-            .map(lambda x: x['vendor_severity'])
-            .distinct()
-            .run(conn)
-        )
-
-        all_severities = list(
-            set(rv_severities)
-            .union(vendor_severities)
-        )
-
-    except Exception as e:
-        logger.error(e)
-
-    return(all_severities)
-
-
-#def hide_apps(appids, username, customer_name,
-#              uri=None, method=None, conn=None):
 
 
 def get_remote_file_size(uri=None):
@@ -109,110 +80,6 @@ def unique_uris(uris=None, orig_uris=None):
                         new_uris[i][PKG_SIZE] = size
 
     return(new_uris)
-
-
-def insert_file_data(app_id, file_data):
-    conn = db_connect()
-    try:
-        if len(file_data) > 0:
-            for uri in file_data:
-                exists = (
-                    r
-                    .table(FileCollections.Files)
-                    .get(uri[FilesKey.FileName])
-                    .run(conn)
-                )
-                if exists:
-                    (
-                        r
-                        .table(FileCollections.Files)
-                        .get(uri[FilesKey.FileName])
-                        .update(
-                            {
-                                FilesKey.AppIds: (
-                                    r.row[FilesKey.AppIds]
-                                    .set_insert(app_id)
-                                ),
-                            }
-                        )
-                        .run(conn)
-                    )
-
-                else:
-                    (
-                        r
-                        .table(FileCollections.Files)
-                        .insert(
-                            {
-                                FilesKey.AppIds: [app_id],
-                                FilesKey.AgentIds: [],
-                                FilesKey.FileName: uri[FilesKey.FileName],
-                                FilesKey.FileSize: uri[FilesKey.FileSize],
-                                FilesKey.FileUri: uri[FilesKey.FileUri],
-                                FilesKey.FileHash: uri[FilesKey.FileHash],
-                            },
-                        )
-                        .run(conn, no_reply=True)
-                    )
-
-    except Exception as e:
-        logger.exception(e)
-
-    conn.close()
-
-
-def update_file_data(app_id, agent_id, file_data):
-    conn = db_connect()
-    try:
-        if len(file_data) > 0:
-            for uri in file_data:
-                exists = (
-                    r
-                    .table(FileCollections.Files)
-                    .get(uri[FilesKey.FileName])
-                    .run(conn)
-                )
-                if exists:
-                    (
-                        r
-                        .table(FileCollections.Files)
-                        .get(uri[FilesKey.FileName])
-                        .update(
-                            {
-                                FilesKey.AppIds: (
-                                    r.row[FilesKey.AppIds]
-                                    .set_insert(app_id)
-                                ),
-                                FilesKey.AgentIds: (
-                                    r.row[FilesKey.AgentIds]
-                                    .set_insert(agent_id)
-                                )
-                            }
-                        )
-                        .run(conn)
-                    )
-
-                else:
-                    (
-                        r
-                        .table(FileCollections.Files)
-                        .insert(
-                            {
-                                FilesKey.AppIds: [app_id],
-                                FilesKey.AgentIds: [agent_id],
-                                FilesKey.FileName: uri[FilesKey.FileName],
-                                FilesKey.FileSize: uri[FilesKey.FileSize],
-                                FilesKey.FileUri: uri[FilesKey.FileUri],
-                                FilesKey.FileHash: uri[FilesKey.FileHash],
-                            },
-                        )
-                        .run(conn, no_reply=True)
-                    )
-
-    except Exception as e:
-        logger.exception(e)
-
-    conn.close()
 
 
 def update_customers_in_app(customer_name, app_id, table=AppCollections.UniqueApplications):
@@ -732,142 +599,6 @@ def update_hidden_status(username, customer_name,
 
     return(results)
 
-
-@db_create_close
-def get_all_app_stats_by_agentid(username, customer_name,
-                                 uri, method, agent_id, conn=None):
-    data = []
-    try:
-        inventory = (
-            r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.INSTALLED, agent_id],
-                index=AppsPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: inventory,
-                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
-                CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
-            }
-        )
-        os_apps_avail = (
-            r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=AppsPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: os_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.OS
-            }
-        )
-        custom_apps_avail = (
-            r
-            .table(AppCollections.CustomAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=CustomAppsPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: custom_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
-            }
-        )
-        supported_apps_avail = (
-            r
-            .table(AppCollections.SupportedAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=SupportedAppsPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-
-        data.append(
-            {
-                CommonAppKeys.COUNT: supported_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
-            }
-        )
-
-        agent_apps_avail = (
-            r
-            .table(AppCollections.vFenseAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=AgentAppsPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-
-        data.append(
-            {
-                CommonAppKeys.COUNT: agent_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
-            }
-        )
-
-        #all_pending_apps = (
-        #   r
-        #   .table(AppCollections.AppsPerAgent)
-        #   .union(r.table(AppCollections.CustomAppsPerAgent))
-        #   .union(r.table(AppCollections.SupportedAppsPerAgent))
-        #   .union(r.table(AppCollections.vFenseAppsPerAgent))
-        #   .filter(
-        #       {
-        #           AgentKey.AgentId: agent_id,
-        #           AppsPerAgentKey.Status: CommonAppKeys.PENDING
-        #       }
-        #   )
-        #   .count()
-        #   .run(conn)
-        #
-
-        #data.append(
-        #   {
-        #       CommonAppKeys.COUNT: all_pending_apps,
-        #       CommonAppKeys.STATUS: CommonAppKeys.PENDING,
-        #       CommonAppKeys.NAME: CommonAppKeys.PENDING.capitalize()
-        #   }
-        #
-
-        results = (
-            GenericResults(
-                username, uri, method
-            ).information_retrieved(data, len(data))
-        )
-
-        logger.info(results)
-
-    except Exception as e:
-        results = (
-            GenericResults(
-                username, uri, method
-            ).something_broke('getting_pkg_stats', 'updates', e)
-        )
-        logger.exception(results)
-
-    return(results)
 
 @db_create_close
 def get_all_app_stats_by_tagid(username, customer_name,

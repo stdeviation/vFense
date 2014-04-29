@@ -95,7 +95,7 @@ def get_download_urls(customer_name, app_id, file_data):
         file_data (list): List of the file_data that will be manipulated
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import fetch_file_data
+        >>> from vFense.plugins.patching._db_files import fetch_file_data
         >>> from vFense.plugins.patching.patching import get_download_urls
         >>> customer_name = 'default'
         >>> app_id = 'c726edf62d1d17ca8b420f24bbdc9c8fa58d000b51d31614e3826c2fb37a2929'

@@ -45,10 +45,7 @@ class AgentController():
             if agent_data:
                 agent_data['tags'] = get_tags_by_agent_id(agent_id=self.agent_id)
                 agent_data[CommonAppKeys.BASIC_RV_STATS] = (
-                    get_all_app_stats_by_agentid(
-                        self.username, self.customer_name,
-                        uri, method, self.agent_id
-                    )['data']
+                    get_all_app_stats_by_agentid(self.agent_id)
                 )
                 status = (
                     GenericResults(
