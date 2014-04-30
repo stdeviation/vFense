@@ -332,7 +332,7 @@ define(
 //                                    if (customer.customer_name !== 'default') {
                                     fragment = crel('div');
                                     fragment.appendChild(
-                                        crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
+                                        crel('button', {title: 'Delete Customer', class: 'btn btn-link noPadding', name: 'toggleDelete'},
                                             crel('i', {class: 'icon-remove', style: 'color: red'}))
                                     );
                                     return fragment.innerHTML;

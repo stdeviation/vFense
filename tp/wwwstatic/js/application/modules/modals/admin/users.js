@@ -67,12 +67,22 @@ define(
                             {
                                 if(icon.hasClass('icon-ban-circle'))
                                 {
+                                    if(toggleUser.parents('.accordion-heading').siblings('.accordion-body').hasClass('in'))
+                                    {
+                                        toggleUser.parents('.accordion-heading').siblings('.accordion-body').collapse('toggle');
+                                        toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                    }
+                                    else
+                                    {
+                                        toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                    }
                                     icon.removeClass('icon-ban-circle').addClass('icon-ok-circle');
-                                    toggleUser.parents('.accordion-heading').find('.pull-left').empty().append(crel('strong', username));
+                                    toggleUser.attr('title', 'Enable User');
                                 }
                                 else
                                 {
                                     icon.removeClass('icon-ok-circle').addClass('icon-ban-circle');
+                                    toggleUser.attr('title', 'Disable User');
                                     toggleUser.parents('.accordion-heading').find('.pull-left').empty()
                                         .append(
                                             crel('button', {name: 'toggleAcl', class: 'btn btn-link noPadding'},
@@ -208,7 +218,7 @@ define(
                     };
                     $.ajax({
                         type: 'POST',
-                        url: url + '?' + $.param(params),
+                        url: url,
                         data: JSON.stringify(params),
                         dataType: 'json',
                         contentType: 'application/json',
@@ -381,12 +391,12 @@ define(
                                     if (user.user_name !== 'admin') {
                                         fragment = crel('div');
                                         fragment.appendChild(
-                                            crel('button', {class: 'btn btn-link right-margin noPadding', name: 'toggleDisable'},
+                                            crel('button', {title: 'Disable User', class: 'btn btn-link right-margin noPadding', name: 'toggleDisable'},
                                                 crel('i', {class: 'icon-ban-circle'})
                                             )
                                         );
                                         fragment.appendChild(
-                                            crel('button', {class: 'btn btn-link noPadding', name: 'toggleDelete'},
+                                            crel('button', {title: 'Delete User', class: 'btn btn-link noPadding', name: 'toggleDelete'},
                                                 crel('i', {class: 'icon-remove', style: 'color: red'})
                                             )
                                         );
