@@ -5,6 +5,7 @@ import requests
 import logging
 import logging.config
 
+from time import sleep
 from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
     WindowsBulletinStrings
 
@@ -68,13 +69,14 @@ def get_msft_bulletin_url(count=0):
         return(xls_url, xls_file_name)
 
     except Exception as e:
+        sleep(5)
         if count <= 10:
             count += 1
             logger.exception(
                 'failed to retrieve XLSX url from %s: count = %s'
                 % (WindowsBulletinStrings.XLS_DOWNLOAD_URL, str(count))
             )
-            get_msft_bulletin_url(count)
+            return(get_msft_bulletin_url(count))
         else:
             logger.exception(
                 'Microsoft is not letting us get the XLSX url from %s'
