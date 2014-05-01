@@ -2,11 +2,11 @@ import logging
 import logging.config
 from time import mktime
 from datetime import datetime
-import urllib
-from vFense.db.client import db_create_close, r, db_connect
+from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.file_data import add_file_data
+from vFense.plugins.patching._db import update_customers_in_app_by_app_id
 from vFense.plugins.mightymouse import *
 
 from vFense.plugins.vuln import SecurityBulletinKey
@@ -136,7 +136,7 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
     file_data = app.pop(AppsKey.FileData)
     if exists:
         add_file_data(app[AppsKey.AppId], file_data, agent_id)
-        update_customers_in_app(customer_name, app[AppsKey.AppId])
+        update_customers_in_app_by_app_id(customer_name, app[AppsKey.AppId])
         update_vulnerability_info_app(
             exists[AppsKey.AppId], exists, True, os_string
         )

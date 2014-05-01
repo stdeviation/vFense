@@ -153,7 +153,7 @@ def fetch_app_data_by_appid_and_agentid(
     index_to_use = DbCommonAppPerAgentIndexes.AgentIdAndAppId
     try:
         if fields_to_pluck:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .get_all([agent_id, app_id], index=index_to_use)
@@ -164,7 +164,7 @@ def fetch_app_data_by_appid_and_agentid(
                 data = data[0]
 
         else:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .get_all([agent_id, app_id], index=index_to_use)
@@ -234,7 +234,7 @@ def fetch_apps_data_by_os_code(
     merge = AppsMerge.RELEASE_DATE
     try:
         if customer_name and fields_to_pluck:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .get_all(customer_name, index=index_to_use)
@@ -247,7 +247,7 @@ def fetch_apps_data_by_os_code(
                 data = data[0]
 
         elif customer_name and not fields_to_pluck:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .get_all(customer_name, index=index_to_use)
@@ -259,7 +259,7 @@ def fetch_apps_data_by_os_code(
                 data = data[0]
 
         elif not customer_name and fields_to_pluck:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .filter({AppsKey.OsCode: os_code})
@@ -271,7 +271,7 @@ def fetch_apps_data_by_os_code(
                 data = data[0]
 
         else:
-            data = (
+            data = list(
                 r
                 .table(table)
                 .filter({AppsKey.OsCode: os_code})
@@ -862,6 +862,55 @@ def delete_app_data_for_agentid(agentid, table=AppCollections.AppsPerAgent, conn
             .delete()
             .run(conn)
         )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_customers_in_app_by_app_id(
+    customer_name, app_id, table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Update the list of customers that require this application id.
+    Args:
+        customer_name (str): The name of the customer you are adding to the app.
+        app_id (str): The 64 character application id.
+
+    Kwargs:
+        table (str): The name of the collection.
+            default = unique_applications
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_customers_in_app_by_app_id
+        >>> customer_name = 'default'
+        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
+        >>> table = 'unique_applications'
+        >>> update_customers_in_app_by_app_id(customer_name, app_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+         data =  (
+             r
+             .table(table)
+             .get(app_id)
+             .update(
+                 {
+                    DbCommonAppKeys.Customers: (
+                        r.row[DbCommonAppKeys.Customers]
+                        .set_insert(customer_name)
+                    ),
+                 }
+            )
+            .run(conn)
+         )
 
     except Exception as e:
         logger.exception(e)

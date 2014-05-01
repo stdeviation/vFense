@@ -262,13 +262,14 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
                     .table(FileCollections.Files)
                     .get(file_info[FilesKey.FileName])
                     .update(
+                        lambda fd:
                         {
                             FilesKey.AppIds: (
-                                r.row[FilesKey.AppIds]
+                                fd[FilesKey.AppIds]
                                 .set_insert(app_id)
                             ),
                             FilesKey.AgentIds: (
-                                r.row[FilesKey.AgentIds]
+                                fd[FilesKey.AgentIds]
                                 .set_insert(agent_id)
                             )
                         }
@@ -289,9 +290,10 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
                     .update(
                         {
                             FilesKey.AppIds: (
-                                r.row[FilesKey.AppIds]
+                                file_info[FilesKey.AppIds]
                                 .set_insert(app_id)
-                            )
+                            ),
+                            FilesKey.AgentIds: []
                         }
                     )
                 )
