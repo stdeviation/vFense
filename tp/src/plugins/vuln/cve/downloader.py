@@ -3,8 +3,8 @@ import os
 import requests
 import logging
 import logging.config
-from vFense.plugins.vuln.cve._constants import *
-from vFense.plugins.vuln._constants import *
+from vFense.plugins.vuln.cve._constants import CVEDataDir, CVEStrings
+from vFense.plugins.vuln._constants import DateValues
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -34,6 +34,7 @@ def cve_downloader(url, file_path):
 
     return(r.ok, os.stat(file_path).st_size)
 
+
 def log_status(status, size, url_path, nvd_path):
     """Log the status of the downloaded cve file
     Args:
@@ -43,16 +44,17 @@ def log_status(status, size, url_path, nvd_path):
         nvd_path (str): The full path on disk of the file that was downloaded.
 
     """
-    if status == True and size > 0:
-        msg = '%s Downloaded to %s' % ( url_path, nvd_path )
+    if status is True and size > 0:
+        msg = '%s Downloaded to %s' % (url_path, nvd_path)
         logger.info(msg)
-    elif status == False:
-        msg =  '%s Could not be downloaded' % ( url_path )
+    elif status is False:
+        msg = '%s Could not be downloaded' % (url_path)
         logger.warn(msg)
     else:
         msg = '%s Was downloaded to %s, but the size is %d' \
-                % ( url_path, nvd_path, size )
+              % (url_path, nvd_path, size)
         logger.error(msg)
+
 
 def start_nvd_xml_download():
     """The is the CVE/NVD Downloader
@@ -71,7 +73,7 @@ def start_nvd_xml_download():
     )
     log_status(
         xml_status[0], xml_status[1],
-        CVEStrings.NVD_MODIFIED_URL, 
+        CVEStrings.NVD_MODIFIED_URL,
         CVEDataDir.NVD_MODIFIED_FILE
     )
 
@@ -81,18 +83,18 @@ def start_nvd_xml_download():
     """
     while iter_year <= DateValues.CURRENT_YEAR:
         nvd = CVEStrings.NVDCVE_BASE + str(iter_year) + '.xml'
-        full_url =  CVEStrings.NVD_DOWNLOAD_URL + nvd
+        full_url = CVEStrings.NVD_DOWNLOAD_URL + nvd
         full_nvd = os.path.join(CVEDataDir.XML_DIR, nvd)
         if not os.path.exists(full_nvd):
             xml_status = cve_downloader(full_url, full_nvd)
             log_status(xml_status[0], xml_status[1], full_url, full_nvd)
-        
+
         elif iter_year == DateValues.CURRENT_YEAR:
             "Always download the latest and the current year"
             xml_status = cve_downloader(full_url, full_nvd)
             log_status(xml_status[0], xml_status[1], full_url, full_nvd)
 
         else:
-            msg = "%s already exists at %s" % ( nvd, full_nvd )
+            msg = "%s already exists at %s" % (nvd, full_nvd)
             logger.info(msg)
         iter_year = iter_year + 1

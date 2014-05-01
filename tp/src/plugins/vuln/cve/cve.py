@@ -1,4 +1,3 @@
-import sys
 import logging
 import logging.config
 from vFense.core.decorators import time_it
@@ -28,17 +27,17 @@ def get_cve_data(cve_id):
             "cve_modified_date": 1391760000,
             "vulnerability_categories": [
                 "Denial Of Service"
-            ],  
+            ],
             "cvss_vector": [
                 {
                     "metric": "Access Vector",
                     "value": "Network"
-                },  
+                },
                 {
                     "metric": "Access Complexity",
                     "value": "Medium"
-                },  
-            ],  
+                },
+            ],
             "cve_sev": "Medium",
             "cve_id": "CVE-2013-6393",
             "cvss_base_score": "6.8",
@@ -72,7 +71,7 @@ def get_cve_data(cve_id):
     data = fetch_cve_data(cve_id)
     if data:
         info = data[0]
-        
+
     return(info)
 
 
@@ -94,5 +93,5 @@ def get_vulnerability_categories(cve_id):
     data = fetch_vulnerability_categories(cve_id)
     if data:
         info = data[CveKey.CveCategories]
-        
+
     return(info)
