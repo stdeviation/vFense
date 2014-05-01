@@ -4,9 +4,8 @@ import logging.config
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
-from vFense.plugins.vuln._constants import *
-from vFense.plugins.vuln.windows import *
-from vFense.plugins.vuln.windows._constants import *
+from vFense.plugins.vuln.windows import WindowsSecurityCollection, \
+    WindowsSecurityBulletinKey, WindowsSecurityBulletinIndexes
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -40,7 +39,10 @@ def fetch_vuln_ids(kb, conn=None):
             r
             .table(WindowsSecurityCollection.Bulletin)
             .get_all(kb, index=WindowsSecurityBulletinIndexes.ComponentKb)
-            .pluck(WindowsSecurityBulletinKey.BulletinId, WindowsSecurityBulletinKey.CveIds)
+            .pluck(
+                WindowsSecurityBulletinKey.BulletinId,
+                WindowsSecurityBulletinKey.CveIds
+            )
             .run(conn)
         )
 
@@ -82,12 +84,18 @@ def fetch_vuln_data(vuln_id, conn=None):
     data = []
     map_hash = (
         {
-            WindowsSecurityBulletinKey.Id: r.row[WindowsSecurityBulletinKey.Id],
-            WindowsSecurityBulletinKey.BulletinId: r.row[WindowsSecurityBulletinKey.BulletinId],
-            WindowsSecurityBulletinKey.DatePosted: r.row[WindowsSecurityBulletinKey.DatePosted].to_epoch_time(),
-            WindowsSecurityBulletinKey.Details: r.row[WindowsSecurityBulletinKey.Details],
-            WindowsSecurityBulletinKey.CveIds: r.row[WindowsSecurityBulletinKey.CveIds],
-            WindowsSecurityBulletinKey.Supersedes: r.row[WindowsSecurityBulletinKey.Supersedes],
+            WindowsSecurityBulletinKey.Id:
+                r.row[WindowsSecurityBulletinKey.Id],
+            WindowsSecurityBulletinKey.BulletinId:
+                r.row[WindowsSecurityBulletinKey.BulletinId],
+            WindowsSecurityBulletinKey.DatePosted:
+                r.row[WindowsSecurityBulletinKey.DatePosted].to_epoch_time(),
+            WindowsSecurityBulletinKey.Details:
+                r.row[WindowsSecurityBulletinKey.Details],
+            WindowsSecurityBulletinKey.CveIds:
+                r.row[WindowsSecurityBulletinKey.CveIds],
+            WindowsSecurityBulletinKey.Supersedes:
+                r.row[WindowsSecurityBulletinKey.Supersedes],
         }
     )
     try:
@@ -109,8 +117,11 @@ def fetch_vuln_data(vuln_id, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_bulletin_data(bulletin_data, conn=None):
-    """Insert Windows Bulletin data into the Windows Security Bulletin Collection
+    """Insert Windows Bulletin data into the Windows Security Bulletin
+    Collection.
+
         DO NOT CALL DIRECTLY
+
     Args:
         bulletin_data (list|dict): List or dictionary of vulnerability data
 

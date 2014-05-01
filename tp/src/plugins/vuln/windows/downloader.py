@@ -4,7 +4,9 @@ import re
 import requests
 import logging
 import logging.config
-from vFense.plugins.vuln.windows._constants import *
+
+from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
+    WindowsBulletinStrings
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -45,15 +47,26 @@ def get_msft_bulletin_xlsx(xls_url, count=0):
 def get_msft_bulletin_url(count=0):
     """Hack to retrieve the Microsoft XLSX url and name of the file.
     """
+
     xls_url = None
     xls_file_name = None
-    main_url = None
+
     try:
-        main_url = (
-            requests.get(
-                WindowsBulletinStrings.XLS_DOWNLOAD_URL, timeout=2
-            )
+        main_url = requests.get(
+            WindowsBulletinStrings.XLS_DOWNLOAD_URL, timeout=2
         )
+
+        if main_url.status_code == 200:
+            xls_url = re.search(
+                '"(http://download.microsoft.com/download.*.xlsx)",',
+                main_url.content
+            ).group(1)
+
+            if xls_url:
+                xls_file_name = xls_url.split('/')[-1]
+
+        return(xls_url, xls_file_name)
+
     except Exception as e:
         if count <= 10:
             count += 1
@@ -68,13 +81,6 @@ def get_msft_bulletin_url(count=0):
                 % WindowsBulletinStrings.XLS_DOWNLOAD_URL
             )
             return(xls_url, xls_file_name)
-
-    if main_url.status_code == 200:
-        xls_url = re.search('"(http://download.microsoft.com/download.*.xlsx)",', main_url.content).group(1)
-        if xls_url:
-            xls_file_name = xls_url.split('/')[-1]
-
-    return(xls_url, xls_file_name)
 
 
 def download_latest_xls_from_msft():
