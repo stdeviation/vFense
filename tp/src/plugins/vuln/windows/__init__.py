@@ -1,5 +1,5 @@
 class WindowsSecurityCollection():
-    Bulletin= 'windows_security_bulletin'
+    Bulletin = 'windows_security_bulletin'
 
 
 class WindowsSecurityBulletinKey():
