@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from vFense.core.decorators import time_it
 
-from vFense.plugins.vuln.cve import *
+from vFense.core.decorators import time_it
+from vFense.plugins.vuln.cve import CveKey
 from vFense.plugins.vuln.cve._db import fetch_cve_data, \
     fetch_vulnerability_categories
 

@@ -9,11 +9,11 @@ from vFense.plugins.vuln.cve import CveKey
 from vFense.plugins.vuln.cve._constants import (
     CVEDataDir, NVDFeeds, CVEStrings, CVEVectors,
     CVSS_BASE_VECTORS, CVSS_BASE_VECTOR_AV_VALUES,
-    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_C_VALUES,
-    CVSS_BASE_VECTOR_I_VALUES, CVSS_BASE_VECTOR_A_VALUES,
-    CVSS_TEMPORAL_VECTORS, CVSS_TEMPORAL_VECTOR_E_VALUES,
-    CVSS_TEMPORAL_VECTOR_RL_VALUES, CVSS_TEMPORAL_VECTOR_RC_VALUES,
-    CVSS_ENVIRONMENTAL_VECTORS
+    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
+    CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
+    CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
+    CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
+    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS
 )
 
 from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
@@ -270,6 +270,9 @@ class NvdParser(object):
         elif metric in CVSS_ENVIRONMENTAL_VECTORS:
             translated_metric = CVSS_ENVIRONMENTAL_VECTORS[metric]
 
+            # TODO(urgent): what happened to the BASE_VECTOR and
+            # ENVIRONMENTAL_VECTOR dictionaries?
+            
             if metric == CVEVectors.ENVIRONMENTAL_METRIC_CDP:
                 translated_value = CVSS_BASE_VECTOR_CDP_VALUES[value]
 
@@ -355,7 +358,7 @@ def load_up_all_xml_into_db():
     if not xml_exists:
         logger.info('downloading nvd/cve xml data files')
         start_nvd_xml_download()
-    for directory, subdirectories, files in os.walk(CVEDataDir.XML_DIR):
+    for directory, _, files in os.walk(CVEDataDir.XML_DIR):
         for xml_file in files:
             nvd_file = os.path.join(directory, xml_file)
             nvd_files.append(nvd_file)
