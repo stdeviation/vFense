@@ -252,7 +252,7 @@ define(
                             initSelection: function (element, callback) {
                                 var data = JSON.parse(element.val()),
                                     results = [];
-
+                                console.log(data);
                                 _.each(data, function (object) {
                                     results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
                                 });

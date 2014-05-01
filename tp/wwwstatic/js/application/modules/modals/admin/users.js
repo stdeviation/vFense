@@ -232,11 +232,16 @@ define(
                     }).error(function (e) { window.console.log(e.responseText); });
                     return this;
                 },
+                hasPermission: function (permission) {
+                    var permissions = this.groupCollection.toJSON()[0].data;
+                    return _.indexOf(this.get('permissions'), permission) !== -1;
+                },
                 beforeRender: $.noop,
                 onRender: function () {
                     var $groups = this.$('input[name=groups]'),
                         $customers = this.$('select[name=customers]'),
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
+                        groups = this.groupCollection.toJSON()[0].data,
                         that = this;
                     $groups.select2({
                         width: '100%',
@@ -319,7 +324,12 @@ define(
                                 initSelection: function (element, callback) {
                                     var data = JSON.parse(element.val()),
                                         results = [];
+                                    console.log(data);
                                     _.each(data, function (object) {
+                                        if(object)
+                                        {
+                                            
+                                        }
                                         results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
                                     });
                                     callback(results);
