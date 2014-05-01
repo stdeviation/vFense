@@ -2,11 +2,9 @@ import logging
 import logging.config
 
 from vFense.core.decorators import return_status_tuple, time_it
-from vFense.db.client import db_create_close, r, db_connect
-from vFense.plugins.vuln import *
-from vFense.plugins.vuln.cve import *
-from vFense.plugins.patching import *
-from vFense.plugins.vuln.cve._constants import *
+from vFense.db.client import db_create_close, r
+from vFense.plugins.vuln.cve import CVECollections, CveKey
+from vFense.plugins.vuln.cve._constants import CVEStrings, CVECategories
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -189,11 +187,15 @@ def update_cve_categories(conn=None):
                 .filter(
                     lambda x:
                     x[CveKey.CveDescriptions]
-                    .contains(lambda y: y[CVEStrings.DESCRIPTION].match('(?i)'+category))
+                    .contains(
+                        lambda y:
+                            y[CVEStrings.DESCRIPTION].match('(?i)'+category)
+                    )
                 ).update(
                     lambda y:
                     {
-                        CveKey.CveCategories: y[CveKey.CveCategories].set_insert(category)
+                        CveKey.CveCategories:
+                            y[CveKey.CveCategories].set_insert(category)
                     }
                 )
             )

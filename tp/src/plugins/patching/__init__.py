@@ -34,6 +34,7 @@ class FilesIndexes():
     AppId = 'app_id'
     FilesDownloadStatus = 'files_download_status'
 
+
 class FileServerKeys():
     FileServerName = 'file_server_name'
     Customers = 'customers'
@@ -397,6 +398,7 @@ class vFenseAppsPerAgentIndexes():
     StatusAndCveId = 'status_and_cve_id'
     AppIdAndStatusAndCustomer = 'appid_and_status_and_customer'
 
+
 class DbCommonAppKeys():
     AppId = 'app_id'
     Customers = 'customers'
@@ -420,6 +422,7 @@ class DbCommonAppKeys():
     CveIds = 'cve_ids'
     CliOptions = 'cli_options'
 
+
 class DbCommonAppPerAgentKeys():
     AppId = 'app_id'
     Id = 'id'
@@ -432,6 +435,7 @@ class DbCommonAppPerAgentKeys():
     LastModifiedTime = 'last_modified_time'
     Update = 'update'
     CveIds = 'cve_ids'
+
 
 class DbCommonAppIndexes():
     AppId = 'app_id'

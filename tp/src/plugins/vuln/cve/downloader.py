@@ -25,14 +25,14 @@ def cve_downloader(url, file_path):
         Tuple (Boolean, file_size)
         (True, 186)
     """
-    r = requests.get(url)
+    req = requests.get(url)
     xml = open(file_path, 'wb')
-    if r.ok:
-        xml.write(r.content)
+    if req.ok:
+        xml.write(req.content)
 
     xml.close()
 
-    return(r.ok, os.stat(file_path).st_size)
+    return(req.ok, os.stat(file_path).st_size)
 
 
 def log_status(status, size, url_path, nvd_path):
@@ -77,20 +77,20 @@ def start_nvd_xml_download():
         CVEDataDir.NVD_MODIFIED_FILE
     )
 
-    """
-    If we have not yet downloaded the 2002 until now CVE's,
-    please download then now
-    """
+    # If we have not yet downloaded the 2002-now CVE's,
+    # please download them now
+
     while iter_year <= DateValues.CURRENT_YEAR:
         nvd = CVEStrings.NVDCVE_BASE + str(iter_year) + '.xml'
         full_url = CVEStrings.NVD_DOWNLOAD_URL + nvd
         full_nvd = os.path.join(CVEDataDir.XML_DIR, nvd)
+
         if not os.path.exists(full_nvd):
             xml_status = cve_downloader(full_url, full_nvd)
             log_status(xml_status[0], xml_status[1], full_url, full_nvd)
 
         elif iter_year == DateValues.CURRENT_YEAR:
-            "Always download the latest and the current year"
+            # Always download the latest and the current year
             xml_status = cve_downloader(full_url, full_nvd)
             log_status(xml_status[0], xml_status[1], full_url, full_nvd)
 
