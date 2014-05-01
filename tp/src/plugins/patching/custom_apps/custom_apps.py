@@ -5,10 +5,11 @@ from vFense.plugins.patching import *
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
 from vFense.plugins.patching._db_files import fetch_file_data
-from vFense.plugins.patching._db import fetch_app_data, \
-    fetch_apps_data_by_os_code, fetch_file_data, insert_app_data
+from vFense.plugins.patching.file_data import add_file_data
 
-from vFense.plugins.patching.rv_db_calls import update_file_data
+from vFense.plugins.patching._db import fetch_app_data, \
+    fetch_apps_data_by_os_code, insert_app_data
+
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -27,7 +28,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
         agent_ids = get_all_agent_ids(customer_name, agent_os=app_info[AgentKey.OsCode])
         if len(agent_ids) > 0:
             for agentid in agent_ids:
-                update_file_data(app_id, agentid, file_data)
+                add_file_data(app_id, file_data, agent_id)
                 agent_info_to_insert = (
                     {
                         CustomAppsPerAgentKey.AgentId: agentid,
@@ -50,9 +51,8 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
             for app_info in apps_info:
                 app_id = app_info.get(CustomAppsKey.AppId)
                 file_data = fetch_file_data(app_id)
-                update_file_data(
-                    app_id,
-                    agent_id, file_data
+                add_file_data(
+                    app_id, file_data, agent_id
                 )
                 agent_info_to_insert = (
                     {

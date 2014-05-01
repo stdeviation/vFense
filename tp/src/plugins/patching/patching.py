@@ -1,5 +1,6 @@
 import os
 import logging
+import urllib
 
 from hashlib import sha256
 from vFense.core._constants import *
@@ -18,6 +19,36 @@ from vFense.plugins.patching._db import fetch_file_servers_addresses, \
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
+
+
+def get_remote_file_size(url):
+    """If the agent does not provide us with the size of the file,
+        we will go and make a connection to the url provided and
+        retrieve the size from the Content-Length
+
+    Args:
+        url (str): The url, where the vendor hosts the file.
+
+    Returns:
+        String (The size of the file)
+
+    """
+    remote_size = None
+
+    if uri:
+        try:
+            remote_size = (
+                urllib
+                .urlopen(uri)
+                .info()
+                .getheaders("Content-Length")[0]
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+    return(str(remote_size))
+
 
 def build_app_id(app):
     """ Return the 64 character hexdigest of the appid.

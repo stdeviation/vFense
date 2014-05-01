@@ -6,6 +6,7 @@ import urllib
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.plugins.patching.file_data import add_file_data
 from vFense.plugins.mightymouse import *
 
 from vFense.plugins.vuln import SecurityBulletinKey
@@ -26,103 +27,7 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-def get_remote_file_size(uri=None):
-    remote_size = None
 
-    if uri:
-        try:
-            remote_size = (
-                urllib
-                .urlopen(uri)
-                .info()
-                .getheaders("Content-Length")[0]
-            )
-
-        except Exception as e:
-            logger.error('OHHHHS NOOO: %s' % (e))
-
-    return(str(remote_size))
-
-
-def unique_uris(uris=None, orig_uris=None):
-    new_uris = list()
-
-    if uris and orig_uris:
-        combined_data = uris + orig_uris
-
-        for i in xrange(len(combined_data)):
-
-            if len(new_uris) > 0:
-
-                if (not combined_data[i][PKG_URI].split('/')[-1]
-                        in map(
-                            lambda x: x[PKG_URI]
-                            .split('/')[-1],
-                            new_uris)):
-
-                    new_uris.append(combined_data[i])
-            else:
-                new_uris.append(combined_data[i])
-
-    if uris:
-        if not new_uris:
-            new_uris = uris
-        for i in range(len(new_uris)):
-            if not PKG_SIZE in new_uris[i]:
-                size = (
-                    get_remote_file_size(
-                        uri=new_uris[i][PKG_URI]
-                    )
-                )
-
-                if size:
-                    if size > '0':
-                        new_uris[i][PKG_SIZE] = size
-
-    return(new_uris)
-
-
-def update_customers_in_app(customer_name, app_id, table=AppCollections.UniqueApplications):
-    conn = db_connect()
-    if table == AppCollections.UniqueApplications:
-        CurrentAppsKey = AppsKey
-
-    elif table == AppCollections.CustomApps:
-        CurrentAppsKey = CustomAppsKey
-
-    elif table == AppCollections.SupportedApps:
-        CurrentAppsKey = SupportedAppsKey
-
-    elif table == AppCollections.vFenseApps:
-        CurrentAppsKey = AgentAppsKey
-
-    try:
-        exists = (
-            r
-            .table(table)
-            .get(app_id)
-            .run(conn)
-        )
-        if exists:
-            (
-                r
-                .table(table)
-                .get(app_id)
-                .update(
-                    {
-                        CurrentAppsKey.Customers: (
-                            r.row[CurrentAppsKey.Customers]
-                            .set_insert(customer_name)
-                        ),
-                    }
-                )
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    conn.close()
 
 @db_create_close
 def update_os_app(app_id, data, table=AppCollections.UniqueApplications, conn=None):
@@ -230,14 +135,14 @@ def unique_application_updater(customer_name, app, os_string, conn=None):
     app.pop(AppsPerAgentKey.InstallDate, None)
     file_data = app.pop(AppsKey.FileData)
     if exists:
-        update_file_data(app[AppsKey.AppId], agent_id, file_data)
+        add_file_data(app[AppsKey.AppId], file_data, agent_id)
         update_customers_in_app(customer_name, app[AppsKey.AppId])
         update_vulnerability_info_app(
             exists[AppsKey.AppId], exists, True, os_string
         )
 
     else:
-        update_file_data(app[AppsKey.AppId], agent_id, file_data)
+        add_file_data(app[AppsKey.AppId], file_data, agent_id)
         app[AppsKey.Customers] = [customer_name]
         app[AppsKey.Hidden] = 'no'
         if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or

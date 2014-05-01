@@ -157,11 +157,14 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
         >>> from vFense.plugins.patching._db_files import insert_file_data
         >>> app_id = '3e480d178a945e8c35479c60a398da3d16a0f8c2aecf3306b2341466b5e897ae'
         >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
-        >>> file_data = (
-                {
-                    
-                }
-            )
+        >>> file_data = [
+            {
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_size": 7782
+            }
+        ]
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -229,6 +232,18 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
 
     Kwargs:
         agent_id (str): 36 character UUID of the agent.
+
+    Basic Usage:
+        >>> app_id = '3e480d178a945e8c35479c60a398da3d16a0f8c2aecf3306b2341466b5e897ae'
+        >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
+        >>> file_data = [
+            {
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_size": 7782
+            }
+        ]
 
     Returns:
         Tuple (status_code, count, error, generated ids)

@@ -11,8 +11,7 @@ from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
     insert_app_data
 from vFense.plugins.patching.patching import build_agent_app_id
-from vFense.plugins.patching.rv_db_calls import insert_file_data,\
-    update_file_data
+from vFense.plugins.patching.file_data import add_file_data
 
 from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
@@ -95,10 +94,10 @@ class IncomingSupportedOrAgentApps(object):
                     for agent in agents:
                         if agent[AgentKey.OsCode] == app[AgentKey.OsCode]:
                             agent[self.CurrentAppsPerAgentKey.AppId] = app[self.CurrentAppsPerAgentKey.AppId]
-                            update_file_data(
+                            add_file_data(
                                 agent[self.CurrentAppsPerAgentKey.AppId],
+                                file_data,
                                 agent[self.CurrentAppsPerAgentKey.AgentId],
-                                file_data
                             )
                             app_per_agent_props = self._set_app_per_agent_properties(**agent)
                             agent_has_app = self.check_if_agent_has_app(agent)
@@ -296,7 +295,7 @@ def update_supported_and_agent_apps(json_data, table=AppCollections.SupportedApp
             json_data[i][CurrentAppsKey.Hidden] = 'no'
             insert_app_data(json_data[i], LatestDownloadedCollection)
             file_data = json_data[i].get(CurrentAppsKey.FileData)
-            insert_file_data(json_data[i][CurrentAppsKey.AppId], file_data)
+            add_file_data(json_data[i][CurrentAppsKey.AppId], file_data)
             data_to_update = (
                 {
                     CurrentAppsKey.Customers: all_customers
