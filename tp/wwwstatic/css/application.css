@@ -765,9 +765,9 @@ BODY > HEADER #primaryNav {
 .list SELECT,
 .list INPUT[type="text"],
 .list INPUT[type="password"] {
-    /*font-size: 12px;
+    font-size: 12px;
     height: 21px;
-    width: 110px;*/
+    width: 110px;
     margin-bottom: 0;
 }
 .list .input-prepend,
@@ -1746,4 +1746,12 @@ input#deleteAllAgents {
 
 .right-margin {
     margin-right: 8px;
+}
+
+#newUserDiv SELECT, #newCustomerDiv SELECT,
+#newUserDiv INPUT[type="text"], #newCustomerDiv INPUT[type="text"],
+#newUserDiv INPUT[type="password"], #newCustomerDiv INPUT[type="password"] {
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 0;
 }
