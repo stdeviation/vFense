@@ -1,7 +1,8 @@
 import logging
 
 from vFense.core._constants import *
-from vFense.core._db import insert_data_in_table, delete_all_in_table
+from vFense.core._db import insert_data_in_table, delete_all_in_table, \
+    update_data_in_table
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
@@ -911,6 +912,103 @@ def update_customers_in_app_by_app_id(
             )
             .run(conn)
          )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+def update_app_data_by_app_id(
+    app_id, data, table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Update the data of an application.
+        DO NOT CALL DIRECTLY
+    Args:
+        app_id (str): The 64 character hex digest of the application.
+        data (dict): Dictionary of the data you are updateing.
+
+    Kwargs:
+        table (str): The name of the collection you are updating
+
+    """
+    data = {}
+    try:
+        data = update_data_in_table(app_id, data, table)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+def update_custom_app_data_by_app_id(
+    app_id, data, table=AppCollections.CustomApps,
+    conn=None
+    ):
+    """Update the data of an application.
+        DO NOT CALL DIRECTLY
+    Args:
+        app_id (str): The 64 character hex digest of the application.
+        data (dict): Dictionary of the data you are updateing.
+
+    Kwargs:
+        table (str): The name of the collection you are updating
+
+    """
+    data = {}
+    try:
+        data = update_data_in_table(app_id, data, table)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+def update_supported_app_data_by_app_id(
+    app_id, data, table=AppCollections.SupportedApps,
+    conn=None
+    ):
+    """Update the data of an application.
+        DO NOT CALL DIRECTLY
+    Args:
+        app_id (str): The 64 character hex digest of the application.
+        data (dict): Dictionary of the data you are updateing.
+
+    Kwargs:
+        table (str): The name of the collection you are updating
+
+    """
+    data = {}
+    try:
+        data = update_data_in_table(app_id, data, table)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+def update_vFense_app_data_by_app_id(
+    app_id, data, table=AppCollections.vFenseApps,
+    conn=None
+    ):
+    """Update the data of an application.
+        DO NOT CALL DIRECTLY
+    Args:
+        app_id (str): The 64 character hex digest of the application.
+        data (dict): Dictionary of the data you are updateing.
+
+    Kwargs:
+        table (str): The name of the collection you are updating
+
+    """
+    data = {}
+    try:
+        data = update_data_in_table(app_id, data, table)
 
     except Exception as e:
         logger.exception(e)
