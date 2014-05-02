@@ -12,6 +12,8 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
+import vFense_module_loader
+
 from redis import StrictRedis
 from rq import Connection, Queue
 
@@ -112,11 +114,11 @@ class Application(tornado.web.Application):
                 GetAllValidFieldsForNotifications),
             (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
-            ##### Monitoring Api
-            (r"/api/monitor/memory/?", GetMemoryStats),
-            (r"/api/monitor/filesystem/?", GetFileSystemStats),
-            (r"/api/monitor/cpu/?", GetCpuStats),
-            (r"/api/monitor/?", GetAllStats),
+            ###### Monitoring Api
+            #(r"/api/monitor/memory/?", GetMemoryStats),
+            #(r"/api/monitor/filesystem/?", GetFileSystemStats),
+            #(r"/api/monitor/cpu/?", GetCpuStats),
+            #(r"/api/monitor/?", GetAllStats),
 
             ##### RA Api
             (r"/api/ra/rd/password/?", SetPassword),
@@ -246,6 +248,14 @@ class Application(tornado.web.Application):
             (r"/packages/*/(.*?)", tornado.web.StaticFileHandler,
                 {"path": "/opt/TopPatch/var/packages"})
         ]
+
+        core_loader = vFense_module_loader.CoreLoader()
+        plugin_loader = vFense_module_loader.PluginsLoader()
+
+        # TODO: check for colliding regex's from plugins
+        handlers.extend(core_loader.get_core_web_api_handlers())
+        handlers.extend(plugin_loader.get_plugins_web_api_handlers())
+
 
         template_path = "/opt/TopPatch/tp/templates"
         settings = {
