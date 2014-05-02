@@ -1,6 +1,7 @@
 "CVE DOWNLOADER FOR TOPPATCH, NVD/CVE XML VERSION 1.2"
 import os
 import re
+from time import sleep
 import requests
 import logging
 import logging.config
@@ -29,7 +30,8 @@ def get_msft_bulletin_xlsx(xls_url, count=0):
         return(downloaded, data)
 
     except Exception as e:
-        if count <= 10:
+        sleep(5)
+        if count <= 20:
             count += 1
             logger.exception(
                 'failed to retrieve XLSX file from %s: count = %s'
@@ -72,7 +74,7 @@ def get_msft_bulletin_url(count=0):
 
     except Exception as e:
         sleep(5)
-        if count <= 10:
+        if count <= 20:
             count += 1
             logger.exception(
                 'failed to retrieve XLSX url from %s: count = %s'

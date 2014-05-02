@@ -5,6 +5,7 @@ from hashlib import sha256
 
 from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
+from vFense.plugins.patching._db import *
 from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching import *
 from vFense.plugins.patching.downloader.downloader import download_all_files_in_app
