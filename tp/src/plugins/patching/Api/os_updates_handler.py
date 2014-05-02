@@ -25,8 +25,9 @@ from vFense.core.permissions._constants import *
 from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
+from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
-from vFense.plugins.patching.rv_db_calls import update_hidden_status, update_os_app
+from vFense.plugins.patching.rv_db_calls import update_hidden_status
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
@@ -498,7 +499,7 @@ class AppIdOsAppsHandler(BaseHandler):
                         AppsKey.RvSeverity: severity
                     }
                 )
-                update_os_app(
+                update_app_data_by_app_id(
                     app_id, sev_data
                 )
                 results = (

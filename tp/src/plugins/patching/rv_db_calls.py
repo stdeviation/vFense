@@ -6,7 +6,8 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.file_data import add_file_data
-from vFense.plugins.patching._db import update_customers_in_app_by_app_id
+from vFense.plugins.patching._db import update_customers_in_app_by_app_id, \
+    update_app_data_by_app_id
 from vFense.plugins.mightymouse import *
 
 from vFense.plugins.vuln import SecurityBulletinKey

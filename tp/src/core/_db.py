@@ -140,6 +140,45 @@ def insert_data_in_table(data, table, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
+def update_data_in_table(primary_key, data, table, conn=None):
+    """Update data by the primary key of the collection
+    Args:
+        primary_key (str): The primary key, of the object you are searching.
+        data (dict): Dictionary of the data you are updating.
+            you are inserting.
+        table (str): The name of the collection you are updating.
+
+    Basic Usage:
+        >>> from vFense.core._db import update_data_in_table
+        >>> primary_key = 'default'
+        >>> data = {'enabled': 'no'}
+        >>> table = 'users'
+        >>> update_data_in_table(primary_key, data, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+
+    results = {}
+    try:
+        results = (
+            r
+            .table(table)
+            .get(primary_key)
+            .update(data)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(results)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
 def delete_all_in_table(table, conn=None):
     """Delete all data in a collection
         WARNING, ALL DATA INSIDE COLLECTION WILL BE DELETED!!!
