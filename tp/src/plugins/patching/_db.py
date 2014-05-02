@@ -992,7 +992,7 @@ def update_supported_app_data_by_app_id(
     return(data)
 
 @time_it
-def update_vFense_app_data_by_app_id(
+def update_vfense_app_data_by_app_id(
     app_id, data, table=AppCollections.vFenseApps,
     conn=None
     ):
