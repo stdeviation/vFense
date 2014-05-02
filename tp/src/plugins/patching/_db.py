@@ -1,17 +1,14 @@
 import logging
 
 from vFense.core._constants import *
-from vFense.core._db import insert_data_in_table, delete_all_in_table, \
+from vFense.core._db import insert_data_in_table, \
     update_data_in_table
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching import AppCollections, DownloadCollections, \
-    FileCollections, AppsKey, AppsPerAgentKey, AppsIndexes, \
-    AppsPerAgentIndexes, SupportedAppsKey, SupportedAppsPerAgentKey, \
-    SupportedAppsPerAgentIndexes, CustomAppsKey, CustomAppsPerAgentKey, \
-    CustomAppsPerAgentIndexes, AgentAppsKey, AgentAppsPerAgentKey, \
-    AgentAppsPerAgentIndexes, DbCommonAppKeys, DbCommonAppPerAgentKeys, \
+from vFense.plugins.patching import AppCollections,\
+    FileCollections, AppsKey, \
+    DbCommonAppKeys, DbCommonAppPerAgentKeys, \
     DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey, \
     FileServerIndexes, FileServerKeys
 
@@ -432,6 +429,54 @@ def fetch_appids_by_agentid_and_status(
 
     return(appids)
 
+
+@time_it
+@db_create_close
+def fetch_app_id_by_name_and_version(
+    app_name, app_version,
+    table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Fetch app_id by searching for the app name and version.
+    Args:
+        app_name (str): Name of the application you are removing
+            from this agent.
+        app_version (str): The exact verision of the application
+            you are removing.
+
+    Kwargs:
+        table (str): The name of the table you are perfoming the delete on.
+            default = 'unique_applications'
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import fetch_app_id_by_name_and_version
+        >>> app_name = 'libpangoxft-1.0-0'
+        >>> app_version = '1.36.3-1ubuntu1'
+        >>> table = 'apps_per_agent'
+        >>> fetch_app_id_by_name_and_version(name, version, table)
+
+    Returns:
+        String
+    """
+    app_id = None
+    try:
+        app_ids = (
+            r
+            .table(table)
+            .get_all(
+                [app_name, app_version],
+                index=DbCommonAppIndexes.NameAndVersion
+            )
+            .map(lambda app: app[DbCommonAppKeys.AppId])
+            .run(conn)
+        )
+        if app_ids:
+            app_id = app_ids[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return app_id
 
 @time_it
 @db_create_close
@@ -1014,3 +1059,89 @@ def update_vfense_app_data_by_app_id(
         logger.exception(e)
 
     return(data)
+
+@time_it
+@db_create_close
+def delete_apps_per_agent_older_than(
+    now, table=AppCollections.AppsPerAgent, conn=None
+    ):
+    """Delete all apps_per_agent that are older than now,
+    Args:
+        now (rql_epoch_time): RQL epoch time object.
+
+    Kwargs:
+        table (str): The name of the table you are perfoming the delete on.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
+        >>> from vFense.plugins.patching._db_constants import DbTime
+        >>> now = DbTime.time_now()
+        >>> table = 'apps_per_agent'
+        >>> delete_apps_per_agent_older_than(now, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(table)
+            .get_all(
+                pkg[DbCommonAppPerAgentKeys.AgentId],
+                index=DbCommonAppPerAgentIndexes.AgentId
+            )
+            .filter(
+                r.row[DbCommonAppPerAgentKeys.LastModifiedTime] <
+                r.epoch_time(last_modified_time)
+            )
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@time_it
+@db_create_close
+def update_apps_per_agent(
+    pkg_list,
+    table=AppCollections.AppsPerAgent,
+    conn=None
+    ):
+    """Insert or Update into the apps_per_agent collection
+    Args:
+        pkg_list (list): List of all the applications you want to insert
+            or update into the database.
+
+    Kwargs:
+        table (str, optional): The name of the table you want to update.
+            default = apps_per_agent
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_apps_per_agent
+        >>> table = 'apps_per_agent'
+        >>> pkg_list = [
+                {
+                    "status": "installed", 
+                    "install_date": 1397697799, 
+                    "app_id": "c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c", 
+                    "update": 5014, 
+                    "dependencies": [], 
+                    "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3", 
+                    "last_modified_time": 1398997520, 
+                    "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f", 
+                    "customer_name": "default"
+                }
+            ]
+        >>> update_apps_per_agent(pkg_list, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = insert_data_in_table(pkg_list)
+    return data

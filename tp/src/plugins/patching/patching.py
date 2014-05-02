@@ -4,10 +4,12 @@ import urllib
 
 from hashlib import sha256
 from vFense.core._constants import *
-from vFense.core._db import object_exist, insert_data_in_table
+from vFense.core._db import object_exist, insert_data_in_table, \
+    delete_data_in_table
 from vFense.core.agent._db import total_agents_in_customer
 from vFense.errorz.status_codes import DbCodes
 from vFense.plugins.patching import AppsKey, AppCollections
+from vFense.plugins.patching._db_constants import DbTime
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
 from vFense.core.decorators import time_it 
@@ -16,7 +18,8 @@ from vFense.core.customer.customers import get_customer_property
 from vFense.plugins.patching._db import fetch_file_servers_addresses, \
     delete_app_data_for_agentid, update_apps_per_agent_by_customer, \
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid, \
-    update_customers_in_apps_by_customer
+    update_customers_in_apps_by_customer, update_apps_per_agent, \
+    delete_apps_per_agent_older_than
 
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
@@ -102,7 +105,7 @@ def build_agent_app_id(agent_id, app_id):
         app_id.encode('utf8')
     )
 
-    return (sha258(agent_app_id).hexdigest())
+    return (sha256(agent_app_id).hexdigest())
 
 
 def get_base_url(customer_name):
@@ -303,6 +306,35 @@ def update_custom_app_data_by_agentid_and_appid(agent_id, app_id, data):
             agent_id, app_id, data, table=table
         )
     )
+
+@time_it
+def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, data):
+    """Update the supported_apps_per_agent collection by agent_id and app_id.
+        This function should not be called directly.
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+        app_id (str): 64 character ID of the application.
+        data(dict): Dictionary of the application data that
+            is being updated for the agent.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching.patching import update_supported_app_data_by_agentid_and_appid
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
+        >>> data = {'status': 'pending'}
+        >>> update_supported_app_data_by_agentid_and_appid(agent_id, app_id, data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    table = AppCollections.SupportedApps
+    return(
+        update_app_data_by_agentid_and_appid(
+            agent_id, app_id, data, table=table
+        )
+    )
+
 
 @time_it
 def update_vfense_app_data_by_agentid_and_appid(agent_id, app_id, data):
@@ -852,6 +884,7 @@ def get_vulnerability_info_for_app(
 
     return vuln_data
 
+@time_it
 def unique_application_updater(customer_name, app_data, os_string):
     """Insert or update an existing application.
     Args:
@@ -936,3 +969,64 @@ def unique_application_updater(customer_name, app_data, os_string):
             inserted_count = data_inserted[1]
 
     return(inserted_count, updated_count)
+
+@time_it
+def add_or_update_apps_per_agent(pkg_list, now=None, delete_afterwards=True):
+    updated = 0
+    inserted = 0
+    deleted = 0
+    status_code, count, errors, generated_ids = (
+        update_apps_per_agent(pkg_list)
+    )
+    if len(count) > 1:
+        inserted = count[0]
+        updated = count[1]
+
+    if delete_afterwards:
+        if not now:
+            now = DbTime.time_now()
+        status_code, count, errors, generated_ids = (
+            delete_apps_per_agent_older_than(now)
+        )
+        deleted = count
+
+    return(inserted, updated, deleted)
+
+@time_it
+def delete_apps_from_agent_by_name_and_version(
+    agent_id, app_name, app_version,
+    table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Delete apps from an agent that contain this name and version.
+    Args:
+        agent_id (str): The 36 character UUID of the agent.
+        app_name (str): Name of the application you are removing
+            from this agent.
+        app_version (str): The exact verision of the application
+            you are removing.
+
+    Kwargs:
+        table (str): The name of the table you are perfoming the delete on.
+            default = 'unique_applications'
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import delete_apps_from_agent_by_name_and_version
+        >>> agent_id = '78211125-3c1e-476a-98b6-ea7f683142b3'
+        >>> app_name = 'libpangoxft-1.0-0'
+        >>> app_version = '1.36.3-1ubuntu1'
+        >>> table = 'apps_per_agent'
+        >>> delete_apps_from_agent_by_name_and_version(agent_id, name, version, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    app_id = fetch_app_id_by_name_and_version(app_name, app_version)
+    if app_id:
+        agent_app_id = build_agent_app_id(agent_id, app_id)
+        status_code, count, error, generated_ids = (
+            delete_data_in_table(agent_app_id)
+        )
+
+    return app_id

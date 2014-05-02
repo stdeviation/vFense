@@ -171,6 +171,41 @@ def insert_data_in_table(data, table, conn=None):
 
     return results
 
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_data_in_table(primary_key, table, conn=None):
+    """Delete data in a collection
+    Args:
+        primary_key (str): The primary key of the collection
+            you are searching for,
+        table (str): The name of the collection you are removing all data from.
+
+    Basic Usage:
+        >>> from vFense.core._db import delete_data_in_table
+        >>> primary_key = 'default'
+        >>> table = 'agents'
+        >>> delete_data_in_table(primary_key, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+
+    results = {}
+    try:
+        results = (
+            r
+            .table(table)
+            .get(primary_key)
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return results
 
 @time_it
 @db_create_close

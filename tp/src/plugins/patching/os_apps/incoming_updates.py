@@ -1,13 +1,13 @@
-import os
 import logging
 import logging.config
 from hashlib import sha256
 
 from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
-from vFense.plugins.patching._db import *
-from vFense.plugins.patching.rv_db_calls import *
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db import add_or_update_apps_per_agent, \
+    unique_application_updater
+from vFense.plugins.patching import AppsKey, AppsPerAgentKey
+from vFense.plugins.patching._db_constants import DbTime
 from vFense.plugins.patching.downloader.downloader import download_all_files_in_app
 import re
 
@@ -35,6 +35,7 @@ class IncomingApplicationsFromAgent():
         self.os_string = os_string
         self.inserted_count = 0
         self.updated_count = 0
+        self.modified_time = DbTime.time_now()
 
     def add_or_update_packages(self, app_list, delete_afterwards=True):
         rv_q = Queue('downloader', connection=rq_pkg_pool)
@@ -75,23 +76,18 @@ class IncomingApplicationsFromAgent():
                 )
             good_app_list.append(agent_app)
 
-        updated = add_or_update_applications(
-            pkg_list=good_app_list,
-            delete_afterwards=delete_afterwards
+        inserted, updated, deleted = (
+            add_or_update_apps_per_agent(
+                good_app_list, self.modified_time,
+                delete_afterwards
+            )
         )
         #end_time = datetime.now()
         #print end_time, 'finished adding  all apps to app_table'
         #print 'total time took %s' % (str(end_time - start_time))
+        print inserted, updated, deleted
 
-        msg = (
-            '%s - agent_id: %s, repl: %s, del: %s, ins: %s, count: %s' %
-            (
-                self.username, self.agent_id, str(updated['replaced']),
-                str(updated['deleted']), str(updated['inserted']),
-                str(updated['pkg_count'])
-            )
-        )
-        logger.info(msg)
+        #logger.info(msg)
 
     def set_specific_keys_for_app_agent(self, app):
         only_these_keys_are_needed = (
@@ -104,6 +100,7 @@ class IncomingApplicationsFromAgent():
                 AppsPerAgentKey.Status: app[AppsPerAgentKey.Status],
                 AppsPerAgentKey.Dependencies: app.pop(AppsPerAgentKey.Dependencies),
                 AppsPerAgentKey.Update: PackageCodes.ThisIsAnUpdate,
+                AppsPerAgentKey.LastModifiedTime: self.modified_time,
                 AppsPerAgentKey.Id: self.build_agent_app_id(
                     app[AppsPerAgentKey.AppId])
             }
