@@ -15,6 +15,13 @@ define(
                     return this.baseUrl;
                 }
             }),
+            GroupCollection: Backbone.Collection.extend({
+                baseUrl: 'api/v1/groups',
+                filter: '',
+                url: function () {
+                    return this.baseUrl + this.filter;
+                }
+            }),
             View: Backbone.View.extend({
                 initialize: function () {
                     var that = this;
@@ -26,6 +33,10 @@ define(
                     this.userCollection = new exports.UserCollection();
                     this.listenTo(this.userCollection, 'sync', this.render);
                     this.userCollection.fetch();
+                    this.groupCollection = new exports.GroupCollection();
+                    this.groupCollection.filter = '?all_customers=True';
+                    this.listenTo(this.groupCollection, 'sync', this.render);
+                    this.groupCollection.fetch();
                     return this;
                 },
                 events: {
@@ -242,6 +253,7 @@ define(
 //                    var $users = this.$('select[name=users]'),
 //                        $customers = this.$('select[name=customers]'),
                       var $select = this.$el.find('input[name=groupSelect], input[name=userSelect]'),
+                          groups = this.groupCollection.toJSON()[0].data,
                         that = this;
 //                    $users.select2({width: '100%'});
 //                    $customers.select2({width: '100%'});
@@ -252,9 +264,28 @@ define(
                             initSelection: function (element, callback) {
                                 var data = JSON.parse(element.val()),
                                     results = [];
-                                console.log(data);
+
                                 _.each(data, function (object) {
-                                    results.push({id: object.id || object.user_name, text: object.group_name ? object.group_name : object.user_name});
+                                    if(object.id)
+                                    {
+                                        _.each(groups, function (group) {
+                                            if(object.id === group.id)
+                                            {
+                                                if(_.indexOf(group.permissions, 'administrator') !== -1)
+                                                {
+                                                    results.push({locked: true, id: object.id, text: object.group_name});
+                                                }
+                                                else
+                                                {
+                                                    results.push({id: object.id, text: object.group_name});
+                                                }
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        results.push({id: object.user_name, text: object.user_name});
+                                    }
                                 });
                                 callback(results);
                             },

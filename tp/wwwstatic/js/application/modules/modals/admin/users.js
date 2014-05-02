@@ -30,6 +30,9 @@ define(
                     this.listenTo(this.groupCollection, 'sync', this.render);
                     this.groupCollection.fetch();
 
+                    this.groupCollection.filter = '?all_customers=True';
+                    this.groupCollection.fetch();
+
                     $.ajaxSetup({traditional: true});
                     return this;
                 },
@@ -204,6 +207,7 @@ define(
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         username = $input.data('user'),
+                        currentCustomer = $input.data('customer'),
                         groupId = $input.data('id'),
                         url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
@@ -213,6 +217,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
+                        customer_context: currentCustomer,
                         group_ids: groups,
                         action: event.added ? 'add' : 'delete'
                     };
@@ -232,10 +237,6 @@ define(
                     }).error(function (e) { window.console.log(e.responseText); });
                     return this;
                 },
-                hasPermission: function (permission) {
-                    var permissions = this.groupCollection.toJSON()[0].data;
-                    return _.indexOf(this.get('permissions'), permission) !== -1;
-                },
                 beforeRender: $.noop,
                 onRender: function () {
                     var $groups = this.$('input[name=groups]'),
@@ -243,6 +244,7 @@ define(
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
                         groups = this.groupCollection.toJSON()[0].data,
                         that = this;
+
                     $groups.select2({
                         width: '100%',
                         multiple: true,
@@ -300,9 +302,18 @@ define(
                                         return $(select).data('url');
                                     },
                                     data: function () {
-                                        return {
-                                            username: $(select).data('user')
-                                        };
+                                        if(select.name === 'groupSelect')
+                                        {
+                                            return {
+                                                customer_context: $(select).data('customer')
+                                            };
+                                        }
+                                        else
+                                        {
+                                            return {
+
+                                            };
+                                        }
                                     },
                                     results: function (data) {
                                         var results = [];
@@ -324,13 +335,27 @@ define(
                                 initSelection: function (element, callback) {
                                     var data = JSON.parse(element.val()),
                                         results = [];
-                                    console.log(data);
                                     _.each(data, function (object) {
-                                        if(object)
+                                        if(object.group_id)
                                         {
-                                            
+                                            _.each(groups, function (group) {
+                                                if(object.group_id === group.id)
+                                                {
+                                                    if(_.indexOf(group.permissions, 'administrator') !== -1)
+                                                    {
+                                                        results.push({locked: true, id: object.group_id, text: object.group_name});
+                                                    }
+                                                    else
+                                                    {
+                                                        results.push({id: object.group_id, text: object.group_name});
+                                                    }
+                                                }
+                                            });
                                         }
-                                        results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                        else
+                                        {
+                                            results.push({id: object.customer_name, text: object.customer_name});
+                                        }
                                     });
                                     callback(results);
                                 },
@@ -339,9 +364,18 @@ define(
                                         return $(select).data('url');
                                     },
                                     data: function () {
-                                        return {
-                                            username: $(select).data('user')
-                                        };
+                                        if(select.name === 'groupSelect')
+                                        {
+                                            return {
+                                                customer_context: $(select).data('customer')
+                                            };
+                                        }
+                                        else
+                                        {
+                                            return {
+
+                                            };
+                                        }
                                     },
                                     results: function (data) {
                                         var results = [];

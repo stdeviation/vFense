@@ -255,13 +255,13 @@ def initialize_db():
 
         if args.cve_data:
             print "Updating CVE's..."
-            load_up_all_xml_into_db()
+           # load_up_all_xml_into_db()
             print "Done Updating CVE's..."
             print "Updating Microsoft Security Bulletin Ids..."
-            parse_bulletin_and_updatedb()
+            #parse_bulletin_and_updatedb()
             print "Done Updating Microsoft Security Bulletin Ids..."
             print "Updating Ubuntu Security Bulletin Ids...( This can take a couple of minutes )"
-            begin_usn_home_page_processing(full_parse=True)
+            #begin_usn_home_page_processing(full_parse=True)
             print "Done Updating Ubuntu Security Bulletin Ids..."
 
 
