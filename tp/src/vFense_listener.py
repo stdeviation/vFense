@@ -24,7 +24,6 @@ from vFense.receiver.api.rv.results import *
 from vFense.receiver.api.core.results import *
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
 from vFense.receiver.api.ra.results import RemoteDesktopResults
-#from vFense.receiver.api.monitoring.monitoringdata import UpdateMonitoringStatsV1
 
 from vFense.db.client import *
 
@@ -40,9 +39,6 @@ define("debug", default=True, help="enable debugging features", type=bool)
 class Application(tornado.web.Application):
     def __init__(self, debug):
         handlers = [
-
-            ##Operations for the Monitoring Plugin
-            #(r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/monitoring/monitordata/?", UpdateMonitoringStatsV1),
 
             #RA plugin
             (r"/rvl/ra/rd/results/?", RemoteDesktopResults),

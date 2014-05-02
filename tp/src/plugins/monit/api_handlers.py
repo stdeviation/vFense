@@ -11,12 +11,11 @@ from vFense.plugins.monit import api
 from vFense.plugins.monit.utils import update_agent_monit_stats
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+list_log = logging.getLogger('rvlistener')
+web_log = logging.getLogger('rvlistener')
 
 
 class UpdateMonitoringStatsV1(BaseHandler):
-
-    def __init__(self):
-        self.logger = logging.getLogger('rvlistener')
 
     @agent_authenticated_request
     @convert_json_to_arguments
@@ -52,7 +51,7 @@ class UpdateMonitoringStatsV1(BaseHandler):
                     username, uri, method
                 ).something_broke(agent_id, 'monitoring data', e)
             )
-            self.logger.exception(results)
+            list_log.exception(results)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')

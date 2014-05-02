@@ -4,7 +4,7 @@ import time
 import _db
 
 from _db import Collection, Master
-from vFense.db.client import db_create_close
+from vFense.db.client import r, db_create_close
 
 
 AgentStatsKey = 'monit_stats'
