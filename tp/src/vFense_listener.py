@@ -82,20 +82,14 @@ class Application(tornado.web.Application):
         handlers.extend(core_loader.get_core_listener_api_handlers())
         handlers.extend(plugin_loader.get_plugins_listener_api_handlers())
 
-        with open('somefile', 'a') as _file:
-            _file.write('--------------------------------------------\n')
-
-            for h in handlers:
-                _file.write(str(h) + '\n')
-
         template_path = "/opt/TopPatch/tp/templates"
         settings = {
             "cookie_secret": "patching-0.7",
             "login_url": "/rvl/login",
         }
-        tornado.web.Application.__init__(self, handlers,
-                                         template_path=template_path,
-                                         debug=True, **settings)
+        tornado.web.Application.__init__(
+            self, handlers, template_path=template_path, debug=True, **settings
+        )
 
     def log_request(self, handler):
         logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
