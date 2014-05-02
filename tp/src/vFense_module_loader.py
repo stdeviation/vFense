@@ -4,13 +4,169 @@ import importlib
 import inspect
 import traceback
 
+from vFense.receiver.api.core.newagent import NewAgentV1
+from vFense.receiver.api.core.checkin import CheckInV1
+from vFense.receiver.api.core.startup import StartUpV1
+from vFense.receiver.api.core.result_uris import ResultURIs
+from vFense.receiver.api.core.results import RebootResultsV1, ShutdownResultsV1
+
+from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
+from vFense.core.api.user import UserHandler, UsersHandler
+from vFense.core.api.group import GroupHandler, GroupsHandler
+from vFense.core.api.customer import CustomerHandler, CustomersHandler
+from vFense.core.api.agent import AgentHandler, AgentResultURIs, \
+    AgentsHandler, FetchSupportedOperatingSystems, FetchValidProductionLevels
+from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
+    WebSocketHandler, AdminHandler
+
+from vFense.server.api.tag_api import TagsAgentHandler, TagHandler, TagsHandler
+from vFense.server.api.email_api import CreateEmailConfigHandler, \
+    GetEmailConfigHandler
+from vFense.server.api.log_api import LoggingModifyerHandler, \
+    LoggingListerHandler
+from vFense.server.api.reports_api import (AgentsOsDetailsHandler,
+    AgentsHardwareDetailsHandler, AgentsCPUDetailsHandler,
+    AgentsMemoryDetailsHandler, AgentsDiskDetailsHandler,
+    AgentsNetworkDetailsHandler)
+from vFense.server.api.scheduler_api import (ScheduleListerHandler,
+    ScheduleAppDetailHandler, SchedulerDateBasedJobHandler,
+    SchedulerDailyRecurrentJobHandler, SchedulerMonthlyRecurrentJobHandler,
+    SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
+    SchedulerCustomRecurrentJobHandler)
+
+from vFense.plugins.patching.Api.app_data import FileInfoHandler
+from vFense.plugins.patching.Api.os_updates_handler import \
+    AgentIdOsAppsHandler, TagIdOsAppsHandler
+from vFense.plugins.patching.Api.agent_updates_handler import \
+    AgentIdAgentAppsHandler, TagIdAgentAppsHandler
+from vFense.plugins.patching.Api.supported_updates_handler import \
+    AgentIdSupportedAppsHandler, TagIdSupportedAppsHandler
+from vFense.plugins.patching.Api.custom_updates_handler import \
+    AgentIdCustomAppsHandler, TagIdCustomAppsHandler
+from vFense.plugins.patching.Api.stats_api import (AgentSeverityHandler,
+    AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
+    TagStatsByOsHandler)
+
+from vFense.operations.api.agent_operations import (GetTransactionsHandler,
+    AgentOperationsHandler, TagOperationsHandler, OperationHandler,
+    TagOperationsHandler)
+
+
 class CoreLoader():
 
     def get_core_listener_api_handlers(self):
-        return []
+        handlers = [
+
+            #Login and Logout Operations
+            (r"/rvl/?", RootHandler),
+            (r"/rvl/login/?", RvlLoginHandler),
+            (r"/rvl/logout/?", RvlLogoutHandler),
+
+            #Operations for the New Core Plugin
+            (r"/rvl/v1/core/newagent/?", NewAgentV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?",
+                StartUpV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?",
+                ResultURIs),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?",
+                CheckInV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?",
+                RebootResultsV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?",
+                ShutdownResultsV1)
+        ]
+
+        return handlers
 
     def get_core_web_api_handlers(self):
-        return []
+        handlers = [
+
+            (r"/?", RootHandler),
+            (r"/login/?", LoginHandler),
+            (r"/logout/?", LogoutHandler),
+            #(r"/ws/?", WebSocketHandler),
+            (r"/adminForm", AdminHandler),
+
+            ##### New User API
+            (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
+            (r"/api/v1/users?", UsersHandler),
+
+            ##### New Group API
+            (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
+            (r"/api/v1/groups?", GroupsHandler),
+
+            ##### New Customer API
+            (r'/api/v1/customer/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', CustomerHandler),
+            (r"/api/v1/customers?", CustomersHandler),
+
+            ##### Email API Handlers
+            (r"/api/email/config/create?", CreateEmailConfigHandler),
+            (r"/api/email/config/list?", GetEmailConfigHandler),
+
+            ##### Logger API Handlers
+            (r"/api/logger/modifyLogging?", LoggingModifyerHandler),
+            (r"/api/logger/getParams?", LoggingListerHandler),
+
+            ##### Reports Api
+            (r"/api/v1/reports/osdetails?", AgentsOsDetailsHandler),
+            (r"/api/v1/reports/hardwaredetails?",AgentsHardwareDetailsHandler),
+            (r"/api/v1/reports/cpudetails?",AgentsCPUDetailsHandler),
+            (r"/api/v1/reports/memorydetails?",AgentsMemoryDetailsHandler),
+            (r"/api/v1/reports/diskdetails?",AgentsDiskDetailsHandler),
+            (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
+
+            ##### Scheduler API Handlers
+            (r"/api/v1/schedules?", ScheduleListerHandler),
+            (r"/api/v1/schedule/([A-Za-z0-9_ ]+.*)?", ScheduleAppDetailHandler),
+            (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
+            (r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
+            (r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
+            (r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
+            (r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
+            (r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
+
+            ##### Agent API Handlers
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",AgentSeverityHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", AgentOsAppsOverTimeHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", TagsAgentHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", AgentIdOsAppsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", AgentIdAgentAppsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", AgentIdCustomAppsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", AgentIdSupportedAppsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", AgentOperationsHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/uris/response?", AgentResultURIs),
+
+            ##### Agents API Handlers
+            (r"/api/v1/agents", AgentsHandler),
+
+            ##### Tag API Handlers
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", TagHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",TagSeverityHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", TagOsAppsOverTimeHandler),
+            #(r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/linear/severity?",TagPackageSeverityOverTimeHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", TagIdOsAppsHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", TagIdAgentAppsHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", TagIdSupportedAppsHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", TagIdCustomAppsHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", TagOperationsHandler),
+            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/stats_by_os?", TagStatsByOsHandler),
+
+            ##### Tags API Handlers
+            (r"/api/v1/tags", TagsHandler),
+
+            ##### FileData API Handlers
+            (r'/api/v1/apps/info?', FileInfoHandler),
+
+            ##### Generic API Handlers
+            (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
+            (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
+            #(r"/api/package/getDependecies?", GetDependenciesHandler),
+
+        ]
+
+        return handlers
+
 
 class PluginsLoader():
     """Used to retrieve the listener and web api's from every plugin."""
