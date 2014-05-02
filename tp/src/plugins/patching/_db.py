@@ -42,7 +42,7 @@ def fetch_file_servers_addresses(customer_name, conn=None):
             r
             .table(FileCollections.FileServers)
             .get_all(customer_name, index=FileServerIndexes.CustomerName)
-            .map(lambda x: x[FileServerKeys.CustomerName])
+            .map(lambda x: x[FileServerKeys.Customers])
             .run(conn)
         )
 
