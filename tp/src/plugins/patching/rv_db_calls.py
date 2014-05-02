@@ -5,15 +5,7 @@ from datetime import datetime
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching.file_data import add_file_data
-from vFense.plugins.patching._db import update_customers_in_app_by_app_id, \
-    update_app_data_by_app_id
 from vFense.plugins.mightymouse import *
-
-from vFense.plugins.vuln import SecurityBulletinKey
-import vFense.plugins.vuln.windows.ms as ms
-import vFense.plugins.vuln.ubuntu.usn as usn
-import vFense.plugins.vuln.cve.cve as cve
 
 from vFense.errorz.error_messages import GenericResults, PackageResults
 from vFense.errorz.status_codes import PackageCodes
@@ -26,119 +18,6 @@ from vFense.core.customer import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
-
-
-def update_vulnerability_info_app(
-    app_id, app, exists, os_string,
-    table=AppCollections.UniqueApplications
-    ):
-
-    vuln_info = None
-    if app.has_key(AppsKey.AppId):
-        app.pop(AppsKey.AppId)
-    app[AppsKey.CveIds] = []
-    app[AppsKey.VulnerabilityId] = ""
-    app[AppsKey.VulnerabilityCategories] = []
-
-    if app[AppsKey.Kb] != "" and os_string.find('Windows') == 0:
-        vuln_info = ms.get_vuln_ids(app[AppsKey.Kb])
-
-    elif os_string.find('Ubuntu') == 0:
-        vuln_info = (
-            usn.get_vuln_ids(
-                app[AppsKey.Name],
-                app[AppsKey.Version],
-                os_string
-            )
-        )
-    if vuln_info:
-        app[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
-        for cve_id in app[AppsKey.CveIds]:
-            #cve_id = cve_id.replace('CVE-', '')
-            app[AppsKey.VulnerabilityCategories] += (
-                cve.get_vulnerability_categories(cve_id)
-            )
-
-        app[AppsKey.VulnerabilityCategories] = (
-            list(set(app[AppsKey.VulnerabilityCategories]))
-        )
-        app[AppsKey.VulnerabilityId] = (
-                vuln_info[SecurityBulletinKey.BulletinId]
-        )
-
-        if exists:
-            update_app_data_by_app_id(app_id, app, table)
-
-    app[AppsKey.AppId] = app_id
-
-    return(app)
-
-
-@db_create_close
-def unique_application_updater(customer_name, app, os_string, conn=None):
-
-    table = AppCollections.UniqueApplications
-
-    exists = None
-    try:
-        exists = (
-            r
-            .table(table)
-            .get(app[AppsKey.AppId])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    status = app.pop(AppsPerAgentKey.Status, None)
-    agent_id = app.pop(AppsPerAgentKey.AgentId, None)
-    app.pop(AppsPerAgentKey.InstallDate, None)
-    file_data = app.pop(AppsKey.FileData)
-    if exists:
-        add_file_data(app[AppsKey.AppId], file_data, agent_id)
-        update_customers_in_app_by_app_id(customer_name, app[AppsKey.AppId])
-        update_vulnerability_info_app(
-            exists[AppsKey.AppId], exists, True, os_string
-        )
-
-    else:
-        add_file_data(app[AppsKey.AppId], file_data, agent_id)
-        app[AppsKey.Customers] = [customer_name]
-        app[AppsKey.Hidden] = 'no'
-        if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
-                len(file_data) > 0 and status == CommonAppKeys.INSTALLED):
-            app[AppsKey.FilesDownloadStatus] = PackageCodes.FilePendingDownload
-
-        elif len(file_data) == 0 and status == CommonAppKeys.AVAILABLE:
-            app[AppsKey.FilesDownloadStatus] = PackageCodes.MissingUri
-
-        elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
-            app[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
-
-        app = (
-            update_vulnerability_info_app(
-                app[AppsKey.AppId], app, False, os_string
-            )
-        )
-
-        try:
-            (
-                r
-                .table(AppCollections.UniqueApplications)
-                .insert(app)
-                .run(conn, no_reply=True)
-            )
-
-        except Exception as e:
-            msg = (
-                'Failed to insert %s into unique_applications, error: %s' %
-                (app[AppsKey.AppId], e)
-            )
-            logger.exception(msg)
-
-    return(app, file_data)
-
 
 @db_create_close
 def add_or_update_applications(table=AppCollections.AppsPerAgent, pkg_list=[],

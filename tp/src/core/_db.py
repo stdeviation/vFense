@@ -36,7 +36,7 @@ def retrieve_primary_key(collection, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @db_create_close
 def retrieve_indexes(collection, conn=None):
@@ -67,7 +67,7 @@ def retrieve_indexes(collection, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @db_create_close
@@ -98,7 +98,42 @@ def retrieve_object(primary_key, collection, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
+
+
+@time_it
+@db_create_close
+def object_exist(primary_key, collection, conn=None):
+    """Verify if an object exist in the database, by primary key.
+    Args:
+        primary_key (str):  The primary key that you are doing a get against.
+        collection (str):  The table aka collection you are doing the query against.
+
+    Basic Usage:
+        >>> from vFense._db import object_exist
+        >>> collection, = 'users'
+        >>> primary_key = 'admin'
+        >>> object_exist(primary_key, collection)
+
+    Returns:
+        Boolean
+    """
+    exist = False
+    try:
+        is_empty = (
+            r
+            .table(collection)
+            .get_all(primary_key)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return exist
 
 
 @time_it
@@ -134,7 +169,7 @@ def insert_data_in_table(data, table, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(results)
+    return results
 
 
 @time_it
@@ -173,7 +208,7 @@ def update_data_in_table(primary_key, data, table, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(results)
+    return results
 
 
 @time_it
@@ -206,4 +241,4 @@ def delete_all_in_table(table, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data

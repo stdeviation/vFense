@@ -33,6 +33,8 @@ class IncomingApplicationsFromAgent():
         self.customer_name = customer_name
         self.os_code = os_code
         self.os_string = os_string
+        self.inserted_count = 0
+        self.updated_count = 0
 
     def add_or_update_packages(self, app_list, delete_afterwards=True):
         rv_q = Queue('downloader', connection=rq_pkg_pool)
@@ -52,11 +54,15 @@ class IncomingApplicationsFromAgent():
             app_list[i] = self.set_app_per_node_parameters(app_list[i])
             app_list[i][AppsKey.AppId] = self.build_app_id(app_list[i])
             agent_app = self.set_specific_keys_for_app_agent(app_list[i])
-            unique_app, file_data = (
+            file_data = app_list[i].get(AppsKey.FileData)
+            counts = (
                 unique_application_updater(
                     self.customer_name, app_list[i], self.os_string
                 )
             )
+            self.inserted_count += counts[0]
+            self.updated_count += counts[1]
+
             if agent_app[AppsPerAgentKey.Status] == 'available':
                 rv_q.enqueue_call(
                     func=download_all_files_in_app,

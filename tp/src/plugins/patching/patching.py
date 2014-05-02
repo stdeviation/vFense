@@ -4,6 +4,7 @@ import urllib
 
 from hashlib import sha256
 from vFense.core._constants import *
+from vFense.core._db import object_exist, insert_data_in_table
 from vFense.core.agent._db import total_agents_in_customer
 from vFense.errorz.status_codes import DbCodes
 from vFense.plugins.patching import AppsKey, AppCollections
@@ -16,6 +17,11 @@ from vFense.plugins.patching._db import fetch_file_servers_addresses, \
     delete_app_data_for_agentid, update_apps_per_agent_by_customer, \
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid, \
     update_customers_in_apps_by_customer
+
+from vFense.plugins.vuln import SecurityBulletinKey
+import vFense.plugins.vuln.windows.ms as ms
+import vFense.plugins.vuln.ubuntu.usn as usn
+import vFense.plugins.vuln.cve.cve as cve
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -785,3 +791,148 @@ def update_app_status_by_agentid_and_appid(
             updated = True
 
     return(updated)
+
+def get_vulnerability_info_for_app(
+    os_string, app_name=None, app_version=None,
+    kb=''
+    ):
+    """Retrieve the relevant vulnerability for an application if
+        it exist. We search by using the kb for Windows and by using the name
+        and version for Ubuntu.
+
+    Args:
+        os_string (str): The operating system string.. example Ubuntu 12.0.4
+
+    Kwargs:
+        app_name (str, optional): The name of the application we are
+            searching for.
+            default = None
+        app_version (str, optional): The version of the application we are
+            searching for.
+            default = None
+        kb (str, optional): The knowledge base id of this application.
+            default = ''
+
+    Basic Usage:
+        >>> from vFense.plugins.patching.patching import get_vulnerability_info_for_app
+
+    Returns:
+        Dictionary
+    """
+
+    vuln_info = {}
+    vuln_data[AppsKey.CveIds] = []
+    vuln_data[AppsKey.VulnerabilityId] = ""
+    vuln_data[AppsKey.VulnerabilityCategories] = []
+
+    if kb != "" and os_string.find('Windows') == 0:
+        vuln_info = ms.get_vuln_ids(kb)
+
+    elif os_string.find('Ubuntu') == 0 and app_name and app_version:
+        vuln_info = (
+            usn.get_vuln_ids(
+                app[AppsKey.Name],
+                app[AppsKey.Version],
+                os_string
+            )
+        )
+    if vuln_info:
+        vuln_data[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
+        vuln_data[AppsKey.VulnerabilityId] = (
+            vuln_info[SecurityBulletinKey.BulletinId]
+        )
+        for cve_id in vuln_data[AppsKey.CveIds]:
+            vuln_data[AppsKey.VulnerabilityCategories] += (
+                cve.get_vulnerability_categories(cve_id)
+            )
+
+        vuln_data[AppsKey.VulnerabilityCategories] = (
+            list(set(vuln_data[AppsKey.VulnerabilityCategories]))
+        )
+
+    return vuln_data
+
+def unique_application_updater(customer_name, app_data, os_string):
+    """Insert or update an existing application.
+    Args:
+        customer_name (str): The name of the customer, this application
+            is a part of.
+        app_data (dict): Dictionary of the application data.
+        os_string (str): The name of the operating system... Ubuntu 12.04
+
+    Basic Usage:
+        >>> from vFense.plugins.patching.patching import unique_application_updater
+        >>> customer_name = 'default'
+        >>> app_data = {
+                "kb": "",
+                "vendor_name": "", 
+                "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
+                "release_date": 1394769600, 
+                "vendor_severity": "recommended", 
+                "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
+                "reboot_required": "no", 
+                "os_code": "linux", 
+                "repo": "precise-updates/main", 
+                "support_url": "", 
+                "version": "3.4.2-0ubuntu2.4", 
+                "rv_severity": "Recommended", 
+                "uninstallable": "yes", 
+                "name": "gwibber-service-facebook"
+            }
+        >>> os_string = 'Ubuntu 12.04 '
+        >>> unique_application_updater(customer_name, app_data, os_string)
+
+    Returns:
+        Tuple (inserted_count, updated_count)
+    """
+    updated_count = 0
+    inserted_count = 0
+    status = app_data.pop(AppsPerAgentKey.Status, None)
+    agent_id = app_data.pop(AppsPerAgentKey.AgentId, None)
+    app_data.pop(AppsPerAgentKey.InstallDate, None)
+    file_data = app_data.pop(AppsKey.FileData)
+    app_name = app_data.get(AppsKey.Name, None)
+    app_version = app_data.get(AppsKey.Version, None)
+    app_kb = app_data.get(AppsKey.Kb, '')
+    app_id = app_data.get(AppsKey.AppId)
+    exists = object_exist(app_id, AppCollections.UniqueApplications)
+
+    if exists:
+        add_file_data(app_id, file_data, agent_id)
+        update_customers_in_app_by_app_id(customer_name, app_id)
+        vuln_data = get_vulnerability_info_for_app(
+            os_string, app_name, app_version, app_kb
+        )
+        data_updated = update_app_data_by_app_id(
+            app_id, vuln_data,
+            AppCollections.UniqueApplications
+        )
+        if data_updated[0] == DbCodes.Replaced:
+            updated_count = data_updated[1]
+
+    else:
+        add_file_data(app_id, file_data, agent_id)
+        app_data[AppsKey.Customers] = [customer_name]
+        app_data[AppsKey.Hidden] = CommonKeys.NO
+        if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
+                len(file_data) > 0 and status == CommonAppKeys.INSTALLED):
+            app_data[AppsKey.FilesDownloadStatus] = PackageCodes.FilePendingDownload
+
+        elif len(file_data) == 0 and status == CommonAppKeys.AVAILABLE:
+            app_data[AppsKey.FilesDownloadStatus] = PackageCodes.MissingUri
+
+        elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
+            app_Data[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
+
+        vuln_data = (
+            get_vulnerability_info_for_app(
+                os_string, app_name, app_version, app_kb
+            )
+        )
+        app_data = dict(app_data.items() + vuln_data.items())
+
+        data_inserted = insert_data_in_table(app_data, AppCollections.UniqueApplications)
+        if data_inserted[0] == DbCodes.Inserted:
+            inserted_count = data_inserted[1]
+
+    return(inserted_count, updated_count)
