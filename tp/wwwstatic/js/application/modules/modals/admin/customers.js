@@ -232,6 +232,85 @@ define(
                             server_queue_ttl: serverQueueTTL,
                             agent_queue_ttl: agentQueueTTL
                         };
+
+                    /*this.$el.find('#newCustomerDiv input').focus(function() {
+                        $(this).parents('.control-group').removeClass('error');
+                        $(this).siblings('.help-block').empty().hide();
+                    });*/
+
+                    var alphaNumRegExp = /^[A-Za-z0-9]+$/,
+                        numRegExp = /^[0-9]+$/,
+                        urlRegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+                    if(!$.trim(customerName))
+                    {
+                        that.$el.find('#customerName').parents('.control-group').addClass('error');
+                        that.$el.find('#customerName').siblings('.help-block').html('Customer Name should not be empty.').show();
+                        return false;
+                    }
+                    else if(!alphaNumRegExp.test(customerName))
+                    {
+                        that.$el.find('#customerName').parents('.control-group').addClass('error');
+                        that.$el.find('#customerName').siblings('.help-block').html('Customer Name should have alphanumeric characters only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#customerName').parents('.control-group').removeClass('error');
+                        that.$el.find('#customerName').siblings('.help-block').empty().hide();
+                    }
+
+                    if(!_.isEmpty(downloadURL))
+                    {
+                        if(!urlRegExp.test(downloadURL))
+                        {
+                            that.$el.find('#downloadURL').parents('.control-group').addClass('error');
+                            that.$el.find('#downloadURL').siblings('.help-block').html('Invalid URL format.').show();
+                            return false;
+                        }
+                        else
+                        {
+                            that.$el.find('#downloadURL').parents('.control-group').removeClass('error');
+                            that.$el.find('#downloadURL').siblings('.help-block').empty().hide();
+                        }
+                    }
+
+                    if(!numRegExp.test(netThrottle))
+                    {
+                        that.$el.find('#netThrottle').parents('.control-group').addClass('error');
+                        that.$el.find('#netThrottle').siblings('.help-block').html('Net Throttle should have numbers only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#netThrottle').parents('.control-group').removeClass('error');
+                        that.$el.find('#netThrottle').siblings('.help-block').empty().hide();
+                    }
+
+                    if(!numRegExp.test(serverQueueTTL))
+                    {
+                        that.$el.find('#serverQueueTTL').parents('.control-group').addClass('error');
+                        that.$el.find('#serverQueueTTL').siblings('.help-block').html('Server Queue TTL should have numbers only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#serverQueueTTL').parents('.control-group').removeClass('error');
+                        that.$el.find('#serverQueueTTL').siblings('.help-block').empty().hide();
+                    }
+
+                    if(!numRegExp.test(agentQueueTTL))
+                    {
+                        that.$el.find('#agentQueueTTL').parents('.control-group').addClass('error');
+                        that.$el.find('#agentQueueTTL').siblings('.help-block').html('Agent Queue TTL should have numbers only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#agentQueueTTL').parents('.control-group').removeClass('error');
+                        that.$el.find('#agentQueueTTL').siblings('.help-block').empty().hide();
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: 'api/v1/customers',

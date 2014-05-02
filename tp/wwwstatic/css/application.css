@@ -765,9 +765,9 @@ BODY > HEADER #primaryNav {
 .list SELECT,
 .list INPUT[type="text"],
 .list INPUT[type="password"] {
-    font-size: 12px;
+    /*font-size: 12px;
     height: 21px;
-    width: 110px;
+    width: 110px;*/
     margin-bottom: 0;
 }
 .list .input-prepend,

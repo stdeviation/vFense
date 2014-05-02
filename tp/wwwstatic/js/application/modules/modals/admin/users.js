@@ -188,6 +188,70 @@ define(
                     params.group_ids = this.groupsArray;
                     params.customer_names = this.customersArray;
 
+                    var alphaNumRegExp = /^[A-Za-z0-9 ]+$/,
+                        numRegExp = /^[0-9]+$/,
+                        emailRegExp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                    if(!_.isEmpty(fullName))
+                    {
+                        if(!alphaNumRegExp.test(fullName))
+                        {
+                            that.$el.find('#fullname').parents('.control-group').addClass('error');
+                            that.$el.find('#fullname').siblings('.help-block').html('Full Name should have alphanumeric characters only.').show();
+                            return false;
+                        }
+                        else
+                        {
+                            that.$el.find('#fullname').parents('.control-group').removeClass('error');
+                            that.$el.find('#fullname').siblings('.help-block').empty().hide();
+                        }
+                    }
+
+                    if(!_.isEmpty(email))
+                    {
+                        if(!emailRegExp.test(email))
+                        {
+                            that.$el.find('#email').parents('.control-group').addClass('error');
+                            that.$el.find('#email').siblings('.help-block').html('Invalid Email-ID format.').show();
+                            return false;
+                        }
+                        else
+                        {
+                            that.$el.find('#email').parents('.control-group').removeClass('error');
+                            that.$el.find('#email').siblings('.help-block').empty().hide();
+                        }
+                    }
+
+                    if(!$.trim(username))
+                    {
+                        that.$el.find('#username').parents('.control-group').addClass('error');
+                        that.$el.find('#username').siblings('.help-block').html('Username Name should not be empty.').show();
+                        return false;
+                    }
+                    else if(!alphaNumRegExp.test(username))
+                    {
+                        that.$el.find('#username').parents('.control-group').addClass('error');
+                        that.$el.find('#username').siblings('.help-block').html('Username should have alphanumeric characters only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#username').parents('.control-group').removeClass('error');
+                        that.$el.find('#username').siblings('.help-block').empty().hide();
+                    }
+
+                    if(password.length < 8)
+                    {
+                        that.$el.find('#password').parents('.control-group').addClass('error');
+                        that.$el.find('#password').siblings('.help-block').html('Password should be of atleast 8 characters').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#password').parents('.control-group').removeClass('error');
+                        that.$el.find('#password').siblings('.help-block').empty().hide();
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/v1/users',
@@ -381,7 +445,7 @@ define(
                                         var results = [];
                                         if (data.rv_status_code === 1001) {
                                             _.each(data.data, function (object) {
-                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                                results.push({id: object.id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
                                             });
                                             return {results: results, more: false, context: results};
                                         }
