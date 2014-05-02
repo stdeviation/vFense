@@ -46,11 +46,7 @@ def add_file_data(app_id, file_data, agent_id=None):
             data_to_insert.append(uri)
 
     if data_to_insert:
-        print  'inserting data',  data_to_insert
         insert_file_data(app_id, data_to_insert, agent_id)
 
     elif data_to_update:
-        print  'updating data',  data_to_update
-        print app_id, agent_id
-        insert_file_data(app_id, data_to_insert, agent_id)
-        update_file_data(app_id, data_to_insert, agent_id)
+        update_file_data(app_id, data_to_update, agent_id)

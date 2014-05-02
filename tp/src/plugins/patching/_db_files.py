@@ -249,7 +249,6 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-
     data = {}
     try:
         if agent_id:
