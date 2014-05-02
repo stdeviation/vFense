@@ -1,3 +1,9 @@
+def get_listener_api_handlers():
+    pass
+
+def get_web_api_handlers():
+    pass
+
 class AppCollections():
     UniqueApplications = 'unique_applications'
     AppsPerAgent = 'apps_per_agent'
