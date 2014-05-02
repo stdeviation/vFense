@@ -27,46 +27,6 @@ logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-
-
-@db_create_close
-def update_os_app(app_id, data, table=AppCollections.UniqueApplications, conn=None):
-    app_updated = None
-    try:
-        exists = (
-            r
-            .table(table)
-            .get(app_id)
-            .run(conn)
-        )
-        if exists:
-            app_updated = (
-                r
-                .table(table)
-                .get(app_id)
-                .update(data)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(app_updated)
-
-
-def update_custom_app(app_id, data, table=AppCollections.CustomApps):
-    return(update_os_app(app_id, data, table))
-
-
-def update_supported_app(app_id, data, table=AppCollections.SupportedApps):
-    return(update_os_app(app_id, data, table))
-
-
-def update_agent_app(app_id, data, table=AppCollections.vFenseApps):
-    return(update_os_app(app_id, data, table))
-
-
-
 def update_vulnerability_info_app(
     app_id, app, exists, os_string,
     table=AppCollections.UniqueApplications
