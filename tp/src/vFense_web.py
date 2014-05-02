@@ -113,12 +113,6 @@ class Application(tornado.web.Application):
                 GetAllValidFieldsForNotifications),
             (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
-            ###### Monitoring Api
-            #(r"/api/monitor/memory/?", GetMemoryStats),
-            #(r"/api/monitor/filesystem/?", GetFileSystemStats),
-            #(r"/api/monitor/cpu/?", GetCpuStats),
-            #(r"/api/monitor/?", GetAllStats),
-
             ##### RA Api
             (r"/api/ra/rd/password/?", SetPassword),
             (r"/api/ra/rd/([^/]+)/?", RDSession),
@@ -251,7 +245,6 @@ class Application(tornado.web.Application):
         # TODO: check for colliding regex's from plugins
         handlers.extend(core_loader.get_core_web_api_handlers())
         handlers.extend(plugin_loader.get_plugins_web_api_handlers())
-
 
         template_path = "/opt/TopPatch/tp/templates"
         settings = {
