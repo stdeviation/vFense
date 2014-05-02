@@ -67,7 +67,7 @@ def update_vulnerability_info_app(
         )
 
         if exists:
-            update_os_app(app_id, app, table)
+            update_app_data_by_app_id(app_id, app, table)
 
     app[AppsKey.AppId] = app_id
 
