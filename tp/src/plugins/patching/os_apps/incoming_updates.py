@@ -79,8 +79,8 @@ class IncomingApplicationsFromAgent():
 
         inserted, updated, deleted = (
             add_or_update_apps_per_agent(
-                good_app_list, self.modified_time,
-                delete_afterwards
+                self.agent_id, good_app_list,
+                self.modified_time, delete_afterwards
             )
         )
         #end_time = datetime.now()

@@ -12,7 +12,8 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import DbCodes, GenericCodes, \
     GenericFailureCodes, PackageCodes, PackageFailureCodes
 
-from vFense.plugins.patching import AppsKey, AppCollections
+from vFense.plugins.patching import AppsKey, AppCollections, \
+        DbCommonAppKeys, DbCommonAppPerAgentKeys
 from vFense.plugins.patching._db_constants import DbTime
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
@@ -20,12 +21,14 @@ from vFense.plugins.patching._constants import CommonAppKeys, \
 from vFense.core.decorators import time_it, results_message
 from vFense.core.customer import CustomerKeys
 from vFense.core.customer.customers import get_customer_property
+from vFense.plugins.patching.file_data import add_file_data
 from vFense.plugins.patching._db import fetch_file_servers_addresses, \
     delete_app_data_for_agentid, update_apps_per_agent_by_customer, \
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid, \
     update_customers_in_apps_by_customer, update_apps_per_agent, \
     delete_apps_per_agent_older_than, update_hidden_status, \
-    fetch_app_id_by_name_and_version
+    fetch_app_id_by_name_and_version, update_customers_in_app_by_app_id, \
+    update_app_data_by_app_id
 
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
@@ -858,6 +861,7 @@ def get_vulnerability_info_for_app(
         Dictionary
     """
 
+    vuln_data = {}
     vuln_info = {}
     vuln_data[AppsKey.CveIds] = []
     vuln_data[AppsKey.VulnerabilityId] = ""
@@ -869,11 +873,10 @@ def get_vulnerability_info_for_app(
     elif os_string.find('Ubuntu') == 0 and app_name and app_version:
         vuln_info = (
             usn.get_vuln_ids(
-                app[AppsKey.Name],
-                app[AppsKey.Version],
-                os_string
+                app_name, app_version, os_string
             )
         )
+
     if vuln_info:
         vuln_data[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
         vuln_data[AppsKey.VulnerabilityId] = (
@@ -926,14 +929,14 @@ def unique_application_updater(customer_name, app_data, os_string):
     """
     updated_count = 0
     inserted_count = 0
-    status = app_data.pop(AppsPerAgentKey.Status, None)
-    agent_id = app_data.pop(AppsPerAgentKey.AgentId, None)
-    app_data.pop(AppsPerAgentKey.InstallDate, None)
-    file_data = app_data.pop(AppsKey.FileData)
-    app_name = app_data.get(AppsKey.Name, None)
-    app_version = app_data.get(AppsKey.Version, None)
-    app_kb = app_data.get(AppsKey.Kb, '')
-    app_id = app_data.get(AppsKey.AppId)
+    status = app_data.pop(DbCommonAppPerAgentKeys.Status, None)
+    agent_id = app_data.pop(DbCommonAppPerAgentKeys.AgentId, None)
+    app_data.pop(DbCommonAppPerAgentKeys.InstallDate, None)
+    file_data = app_data.pop(DbCommonAppKeys.FileData)
+    app_name = app_data.get(DbCommonAppKeys.Name, None)
+    app_version = app_data.get(DbCommonAppKeys.Version, None)
+    app_kb = app_data.get(DbCommonAppKeys.Kb, '')
+    app_id = app_data.get(DbCommonAppKeys.AppId)
     exists = object_exist(app_id, AppCollections.UniqueApplications)
 
     if exists:
@@ -978,11 +981,12 @@ def unique_application_updater(customer_name, app_data, os_string):
 
 @time_it
 def add_or_update_apps_per_agent(
-    pkg_list, now=None, delete_afterwards=True,
+    agent_id, pkg_list, now=None, delete_afterwards=True,
     table=AppCollections.AppsPerAgent
     ):
     """Add or update apps for an agent.
     Args:
+        agent_id (str): The 36 character UUID of the agent.
         pkg_list (list): List of dictionaries.
 
     Kwargs:
@@ -995,6 +999,7 @@ def add_or_update_apps_per_agent(
         >>> from vFense.plugins.patching._db import add_or_update_apps_per_agent
         >>> table = 'apps_per_agent'
         >>> now = 1399075090.83746
+        >>> agent_id = '78211125-3c1e-476a-98b6-ea7f683142b3'
         >>> delete_unused_apps = True
         >>> pkg_list = [
                 {
@@ -1024,11 +1029,17 @@ def add_or_update_apps_per_agent(
     inserted = 0
     deleted = 0
     status_code, count, errors, generated_ids = (
-        update_apps_per_agent(pkg_list)
+        update_apps_per_agent(pkg_list, table)
     )
-    if len(count) > 1:
-        inserted = count[0]
-        updated = count[1]
+    if isinstance(count, list):
+        if len(count) > 1:
+            inserted = count[0]
+            updated = count[1]
+    else:
+        if status_code == DbCodes.Replaced:
+            updated = count
+        elif status_code == DbCodes.Inserted:
+            inserted = count
 
     if delete_afterwards:
         if not now:
@@ -1040,7 +1051,7 @@ def add_or_update_apps_per_agent(
                 now = DbTime.time_now()
 
         status_code, count, errors, generated_ids = (
-            delete_apps_per_agent_older_than(now)
+            delete_apps_per_agent_older_than(agent_id, now, table)
         )
         deleted = count
 
@@ -1081,7 +1092,7 @@ def delete_apps_from_agent_by_name_and_version(
     if app_id:
         agent_app_id = build_agent_app_id(agent_id, app_id)
         status_code, count, error, generated_ids = (
-            delete_data_in_table(agent_app_id)
+            delete_data_in_table(agent_app_id, table)
         )
         if status_code == DbCodes.Deleted:
             completed = True
