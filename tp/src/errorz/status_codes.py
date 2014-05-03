@@ -199,8 +199,14 @@ class PackageCodes(object):
     ThisIsAnUpdate = 5014
     ToggleHiddenSuccessful = 5015
     AgentWillDownloadFromVendor = 5016
-    PackageDeleted = 517
-    PackagesDeletionFailed = 518
+    PackageDeleted = 5017
+    PackagesDeletionFailed = 5018
+
+
+class PackageFailureCodes(object):
+    ToggleHiddenFailed = 5300
+    InvalidToggle = 5301
+    ApplicationDoesntExist = 5302
 
 
 class AgentOperationCodes(object):

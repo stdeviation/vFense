@@ -3,23 +3,29 @@ import logging
 import urllib
 
 from hashlib import sha256
-from vFense.core._constants import *
+from vFense.core._constants import CommonKeys
 from vFense.core._db import object_exist, insert_data_in_table, \
     delete_data_in_table
+
 from vFense.core.agent._db import total_agents_in_customer
-from vFense.errorz.status_codes import DbCodes
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import DbCodes, GenericCodes, \
+    GenericFailureCodes, PackageCodes, PackageFailureCodes
+
 from vFense.plugins.patching import AppsKey, AppCollections
 from vFense.plugins.patching._db_constants import DbTime
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
-from vFense.core.decorators import time_it 
+
+from vFense.core.decorators import time_it, results_message
 from vFense.core.customer import CustomerKeys
 from vFense.core.customer.customers import get_customer_property
 from vFense.plugins.patching._db import fetch_file_servers_addresses, \
     delete_app_data_for_agentid, update_apps_per_agent_by_customer, \
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid, \
     update_customers_in_apps_by_customer, update_apps_per_agent, \
-    delete_apps_per_agent_older_than
+    delete_apps_per_agent_older_than, update_hidden_status, \
+    fetch_app_id_by_name_and_version
 
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
@@ -971,7 +977,49 @@ def unique_application_updater(customer_name, app_data, os_string):
     return(inserted_count, updated_count)
 
 @time_it
-def add_or_update_apps_per_agent(pkg_list, now=None, delete_afterwards=True):
+def add_or_update_apps_per_agent(
+    pkg_list, now=None, delete_afterwards=True,
+    table=AppCollections.AppsPerAgent
+    ):
+    """Add or update apps for an agent.
+    Args:
+        pkg_list (list): List of dictionaries.
+
+    Kwargs:
+        now (float|int): The time in epoch
+            default = None
+        table (str): The name of the table this is applied too.
+            default = apps_per_agent
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import add_or_update_apps_per_agent
+        >>> table = 'apps_per_agent'
+        >>> now = 1399075090.83746
+        >>> delete_unused_apps = True
+        >>> pkg_list = [
+                {
+                    "status": "installed", 
+                    "install_date": 1397697799, 
+                    "app_id": "c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c", 
+                    "update": 5014, 
+                    "dependencies": [], 
+                    "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3", 
+                    "last_modified_time": 1398997520, 
+                    "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f", 
+                    "customer_name": "default"
+                }
+            ]
+        >>> add_or_update_apps_per_agent(
+                pkg_list, now,
+                delete_unused_apps,
+                table
+            )
+
+    Returns:
+        Tuple
+        >>> (insert_count, updated_count, deleted_count)
+
+    """
     updated = 0
     inserted = 0
     deleted = 0
@@ -985,6 +1033,12 @@ def add_or_update_apps_per_agent(pkg_list, now=None, delete_afterwards=True):
     if delete_afterwards:
         if not now:
             now = DbTime.time_now()
+        else:
+            if isinstance(now, float) or isinstance(now, int):
+                now = DbTime.epoch_time_to_db_time(now)
+            else:
+                now = DbTime.time_now()
+
         status_code, count, errors, generated_ids = (
             delete_apps_per_agent_older_than(now)
         )
@@ -1019,14 +1073,91 @@ def delete_apps_from_agent_by_name_and_version(
         >>> delete_apps_from_agent_by_name_and_version(agent_id, name, version, table)
 
     Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
+        Boolean
+        >>> True
     """
+    completed = False
     app_id = fetch_app_id_by_name_and_version(app_name, app_version)
     if app_id:
         agent_app_id = build_agent_app_id(agent_id, app_id)
         status_code, count, error, generated_ids = (
             delete_data_in_table(agent_app_id)
         )
+        if status_code == DbCodes.Deleted:
+            completed = True
 
-    return app_id
+    return completed
+
+@time_it
+@results_message
+def toggle_hidden_status(
+    app_ids, hidden=CommonKeys.TOGGLE,
+    table=AppCollections.UniqueApplications,
+    user_name=None, uri=None, method=None
+    ):
+    """Toggle the hidden status of an application
+    Args:
+        app_ids (list): List of application ids.
+
+    Kwargs:
+        hidden (str, optional): yes, no, or toggle
+            default = toggle
+        table (str, optional): The table you are updating for.
+            table = unique_applications
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching.patching import toggle_hidden_status
+        >>> hidden = 'toggle'
+        >>> app_ids = ['c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c']
+        >>> toggle_hidden_status(app_ids, hidden)
+
+    Returns:
+    """
+    status = toggle_hidden_status.func_name + ' - '
+    results = {
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method,
+    }
+    status_code, count, error, generated_ids = (
+        update_hidden_status(
+            app_ids, hidden, table
+        )
+    )
+    if status_code == DbCodes.Replaced:
+        msg = 'Hidden status updated'
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = PackageCodes.ToggleHiddenSuccessful
+        results[ApiResultKeys.UPDATED_IDS] = app_ids
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        msg = 'Hidden status could not be updated.'
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
+
+    elif status_code == DbCodes.DoesntExist:
+        msg = (
+            'Hidden status could not be updated: app_ids do not exist - %s.'
+            % (','.join(app_ids))
+        )
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = PackageFailureCodes.ApplicationDoesntExist
+
+    elif status_code == DbCodes.Errors:
+        msg = (
+            'Hidden status could not be updated: error occured - %s.'
+            % (error)
+        )
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
+
+    results[ApiResultKeys.DB_STATUS_CODE] = status_code
+    results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+    results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+    results[ApiResultKeys.MESSAGE] = status + msg
+
+    return results

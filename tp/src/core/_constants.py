@@ -1,6 +1,7 @@
 class CommonKeys():
     YES = 'yes'
     NO = 'no'
+    TOGGLE = 'toggle'
     TRUE = 'true'
     FALSE = 'false'
     COUNT = 'count'

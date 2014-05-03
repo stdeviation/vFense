@@ -4,10 +4,11 @@ from hashlib import sha256
 
 from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
-from vFense.plugins.patching._db import add_or_update_apps_per_agent, \
-    unique_application_updater
 from vFense.plugins.patching import AppsKey, AppsPerAgentKey
 from vFense.plugins.patching._db_constants import DbTime
+from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
+    unique_application_updater
+
 from vFense.plugins.patching.downloader.downloader import download_all_files_in_app
 import re
 

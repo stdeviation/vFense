@@ -978,6 +978,10 @@ def update_app_data_by_app_id(
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+
     """
     data = {}
     try:
@@ -986,7 +990,7 @@ def update_app_data_by_app_id(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 def update_custom_app_data_by_app_id(
@@ -1002,6 +1006,9 @@ def update_custom_app_data_by_app_id(
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
@@ -1026,6 +1033,9 @@ def update_supported_app_data_by_app_id(
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
@@ -1050,6 +1060,9 @@ def update_vfense_app_data_by_app_id(
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
@@ -1063,11 +1076,12 @@ def update_vfense_app_data_by_app_id(
 @time_it
 @db_create_close
 def delete_apps_per_agent_older_than(
-    now, table=AppCollections.AppsPerAgent, conn=None
+    data, now, table=AppCollections.AppsPerAgent, conn=None
     ):
     """Delete all apps_per_agent that are older than now,
     Args:
-        now (rql_epoch_time): RQL epoch time object.
+        agent_id (str): The 36 character UUID of the agent.
+        now (rethinkdb.ast.EpochTime): RQL epoch time object.
 
     Kwargs:
         table (str): The name of the table you are perfoming the delete on.
@@ -1089,12 +1103,11 @@ def delete_apps_per_agent_older_than(
             r
             .table(table)
             .get_all(
-                pkg[DbCommonAppPerAgentKeys.AgentId],
+                agent_id,
                 index=DbCommonAppPerAgentIndexes.AgentId
             )
             .filter(
-                r.row[DbCommonAppPerAgentKeys.LastModifiedTime] <
-                r.epoch_time(last_modified_time)
+                r.row[DbCommonAppPerAgentKeys.LastModifiedTime] < now
             )
             .delete()
             .run(conn)
@@ -1145,3 +1158,76 @@ def update_apps_per_agent(
     """
     data = insert_data_in_table(pkg_list)
     return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_hidden_status(
+    app_ids, hidden=CommonKeys.TOGGLE,
+    table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Update the global hidden status of an application
+    Args:
+        app_ids (list): List of application ids.
+
+    Kwargs:
+        hidden (str, optional): yes, no, or toggle
+            default = toggle
+        table (str, optional): The table you are updating for.
+            table = unique_applications
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_hidden_status
+        >>> hidden = 'toggle'
+        >>> app_ids = ['c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c']
+        >>> update_hidden_status(app_ids, hidden)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        if hidden == CommonKeys.YES or hidden == CommonKeys.NO:
+            data = (
+                r
+                .expr(app_ids)
+                .for_each(
+                    lambda app_id:
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .update(
+                        {
+                            DbCommonAppKeys.Hidden: hidden
+                        }
+                    )
+                )
+                .run(conn)
+            )
+
+        elif hidden == CommonKeys.TOGGLE:
+            for app_id in app_ids:
+                data = (
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .update(
+                        {
+                            DbCommonAppKeys.Hidden: (
+                                r.branch(
+                                    r.row[DbCommonAppKeys.Hidden] == CommonKeys.YES,
+                                    CommonKeys.NO,
+                                    CommonKeys.YES
+                                )
+                            )
+                        }
+                    )
+                    .run(conn)
+                )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)

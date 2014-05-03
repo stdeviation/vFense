@@ -11,3 +11,8 @@ class DbTime(object):
     @staticmethod
     def begining_of_time():
         return(r.epoch_time(0.0))
+
+
+    @staticmethod
+    def epoch_time_to_db_time(epoch):
+        return(r.epoch_time(epoch))
