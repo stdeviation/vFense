@@ -14,18 +14,12 @@ import tornado.options
 
 import vFense_module_loader
 
-from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
 from vFense.core.api.base import WebSocketHandler, AdminHandler
-from vFense.receiver.api.core.newagent import NewAgentV1
-from vFense.receiver.api.core.checkin import CheckInV1
-from vFense.receiver.api.core.startup import StartUpV1
-from vFense.receiver.api.core.result_uris import ResultURIs
-from vFense.receiver.api.rv.results import *
-from vFense.receiver.api.core.results import *
+from vFense.receiver.api.rv.results import InstallOsAppsResults, \
+    InstallCustomAppsResults, InstallSupportedAppsResults, \
+    InstallAgentAppsResults, UninstallAppsResults
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
 from vFense.receiver.api.ra.results import RemoteDesktopResults
-
-from vFense.db.client import *
 
 from tornado.options import define, options
 
@@ -43,19 +37,8 @@ class Application(tornado.web.Application):
             #RA plugin
             (r"/rvl/ra/rd/results/?", RemoteDesktopResults),
 
-            #Login and Logout Operations
-            (r"/rvl/?", RootHandler),
-            (r"/rvl/login/?", RvlLoginHandler),
-            (r"/rvl/logout/?", RvlLogoutHandler),
-
             #Operations for the New Core Plugin
-            (r"/rvl/v1/core/newagent/?", NewAgentV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIs),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?", CheckInV1),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/updatesapplications/?", UpdateApplicationsV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?", ShutdownResultsV1),
 
             #New Operations for the New RV Plugin
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/os?",
@@ -67,7 +50,7 @@ class Application(tornado.web.Application):
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/agent?",
                 InstallAgentAppsResults),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/uninstall?",
-                UnInstallAppsResults),
+                UninstallAppsResults),
 
         ]
 
