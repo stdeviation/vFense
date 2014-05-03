@@ -2,8 +2,6 @@ import os
 import re
 import sys
 import gc
-from time import mktime
-from datetime import datetime
 import logging
 import logging.config
 
@@ -13,8 +11,9 @@ from datetime import datetime
 from xlrd import open_workbook, xldate_as_tuple
 
 from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.windows import *
-from vFense.plugins.vuln.windows._constants import *
+from vFense.plugins.vuln.windows import WindowsSecurityBulletinKey
+from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
+    WindowsBulletinStrings
 from vFense.plugins.vuln.windows._db import insert_bulletin_data
 from vFense.plugins.vuln.windows.downloader import download_latest_xls_from_msft
 from vFense.db.client import r
@@ -49,15 +48,18 @@ def parse_spread_sheet(bulletin_file):
             row[1] + row[2] + row[3] + row[4] +
             row[6] + row[7] + row[8] + row[9]
         )
-        rows_to_use = unicode(rows_to_use).encode(sys.stdout.encoding, 'replace')
-        id = build_bulletin_id(rows_to_use)
-        bulletin_dict[WindowsSecurityBulletinKey.Id] = id
+        rows_to_use = \
+            unicode(rows_to_use).encode(sys.stdout.encoding, 'replace')
+        built_id = build_bulletin_id(rows_to_use)
+        bulletin_dict[WindowsSecurityBulletinKey.Id] = built_id
         date = xldate_as_tuple(row[0], workbook.datemode)
         epoch_time = mktime(datetime(*date).timetuple())
         bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
             r.epoch_time(epoch_time)
         )
-        #Need to see if I can pull the column names and use that instead of using the row number
+
+        # Need to see if I can pull the column names and use that instead
+        # of using the row number
         bulletin_dict[WindowsSecurityBulletinKey.BulletinId] = row[1]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
         bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
@@ -68,6 +70,7 @@ def parse_spread_sheet(bulletin_file):
         bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentImpact] = row[9]
         bulletin_dict[WindowsSecurityBulletinKey.ComponentSeverity] = row[10]
+
         if len(row) == 15:
             supercedes = row[12]
             reboot = row[13]
@@ -89,8 +92,10 @@ def parse_spread_sheet(bulletin_file):
 
             supercede_list.append(
                 {
-                    WindowsSecurityBulletinKey.SupersedesBulletinId: bulletin_id,
-                    WindowsSecurityBulletinKey.SupersedesBulletinKb: bulletin_kb
+                    WindowsSecurityBulletinKey.SupersedesBulletinId:
+                        bulletin_id,
+                    WindowsSecurityBulletinKey.SupersedesBulletinKb:
+                        bulletin_kb
                 }
             )
         bulletin_dict[WindowsSecurityBulletinKey.Supersedes] = supercede_list

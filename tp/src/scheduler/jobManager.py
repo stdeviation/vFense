@@ -16,8 +16,9 @@ from vFense.core.tag import *
 from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
     get_tags_info_from_tag_ids, get_agent_ids_from_tag
 from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import \
-    get_appids_by_agentid_and_status, get_app_data, get_app_data_by_appids
+from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
+    fetch_app_data
 from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.errorz.error_messages import GenericResults, SchedulerResults
 from vFense.server.hierarchy import *
@@ -282,15 +283,15 @@ def get_appid_list(agent_id, severity=None,
 
     if severity in severities:
         appids = (
-            get_appids_by_agentid_and_status(
-                agent_id, AVAILABLE, severity,
+            fetch_appids_by_agentid_and_status(
+                agent_id, CommonAppKeys.AVAILABLE, severity,
                 table
             )
         )
     else:
         appids = (
-            get_appids_by_agentid_and_status(
-                agent_id, AVAILABLE,
+            fetch_appids_by_agentid_and_status(
+                agent_id, CommonAppKeys.AVAILABLE,
                 table=table
             )
         )
@@ -301,7 +302,7 @@ def get_appid_list(agent_id, severity=None,
 def get_app_for_appids(table, app_id, conn=None):
     fields_to_pluck = [AppsKey.AppId, AppsKey.Name, AppsKey.RvSeverity]
     app = (
-        get_app_data(
+        fetch_app_data(
             app_id, table=table,
             fields_to_pluck=fields_to_pluck
         )
@@ -359,7 +360,7 @@ def get_agent_apps_details(job, agent_id, details=True, conn=None):
 
     if app_ids_needed and details:
         apps = (
-            get_app_data_by_appids(
+            fetch_app_data_by_appids(
                 app_ids_needed,
                 table=CurrentAppsCollection,
                 fields_to_pluck=app_keys_to_pluck

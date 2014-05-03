@@ -5,5 +5,6 @@ class WindowsDataDir():
     XLS_DIR = os.path.join(PLUGIN_DIR, 'data/xls')
 
 class WindowsBulletinStrings():
-    XLS_DOWNLOAD_URL = 'http://www.microsoft.com/en-us/download/confirmation.aspx?id=36982'
+    XLS_DOWNLOAD_URL = \
+        'http://www.microsoft.com/en-us/download/confirmation.aspx?id=36982'
     WORKBOOK_SHEET = 'Bulletin Search'

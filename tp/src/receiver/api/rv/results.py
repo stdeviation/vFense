@@ -238,7 +238,7 @@ class InstallAgentAppsResults(BaseHandler):
             self.write(dumps(results, indent=4))
 
 
-class UnInstallAppsResults(BaseHandler):
+class UninstallAppsResults(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):

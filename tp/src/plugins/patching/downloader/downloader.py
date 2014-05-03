@@ -4,8 +4,9 @@ import os
 import re
 from vFense.plugins.patching import AppsKey
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching.rv_db_calls import update_os_app,\
-    update_supported_app, update_agent_app
+from vFense.plugins.patching._db import update_app_data_by_app_id, \
+    update_supported_app_data_by_app_id, update_vfense_app_data_by_app_id
+
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core.agent import *
 from urlgrabber import urlgrab
@@ -38,7 +39,7 @@ def download_all_files_in_app(
                     AppsKey.FilesDownloadStatus: PackageCodes.AgentWillDownloadFromVendor
                 }
             )
-            update_os_app(app_id, download_status)
+            update_app_data_by_app_id(app_id, download_status)
     
     elif len(file_data) > 0:
         num_of_files_to_download = len(file_data)
@@ -51,7 +52,7 @@ def download_all_files_in_app(
                 AppsKey.FilesDownloadStatus: PackageCodes.FileIsDownloading
             }
         )
-        update_os_app(app_id, new_status)
+        update_app_data_by_app_id(app_id, new_status)
         for file_info in file_data:
             uri = str(file_info[CommonFileKeys.PKG_URI])
             lhash = str(file_info[CommonFileKeys.PKG_HASH])
@@ -132,13 +133,20 @@ def download_all_files_in_app(
                 PackageCodes.InvalidUri
             )
 
+        db_update_response = None
+
         if collection == 'os_apps':
-            update_os_app(app_id, new_status)
+            db_update_response = update_app_data_by_app_id(app_id, new_status)
 
         elif collection == 'supported_apps':
-            update_supported_app(app_id, new_status)
+            db_update_response = \
+                update_supported_app_data_by_app_id(app_id, new_status)
 
         elif collection == 'agent_apps':
-            update_agent_app(app_id, new_status)
+            db_update_response = \
+                update_vfense_app_data_by_app_id(app_id, new_status)
 
-        logger.info('%s, %s, %s' % (collection, app_id, str(new_status)))
+        logger.info(
+            '%s, %s, %s, %s' %
+            (collection, app_id, str(new_status), db_update_response)
+        )

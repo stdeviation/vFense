@@ -29,7 +29,7 @@ def return_status_tuple(fn):
                 DbCodes.Errors, status['errors'], status['first_error'], []
             )
 
-        elif status['inserted'] > 0:
+        elif status['inserted'] > 0 and status['replaced'] < 1:
             if status.get('generated_keys'):
                 return_code = (
                     DbCodes.Inserted, status['inserted'],
@@ -41,7 +41,19 @@ def return_status_tuple(fn):
                     None, []
                 )
 
-        elif status['replaced'] > 0:
+        elif status['inserted'] > 0 and status['replaced'] > 0:
+            if status.get('generated_keys'):
+                return_code = (
+                    DbCodes.Inserted, (status['inserted'], status['replaced']),
+                    None, status['generated_keys']
+                )
+            else:
+                return_code = (
+                    DbCodes.Inserted, (status['inserted'], status['replaced']),
+                    None, []
+                )
+
+        elif status['replaced'] > 0 and status['inserted'] < 1:
             return_code = (DbCodes.Replaced, status['replaced'], None, [])
 
         elif status['skipped'] > 0:

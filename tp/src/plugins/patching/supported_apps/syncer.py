@@ -2,14 +2,17 @@ from time import mktime
 from datetime import datetime
 import logging
 import requests
+from vFense.core._db import delete_all_in_table
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info 
 from vFense.errorz.status_codes import PackageCodes
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching.rv_db_calls import insert_file_data,\
-    build_agent_app_id, update_file_data,\
-    get_apps_data, delete_all_in_table, insert_data_into_table
+from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
+    insert_app_data
+from vFense.plugins.patching.patching import build_agent_app_id
+from vFense.plugins.patching.file_data import add_file_data
+
 from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
 from vFense.db.client import db_connect, r, db_create_close
@@ -91,10 +94,10 @@ class IncomingSupportedOrAgentApps(object):
                     for agent in agents:
                         if agent[AgentKey.OsCode] == app[AgentKey.OsCode]:
                             agent[self.CurrentAppsPerAgentKey.AppId] = app[self.CurrentAppsPerAgentKey.AppId]
-                            update_file_data(
+                            add_file_data(
                                 agent[self.CurrentAppsPerAgentKey.AppId],
+                                file_data,
                                 agent[self.CurrentAppsPerAgentKey.AgentId],
-                                file_data
                             )
                             app_per_agent_props = self._set_app_per_agent_properties(**agent)
                             agent_has_app = self.check_if_agent_has_app(agent)
@@ -290,9 +293,9 @@ def update_supported_and_agent_apps(json_data, table=AppCollections.SupportedApp
             json_data[i][CurrentAppsKey.ReleaseDate] = r.epoch_time(json_data[i][CurrentAppsKey.ReleaseDate])
             json_data[i][CurrentAppsKey.FilesDownloadStatus] = PackageCodes.FilePendingDownload
             json_data[i][CurrentAppsKey.Hidden] = 'no'
-            insert_data_into_table(json_data[i], LatestDownloadedCollection)
+            insert_app_data(json_data[i], LatestDownloadedCollection)
             file_data = json_data[i].get(CurrentAppsKey.FileData)
-            insert_file_data(json_data[i][CurrentAppsKey.AppId], file_data)
+            add_file_data(json_data[i][CurrentAppsKey.AppId], file_data)
             data_to_update = (
                 {
                     CurrentAppsKey.Customers: all_customers
@@ -354,7 +357,7 @@ def get_agents_apps():
 
 
 def get_supported_apps():
-    delete_all_in_table()
+    delete_all_in_table(table=DownloadCollections.LatestDownloadedSupported)
     get_updater_data = requests.get(BASE_URL + GET_SUPPORTED_UPDATES)
     if get_updater_data.status_code == 200:
         json_data = get_updater_data.json()
@@ -368,9 +371,9 @@ def get_supported_apps():
 def get_all_supported_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = (
-        get_apps_data(
-            table=DownloadCollections.LatestDownloadedSupported,
-            os_code=agent[AgentKey.OsCode]
+        fetch_apps_data_by_os_code(
+            agent[AgentKey.OsCode],
+            table=DownloadCollections.LatestDownloadedSupported
         )
     )
     if apps:
@@ -385,9 +388,9 @@ def get_all_supported_apps_for_agent(agent_id):
 def get_all_agent_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = (
-        get_apps_data(
-            table=DownloadCollections.LatestDownloadedAgent,
-            os_code=agent[AgentKey.OsCode]
+        fetch_apps_data_by_os_code(
+            agent[AgentKey.OsCode],
+            table=DownloadCollections.LatestDownloadedAgent
         )
     )
 
