@@ -1,17 +1,14 @@
 import logging
 
 from vFense.core._constants import *
-from vFense.core._db import insert_data_in_table, delete_all_in_table, \
+from vFense.core._db import insert_data_in_table, \
     update_data_in_table
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching import AppCollections, DownloadCollections, \
-    FileCollections, AppsKey, AppsPerAgentKey, AppsIndexes, \
-    AppsPerAgentIndexes, SupportedAppsKey, SupportedAppsPerAgentKey, \
-    SupportedAppsPerAgentIndexes, CustomAppsKey, CustomAppsPerAgentKey, \
-    CustomAppsPerAgentIndexes, AgentAppsKey, AgentAppsPerAgentKey, \
-    AgentAppsPerAgentIndexes, DbCommonAppKeys, DbCommonAppPerAgentKeys, \
+from vFense.plugins.patching import AppCollections,\
+    FileCollections, AppsKey, \
+    DbCommonAppKeys, DbCommonAppPerAgentKeys, \
     DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey, \
     FileServerIndexes, FileServerKeys
 
@@ -190,44 +187,48 @@ def fetch_apps_data_by_os_code(
         os_code (str): linux or darwin or windows
 
     Kwargs:
-        customer_name (str): The name of the customer you are searching on.
-        table (str): The name of the apps per agent collection,
-            that will be used when updating the application data.
-            default = unique_applications
+        customer_name (str, optional): The name of the customer
+            you are searching on.
+        table (str, optional): The name of the collection,
+            default = unique_applications.
+        fields_to_pluck (list, optional): Fields you want to pluck from
+            the database.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import fetch_app_data
-        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> from vFense.plugins.patching._db import fetch_apps_data_by_os_code
         >>> table = 'unique_applications'
-        >>> fetch_app_data_by_agentid(app_id, agent_id, table)
+        >>> os_code = 'linux'
+        >>> customer_name = 'default'
+        >>> fetch_apps_data_by_os_code(os_code, customer_name. table)
 
     Returns:
-        Dictionary
-        {
-            "kb": "", 
-            "customers": [
-                "default"
-            ], 
-            "vendor_name": "", 
-            "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
-            "vulnerability_categories": [], 
-            "files_download_status": 5004, 
-            "release_date": 1394769600, 
-            "vendor_severity": "recommended", 
-            "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
-            "reboot_required": "no", 
-            "os_code": "linux", 
-            "repo": "precise-updates/main", 
-            "support_url": "", 
-            "version": "3.4.2-0ubuntu2.4", 
-            "cve_ids": [], 
-            "rv_severity": "Recommended", 
-            "hidden": "no", 
-            "uninstallable": "yes", 
-            "vulnerability_id": "", 
-            "name": "gwibber-service-facebook"
-        }
+        List of dictionaries.
+        [
+            {
+                "kb": "", 
+                "customers": [
+                    "default"
+                ], 
+                "vendor_name": "", 
+                "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
+                "vulnerability_categories": [], 
+                "files_download_status": 5004, 
+                "release_date": 1394769600, 
+                "vendor_severity": "recommended", 
+                "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
+                "reboot_required": "no", 
+                "os_code": "linux", 
+                "repo": "precise-updates/main", 
+                "support_url": "", 
+                "version": "3.4.2-0ubuntu2.4", 
+                "cve_ids": [], 
+                "rv_severity": "Recommended", 
+                "hidden": "no", 
+                "uninstallable": "yes", 
+                "vulnerability_id": "", 
+                "name": "gwibber-service-facebook"
+            }
+        ]
     """
 
     data = {}
@@ -244,8 +245,6 @@ def fetch_apps_data_by_os_code(
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
-            if data:
-                data = data[0]
 
         elif customer_name and not fields_to_pluck:
             data = list(
@@ -256,8 +255,6 @@ def fetch_apps_data_by_os_code(
                 .merge(merge)
                 .run(conn)
             )
-            if data:
-                data = data[0]
 
         elif not customer_name and fields_to_pluck:
             data = list(
@@ -268,8 +265,6 @@ def fetch_apps_data_by_os_code(
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
-            if data:
-                data = data[0]
 
         else:
             data = list(
@@ -279,8 +274,6 @@ def fetch_apps_data_by_os_code(
                 .merge(merge)
                 .run(conn)
             )
-            if data:
-                data = data[0]
 
     except Exception as e:
         logger.exception(e)
@@ -435,6 +428,54 @@ def fetch_appids_by_agentid_and_status(
 
 @time_it
 @db_create_close
+def fetch_app_id_by_name_and_version(
+    app_name, app_version,
+    table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Fetch app_id by searching for the app name and version.
+    Args:
+        app_name (str): Name of the application you are removing
+            from this agent.
+        app_version (str): The exact verision of the application
+            you are removing.
+
+    Kwargs:
+        table (str): The name of the table you are perfoming the delete on.
+            default = 'unique_applications'
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import fetch_app_id_by_name_and_version
+        >>> app_name = 'libpangoxft-1.0-0'
+        >>> app_version = '1.36.3-1ubuntu1'
+        >>> table = 'apps_per_agent'
+        >>> fetch_app_id_by_name_and_version(name, version, table)
+
+    Returns:
+        String
+    """
+    app_id = None
+    try:
+        app_ids = (
+            r
+            .table(table)
+            .get_all(
+                [app_name, app_version],
+                index=DbCommonAppIndexes.NameAndVersion
+            )
+            .map(lambda app: app[DbCommonAppKeys.AppId])
+            .run(conn)
+        )
+        if app_ids:
+            app_id = app_ids[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return app_id
+
+@time_it
+@db_create_close
 def return_valid_appids_for_agent(
     app_ids, agent_id,
     table=AppCollections.AppsPerAgent, conn=None
@@ -517,7 +558,7 @@ def insert_app_data(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    return(insert_data_in_table(app_data, table))
+    return insert_data_in_table(app_data, table)
 
 
 @time_it
@@ -921,46 +962,49 @@ def update_customers_in_app_by_app_id(
 
 @time_it
 def update_app_data_by_app_id(
-    app_id, data, table=AppCollections.UniqueApplications,
-    conn=None
+    app_id, app_data, table=AppCollections.UniqueApplications
     ):
     """Update the data of an application.
-        DO NOT CALL DIRECTLY
     Args:
         app_id (str): The 64 character hex digest of the application.
-        data (dict): Dictionary of the data you are updateing.
+        app_data (dict): Dictionary of the data you are updateing.
 
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+
     """
     data = {}
     try:
-        data = update_data_in_table(app_id, data, table)
+        data = update_data_in_table(app_id, app_data, table)
 
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 def update_custom_app_data_by_app_id(
-    app_id, data, table=AppCollections.CustomApps,
-    conn=None
+    app_id, app_data, table=AppCollections.CustomApps,
     ):
     """Update the data of an application.
-        DO NOT CALL DIRECTLY
     Args:
         app_id (str): The 64 character hex digest of the application.
-        data (dict): Dictionary of the data you are updateing.
+        app_data (dict): Dictionary of the data you are updateing.
 
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
-        data = update_data_in_table(app_id, data, table)
+        data = update_data_in_table(app_id, app_data, table)
 
     except Exception as e:
         logger.exception(e)
@@ -969,22 +1013,23 @@ def update_custom_app_data_by_app_id(
 
 @time_it
 def update_supported_app_data_by_app_id(
-    app_id, data, table=AppCollections.SupportedApps,
-    conn=None
+    app_id, app_data, table=AppCollections.SupportedApps,
     ):
     """Update the data of an application.
-        DO NOT CALL DIRECTLY
     Args:
         app_id (str): The 64 character hex digest of the application.
-        data (dict): Dictionary of the data you are updateing.
+        app_data (dict): Dictionary of the data you are updateing.
 
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
-        data = update_data_in_table(app_id, data, table)
+        data = update_data_in_table(app_id, app_data, table)
 
     except Exception as e:
         logger.exception(e)
@@ -993,22 +1038,183 @@ def update_supported_app_data_by_app_id(
 
 @time_it
 def update_vfense_app_data_by_app_id(
-    app_id, data, table=AppCollections.vFenseApps,
-    conn=None
+    app_id, app_data, table=AppCollections.vFenseApps,
     ):
     """Update the data of an application.
-        DO NOT CALL DIRECTLY
     Args:
         app_id (str): The 64 character hex digest of the application.
-        data (dict): Dictionary of the data you are updateing.
+        app_data (dict): Dictionary of the data you are updateing.
 
     Kwargs:
         table (str): The name of the collection you are updating
 
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
     """
     data = {}
     try:
-        data = update_data_in_table(app_id, data, table)
+        data = update_data_in_table(app_id, app_data, table)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_apps_per_agent_older_than(
+    agent_id, now, table=AppCollections.AppsPerAgent, conn=None
+    ):
+    """Delete all apps_per_agent that are older than now,
+    Args:
+        agent_id (str): The 36 character UUID of the agent.
+        now (rethinkdb.ast.EpochTime): RQL epoch time object.
+
+    Kwargs:
+        table (str): The name of the table you are perfoming the delete on.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
+        >>> from vFense.plugins.patching._db_constants import DbTime
+        >>> now = DbTime.time_now()
+        >>> table = 'apps_per_agent'
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> delete_apps_per_agent_older_than(now, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(table)
+            .get_all(
+                agent_id,
+                index=DbCommonAppPerAgentIndexes.AgentId
+            )
+            .filter(
+                r.row[DbCommonAppPerAgentKeys.LastModifiedTime] < now
+            )
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@time_it
+def update_apps_per_agent(
+    pkg_list,
+    table=AppCollections.AppsPerAgent,
+    conn=None
+    ):
+    """Insert or Update into the apps_per_agent collection
+    Args:
+        pkg_list (list): List of all the applications you want to insert
+            or update into the database.
+
+    Kwargs:
+        table (str, optional): The name of the table you want to update.
+            default = apps_per_agent
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_apps_per_agent
+        >>> table = 'apps_per_agent'
+        >>> pkg_list = [
+                {
+                    "status": "installed", 
+                    "install_date": 1397697799, 
+                    "app_id": "c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c", 
+                    "update": 5014, 
+                    "dependencies": [], 
+                    "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3", 
+                    "last_modified_time": 1398997520, 
+                    "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f", 
+                    "customer_name": "default"
+                }
+            ]
+        >>> update_apps_per_agent(pkg_list, table)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = insert_data_in_table(pkg_list, table)
+    return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_hidden_status(
+    app_ids, hidden=CommonKeys.TOGGLE,
+    table=AppCollections.UniqueApplications,
+    conn=None
+    ):
+    """Update the global hidden status of an application
+    Args:
+        app_ids (list): List of application ids.
+
+    Kwargs:
+        hidden (str, optional): yes, no, or toggle
+            default = toggle
+        table (str, optional): The table you are updating for.
+            table = unique_applications
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import update_hidden_status
+        >>> hidden = 'toggle'
+        >>> app_ids = ['c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c']
+        >>> update_hidden_status(app_ids, hidden)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        if hidden == CommonKeys.YES or hidden == CommonKeys.NO:
+            data = (
+                r
+                .expr(app_ids)
+                .for_each(
+                    lambda app_id:
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .update(
+                        {
+                            DbCommonAppKeys.Hidden: hidden
+                        }
+                    )
+                )
+                .run(conn)
+            )
+
+        elif hidden == CommonKeys.TOGGLE:
+            for app_id in app_ids:
+                data = (
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .update(
+                        {
+                            DbCommonAppKeys.Hidden: (
+                                r.branch(
+                                    r.row[DbCommonAppKeys.Hidden] == CommonKeys.YES,
+                                    CommonKeys.NO,
+                                    CommonKeys.YES
+                                )
+                            )
+                        }
+                    )
+                    .run(conn)
+                )
 
     except Exception as e:
         logger.exception(e)

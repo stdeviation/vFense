@@ -22,10 +22,11 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def get_production_levels(customer_name):
-    """
-    Retrieve all the production levels that is in the database.
-    :param customer_name: Name of the customer, where the agent is located.
-    Basic Usage::
+    """Retrieve all the production levels that is in the database.
+    Args:
+        customer_name (str): Name of the customer, where the agent is located.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_production_levels
         >>> customer_name = 'default'
         >>> get_production_levels(customer_name)
@@ -40,9 +41,10 @@ def get_production_levels(customer_name):
 
 @time_it
 def get_supported_os_codes():
-    """
-    Retrieve all the base operating systems codes that is in the database.
-    Basic Usage::
+    """Retrieve all the base operating systems codes
+        that is in the database.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_supported_os_codes
         >>> get_supported_os_codes()
         [
@@ -57,10 +59,11 @@ def get_supported_os_codes():
 
 @time_it
 def get_supported_os_strings(customer_name):
-    """
-    Retrieve all the operating systems that is in the database.
-    :param customer_name: Name of the customer, where the agent is located.
-    Basic Usage::
+    """Retrieve all the operating systems that is in the database.
+    Args:
+        customer_name (str): Name of the customer, where the agent is located.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_supported_os_strings
         >>> customer_name = 'default'
         >>> get_supported_os_strings(customer_name)
@@ -77,10 +80,12 @@ def get_supported_os_strings(customer_name):
 
 @time_it
 def get_all_agent_ids(customer_name=None, agent_os=None):
-    """
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located
-    :param agent_os: (Optional) linux or windows or darwin
+    """Retrieve all agent_ids by either customer_name or os code.
+    Kwargs:
+        customer_name (str, optional): Name of the customer, where the agent
+            is located
+        agent_os (str, optional): linux or windows or darwin
+
     Basic Usage::
         >>> from vFense.core.agent.agents import get_all_agent_ids
         >>> customer_name = 'default'
@@ -109,14 +114,16 @@ def get_all_agent_ids(customer_name=None, agent_os=None):
 
 @time_it
 def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
-    """
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located
-    :param agent_os: (Optional) The operating system you are filtering for.
-        linux or windows or darwin
-    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
-        from the database
-    Basic Usage::
+    """Retrieve a list of agents by os code and or customer name.
+    Kwargs:
+        customer_name (str, optional): Name of the customer, where the agent
+            is located
+        agent_os (str, optional): The operating system you are filtering for.
+            Ex: linux or windows or darwin
+        keys_to_pluck (list, optional): List of specific keys that you
+            are retrieving from the database.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_agents_info
         >>> os_code = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
@@ -199,10 +206,14 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
 
 @time_it
 def get_agent_info(agent_id, keys_to_pluck=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
-        from the database
+    """Retrieve agent information.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+
+    Kwargs:
+        keys_to_pluck (list, optional): List of specific keys that
+        you are retrieving from the database.
+
     Basic Usage::
         >>> from vFense.core.agent.agents import get_agent_info
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
@@ -224,11 +235,20 @@ def get_agent_info(agent_id, keys_to_pluck=None):
 
 @time_it
 @results_message
-def update_agent_field(agent_id, field, value, username=None, uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param field: The field you are going to update.
-    :param value: The field will be updated to this value.
+def update_agent_field(
+    agent_id, field, value,
+    username=None, uri=None, method=None
+    ):
+    """Update a field for an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+        field (str): The field you are going to update.
+        value (str): The field will be updated to this value.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage::
         >>> from vFense.core.agent.agents import update_agent_field
@@ -288,11 +308,20 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
 
 @time_it
 @results_message
-def update_agent_fields(agent_id, agent_data, username=None,
-                        uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param agent_data: Dictionary of the data that you are updating
+def update_agent_fields(
+    agent_id, agent_data,
+    username=None, uri=None, method=None
+    ):
+    """Update various fields in an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+        agent_data (dict): Dictionary of the data that you are updating.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
     Basic Usage::
         >>> from vFense.core.agent.agents import update_agent_fields
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
@@ -350,9 +379,16 @@ def update_agent_fields(agent_id, agent_data, username=None,
 @time_it
 @results_message
 def update_agent_status(agent_id, username=None, uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    Basic Usage::
+    """Update the status of an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import update_agent_status
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> update_agent_status(agent_id)
@@ -408,10 +444,22 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
 @time_it
 def add_agent(system_info, hardware, username=None,
               customer_name=None, uri=None, method=None):
-    """
-    Add a new agent to the database
-    :param system_info: Dictionary with system related info
-    :param hardware:  List of dictionaries that rpresent the hardware
+    """Add a new agent to the database
+    Args:
+        system_info (dict): Dictionary with system related info
+        hardware (list):  List of dictionaries that rpresent the hardware
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        customer_name (str): The name of the customer.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import add_agent
+
+    Returns:
+        Dictionary
     """
     try:
         now = mktime(datetime.now().timetuple())
