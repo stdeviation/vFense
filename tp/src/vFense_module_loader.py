@@ -34,7 +34,6 @@ from vFense.server.api.scheduler_api import (ScheduleListerHandler,
     SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
     SchedulerCustomRecurrentJobHandler)
 
-from vFense.plugins.patching.Api.app_data import FileInfoHandler
 from vFense.plugins.patching.Api.os_updates_handler import \
     AgentIdOsAppsHandler, TagIdOsAppsHandler
 from vFense.plugins.patching.Api.agent_updates_handler import \
@@ -154,9 +153,6 @@ class CoreLoader():
 
             ##### Tags API Handlers
             (r"/api/v1/tags", TagsHandler),
-
-            ##### FileData API Handlers
-            (r'/api/v1/apps/info?', FileInfoHandler),
 
             ##### Generic API Handlers
             (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
