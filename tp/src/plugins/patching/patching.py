@@ -964,7 +964,7 @@ def unique_application_updater(customer_name, app_data, os_string):
             app_data[AppsKey.FilesDownloadStatus] = PackageCodes.MissingUri
 
         elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
-            app_Data[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
+            app_data[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
         vuln_data = (
             get_vulnerability_info_for_app(
