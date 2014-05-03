@@ -37,7 +37,7 @@ def file_data_exists(file_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(exist)
+    return exist
 
 @time_it
 @db_create_close
@@ -59,9 +59,9 @@ def fetch_file_data(app_id, agent_id=None, conn=None):
         List of dictionaries
         [
             {
-                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
-                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c",
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
                 "file_size": 7782
             }
         ]
@@ -98,7 +98,7 @@ def fetch_file_data(app_id, agent_id=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -112,13 +112,13 @@ def fetch_all_file_data(conn=None):
         List
         [
             {
-                "file_hash": "f4cbc8e6a3e49001e2079bd697c91c20cd85f1a0471cdfe660ba7a4b5238f487", 
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/b/bluez/bluez-cups_4.98-2ubuntu7.1_amd64.deb", 
+                "file_hash": "f4cbc8e6a3e49001e2079bd697c91c20cd85f1a0471cdfe660ba7a4b5238f487",
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/b/bluez/bluez-cups_4.98-2ubuntu7.1_amd64.deb",
                 "file_size": 70284
-            }, 
+            },
             {
-                "file_hash": "9259166bac143ed6ce1a224ea5b519017f8b81afbbfb0a654ea1a068ca8d8e71", 
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/d/deja-dup/deja-dup_22.0-0ubuntu5_amd64.deb", 
+                "file_hash": "9259166bac143ed6ce1a224ea5b519017f8b81afbbfb0a654ea1a068ca8d8e71",
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/d/deja-dup/deja-dup_22.0-0ubuntu5_amd64.deb",
                 "file_size": 596854
             }
         ]
@@ -138,7 +138,7 @@ def fetch_all_file_data(conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -159,9 +159,9 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
         >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
         >>> file_data = [
             {
-                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
-                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c",
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
                 "file_size": 7782
             }
         ]
@@ -219,7 +219,7 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -238,9 +238,9 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
         >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
         >>> file_data = [
             {
-                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c", 
-                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb", 
+                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c",
+                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
                 "file_size": 7782
             }
         ]
@@ -302,4 +302,4 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data

@@ -105,7 +105,4 @@ def get_all_app_stats_by_agentid(agent_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
-
-
+    return data

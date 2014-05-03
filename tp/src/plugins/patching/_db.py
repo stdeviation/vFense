@@ -1,6 +1,6 @@
 import logging
 
-from vFense.core._constants import *
+from vFense.core._constants import CommonKeys
 from vFense.core._db import insert_data_in_table, \
     update_data_in_table
 from vFense.core.decorators import return_status_tuple, time_it
@@ -46,12 +46,12 @@ def fetch_file_servers_addresses(customer_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @db_create_close
 def fetch_app_data(
-    app_id, table=AppCollections.UniqueApplications,
-    fields_to_pluck=None, conn=None
+        app_id, table=AppCollections.UniqueApplications,
+        fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
     Args:
@@ -96,12 +96,12 @@ def fetch_app_data(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @db_create_close
 def fetch_app_data_by_appid_and_agentid(
-    app_id, agent_id, table=AppCollections.AppsPerAgent,
-    fields_to_pluck=None, conn=None
+        app_id, agent_id, table=AppCollections.AppsPerAgent,
+        fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
     Args:
@@ -122,27 +122,27 @@ def fetch_app_data_by_appid_and_agentid(
     Returns:
         Dictionary
         {
-            "kb": "", 
+            "kb": "",
             "customers": [
                 "default"
-            ], 
-            "vendor_name": "", 
-            "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
-            "vulnerability_categories": [], 
-            "files_download_status": 5004, 
-            "release_date": 1394769600, 
-            "vendor_severity": "recommended", 
-            "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
-            "reboot_required": "no", 
-            "os_code": "linux", 
-            "repo": "precise-updates/main", 
-            "support_url": "", 
-            "version": "3.4.2-0ubuntu2.4", 
-            "cve_ids": [], 
-            "rv_severity": "Recommended", 
-            "hidden": "no", 
-            "uninstallable": "yes", 
-            "vulnerability_id": "", 
+            ],
+            "vendor_name": "",
+            "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .",
+            "vulnerability_categories": [],
+            "files_download_status": 5004,
+            "release_date": 1394769600,
+            "vendor_severity": "recommended",
+            "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457",
+            "reboot_required": "no",
+            "os_code": "linux",
+            "repo": "precise-updates/main",
+            "support_url": "",
+            "version": "3.4.2-0ubuntu2.4",
+            "cve_ids": [],
+            "rv_severity": "Recommended",
+            "hidden": "no",
+            "uninstallable": "yes",
+            "vulnerability_id": "",
             "name": "gwibber-service-facebook"
         }
     """
@@ -174,13 +174,13 @@ def fetch_app_data_by_appid_and_agentid(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @db_create_close
 def fetch_apps_data_by_os_code(
-    os_code, customer_name=None,
-    table=AppCollections.UniqueApplications,
-    fields_to_pluck=None, conn=None
+        os_code, customer_name=None,
+        table=AppCollections.UniqueApplications,
+        fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
     Args:
@@ -205,27 +205,27 @@ def fetch_apps_data_by_os_code(
         List of dictionaries.
         [
             {
-                "kb": "", 
+                "kb": "",
                 "customers": [
                     "default"
-                ], 
-                "vendor_name": "", 
-                "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
-                "vulnerability_categories": [], 
-                "files_download_status": 5004, 
-                "release_date": 1394769600, 
-                "vendor_severity": "recommended", 
-                "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
-                "reboot_required": "no", 
-                "os_code": "linux", 
-                "repo": "precise-updates/main", 
-                "support_url": "", 
-                "version": "3.4.2-0ubuntu2.4", 
-                "cve_ids": [], 
-                "rv_severity": "Recommended", 
-                "hidden": "no", 
-                "uninstallable": "yes", 
-                "vulnerability_id": "", 
+                ],
+                "vendor_name": "",
+                "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .",
+                "vulnerability_categories": [],
+                "files_download_status": 5004,
+                "release_date": 1394769600,
+                "vendor_severity": "recommended",
+                "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457",
+                "reboot_required": "no",
+                "os_code": "linux",
+                "repo": "precise-updates/main",
+                "support_url": "",
+                "version": "3.4.2-0ubuntu2.4",
+                "cve_ids": [],
+                "rv_severity": "Recommended",
+                "hidden": "no",
+                "uninstallable": "yes",
+                "vulnerability_id": "",
                 "name": "gwibber-service-facebook"
             }
         ]
@@ -278,14 +278,15 @@ def fetch_apps_data_by_os_code(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 @db_create_close
 def fetch_app_data_to_send_to_agent(
-    app_id, agent_id,
-    table=AppCollections.UniqueApplications, conn=None
+        app_id, agent_id,
+        table=AppCollections.UniqueApplications,
+        conn=None
     ):
     """Fetch application data by app id
     Args:
@@ -308,14 +309,14 @@ def fetch_app_data_to_send_to_agent(
         {
             "file_data": [
                 {
-                    "file_hash": "47dc1daa42e6d53e1a881f4ed9c5472f6732665af2cba082f8fa3931199fb746", 
-                    "file_name": "gpgv_1.4.11-3ubuntu2.5_amd64.deb", 
-                    "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gnupg/gpgv_1.4.11-3ubuntu2.5_amd64.deb", 
+                    "file_hash": "47dc1daa42e6d53e1a881f4ed9c5472f6732665af2cba082f8fa3931199fb746",
+                    "file_name": "gpgv_1.4.11-3ubuntu2.5_amd64.deb",
+                    "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gnupg/gpgv_1.4.11-3ubuntu2.5_amd64.deb",
                     "file_size": 185400
                 }
-            ], 
-            "cli_options": "", 
-            "version": "1.4.11-3ubuntu2.5", 
+            ],
+            "cli_options": "",
+            "version": "1.4.11-3ubuntu2.5",
             "name": "gpgv"
         }
     """
@@ -361,13 +362,14 @@ def fetch_app_data_to_send_to_agent(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @db_create_close
 def fetch_appids_by_agentid_and_status(
         agent_id, status, sev=None,
         table=AppCollections.AppsPerAgent,
-        conn=None):
+        conn=None
+    ):
 
     if table == AppCollections.AppsPerAgent:
         join_table = AppCollections.UniqueApplications
@@ -423,15 +425,15 @@ def fetch_appids_by_agentid_and_status(
             .run(conn)
         )
 
-    return(appids)
+    return appids
 
 
 @time_it
 @db_create_close
 def fetch_app_id_by_name_and_version(
-    app_name, app_version,
-    table=AppCollections.UniqueApplications,
-    conn=None
+        app_name, app_version,
+        table=AppCollections.UniqueApplications,
+        conn=None
     ):
     """Fetch app_id by searching for the app name and version.
     Args:
@@ -477,8 +479,8 @@ def fetch_app_id_by_name_and_version(
 @time_it
 @db_create_close
 def return_valid_appids_for_agent(
-    app_ids, agent_id,
-    table=AppCollections.AppsPerAgent, conn=None
+        app_ids, agent_id,
+        table=AppCollections.AppsPerAgent, conn=None
     ):
     """Return the valid application ids, from the list of application ids
         that were passed into this function
@@ -525,12 +527,13 @@ def return_valid_appids_for_agent(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 def insert_app_data(
-    app_data, table=AppCollections.UniqueApplications,
+        app_data,
+        table=AppCollections.UniqueApplications,
     ):
     """Insert application data in the unique_applications collection.
         This function should not be called directly.
@@ -545,12 +548,19 @@ def insert_app_data(
     Basic Usage:
         >>> from vFense.plugins.patching._db import insert_app_data
         >>> app_data = {
-                "kb": "", "customers": ["default"], "vendor_name": "", "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .", 
-                "vulnerability_categories": [], "files_download_status": 5004, "release_date": 1394769600, 
-                "vendor_severity": "recommended", "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457", 
-                "reboot_required": "no", "os_code": "linux", "repo": "precise-updates/main", 
-                "support_url": "", "version": "3.4.2-0ubuntu2.4", "cve_ids": [], "rv_severity": "Recommended", 
-                "hidden": "no", "uninstallable": "yes", "vulnerability_id": "", "name": "gwibber-service-facebook"
+                "kb": "", "customers": ["default"],
+                "vendor_name": "",
+                "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .",
+                "vulnerability_categories": [], "files_download_status": 5004,
+                "release_date": 1394769600,
+                "vendor_severity": "recommended",
+                "app_id": "922bcb88f6bd75c1e40fcc0c571f603cd59cf7e05b4a192bd5d69c974acc1457",
+                "reboot_required": "no", "os_code": "linux",
+                "repo": "precise-updates/main", "support_url": "",
+                "version": "3.4.2-0ubuntu2.4", "cve_ids": [],
+                "rv_severity": "Recommended", "hidden": "no",
+                "uninstallable": "yes", "vulnerability_id": "",
+                "name": "gwibber-service-facebook"
             }
         >>> insert_app_data(app_data, table)
 
@@ -565,9 +575,9 @@ def insert_app_data(
 @db_create_close
 @return_status_tuple
 def update_customers_in_apps_by_customer(
-    current_customer, new_customer, remove_customer=False,
-    collection=AppCollections.UniqueApplications,
-    conn=None
+        current_customer, new_customer, remove_customer=False,
+        collection=AppCollections.UniqueApplications,
+        conn=None
     ):
     """ Update the customers list of all applications for the current customer.
     Args:
@@ -639,15 +649,17 @@ def update_customers_in_apps_by_customer(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_apps_per_agent_by_customer(
-    customer_name, app_data, collection=AppCollections.AppsPerAgent,
-    conn=None):
+        customer_name, app_data,
+        collection=AppCollections.AppsPerAgent,
+        conn=None
+    ):
     """ Update any keys for any apps collection by customer name
         This function should not be called directly.
     Args:
@@ -660,7 +672,7 @@ def update_apps_per_agent_by_customer(
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_apps_per_agent_by_customer
         >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'} 
+        >>> app_data = {'customer_name': 'vFense'}
         >>> collection = 'apps_per_agent'
         >>> update_apps_per_agent_by_customer(customer_name,_app_data, collection)
 
@@ -685,14 +697,16 @@ def update_apps_per_agent_by_customer(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_apps_per_agent_by_agentids(
-    agent_ids, app_data, collection=AppCollections.AppsPerAgent,
-    conn=None):
+        agent_ids, app_data,
+        collection=AppCollections.AppsPerAgent,
+        conn=None
+    ):
     """ Update any keys for any apps collection by customer name
         This function should not be called directly.
     Args:
@@ -705,7 +719,7 @@ def update_apps_per_agent_by_agentids(
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_apps_per_agent_by_agentids
         >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
-        >>> app_data = {'customer_name': 'vFense'} 
+        >>> app_data = {'customer_name': 'vFense'}
         >>> collection = 'apps_per_agent'
         >>> update_apps_per_agent_by_agentids(agent_ids,_app_data, collection)
 
@@ -735,15 +749,17 @@ def update_apps_per_agent_by_agentids(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 @db_create_close
 @return_status_tuple
 def delete_apps_by_customer(
-    customer_name, collection=AppCollections.AppsPerAgent,
-    conn=None):
+        customer_name,
+        collection=AppCollections.AppsPerAgent,
+        conn=None
+    ):
     """Delete all apps for all agents by customer and app type
         This function should not be called directly.
     Args:
@@ -779,16 +795,16 @@ def delete_apps_by_customer(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_app_data_by_agentid(
-    agent_id, data,
-    table=AppCollections.AppsPerAgent,
-    conn=None
+        agent_id, data,
+        table=AppCollections.AppsPerAgent,
+        conn=None
     ):
     """Update app data for an agent.
         This function should not be called directly.
@@ -825,15 +841,15 @@ def update_app_data_by_agentid(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_app_data_by_agentid_and_appid(
-    agent_id, app_id, data,
-    table=AppCollections.AppsPerAgent,
-    conn=None
+        agent_id, app_id, data,
+        table=AppCollections.AppsPerAgent,
+        conn=None
     ):
     """Update app data for an agent.
         This function should not be called directly.
@@ -872,14 +888,15 @@ def update_app_data_by_agentid_and_appid(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def delete_app_data_for_agentid(
-    agent_id, table=AppCollections.AppsPerAgent,
-    conn=None
+        agent_id,
+        table=AppCollections.AppsPerAgent,
+        conn=None
     ):
     """Delete all apps for an agent_id.
     Args:
@@ -911,14 +928,15 @@ def delete_app_data_for_agentid(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_customers_in_app_by_app_id(
-    customer_name, app_id, table=AppCollections.UniqueApplications,
-    conn=None
+        customer_name, app_id,
+        table=AppCollections.UniqueApplications,
+        conn=None
     ):
     """Update the list of customers that require this application id.
     Args:
@@ -942,30 +960,31 @@ def update_customers_in_app_by_app_id(
     """
     data = {}
     try:
-         data =  (
-             r
-             .table(table)
-             .get(app_id)
-             .update(
-                 {
+        data = (
+            r
+            .table(table)
+            .get(app_id)
+            .update(
+                {
                     DbCommonAppKeys.Customers: (
                         r.row[DbCommonAppKeys.Customers]
                         .set_insert(customer_name)
                     ),
-                 }
+                }
             )
             .run(conn)
-         )
+        )
 
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
 def update_app_data_by_app_id(
-    app_id, app_data, table=AppCollections.UniqueApplications
+        app_id, app_data,
+        table=AppCollections.UniqueApplications
     ):
     """Update the data of an application.
     Args:
@@ -991,7 +1010,8 @@ def update_app_data_by_app_id(
 
 @time_it
 def update_custom_app_data_by_app_id(
-    app_id, app_data, table=AppCollections.CustomApps,
+        app_id, app_data,
+        table=AppCollections.CustomApps,
     ):
     """Update the data of an application.
     Args:
@@ -1012,11 +1032,12 @@ def update_custom_app_data_by_app_id(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 def update_supported_app_data_by_app_id(
-    app_id, app_data, table=AppCollections.SupportedApps,
+        app_id, app_data,
+        table=AppCollections.SupportedApps,
     ):
     """Update the data of an application.
     Args:
@@ -1037,11 +1058,12 @@ def update_supported_app_data_by_app_id(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 def update_vfense_app_data_by_app_id(
-    app_id, app_data, table=AppCollections.vFenseApps,
+        app_id, app_data,
+        table=AppCollections.vFenseApps,
     ):
     """Update the data of an application.
     Args:
@@ -1062,13 +1084,15 @@ def update_vfense_app_data_by_app_id(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def delete_apps_per_agent_older_than(
-    agent_id, now, table=AppCollections.AppsPerAgent, conn=None
+        agent_id, now,
+        table=AppCollections.AppsPerAgent,
+        conn=None
     ):
     """Delete all apps_per_agent that are older than now,
     Args:
@@ -1113,8 +1137,8 @@ def delete_apps_per_agent_older_than(
 
 @time_it
 def update_apps_per_agent(
-    pkg_list,
-    table=AppCollections.AppsPerAgent
+        pkg_list,
+        table=AppCollections.AppsPerAgent
     ):
     """Insert or Update into the apps_per_agent collection
     Args:
@@ -1130,14 +1154,14 @@ def update_apps_per_agent(
         >>> table = 'apps_per_agent'
         >>> pkg_list = [
                 {
-                    "status": "installed", 
-                    "install_date": 1397697799, 
-                    "app_id": "c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c", 
-                    "update": 5014, 
-                    "dependencies": [], 
-                    "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3", 
-                    "last_modified_time": 1398997520, 
-                    "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f", 
+                    "status": "installed",
+                    "install_date": 1397697799,
+                    "app_id": "c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c",
+                    "update": 5014,
+                    "dependencies": [],
+                    "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3",
+                    "last_modified_time": 1398997520,
+                    "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f",
                     "customer_name": "default"
                 }
             ]
@@ -1154,9 +1178,9 @@ def update_apps_per_agent(
 @db_create_close
 @return_status_tuple
 def update_hidden_status(
-    app_ids, hidden=CommonKeys.TOGGLE,
-    table=AppCollections.UniqueApplications,
-    conn=None
+        app_ids, hidden=CommonKeys.TOGGLE,
+        table=AppCollections.UniqueApplications,
+        conn=None
     ):
     """Update the global hidden status of an application
     Args:
@@ -1221,4 +1245,4 @@ def update_hidden_status(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
