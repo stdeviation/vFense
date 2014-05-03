@@ -133,13 +133,20 @@ def download_all_files_in_app(
                 PackageCodes.InvalidUri
             )
 
+        db_update_response = None
+
         if collection == 'os_apps':
-            update_app_data_by_app_id(app_id, new_status)
+            db_update_response = update_app_data_by_app_id(app_id, new_status)
 
         elif collection == 'supported_apps':
-            update_supported_app_data_by_app_id(app_id, new_status)
+            db_update_response = \
+                update_supported_app_data_by_app_id(app_id, new_status)
 
         elif collection == 'agent_apps':
-            update_vfense_app_data_by_app_id(app_id, new_status)
+            db_update_response = \
+                update_vfense_app_data_by_app_id(app_id, new_status)
 
-        logger.info('%s, %s, %s' % (collection, app_id, str(new_status)))
+        logger.info(
+            '%s, %s, %s, %s' %
+            (collection, app_id, str(new_status), db_update_response)
+        )
