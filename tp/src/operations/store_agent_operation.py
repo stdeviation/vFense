@@ -6,7 +6,7 @@ from vFense.operations.agent_operations import AgentOperation
 from vFense.operations import OperationPerAgentKey, AgentOperationKey
 from vFense.core.decorators import results_message
 from vFense.core.queue.queue import AgentQueue
-from vFense.core.tag.tagManager import *
+from vFense.core.tag.tagManager import get_agent_ids_from_tag
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
@@ -14,11 +14,14 @@ from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
+
 class StoreAgentOperation(object):
     """This is the base class for storing operations in an agent"""
-    def __init__(self, username, customer_name,
-                 uri, method, server_queue_ttl=None,
-                 agent_queue_ttl=None):
+    def __init__(
+            self, username, customer_name,
+            uri, method, server_queue_ttl=None,
+            agent_queue_ttl=None
+        ):
         """
         Args:
             username (str): The name of the user who called this class
@@ -70,8 +73,8 @@ class StoreAgentOperation(object):
 
     @results_message
     def generic_operation(
-        self, action, plugin,
-        agentids=None, tag_id=None
+            self, action, plugin,
+            agentids=None, tag_id=None
         ):
         """This will do all the necessary work, to add the operation
             into the agent_queue. This method is to be used for operations
@@ -102,22 +105,22 @@ class StoreAgentOperation(object):
         Returns:
             Dictionary
             {
-                "rv_status_code": 6000, 
-                "http_method": "POST", 
-                "http_status": 200, 
-                "unchanged_ids": [], 
+                "rv_status_code": 6000,
+                "http_method": "POST",
+                "http_status": 200,
+                "unchanged_ids": [],
                 "generated_ids": [
                     "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
-                ], 
-                "message": "operation created", 
+                ],
+                "message": "operation created",
                 "data": [
                     {
-                        "operation_id": "d5fb023c-82a0-4552-adc1-b3f83de7ae8a", 
-                        "operation": "reboot", 
-                        "agent_id": "456404f1-b185-4f4f-8fb7-bfb21b3a5d53", 
+                        "operation_id": "d5fb023c-82a0-4552-adc1-b3f83de7ae8a",
+                        "operation": "reboot",
+                        "agent_id": "456404f1-b185-4f4f-8fb7-bfb21b3a5d53",
                         "plugin": "core"
                     }
-                ], 
+                ],
                 "uri": "/api/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/"
 
             }
@@ -171,17 +174,19 @@ class StoreAgentOperation(object):
                 data.append(agent_data)
                 self._store_in_agent_queue(operation_data)
                 operation.add_agent_to_operation(agent_id, operation_id)
+
             results[ApiResultKeys.DATA] = data
 
         else:
             msg = 'operation failed to create'
             status_code = GenericFailureCodes.FailedToCreateObject
-            vfense_status_code = AgentOperationFailureCodes.FailedToCreateOperation
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id],
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
+            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
             results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
             results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
             results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.DATA] = data
 
-        return(results)
-
+        return results

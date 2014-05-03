@@ -1,9 +1,10 @@
-from vFense.operations import *
+from vFense.operations import OperationPerAgentKey, \
+    OperationPerAppKey
 from vFense.operations.agent_operations import AgentOperation
 from vFense.operations._db_constants import DbTime
 from vFense.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
-    update_errors_and_pending_count,update_failed_and_pending_count, \
+    update_errors_and_pending_count, update_failed_and_pending_count, \
     update_completed_and_pending_count, insert_agent_into_agent_operations, \
     insert_app_into_agent_operations
 
@@ -15,7 +16,7 @@ class PatchingOperation(AgentOperation):
     """Creates the operations for the patching plugin."""
 
     def add_agent_to_install_operation(
-        self, agent_id, operation_id, applications
+            self, agent_id, operation_id, applications
         ):
         """Add an install operation for an agent
         Args:
@@ -70,11 +71,19 @@ class PatchingOperation(AgentOperation):
                         OperationPerAppKey.AgentId: agent_id,
                         OperationPerAppKey.OperationId: operation_id,
                         OperationPerAppKey.CustomerName: self.customer_name,
-                        OperationPerAppKey.Results: AgentOperationCodes.ResultsPending,
-                        OperationPerAppKey.ResultsReceivedTime: DbTime.begining_of_time(),
+                        OperationPerAppKey.Results: (
+                            AgentOperationCodes.ResultsPending
+                        ),
+                        OperationPerAppKey.ResultsReceivedTime: (
+                            DbTime.begining_of_time()
+                        ),
                         OperationPerAppKey.AppId: app[OperationPerAppKey.AppId],
-                        OperationPerAppKey.AppName: app[OperationPerAppKey.AppName],
-                        OperationPerAppKey.AppVersion: app[OperationPerAppKey.AppVersion],
+                        OperationPerAppKey.AppName: (
+                            app[OperationPerAppKey.AppName]
+                        ),
+                        OperationPerAppKey.AppVersion: (
+                            app[OperationPerAppKey.AppVersion]
+                        ),
                         OperationPerAppKey.AppsRemoved: [],
                         OperationPerAppKey.Errors: None
                     }
@@ -86,20 +95,19 @@ class PatchingOperation(AgentOperation):
             if status_code == DbCodes.Inserted:
                 completed = True
 
-        return(completed)
-
+        return completed
 
     def update_app_results(
-        self, operation_id, agent_id, app_id,
-        status=AgentOperationCodes.ResultsReceived,
-        errors=None, apps_removed=None
+            self, operation_id, agent_id, app_id,
+            status=AgentOperationCodes.ResultsReceived,
+            errors=None, apps_removed=None
         ):
         """Update the results for an application.
         Args:
             operation_id (str): The operation id.
             agent_id (str): The agent id.
             app_id (str): The application id.
-        
+
         Kwargs:
             status (int): The operation status code.
                 default = 6002
@@ -142,13 +150,12 @@ class PatchingOperation(AgentOperation):
                 operation_id, agent_id, app_id, operation_data
             )
         )
-        
+
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_app_stats(operation_id, agent_id, app_id)
             completed = True
 
-        return(completed)
-
+        return completed
 
     def _update_app_stats(self, operation_id, agent_id, app_id):
 
@@ -197,12 +204,12 @@ class PatchingOperation(AgentOperation):
             )
             completed = True
 
-        return(completed)
+        return completed
 
     def _update_agent_stats_by_app_stats(
-        self, operation_id, agent_id,
-        completed_count, failed_count,
-        pending_count
+            self, operation_id, agent_id,
+            completed_count, failed_count,
+            pending_count
         ):
         """Update the total counts based on the status code.
         Args:
@@ -265,5 +272,4 @@ class PatchingOperation(AgentOperation):
                 self._update_operation_status_code(operation_id)
                 completed = True
 
-        return(completed)
-
+        return completed

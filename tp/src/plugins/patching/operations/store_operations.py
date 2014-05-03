@@ -1,22 +1,23 @@
 import logging
 import logging.config
-from vFense.utils.common import *
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
 from vFense.operations._constants import AgentOperations, vFensePlugins, \
     vFenseObjects
 from vFense.operations.store_agent_operation import StoreAgentOperation
-from vFense.operations import *
-from vFense.core.agent import *
+from vFense.operations import AgentOperationKey, OperationPerAgentKey
 from vFense.core.decorators import results_message
 from vFense.core._constants import CPUThrottleValues, RebootValues
+from vFense.plugins.patching import AppCollections, DbCommonAppKeys, \
+        DbCommonAppPerAgentKeys
 from vFense.plugins.patching._db import fetch_app_data_to_send_to_agent, \
     return_valid_appids_for_agent
+
 from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
 from vFense.plugins.patching.patching import get_download_urls, \
     update_app_status_by_agentid_and_appid
 
-from vFense.core.tag.tagManager import *
+from vFense.core.tag.tagManager import get_agent_ids_from_tag
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
@@ -57,7 +58,7 @@ class StorePatchingOperation(StoreAgentOperation):
             )
         )
 
-        return(results)
+        return results
 
     def uninstall_agent(self, agent_id):
         operation_data = {
@@ -68,9 +69,10 @@ class StorePatchingOperation(StoreAgentOperation):
         self._store_in_agent_queue(operation_data)
 
     def install_os_apps(
-        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None):
+            self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
+        ):
         """Send the install_os_apps operation to the agent,
             This will install a list of applications on n
             number of agents or tag id.
@@ -112,13 +114,12 @@ class StorePatchingOperation(StoreAgentOperation):
 
         Returns:
         """
-
         oper_type = AgentOperations.INSTALL_OS_APPS
 
         self.CurrentAppsCollection = AppCollections.UniqueApplications
-        self.CurrentAppsKey = AppsKey
+        self.CurrentAppsKey = DbCommonAppKeys
         self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
-        self.CurrentAppsPerAgentKey = AppsPerAgentKey
+        self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         return(
             self.install_apps(
@@ -129,9 +130,9 @@ class StorePatchingOperation(StoreAgentOperation):
         )
 
     def install_custom_apps(
-        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None
+            self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
         ):
         """Send the install_custom_apps operation to the agent,
             This will install a list of applications on n
@@ -176,9 +177,9 @@ class StorePatchingOperation(StoreAgentOperation):
         oper_type = AgentOperations.INSTALL_CUSTOM_APPS
 
         self.CurrentAppsCollection = AppCollections.CustomApps
-        self.CurrentAppsKey = CustomAppsKey
+        self.CurrentAppsKey = DbCommonAppKeys
         self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
-        self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
+        self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         return(
             self.install_apps(
@@ -188,11 +189,10 @@ class StorePatchingOperation(StoreAgentOperation):
             )
         )
 
-
     def install_supported_apps(
-        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None
+            self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
         ):
         """Send the install_supported_apps operation to the agent,
             This will install a list of supported applications on n
@@ -237,9 +237,9 @@ class StorePatchingOperation(StoreAgentOperation):
         oper_type = AgentOperations.INSTALL_SUPPORTED_APPS
 
         self.CurrentAppsCollection = AppCollections.SupportedApps
-        self.CurrentAppsKey = SupportedAppsKey
+        self.CurrentAppsKey = DbCommonAppKeys
         self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
-        self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
+        self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         return(
             self.install_apps(
@@ -250,9 +250,9 @@ class StorePatchingOperation(StoreAgentOperation):
         )
 
     def install_agent_apps(
-        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None
+            self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
         ):
         """Send the install_agent_apps operation to the agent,
             This will install the agent update on n
@@ -296,10 +296,10 @@ class StorePatchingOperation(StoreAgentOperation):
 
         oper_type = AgentOperations.INSTALL_AGENT_APPS
 
-        self.CurrentAppsCollection = AppCollections.AgentApps
-        self.CurrentAppsKey = AgentAppsKey
-        self.CurrentAppsPerAgentCollection = AppCollections.AgentAppsPerAgent
-        self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
+        self.CurrentAppsCollection = AppCollections.vFenseApps
+        self.CurrentAppsKey = DbCommonAppKeys
+        self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
+        self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         return(
             self.install_apps(
@@ -311,9 +311,9 @@ class StorePatchingOperation(StoreAgentOperation):
 
 
     def uninstall_apps(
-        self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None
+            self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
         ):
         """Send the uninstall_apps operation to the agent,
             This will uninstall the applications from n
@@ -358,9 +358,9 @@ class StorePatchingOperation(StoreAgentOperation):
         oper_type = AgentOperations.UNINSTALL
 
         self.CurrentAppsCollection = AppCollections.UniqueApplications
-        self.CurrentAppsKey = AppsKey
+        self.CurrentAppsKey = DbCommonAppKeys
         self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
-        self.CurrentAppsPerAgentKey = AppsPerAgentKey
+        self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         return(
             self.install_apps(
@@ -370,13 +370,12 @@ class StorePatchingOperation(StoreAgentOperation):
             )
         )
 
-
     @results_message
     def install_apps(
-        self, oper_type, appids,
-        cpu_throttle=CPUThrottleValues.NORMAL,
-        net_throttle=0, restart=RebootValues.NONE,
-        agentids=None, tag_id=None
+            self, oper_type, appids,
+            cpu_throttle=CPUThrottleValues.NORMAL,
+            net_throttle=0, restart=RebootValues.NONE,
+            agentids=None, tag_id=None
         ):
         """This method creates the operation and stores it into the agent queue.
         Args:
@@ -409,7 +408,7 @@ class StorePatchingOperation(StoreAgentOperation):
             ApiResultKeys.URI: self.uri,
             ApiResultKeys.HTTP_METHOD: self.method
         }
-    
+
         performed_on = vFenseObjects.AGENT
         if tag_id:
             performed_on = vFenseObjects.TAG
@@ -452,10 +451,14 @@ class StorePatchingOperation(StoreAgentOperation):
                 for app_id in valid_appids:
                     data_to_update = (
                         {
-                            self.CurrentAppsPerAgentKey.Status: CommonAppKeys.PENDING
+                            self.CurrentAppsPerAgentKey.Status: (
+                                CommonAppKeys.PENDING
+                            )
                         }
                     )
-                    update_app_status_by_agentid_and_appid(agent_id, app_id, data_to_update)
+                    update_app_status_by_agentid_and_appid(
+                        agent_id, app_id, data_to_update
+                    )
 
                     pkg_data.append(
                         self._get_apps_data(app_id, agent_id)
@@ -472,18 +475,22 @@ class StorePatchingOperation(StoreAgentOperation):
                     AgentOperationKey.NetThrottle: net_throttle,
                 }
                 self._store_in_agent_queue(operation_data)
-                operation.add_agent_to_install_operation(agent_id, operation_id, pkg_data)
+                operation.add_agent_to_install_operation(
+                    agent_id, operation_id, pkg_data
+                )
 
         else:
             msg = 'operation failed to create'
             status_code = GenericFailureCodes.FailedToCreateObject
-            vfense_status_code = AgentOperationFailureCodes.FailedToCreateOperation
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
             results[ApiResultKeys.GENERATED_IDS] = [operation_id],
             results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
             results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
             results[ApiResultKeys.MESSAGE] = msg
 
-        return(results)
+        return results
 
     def _get_apps_data(self, app_id, agent_id):
 
@@ -500,12 +507,11 @@ class StorePatchingOperation(StoreAgentOperation):
         )
 
         pkg_data = {
-            CommonAppKeys.APP_NAME: pkg[AppsKey.Name],
-            CommonAppKeys.APP_VERSION: pkg[AppsKey.Version],
+            CommonAppKeys.APP_NAME: pkg[DbCommonAppKeys.Name],
+            CommonAppKeys.APP_VERSION: pkg[DbCommonAppKeys.Version],
             CommonAppKeys.APP_URIS: uris,
             CommonAppKeys.APP_ID: app_id,
             CommonFileKeys.PKG_CLI_OPTIONS: pkg[CommonFileKeys.PKG_CLI_OPTIONS]
         }
 
-        return(pkg_data)
-
+        return pkg_data

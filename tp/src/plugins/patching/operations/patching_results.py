@@ -3,6 +3,8 @@ import re
 import logging
 import logging.config
 
+from json import loads
+
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
@@ -17,8 +19,8 @@ from vFense.operations.agent_operations import \
 from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
 
+from vFense.plugins.patching import AppCollections
 from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
-from vFense.plugins.patching.rv_db_calls import *
 from vFense.plugins.patching._db import fetch_app_data
 
 from vFense.plugins.patching.patching import \
@@ -43,14 +45,15 @@ class PatchingOperationResults(OperationResults):
     """
 
     def __init__(
-        self, username, agent_id, operation_id,
-        success, error=None, status_code=None,
-        uri=None, method=None
+            self, username, agent_id, operation_id,
+            success, error=None, status_code=None,
+            uri=None, method=None
         ):
         super(PatchingOperationResults, self).__init__(
-                username, agent_id, operation_id, success,
-                error=None, status_code=None,
-                uri=None, method=None)
+            username, agent_id, operation_id, success,
+            error=None, status_code=None,
+            uri=None, method=None
+        )
 
         self.operation = (
             PatchingOperation(
@@ -61,11 +64,11 @@ class PatchingOperationResults(OperationResults):
     def apps_refresh(self):
         operation_type = AgentOperations.REFRESH_APPS
         results = self.update_operation(operation_type)
-        return(results)
+        return results
 
     def install_os_apps(
-        self, app_id, reboot_required,
-        apps_to_delete, apps_to_add
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
         ):
         self._set_global_properties(
             app_id, reboot_required,
@@ -73,11 +76,11 @@ class PatchingOperationResults(OperationResults):
         )
         self.CurrentAppsCollection = AppCollections.UniqueApplications
         results = self._update_app_status()
-        return(results)
+        return results
 
     def install_custom_apps(
-        self, app_id, reboot_required,
-        apps_to_delete, apps_to_add
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
         ):
         self._set_global_properties(
             app_id, reboot_required,
@@ -85,11 +88,11 @@ class PatchingOperationResults(OperationResults):
         )
         self.CurrentAppsCollection = AppCollections.CustomApps
         results = self._update_app_status()
-        return(results)
+        return results
 
     def install_supported_apps(
-        self, app_id, reboot_required,
-        apps_to_delete, apps_to_add
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
         ):
         self._set_global_properties(
             app_id, reboot_required,
@@ -97,23 +100,23 @@ class PatchingOperationResults(OperationResults):
         )
         self.CurrentAppsCollection = AppCollections.SupportedApps
         results = self._update_app_status()
-        return(results)
+        return results
 
     def install_agent_apps(
-        self, app_id, reboot_required,
-        apps_to_delete, apps_to_add
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
         ):
         self._set_global_properties(
             app_id, reboot_required,
             apps_to_delete, apps_to_add
         )
-        self.CurrentAppsCollection = AppCollections.AgentApps
+        self.CurrentAppsCollection = AppCollections.vFenseApps
         results = self._update_app_status()
-        return(results)
+        return results
 
     def _set_global_properties(
-        self, app_id, reboot_required,
-        apps_to_delete, apps_to_add
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
         ):
         """Set global properties
         Args:
@@ -316,4 +319,4 @@ class PatchingOperationResults(OperationResults):
 
             results[ApiResultKeys.MESSAGE] = msg
 
-        return(results)
+        return results
