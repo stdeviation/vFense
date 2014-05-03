@@ -877,7 +877,10 @@ def update_app_data_by_agentid_and_appid(
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_app_data_for_agentid(agentid, table=AppCollections.AppsPerAgent, conn=None):
+def delete_app_data_for_agentid(
+    agent_id, table=AppCollections.AppsPerAgent,
+    conn=None
+    ):
     """Delete all apps for an agent_id.
     Args:
         agent_id (str): The 36 character UUID of the agent
@@ -1111,8 +1114,7 @@ def delete_apps_per_agent_older_than(
 @time_it
 def update_apps_per_agent(
     pkg_list,
-    table=AppCollections.AppsPerAgent,
-    conn=None
+    table=AppCollections.AppsPerAgent
     ):
     """Insert or Update into the apps_per_agent collection
     Args:

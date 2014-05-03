@@ -1047,8 +1047,6 @@ def add_or_update_apps_per_agent(
         else:
             if isinstance(now, float) or isinstance(now, int):
                 now = DbTime.epoch_time_to_db_time(now)
-            else:
-                now = DbTime.time_now()
 
         status_code, count, errors, generated_ids = (
             delete_apps_per_agent_older_than(agent_id, now, table)
