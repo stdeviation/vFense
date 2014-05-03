@@ -13,7 +13,7 @@ from vFense.errorz.status_codes import DbCodes, GenericCodes, \
     GenericFailureCodes, PackageCodes, PackageFailureCodes
 
 from vFense.plugins.patching import AppsKey, AppCollections, \
-        DbCommonAppKeys, DbCommonAppPerAgentKeys
+        DbCommonAppKeys, DbCommonAppPerAgentKeys, FileServerKeys
 from vFense.plugins.patching._db_constants import DbTime
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
@@ -53,11 +53,11 @@ def get_remote_file_size(url):
     """
     remote_size = None
 
-    if uri:
+    if url:
         try:
             remote_size = (
                 urllib
-                .urlopen(uri)
+                .urlopen(url)
                 .info()
                 .getheaders("Content-Length")[0]
             )
@@ -177,7 +177,7 @@ def get_download_urls(customer_name, app_id, file_data):
         if file_servers:
             for mm in file_servers:
                 file_uris.append(
-                    'http://%s/%s%s' %
+                    'http://%s/%s/%s' %
                     (mm[FileServerKeys.Addresses], file_uris_base, pkg[CommonFileKeys.PKG_NAME])
                 )
         file_uris.append(url_base + pkg[CommonFileKeys.PKG_NAME])

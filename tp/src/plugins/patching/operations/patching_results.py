@@ -25,7 +25,8 @@ from vFense.plugins.patching.patching import \
     update_os_app_data_by_agentid_and_appid, \
     update_custom_app_data_by_agentid_and_appid, \
     update_supported_app_data_by_agentid_and_appid, \
-    update_vfense_app_data_by_agentid_and_appid
+    update_vfense_app_data_by_agentid_and_appid, \
+    delete_apps_from_agent_by_name_and_version
 
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
@@ -161,10 +162,10 @@ class PatchingOperationResults(OperationResults):
             pass
 
         for apps in self.apps_to_delete:
-            delete_app_from_agent(
+            delete_apps_from_agent_by_name_and_version(
+                self.agent_id,
                 apps[CommonAppKeys.NAME],
                 apps[CommonAppKeys.VERSION],
-                self.agent_id
             )
 
     @results_message
