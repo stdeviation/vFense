@@ -6,7 +6,7 @@ from datetime import datetime
 from time import mktime
 from vFense.operations import AgentOperationKey, OperationPerAgentKey
 from vFense.operations._constants import vFenseObjects, OperationErrors
-from vFense.operations._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.operations._db_agent import fetch_agent_operation, \
     operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
     insert_into_agent_operations, update_agent_operation_expire_time, \

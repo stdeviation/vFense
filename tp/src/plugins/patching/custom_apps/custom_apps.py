@@ -2,6 +2,7 @@ import logging
 from vFense.core.agent import *
 from vFense.db.client import r
 from vFense.plugins.patching import *
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
 from vFense.plugins.patching._db_files import fetch_file_data
@@ -33,7 +34,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                     {
                         CustomAppsPerAgentKey.AgentId: agentid,
                         CustomAppsPerAgentKey.AppId: app_id,
-                        CustomAppsPerAgentKey.Status: AVAILABLE,
+                        CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
                         CustomAppsPerAgentKey.CustomerName: customer_name,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
@@ -44,7 +45,8 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
         agent_info = get_agent_info(agent_id)
         apps_info = (
             fetch_apps_data_by_os_code(
-                agent_info[AgentKey.OsCode], customer_name
+                agent_info[AgentKey.OsCode], customer_name,
+                table=AppCollections.CustomApps
             )
         )
         if len(apps_info) > 0:
@@ -58,9 +60,12 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                     {
                         CustomAppsPerAgentKey.AgentId: agent_id,
                         CustomAppsPerAgentKey.AppId: app_id,
-                        CustomAppsPerAgentKey.Status: AVAILABLE,
+                        CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
                         CustomAppsPerAgentKey.CustomerName: customer_name,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                insert_app_data(agent_info_to_insert, table=AppCollections.CustomAppsPerAgent)
+                insert_app_data(
+                    agent_info_to_insert,
+                    table=AppCollections.CustomAppsPerAgent
+                )

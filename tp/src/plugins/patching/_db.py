@@ -1104,7 +1104,7 @@ def delete_apps_per_agent_older_than(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
-        >>> from vFense.plugins.patching._db_constants import DbTime
+        >>> from vFense.core._db_constants import DbTime
         >>> now = DbTime.time_now()
         >>> table = 'apps_per_agent'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'

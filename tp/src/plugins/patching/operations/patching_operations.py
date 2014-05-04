@@ -1,7 +1,7 @@
 from vFense.operations import OperationPerAgentKey, \
     OperationPerAppKey
 from vFense.operations.agent_operations import AgentOperation
-from vFense.operations._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
     update_errors_and_pending_count, update_failed_and_pending_count, \
