@@ -86,7 +86,9 @@ class IncomingApplicationsFromAgent():
         #end_time = datetime.now()
         #print end_time, 'finished adding  all apps to app_table'
         #print 'total time took %s' % (str(end_time - start_time))
-        print inserted, updated, deleted
+        print (("Added or updated apps per agent: "
+               "inserted: {0}, updated: {1}, deleted: {2}")
+               .format(inserted, updated, deleted))
 
         #logger.info(msg)
 
