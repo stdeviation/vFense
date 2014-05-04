@@ -458,7 +458,7 @@ def fetch_app_id_by_name_and_version(
     """
     app_id = None
     try:
-        app_ids = (
+        app_ids = list(
             r
             .table(table)
             .get_all(
