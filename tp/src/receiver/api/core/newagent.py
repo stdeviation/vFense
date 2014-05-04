@@ -10,7 +10,9 @@ from vFense.operations import *
 from vFense.operations._constants import AgentOperations
 from vFense.core.agent.agents import add_agent
 from vFense.core.queue.uris import get_result_uris
+from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import AgentResultCodes
 from vFense.receiver.rvhandler import RvHandOff
 
 from vFense.core.user import UserKeys
@@ -38,18 +40,27 @@ class NewAgentV1(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         logger.info('data received on newagent: %s' % (self.request.body))
+        self.set_header('Content-Type', 'application/json')
 
         try:
-            new_agent = (
+            new_agent_results = (
                 add_agent(
                     system_info, hardware, username, customer_name, uri, method
                 )
             )
-            agent_info = new_agent['data']
-            self.set_status(new_agent['http_status'])
+            self.set_status(
+                new_agent_results[ApiResultKeys.HTTP_STATUS_CODE]
+            )
 
-            if new_agent['http_status'] == 200:
-                agent_id = agent_info[AgentKey.AgentId]
+            if (
+                    new_agent_results[ApiResultKeys.VFENSE_STATUS_CODE] ==
+                    AgentResultCodes.NewAgentSucceeded
+                ):
+
+                agent_info = new_agent_results[ApiResultKeys.DATA][-1]
+                agent_id = (
+                    new_agent_results[ApiResultKeys.GENERATED_IDS].pop()
+                )
                 uris = get_result_uris(agent_id, username, uri, method)
                 uris[AgentOperationKey.Operation] = (
                     AgentOperations.REFRESH_RESPONSE_URIS
@@ -59,8 +70,7 @@ class NewAgentV1(BaseHandler):
                     AgentOperationKey.OperationId: "",
                     OperationPerAgentKey.AgentId: agent_id
                 }
-                new_agent['data'] = [json_msg, uris]
-                self.set_header('Content-Type', 'application/json')
+                new_agent_results[ApiResultKeys.DATA] = [json_msg, uris]
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
@@ -73,11 +83,11 @@ class NewAgentV1(BaseHandler):
 
                 except Exception as e:
                     logger.exception(e)
-                self.write(dumps(new_agent, indent=4))
+
+                self.write(dumps(new_agent_results, indent=4))
 
             else:
-                self.set_header('Content-Type', 'application/json')
-                self.write(dumps(new_agent, indent=4))
+                self.write(dumps(new_agent_results, indent=4))
 
         except Exception as e:
             status = (

@@ -7,7 +7,7 @@ from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
-from vFense.operations._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.operations.agent_operations import AgentOperation, \
     operation_for_agent_exist, get_agent_operation
 

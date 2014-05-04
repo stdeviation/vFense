@@ -14,7 +14,8 @@ from vFense.errorz.status_codes import DbCodes, GenericCodes, \
 
 from vFense.plugins.patching import AppsKey, AppCollections, \
         DbCommonAppKeys, DbCommonAppPerAgentKeys, FileServerKeys
-from vFense.plugins.patching._db_constants import DbTime
+
+from vFense.core._db_constants import DbTime
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
 
