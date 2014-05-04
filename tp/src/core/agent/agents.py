@@ -545,6 +545,7 @@ def add_agent(
     return results
 
 @time_it
+@results_message
 def update_agent(
         agent_id, system_info, hardware, rebooted,
         username=None, customer_name=None,
@@ -595,8 +596,6 @@ def update_agent(
                 update_agent_data(agent_id, agent_data)
             )
 
-            results[ApiResultKeys.HTTP_STATUS_CODE] = 200
-
             if status_code == DbCodes.Replaced and count > 0:
                 Hardware().add(agent_id, hardware)
                 msg = 'agent %s updated successfully.' % (agent_id)
@@ -643,7 +642,6 @@ def update_agent(
         else:
             msg = 'agent %s does not exist.' % (agent_id)
 
-            results[ApiResultKeys.HTTP_STATUS_CODE] = 500
             results[ApiResultKeys.GENERIC_STATUS_CODE] = \
                     GenericFailureCodes.InvalidId
             results[ApiResultKeys.VFENSE_STATUS_CODE] = \
@@ -655,7 +653,6 @@ def update_agent(
         logger.exception(e)
         msg = 'operation failed' % (error)
 
-        results[ApiResultKeys.HTTP_STATUS_CODE] = 500
         results[ApiResultKeys.GENERIC_STATUS_CODE] = \
             GenericFailureCodes.FailedToUpdateObject
         results[ApiResultKeys.VFENSE_STATUS_CODE] = \
