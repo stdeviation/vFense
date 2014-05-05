@@ -2,11 +2,15 @@ import logging
 from vFense.core.agent import *
 from vFense.db.client import r
 from vFense.plugins.patching import *
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
-from vFense.plugins.patching.rv_db_calls import \
-    apps_to_insert_per_agent, get_apps_data, get_app_data,\
-    apps_to_insert_per_tag, update_file_data, get_file_data
+from vFense.plugins.patching._db_files import fetch_file_data
+from vFense.plugins.patching.file_data import add_file_data
+
+from vFense.plugins.patching._db import fetch_app_data, \
+    fetch_apps_data_by_os_code, insert_app_data
+
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -17,7 +21,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
 
     if app_id and not agent_id:
         app_info = (
-            get_app_data(
+            fetch_app_data(
                 app_id, table=AppCollections.CustomApps
             )
         )
@@ -25,36 +29,43 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
         agent_ids = get_all_agent_ids(customer_name, agent_os=app_info[AgentKey.OsCode])
         if len(agent_ids) > 0:
             for agentid in agent_ids:
-                update_file_data(app_id, agentid, file_data)
+                add_file_data(app_id, file_data, agent_id)
                 agent_info_to_insert = (
                     {
                         CustomAppsPerAgentKey.AgentId: agentid,
                         CustomAppsPerAgentKey.AppId: app_id,
-                        CustomAppsPerAgentKey.Status: AVAILABLE,
+                        CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
                         CustomAppsPerAgentKey.CustomerName: customer_name,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                apps_to_insert_per_agent(username, uri, method, agent_info_to_insert)
+                insert_app_data(agent_info_to_insert, table=AppCollections.CustomAppsPerAgent)
 
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
-        apps_info = get_apps_data(customer_name, os_code=agent_info[AgentKey.OsCode])
+        apps_info = (
+            fetch_apps_data_by_os_code(
+                agent_info[AgentKey.OsCode], customer_name,
+                table=AppCollections.CustomApps
+            )
+        )
         if len(apps_info) > 0:
             for app_info in apps_info:
                 app_id = app_info.get(CustomAppsKey.AppId)
-                file_data = get_file_data(app_id)
-                update_file_data(
-                    app_id,
-                    agent_id, file_data
+                file_data = fetch_file_data(app_id)
+                add_file_data(
+                    app_id, file_data, agent_id
                 )
                 agent_info_to_insert = (
                     {
                         CustomAppsPerAgentKey.AgentId: agent_id,
                         CustomAppsPerAgentKey.AppId: app_id,
-                        CustomAppsPerAgentKey.Status: AVAILABLE,
+                        CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
                         CustomAppsPerAgentKey.CustomerName: customer_name,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                apps_to_insert_per_agent(username, uri, method, agent_info_to_insert)
+                insert_app_data(
+                    agent_info_to_insert,
+                    table=AppCollections.CustomAppsPerAgent
+                )

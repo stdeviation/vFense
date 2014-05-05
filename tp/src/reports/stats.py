@@ -6,6 +6,7 @@ from vFense.core.agent.agents import *
 from vFense.plugins.patching import * 
 from time import ctime
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
+<<<<<<< HEAD
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
@@ -70,6 +71,9 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
                     ).something_broke('get_all_agents', 'agent', e)
                 )
         return(status)
+=======
+from vFense.errorz.error_messages import GenericResults
+>>>>>>> a7de75f94f8ce03fcf258c1204e379ef21b083ba
 
 def system_os_details(agent_info):
     if agent_info:

@@ -14,7 +14,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.agent.agents import change_customer_for_agents, \
+from vFense.core.agent.agents import change_customer_for_all_agents_in_customer, \
     remove_all_agents_for_customer
 
 from vFense.core.user import *
@@ -32,7 +32,7 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.results import Results
 from vFense.errorz.status_codes import CustomerFailureCodes, CustomerCodes
 from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
-    update_all_apps_for_customer
+    change_customer_for_apps_in_customer
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -237,8 +237,12 @@ class CustomerHandler(BaseHandler):
                     if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
                             CustomerCodes.CustomerDeleted):
 
-                        change_customer_for_agents(move_agents_to_customer)
-                        update_all_apps_for_customer(move_agents_to_customer)
+                        change_customer_for_all_agents_in_customer(
+                            customer_name, move_agents_to_customer
+                        )
+                        change_customer_for_apps_in_customer(
+                            customer_name, move_agents_to_customer
+                        )
 
             elif deleted_agents == ApiValues.YES:
                 results = (

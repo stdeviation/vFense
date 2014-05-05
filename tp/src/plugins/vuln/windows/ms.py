@@ -1,10 +1,8 @@
 import logging
 import logging.config
 
-from vFense.core.decorators import return_status_tuple, time_it
-from vFense.db.client import db_create_close, r
-from vFense.plugins.vuln._constants import *
-from vFense.plugins.vuln.windows import *
+from vFense.core.decorators import time_it
+from vFense.plugins.vuln.windows import WindowsSecurityBulletinKey
 from vFense.plugins.vuln.windows._db import fetch_vuln_ids, \
     fetch_vuln_data
 

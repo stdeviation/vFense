@@ -1,20 +1,29 @@
 import logging
-from datetime import datetime
-from time import mktime
+from time import time
 
-from vFense.core.agent import *
-from vFense.core.agent._db import *
+from vFense.core._constants import CommonKeys
+from vFense.core._db_constants import DbTime
+from vFense.core.agent import AgentKey
+from vFense.core.agent._constants import AgentVirtualKeys, \
+    AgentStatusKeys, ProductionLevels
+
+from vFense.core.agent._db import fetch_production_levels_from_agent, \
+    fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
+    fetch_all_agents_for_customer, fetch_agent_info, \
+    update_agent_data, insert_agent_data, delete_all_agents_for_customer, \
+    move_agents_to_customer, move_agent_to_customer, \
+    move_all_agents_to_customer
+
 from vFense.core.customer.customers import get_customer, create_customer
 from vFense.core.decorators import time_it, results_message
 
-from vFense.db.client import r
 from vFense.db.hardware import Hardware
-from vFense.errorz.error_messages import AgentResults, GenericResults
-from vFense.errorz.results import Results 
-from vFense.errorz._constants import ApiResultKeys 
+#from vFense.errorz.results import Results
+from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import DbCodes, GenericCodes,\
-    AgentCodes, AgentFailureCodes, GenericFailureCodes
-from vFense.plugins.patching import *
+    AgentCodes, AgentFailureCodes, GenericFailureCodes, \
+    AgentResultCodes, AgentFailureResultCodes
+#from vFense.plugins.patching import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -22,10 +31,11 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def get_production_levels(customer_name):
-    """
-    Retrieve all the production levels that is in the database.
-    :param customer_name: Name of the customer, where the agent is located.
-    Basic Usage::
+    """Retrieve all the production levels that is in the database.
+    Args:
+        customer_name (str): Name of the customer, where the agent is located.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_production_levels
         >>> customer_name = 'default'
         >>> get_production_levels(customer_name)
@@ -35,14 +45,14 @@ def get_production_levels(customer_name):
         ]
     """
     data = fetch_production_levels_from_agent(customer_name)
-    return(data)
-
+    return data
 
 @time_it
 def get_supported_os_codes():
-    """
-    Retrieve all the base operating systems codes that is in the database.
-    Basic Usage::
+    """Retrieve all the base operating systems codes
+        that is in the database.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_supported_os_codes
         >>> get_supported_os_codes()
         [
@@ -52,15 +62,15 @@ def get_supported_os_codes():
         ]
     """
     oses = ['windows', 'linux', 'darwin']
-    return(oses)
-
+    return oses
 
 @time_it
 def get_supported_os_strings(customer_name):
-    """
-    Retrieve all the operating systems that is in the database.
-    :param customer_name: Name of the customer, where the agent is located.
-    Basic Usage::
+    """Retrieve all the operating systems that is in the database.
+    Args:
+        customer_name (str): Name of the customer, where the agent is located.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_supported_os_strings
         >>> customer_name = 'default'
         >>> get_supported_os_strings(customer_name)
@@ -72,15 +82,16 @@ def get_supported_os_strings(customer_name):
         ]
     """
     data = fetch_supported_os_strings(customer_name)
-    return(data)
-
+    return data
 
 @time_it
 def get_all_agent_ids(customer_name=None, agent_os=None):
-    """
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located
-    :param agent_os: (Optional) linux or windows or darwin
+    """Retrieve all agent_ids by either customer_name or os code.
+    Kwargs:
+        customer_name (str, optional): Name of the customer, where the agent
+            is located
+        agent_os (str, optional): linux or windows or darwin
+
     Basic Usage::
         >>> from vFense.core.agent.agents import get_all_agent_ids
         >>> customer_name = 'default'
@@ -104,19 +115,20 @@ def get_all_agent_ids(customer_name=None, agent_os=None):
     elif not agent_os and not customer_name:
         agents = fetch_agent_ids()
 
-    return(agents)
-
+    return agents
 
 @time_it
 def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
-    """
-    :param customer_name: (Optional) Name of the customer, where the agent
-        is located
-    :param agent_os: (Optional) The operating system you are filtering for.
-        linux or windows or darwin
-    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
-        from the database
-    Basic Usage::
+    """Retrieve a list of agents by os code and or customer name.
+    Kwargs:
+        customer_name (str, optional): Name of the customer, where the agent
+            is located
+        agent_os (str, optional): The operating system you are filtering for.
+            Ex: linux or windows or darwin
+        keys_to_pluck (list, optional): List of specific keys that you
+            are retrieving from the database.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import get_agents_info
         >>> os_code = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
@@ -191,18 +203,22 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
 
     elif not agent_os and not keys_to_pluck and customer_name:
         agents = (
-            fetch_agents_collection(customer_name=customer_name)
+            fetch_all_agents_for_customer(customer_name)
         )
 
-    return(agents)
+    return agents
 
 
 @time_it
 def get_agent_info(agent_id, keys_to_pluck=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param keys_to_pluck: (Optional) Specific keys that you are retrieving
-        from the database
+    """Retrieve agent information.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+
+    Kwargs:
+        keys_to_pluck (list, optional): List of specific keys that
+        you are retrieving from the database.
+
     Basic Usage::
         >>> from vFense.core.agent.agents import get_agent_info
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
@@ -219,16 +235,24 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     else:
         agent_info = fetch_agent_info(agent_id, keys_to_pluck)
 
-    return(agent_info)
-
+    return agent_info
 
 @time_it
 @results_message
-def update_agent_field(agent_id, field, value, username=None, uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param field: The field you are going to update.
-    :param value: The field will be updated to this value.
+def update_agent_field(
+        agent_id, field, value,
+        username=None, uri=None, method=None
+    ):
+    """Update a field for an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+        field (str): The field you are going to update.
+        value (str): The field will be updated to this value.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage::
         >>> from vFense.core.agent.agents import update_agent_field
@@ -283,16 +307,25 @@ def update_agent_field(agent_id, field, value, username=None, uri=None, method=N
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
-
+    return results
 
 @time_it
 @results_message
-def update_agent_fields(agent_id, agent_data, username=None,
-                        uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    :param agent_data: Dictionary of the data that you are updating
+def update_agent_fields(
+        agent_id, agent_data,
+        username=None, uri=None,
+        method=None
+    ):
+    """Update various fields in an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+        agent_data (dict): Dictionary of the data that you are updating.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
     Basic Usage::
         >>> from vFense.core.agent.agents import update_agent_fields
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
@@ -344,15 +377,21 @@ def update_agent_fields(agent_id, agent_data, username=None,
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
-
+    return results
 
 @time_it
 @results_message
 def update_agent_status(agent_id, username=None, uri=None, method=None):
-    """
-    :param agent_id: 36 character uuid of the agent you are updating
-    Basic Usage::
+    """Update the status of an agent.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are updating.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
         >>> from vFense.core.agent.agents import update_agent_status
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> update_agent_status(agent_id)
@@ -366,9 +405,9 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
         }
     """
     status = update_agent_status.func_name + ' - '
-    now = mktime(datetime.now().timetuple())
+    now = time()
     agent_data = {
-        AgentKey.LastAgentUpdate: r.epoch_time(now),
+        AgentKey.LastAgentUpdate: DbTime.epoch_time_to_db_time(now),
         AgentKey.AgentStatus: 'up'
     }
     status_code, count, error, generated_ids = (
@@ -402,31 +441,50 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
-
+    return results
 
 @time_it
-def add_agent(system_info, hardware, username=None,
-              customer_name=None, uri=None, method=None):
+@results_message
+def add_agent(
+        system_info, hardware, username=None,
+        customer_name=None, uri=None, method=None
+    ):
+    """Add a new agent to the database
+    Args:
+        system_info (dict): Dictionary with system related info
+        hardware (list):  List of dictionaries that rpresent the hardware
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        customer_name (str): The name of the customer.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import add_agent
+
+    Returns:
+        Dictionary
     """
-    Add a new agent to the database
-    :param system_info: Dictionary with system related info
-    :param hardware:  List of dictionaries that rpresent the hardware
-    """
+    results = {
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
     try:
-        now = mktime(datetime.now().timetuple())
+        now = time()
         agent_data = {}
-        agent_data[AgentKey.AgentStatus] = 'up'
-        agent_data[AgentKey.MachineType] = 'physical'
+        agent_data[AgentKey.AgentStatus] = AgentStatusKeys.UP
+        agent_data[AgentKey.MachineType] = AgentVirtualKeys.PHYSICAL
         agent_data[AgentKey.Tags] = []
-        agent_data[AgentKey.NeedsReboot] = 'no'
+        agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
         agent_data[AgentKey.DisplayName] = None
         agent_data[AgentKey.HostName] = None
         agent_data[AgentKey.CustomerName] = customer_name
         agent_data[AgentKey.Hardware] = hardware
 
         if not AgentKey.ProductionLevel in system_info:
-            agent_data[AgentKey.ProductionLevel] = 'Production'
+            agent_data[AgentKey.ProductionLevel] = ProductionLevels.PRODUCTION
 
         if customer_name != 'default':
             cexists = get_customer(customer_name)
@@ -439,13 +497,15 @@ def add_agent(system_info, hardware, username=None,
         for key, value in system_info.items():
             agent_data[key] = value
 
-        agent_data[AgentKey.LastAgentUpdate] = r.epoch_time(now)
+        agent_data[AgentKey.LastAgentUpdate] = (
+            DbTime.epoch_time_to_db_time(now)
+        )
 
         object_status, object_count, error, generated_ids = (
             insert_agent_data(agent_data)
         )
         if object_status == DbCodes.Inserted and object_count > 0:
-            agent_id = generated_ids[0]
+            agent_id = generated_ids.pop()
             Hardware().add(agent_id, agent_data[AgentKey.Hardware])
             data = {
                 AgentKey.AgentId: agent_id,
@@ -456,40 +516,41 @@ def add_agent(system_info, hardware, username=None,
                 AgentKey.OsCode: agent_data[AgentKey.OsCode],
                 AgentKey.OsString: agent_data[AgentKey.OsString],
             }
+            msg = 'new agent_operation succeeded'
+            generic_status_code = GenericCodes.ObjectCreated
+            vfense_status_code = AgentResultCodes.NewAgentSucceeded
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.DATA] = [data]
+            results[ApiResultKeys.GENERATED_IDS] = [agent_id]
 
-            status = (
-                AgentResults(
-                    username, uri, method
-                ).new_agent(agent_id, data)
-            )
-
-            logger.debug(status['message'])
-
-        else:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agentid, 'agent', agent_added)
-            )
-
-            logger.info(status['message'])
+        elif object_status == DbCodes.Errors:
+            msg = 'new agent operation failed' % (error)
+            generic_status_code = GenericFailureCodes.FailedToCreateObject
+            vfense_status_code = AgentFailureResultCodes.NewAgentFailed
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
 
     except Exception as e:
-        status = (
-            GenericResults(
-                username, uri, method
-            ).something_broke('new agent', 'agent', e)
-        )
+        logger.exception(e)
+        msg = 'new agent operation failed' % (e)
+        generic_status_code = GenericFailureCodes.FailedToCreateObject
+        vfense_status_code = AgentFailureResultCodes.NewAgentFailed
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+        results[ApiResultKeys.MESSAGE] = msg
 
-        logger.exception(status['message'])
-
-    return(status)
-
+    return results
 
 @time_it
-def update_agent(agent_id, system_info, hardware, rebooted,
-                 username=None, customer_name=None,
-                 uri=None, method=None):
+@results_message
+def update_agent(
+        agent_id, system_info, hardware, rebooted,
+        username=None, customer_name=None,
+        uri=None, method=None
+    ):
     """Update various aspects of agent
     Args:
         agent_id (str): 36 character uuid of the agent you are updating
@@ -503,11 +564,15 @@ def update_agent(agent_id, system_info, hardware, rebooted,
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
     """
+    results = {
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
     agent_data = {}
-
     try:
-        now = mktime(datetime.now().timetuple())
-        agent_orig_info = get_agent_info(agent_id)
+        now = time()
+        agent_orig_info = fetch_agent_info(agent_id)
         if agent_orig_info:
             agent_data[AgentKey.Hardware] = hardware
 
@@ -515,7 +580,7 @@ def update_agent(agent_id, system_info, hardware, rebooted,
                 agent_data[key] = value
 
             agent_data[AgentKey.LastAgentUpdate] = (
-                r.epoch_time(now)
+                DbTime.epoch_time_to_db_time(now)
             )
             agent_data[AgentKey.HostName] = (
                 agent_orig_info.get(AgentKey.HostName, None)
@@ -524,43 +589,83 @@ def update_agent(agent_id, system_info, hardware, rebooted,
                 agent_orig_info.get(AgentKey.DisplayName, None)
             )
 
-            if rebooted == 'yes':
-                agent_data[AgentKey.NeedsReboot] = 'no'
+            if rebooted == CommonKeys.YES:
+                agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
 
-            update_agent_data(agent_id, agent_data)
-            Hardware().add(agent_id, hardware)
-            status = (
-                AgentResults(
-                    username, uri, method
-                ).startup(agent_id, agent_data)
+            status_code, count, error, generated_ids = (
+                update_agent_data(agent_id, agent_data)
             )
-            logger.debug(status)
 
+            if status_code == DbCodes.Replaced and count > 0:
+                Hardware().add(agent_id, hardware)
+                msg = 'agent %s updated successfully.' % (agent_id)
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericCodes.ObjectUpdated
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentResultCodes.ResultsUpdated
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = [agent_data]
+                results[ApiResultKeys.UPDATED_IDS] = [agent_id]
+
+            elif status_code == DbCodes.Unchanged:
+                Hardware().add(agent_id, hardware)
+                msg = 'agent %s unchanged, data is the same.' % (agent_id)
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericCodes.ObjectUnchanged
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentResultCodes.ResultsUpdated
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = [agent_data]
+                results[ApiResultKeys.UNCHANGED_IDS] = [agent_id]
+
+            elif status_code == DbCodes.Skipped:
+                msg = 'agent %s does not exist.' % (agent_id)
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.InvalidId
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentFailureCodes.AgentsDoesNotExist
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = [agent_data]
+
+            elif status_code == DbCodes.Errors:
+                msg = 'operation failed' % (error)
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.FailedToUpdateObject
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentFailureResultCodes.ResultsFailedToUpdate
+                results[ApiResultKeys.MESSAGE] = msg
 
         else:
-            status = (
-                AgentResults(
-                    username, uri, method
-                ).startup_failed()
-            )
-            logger.warn(status)
+            msg = 'agent %s does not exist.' % (agent_id)
+
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.InvalidId
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentFailureCodes.AgentsDoesNotExist
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.DATA] = [agent_data]
 
     except Exception as e:
-        status = (
-            GenericResults(
-                username, uri, method
-            ).something_broke(agent_id, 'startup', e)
-        )
+        logger.exception(e)
+        msg = 'operation failed' % (error)
 
-        logger.exception(status)
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+            GenericFailureCodes.FailedToUpdateObject
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+            AgentFailureResultCodes.ResultsFailedToUpdate
+        results[ApiResultKeys.MESSAGE] = msg
 
-    return(status)
+    return results
 
 @time_it
 @results_message
 def remove_all_agents_for_customer(
-    customer_name, user_name=None,
-    uri=None, method=None
+        customer_name,
+        user_name=None, uri=None, method=None
     ):
     """Remove all agents from the system, filtered by customer_name
     Args:
@@ -598,7 +703,6 @@ def remove_all_agents_for_customer(
         generic_status_code = GenericFailureCodes.FailedToDeleteObject
         vfense_status_code = AgentFailureCodes.AgentsFailedToDelete
 
-
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
@@ -610,18 +714,18 @@ def remove_all_agents_for_customer(
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
-
+    return results
 
 @time_it
 @results_message
-def change_customer_for_agents(
-    customer_name, user_name=None,
-    uri=None, method=None
+def change_customer_for_all_agents_in_customer(
+        current_customer, new_customer,
+        user_name=None, uri=None, method=None
     ):
     """Move all agents from one customer to another 
     Args:
-        customer_name (str): The name of the customer.
+        current_customer (str): The name of the current customer.
+        new_customer (str): The name of the new customer.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -629,14 +733,15 @@ def change_customer_for_agents(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import change_customer_for_agents
-        >>> customer_name = 'tester'
-        >>> change_customer_for_agents(customer_name)
+        >>> from vFense.core.agent.agents import change_customer_for_all_agents_in_customer
+        >>> current_customer = 'default'
+        >>> new_customer = 'tester'
+        >>> change_customer_for_all_agents_in_customer(current_customer, new_customer)
     """
     status = change_customer_for_agents.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        move_all_agents_to_customer(customer_name)
+        move_all_agents_to_customer(current_customer, new_customer)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:
@@ -666,4 +771,118 @@ def change_customer_for_agents(
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
+    return results
+
+@time_it
+@results_message
+def change_customer_for_agents(
+        agent_ids, new_customer,
+        user_name=None, uri=None, method=None
+    ):
+    """Move a list of agents from one customer to another 
+    Args:
+        agent_ids (list): List of agent ids
+        new_customer (str): The name of the new customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agents
+        >>> new_customer = 'tester'
+        >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
+        >>> change_customer_for_agents(agent_ids, new_customer)
+    """
+    status = change_customer_for_agents.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        move_agents_to_customer(agent_ids, new_customer)
+    )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return results
+
+@time_it
+@results_message
+def change_customer_for_agent(
+        agent_id, new_customer,
+        user_name=None, uri=None, method=None
+    ):
+    """Move an agent from one customer to another 
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+        new_customer (str): The name of the new customer.
+
+    Kwargs:
+        user_name (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.core.agent.agents import change_customer_for_agent
+        >>> new_customer = 'tester'
+        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
+        >>> change_customer_for_agent(agent_id, new_customer)
+    """
+    status = change_customer_for_agent.func_name + ' - '
+
+    status_code, count, error, generated_ids = (
+        move_agent_to_customer(agent_id, new_customer)
+    )
+    msg = 'total number of agents moved: %s' % (str(count))
+    if status_code == DbCodes.Replaced:
+        generic_status_code = GenericCodes.ObjectUpdated
+        vfense_status_code = AgentCodes.AgentsUpdated
+
+    elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.DoesntExist:
+        generic_status_code = GenericCodes.DoesNotExists
+        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+
+    elif status_code == DbCodes.Errors:
+        generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
+
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
+
+    return results

@@ -1,23 +1,26 @@
 import os
+
 from vFense.plugins.vuln._constants import DateValues
 
 
 class CVEDataDir():
     PLUGIN_DIR = os.path.abspath(os.path.dirname(__file__))
     XML_DIR = os.path.join(PLUGIN_DIR, 'data/xml')
-    NVD_MODIFIED_FILE = os.path.join(XML_DIR,'nvdcve-modified.xml')
+    NVD_MODIFIED_FILE = os.path.join(XML_DIR, 'nvdcve-modified.xml')
     NVD_CURRENT_FILE = (
         os.path.join(
-            XML_DIR,'nvdcve-%s.xml' %
+            XML_DIR, 'nvdcve-%s.xml' %
             (str(DateValues.CURRENT_YEAR))
         )
     )
+
 
 class NVDFeeds():
     ENTRY = '{http://nvd.nist.gov/feeds/cve/1.2}entry'
     DESC = '{http://nvd.nist.gov/feeds/cve/1.2}desc'
     REFS = '{http://nvd.nist.gov/feeds/cve/1.2}refs'
     VULN_SOFT = '{http://nvd.nist.gov/feeds/cve/1.2}vuln_soft'
+
 
 class CVEStrings():
     START_YEAR = 2002
@@ -47,6 +50,7 @@ class CVEStrings():
     NVDCVE_BASE = 'nvdcve-'
     NVDCVE_MODIFIED = 'nvdcve-modified.xml'
     NVD_MODIFIED_URL = NVD_DOWNLOAD_URL + NVDCVE_MODIFIED
+
 
 class CVEVectors():
     BASE_METRIC_AV = 'AV'
@@ -249,4 +253,3 @@ CVSS_ENVIRONMENTAL_AR_VALUES = (
         'ND': 'Not Defined',
     }
 )
-

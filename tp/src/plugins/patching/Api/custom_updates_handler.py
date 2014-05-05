@@ -13,8 +13,10 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
 from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import update_custom_app, \
-    update_hidden_status, delete_app_from_rv
+from vFense.plugins.patching._db import update_custom_app_data_by_app_id
+from vFense.plugins.patching.patching import toggle_hidden_status
+
+from vFense.plugins.patching.rv_db_calls import delete_app_from_rv
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
@@ -578,7 +580,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                             AppsKey.RvSeverity: severity
                         }
                     )
-                    update_custom_app(
+                    update_custom_app_data_by_app_id(
                         app_id, sev_data
                     )
                     results = (
@@ -606,7 +608,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                         CustomAppsKey.CliOptions: install_options
                     }
                 )
-                update_custom_app(
+                update_custom_app_data_by_app_id(
                     app_id, install_options_hash
                 )
                 results = (
@@ -1038,19 +1040,16 @@ class CustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             toggle = self.arguments.get('hide', 'toggle')
             results = (
-                update_hidden_status(
-                    username, customer_name, uri,
-                    method, app_ids, toggle,
-                    CustomAppsCollection
+                toggle_hidden_status(
+                    app_ids, toggle,
+                    AppCollections.CustomApps,
+                    username, uri, method
                 )
             )
 

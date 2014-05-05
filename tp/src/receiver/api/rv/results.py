@@ -40,6 +40,7 @@ class InstallOsAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
+
             if not isinstance(reboot_required, bool):
                 if reboot_required == CommonKeys.TRUE:
                     reboot_required = True
@@ -98,6 +99,13 @@ class InstallCustomAppsResults(BaseHandler):
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
             print self.arguments
+
+            if not isinstance(reboot_required, bool):
+                if reboot_required == CommonKeys.TRUE:
+                    reboot_required = True
+                else:
+                    reboot_required = False
+
             results = (
                 PatchingOperationResults(
                     username, agent_id,
@@ -150,6 +158,13 @@ class InstallSupportedAppsResults(BaseHandler):
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
             print self.arguments
+
+            if not isinstance(reboot_required, bool):
+                if reboot_required == CommonKeys.TRUE:
+                    reboot_required = True
+                else:
+                    reboot_required = False
+
             results = (
                 PatchingOperationResults(
                     username, agent_id,
@@ -204,6 +219,13 @@ class InstallAgentAppsResults(BaseHandler):
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
             print self.arguments
+
+            if not isinstance(reboot_required, bool):
+                if reboot_required == CommonKeys.TRUE:
+                    reboot_required = True
+                else:
+                    reboot_required = False
+
             results = (
                 PatchingOperationResults(
                     username, agent_id,
@@ -238,7 +260,7 @@ class InstallAgentAppsResults(BaseHandler):
             self.write(dumps(results, indent=4))
 
 
-class UnInstallAppsResults(BaseHandler):
+class UninstallAppsResults(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
@@ -260,6 +282,13 @@ class UnInstallAppsResults(BaseHandler):
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
             print self.arguments
+
+            if not isinstance(reboot_required, bool):
+                if reboot_required == CommonKeys.TRUE:
+                    reboot_required = True
+                else:
+                    reboot_required = False
+
             results = (
                 PatchingOperationResults(
                     username, agent_id,

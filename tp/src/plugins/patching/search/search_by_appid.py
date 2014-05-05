@@ -4,8 +4,8 @@ import logging.config
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
+from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.os_apps.db_calls import get_all_stats_by_appid
-from vFense.plugins.patching.rv_db_calls import get_file_data
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
@@ -68,7 +68,7 @@ class RetrieveAppsByAppId(object):
                 .run(conn)
             )
             if pkg:
-                pkg[0][self.CurrentAppsKey.FileData] = get_file_data(self.app_id)
+                pkg[0][self.CurrentAppsKey.FileData] = fetch_file_data(self.app_id)
 
                 if stats:
                     pkg[0]['agent_stats'] = (
