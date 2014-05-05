@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'underscore', 'backbone', 'app', 'moment', 'modals/panel', 'modals/delete', 'crel', 'modules/lists/pageable'],
-    function ($, _, Backbone, app, moment, Panel, DeletePanel, crel, Pager) {
+    ['jquery', 'underscore', 'backbone', 'app', 'moment', 'modals/panel', 'modals/agentTags', 'modals/delete', 'crel', 'modules/lists/pageable'],
+    function ($, _, Backbone, app, moment, Panel, AgentTagsPanel, DeletePanel, crel, Pager) {
         'use strict';
         var helpers = {},
             exports = {};
@@ -60,15 +60,16 @@ define(
                 },
                 events: function () {
                     return _.extend({}, _.result(Pager.View.prototype, 'events'), {
-                        'change select[name=advancedSearch]'    : 'filterBySearch',
-                        'change select[name=sort]'              : 'sortBy',
-                        'change select[name=order]'             : 'orderBy',
-                        'change select[name=filterKey]'         : 'filterKeyChange',
-                        'change select[name=filterValue]'       : 'filterValueChange',
-                        'keyup input[name=search]'              : 'debouncedSearch',
-                        'click input[data-toggle=all]'          : 'selectAll',
-                        'click #deleteAgents'                   : 'deleteAgents',
-                        'click #switchCustomer'                 : 'switchCustomer'
+                        'change select[name=advancedSearch]'    :   'filterBySearch',
+                        'change select[name=sort]'              :   'sortBy',
+                        'change select[name=order]'             :   'orderBy',
+                        'change select[name=filterKey]'         :   'filterKeyChange',
+                        'change select[name=filterValue]'       :   'filterValueChange',
+                        'keyup input[name=search]'              :   'debouncedSearch',
+                        'click input[data-toggle=all]'          :   'selectAll',
+                        'click #deleteAgents'                   :   'deleteAgents',
+                        'click #switchCustomer'                 :   'switchCustomer',
+                        'click button[name=agentTags]'          :   'showAgentTagsModal'
                     });
                 },
                 debouncedSearch: _.debounce(function (event) {
@@ -216,7 +217,8 @@ define(
                             crel('a', {href: '#', id: 'switchCustomer', title: 'Move agents to a different customer'}, crel('i', {class: 'icon-exchange'}))
                         ),
                         crel('span', {class: 'span2'}, 'Operating System'),
-                        crel('span', {class: 'span2'}, 'OS Code'),
+                        crel('span', {class: 'span1'}, 'OS Code'),
+                        crel('span', {class: 'span1'}, 'Tags'),
                         crel('span', {class: 'span1'}, 'Updates'),
                         crel('span', {class: 'span2'}, 'Vulnerabilities'),
                         crel('span', {class: 'span2'}, 'Last Updated on')
@@ -239,6 +241,10 @@ define(
                         lastAgentUpdate     = item.get('last_agent_update'),
                         vulnerabilities     = item.get('available_vulnerabilities');
 //                        stats               = helpers.sortStats(item.get('basic_rv_stats'));
+
+                    this.tags = item.get('tags');
+                    this.agentName = displayName;
+
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
                             crel('a', {href: '#nodes/' + id},
@@ -251,7 +257,10 @@ define(
                                     crel('strong', displayName)
                                 ),
                                 crel('span', {class: 'span2'}, item.get('os_string')),
-                                crel('span', {class: 'span2'}, item.get('os_code')),
+                                crel('span', {class: 'span1'}, item.get('os_code')),
+                                crel('span', {class: 'span1'},
+                                    this.tags.length === 0 ? 0 : crel('button', {name: 'agentTags', title: 'Click to see the Tags of this Agent', class: 'btn btn-mini btn-info', 'data-toggle': 'modal'}, this.tags.length)
+                                ),
                                 crel('span', {class: 'span1'}, item.get('available_updates')),
                                 crel('span', {class: 'span2'}, item.get('available_vulnerabilities')),
                                 crel('span', {class: 'span2'}, this.formatDate(lastAgentUpdate))
@@ -320,6 +329,18 @@ define(
                         agents = [];
                     $checkboxes.each(function () { agents.push(this.value); });
                     return agents;
+                },
+                showAgentTagsModal: function (event) {
+                    event.preventDefault();
+//                    if (!this.agentTagsModal) {
+                        var that = this;
+                        this.agentTagsModal = new AgentTagsPanel.View({
+                            agentName: that.agentName,
+                            tags: that.tags
+                        });
+//                    }
+                    this.agentTagsModal.open();
+                    return this;
                 },
                 deleteAgents: function (event) {
                     event.preventDefault();
