@@ -15,7 +15,6 @@ import tornado.options
 import vFense_module_loader
 
 from redis import StrictRedis
-from rq import Connection, Queue
 
 from vFense.server.api.reports_api import *
 
