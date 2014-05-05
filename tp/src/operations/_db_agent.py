@@ -32,25 +32,25 @@ def fetch_agent_operation(operation_id, conn=None):
     Returns:
         Dictionary
         {
-            "agents_expired_count": 0, 
-            "cpu_throttle": "normal", 
-            "agents_total_count": 1, 
-            "plugin": "rv", 
-            "tag_id": null, 
-            "agents_completed_with_errors_count": 0, 
-            "created_by": "admin", 
-            "agents_pending_pickup_count": 0, 
-            "completed_time": 1397246851, 
-            "operation_status": 6006, 
-            "agents_completed_count": 1, 
-            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22", 
-            "created_time": 1397246674, 
-            "agents_pending_results_count": 0, 
-            "operation": "install_os_apps", 
-            "updated_time": 1397246851, 
-            "net_throttle": 0, 
-            "agents_failed_count": 0, 
-            "restart": "none", 
+            "agents_expired_count": 0,
+            "cpu_throttle": "normal",
+            "agents_total_count": 1,
+            "plugin": "rv",
+            "tag_id": null,
+            "agents_completed_with_errors_count": 0,
+            "created_by": "admin",
+            "agents_pending_pickup_count": 0,
+            "completed_time": 1397246851,
+            "operation_status": 6006,
+            "agents_completed_count": 1,
+            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22",
+            "created_time": 1397246674,
+            "agents_pending_results_count": 0,
+            "operation": "install_os_apps",
+            "updated_time": 1397246851,
+            "net_throttle": 0,
+            "agents_failed_count": 0,
+            "restart": "none",
             "customer_name": "default"
         }
     """
@@ -66,8 +66,7 @@ def fetch_agent_operation(operation_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
@@ -99,8 +98,7 @@ def operation_exist(operation_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(exists)
-
+    return exists
 
 @time_it
 @db_create_close
@@ -137,8 +135,7 @@ def operation_with_agentid_exists(operation_id, agent_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(exists)
-
+    return exists
 
 @time_it
 @db_create_close
@@ -157,18 +154,18 @@ def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
     Returns:
         Dictionary
         {
-            "status": "picked_up", 
-            "picked_up_time": 1397246704, 
-            "errors": null, 
-            "expired_time": 0, 
-            "apps_failed_count": 0, 
-            "apps_completed_count": 1, 
-            "completed_time": 1397246851, 
-            "apps_pending_count": 0, 
-            "agent_id": "4db6bf07-c5da-4494-93bb-109db205ca64", 
-            "apps_total_count": 1, 
-            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22", 
-            "id": "2f678e9e-a537-4cfb-8613-6aa37696a8a9", 
+            "status": "picked_up",
+            "picked_up_time": 1397246704,
+            "errors": null,
+            "expired_time": 0,
+            "apps_failed_count": 0,
+            "apps_completed_count": 1,
+            "completed_time": 1397246851,
+            "apps_pending_count": 0,
+            "agent_id": "4db6bf07-c5da-4494-93bb-109db205ca64",
+            "apps_total_count": 1,
+            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22",
+            "id": "2f678e9e-a537-4cfb-8613-6aa37696a8a9",
             "customer_name": "default"
         }
     """
@@ -190,13 +187,13 @@ def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 def operation_with_agentid_and_appid_exists(
-    operation_id, agent_id, app_id, conn=None
+        operation_id, agent_id,
+        app_id, conn=None
     ):
     """Verify if the operation exists by operation id, agent id and app id.
     Args:
@@ -232,13 +229,12 @@ def operation_with_agentid_and_appid_exists(
     except Exception as e:
         logger.exception(e)
 
-    return(exists)
-
+    return exists
 
 @time_it
 @db_create_close
 def group_operations_per_app_by_results(
-    operation_id, agent_id, conn=None
+        operation_id, agent_id, conn=None
     ):
     """Return the grouped results, grouped by status_count
     Args:
@@ -278,7 +274,10 @@ def group_operations_per_app_by_results(
             elif i[CommonKeys.GROUP] == AgentOperationCodes.ResultsReceived:
                 completed_count = i[CommonKeys.REDUCTION]
 
-            elif i[CommonKeys.GROUP] == AgentOperationCodes.ResultsReceivedWithErrors:
+            elif (
+                    i[CommonKeys.GROUP] ==
+                    AgentOperationCodes.ResultsReceivedWithErrors
+                ):
                 failed_count = i[CommonKeys.REDUCTION]
 
         data = (pending_count, completed_count, failed_count)
@@ -286,8 +285,7 @@ def group_operations_per_app_by_results(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
@@ -319,8 +317,7 @@ def insert_into_agent_operations(operation_data, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
@@ -352,8 +349,7 @@ def insert_agent_into_agent_operations(operation_data, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
@@ -385,8 +381,7 @@ def insert_app_into_agent_operations(operation_data, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
@@ -421,15 +416,14 @@ def update_agent_operation(operation_id, operation_data, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_operation_per_agent(
-    operation_id, agent_id,
-    operation_data, conn=None
+        operation_id, agent_id,
+        operation_data, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
@@ -465,15 +459,14 @@ def update_operation_per_agent(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_operation_per_app(
-    operation_id, agent_id, app_id,
-    operation_data, conn=None
+        operation_id, agent_id, app_id,
+        operation_data, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
@@ -511,28 +504,25 @@ def update_operation_per_app(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_agent_operation_expire_time(
-    operation_id, agent_id, db_time, conn=None
+        operation_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
     Args:
         operation_id (str): the id of the operation.
-        agent_id (str): the id of the agent.
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
         >>> from vFense.operations._db import update_agent_operation_expire_time
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
-        >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
         >>> db_time = r.epoch_time(time.time())
-        >>> update_agent_operation_expire_time(operation_id, agent_id, db_time)
+        >>> update_agent_operation_expire_time(operation_id, db_time)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -569,28 +559,25 @@ def update_agent_operation_expire_time(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_agent_operation_pickup_time(
-    operation_id, agent_id, db_time, conn=None
+        operation_id, db_time, conn=None
     ):
     """Update an operation per agent.
         DO NOT CALL DIRECTLY
     Args:
         operation_id (str): the id of the operation.
-        agent_id (str): the id of the agent.
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
         >>> from vFense.operations._db import update_agent_operation_pickup_time
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
-        >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
         >>> db_time = r.epoch_time(time.time())
-        >>> update_agent_operation_pickup_time(operation_id, agent_id, db_time)
+        >>> update_agent_operation_pickup_time(operation_id, db_time)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -613,7 +600,9 @@ def update_agent_operation_pickup_time(
                     ),
                     AgentOperationKey.AgentsPendingResultsCount: (
                         r.branch(
-                            r.row[AgentOperationKey.AgentsPendingResultsCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                            r.row[AgentOperationKey.AgentsPendingResultsCount] < (
+                                r.row[AgentOperationKey.AgentsTotalCount]
+                            ),
                             r.row[AgentOperationKey.AgentsPendingResultsCount] + 1,
                             r.row[AgentOperationKey.AgentsPendingResultsCount]
                         )
@@ -627,14 +616,13 @@ def update_agent_operation_pickup_time(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_completed_and_pending_count(
-    operation_id, db_time, conn=None
+        operation_id, db_time, conn=None
     ):
     """Update completed and pending count.
         DO NOT CALL DIRECTLY
@@ -661,7 +649,9 @@ def update_completed_and_pending_count(
             .update(
                 {
                     AgentOperationKey.AgentsCompletedCount: r.branch(
-                        r.row[AgentOperationKey.AgentsCompletedCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                        r.row[AgentOperationKey.AgentsCompletedCount] < (
+                            r.row[AgentOperationKey.AgentsTotalCount]
+                        ),
                         r.row[AgentOperationKey.AgentsCompletedCount] + 1,
                         r.row[AgentOperationKey.AgentsCompletedCount]
                     ),
@@ -680,14 +670,13 @@ def update_completed_and_pending_count(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_failed_and_pending_count(
-    operation_id, db_time, conn=None
+        operation_id, db_time, conn=None
     ):
     """Update failed and pending count.
         DO NOT CALL DIRECTLY
@@ -714,7 +703,9 @@ def update_failed_and_pending_count(
             .update(
                 {
                     AgentOperationKey.AgentsFailedCount: r.branch(
-                        r.row[AgentOperationKey.AgentsFailedCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                        r.row[AgentOperationKey.AgentsFailedCount] < (
+                            r.row[AgentOperationKey.AgentsTotalCount]
+                        ),
                         r.row[AgentOperationKey.AgentsFailedCount] + 1,
                         r.row[AgentOperationKey.AgentsFailedCount]
                     ),
@@ -733,14 +724,13 @@ def update_failed_and_pending_count(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def update_errors_and_pending_count(
-    operation_id, db_time, conn=None
+        operation_id, db_time, conn=None
     ):
     """Update errors and pending count.
         DO NOT CALL DIRECTLY
@@ -767,7 +757,9 @@ def update_errors_and_pending_count(
             .update(
                 {
                     AgentOperationKey.AgentsCompletedWithErrorsCount: r.branch(
-                        r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                        r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] < (
+                            r.row[AgentOperationKey.AgentsTotalCount]
+                        ),
                         r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] + 1,
                         r.row[AgentOperationKey.AgentsCompletedWithErrorsCount]
                     ),
@@ -786,6 +778,4 @@ def update_errors_and_pending_count(
     except Exception as e:
         logger.exception(e)
 
-    return(data)
-
-
+    return data

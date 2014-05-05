@@ -7,7 +7,7 @@ from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
-from vFense.operations._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.operations.agent_operations import AgentOperation, \
     operation_for_agent_exist, get_agent_operation
 
@@ -22,9 +22,9 @@ class OperationResults(object):
     """Update an operation for an agent, based on the results received.
         This is the base class for adding results to an aegnt operation"""
     def __init__(
-        self, username, agent_id, operation_id,
-        success, error=None, status_code=None,
-        uri=None, method=None
+            self, username, agent_id, operation_id,
+            success, error=None, status_code=None,
+            uri=None, method=None
         ):
         """
         Args:
@@ -69,8 +69,7 @@ class OperationResults(object):
             )
         )
 
-
-    @results_message 
+    @results_message
     def update_operation(self, oper_type):
         """Update an agent operation
         Args:
@@ -91,15 +90,15 @@ class OperationResults(object):
         Returns:
             Dictionary
             {
-                "rv_status_code": 3203, 
+                "rv_status_code": 3203,
                 "http_method": PUT,
                 "updated_ids": [
                     "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
-                ], 
-                "http_status": 200, 
-                "unchanged_ids": [], 
-                "message": "Results updated for operation id d5fb023c-82a0-4552-adc1-b3f83de7ae8a", 
-                "data": [], 
+                ],
+                "http_status": 200,
+                "unchanged_ids": [],
+                "message": "Results updated for operation id d5fb023c-82a0-4552-adc1-b3f83de7ae8a",
+                "data": [],
                 "uri": "rvl/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/core/results/reboot"
             }
         """
@@ -119,8 +118,9 @@ class OperationResults(object):
 
         if oper_exists:
             if (
-                self.success == CommonKeys.TRUE or
-                self.success == CommonKeys.FALSE):
+                    self.success == CommonKeys.TRUE or
+                    self.success == CommonKeys.FALSE
+                ):
 
                 if self.success == CommonKeys.TRUE:
                     status_code = AgentOperationCodes.ResultsReceived
@@ -207,4 +207,4 @@ class OperationResults(object):
                 [self.operation_id]
             )
 
-        return(results)
+        return results

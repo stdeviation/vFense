@@ -6,10 +6,9 @@ from functools import wraps
 
 from tornado.web import HTTPError
 
-from vFense.errorz._constants import *
-from vFense.core._constants import *
-from vFense.errorz.status_codes import *
-from vFense.errorz.error_messages import *
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import DbCodes, \
+    GenericCodes, GenericFailureCodes
 from vFense.errorz.results import Results
 
 
@@ -172,7 +171,7 @@ def results_message(fn):
             )
 
 
-        return(status)
+        return status
 
     return wraps(fn)(db_wrapper)
 
@@ -254,7 +253,6 @@ def agent_authenticated_request(method):
         return method(self, *args, **kwargs)
 
     return wrapper
-
 
 def convert_json_to_arguments(fn):
 

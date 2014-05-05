@@ -5,7 +5,7 @@ from hashlib import sha256
 from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
 from vFense.plugins.patching import AppsKey, AppsPerAgentKey
-from vFense.plugins.patching._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
     unique_application_updater
 
@@ -86,7 +86,9 @@ class IncomingApplicationsFromAgent():
         #end_time = datetime.now()
         #print end_time, 'finished adding  all apps to app_table'
         #print 'total time took %s' % (str(end_time - start_time))
-        print inserted, updated, deleted
+        print (("Added or updated apps per agent: "
+               "inserted: {0}, updated: {1}, deleted: {2}")
+               .format(inserted, updated, deleted))
 
         #logger.info(msg)
 

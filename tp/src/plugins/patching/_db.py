@@ -458,7 +458,7 @@ def fetch_app_id_by_name_and_version(
     """
     app_id = None
     try:
-        app_ids = (
+        app_ids = list(
             r
             .table(table)
             .get_all(
@@ -802,7 +802,7 @@ def delete_apps_by_customer(
 @db_create_close
 @return_status_tuple
 def update_app_data_by_agentid(
-        agent_id, data,
+        agent_id, app_data,
         table=AppCollections.AppsPerAgent,
         conn=None
     ):
@@ -834,7 +834,7 @@ def update_app_data_by_agentid(
             r
             .table(table)
             .get_all(agent_id, index=index_to_use)
-            .update(data)
+            .update(app_data)
             .run(conn)
         )
 
@@ -847,7 +847,7 @@ def update_app_data_by_agentid(
 @db_create_close
 @return_status_tuple
 def update_app_data_by_agentid_and_appid(
-        agent_id, app_id, data,
+        agent_id, app_id, app_data,
         table=AppCollections.AppsPerAgent,
         conn=None
     ):
@@ -881,7 +881,7 @@ def update_app_data_by_agentid_and_appid(
             r
             .table(table)
             .get_all([agent_id, app_id], index=index_to_use)
-            .update(data)
+            .update(app_data)
             .run(conn)
         )
 
@@ -1104,7 +1104,7 @@ def delete_apps_per_agent_older_than(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
-        >>> from vFense.plugins.patching._db_constants import DbTime
+        >>> from vFense.core._db_constants import DbTime
         >>> now = DbTime.time_now()
         >>> table = 'apps_per_agent'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
