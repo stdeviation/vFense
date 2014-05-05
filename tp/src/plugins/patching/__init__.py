@@ -278,8 +278,8 @@ class AgentAppsKey():
     VendorName = 'vendor_name'
     CliOptions = 'cli_options'
     Arch = 'arch'
-    VulnerabiltyId = 'vulnerability_id'
-    VulnerabiltyCategories = 'vulnerability_categories'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
 
 
