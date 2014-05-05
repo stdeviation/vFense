@@ -545,6 +545,7 @@ def add_agent(
     return results
 
 @time_it
+@results_message
 def update_agent(
         agent_id, system_info, hardware, rebooted,
         username=None, customer_name=None,
@@ -594,13 +595,15 @@ def update_agent(
             status_code, count, error, generated_ids = (
                 update_agent_data(agent_id, agent_data)
             )
+
             if status_code == DbCodes.Replaced and count > 0:
                 Hardware().add(agent_id, hardware)
                 msg = 'agent %s updated successfully.' % (agent_id)
-                generic_status_code = GenericCodes.ObjectUpdated
-                vfense_status_code = AgentResultCodes.ResultsUpdated
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericCodes.ObjectUpdated
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentResultCodes.ResultsUpdated
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = [agent_data]
                 results[ApiResultKeys.UPDATED_IDS] = [agent_id]
@@ -608,51 +611,52 @@ def update_agent(
             elif status_code == DbCodes.Unchanged:
                 Hardware().add(agent_id, hardware)
                 msg = 'agent %s unchanged, data is the same.' % (agent_id)
-                generic_status_code = GenericCodes.ObjectUnchanged
-                vfense_status_code = AgentResultCodes.ResultsUpdated
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericCodes.ObjectUnchanged
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentResultCodes.ResultsUpdated
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = [agent_data]
                 results[ApiResultKeys.UNCHANGED_IDS] = [agent_id]
 
             elif status_code == DbCodes.Skipped:
                 msg = 'agent %s does not exist.' % (agent_id)
-                generic_status_code = GenericFailureCodes.InvalidId
-                vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.InvalidId
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentFailureCodes.AgentsDoesNotExist
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = [agent_data]
 
             elif status_code == DbCodes.Errors:
                 msg = 'operation failed' % (error)
-                generic_status_code = GenericFailureCodes.FailedToUpdateObject
-                vfense_status_code = (
+
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.FailedToUpdateObject
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = \
                     AgentFailureResultCodes.ResultsFailedToUpdate
-                )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
                 results[ApiResultKeys.MESSAGE] = msg
 
         else:
             msg = 'agent %s does not exist.' % (agent_id)
-            generic_status_code = GenericFailureCodes.InvalidId
-            vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+                    GenericFailureCodes.InvalidId
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = \
+                    AgentFailureCodes.AgentsDoesNotExist
             results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.DATA] = [agent_data]
 
     except Exception as e:
         logger.exception(e)
         msg = 'operation failed' % (error)
-        generic_status_code = GenericFailureCodes.FailedToUpdateObject
-        vfense_status_code = (
+
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = \
+            GenericFailureCodes.FailedToUpdateObject
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = \
             AgentFailureResultCodes.ResultsFailedToUpdate
-        )
-        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
         results[ApiResultKeys.MESSAGE] = msg
 
     return results

@@ -6,7 +6,7 @@ from vFense.utils.common import *
 from vFense.core.agent.agents import *
 from vFense.plugins.patching import * 
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
-
+from vFense.errorz.error_messages import GenericResults
 
 def system_os_details(agent_info):
     data={

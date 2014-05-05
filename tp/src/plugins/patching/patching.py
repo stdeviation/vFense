@@ -175,16 +175,21 @@ def get_download_urls(customer_name, app_id, file_data):
     for pkg in file_data:
         file_servers = fetch_file_servers_addresses(customer_name)
         file_uris = []
+
+        # If customer defined file_servers exist then add those to the
+        # beginning of the file_uris list.
         if file_servers:
             for server in file_servers:
                 file_uris.append(
-                    'http://%s/%s/%s' %
-                    (
-                        server[FileServerKeys.Address],
+                    os.path.join(
+                        'http://', server[FileServerKeys.Address],
                         file_uris_base, pkg[CommonFileKeys.PKG_NAME]
                     )
                 )
-        file_uris.append(url_base + pkg[CommonFileKeys.PKG_NAME])
+
+        # Finally, make sure to add the vFense address
+        file_uris.append(os.path.join(url_base, pkg[CommonFileKeys.PKG_NAME]))
+
         uris.append(
             {
                 CommonFileKeys.PKG_NAME: pkg[CommonFileKeys.PKG_NAME],
@@ -1107,13 +1112,16 @@ def delete_apps_from_agent_by_name_and_version(
         Boolean
         >>> True
     """
+
     completed = False
     app_id = fetch_app_id_by_name_and_version(app_name, app_version)
+
     if app_id:
         agent_app_id = build_agent_app_id(agent_id, app_id)
         status_code, count, error, generated_ids = (
             delete_data_in_table(agent_app_id, table)
         )
+
         if status_code == DbCodes.Deleted:
             completed = True
 

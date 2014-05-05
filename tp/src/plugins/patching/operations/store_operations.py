@@ -62,7 +62,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
     def uninstall_agent(self, agent_id):
         operation_data = {
-            AgentOperationKey.Operation: AgentOperations.UNINSTALL,
+            AgentOperationKey.Operation: AgentOperations.UNINSTALL_AGENT,
             AgentOperationKey.Plugin: vFensePlugins.RV_PLUGIN,
             OperationPerAgentKey.AgentId: agent_id,
         }
