@@ -229,13 +229,8 @@ def get_agent_info(agent_id, keys_to_pluck=None):
             u'production_level': u'Development'
         }
     """
-    if not keys_to_pluck:
-        agent_info = fetch_agent_info(agent_id)
 
-    else:
-        agent_info = fetch_agent_info(agent_id, keys_to_pluck)
-
-    return agent_info
+    return fetch_agent_info(agent_id, keys_to_pluck)
 
 @time_it
 @results_message

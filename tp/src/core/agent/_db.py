@@ -345,7 +345,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
             u'production_level': u'Development'
         }
     """
-    data = []
+    data = {}
     try:
         if agent_id and keys_to_pluck:
             data = (
@@ -387,7 +387,7 @@ def fetch_all_agents_for_customer(customer_name, conn=None):
     Return:
         List of dictionaries.
     """
-    data = {}
+    data = []
     try:
         data = list(
             r
