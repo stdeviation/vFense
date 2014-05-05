@@ -421,7 +421,7 @@ def add_user_to_groups(
         msg = 'Customer name is invalid: %s' % (customer_name)
         status_code = DbCodes.Errors
         generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.CustomerDoesNotExists
+        vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,

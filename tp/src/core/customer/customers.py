@@ -355,7 +355,7 @@ def add_user_to_customers(
             status_code = DbCodes.Errors
             msg = 'User name is invalid: %s' % (username)
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
 
     elif not customers_are_valid[0]:
         status_code = DbCodes.Errors
@@ -782,9 +782,9 @@ def remove_customers_from_user(
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
-        elif status_code == DbCodes.DoesntExist:
+        elif status_code == DbCodes.DoesNotExist:
             msg = 'customer name or username does not exist'
-            generic_status_code = GenericCodes.DoesNotExists
+            generic_status_code = GenericCodes.DoesNotExist
             vfense_status_code = CustomerFailureCodes.UsersDoNotExistForCustomer
 
         results = {

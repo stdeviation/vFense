@@ -210,7 +210,7 @@ class Results(object):
         status_code = (
             kwargs.get(
                 ApiResultKeys.VFENSE_STATUS_CODE,
-                GenericCodes.DoesNotExists
+                GenericCodes.DoesNotExist
             )
         )
         return(

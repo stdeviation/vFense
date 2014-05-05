@@ -1132,7 +1132,7 @@ def delete_apps_from_agent_by_name_and_version(
 def toggle_hidden_status(
         app_ids, hidden=CommonKeys.TOGGLE,
         table=AppCollections.UniqueApplications,
-        user_name=None, uri=None, method=None
+        username=None, uri=None, method=None
     ):
     """Toggle the hidden status of an application
     Args:
@@ -1143,7 +1143,7 @@ def toggle_hidden_status(
             default = toggle
         table (str, optional): The table you are updating for.
             table = unique_applications
-        user_name (str): The name of the user who called this function.
+        username (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
 
@@ -1158,15 +1158,14 @@ def toggle_hidden_status(
     status = toggle_hidden_status.func_name + ' - '
     results = {
         ApiResultKeys.DATA: [],
-        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.USERNAME: username,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method,
     }
-    status_code, count, error, generated_ids = (
-        update_hidden_status(
-            app_ids, hidden, table
-        )
+    status_code, count, error, generated_ids = update_hidden_status(
+        app_ids, hidden, table
     )
+
     if status_code == DbCodes.Replaced:
         msg = 'Hidden status updated'
         generic_status_code = GenericCodes.ObjectUpdated
@@ -1175,16 +1174,16 @@ def toggle_hidden_status(
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
         msg = 'Hidden status could not be updated.'
-        generic_status_code = GenericCodes.DoesNotExists
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
 
-    elif status_code == DbCodes.DoesntExist:
+    elif status_code == DbCodes.DoesNotExist:
         msg = (
             'Hidden status could not be updated: app_ids do not exist - %s.'
             % (','.join(app_ids))
         )
-        generic_status_code = GenericCodes.DoesNotExists
-        vfense_status_code = PackageFailureCodes.ApplicationDoesntExist
+        generic_status_code = GenericCodes.DoesNotExist
+        vfense_status_code = PackageFailureCodes.ApplicationDoesNotExist
 
     elif status_code == DbCodes.Errors:
         msg = (
