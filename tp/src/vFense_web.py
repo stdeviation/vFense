@@ -18,7 +18,6 @@ from redis import StrictRedis
 from rq import Connection, Queue
 
 from vFense.server.api.reports_api import *
-from vFense.server.api.filter_reports_api import *
 
 from vFense.db.client import *
 from vFense.scheduler.jobManager import start_scheduler
@@ -85,79 +84,6 @@ class Application(tornado.web.Application):
             (r"/api/ra/rd/([^/]+)/?", RDSession),
             (r"/ws/ra/status/?", RDStatusQueue),
 
-<<<<<<< HEAD
-            ##### Email API Handlers
-            (r"/api/email/config/create?", CreateEmailConfigHandler),
-            (r"/api/email/config/list?", GetEmailConfigHandler),
-
-            ##### Logger API Handlers
-            (r"/api/logger/modifyLogging?", LoggingModifyerHandler),
-            (r"/api/logger/getParams?", LoggingListerHandler),
-
-            ##### Scheduler API Handlers
-            (r"/api/v1/schedules?", ScheduleListerHandler),
-            (r"/api/v1/schedule/([A-Za-z0-9_ ]+.*)?", ScheduleAppDetailHandler),
-            (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
-            (r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
-            
-            ##### Reports Api
-            (r"/api/v1/reports/osdetails?", AgentsOsDetailsHandler),
-            (r"/api/v1/reports/hardwaredetails?",AgentsHardwareDetailsHandler),
-            (r"/api/v1/reports/cpudetails?",AgentsCPUDetailsHandler),
-            (r"/api/v1/reports/memorydetails?",AgentsMemoryDetailsHandler),
-            (r"/api/v1/reports/diskdetails?",AgentsDiskDetailsHandler),
-            (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
-
-    	    ##### Filter-Reports Api
-            (r"/api/v1/reports/os?", AgentsOsQueryDetailsHandler),
-            (r"/api/v1/reports/hardware?",AgentsHardwareQueryDetailsHandler),
-            (r"/api/v1/reports/cpu?",AgentsCPUQueryDetailsHandler),
-            (r"/api/v1/reports/memory?",AgentsMemoryQueryDetailsHandler),
-            (r"/api/v1/reports/disk?",AgentsDiskQueryDetailsHandler),
-            (r"/api/v1/reports/network?",AgentsNetworkQueryDetailsHandler),
-            (r"/api/v1/reports/lastupdated?", AgentsLastUpdatedHandler),
-            (r"/api/v1/reports/rebootneeded?", AgentsRequireRebootHandler),
-            (r"/api/v1/reports/agentstatus?",AgentsConnectionStatusHandler),
-
-            ##### Agent API Handlers
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",AgentSeverityHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", AgentOsAppsOverTimeHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", TagsAgentHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", AgentIdOsAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", AgentIdAgentAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", AgentIdCustomAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", AgentIdSupportedAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", AgentOperationsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/uris/response?", AgentResultURIs),
-
-            ##### Agents API Handlers
-            (r"/api/v1/agents", AgentsHandler),
-
-            ##### Tag API Handlers
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", TagHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",TagSeverityHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", TagOsAppsOverTimeHandler),
-            #(r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/linear/severity?",TagPackageSeverityOverTimeHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", TagIdOsAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", TagIdAgentAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", TagIdSupportedAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", TagIdCustomAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", TagOperationsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/stats_by_os?", TagStatsByOsHandler),
-
-            ##### Tags API Handlers
-            (r"/api/v1/tags", TagsHandler),
-
-            ##### FileData API Handlers
-            (r'/api/v1/apps/info?', FileInfoHandler),
-
-=======
->>>>>>> a7de75f94f8ce03fcf258c1204e379ef21b083ba
             ##### MightyMouse API Handlers
             (r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),
             (r"/api/v1/relay", RelayServersHandler),
@@ -275,3 +201,4 @@ if __name__ == '__main__':
     )
     https_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
+
