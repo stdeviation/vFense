@@ -12,4 +12,8 @@ var/tmp
 *.log
 *.oqd
 *.rqd
+<<<<<<< HEAD
+agent
+=======
 agent/
+>>>>>>> a7de75f94f8ce03fcf258c1204e379ef21b083ba

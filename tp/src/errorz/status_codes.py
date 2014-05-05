@@ -2,7 +2,7 @@ class GenericCodes(object):
     InformationRetrieved = 1001
     CouldNotRetrieveInformation = 1002
     IncorrectArguments = 1003
-    DoesNotExists = 1004
+    DoesNotExist = 1004
     CouldNotBeDeleted = 1005
     InvalidId = 1006
     InvalidFilter = 1007
@@ -14,7 +14,7 @@ class GenericCodes(object):
     SomethingBroke = 1013
     FileUploaded = 1014
     FileFailedToUpload = 1015
-    FileDoesntExist = 1016
+    FileDoesNotExist = 1016
     ObjectUnchanged = 1017
     PermissionGranted = 1018
     PermissionDenied = 1019
@@ -76,7 +76,7 @@ class UserCodes(object):
 
 class UserFailureCodes(object):
     UserNameExists = 13500
-    UserNameDoesNotExists = 13501
+    UserNameDoesNotExist = 13501
     FailedToCreateUser = 13502
     FailedToRemoveUser = 13503
     FailedToUpdateUser = 13504
@@ -104,7 +104,7 @@ class CustomerCodes(object):
 
 class CustomerFailureCodes(object):
     CustomerExists = 14500
-    CustomerDoesNotExists = 14501
+    CustomerDoesNotExist = 14501
     FailedToCreateCustomer = 14502
     FailedToRemoveCustomer = 14503
     FailedToRemoveUserFromCustomer = 14504
@@ -128,7 +128,7 @@ class DbCodes(object):
     Deleted = 2006
     Nothing = 2007
     Skipped = 2008
-    DoesntExist = 2009
+    DoesNotExist = 2009
 
 
 class AgentCodes(object):
@@ -206,7 +206,7 @@ class PackageCodes(object):
 class PackageFailureCodes(object):
     ToggleHiddenFailed = 5300
     InvalidToggle = 5301
-    ApplicationDoesntExist = 5302
+    ApplicationDoesNotExist = 5302
 
 
 class AgentOperationCodes(object):

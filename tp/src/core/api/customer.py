@@ -213,7 +213,7 @@ class CustomerHandler(BaseHandler):
                     data = {
                         ApiResultKeys.INVALID_ID: move_agents_to_customer,
                         ApiResultKeys.MESSAGE: msg,
-                        ApiResultKeys.VFENSE_STATUS_CODE: CustomerFailureCodes.CustomerDoesNotExists
+                        ApiResultKeys.VFENSE_STATUS_CODE: CustomerFailureCodes.CustomerDoesNotExist
                     }
                     results = (
                         Results(

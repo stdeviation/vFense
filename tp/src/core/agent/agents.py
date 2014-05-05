@@ -229,13 +229,8 @@ def get_agent_info(agent_id, keys_to_pluck=None):
             u'production_level': u'Development'
         }
     """
-    if not keys_to_pluck:
-        agent_info = fetch_agent_info(agent_id)
 
-    else:
-        agent_info = fetch_agent_info(agent_id, keys_to_pluck)
-
-    return agent_info
+    return fetch_agent_info(agent_id, keys_to_pluck)
 
 @time_it
 @results_message
@@ -692,11 +687,11 @@ def remove_all_agents_for_customer(
         vfense_status_code = AgentCodes.AgentsDeleted
 
     elif status_code == DbCodes.Skipped:
-        generic_status_code = GenericCodes.DoesNotExists
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
-    elif status_code == DbCodes.DoesntExist:
-        generic_status_code = GenericCodes.DoesNotExists
+    elif status_code == DbCodes.DoesNotExist:
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
     elif status_code == DbCodes.Errors:
@@ -749,11 +744,11 @@ def change_customer_for_all_agents_in_customer(
         vfense_status_code = AgentCodes.AgentsUpdated
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
-        generic_status_code = GenericCodes.DoesNotExists
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
-    elif status_code == DbCodes.DoesntExist:
-        generic_status_code = GenericCodes.DoesNotExists
+    elif status_code == DbCodes.DoesNotExist:
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
     elif status_code == DbCodes.Errors:
@@ -806,11 +801,11 @@ def change_customer_for_agents(
         vfense_status_code = AgentCodes.AgentsUpdated
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
-        generic_status_code = GenericCodes.DoesNotExists
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
-    elif status_code == DbCodes.DoesntExist:
-        generic_status_code = GenericCodes.DoesNotExists
+    elif status_code == DbCodes.DoesNotExist:
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
     elif status_code == DbCodes.Errors:
@@ -863,11 +858,11 @@ def change_customer_for_agent(
         vfense_status_code = AgentCodes.AgentsUpdated
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
-        generic_status_code = GenericCodes.DoesNotExists
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
-    elif status_code == DbCodes.DoesntExist:
-        generic_status_code = GenericCodes.DoesNotExists
+    elif status_code == DbCodes.DoesNotExist:
+        generic_status_code = GenericCodes.DoesNotExist
         vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
     elif status_code == DbCodes.Errors:

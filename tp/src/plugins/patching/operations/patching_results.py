@@ -51,8 +51,7 @@ class PatchingOperationResults(OperationResults):
         ):
         super(PatchingOperationResults, self).__init__(
             username, agent_id, operation_id, success,
-            error=None, status_code=None,
-            uri=None, method=None
+            error, status_code, uri, method
         )
 
         self.operation = (

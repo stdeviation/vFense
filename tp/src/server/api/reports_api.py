@@ -119,10 +119,12 @@ class AgentsMemoryDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_memory_stats(username=username, customer_name=customer_name,
-                    tag_id=tag_id, os_code=os_code,
-                    uri=uri, method=method,
-                    )
+            results = systems_memory_stats(
+                username=username,
+                customer_name=customer_name,
+                tag_id=tag_id, os_code=os_code,
+                uri=uri, method=method,
+            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

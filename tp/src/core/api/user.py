@@ -311,6 +311,7 @@ class UsersHandler(BaseHandler):
                 user_data = get_properties_for_all_users(active_customer)
 
             elif granted and customer_context and not all_customers and not user_name:
+
                 user_data = get_properties_for_all_users(customer_context)
 
             elif granted and all_customers and not customer_context and not user_name:

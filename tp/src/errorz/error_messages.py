@@ -70,7 +70,7 @@ class GenericResults(object):
         return(
             {
                 status: 409,
-                code: GenericCodes.FileDoesntExist,
+                code: GenericCodes.FileDoesNotExist,
                 uri: self.uri,
                 method: self.method,
                 message: (
@@ -229,7 +229,7 @@ class GenericResults(object):
         return(
             {
                 status: 409,
-                code: GenericCodes.DoesNotExists,
+                code: GenericCodes.DoesNotExist,
                 uri: self.uri,
                 method: self.method,
                 message: (
