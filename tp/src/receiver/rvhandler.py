@@ -12,6 +12,8 @@ from vFense.plugins.patching.custom_apps.custom_apps import \
 from vFense.plugins.patching.supported_apps.syncer import \
     get_all_supported_apps_for_agent, get_all_agent_apps_for_agent
 
+from vFense.operations._constants import AgentOperations
+
 rq_host = 'localhost'
 rq_port = 6379
 rq_db = 0
@@ -23,59 +25,63 @@ logger = logging.getLogger('rvapi')
 class RvHandOff():
 
     def __init__(self, username, customer_name, uri, method,
-                 agentid, rv_plugin, agent_data=None,
+                 agent_id, apps_data, agent_data=None,
                  oper_type='newagent', delete_afterwards=True):
 
         self.delete_afterwards = delete_afterwards
         self.customer_name = customer_name
+
         if not agent_data:
-            agent_data = get_agent_info(agentid)
+            agent_data = get_agent_info(agent_id)
 
         self.add_packages_from_agent(
-            username, agentid,
-            agent_data, rv_plugin
+            username, agent_id,
+            agent_data, apps_data
         )
-        
-        if oper_type == 'newagent':
+
+        if oper_type == AgentOperations.NEWAGENT:
             self.add_custom_apps(
                 username, customer_name,
-                uri, method, agentid
+                uri, method, agent_id
             )
-            self.add_supported_apps(agentid)
-            self.add_agent_apps(agentid)
+            self.add_supported_apps(agent_id)
+            self.add_os_apps(agent_id)
 
-        elif oper_type == 'updatesapplications':
-            self.add_supported_apps(agentid)
-            self.add_agent_apps(agentid)
+        elif oper_type == AgentOperations.REFRESH_APPS:
+            self.add_supported_apps(agent_id)
+            self.add_os_apps(agent_id)
+
+        elif oper_type == AgentOperations.AVAILABLE_AGENT_UPDATE:
+            pass
 
     def add_custom_apps(self, username, customer_name,
-                        uri, method, agentid):
+                        uri, method, agent_id):
         rv_q = Queue('incoming_updates', connection=rq_pool)
         rv_q.enqueue_call(
             func=add_custom_app_to_agents,
             args=(
                 username, customer_name,
-                uri, method, None, agentid
+                uri, method, None, agent_id
             ),
             timeout=3600
         )
 
-    def add_supported_apps(self, agentid):
+    def add_supported_apps(self, agent_id):
         rv_q = Queue('incoming_updates', connection=rq_pool)
         rv_q.enqueue_call(
             func=get_all_supported_apps_for_agent,
             args=(
-                agentid,
+                agent_id,
             ),
             timeout=3600
         )
 
-    def add_agent_apps(self, agentid):
+    def add_os_apps(self, agent_id):
         rv_q = Queue('incoming_updates', connection=rq_pool)
         rv_q.enqueue_call(
             func=get_all_agent_apps_for_agent,
             args=(
-                agentid,
+                agent_id,
             ),
             timeout=3600
         )

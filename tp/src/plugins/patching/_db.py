@@ -987,6 +987,7 @@ def update_app_data_by_app_id(
         table=AppCollections.UniqueApplications
     ):
     """Update the data of an application.
+
     Args:
         app_id (str): The 64 character hex digest of the application.
         app_data (dict): Dictionary of the data you are updateing.

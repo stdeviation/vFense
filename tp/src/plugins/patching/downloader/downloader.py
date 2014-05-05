@@ -2,6 +2,7 @@ import logging
 import logging.config
 import os
 import re
+
 from vFense.plugins.patching import AppsKey
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id, \
@@ -25,7 +26,8 @@ def download_all_files_in_app(
         collection='os_apps'):
 
     REDHAT = 'Red Hat Enterprise Linux Server'
-    app_path = packages_directory + str(app_id)
+    app_path = os.path.join(packages_directory, str(app_id))
+
     if not os.path.exists(packages_directory):
         os.mkdir(packages_directory)
     if not os.path.exists(dependencies_directory):
@@ -34,30 +36,31 @@ def download_all_files_in_app(
         os.mkdir(app_path)
 
     if not file_data and re.search(REDHAT, os_string, re.IGNORECASE):
-            download_status = (
-                {
-                    AppsKey.FilesDownloadStatus: PackageCodes.AgentWillDownloadFromVendor
-                }
-            )
-            update_app_data_by_app_id(app_id, download_status)
-    
+        download_status = {
+            AppsKey.FilesDownloadStatus: \
+                PackageCodes.AgentWillDownloadFromVendor
+        }
+        update_app_data_by_app_id(app_id, download_status)
+
     elif len(file_data) > 0:
         num_of_files_to_download = len(file_data)
         num_of_files_downloaded = 0
         num_of_files_mismatch = 0
         num_of_files_failed = 0
         num_of_files_invalid_uri = 0
-        new_status = (
-            {
-                AppsKey.FilesDownloadStatus: PackageCodes.FileIsDownloading
-            }
-        )
+
+        new_status = {
+            AppsKey.FilesDownloadStatus: PackageCodes.FileIsDownloading
+        }
+
         update_app_data_by_app_id(app_id, new_status)
+
         for file_info in file_data:
             uri = str(file_info[CommonFileKeys.PKG_URI])
             lhash = str(file_info[CommonFileKeys.PKG_HASH])
             fname = str(file_info[CommonFileKeys.PKG_NAME])
             fsize = file_info[CommonFileKeys.PKG_SIZE]
+
             if os_code == 'linux':
                 file_path = dependencies_directory + fname
 
@@ -73,6 +76,7 @@ def download_all_files_in_app(
             try:
                 if uri and not os.path.exists(file_path):
                     urlgrab(uri, filename=file_path, throttle=throttle)
+
                     if os.path.exists(file_path):
                         if lhash:
                             hash_match = (
@@ -81,8 +85,10 @@ def download_all_files_in_app(
                                     file_path=file_path
                                 )
                             )
+
                             if hash_match['pass']:
                                 num_of_files_downloaded += 1
+
                                 if os_code == 'linux':
                                     if not os.path.islink(file_path):
                                         os.system(cmd)
