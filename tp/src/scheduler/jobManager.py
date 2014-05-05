@@ -20,6 +20,8 @@ from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
     fetch_app_data
+
+from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.errorz.error_messages import GenericResults, SchedulerResults
 from vFense.server.hierarchy import *
@@ -463,8 +465,8 @@ def scheduled_install_operation(job_info, customer_name, username,
 
     jobname = job_info['job_name']
 
-    store_operation = StoreAgentOperation(
-        customer_name=customer_name, username=username, uri=uri, method=method
+    store_operation = StorePatchingOperation(
+        username, customer_name, uri, method
     )
 
     if not agent_ids:
@@ -528,7 +530,7 @@ def scheduled_reboot_operation(job_info, customer_name, username,
         uri=None, method=None, conn=None):
 
     store_operation = StoreAgentOperation(
-        customer_name=customer_name, username=username, uri=uri, method=method
+        username, customer_name, uri, method
     )
 
     operation = job_info['operation']
@@ -545,7 +547,7 @@ def scheduled_shutdown_operation(job_info, customer_name, username,
         uri=None, method=None, conn=None):
 
     store_operation = StoreAgentOperation(
-        customer_name=customer_name, username=username, uri=uri, method=method
+        username, customer_name, uri, method
     )
 
     operation = job_info['operation']
