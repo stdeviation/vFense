@@ -189,7 +189,7 @@ define(
                     params.customer_names = this.customersArray;
 
                     var alphaNumRegExp = /^[A-Za-z0-9 ]+$/,
-                        numRegExp = /^[0-9]+$/,
+                        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/,
                         emailRegExp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
                     if(!_.isEmpty(fullName))
@@ -225,7 +225,7 @@ define(
                     if(!$.trim(username))
                     {
                         that.$el.find('#username').parents('.control-group').addClass('error');
-                        that.$el.find('#username').siblings('.help-block').html('Username Name should not be empty.').show();
+                        that.$el.find('#username').siblings('.help-block').html('Username should not be empty.').show();
                         return false;
                     }
                     else if(!alphaNumRegExp.test(username))
@@ -240,10 +240,17 @@ define(
                         that.$el.find('#username').siblings('.help-block').empty().hide();
                     }
 
-                    if(password.length < 8)
+                    if(!$.trim(password))
                     {
                         that.$el.find('#password').parents('.control-group').addClass('error');
-                        that.$el.find('#password').siblings('.help-block').html('Password should be of atleast 8 characters').show();
+                        that.$el.find('#password').siblings('.help-block').html('Password should not be empty.').show();
+                        return false;
+                    }
+                    else if(!passwordRegExp.test(password))
+                    {
+                        that.$el.find('#password').parents('.control-group').addClass('error');
+//                        that.$el.find('#password').siblings('.help-block').html('Password should have atleast 1 Lowercase, 1 Uppercase, 1 Numeric, 1 Special Character and minimum 8 characters.').show();
+                        that.$el.find('#password').siblings('.help-block').html('Invalid Password').show();
                         return false;
                     }
                     else
