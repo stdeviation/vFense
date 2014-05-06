@@ -99,6 +99,79 @@ def fetch_app_data(
     return data
 
 @db_create_close
+def fetch_app_data_by_appids(
+        app_ids, table=AppCollections.UniqueApplications,
+        fields_to_pluck=None, conn=None
+    ):
+    """Fetch application data by application ids
+    Args:
+        app_ids (str): List of application ids.
+
+    Kwargs:
+        table (str): The name of the apps per agent collection,
+            that will be used when searching for the application data.
+            default = unique_applications
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import fetch_app_data_by_appids
+        >>> app_ids = ['15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb']
+        >>> table = 'unique_applications'
+        >>> fetch_app_data_by_appids(app_ids, table)
+
+    Returns:
+        Dictionary
+    """
+    data = {}
+    try:
+        if fields_to_pluck:
+            data = list(
+                r
+                .expr(app_ids)
+                .map(
+                    lambda app_id:
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .merge(
+                        lambda x: 
+                        {
+                            DbCommonAppKeys.ReleaseDate: (
+                                x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                            )
+                        }
+                    )
+                    .pluck(fields_to_pluck)
+                )
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .expr(app_ids)
+                .map(
+                    lambda app_id:
+                    r
+                    .table(table)
+                    .get(app_id)
+                    .merge(
+                        lambda x:
+                        {
+                            DbCommonAppKeys.ReleaseDate: (
+                                x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                            )
+                        }
+                    )
+                )
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@db_create_close
 def fetch_app_data_by_appid_and_agentid(
         app_id, agent_id, table=AppCollections.AppsPerAgent,
         fields_to_pluck=None, conn=None

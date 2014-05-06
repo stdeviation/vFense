@@ -19,7 +19,7 @@ from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
-    fetch_app_data
+    fetch_app_data, fetch_app_data_by_appids
 
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.operations.store_agent_operation import StoreAgentOperation
@@ -1498,40 +1498,3 @@ def add_custom_recurrent(sched, customer_name, username,
                         results = GenericResults(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
-
-
-def job_scheduler(sched, label, job, date_time,
-        customer_name='default', username='system_user'):
-
-    """
-        job_scheduler handles the adding of scheduled jobs
-        arguments below...
-        job == this contains the operation and related information that the
-        schedule will perform. This also contains the start date and time.
-        name == The name of the scheduled job
-    """
-    job_already_exists = job_exists(
-        sched, label, customer_name=customer_name, username=username
-    )
-
-    if job_already_exists:
-        return {
-            'message': 'Job with name %s already exists' % (label),
-            'pass': False
-        }
-
-    if date_time:
-        utc_timestamp = date_time_parser(date_time)
-
-    encoded_job = json.dumps(job)
-    logger.debug('%s - %s is being scheduled for %s' % (
-        username, job, str(utc_timestamp))
-    )
-
-    # TODO: What happened to add_once?
-    job_added = add_once(
-        label, customer_name, username, utc_timestamp, encoded_job, sched
-    )
-
-    return job_added
-
