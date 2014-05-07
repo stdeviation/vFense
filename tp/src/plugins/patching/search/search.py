@@ -65,13 +65,20 @@ class RetrieveApps(object):
 
         self.joined_map_hash = (
             {                                                                                                                                                      
-                self.CurrentAppsKey.AppId: r.row['right'][self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row['right'][self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row['right'][self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate: r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row['right'][self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VulnerabilityId: r.row['right'][self.CurrentAppsKey.VulnerabilityId],
-                self.CurrentAppsKey.Hidden: r.row['right'][self.CurrentAppsKey.Hidden],
+                self.CurrentAppsKey.AppId:
+                    r.row['right'][self.CurrentAppsKey.AppId],
+                self.CurrentAppsKey.Version:
+                    r.row['right'][self.CurrentAppsKey.Version],
+                self.CurrentAppsKey.Name:
+                    r.row['right'][self.CurrentAppsKey.Name],
+                self.CurrentAppsKey.ReleaseDate:
+                    r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
+                self.CurrentAppsKey.RvSeverity:
+                    r.row['right'][self.CurrentAppsKey.RvSeverity],
+                self.CurrentAppsKey.VulnerabilityId:
+                    r.row['right'][self.CurrentAppsKey.VulnerabilityId],
+                self.CurrentAppsKey.Hidden:
+                    r.row['right'][self.CurrentAppsKey.Hidden],
             }
         )
 

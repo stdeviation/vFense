@@ -15,7 +15,6 @@ import tornado.options
 import vFense_module_loader
 
 from redis import StrictRedis
-from rq import Connection, Queue
 
 from vFense.server.api.reports_api import *
 
@@ -201,3 +200,4 @@ if __name__ == '__main__':
     )
     https_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
+

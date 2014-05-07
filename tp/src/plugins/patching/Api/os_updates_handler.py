@@ -941,13 +941,14 @@ class OsAppsHandler(BaseHandler):
         username = self.get_current_user().encode('utf-8')
         uri = self.request.uri
         method = self.request.method
+
         try:
             app_ids = self.arguments.get('app_ids')
             toggle = self.arguments.get('hide', 'toggle')
             results = (
                 toggle_hidden_status(
                     app_ids, toggle,
-                    username, uri, method
+                    username=username, uri=uri, method=method
                 )
             )
 

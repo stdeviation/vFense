@@ -12,7 +12,7 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def add_file_data(app_id, file_data, agent_id=None):
-    """Insert or Update the file date information for
+    """Insert or Update the file data information for
         application id.
 
     Args:

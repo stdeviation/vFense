@@ -89,6 +89,7 @@ class AgentOperations():
     SHUTDOWN = 'shutdown'
     RA = 'ra'
     REFRESH_RESPONSE_URIS = 'refresh_response_uris'
+    AVAILABLE_AGENT_UPDATE = 'available_agent_update'
 
     OPERATIONS = (
         NEWAGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,

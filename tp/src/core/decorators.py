@@ -62,7 +62,7 @@ def return_status_tuple(fn):
             return_code = (DbCodes.Unchanged, status['unchanged'], None, [])
 
         else:
-            return_code = (DbCodes.DoesntExist, 0, None, [])
+            return_code = (DbCodes.DoesNotExist, 0, None, [])
 
         return(return_code)
 
@@ -148,7 +148,7 @@ def results_message(fn):
                 ).invalid_id(**data)
             )
 
-        elif generic_status_code == GenericCodes.DoesNotExists:
+        elif generic_status_code == GenericCodes.DoesNotExist:
             status = (
                 Results(
                     username, uri, method

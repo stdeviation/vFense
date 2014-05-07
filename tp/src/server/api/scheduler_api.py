@@ -2,11 +2,13 @@ import simplejson as json
 
 import logging
 import logging.config
+
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.scheduler.jobManager import *
-from vFense.core.decorators import authenticated_request, convert_json_to_arguments
+from vFense.core.decorators import authenticated_request, \
+    convert_json_to_arguments
 from vFense.utils.common import *
 from datetime import datetime
 
@@ -149,13 +151,22 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
             if operation and jobname:
                 results = (
                     add_yearly_recurrent(
-                        sched, agent_ids=node_ids,all_agents=all_agents,
-                        tag_ids=tag_ids, all_tags=all_tags, severity=severity,
-                        pkg_type=pkg_type,operation=operation, 
-                        name=jobname, epoch_time= epoch_time,
-                        every = every, custom = custom,
+                        sched,
                         customer_name=customer_name,
-                        username=username, uri=uri, method=method,
+                        username=username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        every = every,
+                        custom = custom,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method,
                     )
                 )
 
@@ -207,13 +218,22 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
             if operation and jobname:
                 results = (
                     add_monthly_recurrent(
-                        sched, agent_ids=node_ids,all_agents=all_agents,
-                        all_tags=all_tags,tag_ids=tag_ids, severity=severity,
-                        pkg_type=pkg_type,operation=operation, 
-                        name=jobname, epoch_time= epoch_time,
-                        custom = custom, every = every,
-                        customer_name=customer_name,
-                        username=username, uri=uri, method=method
+                        sched,
+                        customer_name,
+                        username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        custom = custom,
+                        every = every,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method
                     )
                 )
             self.set_status(results['http_status'])
@@ -262,13 +282,22 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
             if operation and jobname:
                 results = (
                     add_daily_recurrent(
-                        sched, agent_ids=node_ids,all_agents=all_agents,
-                        all_tags=all_tags,tag_ids=tag_ids, severity=severity,
-                        pkg_type=pkg_type, operation=operation, 
-                        name=jobname, epoch_time= epoch_time,
-                        every = every, custom = custom,
+                        sched,
                         customer_name=customer_name,
-                        username=username, uri=uri, method=method,
+                        username=username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        every = every,
+                        custom = custom,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method,
                     )
                 )
             self.set_status(results['http_status'])
@@ -316,13 +345,22 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
         
             results = (
                 add_weekly_recurrent(
-                    sched, agent_ids=node_ids,all_agents=all_agents,
-                    all_tags=all_tags,tag_ids=tag_ids, severity=severity,
-                    pkg_type=pkg_type, operation=operation, 
-                    name=jobname, epoch_time=epoch_time,
-                    every=every, custom=custom,
+                    sched,
                     customer_name=customer_name,
-                    username=username, uri=uri, method=method,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    name=jobname,
+                    every=every,
+                    custom=custom,
+                    epoch_time=epoch_time,
+                    uri=uri,
+                    method=method,
                 )
             )
 
@@ -370,12 +408,20 @@ class SchedulerDateBasedJobHandler(BaseHandler):
 
             results = (
                 schedule_once(
-                    sched, agent_ids=node_ids,all_agents=all_agents,
-                    all_tags=all_tags,tag_ids=tag_ids, severity=severity,
-                    pkg_type=pkg_type, operation=operation, 
-                    name=jobname, date=date_to_execute,
+                    sched,
                     customer_name=customer_name,
-                    username=username, uri=uri, method=method,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    name=jobname,
+                    date=date_to_execute,
+                    uri=uri,
+                    method=method
                 )
             )
             
@@ -425,11 +471,21 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
         
             results = (
                 add_custom_recurrent(
-                    sched, agent_ids=node_ids,all_agents=all_agents,
-                    all_tags=all_tags,tag_ids=tag_ids, severity=severity,
-                    pkg_type=pkg_type, operation=operation, name=jobname, 
-                    every=every, custom=custom, frequency=frequency, date=datetime, 
-                    customer_name=customer_name, username=username, 
+                    sched,
+                    customer_name=customer_name,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    every=every,
+                    custom=custom,
+                    name=jobname,
+                    frequency=frequency,
+                    date=datetime,
                     uri=uri, method=method,
                 )
             )
