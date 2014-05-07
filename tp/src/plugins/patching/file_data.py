@@ -12,8 +12,7 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 def add_file_data(app_id, file_data, agent_id=None):
-    """Insert or Update the file data information for
-        application id.
+    """Insert or Update the file data information for application id.
 
     Args:
         app_id (str): The 64 character hex digest of the application.

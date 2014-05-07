@@ -13,17 +13,15 @@ from vFense.core.agent import *
 from urlgrabber import urlgrab
 from vFense.utils.common import hash_verifier
 
-packages_directory = '/opt/TopPatch/var/packages/'
-dependencies_directory = '/opt/TopPatch/var/packages/dependencies/'
+packages_directory = '/opt/TopPatch/var/packages'
+dependencies_directory = '/opt/TopPatch/var/packages/dependencies'
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-def download_all_files_in_app(
-        app_id, os_code, os_string=None,
-        file_data=None, throttle=0,
-        collection='os_apps'):
+def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
+        throttle=0, collection='os_apps'):
 
     REDHAT = 'Red Hat Enterprise Linux Server'
     app_path = os.path.join(packages_directory, str(app_id))
@@ -62,15 +60,14 @@ def download_all_files_in_app(
             fsize = file_info[CommonFileKeys.PKG_SIZE]
 
             if os_code == 'linux':
-                file_path = dependencies_directory + fname
-
+                file_path = os.path.join(dependencies_directory, fname)
             else:
-                file_path = app_path + '/' + fname
+                file_path = os.path.join(app_path, fname)
 
             if throttle != 0:
                 throttle *= 1024
 
-            symlink_path = app_path + '/' + fname 
+            symlink_path = os.path.join(app_path, fname)
             cmd = 'ln -s %s %s' % (file_path, symlink_path)
 
             try:

@@ -22,7 +22,7 @@ def _get_result_uris_dict(agent_id):
             CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT,
             CommonKeys.REQUEST_METHOD: HTTPMethods.GET
         },
-        AgentOperations.NEWAGENT: {
+        AgentOperations.NEW_AGENT: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 BaseURIs.LISTENER, ListenerURIs.NEWAGENT
             ),

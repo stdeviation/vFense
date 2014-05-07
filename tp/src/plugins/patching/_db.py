@@ -604,10 +604,7 @@ def return_valid_appids_for_agent(
 
 
 @time_it
-def insert_app_data(
-        app_data,
-        table=AppCollections.UniqueApplications,
-    ):
+def insert_app_data(app_data, table=AppCollections.UniqueApplications):
     """Insert application data in the unique_applications collection.
         This function should not be called directly.
     Args:

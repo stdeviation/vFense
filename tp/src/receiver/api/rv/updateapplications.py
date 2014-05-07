@@ -49,12 +49,10 @@ class UpdateApplicationsV1(BaseHandler):
             if operation_id:
                 print self.arguments
 
-                results = (
-                    PatchingOperationResults(
-                        username, agent_id,
-                        operation_id, success, error,
-                        status_code, uri, method
-                    )
+                results = PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
 
                 results_data = results.apps_refresh()

@@ -74,7 +74,7 @@ class ListenerURIs():
 
 
 class AgentOperations():
-    NEWAGENT = 'new_agent'
+    NEW_AGENT = 'new_agent'
     REFRESH_APPS = 'updatesapplications'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
@@ -92,7 +92,7 @@ class AgentOperations():
     AVAILABLE_AGENT_UPDATE = 'available_agent_update'
 
     OPERATIONS = (
-        NEWAGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
+        NEW_AGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
         START_UP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
         INSTALL_SUPPORTED_APPS, INSTALL_AGENT_APPS,
         UNINSTALL, UNINSTALL_AGENT,

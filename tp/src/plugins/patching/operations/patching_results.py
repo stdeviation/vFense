@@ -34,7 +34,7 @@ from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
 
 from vFense.plugins.patching.os_apps.incoming_updates import \
-    incoming_packages_from_agent
+    incoming_applications_from_agent
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -147,7 +147,7 @@ class PatchingOperationResults(OperationResults):
         except Exception as e:
             pass
 
-        incoming_packages_from_agent(
+        incoming_applications_from_agent(
             self.username, self.agent_id,
             self.customer_name,
             self.agent_data[AgentKey.OsCode],
