@@ -45,8 +45,7 @@ class UpdateApplicationsV1(BaseHandler):
             #   username, customer_name, uri, method, agent_id,
             #   app_data, oper_type=AgentOperations.REFRESH_APPS
             #)
-            hand_off = RvHandOff()
-            hand_off.refresh_apps_operation(
+            RvHandOff().refresh_apps_operation(
                 username, customer_name, uri, method, agent_id, apps_data
             )
 
@@ -76,11 +75,9 @@ class UpdateApplicationsV1(BaseHandler):
                 self.write(dumps(results))
 
         except Exception as e:
-            results = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
-            )
+            results = GenericResults(
+                username, uri, method
+            ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
             logger.exception(results)
 
             self.set_status(results['http_status'])

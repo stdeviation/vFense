@@ -67,6 +67,7 @@ class ListenerURIs():
     REBOOT = 'core/results/reboot'
     SHUTDOWN = 'core/results/shutdown'
     REFRESH_APPS = 'rv/updatesapplications'
+    AVAILABLE_AGENT_UPDATE = 'rv/available_agent_update'
     START_UP = 'core/results/startup'
     CHECK_IN = 'core/checkin'
     MONITOR_DATA = 'monitoring/monitordata'

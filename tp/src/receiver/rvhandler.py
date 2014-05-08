@@ -64,6 +64,7 @@ class RvHandOff():
 
     def startup_operation(self, username, customer_name, uri, method,
             agent_id, apps_data):
+
         self.refresh_apps_operation(
             username, customer_name, uri, method, agent_id, apps_data
         )

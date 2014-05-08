@@ -1,10 +1,16 @@
 import logging
 
+from json import dumps
+
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, \
     convert_json_to_arguments
 from vFense.core.user.users import get_user_property
 from vFense.core.user import UserKeys
+
+from vFense.errorz.error_messages import GenericResults, \
+    UpdateApplicationsResults
+
 from vFense.receiver.rvhandler import RvHandOff
 
 from vFense.operations._constants import AgentOperations
@@ -16,7 +22,7 @@ logger = logging.getLogger('rvlistener')
 class AgentUpdateHandler(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
-    def post(self, agent_id):
+    def put(self, agent_id):
         username = self.get_current_user()
         customer_name = (
             get_user_property(username, UserKeys.CurrentCustomer)
@@ -36,9 +42,25 @@ class AgentUpdateHandler(BaseHandler):
             #   username, customer_name, uri, method, agent_id,
             #   app_data, oper_type=AgentOperations.AVAILABLE_AGENT_UPDATE
             #)
-            hand_off = RvHandOff()
-            hand_off.available_agent_update_operation(agent_id, app_data)
+            RvHandOff().available_agent_update_operation(agent_id, app_data)
+
+            results = (
+                UpdateApplicationsResults(username, uri, method)
+                .applications_updated(agent_id, app_data)
+            )
+
+            results['data'] = []
+            self.set_status(results['http_status'])
+            self.write(dumps(results))
 
         except Exception as e:
-            logger.exception(e)
+            results = GenericResults(
+                username, uri, method
+            ).something_broke(
+                agent_id, AgentOperations.AVAILABLE_AGENT_UPDATE, e
+            )
+            logger.exception(results)
+
+            self.set_status(results['http_status'])
+            self.write(dumps(results))
 

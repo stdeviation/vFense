@@ -79,8 +79,7 @@ class NewAgentV1(BaseHandler):
                         #)
                         apps_data = plugins['rv']['data']
 
-                        hand_off = RvHandOff(agent_info)
-                        hand_off.new_agent_operation(
+                        RvHandOff(agent_info).new_agent_operation(
                             username,
                             customer_name,
                             uri,

@@ -147,7 +147,6 @@ class IncomingApplications():
                 self.updated_count += counts[1]
 
                 if agent_app[AppsPerAgentKey.Status] == 'available':
-                    print agent_app
                     self._download_app_files(app_id, file_data)
 
                 good_app_list.append(agent_app)

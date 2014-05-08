@@ -19,6 +19,7 @@ from vFense.receiver.api.rv.results import InstallOsAppsResults, \
     InstallCustomAppsResults, InstallSupportedAppsResults, \
     InstallAgentAppsResults, UninstallAppsResults
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
+from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
 from vFense.receiver.api.ra.results import RemoteDesktopResults
 
 from tornado.options import define, options
@@ -39,6 +40,7 @@ class Application(tornado.web.Application):
 
             #Operations for the New Core Plugin
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/updatesapplications/?", UpdateApplicationsV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/available_agent_update/?", AgentUpdateHandler),
 
             #New Operations for the New RV Plugin
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/os?",

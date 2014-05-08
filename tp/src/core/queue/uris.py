@@ -40,6 +40,12 @@ def _get_result_uris_dict(agent_id):
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
+        AgentOperations.AVAILABLE_AGENT_UPDATE: {
+            CommonKeys.RESPONSE_URI: os.path.join(
+                base, ListenerURIs.AVAILABLE_AGENT_UPDATE
+            ),
+            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
+        },
         AgentOperations.CHECK_IN: {
             CommonKeys.RESPONSE_URI: os.path.join(
                 base, ListenerURIs.CHECK_IN
