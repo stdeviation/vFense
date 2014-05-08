@@ -61,22 +61,9 @@ class StartUpV1(BaseHandler):
 
             if agent_data['http_status'] == 200:
                 if 'rv' in plugins:
-                    #RvHandOff(
-                    #    username, customer_name, uri, method,
-                    #    agent_id, plugins['rv']['data'],
-                    #    oper_type='updates_applications'
-                    #)
-                    apps_data = plugins['rv']['data']
-
-                    hand_off = RvHandOff()
-                    hand_off.startup_operation(
-                        username,
-                        customer_name,
-                        uri,
-                        method,
-                        agent_id,
-                        apps_data
-                    )
+                    RvHandOff(
+                        username, customer_name, uri, method
+                    ).startup_operation(agent_id, plugins['rv']['data'])
 
                 if 'ra' in plugins:
                     RaHandoff.startup(agent_id, plugins['ra'])

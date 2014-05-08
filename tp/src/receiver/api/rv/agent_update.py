@@ -38,11 +38,9 @@ class AgentUpdateHandler(BaseHandler):
             app_data = self.arguments.get('data')
             status_code = self.arguments.get('status_code', None)
 
-            #RvHandOff(
-            #   username, customer_name, uri, method, agent_id,
-            #   app_data, oper_type=AgentOperations.AVAILABLE_AGENT_UPDATE
-            #)
-            RvHandOff().available_agent_update_operation(agent_id, app_data)
+            RvHandOff(
+                username, customer_name, uri, method
+            ).available_agent_update_operation(agent_id, app_data)
 
             results = (
                 UpdateApplicationsResults(username, uri, method)

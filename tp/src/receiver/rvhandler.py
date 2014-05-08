@@ -3,6 +3,7 @@ import logging
 import redis
 from rq import Connection, Queue
 
+from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import get_agent_info
 from vFense.plugins.patching.apps.incoming_apps import \
    incoming_applications_from_agent 
@@ -29,56 +30,27 @@ logger = logging.getLogger('rvapi')
 
 class RvHandOff():
 
-    #def __init__(self, username, customer_name, uri, method,
-    #             agent_id, apps_data, agent_data=None,
-    #             oper_type=AgentOperations.NEW_AGENT, delete_afterwards=True):
+    def __init__(self, username, customer_name, uri, method,
+            delete_afterwards=True):
 
-    def __init__(self, agent_data=None, delete_afterwards=True):
-
+        self.username = username
+        self.customer_name = customer_name
+        self.uri = uri
+        self.method = method
         self.delete_afterwards = delete_afterwards
-        self.agent_data = agent_data
+        self.agent_data = None
 
-        #if not self.agent_data:
-        #    self.agent_data = get_agent_info(agent_id)
+    def _get_agent_data(self, agent_id):
+        if self.agent_data:
+            if self.agent_data.get(AgentKey.AgentId) == agent_id:
+                return
+            else:
+                logger.info(
+                    "Agent id: {0} did not match agent id of set agent data: {0}"
+                    .format(agent_id, self.agent_data)
+                )
 
-        #self.add_packages_from_agent(username, agent_id, agent_data, apps_data)
-
-        #if oper_type == AgentOperations.NEW_AGENT:
-        #    self.add_custom_apps(username, customer_name, uri, method, agent_id)
-        #    self.add_supported_apps(agent_id)
-
-        #elif oper_type == AgentOperations.REFRESH_APPS:
-        #    self.add_supported_apps(agent_id)
-
-        #elif oper_type == AgentOperations.AVAILABLE_AGENT_UPDATE:
-        #    self.add_vFense_apps(agent_id)
-
-    def new_agent_operation(self, username, customer_name, uri, method,
-            agent_id, apps_data):
-
-        self._add_applications_from_agent(
-            username, customer_name, agent_id, self.agent_data, apps_data
-        )
-        self._add_custom_apps(username, customer_name, uri, method, agent_id)
-        self._add_supported_apps(agent_id)
-
-    def startup_operation(self, username, customer_name, uri, method,
-            agent_id, apps_data):
-
-        self.refresh_apps_operation(
-            username, customer_name, uri, method, agent_id, apps_data
-        )
-
-    def refresh_apps_operation(self, username, customer_name, uri, method,
-            agent_id, apps_data):
-
-        self._add_applications_from_agent(
-            username, customer_name, agent_id, self.agent_data, apps_data
-        )
-        self._add_supported_apps(agent_id)
-
-    def available_agent_update_operation(self, agent_id, app_data):
-        self._add_vFense_apps(agent_id, app_data)
+        self.agent_data = get_agent_info(agent_id)
 
     def _add_custom_apps(self, username, customer_name, uri, method, agent_id):
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
@@ -116,19 +88,72 @@ class RvHandOff():
             timeout=3600
         )
 
-    def _add_applications_from_agent(self, username, customer_name, agent_id,
-            agent_data, apps):
+    def _add_applications_from_agent(self, username, customer_name, agent_data,
+            apps, delete_afterwards):
+
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
             func=incoming_applications_from_agent,
             args=(
                 username,
-                agent_id,
                 customer_name,
-                agent_data['os_code'],
-                agent_data['os_string'],
+                agent_data[AgentKey.AgentId],
+                agent_data[AgentKey.OsCode],
+                agent_data[AgentKey.OsString],
                 apps,
-                self.delete_afterwards
+                delete_afterwards
             ),
             timeout=3600
         )
+
+    def new_agent_operation(self, agent_id, apps_data, agent_data=None):
+
+        if agent_data:
+            self.agent_data = agent_data
+
+        self._get_agent_data(agent_id)
+
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            self.agent_data,
+            apps_data,
+            self.delete_afterwards
+        )
+        self._add_custom_apps(
+            self.username,
+            self.customer_name,
+            self.uri,
+            self.method,
+            agent_id
+        )
+        self._add_supported_apps(agent_id)
+
+    def startup_operation(self, agent_id, apps_data, agent_data=None):
+
+        if agent_data:
+            self.agent_data = agent_data
+
+        self._get_agent_data(agent_id)
+
+        self.refresh_apps_operation(agent_id, apps_data)
+
+    def refresh_apps_operation(self, agent_id, apps_data, agent_data=None):
+
+        if agent_data:
+            self.agent_data = agent_data
+
+        self._get_agent_data(agent_id)
+
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            self.agent_data,
+            apps_data,
+            self.delete_afterwards
+        )
+        self._add_supported_apps(agent_id)
+
+    def available_agent_update_operation(self, agent_id, app_data):
+        self._add_vFense_apps(agent_id, app_data)
+

@@ -73,19 +73,12 @@ class NewAgentV1(BaseHandler):
                 new_agent_results[ApiResultKeys.DATA] = [json_msg, uris]
                 try:
                     if 'rv' in plugins:
-                        #RvHandOff(
-                        #    username, customer_name, uri, method, agent_id,
-                        #    plugins['rv']['data'], agent_info
-                        #)
-                        apps_data = plugins['rv']['data']
-
-                        RvHandOff(agent_info).new_agent_operation(
-                            username,
-                            customer_name,
-                            uri,
-                            method,
+                        RvHandOff(
+                            username, customer_name, uri, method
+                        ).new_agent_operation(
                             agent_id,
-                            apps_data
+                            plugins['rv']['data'],
+                            agent_info
                         )
 
                     if 'ra' in plugins:

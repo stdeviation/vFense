@@ -148,11 +148,13 @@ class PatchingOperationResults(OperationResults):
             pass
 
         incoming_applications_from_agent(
-            self.username, self.agent_id,
+            self.username,
             self.customer_name,
+            self.agent_id,
             self.agent_data[AgentKey.OsCode],
             self.agent_data[AgentKey.OsString],
-            self.apps_to_add, delete_afterwards=False
+            self.apps_to_add,
+            delete_afterwards=False
         )
 
     def _apps_to_delete(self):

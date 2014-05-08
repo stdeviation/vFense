@@ -29,7 +29,7 @@ logger = logging.getLogger('rvapi')
 
 class IncomingApplications():
 
-    def __init__(self, username, agent_id, customer_name, os_code, os_string):
+    def __init__(self, username, customer_name, agent_id, os_code, os_string):
         self.username = username
         self.agent_id = agent_id
         self.customer_name = customer_name
@@ -167,10 +167,10 @@ class IncomingApplications():
         logger.info(log_msg)
 
 
-def incoming_applications_from_agent(username, agent_id, customer_name,
-        os_code, os_string, apps, delete_afterwards=True):
+def incoming_applications_from_agent(username, customer_name, agent_id, 
+        agent_os_code, agent_os_string, apps, delete_afterwards=True):
 
     app = IncomingApplications(
-        username, agent_id, customer_name, os_code, os_string
+        username, customer_name, agent_id, agent_os_code, agent_os_string
     )
     app.add_or_update_applications(apps, delete_afterwards)

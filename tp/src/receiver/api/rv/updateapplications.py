@@ -41,13 +41,9 @@ class UpdateApplicationsV1(BaseHandler):
             apps_data = self.arguments.get('data')
             status_code = self.arguments.get('status_code', None)
 
-            #RvHandOff(
-            #   username, customer_name, uri, method, agent_id,
-            #   app_data, oper_type=AgentOperations.REFRESH_APPS
-            #)
-            RvHandOff().refresh_apps_operation(
-                username, customer_name, uri, method, agent_id, apps_data
-            )
+            RvHandOff(
+                username, customer_name, uri, method
+            ).refresh_apps_operation(agent_id, apps_data)
 
             if operation_id:
                 print self.arguments
