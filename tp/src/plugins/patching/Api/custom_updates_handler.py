@@ -24,7 +24,7 @@ from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByT
 from vFense.plugins.patching.search.search_by_appid import RetrieveCustomAppsByAppId, \
     RetrieveAgentsByCustomAppId
 
-from vFense.plugins.patching.custom_apps.uploaded.uploader import gen_uuid, \
+from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import gen_uuid, \
     move_packages, store_package_info_in_db
 
 from vFense.core.user import UserKeys

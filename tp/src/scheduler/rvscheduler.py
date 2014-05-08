@@ -2,8 +2,8 @@ from time import sleep
 import logging 
 
 from vFense.scheduler.jobManager import start_scheduler, job_exists, remove_job
-#from vFense.plugins.patching.supported_apps.syncer import get_agents_apps, get_supported_apps
-from vFense.plugins.patching.supported_apps.syncer import get_supported_apps
+#from vFense.plugins.patching.apps.supported_apps.syncer import get_agents_apps, get_supported_apps
+from vFense.plugins.patching.apps.supported_apps.syncer import get_supported_apps
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing

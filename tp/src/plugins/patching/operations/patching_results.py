@@ -33,7 +33,7 @@ from vFense.plugins.patching.patching import \
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
 
-from vFense.plugins.patching.os_apps.incoming_updates import \
+from vFense.plugins.patching.apps.incoming_apps import \
     incoming_applications_from_agent
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

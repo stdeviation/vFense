@@ -1,5 +1,6 @@
 class AppCollections():
     UniqueApplications = 'unique_applications'
+    OsApps = 'os_apps'
     AppsPerAgent = 'apps_per_agent'
     CustomApps = 'custom_apps'
     CustomAppsPerAgent = 'custom_apps_per_agent'

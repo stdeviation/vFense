@@ -38,12 +38,16 @@ class UpdateApplicationsV1(BaseHandler):
             operation_id = self.arguments.get('operation_id', None)
             error = self.arguments.get('error', None)
             success = self.arguments.get('success', 'true')
-            app_data = self.arguments.get('data')
+            apps_data = self.arguments.get('data')
             status_code = self.arguments.get('status_code', None)
 
-            RvHandOff(
-               username, customer_name, uri, method, agent_id,
-               app_data, oper_type=AgentOperations.REFRESH_APPS
+            #RvHandOff(
+            #   username, customer_name, uri, method, agent_id,
+            #   app_data, oper_type=AgentOperations.REFRESH_APPS
+            #)
+            hand_off = RvHandOff()
+            hand_off.refresh_apps_operation(
+                username, customer_name, uri, method, agent_id, apps_data
             )
 
             if operation_id:
@@ -64,7 +68,7 @@ class UpdateApplicationsV1(BaseHandler):
             else:
                 results = (
                     UpdateApplicationsResults(username, uri, method)
-                    .applications_updated(agent_id, app_data)
+                    .applications_updated(agent_id, apps_data)
                 )
 
                 results['data'] = []

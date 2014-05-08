@@ -1,6 +1,10 @@
+import re
+
 from hashlib import sha256
 
 from vFense.plugins.patching import AppsKey
+from vFense.plugins.patching._constants import CommonSeverityKeys
+
 
 def build_app_id(name, version):
     """ Return the 64 character hexdigest of the appid.
@@ -48,4 +52,14 @@ def build_agent_app_id(agent_id, app_id):
 
     return sha256(agent_app_id).hexdigest()
 
+
+def get_proper_severity(severity):
+
+    if re.search(r'Critical|Important|Security', severity, re.IGNORECASE):
+        return CommonSeverityKeys.CRITICAL
+
+    elif re.search(r'Recommended|Moderate|Low|Bugfix', severity, re.IGNORECASE):
+        return CommonSeverityKeys.RECOMMENDED
+
+    return CommonSeverityKeys.OPTIONAL
 

@@ -959,14 +959,14 @@ def unique_application_updater(customer_name, app_data, os_string):
     return(inserted_count, updated_count)
 
 @time_it
-def add_or_update_apps_per_agent(
-        agent_id, pkg_list, now=None, delete_afterwards=True,
-        table=AppCollections.AppsPerAgent
-    ):
+def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
+        delete_afterwards=True, table=AppCollections.AppsPerAgent):
+
     """Add or update apps for an agent.
+
     Args:
         agent_id (str): The 36 character UUID of the agent.
-        pkg_list (list): List of dictionaries.
+        app_dict_list (list): List of dictionaries.
 
     Kwargs:
         now (float|int): The time in epoch
@@ -980,7 +980,7 @@ def add_or_update_apps_per_agent(
         >>> now = 1399075090.83746
         >>> agent_id = '78211125-3c1e-476a-98b6-ea7f683142b3'
         >>> delete_unused_apps = True
-        >>> pkg_list = [
+        >>> app_dict_list = [
                 {
                     "status": "installed",
                     "install_date": 1397697799,
@@ -994,7 +994,7 @@ def add_or_update_apps_per_agent(
                 }
             ]
         >>> add_or_update_apps_per_agent(
-                pkg_list, now,
+                app_dict_list, now,
                 delete_unused_apps,
                 table
             )
@@ -1007,13 +1007,16 @@ def add_or_update_apps_per_agent(
     updated = 0
     inserted = 0
     deleted = 0
-    status_code, count, errors, generated_ids = (
-        update_apps_per_agent(pkg_list, table)
+
+    status_code, count, _, _ = (
+        update_apps_per_agent(app_dict_list, table)
     )
+
     if isinstance(count, list):
         if len(count) > 1:
             inserted = count[0]
             updated = count[1]
+
     else:
         if status_code == DbCodes.Replaced:
             updated = count
@@ -1027,12 +1030,13 @@ def add_or_update_apps_per_agent(
             if isinstance(now, float) or isinstance(now, int):
                 now = DbTime.epoch_time_to_db_time(now)
 
-        status_code, count, errors, generated_ids = (
+        status_code, count, _, _ = (
             delete_apps_per_agent_older_than(agent_id, now, table)
         )
+
         deleted = count
 
-    return(inserted, updated, deleted)
+    return inserted, updated, deleted
 
 @time_it
 def delete_apps_from_agent_by_name_and_version(

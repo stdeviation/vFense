@@ -364,7 +364,7 @@ def update_supported_apps(json_data):
         conn.close()
 
         #update_apps = IncomingSupportedOrAgentApps(table=table)
-        update_apps = IncomingSupportedApps(table=table)
+        update_apps = IncomingSupportedApps()
         update_apps.sync_supported_updates_to_all_agents(json_data)
 
     except Exception as e:

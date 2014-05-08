@@ -4,16 +4,16 @@ import redis
 from rq import Connection, Queue
 
 from vFense.core.agent.agents import get_agent_info
-from vFense.plugins.patching.os_apps.incoming_updates import \
+from vFense.plugins.patching.apps.incoming_apps import \
    incoming_applications_from_agent 
-from vFense.plugins.patching.custom_apps.custom_apps import \
+from vFense.plugins.patching.apps.custom_apps.custom_apps import \
     add_custom_app_to_agents
-from vFense.plugins.patching.supported_apps.syncer import \
+from vFense.plugins.patching.apps.supported_apps.syncer import \
     get_all_supported_apps_for_agent
-from vFense.plugins.patching.vFense_apps.vFense_apps import \
+from vFense.plugins.patching.apps.vFense_apps.vFense_apps import \
     add_vFense_apps_to_agent
 
-#from vFense.plugins.patching.supported_apps.syncer import \
+#from vFense.plugins.patching.apps.supported_apps.syncer import \
 #    get_all_supported_apps_for_agent, get_all_vFense_apps_for_agent
 
 #from vFense.operations._constants import AgentOperations
@@ -61,6 +61,12 @@ class RvHandOff():
         )
         self._add_custom_apps(username, customer_name, uri, method, agent_id)
         self._add_supported_apps(agent_id)
+
+    def startup_operation(self, username, customer_name, uri, method,
+            agent_id, apps_data):
+        self.refresh_apps_operation(
+            username, customer_name, uri, method, agent_id, apps_data
+        )
 
     def refresh_apps_operation(self, username, customer_name, uri, method,
             agent_id, apps_data):

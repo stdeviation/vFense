@@ -32,10 +32,12 @@ class AgentUpdateHandler(BaseHandler):
             app_data = self.arguments.get('data')
             status_code = self.arguments.get('status_code', None)
 
-            RvHandOff(
-               username, customer_name, uri, method, agent_id,
-               app_data, oper_type=AgentOperations.AVAILABLE_AGENT_UPDATE
-            )
+            #RvHandOff(
+            #   username, customer_name, uri, method, agent_id,
+            #   app_data, oper_type=AgentOperations.AVAILABLE_AGENT_UPDATE
+            #)
+            hand_off = RvHandOff()
+            hand_off.available_agent_update_operation(agent_id, app_data)
 
         except Exception as e:
             logger.exception(e)

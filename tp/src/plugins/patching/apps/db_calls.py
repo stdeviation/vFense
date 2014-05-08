@@ -12,10 +12,8 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def get_all_stats_by_appid(username, customer_name,
-                           uri, method, app_id,
-                           table=AppCollections.AppsPerAgent,
-                           conn=None):
+def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
+        table=AppCollections.AppsPerAgent, conn=None):
 
     if table == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
@@ -94,10 +92,8 @@ def get_all_stats_by_appid(username, customer_name,
 
 
 @db_create_close
-def get_all_agents_per_appid(username, customer_name,
-                             uri, method, app_id,
-                             table=AppCollections.AppsPerAgent,
-                             conn=None):
+def get_all_agents_per_appid(username, customer_name, uri, method, app_id,
+    table=AppCollections.AppsPerAgent, conn=None):
 
     if table == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
@@ -122,7 +118,10 @@ def get_all_agents_per_appid(username, customer_name,
             r
             .table(CurrentAppsPerAgentCollection)
             .get_all(app_id, index=CurrentAppsPerAgentKey.AppId)
-            .eq_join(CurrentAppsPerAgentKey.AgentId, r.table(CurrentAgentsCollection))
+            .eq_join(
+                CurrentAppsPerAgentKey.AgentId,
+                r.table(CurrentAgentsCollection)
+            )
             .zip()
             .group(
                 lambda x: x[CurrentAppsPerAgentKey.Status]

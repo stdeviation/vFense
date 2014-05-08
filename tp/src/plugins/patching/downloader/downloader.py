@@ -3,36 +3,40 @@ import logging.config
 import os
 import re
 
-from vFense.plugins.patching import AppsKey
+from urlgrabber import urlgrab
+
+from vFense.errorz.status_codes import PackageCodes
+from vFense.utils.common import hash_verifier
+
+from vFense.plugins.patching import AppsKey, AppCollections
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id, \
     update_supported_app_data_by_app_id, update_vfense_app_data_by_app_id
 
-from vFense.errorz.status_codes import PackageCodes
-from vFense.core.agent import *
-from urlgrabber import urlgrab
-from vFense.utils.common import hash_verifier
-
-packages_directory = '/opt/TopPatch/var/packages'
-dependencies_directory = '/opt/TopPatch/var/packages/dependencies'
+PACKAGES_DIRECTORY = '/opt/TopPatch/var/packages'
+DEPENDENCIES_DIRECTORY = '/opt/TopPatch/var/packages/dependencies'
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
+def create_necessary_dirs():
+    if not os.path.exists(PACKAGES_DIRECTORY):
+        os.mkdir(PACKAGES_DIRECTORY)
+    if not os.path.exists(DEPENDENCIES_DIRECTORY):
+        os.mkdir(DEPENDENCIES_DIRECTORY)
+
+
 def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
-        throttle=0, collection='os_apps'):
+        throttle=0, collection=AppCollections.OsApps):
 
-    REDHAT = 'Red Hat Enterprise Linux Server'
-    app_path = os.path.join(packages_directory, str(app_id))
+    create_necessary_dirs()
 
-    if not os.path.exists(packages_directory):
-        os.mkdir(packages_directory)
-    if not os.path.exists(dependencies_directory):
-        os.mkdir(dependencies_directory)
+    app_path = os.path.join(PACKAGES_DIRECTORY, str(app_id))
     if not os.path.exists(app_path):
         os.mkdir(app_path)
 
+    REDHAT = 'Red Hat Enterprise Linux Server'
     if not file_data and re.search(REDHAT, os_string, re.IGNORECASE):
         download_status = {
             AppsKey.FilesDownloadStatus: \
@@ -51,8 +55,6 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
             AppsKey.FilesDownloadStatus: PackageCodes.FileIsDownloading
         }
 
-        update_app_data_by_app_id(app_id, new_status)
-
         for file_info in file_data:
             uri = str(file_info[CommonFileKeys.PKG_URI])
             lhash = str(file_info[CommonFileKeys.PKG_HASH])
@@ -60,7 +62,7 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
             fsize = file_info[CommonFileKeys.PKG_SIZE]
 
             if os_code == 'linux':
-                file_path = os.path.join(dependencies_directory, fname)
+                file_path = os.path.join(DEPENDENCIES_DIRECTORY, fname)
             else:
                 file_path = os.path.join(app_path, fname)
 
@@ -138,14 +140,14 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
 
         db_update_response = None
 
-        if collection == 'os_apps':
+        if collection == AppCollections.OsApps:
             db_update_response = update_app_data_by_app_id(app_id, new_status)
 
-        elif collection == 'supported_apps':
+        elif collection == AppCollections.SupportedApps:
             db_update_response = \
                 update_supported_app_data_by_app_id(app_id, new_status)
 
-        elif collection == 'agent_apps':
+        elif collection == AppCollections.vFenseApps:
             db_update_response = \
                 update_vfense_app_data_by_app_id(app_id, new_status)
 
