@@ -181,9 +181,9 @@ class InstallSupportedAppsResults(BaseHandler):
             print results_data
             self.set_status(data['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.set_header('Content-Type', 'application/json')
             self.write(dumps(data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
+
         except Exception as e:
             results = (
                 GenericResults(
@@ -243,7 +243,6 @@ class InstallAgentAppsResults(BaseHandler):
             data = results.install_agent_update(data)
 
             self.set_status(data['http_status'])
-            self.set_header('Content-Type', 'application/json')
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
@@ -307,6 +306,7 @@ class UninstallAppsResults(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
+
         except Exception as e:
             results = (
                 GenericResults(

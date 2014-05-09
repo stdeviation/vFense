@@ -89,7 +89,7 @@ class RvHandOff():
         )
 
     def _add_applications_from_agent(self, username, customer_name, agent_data,
-            apps, delete_afterwards, collection):
+            apps, delete_afterwards, app_collection, apps_per_agent_collection):
 
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
@@ -102,7 +102,8 @@ class RvHandOff():
                 agent_data[AgentKey.OsString],
                 apps,
                 delete_afterwards,
-                collection
+                app_collection,
+                apps_per_agent_collection
             ),
             timeout=3600
         )
@@ -118,7 +119,8 @@ class RvHandOff():
             agent_data,
             apps_data,
             self.delete_afterwards,
-            AppCollections.OsApps
+            AppCollections.UniqueApplications,
+            AppCollections.AppsPerAgent
         )
         self._add_custom_apps(
             self.username,
@@ -147,7 +149,8 @@ class RvHandOff():
             agent_data,
             apps_data,
             self.delete_afterwards,
-            AppCollections.OsApps
+            AppCollections.UniqueApplications,
+            AppCollections.AppsPerAgent
         )
         self._add_supported_apps(agent_id)
 
@@ -161,6 +164,7 @@ class RvHandOff():
             agent_data,
             apps_data,
             self.delete_afterwards,
-            AppCollections.vFenseApps
+            AppCollections.vFenseApps,
+            AppCollections.vFenseAppsPerAgent
         )
         self._add_vFense_apps(agent_id, app_data)

@@ -44,7 +44,7 @@ def download_file(uri, dl_path, throttle):
 
 
 def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
-        throttle=0, collection=AppCollections.OsApps):
+        throttle=0, collection=AppCollections.UniqueApplications):
 
     create_necessary_dirs()
     throttle *= 1024

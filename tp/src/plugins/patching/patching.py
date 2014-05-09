@@ -167,15 +167,14 @@ def update_custom_app_data_by_agentid(agent_id, data, conn=None):
         >>> from vFense.plugins.patching.patching import update_custom_app_data_by_agentid
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> data = {'status': 'pending'}
-        >>> table = 'apps_per_agent'
         >>> update_custom_app_data_by_agentid(agent_id, data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.CustomAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, table)
+    collection = AppCollections.CustomAppsPerAgent
+    return update_app_data_by_agentid(agent_id, data, collection)
 
 @time_it
 def update_supported_app_data_by_agentid(agent_id, data, conn=None):
@@ -196,8 +195,8 @@ def update_supported_app_data_by_agentid(agent_id, data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.SupportedAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, table)
+    collection = AppCollections.SupportedAppsPerAgent
+    return update_app_data_by_agentid(agent_id, data, collection)
 
 @time_it
 def update_vfense_app_data_by_agentid(agent_id, data, conn=None):
@@ -218,8 +217,8 @@ def update_vfense_app_data_by_agentid(agent_id, data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.vFenseAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, table)
+    collection = AppCollections.vFenseAppsPerAgent
+    return update_app_data_by_agentid(agent_id, data, collection)
 
 @time_it
 def update_os_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
@@ -242,10 +241,10 @@ def update_os_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.AppsPerAgent
+    collection = AppCollections.AppsPerAgent
     data = (
         update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=table
+            agent_id, app_id, app_data, table=collection
         )
     )
     return data
@@ -271,10 +270,10 @@ def update_custom_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.CustomAppsPerAgent
+    collection = AppCollections.CustomAppsPerAgent
     data = (
         update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=table
+            agent_id, app_id, app_data, table=collection
         )
     )
     return data
@@ -300,10 +299,10 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.SupportedApps
+    collection = AppCollections.SupportedApps
     data = (
         update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=table
+            agent_id, app_id, app_data, table=collection
         )
     )
     return data
@@ -329,10 +328,10 @@ def update_vfense_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    table = AppCollections.vFenseAppsPerAgent
+    collection = AppCollections.vFenseAppsPerAgent
     data = (
         update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=table
+            agent_id, app_id, app_data, table=collection
         )
     )
     return data
@@ -868,8 +867,9 @@ def get_vulnerability_info_for_app(
     return vuln_data
 
 @time_it
-def unique_application_updater(customer_name, app_data, os_string):
-    """Insert or update an existing application.
+def application_updater(customer_name, app_data, os_string,
+        collection=AppCollections.UniqueApplications):
+    """Insert or update an existing application in the provided collection.
 
     Args:
         customer_name (str): The name of the customer, this application
@@ -877,8 +877,12 @@ def unique_application_updater(customer_name, app_data, os_string):
         app_data (dict): Dictionary of the application data.
         os_string (str): The name of the operating system... Ubuntu 12.04
 
+    Kwargs:
+        collection (str): The collection where app_data should be inserted or
+            updated
+
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import unique_application_updater
+        >>> from vFense.plugins.patching.patching import application_updater
         >>> customer_name = 'default'
         >>> app_data = {
                 "kb": "",
@@ -897,7 +901,7 @@ def unique_application_updater(customer_name, app_data, os_string):
                 "name": "gwibber-service-facebook"
             }
         >>> os_string = 'Ubuntu 12.04 '
-        >>> unique_application_updater(customer_name, app_data, os_string)
+        >>> application_updater(customer_name, app_data, os_string[ ,'unique_applications'])
 
     Returns:
         Tuple (inserted_count, updated_count)
@@ -913,7 +917,7 @@ def unique_application_updater(customer_name, app_data, os_string):
     app_version = app_data.get(DbCommonAppKeys.Version, None)
     app_kb = app_data.get(DbCommonAppKeys.Kb, '')
     app_id = app_data.get(DbCommonAppKeys.AppId)
-    exists = object_exist(app_id, AppCollections.UniqueApplications)
+    exists = object_exist(app_id, collection)
 
     if exists:
         add_file_data(app_id, file_data, agent_id)
@@ -924,7 +928,7 @@ def unique_application_updater(customer_name, app_data, os_string):
         data_updated = update_app_data_by_app_id(
             app_id,
             vuln_data,
-            AppCollections.UniqueApplications
+            collection
         )
         if data_updated[0] == DbCodes.Replaced:
             updated_count = data_updated[1]
@@ -933,6 +937,7 @@ def unique_application_updater(customer_name, app_data, os_string):
         add_file_data(app_id, file_data, agent_id)
         app_data[AppsKey.Customers] = [customer_name]
         app_data[AppsKey.Hidden] = CommonKeys.NO
+
         if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
                 len(file_data) > 0 and status == CommonAppKeys.INSTALLED):
             app_data[AppsKey.FilesDownloadStatus] = (
@@ -945,16 +950,14 @@ def unique_application_updater(customer_name, app_data, os_string):
         elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
             app_data[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
-        vuln_data = (
-            get_vulnerability_info_for_app(
-                os_string, app_name, app_version, app_kb
-            )
+        vuln_data = get_vulnerability_info_for_app(
+            os_string, app_name, app_version, app_kb
         )
+
         app_data = dict(app_data.items() + vuln_data.items())
 
-        data_inserted = (
-            insert_data_in_table(app_data, AppCollections.UniqueApplications)
-        )
+        data_inserted = insert_data_in_table(app_data, collection)
+
         if data_inserted[0] == DbCodes.Inserted:
             inserted_count = data_inserted[1]
 
@@ -962,7 +965,7 @@ def unique_application_updater(customer_name, app_data, os_string):
 
 @time_it
 def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
-        delete_afterwards=True, table=AppCollections.AppsPerAgent):
+        delete_afterwards=True, collection=AppCollections.AppsPerAgent):
 
     """Add or update apps for an agent.
 
@@ -973,12 +976,12 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
     Kwargs:
         now (float|int): The time in epoch
             default = None
-        table (str): The name of the table this is applied too.
+        collection (str): The name of the collection this is applied too.
             default = apps_per_agent
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import add_or_update_apps_per_agent
-        >>> table = 'apps_per_agent'
+        >>> collection = 'apps_per_agent'
         >>> now = 1399075090.83746
         >>> agent_id = '78211125-3c1e-476a-98b6-ea7f683142b3'
         >>> delete_unused_apps = True
@@ -998,7 +1001,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
         >>> add_or_update_apps_per_agent(
                 app_dict_list, now,
                 delete_unused_apps,
-                table
+                collection
             )
 
     Returns:
@@ -1011,7 +1014,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
     deleted = 0
 
     status_code, count, _, _ = (
-        update_apps_per_agent(app_dict_list, table)
+        update_apps_per_agent(app_dict_list, collection)
     )
 
     if isinstance(count, list):
@@ -1033,7 +1036,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
                 now = DbTime.epoch_time_to_db_time(now)
 
         status_code, count, _, _ = (
-            delete_apps_per_agent_older_than(agent_id, now, table)
+            delete_apps_per_agent_older_than(agent_id, now, collection)
         )
 
         deleted = count
@@ -1043,7 +1046,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
 @time_it
 def delete_apps_from_agent_by_name_and_version(
         agent_id, app_name, app_version,
-        table=AppCollections.UniqueApplications
+        collection=AppCollections.UniqueApplications
     ):
     """Delete apps from an agent that contain this name and version.
     Args:
@@ -1054,7 +1057,7 @@ def delete_apps_from_agent_by_name_and_version(
             you are removing.
 
     Kwargs:
-        table (str): The name of the table you are perfoming the delete on.
+        collection (str): The name of the collection you are perfoming the delete on.
             default = 'unique_applications'
 
     Basic Usage:
@@ -1062,8 +1065,8 @@ def delete_apps_from_agent_by_name_and_version(
         >>> agent_id = '78211125-3c1e-476a-98b6-ea7f683142b3'
         >>> app_name = 'libpangoxft-1.0-0'
         >>> app_version = '1.36.3-1ubuntu1'
-        >>> table = 'apps_per_agent'
-        >>> delete_apps_from_agent_by_name_and_version(agent_id, name, version, table)
+        >>> collection = 'apps_per_agent'
+        >>> delete_apps_from_agent_by_name_and_version(agent_id, name, version, collection)
 
     Returns:
         Boolean
@@ -1076,7 +1079,7 @@ def delete_apps_from_agent_by_name_and_version(
     if app_id:
         agent_app_id = build_agent_app_id(agent_id, app_id)
         status_code, count, error, generated_ids = (
-            delete_data_in_table(agent_app_id, table)
+            delete_data_in_table(agent_app_id, collection)
         )
 
         if status_code == DbCodes.Deleted:
@@ -1088,7 +1091,7 @@ def delete_apps_from_agent_by_name_and_version(
 @results_message
 def toggle_hidden_status(
         app_ids, hidden=CommonKeys.TOGGLE,
-        table=AppCollections.UniqueApplications,
+        collection=AppCollections.UniqueApplications,
         username=None, uri=None, method=None
     ):
     """Toggle the hidden status of an application
@@ -1098,8 +1101,8 @@ def toggle_hidden_status(
     Kwargs:
         hidden (str, optional): yes, no, or toggle
             default = toggle
-        table (str, optional): The table you are updating for.
-            table = unique_applications
+        collection (str, optional): The collection you are updating for.
+            collection = unique_applications
         username (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
@@ -1120,7 +1123,7 @@ def toggle_hidden_status(
         ApiResultKeys.HTTP_METHOD: method,
     }
     status_code, count, error, generated_ids = update_hidden_status(
-        app_ids, hidden, table
+        app_ids, hidden, collection
     )
 
     if status_code == DbCodes.Replaced:

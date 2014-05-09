@@ -11,7 +11,7 @@ from vFense.plugins.patching import AppsKey, AppsPerAgentKey, AppCollections
 from vFense.plugins.patching.utils import build_app_id, build_agent_app_id, \
     get_proper_severity
 from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
-    unique_application_updater
+    application_updater
 from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
 
@@ -74,8 +74,7 @@ class IncomingApplications():
 
         return necessary_keys
 
-    def _download_app_files(self, app_id, file_data,
-            collection=AppCollections.OsApps):
+    def _download_app_files(self, app_id, file_data, app_collection):
 
         rv_q = Queue('downloader', connection=RQ_PKG_POOL)
         rv_q.enqueue_call(
@@ -86,13 +85,14 @@ class IncomingApplications():
                 self.os_string,
                 file_data,
                 0,
-                collection
+                app_collection
             ),
             timeout=86400
         )
 
     def add_or_update_applications(self, app_list, delete_afterwards=True,
-            collection=AppCollections.OsApps):
+            app_collection=AppCollections.UniqueApplications,
+            apps_per_agent_collection=AppCollections.AppsPerAgent):
 
         good_app_list = []
 
@@ -112,14 +112,14 @@ class IncomingApplications():
                 agent_app = self._set_specific_keys_for_agent_app(app_dict)
 
                 # Mutates app_dict
-                counts = unique_application_updater(
-                    self.customer_name, app_dict, self.os_string
+                counts = application_updater(
+                    self.customer_name, app_dict, self.os_string, app_collection
                 )
                 self.inserted_count += counts[0]
                 self.updated_count += counts[1]
 
                 if agent_app[AppsPerAgentKey.Status] == 'available':
-                    self._download_app_files(app_id, file_data, collection)
+                    self._download_app_files(app_id, file_data, app_collection)
 
                 good_app_list.append(agent_app)
 
@@ -128,7 +128,11 @@ class IncomingApplications():
                 continue
 
         inserted, updated, deleted = add_or_update_apps_per_agent(
-            self.agent_id, good_app_list, self.modified_time, delete_afterwards
+            self.agent_id,
+            good_app_list,
+            self.modified_time,
+            delete_afterwards,
+            apps_per_agent_collection
         )
 
         log_msg = (("Added or updated apps per agent: "
@@ -141,11 +145,15 @@ class IncomingApplications():
 
 def incoming_applications_from_agent(username, customer_name, agent_id, 
         agent_os_code, agent_os_string, apps, delete_afterwards=True,
-        collection=AppCollections.OsApps):
+        app_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent):
 
     app = IncomingApplications(
         username, customer_name, agent_id, agent_os_code, agent_os_string
     )
     app.add_or_update_applications(
-        apps, delete_afterwards, collection=collection
+        apps,
+        delete_afterwards,
+        app_collection,
+        apps_per_agent_collection
     )
