@@ -13,7 +13,8 @@ from vFense.core.decorators import convert_json_to_arguments, \
     authenticated_request
 
 from vFense.plugins.patching import *
-from vFense.plugins.patching._db import update_vfense_app_data_by_app_id
+from vFense.plugins.patching._db import update_app_data_by_app_id
+from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching.patching import toggle_hidden_status
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveAgentApps
@@ -475,20 +476,17 @@ class AppIdAgentAppsHandler(BaseHandler):
         method = self.request.method
         try:
             severity = self.arguments.get('severity').capitalize()
-            if severity in ValidRvSeverities:
-                sev_data = (
-                    {
-                        AppsKey.RvSeverity: severity
-                    }
+
+            if severity in CommonSeverityKeys.ValidRvSeverities:
+                sev_data = {AppsKey.RvSeverity: severity}
+                update_app_data_by_app_id(
+                    app_id, sev_data, AppCollections.vFenseApps
                 )
-                update_vfense_app_data_by_app_id(
-                    app_id, sev_data
-                )
-                results = (
-                    GenericResults(
-                        username, uri, method
-                    ).object_updated(app_id, 'app severity', [sev_data])
-                )
+
+                results = GenericResults(
+                    username, uri, method
+                ).object_updated(app_id, 'app severity', [sev_data])
+
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
@@ -532,6 +530,7 @@ class AppIdAgentAppsHandler(BaseHandler):
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
+
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(

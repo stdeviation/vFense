@@ -13,7 +13,7 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
 from vFense.plugins.patching import *
-from vFense.plugins.patching._db import update_custom_app_data_by_app_id
+from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status
 
 from vFense.plugins.patching.rv_db_calls import delete_app_from_rv
@@ -580,8 +580,8 @@ class AppIdCustomAppsHandler(BaseHandler):
                             AppsKey.RvSeverity: severity
                         }
                     )
-                    update_custom_app_data_by_app_id(
-                        app_id, sev_data
+                    update_app_data_by_app_id(
+                        app_id, sev_data, AppCollections.CustomApps
                     )
                     results = (
                         GenericResults(
@@ -608,9 +608,11 @@ class AppIdCustomAppsHandler(BaseHandler):
                         CustomAppsKey.CliOptions: install_options
                     }
                 )
-                update_custom_app_data_by_app_id(
-                    app_id, install_options_hash
+
+                update_app_data_by_app_id(
+                    app_id, sev_data, AppCollections.CustomApps
                 )
+
                 results = (
                     GenericResults(
                         username, uri, method

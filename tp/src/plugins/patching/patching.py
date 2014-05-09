@@ -904,6 +904,7 @@ def unique_application_updater(customer_name, app_data, os_string):
     """
     updated_count = 0
     inserted_count = 0
+
     status = app_data.pop(DbCommonAppPerAgentKeys.Status, None)
     agent_id = app_data.pop(DbCommonAppPerAgentKeys.AgentId, None)
     app_data.pop(DbCommonAppPerAgentKeys.InstallDate, None)
@@ -921,7 +922,8 @@ def unique_application_updater(customer_name, app_data, os_string):
             os_string, app_name, app_version, app_kb
         )
         data_updated = update_app_data_by_app_id(
-            app_id, vuln_data,
+            app_id,
+            vuln_data,
             AppCollections.UniqueApplications
         )
         if data_updated[0] == DbCodes.Replaced:

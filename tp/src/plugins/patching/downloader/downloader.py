@@ -6,12 +6,11 @@ import re
 from urlgrabber import urlgrab
 
 from vFense.errorz.status_codes import PackageCodes
-from vFense.utils.common import hash_verifier
+from vFense.utils.common import hash_verify
 
 from vFense.plugins.patching import AppsKey, AppCollections
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching._db import update_app_data_by_app_id, \
-    update_supported_app_data_by_app_id, update_vfense_app_data_by_app_id
+from vFense.plugins.patching._db import update_app_data_by_app_id
 
 PACKAGES_DIRECTORY = '/opt/TopPatch/var/packages'
 DEPENDENCIES_DIRECTORY = '/opt/TopPatch/var/packages/dependencies'
@@ -27,24 +26,41 @@ def create_necessary_dirs():
         os.mkdir(DEPENDENCIES_DIRECTORY)
 
 
+def check_if_redhat(os_string):
+    REDHAT = 'Red Hat Enterprise Linux Server'
+    if re.search(REDHAT, os_string, re.IGNORECASE):
+        return True
+
+    return False
+
+
+def download_file(uri, dl_path, throttle):
+    if uri.startswith('https://api.github.com/'):
+        headers = (("Accept", "application/octet-stream"),)
+        urlgrab(uri, filename=dl_path, throttle=throttle, http_headers=headers)
+
+    else:
+        urlgrab(uri, filename=dl_path, throttle=throttle)
+
+
 def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
         throttle=0, collection=AppCollections.OsApps):
 
     create_necessary_dirs()
+    throttle *= 1024
 
-    app_path = os.path.join(PACKAGES_DIRECTORY, str(app_id))
-    if not os.path.exists(app_path):
-        os.mkdir(app_path)
-
-    REDHAT = 'Red Hat Enterprise Linux Server'
-    if not file_data and re.search(REDHAT, os_string, re.IGNORECASE):
+    if not file_data and check_if_redhat(os_string):
         download_status = {
             AppsKey.FilesDownloadStatus: \
                 PackageCodes.AgentWillDownloadFromVendor
         }
-        update_app_data_by_app_id(app_id, download_status)
+        update_app_data_by_app_id(app_id, download_status, collection)
 
     elif len(file_data) > 0:
+        app_path = os.path.join(PACKAGES_DIRECTORY, str(app_id))
+        if not os.path.exists(app_path):
+            os.mkdir(app_path)
+
         num_of_files_to_download = len(file_data)
         num_of_files_downloaded = 0
         num_of_files_mismatch = 0
@@ -66,26 +82,20 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
             else:
                 file_path = os.path.join(app_path, fname)
 
-            if throttle != 0:
-                throttle *= 1024
-
             symlink_path = os.path.join(app_path, fname)
             cmd = 'ln -s %s %s' % (file_path, symlink_path)
 
             try:
                 if uri and not os.path.exists(file_path):
-                    urlgrab(uri, filename=file_path, throttle=throttle)
+                    download_file(uri, file_path, throttle)
 
                     if os.path.exists(file_path):
                         if lhash:
-                            hash_match = (
-                                hash_verifier(
-                                    orig_hash=lhash,
-                                    file_path=file_path
-                                )
+                            hash_match = hash_verify(
+                                orig_hash=lhash, file_path=file_path
                             )
 
-                            if hash_match['pass']:
+                            if hash_match:
                                 num_of_files_downloaded += 1
 
                                 if os_code == 'linux':
@@ -138,18 +148,9 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
                 PackageCodes.InvalidUri
             )
 
-        db_update_response = None
-
-        if collection == AppCollections.OsApps:
-            db_update_response = update_app_data_by_app_id(app_id, new_status)
-
-        elif collection == AppCollections.SupportedApps:
-            db_update_response = \
-                update_supported_app_data_by_app_id(app_id, new_status)
-
-        elif collection == AppCollections.vFenseApps:
-            db_update_response = \
-                update_vfense_app_data_by_app_id(app_id, new_status)
+        db_update_response = update_app_data_by_app_id(
+            app_id, new_status, collection
+        )
 
         logger.info(
             '%s, %s, %s, %s' %

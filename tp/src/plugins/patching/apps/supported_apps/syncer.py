@@ -354,7 +354,9 @@ def update_supported_apps(json_data):
                     json_data[i][current_apps_key.AppId],
                     json_data[i][current_apps_key.OsCode],
                     None,
-                    file_data, 0, app_type
+                    file_data,
+                    0,
+                    app_type
                 ),
                 timeout=86400
             )

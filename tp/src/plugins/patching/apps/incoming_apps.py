@@ -7,7 +7,7 @@ from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core._db_constants import DbTime
 
-from vFense.plugins.patching import AppsKey, AppsPerAgentKey
+from vFense.plugins.patching import AppsKey, AppsPerAgentKey, AppCollections
 from vFense.plugins.patching.utils import build_app_id, build_agent_app_id, \
     get_proper_severity
 from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
@@ -74,7 +74,9 @@ class IncomingApplications():
 
         return necessary_keys
 
-    def _download_app_files(self, app_id, file_data):
+    def _download_app_files(self, app_id, file_data,
+            collection=AppCollections.OsApps):
+
         rv_q = Queue('downloader', connection=RQ_PKG_POOL)
         rv_q.enqueue_call(
             func=download_all_files_in_app,
@@ -82,47 +84,17 @@ class IncomingApplications():
                 app_id,
                 self.os_code,
                 self.os_string,
-                file_data
+                file_data,
+                0,
+                collection
             ),
             timeout=86400
         )
 
-    def add_or_update_applications(self, app_list, delete_afterwards=True):
-        #index_with_no_name = list()
-        good_app_list = list()
+    def add_or_update_applications(self, app_list, delete_afterwards=True,
+            collection=AppCollections.OsApps):
 
-        #start_time = datetime.now()
-        #print start_time, 'add all apps to app_table'
-        #for i in range(len(app_list)):
-        #    if not app_list[i][AppsKey.Name]:
-        #        index_with_no_name.append(i)
-        #        continue
-
-        #    if len(app_list[i][AppsKey.Name]) < 1:
-        #        index_with_no_name.append(i)
-        #        continue
-
-        #    app_list[i] = self._set_app_per_node_parameters(app_list[i])
-        #    app_list[i][AppsKey.AppId] = build_app_id(app_list[i])
-        #    agent_app = self._set_specific_keys_for_agent_app(app_list[i])
-        #    file_data = app_list[i].get(AppsKey.FileData)
-        #    counts = unique_application_updater(
-        #        self.customer_name, app_list[i], self.os_string
-        #    )
-        #    self.inserted_count += counts[0]
-        #    self.updated_count += counts[1]
-
-        #    if agent_app[AppsPerAgentKey.Status] == 'available':
-        #        rv_q.enqueue_call(
-        #            func=download_all_files_in_app,
-        #            args=(
-        #                app_list[i][AppsKey.AppId],
-        #                self.os_code, self.os_string,
-        #                file_data,
-        #            ),
-        #            timeout=86400
-        #        )
-        #    good_app_list.append(agent_app)
+        good_app_list = []
 
         for app_dict in app_list:
             try:
@@ -147,7 +119,7 @@ class IncomingApplications():
                 self.updated_count += counts[1]
 
                 if agent_app[AppsPerAgentKey.Status] == 'available':
-                    self._download_app_files(app_id, file_data)
+                    self._download_app_files(app_id, file_data, collection)
 
                 good_app_list.append(agent_app)
 
@@ -168,9 +140,12 @@ class IncomingApplications():
 
 
 def incoming_applications_from_agent(username, customer_name, agent_id, 
-        agent_os_code, agent_os_string, apps, delete_afterwards=True):
+        agent_os_code, agent_os_string, apps, delete_afterwards=True,
+        collection=AppCollections.OsApps):
 
     app = IncomingApplications(
         username, customer_name, agent_id, agent_os_code, agent_os_string
     )
-    app.add_or_update_applications(apps, delete_afterwards)
+    app.add_or_update_applications(
+        apps, delete_afterwards, collection=collection
+    )

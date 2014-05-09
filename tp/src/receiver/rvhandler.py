@@ -5,6 +5,7 @@ from rq import Connection, Queue
 
 from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import get_agent_info
+from vFense.plugins.patching import AppCollections
 from vFense.plugins.patching.apps.incoming_apps import \
    incoming_applications_from_agent 
 from vFense.plugins.patching.apps.custom_apps.custom_apps import \
@@ -38,19 +39,18 @@ class RvHandOff():
         self.uri = uri
         self.method = method
         self.delete_afterwards = delete_afterwards
-        self.agent_data = None
 
     def _get_agent_data(self, agent_id):
-        if self.agent_data:
-            if self.agent_data.get(AgentKey.AgentId) == agent_id:
-                return
-            else:
-                logger.info(
-                    "Agent id: {0} did not match agent id of set agent data: {0}"
-                    .format(agent_id, self.agent_data)
-                )
+        #if self.agent_data:
+        #    if self.agent_data.get(AgentKey.AgentId) == agent_id:
+        #        return self.agent_data
+        #    else:
+        #        logger.info(
+        #            "Agent id: {0} did not match agent id of set agent data: {0}"
+        #            .format(agent_id, self.agent_data)
+        #        )
 
-        self.agent_data = get_agent_info(agent_id)
+        return get_agent_info(agent_id)
 
     def _add_custom_apps(self, username, customer_name, uri, method, agent_id):
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
@@ -89,7 +89,7 @@ class RvHandOff():
         )
 
     def _add_applications_from_agent(self, username, customer_name, agent_data,
-            apps, delete_afterwards):
+            apps, delete_afterwards, collection):
 
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
@@ -101,24 +101,24 @@ class RvHandOff():
                 agent_data[AgentKey.OsCode],
                 agent_data[AgentKey.OsString],
                 apps,
-                delete_afterwards
+                delete_afterwards,
+                collection
             ),
             timeout=3600
         )
 
     def new_agent_operation(self, agent_id, apps_data, agent_data=None):
 
-        if agent_data:
-            self.agent_data = agent_data
-
-        self._get_agent_data(agent_id)
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
 
         self._add_applications_from_agent(
             self.username,
             self.customer_name,
-            self.agent_data,
+            agent_data,
             apps_data,
-            self.delete_afterwards
+            self.delete_afterwards,
+            AppCollections.OsApps
         )
         self._add_custom_apps(
             self.username,
@@ -131,29 +131,36 @@ class RvHandOff():
 
     def startup_operation(self, agent_id, apps_data, agent_data=None):
 
-        if agent_data:
-            self.agent_data = agent_data
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
 
-        self._get_agent_data(agent_id)
-
-        self.refresh_apps_operation(agent_id, apps_data)
+        self.refresh_apps_operation(agent_id, apps_data, agent_data)
 
     def refresh_apps_operation(self, agent_id, apps_data, agent_data=None):
 
-        if agent_data:
-            self.agent_data = agent_data
-
-        self._get_agent_data(agent_id)
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
 
         self._add_applications_from_agent(
             self.username,
             self.customer_name,
-            self.agent_data,
+            agent_data,
             apps_data,
-            self.delete_afterwards
+            self.delete_afterwards,
+            AppCollections.OsApps
         )
         self._add_supported_apps(agent_id)
 
     def available_agent_update_operation(self, agent_id, app_data):
-        self._add_vFense_apps(agent_id, app_data)
+        agent_data = self._get_agent_data(agent_id)
 
+        apps_data = [app_data]
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            agent_data,
+            apps_data,
+            self.delete_afterwards,
+            AppCollections.vFenseApps
+        )
+        self._add_vFense_apps(agent_id, app_data)
