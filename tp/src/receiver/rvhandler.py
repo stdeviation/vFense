@@ -12,13 +12,7 @@ from vFense.plugins.patching.apps.custom_apps.custom_apps import \
     add_custom_app_to_agents
 from vFense.plugins.patching.apps.supported_apps.syncer import \
     get_all_supported_apps_for_agent
-from vFense.plugins.patching.apps.vFense_apps.vFense_apps import \
-    add_vFense_apps_to_agent
 
-#from vFense.plugins.patching.apps.supported_apps.syncer import \
-#    get_all_supported_apps_for_agent, get_all_vFense_apps_for_agent
-
-#from vFense.operations._constants import AgentOperations
 
 RQ_HOST = 'localhost'
 RQ_PORT = 6379
@@ -118,6 +112,7 @@ class RvHandOff():
             self.method,
             agent_id
         )
+
         self._add_supported_apps(agent_id)
 
     def startup_operation(self, agent_id, apps_data, agent_data=None):

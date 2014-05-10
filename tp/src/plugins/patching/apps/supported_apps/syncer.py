@@ -1,3 +1,4 @@
+import os
 import logging
 import requests
 
@@ -23,44 +24,30 @@ from vFense.db.client import db_connect, r, db_create_close
 from vFense.server.hierarchy import Collection, CustomerKey
 
 import redis
-from rq import Connection, Queue
+from rq import Queue
 
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-rq_pkg_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
+RQ_HOST = 'localhost'
+RQ_PORT = 6379
+RQ_DB = 0
+RQ_PKG_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
 BASE_URL = 'http://updater2.toppatch.com'
-GET_AGENT_UPDATES = '/api/new_updater/rvpkglist'
-GET_SUPPORTED_UPDATES = '/api/new_updater/pkglist'
+#GET_AGENT_UPDATES = 'api/new_updater/rvpkglist'
+GET_SUPPORTED_UPDATES = 'api/new_updater/pkglist'
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 
-#class IncomingSupportedOrAgentApps(object):
 class IncomingSupportedApps(object):
 
-    #def __init__(self, table=AppCollections.SupportedApps):
     def __init__(self):
-        #self.table = table
-        #if table == AppCollections.SupportedApps:
-        self.current_apps_collection = AppCollections.SupportedApps
-        self.current_apps_per_agent_collection = \
-            AppCollections.SupportedAppsPerAgent
-        self.current_apps_key = SupportedAppsKey
-        self.current_apps_per_agent_key = SupportedAppsPerAgentKey
-        self.current_apps_per_agent_indexes = SupportedAppsPerAgentIndexes
-
-        #elif table == AppCollections.vFenseApps:
-        #    self.CurrentAppsCollection = AppCollections.vFenseApps
-        #    self.current_apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
-        #    self.CurrentAppsKey = AgentAppsKey
-        #    self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
-        #    self.CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
-
         last_modified_time = mktime(datetime.now().timetuple())
         self.last_modified_time = r.epoch_time(last_modified_time)
+
+        # Search caching
+        self.previous_os_code_search = None
+        self.previous_agent_list = None
 
     def sync_supported_updates_to_all_agents(self, apps):
         try:
@@ -68,7 +55,7 @@ class IncomingSupportedApps(object):
             deleted_count = 0
             (
                 r
-                .table(self.current_apps_per_agent_collection)
+                .table(AppCollections.SupportedAppsPerAgent)
                 .delete()
                 .run(conn)
             )
@@ -78,52 +65,68 @@ class IncomingSupportedApps(object):
         except Exception as e:
             logger.exception(e)
 
+    def _delete_old_supported_apps_from_agent(self, agent_id, conn):
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .get_all(
+                agent_id,
+                index=SupportedAppsPerAgentIndexes.AgentId
+            )
+            .delete()
+            .run(conn)
+       )
+
+    def _get_list_of_agents_by_os_code(self, os_code):
+        if not self.previous_os_code_search == os_code:
+            self.previous_os_code_search = os_code
+            self.previous_agent_list = get_agents_info(agent_os=os_code)
+
+        return self.previous_agent_list
+
     def update_agents_with_supported(self, apps, agents=None):
+        if agents is None:
+            agents = []
+
         try:
             conn = db_connect()
-            if agents:
-                for agent in agents:
-                    (
-                        r
-                        .table(self.current_apps_per_agent_collection)
-                        .get_all(
-                            agent[self.current_apps_per_agent_key.AgentId],
-                            index=self.current_apps_per_agent_indexes.AgentId
-                        )
-                        .delete()
-                        .run(conn)
-                    )
+            for agent in agents:
+                self._delete_old_supported_apps_from_agent(
+                    agent[SupportedAppsPerAgentKey.AgentId], conn
+                )
+
             for app in apps:
                 if not agents:
-                    agents = get_agents_info(agent_os=app[AgentKey.OsCode])
+                    agents = self._get_list_of_agents_by_os_code(
+                        app[AgentKey.OsCode]
+                    )
 
-                file_data = app.get(self.current_apps_key.FileData)
-                if agents:
-                    for agent in agents:
-                        if agent[AgentKey.OsCode] == app[AgentKey.OsCode]:
-                            agent[self.current_apps_per_agent_key.AppId] = \
-                                app[self.current_apps_per_agent_key.AppId]
+                app_id = app.get(SupportedAppsKey.AppId)
+                file_data = app.get(SupportedAppsKey.FileData)
 
-                            add_file_data(
-                                agent[self.current_apps_per_agent_key.AppId],
-                                file_data,
-                                agent[self.current_apps_per_agent_key.AgentId],
-                            )
+                for agent in agents:
+                    if agent[AgentKey.OsCode] == app[SupportedAppsKey.OsCode]:
+                        agent_id = agent[SupportedAppsPerAgentKey.AgentId]
 
-                            app_per_agent_props = \
-                                self._set_app_per_agent_properties(**agent)
-                            agent_has_app = self.check_if_agent_has_app(agent)
+                        add_file_data(app_id, file_data, agent_id)
 
-                            if not agent_has_app:
-                                self.insert_app(
-                                    app_per_agent_props
-                                )
-                            elif agent_has_app:
-                                app_per_agent_props[
-                                    self.current_apps_per_agent_key.Status
-                                ] = CommonAppKeys.INSTALLED
+                        app_per_agent_props = \
+                            self._set_app_per_agent_properties(agent, app_id)
 
-                                self.insert_app(app_per_agent_props)
+                        agent_has_app = self.check_if_agent_has_app(
+                            agent_id,
+                            app_id
+                        )
+
+                        if not agent_has_app:
+                            self.insert_app(app_per_agent_props)
+
+                        elif agent_has_app:
+                            app_per_agent_props[
+                                SupportedAppsPerAgentKey.Status
+                            ] = CommonAppKeys.INSTALLED
+
+                            self.insert_app(app_per_agent_props)
 
             conn.close()
 
@@ -135,7 +138,7 @@ class IncomingSupportedApps(object):
         try:
             (
                 r
-                .table(self.current_apps_per_agent_collection)
+                .table(AppCollections.SupportedAppsPerAgent)
                 .insert(app)
                 .run(conn)
             )
@@ -148,7 +151,7 @@ class IncomingSupportedApps(object):
         try:
             (
                 r
-                .table(self.current_apps_per_agent_collection)
+                .table(AppCollections.SupportedAppsPerAgent)
                 .insert(app)
                 .run(conn)
             )
@@ -163,35 +166,28 @@ class IncomingSupportedApps(object):
         except Exception as e:
             logger.exception(e)
 
-    def _set_app_per_agent_properties(self, **kwargs):
-        return(
-            {
-                self.current_apps_per_agent_key.AgentId:
-                kwargs[AgentKey.AgentId],
-
-                self.current_apps_per_agent_key.CustomerName:
-                kwargs[AgentKey.CustomerName],
-
-                self.current_apps_per_agent_key.Status: CommonAppKeys.AVAILABLE,
-
-                self.current_apps_per_agent_key.LastModifiedTime:
+    def _set_app_per_agent_properties(self, agent, app_id):
+        return {
+            SupportedAppsPerAgentKey.AgentId:
+                agent[AgentKey.AgentId],
+            SupportedAppsPerAgentKey.CustomerName:
+                agent[AgentKey.CustomerName],
+            SupportedAppsPerAgentKey.Status:
+                CommonAppKeys.AVAILABLE,
+            SupportedAppsPerAgentKey.LastModifiedTime:
                 self.last_modified_time,
-
-                self.current_apps_per_agent_key.Update:
+            SupportedAppsPerAgentKey.Update:
                 PackageCodes.ThisIsAnUpdate,
-
-                self.current_apps_per_agent_key.InstallDate: r.epoch_time(0.0),
-
-                self.current_apps_per_agent_key.AppId:
-                kwargs[self.current_apps_per_agent_key.AppId],
-
-                self.current_apps_per_agent_key.Id:
+            SupportedAppsPerAgentKey.InstallDate:
+                r.epoch_time(0.0),
+            SupportedAppsPerAgentKey.AppId:
+                app_id,
+            SupportedAppsPerAgentKey.Id:
                 build_agent_app_id(
-                    kwargs[self.current_apps_per_agent_key.AgentId],
-                    kwargs[self.current_apps_per_agent_key.AppId]
+                    agent[SupportedAppsPerAgentKey.AgentId],
+                    app_id
                 )
-            }
-        )
+        }
 
     @db_create_close
     def app_name_exist(self, app_info,conn=None):
@@ -205,10 +201,10 @@ class IncomingSupportedApps(object):
                 )
                 .run(conn)
                 .pluck(
-                    self.current_apps_key.AppId,
-                    self.current_apps_key.Name,
-                    self.current_apps_key.Version,
-                    self.current_apps_per_agent_key.AgentId
+                    SupportedAppsKey.AppId,
+                    SupportedAppsKey.Name,
+                    SupportedAppsKey.Version,
+                    SupportedAppsPerAgentKey.AgentId
                 )
                 .run(conn)
             )
@@ -262,15 +258,15 @@ class IncomingSupportedApps(object):
         return(lower_version_exists)
 
     @db_create_close
-    def check_if_agent_has_app(self, app, conn=None):
+    def check_if_agent_has_app(self, agent_id, app_id, conn=None):
         try:
             agent_has_app = list(
                 r
                 .table(AppCollections.AppsPerAgent)
                 .get_all(
                     [
-                        app[AppsPerAgentKey.AgentId],
-                        app[AppsPerAgentKey.AppId],
+                        agent_id,
+                        app_id
                     ],
                     index=AppsPerAgentIndexes.AgentIdAndAppId
                 )
@@ -283,23 +279,10 @@ class IncomingSupportedApps(object):
         return(agent_has_app)
 
 
-#def update_supported_and_agent_apps(json_data,
-#        table=AppCollections.SupportedApps):
 def update_supported_apps(json_data):
 
-    #if table == AppCollections.SupportedApps:
-    collection = AppCollections.SupportedApps
-    current_apps_key = SupportedAppsKey
-    latest_download_collection = DownloadCollections.LatestDownloadedSupported
-    app_type = 'supported_apps'
-
-    #elif table == AppCollections.vFenseApps:
-    #    CurrentAppsKey = AgentAppsKey
-    #    LatestDownloadedCollection = DownloadCollections.LatestDownloadedAgent
-    #    AppType = 'agent_apps'
-
     try:
-        rv_q = Queue('downloader', connection=rq_pkg_pool)
+        rv_q = Queue('downloader', connection=RQ_PKG_POOL)
         conn = db_connect()
 
         inserted_count = 0
@@ -311,31 +294,33 @@ def update_supported_apps(json_data):
         )
 
         for i in range(len(json_data)):
-            json_data[i][current_apps_key.Customers] = all_customers
-            json_data[i][current_apps_key.ReleaseDate] = \
-                r.epoch_time(json_data[i][current_apps_key.ReleaseDate])
-            json_data[i][current_apps_key.FilesDownloadStatus] = \
+            json_data[i][SupportedAppsKey.Customers] = all_customers
+            json_data[i][SupportedAppsKey.ReleaseDate] = \
+                r.epoch_time(json_data[i][SupportedAppsKey.ReleaseDate])
+            json_data[i][SupportedAppsKey.FilesDownloadStatus] = \
                 PackageCodes.FilePendingDownload
-            json_data[i][current_apps_key.Hidden] = 'no'
+            json_data[i][SupportedAppsKey.Hidden] = 'no'
 
-            insert_app_data(json_data[i], latest_download_collection)
-            file_data = json_data[i].get(current_apps_key.FileData)
-            add_file_data(json_data[i][current_apps_key.AppId], file_data)
+            insert_app_data(
+                json_data[i], DownloadCollections.LatestDownloadedSupported
+            )
+            file_data = json_data[i].get(SupportedAppsKey.FileData)
+            add_file_data(json_data[i][SupportedAppsKey.AppId], file_data)
             data_to_update = {
-                current_apps_key.Customers: all_customers
+                SupportedAppsKey.Customers: all_customers
             }
             exists = (
                 r
-                .table(collection)
-                .get(json_data[i][current_apps_key.AppId])
+                .table(AppCollections.SupportedApps)
+                .get(json_data[i][SupportedAppsKey.AppId])
                 .run(conn)
             )
 
             if exists:
                 updated = (
                     r
-                    .table(collection)
-                    .get(json_data[i][current_apps_key.AppId])
+                    .table(AppCollections.SupportedApps)
+                    .get(json_data[i][SupportedAppsKey.AppId])
                     .update(data_to_update)
                     .run(conn)
                 )
@@ -343,7 +328,7 @@ def update_supported_apps(json_data):
             else:
                 updated = (
                     r
-                    .table(collection)
+                    .table(AppCollections.SupportedApps)
                     .insert(json_data[i])
                     .run(conn)
                 )
@@ -351,12 +336,12 @@ def update_supported_apps(json_data):
             rv_q.enqueue_call(
                 func=download_all_files_in_app,
                 args=(
-                    json_data[i][current_apps_key.AppId],
-                    json_data[i][current_apps_key.OsCode],
+                    json_data[i][SupportedAppsKey.AppId],
+                    json_data[i][SupportedAppsKey.OsCode],
                     None,
                     file_data,
                     0,
-                    app_type
+                    AppCollections.SupportedApps
                 ),
                 timeout=86400
             )
@@ -365,7 +350,6 @@ def update_supported_apps(json_data):
 
         conn.close()
 
-        #update_apps = IncomingSupportedOrAgentApps(table=table)
         update_apps = IncomingSupportedApps()
         update_apps.sync_supported_updates_to_all_agents(json_data)
 
@@ -373,27 +357,16 @@ def update_supported_apps(json_data):
         logger.exception(e)
 
 
-#def get_agents_apps():
-#    delete_all_in_table(table=DownloadCollections.LatestDownloadedAgent)
-#    get_updater_data = requests.get(BASE_URL + GET_AGENT_UPDATES)
-#    if get_updater_data.status_code == 200:
-#        json_data = get_updater_data.json()
-#        update_supported_and_agent_apps(json_data, AppCollections.vFenseApps)
-#    else:
-#        logger.error(
-#            'Failed to connect and download packages from TopPatch Updater server'
-#        )
-
-
 def get_supported_apps():
     delete_all_in_table(
         collection=DownloadCollections.LatestDownloadedSupported
     )
-    get_updater_data = requests.get(BASE_URL + GET_SUPPORTED_UPDATES)
+    get_updater_data = requests.get(
+        os.path.join(BASE_URL, GET_SUPPORTED_UPDATES)
+    )
 
     if get_updater_data.status_code == 200:
         json_data = get_updater_data.json()
-        #update_supported_and_agent_apps(json_data, AppCollections.SupportedApps)
         update_supported_apps(json_data)
 
     else:
@@ -408,24 +381,10 @@ def get_all_supported_apps_for_agent(agent_id):
         agent[AgentKey.OsCode],
         collection=DownloadCollections.LatestDownloadedSupported
     )
+
     if apps:
-        #update_apps = IncomingSupportedOrAgentApps(
-        #    table=AppCollections.SupportedApps
-        #)
-        update_apps = IncomingSupportedApps(
-            collection=AppCollections.SupportedApps
-        )
-        update_apps.update_agents_with_supported(apps, [agent])
-
-
-#def get_all_vFense_apps_for_agent(agent_id):
-#    agent = get_agent_info(agent_id)
-#    apps = fetch_apps_data_by_os_code(
-#        agent[AgentKey.OsCode], table=DownloadCollections.LatestDownloadedAgent
-#    )
-#
-#    if apps:
-#        update_apps = IncomingSupportedOrAgentApps(
-#            table=AppCollections.vFenseApps
-#        )
-#        update_apps.update_agents_with_supported(apps, [agent])
+        try:
+            update_apps = IncomingSupportedApps()
+            update_apps.update_agents_with_supported(apps, [agent])
+        except Exception as e:
+            logger.exception(e)
