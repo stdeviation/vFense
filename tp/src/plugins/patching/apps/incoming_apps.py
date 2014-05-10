@@ -8,6 +8,7 @@ from vFense.errorz.status_codes import PackageCodes
 from vFense.core._db_constants import DbTime
 
 from vFense.plugins.patching import AppsKey, AppsPerAgentKey, AppCollections
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.utils import build_app_id, build_agent_app_id, \
     get_proper_severity
 from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
@@ -118,7 +119,7 @@ class IncomingApplications():
                 self.inserted_count += counts[0]
                 self.updated_count += counts[1]
 
-                if agent_app[AppsPerAgentKey.Status] == 'available':
+                if agent_app[AppsPerAgentKey.Status] == CommonAppKeys.AVAILABLE:
                     self._download_app_files(app_id, file_data, app_collection)
 
                 good_app_list.append(agent_app)

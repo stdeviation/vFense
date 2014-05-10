@@ -259,13 +259,13 @@ def get_all_stats_by_tagid(username, customer_name,
 @db_create_close
 def insert_into_agent_apps(customer_name, app, conn=None):
 
-    table=AppCollections.vFenseApps
+    collection=AppCollections.vFenseApps
 
     exists = []
     try:
         exists = (
             r
-            .table(table)
+            .table(collection)
             .get(app[AgentAppsKey.AppId])
             .run(conn)
         )
@@ -310,8 +310,9 @@ def insert_into_agent_apps(customer_name, app, conn=None):
 
 
 @db_create_close
-def add_or_update_applications(table=AppCollections.AppsPerAgent, pkg_list=[],
-                               delete_afterwards=True, conn=None):
+def add_or_update_applications(collection=AppCollections.AppsPerAgent,
+        pkg_list=[], delete_afterwards=True, conn=None):
+
     completed = False
     inserted_count = 0
     updated = None
@@ -326,7 +327,7 @@ def add_or_update_applications(table=AppCollections.AppsPerAgent, pkg_list=[],
             try:
                 updated = (
                     r
-                    .table(table)
+                    .table(collection)
                     .insert(pkg, upsert=True)
                     .run(conn)
                 )
@@ -341,7 +342,7 @@ def add_or_update_applications(table=AppCollections.AppsPerAgent, pkg_list=[],
             if delete_afterwards:
                 deleted = (
                     r
-                    .table(table)
+                    .table(collection)
                     .get_all(
                         pkg[AppsPerAgentKey.AgentId],
                         index=AppsPerAgentIndexes.AgentId

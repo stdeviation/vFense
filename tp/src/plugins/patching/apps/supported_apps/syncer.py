@@ -288,7 +288,7 @@ class IncomingSupportedApps(object):
 def update_supported_apps(json_data):
 
     #if table == AppCollections.SupportedApps:
-    table = AppCollections.SupportedApps
+    collection = AppCollections.SupportedApps
     current_apps_key = SupportedAppsKey
     latest_download_collection = DownloadCollections.LatestDownloadedSupported
     app_type = 'supported_apps'
@@ -326,7 +326,7 @@ def update_supported_apps(json_data):
             }
             exists = (
                 r
-                .table(table)
+                .table(collection)
                 .get(json_data[i][current_apps_key.AppId])
                 .run(conn)
             )
@@ -334,7 +334,7 @@ def update_supported_apps(json_data):
             if exists:
                 updated = (
                     r
-                    .table(table)
+                    .table(collection)
                     .get(json_data[i][current_apps_key.AppId])
                     .update(data_to_update)
                     .run(conn)
@@ -343,7 +343,7 @@ def update_supported_apps(json_data):
             else:
                 updated = (
                     r
-                    .table(table)
+                    .table(collection)
                     .insert(json_data[i])
                     .run(conn)
                 )
@@ -386,7 +386,9 @@ def update_supported_apps(json_data):
 
 
 def get_supported_apps():
-    delete_all_in_table(table=DownloadCollections.LatestDownloadedSupported)
+    delete_all_in_table(
+        collection=DownloadCollections.LatestDownloadedSupported
+    )
     get_updater_data = requests.get(BASE_URL + GET_SUPPORTED_UPDATES)
 
     if get_updater_data.status_code == 200:
@@ -404,14 +406,14 @@ def get_all_supported_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = fetch_apps_data_by_os_code(
         agent[AgentKey.OsCode],
-        table=DownloadCollections.LatestDownloadedSupported
+        collection=DownloadCollections.LatestDownloadedSupported
     )
     if apps:
         #update_apps = IncomingSupportedOrAgentApps(
         #    table=AppCollections.SupportedApps
         #)
         update_apps = IncomingSupportedApps(
-            table=AppCollections.SupportedApps
+            collection=AppCollections.SupportedApps
         )
         update_apps.update_agents_with_supported(apps, [agent])
 

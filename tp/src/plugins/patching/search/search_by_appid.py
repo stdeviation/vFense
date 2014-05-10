@@ -75,7 +75,7 @@ class RetrieveAppsByAppId(object):
                         get_all_stats_by_appid(
                             self.username, self.customer_name,
                             self.uri, self.method, self.app_id,
-                            table=self.CurrentAppsPerAgentCollection
+                            collection=self.CurrentAppsPerAgentCollection
                         )['data']
                     )
 

@@ -77,17 +77,6 @@ class RvHandOff():
             timeout=3600
         )
 
-    def _add_vFense_apps(self, agent_id, apps_data):
-        rv_q = Queue('incoming_updates', connection=RQ_POOL)
-        rv_q.enqueue_call(
-            func=add_vFense_apps_to_agent,
-            args=(
-                agent_id,
-                apps_data
-            ),
-            timeout=3600
-        )
-
     def _add_applications_from_agent(self, username, customer_name, agent_data,
             apps, delete_afterwards, app_collection, apps_per_agent_collection):
 
@@ -167,4 +156,3 @@ class RvHandOff():
             AppCollections.vFenseApps,
             AppCollections.vFenseAppsPerAgent
         )
-        self._add_vFense_apps(agent_id, app_data)

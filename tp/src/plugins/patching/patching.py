@@ -242,13 +242,12 @@ def update_os_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         >>> (2001, 1, None, [])
     """
     collection = AppCollections.AppsPerAgent
-    data = (
-        update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=collection
-        )
+    data = update_app_data_by_agentid_and_appid(
+        agent_id, app_id, app_data, collection=collection
     )
+
     return data
- 
+
 @time_it
 def update_custom_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
     """Update the custom_apps_per_agent collection by agent_id and app_id.
@@ -271,11 +270,10 @@ def update_custom_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         >>> (2001, 1, None, [])
     """
     collection = AppCollections.CustomAppsPerAgent
-    data = (
-        update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=collection
-        )
+    data = update_app_data_by_agentid_and_appid(
+        agent_id, app_id, app_data, collection=collection
     )
+
     return data
 
 @time_it
@@ -300,11 +298,10 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         >>> (2001, 1, None, [])
     """
     collection = AppCollections.SupportedApps
-    data = (
-        update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=collection
-        )
+    data = update_app_data_by_agentid_and_appid(
+        agent_id, app_id, app_data, collection=collection
     )
+
     return data
 
 @time_it
@@ -329,11 +326,10 @@ def update_vfense_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         >>> (2001, 1, None, [])
     """
     collection = AppCollections.vFenseAppsPerAgent
-    data = (
-        update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_data, table=collection
-        )
+    data = update_app_data_by_agentid_and_appid(
+        agent_id, app_id, app_data, collection=collection
     )
+
     return data
 
 @time_it
@@ -648,13 +644,13 @@ def remove_all_app_data_for_agent(agent_id):
     """
     delete_app_data_for_agentid(agent_id)
     delete_app_data_for_agentid(
-        agent_id, table=AppCollections.CustomAppsPerAgent
+        agent_id, collection=AppCollections.CustomAppsPerAgent
     )
     delete_app_data_for_agentid(
-        agent_id, table=AppCollections.SupportedAppsPerAgent
+        agent_id, collection=AppCollections.SupportedAppsPerAgent
     )
     delete_app_data_for_agentid(
-        agent_id, table=AppCollections.vFenseAppsPerAgent
+        agent_id, collection=AppCollections.vFenseAppsPerAgent
     )
 
 
@@ -766,38 +762,40 @@ def update_app_status_by_agentid_and_appid(
         >>> from vFense.plugins.patching.patching import update_app_status_by_agentid_and_appid
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> status = 'pending'
-        >>> update_app_status_by_agentid_and_appid(agent_id, app_id, status)
+        >>> app_status = {'status': 'pending'}
+        >>> update_app_status_by_agentid_and_appid(agent_id, app_id, app_status)
 
     Returns:
         Boolean
     """
     updated = False
+
     if status in CommonAppKeys.ValidPackageStatuses:
+        app_status = {DbCommonAppPerAgentKeys.Status: status}
         status_code, count, error, generated_ids = (
             update_os_app_data_by_agentid_and_appid(
-                agent_id, app_id, status
+                agent_id, app_id, app_status
             )
         )
 
         if status_code != DbCodes.Replaced and count < 1:
             status_code, count, error, generated_ids = (
                 update_custom_app_data_by_agentid(
-                    agent_id, app_id, status
+                    agent_id, app_id, app_status
                 )
             )
 
             if status_code != DbCodes.Replaced and count < 1:
                 status_code, count, error, generated_ids = (
                     update_supported_app_data_by_agentid(
-                        agent_id, app_id, status
+                        agent_id, app_id, app_status
                     )
                 )
 
                 if status_code != DbCodes.Replaced and count < 1:
                     status_code, count, error, generated_ids = (
                         update_vfense_app_data_by_agentid(
-                            agent_id, app_id, status
+                            agent_id, app_id, app_status
                         )
                     )
 

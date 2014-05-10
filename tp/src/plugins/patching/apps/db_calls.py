@@ -13,24 +13,24 @@ logger = logging.getLogger('rvapi')
 
 @db_create_close
 def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
-        table=AppCollections.AppsPerAgent, conn=None):
+        collection=AppCollections.AppsPerAgent, conn=None):
 
-    if table == AppCollections.AppsPerAgent:
+    if collection == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
         CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
 
-    elif table == AppCollections.SupportedAppsPerAgent:
+    elif collection == AppCollections.SupportedAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
         CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
 
-    elif table == AppCollections.CustomAppsPerAgent:
+    elif collection == AppCollections.CustomAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
         CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
 
-    elif table == AppCollections.vFenseAppsPerAgent:
+    elif collection == AppCollections.vFenseAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
         CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
@@ -93,21 +93,21 @@ def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
 
 @db_create_close
 def get_all_agents_per_appid(username, customer_name, uri, method, app_id,
-    table=AppCollections.AppsPerAgent, conn=None):
+    collection=AppCollections.AppsPerAgent, conn=None):
 
-    if table == AppCollections.AppsPerAgent:
+    if collection == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
 
-    elif table == AppCollections.SupportedAppsPerAgent:
+    elif collection == AppCollections.SupportedAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
-    elif table == AppCollections.CustomAppsPerAgent:
+    elif collection == AppCollections.CustomAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
-    elif table == AppCollections.vFenseAppsPerAgent:
+    elif collection == AppCollections.vFenseAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
 
@@ -190,22 +190,22 @@ def get_all_agents_per_appid(username, customer_name, uri, method, app_id,
 @db_create_close
 def get_all_stats_by_agentid(username, customer_name,
                              uri, method, agent_id,
-                             table=AppCollections.AppsPerAgent,
+                             collection=AppCollections.AppsPerAgent,
                              conn=None):
 
-    if table == AppCollections.AppsPerAgent:
+    if collection == AppCollections.AppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         CurrentAppsPerAgentKey = AppsPerAgentKey
 
-    elif table == AppCollections.SupportedAppsPerAgent:
+    elif collection == AppCollections.SupportedAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
 
-    elif table == AppCollections.CustomAppsPerAgent:
+    elif collection == AppCollections.CustomAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         CurrentAppsPerAgentKey = CustomAppsPerAgentKey
 
-    elif table == AppCollections.vFenseAppsPerAgent:
+    elif collection == AppCollections.vFenseAppsPerAgent:
         CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         CurrentAppsPerAgentKey = AgentAppsPerAgentKey
 

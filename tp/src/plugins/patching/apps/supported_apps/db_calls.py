@@ -24,7 +24,7 @@ def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=N
             fetch_apps_data_by_os_code(
                 agent_info[AgentKey.OsCode],
                 customer_name,
-                table=AppCollections.SupportedApps,
+                collection=AppCollections.SupportedApps,
             )
         )
         if len(apps_info) > 0:
@@ -45,7 +45,7 @@ def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=N
                 )
                 insert_app_data(
                     agent_info_to_insert,
-                    table=AppCollections.SupportedAppsPerAgent
+                    collection=AppCollections.SupportedAppsPerAgent
                 )
 
 

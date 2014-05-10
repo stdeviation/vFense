@@ -443,21 +443,14 @@ class StorePatchingOperation(StoreAgentOperation):
                 valid_appids = (
                     return_valid_appids_for_agent(
                         appids, agent_id,
-                        table=self.CurrentAppsPerAgentCollection
+                        collection=self.CurrentAppsPerAgentCollection
                     )
                 )
 
                 pkg_data = []
                 for app_id in valid_appids:
-                    data_to_update = (
-                        {
-                            self.CurrentAppsPerAgentKey.Status: (
-                                CommonAppKeys.PENDING
-                            )
-                        }
-                    )
                     update_app_status_by_agentid_and_appid(
-                        agent_id, app_id, data_to_update
+                        agent_id, app_id, CommonAppKeys.PENDING
                     )
 
                     pkg_data.append(
@@ -494,10 +487,10 @@ class StorePatchingOperation(StoreAgentOperation):
 
     def _get_apps_data(self, app_id, agent_id):
 
-        table = self.CurrentAppsCollection
+        collection = self.CurrentAppsCollection
         pkg = (
             fetch_app_data_to_send_to_agent(
-                app_id, agent_id, table,
+                app_id, agent_id, collection,
             )
         )
         uris = (
