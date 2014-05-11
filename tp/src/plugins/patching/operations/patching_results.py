@@ -60,59 +60,6 @@ class PatchingOperationResults(OperationResults):
             )
         )
 
-    def apps_refresh(self):
-        operation_type = AgentOperations.REFRESH_APPS
-        results = self.update_operation(operation_type)
-        return results
-
-    def install_os_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        results = self._update_app_status()
-        return results
-
-    def install_custom_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.CustomApps
-        results = self._update_app_status()
-        return results
-
-    def install_supported_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.SupportedApps
-        results = self._update_app_status()
-        return results
-
-    def install_agent_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.vFenseApps
-        results = self._update_app_status()
-        return results
-
     def _set_global_properties(
             self, app_id, reboot_required,
             apps_to_delete, apps_to_add
@@ -138,6 +85,62 @@ class PatchingOperationResults(OperationResults):
         self.app_id = app_id
         self.reboot_required = reboot_required
         self.operation_type = self.operation_data[AgentOperationKey.Operation]
+
+    def apps_refresh(self):
+        operation_type = AgentOperations.REFRESH_APPS
+        results = self.update_operation(operation_type)
+        return results
+
+    def install_os_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        self.CurrentAppsCollection = AppCollections.UniqueApplications
+        results = self._update_app_status()
+
+        return results
+
+    def install_custom_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        self.CurrentAppsCollection = AppCollections.CustomApps
+        results = self._update_app_status()
+
+        return results
+
+    def install_supported_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        self.CurrentAppsCollection = AppCollections.SupportedApps
+        results = self._update_app_status()
+
+        return results
+
+    def install_agent_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        self.CurrentAppsCollection = AppCollections.vFenseApps
+        results = self._update_app_status()
+        return results
 
     def _apps_to_add(self):
         """Add apps to agent
