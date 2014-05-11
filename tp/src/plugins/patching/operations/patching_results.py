@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import re
 import logging
 import logging.config
@@ -99,8 +98,7 @@ class PatchingOperationResults(OperationResults):
             app_id, reboot_required,
             apps_to_delete, apps_to_add
         )
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        results = self._update_app_status()
+        results = self._update_app_status(AppCollections.UniqueApplications)
 
         return results
 
@@ -112,8 +110,7 @@ class PatchingOperationResults(OperationResults):
             app_id, reboot_required,
             apps_to_delete, apps_to_add
         )
-        self.CurrentAppsCollection = AppCollections.CustomApps
-        results = self._update_app_status()
+        results = self._update_app_status(AppCollections.CustomApps)
 
         return results
 
@@ -125,8 +122,7 @@ class PatchingOperationResults(OperationResults):
             app_id, reboot_required,
             apps_to_delete, apps_to_add
         )
-        self.CurrentAppsCollection = AppCollections.SupportedApps
-        results = self._update_app_status()
+        results = self._update_app_status(AppCollections.SupportedApps)
 
         return results
 
@@ -138,8 +134,7 @@ class PatchingOperationResults(OperationResults):
             app_id, reboot_required,
             apps_to_delete, apps_to_add
         )
-        self.CurrentAppsCollection = AppCollections.vFenseApps
-        results = self._update_app_status()
+        results = self._update_app_status(AppCollections.vFenseApps)
         return results
 
     def _apps_to_add(self):
@@ -176,7 +171,7 @@ class PatchingOperationResults(OperationResults):
             )
 
     @results_message
-    def _update_app_status(self):
+    def _update_app_status(self, collection):
         """Update the application status per agent as well as update the
             operation
         """
@@ -224,7 +219,7 @@ class PatchingOperationResults(OperationResults):
                     SharedAppKeys.InstallDate: install_date
                 }
             )
-            app_exist = fetch_app_data(self.app_id)
+            app_exist = fetch_app_data(self.app_id, collection)
 
             if app_exist:
                 if (self.operation_type == AgentOperations.INSTALL_OS_APPS or
