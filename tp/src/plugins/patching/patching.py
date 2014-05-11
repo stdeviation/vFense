@@ -297,7 +297,7 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    collection = AppCollections.SupportedApps
+    collection = AppCollections.SupportedAppsPerAgent
     data = update_app_data_by_agentid_and_appid(
         agent_id, app_id, app_data, collection=collection
     )
