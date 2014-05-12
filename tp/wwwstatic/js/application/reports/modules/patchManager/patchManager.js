@@ -295,6 +295,7 @@ define(
                             '#supported': [{text: 'Install', value: 'install'}],
                             '#softwareinventory': [{text: 'Uninstall', value: 'uninstall'}],
                             '#available': [{text: 'Install', value: 'install'}],
+                            '#agentupdates': [{text: 'Install', value: 'install'}],
                             '#installed': [{text: 'Uninstall', value: 'uninstall'}],
                             '#remediationvault': [{text: 'Install', value: 'install'}]
                         };
