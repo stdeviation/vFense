@@ -332,13 +332,13 @@ define(
                 },
                 showAgentTagsModal: function (event) {
                     event.preventDefault();
-//                    if (!this.agentTagsModal) {
+                    if (!this.agentTagsModal) {
                         var that = this;
                         this.agentTagsModal = new AgentTagsPanel.View({
                             agentName: that.agentName,
                             tags: that.tags
                         });
-//                    }
+                    }
                     this.agentTagsModal.open();
                     return this;
                 },

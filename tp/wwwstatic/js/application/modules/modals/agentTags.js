@@ -13,66 +13,38 @@ define(
                         _.extend(this, _.pick(options, viewOptions));
                     }
                     Panel.View.prototype.initialize.call(this);
+                    this.setHeaderHTML(this.renderAgentHeader());
                     this.setContentHTML(this.renderAgentTags());
-
-                    if (this.onRenderAgentTags !== $.noop)
-                     {
-                        this.onRenderAgentTags();
-                     }
                     return this;
                 },
                 events: function () {
                     return _.extend({
-                        'click .close': 'close'
+                        'click .close': 'close',
+                        'click a': 'hideModal'
                     }, _.result(Panel.View.prototype, 'events'));
                 },
-                renderAgentTags: function () {
-                    return crel('div',
-                               crel('label', {for: 'agentTagSelect2'}, 'Tags for Agent ',
-                                   crel('strong', this.agentName), ':'
-                               ),
-                               crel('input', {type: 'hidden', id: 'agentTagSelect2', name: 'agentTagSelect2', value: JSON.stringify(this.tags)})
+                hideModal: function(event) {
+                    event.stopPropagation();
+                    this.hide();
+                    return this;
+                },
+                renderAgentHeader: function() {
+                    return crel('h4', 'Tags for Agent ',
+                        crel('em', this.agentName)
                     );
                 },
-                onRenderAgentTags: function () {
-                    var $agentTagSelect2 = this.$el.find('#agentTagSelect2'),
-                        that = this;
-
-                    $agentTagSelect2.on('select2-opening', function(event){
-                        event.preventDefault();
+                renderAgentTags: function () {
+                    var fragment = crel('div', {class: 'list'}),
+                        items = crel('div', {class: 'items row-fluid'});
+                    _.each(this.tags, function (tag) {
+                        $(items).append(crel('div', {class: 'item'},
+                            crel('a', {href: '#tags/' + tag.tag_id},
+                                crel('span', {class: 'span12'}, tag.tag_name)
+                            )
+                        ));
                     });
-
-                    $agentTagSelect2.select2({
-                        width: '100%',
-                        multiple: true,
-                        initSelection: function (element, callback) {
-                            var data = JSON.parse(element.val()),
-                                results = [];
-
-                            _.each(data, function (object) {
-                                results.push({locked: true, id: object.tag_id, text: object.tag_name});
-                            });
-                            callback(results);
-                        },
-                        ajax: {
-                            url: function () {
-                                return $agentTagSelect2.data('url');
-                            },
-                            data: {
-
-                            },
-                            results: function (data) {
-                                var results = [];
-                                if (data.rv_status_code === 1001) {
-                                    _.each(data.data, function (object) {
-                                        results.push({id: object.tag_id, text: object.tag_name});
-                                    });
-                                    return {results: results, more: false, context: results};
-                                }
-                            }
-                        }
-                    });
-                    return this;
+                    fragment.appendChild(items);
+                    return fragment;
                 }
             })
         });
