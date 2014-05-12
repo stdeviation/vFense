@@ -35,7 +35,6 @@ define(
                             crel('i', {class: 'icon-remove'})
                         )
                     );
-                    return this;
                 },
                 renderDeleteContent: function () {
                     return crel('div', {class: 'customerRemovalDiv'},
@@ -46,7 +45,6 @@ define(
                                crel('label', {for: 'moveAgents'}, 'Select a Customer to Move All the Agents to it'),
                                crel('select', {id: 'moveAgents', class: 'no-border-radius', style: 'width: 100%'}, this.getCustomers())
                            );
-                    return this;
                 },
                 /*toggle: function (event) {
                     var $input = $(event.currentTarget),

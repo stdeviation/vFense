@@ -328,7 +328,7 @@ define(
                                 results: function (data) {
                                     var results = [];
                                     if (data.rv_status_code === 1001) {
-                                        _.each(data.data, function (object) {
+                                        _.each(data.data.users, function (object) {
                                             results.push({id: object.user_name, text: object.user_name});
                                         });
                                         return {results: results, more: false, context: results};
