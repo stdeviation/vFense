@@ -439,6 +439,7 @@ class StorePatchingOperation(StoreAgentOperation):
             results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
             results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
             results[ApiResultKeys.MESSAGE] = msg
+
             for agent_id in agentids:
                 valid_appids = (
                     return_valid_appids_for_agent(
@@ -450,7 +451,10 @@ class StorePatchingOperation(StoreAgentOperation):
                 pkg_data = []
                 for app_id in valid_appids:
                     update_app_status_by_agentid_and_appid(
-                        agent_id, app_id, CommonAppKeys.PENDING
+                        agent_id,
+                        app_id,
+                        CommonAppKeys.PENDING,
+                        self.CurrentAppsPerAgentCollection
                     )
 
                     pkg_data.append(
