@@ -64,7 +64,7 @@ define(
             node: {
                 url: '/api/v1/agent/',
                 urlSuffix: '/apps/',
-                titles: ['Name', 'Version', 'Severity', 'Info'],
+                titles: ['Name', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
                 name: 'name',
                 id: 'app_id',
                 link: '/#patches/',
@@ -92,7 +92,7 @@ define(
             tag: {
                 url: '/api/v1/tag/',
                 urlSuffix: '/apps/',
-                titles: ['Name', 'Version', 'Severity', 'Info'],
+                titles: ['Name', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
                 name: 'name',
                 id: 'app_id',
                 link: '/#patches/',
@@ -286,7 +286,7 @@ define(
                 layoutHeader: function ($left, $right) {
                     var $select, $cpuThrottle = [], $netThrottle = [], $restart = [],
                         titles = exports.keys[this.page].titles,
-                        spans = ['span7', 'span2', 'span2', 'span1 alignRight'],
+                        spans = ['span5', 'span2', 'span2', 'span2', 'span1 alignRight'],
                         $header = this.$el.find('header'),
                         legend = crel('div', {class: 'legend row-fluid'}),
                         options = {
@@ -324,7 +324,7 @@ define(
                         } else {
                             titles.splice(1, 0, 'Installed Date');
                             spans.splice(1, 0, 'span2');
-                            spans[0] = 'span5';
+                            spans[0] = 'span3';
                         }
                         $select = $(crel('select', {'data-id': 'operation'}));
                         var that = this;
@@ -343,6 +343,7 @@ define(
                         spans.splice(titles.indexOf('Installed Date'), 1);
                     }
                     _.each(titles, function (title, i) {
+                        console.log(title);
                         if (title !== 'Severity') {
                             if (title === 'Name') {
                                 $(legend).append(crel('strong',{class: spans[i]}, crel('input', {type: 'checkbox', 'data-toggle': 'all'}), ' ' + title));
@@ -541,10 +542,11 @@ define(
                     var fragment = document.createDocumentFragment(),
                         page = this.page,
                         patchType = this.parentView.patchType ? this.parentView.patchType + '/' : '',
-                        patchNameSpan = 'span7',
+                        patchNameSpan = 'span5',
                         link = exports.keys[page].link,
                         name = model.get(exports.keys[page].name),
                         id = model.get(exports.keys[page].id),
+                        vulnerabilityID = model.get('vulnerability_id'),
                         version = model.get('version'),
                         severity = model.get('rv_severity'),
                         dependencies = helpers.getDependencies(model),
@@ -564,7 +566,7 @@ define(
                         }
                     }
                     if (this.tab === '#softwareinventory') {
-                        patchNameSpan = 'span5';
+                        patchNameSpan = 'span3';
                         installedDate = model.get('install_date') ? moment(model.get('install_date') * 1000).format('L') : 'N/A';
                         installedDateDiv = crel('span', {class: 'span2'}, installedDate);
                     } else {
@@ -583,6 +585,7 @@ define(
                                 )
                             ),
                             installedDateDiv,
+                            crel('span', {class: 'span2'}, vulnerabilityID || '-'),
                             crel('span', {class: 'span2'}, version || ' '),
                             crel('span', {class: 'span2'}, severity || ' '),
                             crel('span', {class: 'span1 alignRight'},
