@@ -1,5 +1,6 @@
 class AppCollections():
     UniqueApplications = 'unique_applications'
+    OsApps = 'os_apps'
     AppsPerAgent = 'apps_per_agent'
     CustomApps = 'custom_apps'
     CustomAppsPerAgent = 'custom_apps_per_agent'
@@ -33,6 +34,7 @@ class FilesKey():
 class FilesIndexes():
     AppId = 'app_id'
     FilesDownloadStatus = 'files_download_status'
+
 
 class FileServerKeys():
     FileServerName = 'file_server_name'
@@ -205,8 +207,8 @@ class SupportedAppsKey():
     VendorName = 'vendor_name'
     CliOptions = 'cli_options'
     Arch = 'arch'
-    VulnerabiltyId = 'vulnerability_id'
-    VulnerabiltyCategories = 'vulnerability_categories'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
 
 
@@ -277,8 +279,8 @@ class AgentAppsKey():
     VendorName = 'vendor_name'
     CliOptions = 'cli_options'
     Arch = 'arch'
-    VulnerabiltyId = 'vulnerability_id'
-    VulnerabiltyCategories = 'vulnerability_categories'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
 
 
@@ -349,8 +351,8 @@ class vFenseAppsKey():
     VendorName = 'vendor_name'
     CliOptions = 'cli_options'
     Arch = 'arch'
-    VulnerabiltyId = 'vulnerability_id'
-    VulnerabiltyCategories = 'vulnerability_categories'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
 
 
@@ -397,6 +399,7 @@ class vFenseAppsPerAgentIndexes():
     StatusAndCveId = 'status_and_cve_id'
     AppIdAndStatusAndCustomer = 'appid_and_status_and_customer'
 
+
 class DbCommonAppKeys():
     AppId = 'app_id'
     Customers = 'customers'
@@ -420,6 +423,7 @@ class DbCommonAppKeys():
     CveIds = 'cve_ids'
     CliOptions = 'cli_options'
 
+
 class DbCommonAppPerAgentKeys():
     AppId = 'app_id'
     Id = 'id'
@@ -432,6 +436,7 @@ class DbCommonAppPerAgentKeys():
     LastModifiedTime = 'last_modified_time'
     Update = 'update'
     CveIds = 'cve_ids'
+
 
 class DbCommonAppIndexes():
     AppId = 'app_id'

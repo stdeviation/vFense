@@ -2,25 +2,34 @@ import simplejson as json
 import logging
 import logging.config
 
+from datetime import datetime
+
 from vFense.core._constants import CommonKeys
 from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.decorators import check_permissions
-from vFense.errorz.error_messages import GenericResults, PackageResults
-
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
-from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
-from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import update_supported_app, \
-    update_hidden_status
+from vFense.errorz.error_messages import GenericResults, PackageResults
 
-from vFense.plugins.patching.search.search import RetrieveSupportedApps
-from vFense.plugins.patching.search.search_by_agentid import RetrieveSupportedAppsByAgentId
-from vFense.plugins.patching.search.search_by_tagid import RetrieveSupportedAppsByTagId
-from vFense.plugins.patching.search.search_by_appid import RetrieveSupportedAppsByAppId, \
-    RetrieveAgentsBySupportedAppId
+from vFense.scheduler.jobManager import schedule_once
+
+from vFense.plugins.patching.operations.store_operations import \
+    StorePatchingOperation
+from vFense.plugins.patching import *
+from vFense.plugins.patching._constants import CommonSeverityKeys
+from vFense.plugins.patching._db import update_app_data_by_app_id
+from vFense.plugins.patching.patching import toggle_hidden_status
+
+from vFense.plugins.patching.search.search import \
+    RetrieveSupportedApps
+from vFense.plugins.patching.search.search_by_agentid import \
+    RetrieveSupportedAppsByAgentId
+from vFense.plugins.patching.search.search_by_tagid import \
+    RetrieveSupportedAppsByTagId
+from vFense.plugins.patching.search.search_by_appid import \
+    RetrieveSupportedAppsByAppId, RetrieveAgentsBySupportedAppId
 
 from vFense.core.user import UserKeys
 from vFense.core.user.users import get_user_property
@@ -475,22 +484,21 @@ class AppIdSupportedAppsHandler(BaseHandler):
         )
         uri = self.request.uri
         method = self.request.method
+
         try:
             severity = self.arguments.get('severity').capitalize()
-            if severity in ValidRvSeverities:
-                sev_data = (
-                    {
-                        AppsKey.RvSeverity: severity
-                    }
+
+            if severity in CommonSeverityKeys.ValidRvSeverities:
+                sev_data = {AppsKey.RvSeverity: severity}
+
+                update_app_data_by_app_id(
+                    app_id, sev_data, AppCollections.SupportedApps
                 )
-                update_supported_app(
-                    app_id, sev_data
-                )
-                results = (
-                    GenericResults(
-                        username, uri, method
-                    ).object_updated(app_id, 'app severity', [sev_data])
-                )
+
+                results = GenericResults(
+                    username, uri, method
+                ).object_updated(app_id, 'app severity', [sev_data])
+
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
@@ -656,7 +664,6 @@ class AppIdSupportedAppsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-
 class GetAgentsBySupportedAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
@@ -738,6 +745,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
                 self.write(json.dumps(results, indent=4))
 
             elif epoch_time and label and agent_ids:
+                date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
                     {
@@ -898,6 +906,7 @@ class SupportedAppsHandler(BaseHandler):
                 )
             )
 
+        # TODO: what happened to filter_by_sev_and_query_by_name
         elif severity and query:
             results = (
                 patches.filter_by_sev_and_query_by_name(
@@ -924,19 +933,16 @@ class SupportedAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             toggle = self.arguments.get('hide', 'toggle')
             results = (
-                update_hidden_status(
-                    username, customer_name, uri,
-                    method, app_ids, toggle,
-                    SupportedAppsCollection
+                toggle_hidden_status(
+                    app_ids, toggle,
+                    AppCollections.SupportedApps,
+                    username, uri, method
                 )
             )
 

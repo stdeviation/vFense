@@ -1,13 +1,21 @@
 import os
-import sys
 import gc
-import re
 import logging
 import logging.config
+
 from lxml import etree
 from re import sub
-from vFense.plugins.vuln.cve import *
-from vFense.plugins.vuln.cve._constants import *
+from vFense.plugins.vuln.cve import CveKey
+from vFense.plugins.vuln.cve._constants import (
+    CVEDataDir, NVDFeeds, CVEStrings, CVEVectors,
+    CVSS_BASE_VECTORS, CVSS_BASE_VECTOR_AV_VALUES,
+    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
+    CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
+    CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
+    CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
+    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS
+)
+
 from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
 from vFense.plugins.vuln.cve.downloader import start_nvd_xml_download
 from vFense.utils.common import date_parser, timestamp_verifier
@@ -15,6 +23,7 @@ from vFense.db.client import r
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
+
 
 class NvdParser(object):
     """The purpose of this class, is to parse NVD/CVE XML 1.2 Data Files.
@@ -28,20 +37,20 @@ class NvdParser(object):
             {
                 "cvss_vector": [
                     {
-                        "metric": "Access Vector", 
+                        "metric": "Access Vector",
                         "value": "Network"
-                    }, 
+                    },
                     {
-                        "metric": "Access Complexity", 
+                        "metric": "Access Complexity",
                         "value": "Medium"
                     }
-                ], 
-                "cve_sev": "Medium", 
-                "cve_id": "CVE-2009-5138", 
-                "cvss_base_score": "5.8", 
-                "cvss_exploit_subscore": "8.6", 
-                "cvss_version": "2.0", 
-                "cvss_impact_subscore": "4.9", 
+                ],
+                "cve_sev": "Medium",
+                "cve_id": "CVE-2009-5138",
+                "cvss_base_score": "5.8",
+                "cvss_exploit_subscore": "8.6",
+                "cvss_version": "2.0",
+                "cvss_impact_subscore": "4.9",
                 "cvss_score": "5.8"
             }
         """
@@ -89,7 +98,9 @@ class NvdParser(object):
         return(data)
 
     def get_descriptions(self, entry):
-        """Parse the desc object under the top level entry object in the XML file
+        """Parse the desc object under the top level entry object
+        in the XML file.
+
         Args:
             entry (lxml.etree._Element): This is an lxml Element
 
@@ -97,7 +108,7 @@ class NvdParser(object):
             List of dictionaires
             [
                 {
-                    "source": "cve", 
+                    "source": "cve",
                     "description": "GnuTLS before 2.7.6, when the GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT flag is not enabled, treats version 1 X.509 certificates as intermediate CAs, whi
                         ch allows remote attackers to bypass intended restrictions by leveraging a X.509 V1 certificate from a trusted CA to issue new certificates, a different vulnerability tha
                         n CVE-2014-1959."
@@ -118,7 +129,9 @@ class NvdParser(object):
         return(list_of_descriptions)
 
     def get_refs(self, entry):
-        """Parse the refs object under the top level entry object in the XML file
+        """Parse the refs object under the top level entry object
+        in the XML file.
+
         Args:
             entry (lxml.etree._Element): This is an lxml Element
 
@@ -128,17 +141,17 @@ class NvdParser(object):
                     "url": "https://gitorious.org/gnutls/gnutls/commit/c8dcbedd1fdc312f5b1a70fcfbc1afe235d800cd",
                     "source": "CONFIRM",
                     "id": "https://gitorious.org/gnutls/gnutls/commit/c8dcbedd1fdc312f5b1a70fcfbc1afe235d800cd"
-                },  
+                },
                 {
                     "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1069301",
                     "source": "CONFIRM",
                     "id": "https://bugzilla.redhat.com/show_bug.cgi?id=1069301"
-                },  
+                },
                 {
                     "url": "http://thread.gmane.org/gmane.comp.security.oss.general/12127",
                     "source": "MLIST",
                     "id": "[oss-security] 20140227 Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)"
-                },  
+                },
             ]
         """
         list_of_refs = []
@@ -146,15 +159,21 @@ class NvdParser(object):
             list_of_refs.append(
                 {
                     CVEStrings.REF_ID: reference.text,
-                    CVEStrings.REF_URL: reference.attrib.get(CVEStrings.REF_URL),
-                    CVEStrings.REF_SOURCE: reference.attrib.get(CVEStrings.REF_SOURCE),
+                    CVEStrings.REF_URL: reference.attrib.get(
+                        CVEStrings.REF_URL
+                    ),
+                    CVEStrings.REF_SOURCE: reference.attrib.get(
+                        CVEStrings.REF_SOURCE
+                    ),
                 }
             )
 
         return(list_of_refs)
 
     def get_vulns_soft(self, entry):
-        """Parse the vuln_soft object under the top level entry object in the XML file
+        """Parse the vuln_soft object under the top level entry object
+        in the XML file.
+
         Args:
             entry (lxml.etree._Element): This is an lxml Element
         """
@@ -185,7 +204,7 @@ class NvdParser(object):
     def _parse_vectors(self, unformatted_vector):
         """Parse the vectors in the top level entry object in the XML file
         Args:
-            unformatted_vector (): 
+            unformatted_vector ():
         """
         translated_metric = None
         translated_value = None
@@ -214,7 +233,8 @@ class NvdParser(object):
         """
         translated_metric = None
         translated_value = None
-        if CVSS_BASE_VECTORS.has_key(metric):
+
+        if metric in CVSS_BASE_VECTORS:
             translated_metric = CVSS_BASE_VECTORS[metric]
 
             if metric == CVEVectors.BASE_METRIC_AV:
@@ -235,7 +255,7 @@ class NvdParser(object):
             elif metric == CVEVectors.BASE_METRIC_A:
                 translated_value = CVSS_BASE_VECTOR_A_VALUES[value]
 
-        elif CVSS_TEMPORAL_VECTORS.has_key(metric):
+        elif metric in CVSS_TEMPORAL_VECTORS:
             translated_metric = CVSS_TEMPORAL_VECTORS[metric]
 
             if metric == CVEVectors.TEMPORAL_METRIC_E:
@@ -247,10 +267,12 @@ class NvdParser(object):
             elif metric == CVEVectors.TEMPORAL_METRIC_RC:
                 translated_value = CVSS_TEMPORAL_VECTOR_RC_VALUES[value]
 
-
-        elif CVSS_ENVIRONMENTAL_VECTORS.has_key(metric):
+        elif metric in CVSS_ENVIRONMENTAL_VECTORS:
             translated_metric = CVSS_ENVIRONMENTAL_VECTORS[metric]
 
+            # TODO(urgent): what happened to the BASE_VECTOR and
+            # ENVIRONMENTAL_VECTOR dictionaries?
+            
             if metric == CVEVectors.ENVIRONMENTAL_METRIC_CDP:
                 translated_value = CVSS_BASE_VECTOR_CDP_VALUES[value]
 
@@ -268,10 +290,12 @@ class NvdParser(object):
 
         return(translated_metric, translated_value)
 
+
 def parse_cve_and_udpatedb(
     download_latest_nvd=True,
     nvd_files=[CVEDataDir.NVD_MODIFIED_FILE, CVEDataDir.NVD_CURRENT_FILE]
-    ):
+        ):
+
     """This begins the actual parsing of the xml files and loads up the data
         into the database
     Kwargs:
@@ -279,6 +303,7 @@ def parse_cve_and_udpatedb(
             the latest nvd data
         nvd_files (list): This is a list of the files you want to parse
     """
+
     if download_latest_nvd:
         start_nvd_xml_download()
     parser = NvdParser()
@@ -290,7 +315,8 @@ def parse_cve_and_udpatedb(
                 cve_data = parser.get_entry_info(entry)
 
             if entry.tag == NVDFeeds.DESC and event == 'start':
-                cve_data[CveKey.CveDescriptions] = parser.get_descriptions(entry)
+                cve_data[CveKey.CveDescriptions] = \
+                    parser.get_descriptions(entry)
 
             if entry.tag == NVDFeeds.REFS and event == 'start':
                 cve_data[CveKey.CveRefs] = parser.get_refs(entry)
@@ -328,17 +354,17 @@ def load_up_all_xml_into_db():
     if not os.path.exists(CVEDataDir.XML_DIR):
         os.makedirs(CVEDataDir.XML_DIR)
     xml_exists = os.listdir(CVEDataDir.XML_DIR)
-    logger.info('starting cve/nvd update process') 
+    logger.info('starting cve/nvd update process')
     if not xml_exists:
         logger.info('downloading nvd/cve xml data files')
         start_nvd_xml_download()
-    for directory, subdirectories, files in os.walk(CVEDataDir.XML_DIR):
+    for directory, _, files in os.walk(CVEDataDir.XML_DIR):
         for xml_file in files:
             nvd_file = os.path.join(directory, xml_file)
             nvd_files.append(nvd_file)
     parse_cve_and_udpatedb(False, nvd_files)
     update_cve_categories()
-    logger.info('finished cve/nvd update process') 
+    logger.info('finished cve/nvd update process')
     gc.collect()
 
 #update_cve_categories()

@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-217-1: Inkscape vulnerability | Ubuntu</title>
+        <title>USN-2183-2: dpkg vulnerability | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,39 +66,128 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-217-1: Inkscape vulnerability</h1>
+                    <h1>USN-2183-2: dpkg vulnerability</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-217-1</h2>
-<p><em>21st November, 2005</em></p>
-<h3>inkscape vulnerability</h3>
+<h2>Ubuntu Security Notice USN-2183-2</h2>
+<p><em>1st May, 2014</em></p>
+<h3>dpkg vulnerability</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
 
-    <li>Ubuntu 5.10</li>
+    <li>Ubuntu 14.04 LTS</li>
+
+    <li>Ubuntu 13.10</li>
+
+    <li>Ubuntu 12.10</li>
+
+    <li>Ubuntu 12.04 LTS</li>
+
+    <li>Ubuntu 10.04 LTS</li>
 
 </ul>
 
 
+<h3>Summary</h3>
+<p>A malicious source package could write files outside the unpack directory.
+</p>
 
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>dpkg 
+    - Debian package management system
+    
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
 
 
 <h3>Details</h3>
-<p>A buffer overflow has been discovered in the SVG importer of Inkscape.<br />By tricking an user into opening a specially crafted SVG image this<br />could be exploited to execute arbitrary code with the privileges of<br />the Inkscape user.</p>
+<p>USN-2183-1 fixed a vulnerability in dpkg. Javier Serrano Polo discovered<br />that the fix introduced a vulnerability in releases with an older version<br />of the patch utility. This update fixes the problem.</p>
+
+<p>Original advisory details:</p>
+
+<p> Jakub Wilk discovered that dpkg incorrectly certain paths and symlinks when<br /> unpacking source packages. If a user or an automated system were tricked<br /> into unpacking a specially crafted source package, a remote attacker could<br /> modify files outside the target unpack directory, leading to a denial of<br /> service or potentially gaining access to the system.<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
 package version:</p>
 <dl>
 
-<dt>Ubuntu 5.10:</dt>
+<dt>Ubuntu 14.04 LTS:</dt>
   
     
-  <dd>inkscape <span></span></dd>
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.17.5ubuntu5.2">1.17.5ubuntu5.2</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 13.10:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.12ubuntu1.2">1.16.12ubuntu1.2</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 12.10:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.7ubuntu6.2">1.16.7ubuntu6.2</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 12.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.1.2ubuntu7.4">1.16.1.2ubuntu7.4</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">dpkg-dev</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.15.5.6ubuntu4.8">1.15.5.6ubuntu4.8</a>
+    </span>
+  </dd>
     
   
 
@@ -106,14 +195,14 @@ package version:</p>
 <p>To update your system, please follow these instructions:
 <a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
 </p>
-<p>None</p>
+<p>In general, a standard system update will make all the necessary changes.<br /></p>
 
 
 
 <h3>References</h3>
 <p>
 
-        <a href="https://bugzilla.ubuntu.com/show_bug.cgi?id=16689">https://bugzilla.ubuntu.com/show_bug.cgi?id=16689</a>
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0471">CVE-2014-0471</a>
         
 
 </p>

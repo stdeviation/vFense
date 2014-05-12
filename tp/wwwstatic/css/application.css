@@ -1747,3 +1747,11 @@ input#deleteAllAgents {
 .right-margin {
     margin-right: 8px;
 }
+
+#newUserDiv SELECT, #newCustomerDiv SELECT,
+#newUserDiv INPUT[type="text"], #newCustomerDiv INPUT[type="text"],
+#newUserDiv INPUT[type="password"], #newCustomerDiv INPUT[type="password"] {
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 0;
+}

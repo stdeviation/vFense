@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-220-1: w3c-libwww vulnerability | Ubuntu</title>
+        <title>USN-2184-2: Unity vulnerabilities | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,57 +66,66 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-220-1: w3c-libwww vulnerability</h1>
+                    <h1>USN-2184-2: Unity vulnerabilities</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-220-1</h2>
-<p><em>1st December, 2005</em></p>
-<h3>w3c-libwww vulnerability</h3>
+<h2>Ubuntu Security Notice USN-2184-2</h2>
+<p><em>30th April, 2014</em></p>
+<h3>unity vulnerabilities</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
 
-    <li>Ubuntu 5.10</li>
-
-    <li>Ubuntu 5.04</li>
-
-    <li>Ubuntu 4.10</li>
+    <li>Ubuntu 14.04 LTS</li>
 
 </ul>
 
 
+<h3>Summary</h3>
+<p>The Unity lock screen could be bypassed.
+</p>
 
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>unity 
+    - Interface designed for efficiency of space and interaction.
+    
+    </li>
+  
+
+</ul>
 
 
 <h3>Details</h3>
-<p>Sam Varshavchik discovered several buffer overflows in the<br />HTBoundary_put_block() function. By sending specially crafted HTTP<br />multipart/byteranges MIME messages, a malicious HTTP server could<br />trigger an out of bounds memory access in the libwww library, which<br />causes the program that uses the library to crash.</p>
+<p>USN-2184-1 fixed lock screen vulnerabilities in Unity. Further testing has<br />uncovered more issues which have been fixed in this update. This update<br />also fixes a regression with the shutdown dialogue.</p>
+
+<p>We apologize for the inconvenience.</p>
+
+<p>Original advisory details:</p>
+
+<p> Frédéric Bardy discovered that Unity incorrectly filtered keyboard<br /> shortcuts when the screen was locked. A local attacker could possibly use<br /> this issue to run commands, and unlock the current session.<br /> <br /> Giovanni Mellini discovered that Unity could display the Dash in certain<br /> conditions when the screen was locked. A local attacker could possibly use<br /> this issue to run commands, and unlock the current session.<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
 package version:</p>
 <dl>
 
-<dt>Ubuntu 5.10:</dt>
+<dt>Ubuntu 14.04 LTS:</dt>
   
     
-  <dd>libwww0 <span></span></dd>
-    
-  
-
-<dt>Ubuntu 5.04:</dt>
-  
-    
-  <dd>libwww0 <span></span></dd>
-    
-  
-
-<dt>Ubuntu 4.10:</dt>
-  
-    
-  <dd>libwww0 <span></span></dd>
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/unity">unity</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/unity/7.2.0+14.04.20140423-0ubuntu1.2">7.2.0+14.04.20140423-0ubuntu1.2</a>
+    </span>
+  </dd>
     
   
 
@@ -124,14 +133,14 @@ package version:</p>
 <p>To update your system, please follow these instructions:
 <a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
 </p>
-<p>None</p>
+<p>After a standard system update you need to restart your session to make all<br />the necessary changes.<br /></p>
 
 
 
 <h3>References</h3>
 <p>
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2005-3183">CVE-2005-3183</a>
+        <a href="https://launchpad.net/bugs/1314247">LP: 1314247</a>
         
 
 </p>

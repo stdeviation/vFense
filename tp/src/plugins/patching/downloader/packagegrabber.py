@@ -7,7 +7,7 @@ from vFense.Queue import Queue, Empty, Full
 from urlgrabber import urlgrab
 import threading
 
-from vFense.utils.common import hash_verifier
+from vFense.utils.common import hash_verify
 
 packages_directory = '/opt/TopPatch/var/packages/'
 dependencies_directory = '/opt/TopPatch/var/packages/dependencies/'
@@ -80,9 +80,9 @@ class PackageGrabber():
 
         if os.path.exists(path):
             if len(lhash) > 0:
-                hash_match = hash_verifier(orig_hash=lhash, file_path=path)
+                hash_match = hash_verify(orig_hash=lhash, file_path=path)
 
-                if hash_match['pass']:
+                if hash_match:
                     hash_status = 'verified'
                     fsize_match = True
                     success = True

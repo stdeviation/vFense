@@ -1,7 +1,7 @@
 import time
 from datetime import datetime, timedelta
 
-from vFense.plugins.monit import Monitor, MonitorKey, get_monitor_data_since
+from vFense.plugins.monit.utils import Monitor, MonitorKey
 
 
 def _default_from_date():

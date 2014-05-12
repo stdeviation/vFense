@@ -3,19 +3,22 @@ import logging
 import redis
 from rq import Connection, Queue
 
+from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import get_agent_info
-from vFense.plugins.patching.os_apps.incoming_updates import \
-   incoming_packages_from_agent 
-from vFense.plugins.patching.custom_apps.custom_apps import \
+from vFense.plugins.patching import AppCollections
+from vFense.plugins.patching.apps.incoming_apps import \
+   incoming_applications_from_agent 
+from vFense.plugins.patching.apps.custom_apps.custom_apps import \
     add_custom_app_to_agents
+from vFense.plugins.patching.apps.supported_apps.syncer import \
+    get_all_supported_apps_for_agent
 
-from vFense.plugins.patching.supported_apps.syncer import \
-    get_all_supported_apps_for_agent, get_all_agent_apps_for_agent
 
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-rq_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
+RQ_HOST = 'localhost'
+RQ_PORT = 6379
+RQ_DB = 0
+RQ_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
+
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
@@ -23,73 +26,128 @@ logger = logging.getLogger('rvapi')
 class RvHandOff():
 
     def __init__(self, username, customer_name, uri, method,
-                 agentid, rv_plugin, agent_data=None,
-                 oper_type='newagent', delete_afterwards=True):
+            delete_afterwards=True):
 
-        self.delete_afterwards = delete_afterwards
+        self.username = username
         self.customer_name = customer_name
-        if not agent_data:
-            agent_data = get_agent_info(agentid)
+        self.uri = uri
+        self.method = method
+        self.delete_afterwards = delete_afterwards
 
-        self.add_packages_from_agent(
-            username, agentid,
-            agent_data, rv_plugin
-        )
-        
-        if oper_type == 'newagent':
-            self.add_custom_apps(
-                username, customer_name,
-                uri, method, agentid
-            )
-            self.add_supported_apps(agentid)
-            self.add_agent_apps(agentid)
+    def _get_agent_data(self, agent_id):
+        #if self.agent_data:
+        #    if self.agent_data.get(AgentKey.AgentId) == agent_id:
+        #        return self.agent_data
+        #    else:
+        #        logger.info(
+        #            "Agent id: {0} did not match agent id of set agent data: {0}"
+        #            .format(agent_id, self.agent_data)
+        #        )
 
-        elif oper_type == 'updatesapplications':
-            self.add_supported_apps(agentid)
-            self.add_agent_apps(agentid)
+        return get_agent_info(agent_id)
 
-    def add_custom_apps(self, username, customer_name,
-                        uri, method, agentid):
-        rv_q = Queue('incoming_updates', connection=rq_pool)
+    def _add_custom_apps(self, username, customer_name, uri, method, agent_id):
+        rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
             func=add_custom_app_to_agents,
             args=(
-                username, customer_name,
-                uri, method, None, agentid
+                username,
+                customer_name,
+                uri,
+                method,
+                None,
+                agent_id
             ),
             timeout=3600
         )
 
-    def add_supported_apps(self, agentid):
-        rv_q = Queue('incoming_updates', connection=rq_pool)
+    def _add_supported_apps(self, agent_id):
+        rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
             func=get_all_supported_apps_for_agent,
             args=(
-                agentid,
+                agent_id,
             ),
             timeout=3600
         )
 
-    def add_agent_apps(self, agentid):
-        rv_q = Queue('incoming_updates', connection=rq_pool)
+    def _add_applications_from_agent(self, username, customer_name, agent_data,
+            apps, delete_afterwards, app_collection, apps_per_agent_collection):
+
+        rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
-            func=get_all_agent_apps_for_agent,
+            func=incoming_applications_from_agent,
             args=(
-                agentid,
+                username,
+                customer_name,
+                agent_data[AgentKey.AgentId],
+                agent_data[AgentKey.OsCode],
+                agent_data[AgentKey.OsString],
+                apps,
+                delete_afterwards,
+                app_collection,
+                apps_per_agent_collection
             ),
             timeout=3600
         )
 
+    def new_agent_operation(self, agent_id, apps_data, agent_data=None):
 
-    def add_packages_from_agent(self, username, agent_id, agent_data, apps):
-        rv_q = Queue('incoming_updates', connection=rq_pool)
-        rv_q.enqueue_call(
-            func=incoming_packages_from_agent,
-            args=(
-                username, agent_id,
-                self.customer_name,
-                agent_data['os_code'], agent_data['os_string'],
-                apps, self.delete_afterwards
-            ),
-            timeout=3600
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
+
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            agent_data,
+            apps_data,
+            self.delete_afterwards,
+            AppCollections.UniqueApplications,
+            AppCollections.AppsPerAgent
+        )
+        self._add_custom_apps(
+            self.username,
+            self.customer_name,
+            self.uri,
+            self.method,
+            agent_id
+        )
+
+        self._add_supported_apps(agent_id)
+
+    def startup_operation(self, agent_id, apps_data, agent_data=None):
+
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
+
+        self.refresh_apps_operation(agent_id, apps_data, agent_data)
+
+    def refresh_apps_operation(self, agent_id, apps_data, agent_data=None):
+
+        if not agent_data:
+            agent_data = self._get_agent_data(agent_id)
+
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            agent_data,
+            apps_data,
+            self.delete_afterwards,
+            AppCollections.UniqueApplications,
+            AppCollections.AppsPerAgent
+        )
+        self._add_supported_apps(agent_id)
+
+    def available_agent_update_operation(self, agent_id, app_data):
+        agent_data = self._get_agent_data(agent_id)
+
+        apps_data = [app_data]
+        self._add_applications_from_agent(
+            self.username,
+            self.customer_name,
+            agent_data,
+            apps_data,
+            self.delete_afterwards,
+            AppCollections.vFenseApps,
+            AppCollections.vFenseAppsPerAgent
         )

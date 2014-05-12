@@ -53,6 +53,7 @@ class RetrieveAppsByAgentId(object):
                 self.CurrentAppsPerAgentKey.InstallDate,
                 self.CurrentAppsPerAgentKey.Status,
                 self.CurrentAppsPerAgentKey.Update,
+                self.CurrentAppsKey.VulnerabilityId,
             ]
         )
 
@@ -71,6 +72,7 @@ class RetrieveAppsByAgentId(object):
                 self.CurrentAppsPerAgentKey.InstallDate: r.row[self.CurrentAppsPerAgentKey.InstallDate].to_epoch_time(),
                 self.CurrentAppsPerAgentKey.Status: r.row[self.CurrentAppsPerAgentKey.Status],
                 self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
+                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
             }
         )
 

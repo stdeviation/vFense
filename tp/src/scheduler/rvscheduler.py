@@ -2,7 +2,8 @@ from time import sleep
 import logging 
 
 from vFense.scheduler.jobManager import start_scheduler, job_exists, remove_job
-from vFense.plugins.patching.supported_apps.syncer import get_agents_apps, get_supported_apps
+#from vFense.plugins.patching.apps.supported_apps.syncer import get_agents_apps, get_supported_apps
+from vFense.plugins.patching.apps.supported_apps.syncer import get_supported_apps
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
@@ -14,7 +15,7 @@ from vFense.errorz.status_codes import SchedulerCodes
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('admin_scheduler')
 get_supported_apps()
-get_agents_apps()
+#get_agents_apps()
 
 if __name__ == '__main__':
    
@@ -30,15 +31,15 @@ if __name__ == '__main__':
             'max_instances': 1,
             'coalesce': True
         },
-        {
-            'name': 'get_agents_apps',
-            'jobstore': jobstore_name,
-            'job': get_agents_apps,
-            'hour': '0,6,12,18',
-            'minute': 1,
-            'max_instances': 1,
-            'coalesce': True
-        },
+        #{
+        #    'name': 'get_agents_apps',
+        #    'jobstore': jobstore_name,
+        #    'job': get_agents_apps,
+        #    'hour': '0,6,12,18',
+        #    'minute': 1,
+        #    'max_instances': 1,
+        #    'coalesce': True
+        #},
         {
             'name': 'parse_cve_and_udpatedb',
             'jobstore': jobstore_name,

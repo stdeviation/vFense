@@ -6,7 +6,7 @@ from datetime import datetime
 from time import mktime
 from vFense.operations import AgentOperationKey, OperationPerAgentKey
 from vFense.operations._constants import vFenseObjects, OperationErrors
-from vFense.operations._db_constants import DbTime
+from vFense.core._db_constants import DbTime
 from vFense.operations._db_agent import fetch_agent_operation, \
     operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
     insert_into_agent_operations, update_agent_operation_expire_time, \
@@ -36,30 +36,29 @@ def get_agent_operation(operation_id):
     Results:
         Dictionary
         {
-            "agents_expired_count": 0, 
-            "cpu_throttle": "normal", 
-            "agents_total_count": 1, 
-            "plugin": "rv", 
-            "tag_id": null, 
-            "agents_completed_with_errors_count": 0, 
-            "created_by": "admin", 
-            "agents_pending_pickup_count": 0, 
-            "completed_time": 1397246851, 
-            "operation_status": 6006, 
-            "agents_completed_count": 1, 
-            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22", 
-            "created_time": 1397246674, 
-            "agents_pending_results_count": 0, 
-            "operation": "install_os_apps", 
-            "updated_time": 1397246851, 
+            "agents_expired_count": 0,
+            "cpu_throttle": "normal",
+            "agents_total_count": 1,
+            "plugin": "rv",
+            "tag_id": null,
+            "agents_completed_with_errors_count": 0,
+            "created_by": "admin",
+            "agents_pending_pickup_count": 0,
+            "completed_time": 1397246851,
+            "operation_status": 6006,
+            "agents_completed_count": 1,
+            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22",
+            "created_time": 1397246674,
+            "agents_pending_results_count": 0,
+            "operation": "install_os_apps",
+            "updated_time": 1397246851,
             "net_throttle": 0,
-            "agents_failed_count": 0, 
-            "restart": "none", 
+            "agents_failed_count": 0,
+            "restart": "none",
             "customer_name": "default"
         }
     """
-    return(fetch_agent_operation(operation_id))
-
+    return fetch_agent_operation(operation_id)
 
 def operation_for_agent_exist(operation_id, agent_id):
     """Verify if the operation exists by operation id and agent id.
@@ -77,7 +76,10 @@ def operation_for_agent_exist(operation_id, agent_id):
         Boolean True or False
     """
 
-    return(operation_with_agentid_exists(operation_id, agent_id))
+    data = (
+        operation_with_agentid_exists(operation_id, agent_id)
+    )
+    return data
 
 
 def operation_for_agent_and_app_exist(operation_id, agent_id, app_id):
@@ -97,11 +99,12 @@ def operation_for_agent_and_app_exist(operation_id, agent_id, app_id):
     Results:
         Boolean True or False
     """
-    return(
+    data = (
         operation_with_agentid_and_appid_exists(
             operation_id, agent_id, app_id
         )
     )
+    return data
 
 
 class AgentOperation(object):
@@ -127,9 +130,9 @@ class AgentOperation(object):
         self.INIT_COUNT = 0
 
     def create_operation(
-        self, operation, plugin, agent_ids,
-        tag_id, cpu_throttle=None, net_throttle=None,
-        restart=None, performed_on=vFenseObjects.AGENT,
+            self, operation, plugin, agent_ids,
+            tag_id, cpu_throttle=None, net_throttle=None,
+            restart=None, performed_on=vFenseObjects.AGENT,
         ):
         """Create the base operation. Here is where the
             operation_id is generated. 
@@ -167,7 +170,9 @@ class AgentOperation(object):
             {
                 AgentOperationKey.Plugin: plugin,
                 AgentOperationKey.Operation: operation,
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsIncomplete,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsIncomplete
+                ),
                 AgentOperationKey.CustomerName: self.customer_name,
                 AgentOperationKey.CreatedBy: self.username,
                 AgentOperationKey.ActionPerformedOn: performed_on,
@@ -179,7 +184,9 @@ class AgentOperation(object):
                 AgentOperationKey.AgentsPendingPickUpCount: number_of_agents,
                 AgentOperationKey.AgentsFailedCount: self.INIT_COUNT,
                 AgentOperationKey.AgentsCompletedCount: self.INIT_COUNT,
-                AgentOperationKey.AgentsCompletedWithErrorsCount: self.INIT_COUNT,
+                AgentOperationKey.AgentsCompletedWithErrorsCount: (
+                    self.INIT_COUNT
+                ),
                 AgentOperationKey.CreatedTime: self.db_time,
                 AgentOperationKey.UpdatedTime: self.db_time,
                 AgentOperationKey.CompletedTime: DbTime.begining_of_time(),
@@ -197,7 +204,7 @@ class AgentOperation(object):
         else:
             operation_id = None
 
-        return(operation_id)
+        return operation_id
 
 
     def add_agent_to_operation(self, agent_id, operation_id):
@@ -241,7 +248,7 @@ class AgentOperation(object):
         else:
             operation_id = None
 
-        return(operation_id)
+        return operation_id
 
 
     def update_operation_expire_time(self, operation_id, agent_id):
@@ -265,7 +272,9 @@ class AgentOperation(object):
         completed = False
         operation_data = (
             {
-                OperationPerAgentKey.Status: OperationPerAgentCodes.OperationExpired,
+                OperationPerAgentKey.Status: (
+                    OperationPerAgentCodes.OperationExpired
+                ),
                 OperationPerAgentKey.ExpiredTime: self.db_time,
                 OperationPerAgentKey.CompletedTime: self.db_time,
                 OperationPerAgentKey.Errors: OperationErrors.EXPIRED,
@@ -278,12 +287,12 @@ class AgentOperation(object):
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_expire_time(
-                    operation_id, agent_id, self.db_time
+                    operation_id, self.db_time
                 )
             )
             completed = True
 
-        return(completed)
+        return completed
 
     def update_operation_pickup_time(self, operation_id, agent_id):
         """Update the pickup time for operation_id and agent id.
@@ -317,16 +326,16 @@ class AgentOperation(object):
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_pickup_time(
-                    operation_id, agent_id, self.db_time
+                    operation_id, self.db_time
                 )
             )
             completed = True
 
-        return(completed)
+        return completed
 
     def update_operation_results(
-        self, operation_id, agent_id,
-        status, operation, errors=None,
+            self, operation_id, agent_id,
+            status, operation, errors=None,
         ):
         """Update the results for an operation.
         Args:
@@ -334,7 +343,7 @@ class AgentOperation(object):
             agent_id (str): The agent id.
             status (int): The operation status code.
             operation (str): The operation type.
-        
+
         Kwargs:
             errors (str): The error message, default is None.
 
@@ -371,8 +380,7 @@ class AgentOperation(object):
             self._update_operation_status_code(operation_id)
             completed = True
 
-        return(completed)
-
+        return completed
 
     def _update_agent_stats(self, operation_id, agent_id):
         """Update the total counts based on the status code.
@@ -412,9 +420,10 @@ class AgentOperation(object):
 
                     completed = True
 
-            elif (operation[OperationPerAgentKey.Status] ==
-                    AgentOperationCodes.ResultsReceivedWithErrors):
-
+            elif (
+                    operation[OperationPerAgentKey.Status] ==
+                    AgentOperationCodes.ResultsReceivedWithErrors
+                ):
 
                 status_code, count, errors, generated_ids = (
                     update_failed_and_pending_count(
@@ -426,7 +435,7 @@ class AgentOperation(object):
 
                     completed = True
 
-        return(completed)
+        return completed
 
     def _update_completed_time_on_agents(self, operation_id, agent_id):
         """Update the completed time for the agent operation.
@@ -455,7 +464,7 @@ class AgentOperation(object):
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             completed = True
 
-        return(completed)
+        return completed
 
 
     def _update_operation_status_code(self, operation_id):
@@ -480,78 +489,108 @@ class AgentOperation(object):
         operation_data = {}
         completed = False
 
-        if (operation[AgentOperationKey.AgentsTotalCount] == 
-            operation[AgentOperationKey.AgentsCompletedCount]):
+        if (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation[AgentOperationKey.AgentsCompletedCount]
+            ):
 
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompleted,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompleted
+                ),
                 AgentOperationKey.CompletedTime: self.db_time
             }
 
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            operation[AgentOperationKey.AgentsFailedCount]):
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation[AgentOperationKey.AgentsFailedCount]
+            ):
 
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedFailed,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedFailed
+                ),
                 AgentOperationKey.CompletedTime: self.db_time
             }
 
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            (
-               operation[AgentOperationKey.AgentsFailedCount] +
-               operation[AgentOperationKey.AgentsExpiredCount]
-            )):
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                (
+                    operation[AgentOperationKey.AgentsFailedCount] +
+                    operation[AgentOperationKey.AgentsExpiredCount]
+                )
+            ):
 
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedFailed,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedFailed
+                ),
                 AgentOperationKey.CompletedTime: self.db_time
             }
 
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            operation[AgentOperationKey.AgentsExpiredCount]):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedFailed,
-                AgentOperationKey.CompletedTime: self.db_time
-            }
-
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            (
-                operation[AgentOperationKey.AgentsFailedCount] +
-                operation[AgentOperationKey.AgentsCompletedWithErrorsCount]
-            )):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedWithErrors,
-                AgentOperationKey.CompletedTime: self.db_time
-            }
-
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            (
-                operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
                 operation[AgentOperationKey.AgentsExpiredCount]
-            )):
+            ):
 
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedWithErrors,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedFailed
+                ),
                 AgentOperationKey.CompletedTime: self.db_time
             }
 
-        elif (operation[AgentOperationKey.AgentsTotalCount] == 
-            (
-                operation[AgentOperationKey.AgentsFailedCount] +
-                operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
-                operation[AgentOperationKey.AgentsExpiredCount]
-            )):
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                (
+                    operation[AgentOperationKey.AgentsFailedCount] +
+                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount]
+                )
+            ):
 
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsCompletedWithErrors,
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedWithErrors
+                ),
+                AgentOperationKey.CompletedTime: self.db_time
+            }
+
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                (
+                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
+                    operation[AgentOperationKey.AgentsExpiredCount]
+                )
+            ):
+
+            operation_data = {
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedWithErrors
+                ),
+                AgentOperationKey.CompletedTime: self.db_time
+            }
+
+        elif (
+                operation[AgentOperationKey.AgentsTotalCount] ==
+                (
+                    operation[AgentOperationKey.AgentsFailedCount] +
+                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
+                    operation[AgentOperationKey.AgentsExpiredCount]
+                )
+            ):
+
+            operation_data = {
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsCompletedWithErrors
+                ),
                 AgentOperationKey.CompletedTime: self.db_time
             }
 
         else:
             operation_data = {
-                AgentOperationKey.OperationStatus: AgentOperationCodes.ResultsIncomplete
+                AgentOperationKey.OperationStatus: (
+                    AgentOperationCodes.ResultsIncomplete
+                )
             }
 
         if operation_data:
@@ -563,4 +602,4 @@ class AgentOperation(object):
 
                 completed = True
 
-        return(completed)
+        return completed

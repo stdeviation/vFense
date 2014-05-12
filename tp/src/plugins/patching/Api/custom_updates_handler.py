@@ -13,8 +13,10 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
 from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import update_custom_app, \
-    update_hidden_status, delete_app_from_rv
+from vFense.plugins.patching._db import update_app_data_by_app_id
+from vFense.plugins.patching.patching import toggle_hidden_status
+
+from vFense.plugins.patching.rv_db_calls import delete_app_from_rv
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
@@ -22,7 +24,7 @@ from vFense.plugins.patching.search.search_by_tagid import RetrieveCustomAppsByT
 from vFense.plugins.patching.search.search_by_appid import RetrieveCustomAppsByAppId, \
     RetrieveAgentsByCustomAppId
 
-from vFense.plugins.patching.custom_apps.uploaded.uploader import gen_uuid, \
+from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import gen_uuid, \
     move_packages, store_package_info_in_db
 
 from vFense.core.user import UserKeys
@@ -578,8 +580,8 @@ class AppIdCustomAppsHandler(BaseHandler):
                             AppsKey.RvSeverity: severity
                         }
                     )
-                    update_custom_app(
-                        app_id, sev_data
+                    update_app_data_by_app_id(
+                        app_id, sev_data, AppCollections.CustomApps
                     )
                     results = (
                         GenericResults(
@@ -606,9 +608,11 @@ class AppIdCustomAppsHandler(BaseHandler):
                         CustomAppsKey.CliOptions: install_options
                     }
                 )
-                update_custom_app(
-                    app_id, install_options_hash
+
+                update_app_data_by_app_id(
+                    app_id, sev_data, AppCollections.CustomApps
                 )
+
                 results = (
                     GenericResults(
                         username, uri, method
@@ -1038,19 +1042,16 @@ class CustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             toggle = self.arguments.get('hide', 'toggle')
             results = (
-                update_hidden_status(
-                    username, customer_name, uri,
-                    method, app_ids, toggle,
-                    CustomAppsCollection
+                toggle_hidden_status(
+                    app_ids, toggle,
+                    AppCollections.CustomApps,
+                    username, uri, method
                 )
             )
 

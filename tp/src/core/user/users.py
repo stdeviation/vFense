@@ -400,9 +400,9 @@ def remove_users_from_customer(
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
-            elif status_code == DbCodes.DoesntExist:
+            elif status_code == DbCodes.DoesNotExist:
                 msg = 'customer name or username does not exist'
-                generic_status_code = GenericCodes.DoesNotExists
+                generic_status_code = GenericCodes.DoesNotExist
                 vfense_status_code = CustomerFailureCodes.UsersDoNotExistForCustomer
 
         else:
@@ -613,9 +613,9 @@ def remove_users_from_group(
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = GroupFailureCodes.InvalidGroupId
 
-            elif status_code == DbCodes.DoesntExist:
+            elif status_code == DbCodes.DoesNotExist:
                 msg = 'group id or username does not exist'
-                generic_status_code = GenericCodes.DoesNotExists
+                generic_status_code = GenericCodes.DoesNotExist
                 vfense_status_code = GroupFailureCodes.UsersDoNotExistForGroup
 
         else:
@@ -842,7 +842,7 @@ def create_user(
                 msg = 'customer name %s does not exist' % (customer_name)
                 object_status = DbCodes.Skipped
                 generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = CustomerFailureCodes.CustomerDoesNotExists
+                vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
 
             elif not groups_are_valid[0] and customer_is_valid:
                 msg = 'group ids %s does not exist' % (groups_are_valid[2])
@@ -968,7 +968,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
             usernames_not_to_delete.append(username)
             object_status = DbCodes.Skipped
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: object_status,
@@ -1051,7 +1051,7 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
                 msg = 'User does not exist %s' % (username)
                 usernames_not_to_delete.append(username)
                 generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+                vfense_status_code = UserFailureCodes.UserNameDoesNotExist
                 object_status = DbCodes.Skipped
 
         if len(usernames_to_delete) > 0:
@@ -1064,9 +1064,9 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
                 vfense_status_code = UserCodes.UserDeleted
                 msg = 'Users removed %s' % (' and '.join(usernames_to_delete))
 
-            if object_status == DbCodes.DoesntExist:
-                generic_status_code = GenericCodes.DoesNotExists
-                vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+            if object_status == DbCodes.DoesNotExist:
+                generic_status_code = GenericCodes.DoesNotExist
+                vfense_status_code = UserFailureCodes.UserNameDoesNotExist
                 msg = 'Users  %s do not exist' % (' and '.join(usernames_to_delete))
 
         else:
@@ -1205,7 +1205,7 @@ def change_password(
             msg = 'User %s does not exist - ' % (username)
             object_status = DbCodes.Skipped
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
 
             results = {
                 ApiResultKeys.DB_STATUS_CODE: object_status,
@@ -1330,7 +1330,7 @@ def edit_user_properties(username, **kwargs):
         else:
             object_status = DbCodes.Skipped
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExists
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
             msg = 'User %s does not exist - ' % (username)
 
         results = {

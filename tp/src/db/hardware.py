@@ -77,7 +77,7 @@ class Hardware():
     @db_create_close
     def _insert_into_db(self, hwinfo=None, added_by='agent',
                         agent_id=None, conn=None):
-        table = 'hardware_per_agent'
+        collection = 'hardware_per_agent'
         added = True
         msg = ''
         logger.info(hwinfo)
@@ -86,7 +86,7 @@ class Hardware():
                 if added_by == 'agent':
                     (
                         r
-                        .table(table)
+                        .table(collection)
                         .get_all(agent_id, index='agent_id')
                         .filter({'added_by': added_by})
                         .delete()
@@ -97,7 +97,7 @@ class Hardware():
 
                     (
                         r
-                        .table(table)
+                        .table(collection)
                         .insert(hw, upsert=True)
                         .run(conn)
                     )
@@ -120,7 +120,7 @@ class Hardware():
             try:
                 (
                     r
-                    .table(table)
+                    .table(collection)
                     .get_all(hwinfo['agent_id'], index='agent_id')
                     .filter({'name': name})
                     .delete()

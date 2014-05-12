@@ -12,19 +12,15 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
-from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
-from vFense.core.api.base import WebSocketHandler, AdminHandler
-from vFense.receiver.api.core.newagent import NewAgentV1
-from vFense.receiver.api.core.checkin import CheckInV1
-from vFense.receiver.api.core.startup import StartUpV1
-from vFense.receiver.api.core.result_uris import ResultURIs
-from vFense.receiver.api.rv.results import *
-from vFense.receiver.api.core.results import *
-from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
-from vFense.receiver.api.ra.results import RemoteDesktopResults
-from vFense.receiver.api.monitoring.monitoringdata import UpdateMonitoringStatsV1
+import vFense_module_loader
 
-from vFense.db.client import *
+from vFense.core.api.base import WebSocketHandler, AdminHandler
+from vFense.receiver.api.rv.results import InstallOsAppsResults, \
+    InstallCustomAppsResults, InstallSupportedAppsResults, \
+    InstallAgentAppsResults, UninstallAppsResults
+from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
+from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
+from vFense.receiver.api.ra.results import RemoteDesktopResults
 
 from tornado.options import define, options
 
@@ -39,25 +35,12 @@ class Application(tornado.web.Application):
     def __init__(self, debug):
         handlers = [
 
-            #Operations for the Monitoring Plugin
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/monitoring/monitordata/?", UpdateMonitoringStatsV1),
-
             #RA plugin
             (r"/rvl/ra/rd/results/?", RemoteDesktopResults),
 
-            #Login and Logout Operations
-            (r"/rvl/?", RootHandler),
-            (r"/rvl/login/?", RvlLoginHandler),
-            (r"/rvl/logout/?", RvlLogoutHandler),
-
             #Operations for the New Core Plugin
-            (r"/rvl/v1/core/newagent/?", NewAgentV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIs),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?", CheckInV1),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/updatesapplications/?", UpdateApplicationsV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?", ShutdownResultsV1),
+            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/available_agent_update/?", AgentUpdateHandler),
 
             #New Operations for the New RV Plugin
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/os?",
@@ -69,18 +52,25 @@ class Application(tornado.web.Application):
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/agent?",
                 InstallAgentAppsResults),
             (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/uninstall?",
-                UnInstallAppsResults),
+                UninstallAppsResults),
 
         ]
+
+        core_loader = vFense_module_loader.CoreLoader()
+        plugin_loader = vFense_module_loader.PluginsLoader()
+
+        # TODO: check for colliding regex's from plugins
+        handlers.extend(core_loader.get_core_listener_api_handlers())
+        handlers.extend(plugin_loader.get_plugins_listener_api_handlers())
 
         template_path = "/opt/TopPatch/tp/templates"
         settings = {
             "cookie_secret": "patching-0.7",
             "login_url": "/rvl/login",
         }
-        tornado.web.Application.__init__(self, handlers,
-                                         template_path=template_path,
-                                         debug=True, **settings)
+        tornado.web.Application.__init__(
+            self, handlers, template_path=template_path, debug=True, **settings
+        )
 
     def log_request(self, handler):
         logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

@@ -3,11 +3,11 @@
 import logging
 import logging.config
 from vFense.db.client import db_create_close, r
-from vFense.operations import *
+#from vFense.operations import *
 from vFense.operations.search._constants import OperationSearchValues
-from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import *
-from vFense.utils.common import *
+#from vFense.plugins.patching import *
+#from vFense.plugins.patching.rv_db_calls import *
+#from vFense.utils.common import *
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent import AgentKey, AgentCollections
 
@@ -15,17 +15,19 @@ from vFense.operations import AgentOperationKey, AgentOperationIndexes, \
     OperationCollections, OperationPerAgentKey, OperationPerAgentIndexes, \
     OperationPerAppKey, OperationPerAppIndexes
 
+from vFense.errorz.status_codes import AgentOperationCodes
+
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 class FetchAgentOperations(object):
     """Agent operation database queries"""
     def __init__(
-        self, customer_name=None,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.ASC,
-        sort_key=AgentOperationKey.CreatedTime
+            self, customer_name=None,
+            count=DefaultQueryValues.COUNT,
+            offset=DefaultQueryValues.OFFSET,
+            sort=SortValues.ASC,
+            sort_key=AgentOperationKey.CreatedTime
         ):
         """
         Kwargs:
@@ -76,9 +78,9 @@ class FetchAgentOperations(object):
                     "agents_completed_with_errors_count": 0,
                     "created_by": "admin",
                     "agents_pending_pickup_count": 0,
-                    "completed_time": 1398092303, 
-                    "operation_status": 6006, 
-                    "agents_completed_count": 1, 
+                    "completed_time": 1398092303,
+                    "operation_status": 6006,
+                    "agents_completed_count": 1,
                     "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
                     "created_time": 1398092302,
                     "agents_pending_results_count": 0,
@@ -133,9 +135,9 @@ class FetchAgentOperations(object):
                     "agents_completed_with_errors_count": 0,
                     "created_by": "admin",
                     "agents_pending_pickup_count": 0,
-                    "completed_time": 1398092303, 
-                    "operation_status": 6006, 
-                    "agents_completed_count": 1, 
+                    "completed_time": 1398092303,
+                    "operation_status": 6006,
+                    "agents_completed_count": 1,
                     "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
                     "created_time": 1398092302,
                     "agents_pending_results_count": 0,
@@ -193,29 +195,29 @@ class FetchAgentOperations(object):
         Returns:
             List [count, data]
             [
-                1, 
+                1,
                 [
                     {
-                        "agents_expired_count": 0, 
-                        "cpu_throttle": "normal", 
-                        "agents_total_count": 2, 
-                        "plugin": "rv", 
-                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297", 
-                        "agents_completed_with_errors_count": 0, 
-                        "action_performed_on": "tag", 
-                        "created_by": "admin", 
-                        "agents_pending_pickup_count": 0, 
-                        "completed_time": 1398110835, 
-                        "operation_status": 6006, 
-                        "agents_completed_count": 2, 
-                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88", 
-                        "created_time": 1398110770, 
-                        "agents_pending_results_count": 0, 
-                        "operation": "install_os_apps", 
-                        "updated_time": 1398110835, 
-                        "net_throttle": 0, 
-                        "agents_failed_count": 0, 
-                        "restart": "none", 
+                        "agents_expired_count": 0,
+                        "cpu_throttle": "normal",
+                        "agents_total_count": 2,
+                        "plugin": "rv",
+                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297",
+                        "agents_completed_with_errors_count": 0,
+                        "action_performed_on": "tag",
+                        "created_by": "admin",
+                        "agents_pending_pickup_count": 0,
+                        "completed_time": 1398110835,
+                        "operation_status": 6006,
+                        "agents_completed_count": 2,
+                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88",
+                        "created_time": 1398110770,
+                        "agents_pending_results_count": 0,
+                        "operation": "install_os_apps",
+                        "updated_time": 1398110835,
+                        "net_throttle": 0,
+                        "agents_failed_count": 0,
+                        "restart": "none",
                         "customer_name": "default"
                     }
                 ]
@@ -268,29 +270,29 @@ class FetchAgentOperations(object):
             List of dictionaries
             [
                 {
-                    "agents_expired_count": 0, 
-                    "created_time": 1398126651, 
-                    "agents_pending_results_count": 0, 
-                    "operation": "install_os_apps", 
-                    "net_throttle": 0, 
-                    "customer_name": "default", 
-                    "cpu_throttle": "normal", 
-                    "agents_total_count": 1, 
-                    "agents_completed_with_errors_count": 0, 
-                    "action_performed_on": "agent", 
+                    "agents_expired_count": 0,
+                    "created_time": 1398126651,
+                    "agents_pending_results_count": 0,
+                    "operation": "install_os_apps",
+                    "net_throttle": 0,
+                    "customer_name": "default",
+                    "cpu_throttle": "normal",
+                    "agents_total_count": 1,
+                    "agents_completed_with_errors_count": 0,
+                    "action_performed_on": "agent",
                     "agent_ids": [
                         "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
-                    ], 
-                    "created_by": "admin", 
-                    "tag_id": null, 
-                    "completed_time": 0, 
-                    "agents_completed_count": 0, 
-                    "agents_pending_pickup_count": 1, 
-                    "restart": "none", 
-                    "plugin": "rv", 
-                    "updated_time": 1398126651, 
-                    "operation_status": 6009, 
-                    "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                    ],
+                    "created_by": "admin",
+                    "tag_id": null,
+                    "completed_time": 0,
+                    "agents_completed_count": 0,
+                    "agents_pending_pickup_count": 1,
+                    "restart": "none",
+                    "plugin": "rv",
+                    "updated_time": 1398126651,
+                    "operation_status": 6009,
+                    "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb",
                     "agents_failed_count": 0
                 }
             ]
@@ -304,7 +306,7 @@ class FetchAgentOperations(object):
                 r
                 .table(OperationCollections.Agent)
                 .get_all(
-                    [operation, self.customer_name],
+                    [action, self.customer_name],
                     index=AgentOperationIndexes.OperationAndCustomer
                 )
                 .count()
@@ -315,8 +317,8 @@ class FetchAgentOperations(object):
                 r
                 .table(OperationCollections.Agent)
                 .get_all(
-                        [operation, self.customer_name],
-                        index=AgentOperationIndexes.OperationAndCustomer
+                    [action, self.customer_name],
+                    index=AgentOperationIndexes.OperationAndCustomer
                 )
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -509,7 +511,7 @@ class FetchAgentOperations(object):
         try:
             data = list(
                 r
-                .table(OperationsCollection)
+                .table(OperationCollections.Agent)
                 .get_all(
                     operation_id,
                     index=AgentOperationIndexes.OperationId
@@ -534,7 +536,7 @@ class FetchAgentOperations(object):
         try:
             data = list(
                 r
-                .table(OperationsCollection)
+                .table(OperationCollections.Agent)
                 .get_all(
                     operation_id,
                     index=AgentOperationIndexes.OperationId
@@ -556,30 +558,41 @@ class FetchAgentOperations(object):
         agent_pluck = self._set_agent_collection_pluck()
         merge = (
             {
-                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_epoch_time(),
-                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_epoch_time(),
+                AgentOperationKey.CreatedTime: (
+                    r.row[AgentOperationKey.CreatedTime].to_epoch_time()
+                ),
+                AgentOperationKey.CompletedTime: (
+                    r.row[AgentOperationKey.CompletedTime].to_epoch_time()
+                ),
                 OperationSearchValues.AGENTS: (
                     r
-                    .table(OperationsPerAgentCollection)
+                    .table(OperationCollections.OperationPerAgent)
                     .get_all(
                         r.row[AgentOperationKey.OperationId],
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
+                    .eq_join(
+                        OperationPerAgentKey.AgentId,
+                        r.table(AgentCollections.Agents)
+                    )
                     .zip()
                     .pluck(agent_pluck)
                     .map(lambda x:
                         {
-                            OperationPerAgentKey.PickedUpTime: x[OperationPerAgentKey.PickedUpTime].to_epoch_time(),
-                            OperationPerAgentKey.CompletedTime: x[OperationPerAgentKey.CompletedTime].to_epoch_time(),
+                            OperationPerAgentKey.PickedUpTime: (
+                                x[OperationPerAgentKey.PickedUpTime].to_epoch_time()
+                            ),
+                            OperationPerAgentKey.CompletedTime: (
+                                x[OperationPerAgentKey.CompletedTime].to_epoch_time()
+                            ),
                         }
                     )
                 )
             }
         )
 
-        return(merge)
+        return merge
 
     def _set_base_time_merge(self):
         merge = (
@@ -596,7 +609,7 @@ class FetchAgentOperations(object):
             }
         )
 
-        return(merge)
+        return merge
 
     def _set_base_time_joined_agent_merge(self):
         merge = (
@@ -619,18 +632,22 @@ class FetchAgentOperations(object):
             }
         )
 
-        return(merge)
-
-
+        return merge
 
     def _set_install_operation_email_alert_merge(self):
         agent_pluck = self._set_agent_collection_pluck()
         app_without = self._set_app_collection_without()
         merge = (
             {
-                AgentOperationKey.CreatedTime: r.row[AgentOperationKey.CreatedTime].to_iso8601(),
-                AgentOperationKey.UpdatedTime: r.row[AgentOperationKey.UpdatedTime].to_iso8601(),
-                AgentOperationKey.CompletedTime: r.row[AgentOperationKey.CompletedTime].to_iso8601(),
+                AgentOperationKey.CreatedTime: (
+                    r.row[AgentOperationKey.CreatedTime].to_iso8601()
+                ),
+                AgentOperationKey.UpdatedTime: (
+                    r.row[AgentOperationKey.UpdatedTime].to_iso8601()
+                ),
+                AgentOperationKey.CompletedTime: (
+                    r.row[AgentOperationKey.CompletedTime].to_iso8601()
+                ),
                 OperationSearchValues.AGENTS: (
                     r
                     .table(OperationCollections.OperationPerAgent)
@@ -639,13 +656,20 @@ class FetchAgentOperations(object):
                         index=OperationPerAgentIndexes.OperationId
                     )
                     .coerce_to('array')
-                    .eq_join(OperationPerAgentKey.AgentId, r.table(AgentCollections.Agents))
+                    .eq_join(
+                        OperationPerAgentKey.AgentId,
+                        r.table(AgentCollections.Agents)
+                    )
                     .zip()
                     .pluck(agent_pluck)
                     .merge(lambda x:
                         {
-                            OperationPerAgentKey.PickedUpTime: x[OperationPerAgentKey.PickedUpTime].to_iso8601(),
-                            OperationPerAgentKey.CompletedTime: x[OperationPerAgentKey.CompletedTime].to_iso8601(),
+                            OperationPerAgentKey.PickedUpTime: (
+                                x[OperationPerAgentKey.PickedUpTime].to_iso8601()
+                            ),
+                            OperationPerAgentKey.CompletedTime: (
+                                x[OperationPerAgentKey.CompletedTime].to_iso8601()
+                            ),
                             OperationSearchValues.APPLICATIONS_FAILED: (
                                 r
                                 .table(OperationCollections.OperationPerApp)
@@ -656,11 +680,17 @@ class FetchAgentOperations(object):
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
                                 )
-                                .filter(lambda y: y[OperationPerAppKey.Results] == AgentOperationCodes.ResultsReceivedWithErrors)
+                                .filter(
+                                    lambda y:
+                                    y[OperationPerAppKey.Results] ==
+                                    AgentOperationCodes.ResultsReceivedWithErrors
+                                )
                                 .coerce_to('array')
                                 .merge(lambda y:
                                     {
-                                        OperationPerAppKey.ResultsReceivedTime: y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
+                                        OperationPerAppKey.ResultsReceivedTime: (
+                                            y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
+                                        )
                                     }
                                 )
                                 .without(app_without)
@@ -675,11 +705,17 @@ class FetchAgentOperations(object):
                                     ],
                                     index=OperationPerAppIndexes.OperationIdAndAgentId
                                 )
-                                .filter(lambda y: y[OperationPerAppKey.Results] == AgentOperationCodes.ResultsReceived)
+                                .filter(
+                                    lambda y:
+                                    y[OperationPerAppKey.Results] ==
+                                    AgentOperationCodes.ResultsReceived
+                                )
                                 .coerce_to('array')
                                 .merge(lambda y:
                                     {
-                                        OperationPerAppKey.ResultsReceivedTime: y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
+                                        OperationPerAppKey.ResultsReceivedTime: (
+                                            y[OperationPerAppKey.ResultsReceivedTime].to_iso8601()
+                                        )
                                     }
                                 )
                                 .without(app_without)

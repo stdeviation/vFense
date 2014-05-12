@@ -373,8 +373,8 @@ def return_modified_list(list_to_modify):
     return(list_to_modify)
 
 
-def hash_verifier(orig_hash=None, file_path=None):
-    completed = False
+def hash_verify(orig_hash=None, file_path=None):
+    verified = False
     msg = (
         'Failed to verify hash %s against file %s'
         % (orig_hash, file_path)
@@ -383,9 +383,7 @@ def hash_verifier(orig_hash=None, file_path=None):
     hashlibs = [hashlib.sha1, hashlib.sha256, hashlib.md5]
 
     if orig_hash and file_path:
-        file_exists = os.path.exists(file_path)
-
-        if file_exists:
+        if os.path.exists(file_path):
             file_in_mem = open(file_path, 'rb').read()
 
             for hlib in hashlibs:
@@ -394,20 +392,17 @@ def hash_verifier(orig_hash=None, file_path=None):
                 local_hash = lhash.hexdigest()
 
                 if local_hash == orig_hash:
-                    completed = True
+                    verified = True
                     msg = (
                         'Remote Hash %s verified against %s using hash type %s'
                         % (orig_hash, file_path.split('/')[-1], lhash.name)
                     )
+                    logger.info(msg)
                     break
 
         else:
-            msg = 'File %s does not exists' % (file_path)
+            logger.error(
+                'File %s does not exists, could not verify hash' % (file_path)
+            )
 
-    return(
-        {
-            'pass': completed,
-            'message': msg,
-            'data': []
-        }
-    )
+    return verified

@@ -294,6 +294,7 @@ define(
                             '#custom': [{text: 'Install', value: 'install'}],
                             '#supported': [{text: 'Install', value: 'install'}],
                             '#softwareinventory': [{text: 'Uninstall', value: 'uninstall'}],
+                            '#agentupdates': [{text: 'Install', value: 'install'}],
                             '#available': [{text: 'Install', value: 'install'}],
                             '#installed': [{text: 'Uninstall', value: 'uninstall'}],
                             '#remediationvault': [{text: 'Install', value: 'install'}]
@@ -326,6 +327,7 @@ define(
                             spans[0] = 'span5';
                         }
                         $select = $(crel('select', {'data-id': 'operation'}));
+                        var that = this;
                         _.each(options[this.tab], function (option) {
                             $select.append(crel('option', {value: option.value}, option.text));
                         });

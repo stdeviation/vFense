@@ -6,10 +6,9 @@ from functools import wraps
 
 from tornado.web import HTTPError
 
-from vFense.errorz._constants import *
-from vFense.core._constants import *
-from vFense.errorz.status_codes import *
-from vFense.errorz.error_messages import *
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import DbCodes, \
+    GenericCodes, GenericFailureCodes
 from vFense.errorz.results import Results
 
 
@@ -29,7 +28,7 @@ def return_status_tuple(fn):
                 DbCodes.Errors, status['errors'], status['first_error'], []
             )
 
-        elif status['inserted'] > 0:
+        elif status['inserted'] > 0 and status['replaced'] < 1:
             if status.get('generated_keys'):
                 return_code = (
                     DbCodes.Inserted, status['inserted'],
@@ -41,7 +40,19 @@ def return_status_tuple(fn):
                     None, []
                 )
 
-        elif status['replaced'] > 0:
+        elif status['inserted'] > 0 and status['replaced'] > 0:
+            if status.get('generated_keys'):
+                return_code = (
+                    DbCodes.Inserted, (status['inserted'], status['replaced']),
+                    None, status['generated_keys']
+                )
+            else:
+                return_code = (
+                    DbCodes.Inserted, (status['inserted'], status['replaced']),
+                    None, []
+                )
+
+        elif status['replaced'] > 0 and status['inserted'] < 1:
             return_code = (DbCodes.Replaced, status['replaced'], None, [])
 
         elif status['skipped'] > 0:
@@ -51,7 +62,7 @@ def return_status_tuple(fn):
             return_code = (DbCodes.Unchanged, status['unchanged'], None, [])
 
         else:
-            return_code = (DbCodes.DoesntExist, 0, None, [])
+            return_code = (DbCodes.DoesNotExist, 0, None, [])
 
         return(return_code)
 
@@ -137,7 +148,7 @@ def results_message(fn):
                 ).invalid_id(**data)
             )
 
-        elif generic_status_code == GenericCodes.DoesNotExists:
+        elif generic_status_code == GenericCodes.DoesNotExist:
             status = (
                 Results(
                     username, uri, method
@@ -160,7 +171,7 @@ def results_message(fn):
             )
 
 
-        return(status)
+        return status
 
     return wraps(fn)(db_wrapper)
 
@@ -242,7 +253,6 @@ def agent_authenticated_request(method):
         return method(self, *args, **kwargs)
 
     return wrapper
-
 
 def convert_json_to_arguments(fn):
 

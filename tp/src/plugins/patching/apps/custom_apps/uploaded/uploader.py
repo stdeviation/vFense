@@ -7,7 +7,7 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import PackageCodes
 from vFense.utils.common import date_parser, timestamp_verifier
 from vFense.plugins.patching import *
-from vFense.plugins.patching.custom_apps.custom_apps import add_custom_app_to_agents
+from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
 
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')

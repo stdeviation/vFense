@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-2172-1: CUPS vulnerability | Ubuntu</title>
+        <title>USN-2188-1: elfutils vulnerability | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,32 +66,31 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-2172-1: CUPS vulnerability</h1>
+                    <h1>USN-2188-1: elfutils vulnerability</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-2172-1</h2>
-<p><em>24th April, 2014</em></p>
-<h3>cups vulnerability</h3>
+<h2>Ubuntu Security Notice USN-2188-1</h2>
+<p><em>30th April, 2014</em></p>
+<h3>elfutils vulnerability</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
+
+    <li>Ubuntu 14.04 LTS</li>
 
     <li>Ubuntu 13.10</li>
 
     <li>Ubuntu 12.10</li>
 
-    <li>Ubuntu 12.04 LTS</li>
-
-    <li>Ubuntu 10.04 LTS</li>
-
 </ul>
 
 
 <h3>Summary</h3>
-<p>CUPS could be made to expose sensitive information over the network.
+<p>elfutils could be made to crash or run programs if it processed a specially
+crafted file.
 </p>
 
 
@@ -100,12 +99,10 @@ dd span {
 <ul>
 
   
-    <li>cups 
-    - Common UNIX Printing System(tm)
+    <li>elfutils 
+    - collection of utilities to handle ELF objects
     
     </li>
-  
-
   
 
   
@@ -116,20 +113,32 @@ dd span {
 
 
 <h3>Details</h3>
-<p>Alex Korobkin discovered that the CUPS web interface incorrectly protected<br />against cross-site scripting (XSS) attacks. If an authenticated user were<br />tricked into visiting a malicious website while logged into CUPS, a remote<br />attacker could modify the CUPS configuration and possibly steal<br />confidential data.<br /></p>
+<p>Florian Weimer discovered that the elfutils libdw library incorrectly<br />handled malformed compressed debug sections in ELF files. If a user or<br />automated system were tricked into processing a specially crafted ELF file,<br />applications linked against libdw could be made to crash, or possibly<br />execute arbitrary code.<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
 package version:</p>
 <dl>
 
+<dt>Ubuntu 14.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/elfutils">libdw1</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/elfutils/0.158-0ubuntu5.1">0.158-0ubuntu5.1</a>
+    </span>
+  </dd>
+    
+  
+
 <dt>Ubuntu 13.10:</dt>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/cups">cups</a>
+    <a href="https://launchpad.net/ubuntu/+source/elfutils">libdw1</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/cups/1.7.0~rc1-0ubuntu5.3">1.7.0~rc1-0ubuntu5.3</a>
+        <a href="https://launchpad.net/ubuntu/+source/elfutils/0.157-1ubuntu1.1">0.157-1ubuntu1.1</a>
     </span>
   </dd>
     
@@ -139,33 +148,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/cups">cups</a>
+    <a href="https://launchpad.net/ubuntu/+source/elfutils">libdw1</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/cups/1.6.1-0ubuntu11.6">1.6.1-0ubuntu11.6</a>
-    </span>
-  </dd>
-    
-  
-
-<dt>Ubuntu 12.04 LTS:</dt>
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/cups">cups</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/cups/1.5.3-0ubuntu8.2">1.5.3-0ubuntu8.2</a>
-    </span>
-  </dd>
-    
-  
-
-<dt>Ubuntu 10.04 LTS:</dt>
-  
-    
-  <dd>
-    <a href="https://launchpad.net/ubuntu/+source/cups">cups</a>
-    <span>
-        <a href="https://launchpad.net/ubuntu/+source/cups/1.4.3-1ubuntu1.11">1.4.3-1ubuntu1.11</a>
+        <a href="https://launchpad.net/ubuntu/+source/elfutils/0.153-1ubuntu1.1">0.153-1ubuntu1.1</a>
     </span>
   </dd>
     
@@ -182,7 +167,7 @@ package version:</p>
 <h3>References</h3>
 <p>
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2856">CVE-2014-2856</a>
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0172">CVE-2014-0172</a>
         
 
 </p>

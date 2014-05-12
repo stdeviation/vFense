@@ -2,7 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <title>USN-2170-1: MySQL vulnerabilities | Ubuntu</title>
+        <title>USN-2183-1: dpkg vulnerability | Ubuntu</title>
         <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
@@ -66,15 +66,15 @@ dd span {
                     
                 </div>
                 <div id="title">
-                    <h1>USN-2170-1: MySQL vulnerabilities</h1>
+                    <h1>USN-2183-1: dpkg vulnerability</h1>
                 </div>
 
                 <div id="content" class="clearfix content-area">
 
     
-<h2>Ubuntu Security Notice USN-2170-1</h2>
-<p><em>23rd April, 2014</em></p>
-<h3>mysql-5.5 vulnerabilities</h3>
+<h2>Ubuntu Security Notice USN-2183-1</h2>
+<p><em>28th April, 2014</em></p>
+<h3>dpkg vulnerability</h3>
 <p>A security issue affects these releases of Ubuntu and its 
     derivatives:</p>
 <ul>
@@ -87,11 +87,13 @@ dd span {
 
     <li>Ubuntu 12.04 LTS</li>
 
+    <li>Ubuntu 10.04 LTS</li>
+
 </ul>
 
 
 <h3>Summary</h3>
-<p>Several security issues were fixed in MySQL.
+<p>A malicious source package could write files outside the unpack directory.
 </p>
 
 
@@ -100,10 +102,12 @@ dd span {
 <ul>
 
   
-    <li>mysql-5.5 
-    - MySQL database
+    <li>dpkg 
+    - Debian package management system
     
     </li>
+  
+
   
 
   
@@ -116,15 +120,7 @@ dd span {
 
 
 <h3>Details</h3>
-<p>Multiple security issues were discovered in MySQL and this update includes<br />a new upstream MySQL version to fix these issues. MySQL has been updated to<br />5.5.37.</p>
-
-<p>In addition to security fixes, the updated packages contain bug fixes,<br />new features, and possibly incompatible changes.</p>
-
-<p>Please see the following for more information:<br />http://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-36.html<br />http://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-37.html<br />http://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html</p>
-
-<p>Additionally, Matthias Reichl discovered that the mysql-5.5 packages were<br />missing the patches applied previously in the mysql-5.1 packages to drop<br />the default test database and localhost permissions granting access to any<br />databases starting with &quot;test_&quot;. This update reintroduces these patches for<br />Ubuntu 12.04 LTS, Ubuntu 12.10, and Ubuntu 13.10. Existing test databases<br />and permissions will not be modified on upgrade. To manually restrict<br />access for existing installations, please refer to the following:</p>
-
-<p>http://dev.mysql.com/doc/refman/5.5/en/default-privileges.html<br /></p>
+<p>Jakub Wilk discovered that dpkg incorrectly certain paths and symlinks when<br />unpacking source packages. If a user or an automated system were tricked<br />into unpacking a specially crafted source package, a remote attacker could<br />modify files outside the target unpack directory, leading to a denial of<br />service or potentially gaining access to the system.<br /></p>
 
 <h3>Update instructions</h3>
 <p> The problem can be corrected by updating your system to the following
@@ -135,9 +131,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/mysql-5.5">mysql-server-5.5</a>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/mysql-5.5/5.5.37-0ubuntu0.14.04.1">5.5.37-0ubuntu0.14.04.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.17.5ubuntu5.1">1.17.5ubuntu5.1</a>
     </span>
   </dd>
     
@@ -147,9 +143,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/mysql-5.5">mysql-server-5.5</a>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/mysql-5.5/5.5.37-0ubuntu0.13.10.1">5.5.37-0ubuntu0.13.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.12ubuntu1.1">1.16.12ubuntu1.1</a>
     </span>
   </dd>
     
@@ -159,9 +155,9 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/mysql-5.5">mysql-server-5.5</a>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/mysql-5.5/5.5.37-0ubuntu0.12.10.1">5.5.37-0ubuntu0.12.10.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.7ubuntu6.1">1.16.7ubuntu6.1</a>
     </span>
   </dd>
     
@@ -171,9 +167,21 @@ package version:</p>
   
     
   <dd>
-    <a href="https://launchpad.net/ubuntu/+source/mysql-5.5">mysql-server-5.5</a>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">libdpkg-perl</a>
     <span>
-        <a href="https://launchpad.net/ubuntu/+source/mysql-5.5/5.5.37-0ubuntu0.12.04.1">5.5.37-0ubuntu0.12.04.1</a>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.16.1.2ubuntu7.3">1.16.1.2ubuntu7.3</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/dpkg">dpkg-dev</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/dpkg/1.15.5.6ubuntu4.7">1.15.5.6ubuntu4.7</a>
     </span>
   </dd>
     
@@ -190,23 +198,7 @@ package version:</p>
 <h3>References</h3>
 <p>
 
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0001">CVE-2014-0001</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0384">CVE-2014-0384</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2419">CVE-2014-2419</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2430">CVE-2014-2430</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2431">CVE-2014-2431</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2432">CVE-2014-2432</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2436">CVE-2014-2436</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2438">CVE-2014-2438</a>, 
-
-        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-2440">CVE-2014-2440</a>
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0471">CVE-2014-0471</a>
         
 
 </p>

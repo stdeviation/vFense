@@ -12,27 +12,15 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
+import vFense_module_loader
+
 from redis import StrictRedis
-from rq import Connection, Queue
 
-from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
-    WebSocketHandler, AdminHandler
-
-from vFense.server.api.scheduler_api import ScheduleListerHandler
-#from server.api.scheduler_api import ScheduleRemoveHandler
-from vFense.server.api.scheduler_api import ScheduleAppDetailHandler
-from vFense.server.api.scheduler_api import SchedulerDateBasedJobHandler
-from vFense.server.api.scheduler_api import SchedulerDailyRecurrentJobHandler
-from vFense.server.api.scheduler_api import SchedulerMonthlyRecurrentJobHandler
-from vFense.server.api.scheduler_api import SchedulerYearlyRecurrentJobHandler
-from vFense.server.api.scheduler_api import SchedulerWeeklyRecurrentJobHandler
-from vFense.server.api.scheduler_api import SchedulerCustomRecurrentJobHandler
 from vFense.server.api.reports_api import *
 
 from vFense.db.client import *
 from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
-from vFense.plugins.patching.Api.app_data import *
 from vFense.core.api.agent import *
 from vFense.plugins.patching.Api.stats_api import *
 from vFense.plugins.patching.Api.notification_handler import *
@@ -49,16 +37,11 @@ from vFense.plugins.ra.api.status import RDStatusQueue
 from vFense.plugins.ra.api.rdsession import RDSession
 from vFense.plugins.ra.api.settings import SetPassword
 from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.api.log_api import *
-from vFense.server.api.email_api import *
 from vFense.server.api.tag_api import *
 #from vFense.server.api.users_api import *
 #from vFense.server.api.groups_api import *
 #from vFense.server.api.customer_api import *
 from vFense.server.api.monit_api import *
-from vFense.core.api.user import UserHandler, UsersHandler
-from vFense.core.api.group import GroupHandler, GroupsHandler
-from vFense.core.api.customer import CustomerHandler, CustomersHandler
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
 from vFense.operations.api.agent_operations import GetTransactionsHandler, \
     AgentOperationsHandler, TagOperationsHandler, OperationHandler
@@ -87,23 +70,6 @@ class HeaderModule(tornado.web.UIModule):
 class Application(tornado.web.Application):
     def __init__(self, debug):
         handlers = [
-            (r"/?", RootHandler),
-            (r"/login/?", LoginHandler),
-            (r"/logout/?", LogoutHandler),
-            #(r"/ws/?", WebSocketHandler),
-            (r"/adminForm", AdminHandler),
-
-            ##### New User API
-            (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
-            (r"/api/v1/users?", UsersHandler),
-
-            ##### New Group API
-            (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
-            (r"/api/v1/groups?", GroupsHandler),
-
-            ##### New Customer API
-            (r'/api/v1/customer/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', CustomerHandler),
-            (r"/api/v1/customers?", CustomersHandler),
 
             ##### Notification API
             (r"/api/v1/notifications?", NotificationsHandler),
@@ -112,76 +78,10 @@ class Application(tornado.web.Application):
                 GetAllValidFieldsForNotifications),
             (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
-            ##### Monitoring Api
-            (r"/api/monitor/memory/?", GetMemoryStats),
-            (r"/api/monitor/filesystem/?", GetFileSystemStats),
-            (r"/api/monitor/cpu/?", GetCpuStats),
-            (r"/api/monitor/?", GetAllStats),
-
             ##### RA Api
             (r"/api/ra/rd/password/?", SetPassword),
             (r"/api/ra/rd/([^/]+)/?", RDSession),
             (r"/ws/ra/status/?", RDStatusQueue),
-
-            ##### Email API Handlers
-            (r"/api/email/config/create?", CreateEmailConfigHandler),
-            (r"/api/email/config/list?", GetEmailConfigHandler),
-
-            ##### Logger API Handlers
-            (r"/api/logger/modifyLogging?", LoggingModifyerHandler),
-            (r"/api/logger/getParams?", LoggingListerHandler),
-
-            ##### Scheduler API Handlers
-            (r"/api/v1/schedules?", ScheduleListerHandler),
-            (r"/api/v1/schedule/([A-Za-z0-9_ ]+.*)?", ScheduleAppDetailHandler),
-            (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
-            (r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
-            
-            ##### Reports Api
-            (r"/api/v1/reports/osdetails?", AgentsOsDetailsHandler),
-            (r"/api/v1/reports/hardwaredetails?",AgentsHardwareDetailsHandler),
-            (r"/api/v1/reports/cpudetails?",AgentsCPUDetailsHandler),
-            (r"/api/v1/reports/memorydetails?",AgentsMemoryDetailsHandler),
-            (r"/api/v1/reports/diskdetails?",AgentsDiskDetailsHandler),
-            (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
-
-
-            ##### Agent API Handlers
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",AgentSeverityHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", AgentOsAppsOverTimeHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", TagsAgentHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", AgentIdOsAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", AgentIdAgentAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", AgentIdCustomAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", AgentIdSupportedAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", AgentOperationsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/uris/response?", AgentResultURIs),
-
-            ##### Agents API Handlers
-            (r"/api/v1/agents", AgentsHandler),
-
-            ##### Tag API Handlers
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", TagHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",TagSeverityHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", TagOsAppsOverTimeHandler),
-            #(r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/linear/severity?",TagPackageSeverityOverTimeHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", TagIdOsAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/remediationvault?", TagIdAgentAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/supported?", TagIdSupportedAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", TagIdCustomAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", TagOperationsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/stats_by_os?", TagStatsByOsHandler),
-
-            ##### Tags API Handlers
-            (r"/api/v1/tags", TagsHandler),
-
-            ##### FileData API Handlers
-            (r'/api/v1/apps/info?', FileInfoHandler),
 
             ##### MightyMouse API Handlers
             (r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),
@@ -225,11 +125,6 @@ class Application(tornado.web.Application):
             (r"/api/v1/operations?", GetTransactionsHandler),
             (r"/api/v1/operation/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", OperationHandler),
 
-            ##### Generic API Handlers
-            (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
-            (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
-            #(r"/api/package/getDependecies?", GetDependenciesHandler),
-
             ##### Vulnerability API Handlers
             (r'/api/v1/vulnerability/os/([A-Za-z0-9_-]+)?', VulnIdHandler),
             (r'/api/v1/vulnerability/cve/(CVE-[0-9]+-[0-9]+)?', CveIdHandler),
@@ -246,6 +141,13 @@ class Application(tornado.web.Application):
             (r"/packages/*/(.*?)", tornado.web.StaticFileHandler,
                 {"path": "/opt/TopPatch/var/packages"})
         ]
+
+        core_loader = vFense_module_loader.CoreLoader()
+        plugin_loader = vFense_module_loader.PluginsLoader()
+
+        # TODO: check for colliding regex's from plugins
+        handlers.extend(core_loader.get_core_web_api_handlers())
+        handlers.extend(plugin_loader.get_plugins_web_api_handlers())
 
         template_path = "/opt/TopPatch/tp/templates"
         settings = {
@@ -298,3 +200,4 @@ if __name__ == '__main__':
     )
     https_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
+

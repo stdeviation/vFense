@@ -28,10 +28,10 @@ class RetrieveByVulnerabilityId(object):
 
     def __os_director(self):
         if re.search('^MS', self.vuln_id, re.IGNORECASE):
-            self.get_vuln_by_id = ms.get_vuln_data
+            self.get_vuln_by_id = ms.get_vuln_data_by_vuln_id
 
         elif re.search('^USN-', self.vuln_id, re.IGNORECASE):
-            self.get_vuln_by_id = usn.get_vuln_data
+            self.get_vuln_by_id = usn.get_vuln_data_by_vuln_id
 
     def get_vuln(self):
         data = self.get_vuln_by_id(self.vuln_id)

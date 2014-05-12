@@ -42,15 +42,15 @@ def get_vuln_ids(name, version, os_string):
 
 
 @time_it
-def get_vuln_data(vuln_id):
+def get_vuln_data_by_vuln_id(vuln_id):
     """Retrieve Ubuntu Bulletin data for an Application by bulletin id.
     Args:
         vuln_id (str): The vulnerability id aka (USN-2161-1)
 
     Basic Usage:
-        >>> from vFense.plugins.vuln.windows.ms import get_vuln_data
+        >>> from vFense.plugins.vuln.windows.ms import get_vuln_data_by_vuln_id
         >>> vuln_id = 'USN-2161-1'
-        >>> get_vuln_data(vuln_id)
+        >>> get_vuln_data_by_vuln_id(vuln_id)
 
     Returns:
     {

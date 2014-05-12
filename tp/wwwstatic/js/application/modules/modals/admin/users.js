@@ -30,6 +30,9 @@ define(
                     this.listenTo(this.groupCollection, 'sync', this.render);
                     this.groupCollection.fetch();
 
+                    this.groupCollection.filter = '?all_customers=True';
+                    this.groupCollection.fetch();
+
                     $.ajaxSetup({traditional: true});
                     return this;
                 },
@@ -185,6 +188,77 @@ define(
                     params.group_ids = this.groupsArray;
                     params.customer_names = this.customersArray;
 
+                    var alphaNumRegExp = /^[A-Za-z0-9 ]+$/,
+                        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/,
+                        emailRegExp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                    if(!_.isEmpty(fullName))
+                    {
+                        if(!alphaNumRegExp.test(fullName))
+                        {
+                            that.$el.find('#fullname').parents('.control-group').addClass('error');
+                            that.$el.find('#fullname').siblings('.help-block').html('Full Name should have alphanumeric characters only.').show();
+                            return false;
+                        }
+                        else
+                        {
+                            that.$el.find('#fullname').parents('.control-group').removeClass('error');
+                            that.$el.find('#fullname').siblings('.help-block').empty().hide();
+                        }
+                    }
+
+                    if(!_.isEmpty(email))
+                    {
+                        if(!emailRegExp.test(email))
+                        {
+                            that.$el.find('#email').parents('.control-group').addClass('error');
+                            that.$el.find('#email').siblings('.help-block').html('Invalid Email-ID format.').show();
+                            return false;
+                        }
+                        else
+                        {
+                            that.$el.find('#email').parents('.control-group').removeClass('error');
+                            that.$el.find('#email').siblings('.help-block').empty().hide();
+                        }
+                    }
+
+                    if(!$.trim(username))
+                    {
+                        that.$el.find('#username').parents('.control-group').addClass('error');
+                        that.$el.find('#username').siblings('.help-block').html('Username should not be empty.').show();
+                        return false;
+                    }
+                    else if(!alphaNumRegExp.test(username))
+                    {
+                        that.$el.find('#username').parents('.control-group').addClass('error');
+                        that.$el.find('#username').siblings('.help-block').html('Username should have alphanumeric characters only.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#username').parents('.control-group').removeClass('error');
+                        that.$el.find('#username').siblings('.help-block').empty().hide();
+                    }
+
+                    if(!$.trim(password))
+                    {
+                        that.$el.find('#password').parents('.control-group').addClass('error');
+                        that.$el.find('#password').siblings('.help-block').html('Password should not be empty.').show();
+                        return false;
+                    }
+                    else if(!passwordRegExp.test(password))
+                    {
+                        that.$el.find('#password').parents('.control-group').addClass('error');
+//                        that.$el.find('#password').siblings('.help-block').html('Password should have atleast 1 Lowercase, 1 Uppercase, 1 Numeric, 1 Special Character and minimum 8 characters.').show();
+                        that.$el.find('#password').siblings('.help-block').html('Invalid Password').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('#password').parents('.control-group').removeClass('error');
+                        that.$el.find('#password').siblings('.help-block').empty().hide();
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/v1/users',
@@ -204,6 +278,7 @@ define(
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         username = $input.data('user'),
+                        currentCustomer = $input.data('customer'),
                         groupId = $input.data('id'),
                         url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
@@ -213,6 +288,7 @@ define(
                     users.push(username);
                     groups.push(groupId);
                     params = {
+                        customer_context: currentCustomer,
                         group_ids: groups,
                         action: event.added ? 'add' : 'delete'
                     };
@@ -237,7 +313,9 @@ define(
                     var $groups = this.$('input[name=groups]'),
                         $customers = this.$('select[name=customers]'),
                         $select = this.$el.find('input[name=groupSelect], input[name=customerSelect]'),
+                        groups = this.groupCollection.toJSON()[0].data,
                         that = this;
+
                     $groups.select2({
                         width: '100%',
                         multiple: true,
@@ -295,9 +373,18 @@ define(
                                         return $(select).data('url');
                                     },
                                     data: function () {
-                                        return {
-                                            username: $(select).data('user')
-                                        };
+                                        if(select.name === 'groupSelect')
+                                        {
+                                            return {
+                                                customer_context: $(select).data('customer')
+                                            };
+                                        }
+                                        else
+                                        {
+                                            return {
+
+                                            };
+                                        }
                                     },
                                     results: function (data) {
                                         var results = [];
@@ -320,7 +407,26 @@ define(
                                     var data = JSON.parse(element.val()),
                                         results = [];
                                     _.each(data, function (object) {
-                                        results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                        if(object.group_id)
+                                        {
+                                            _.each(groups, function (group) {
+                                                if(object.group_id === group.id)
+                                                {
+                                                    if(_.indexOf(group.permissions, 'administrator') !== -1)
+                                                    {
+                                                        results.push({locked: true, id: object.group_id, text: object.group_name});
+                                                    }
+                                                    else
+                                                    {
+                                                        results.push({id: object.group_id, text: object.group_name});
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        else
+                                        {
+                                            results.push({id: object.customer_name, text: object.customer_name});
+                                        }
                                     });
                                     callback(results);
                                 },
@@ -329,15 +435,24 @@ define(
                                         return $(select).data('url');
                                     },
                                     data: function () {
-                                        return {
-                                            username: $(select).data('user')
-                                        };
+                                        if(select.name === 'groupSelect')
+                                        {
+                                            return {
+                                                customer_context: $(select).data('customer')
+                                            };
+                                        }
+                                        else
+                                        {
+                                            return {
+
+                                            };
+                                        }
                                     },
                                     results: function (data) {
                                         var results = [];
                                         if (data.rv_status_code === 1001) {
                                             _.each(data.data, function (object) {
-                                                results.push({id: object.group_id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
+                                                results.push({id: object.id || object.customer_name, text: object.group_name ? object.group_name : object.customer_name});
                                             });
                                             return {results: results, more: false, context: results};
                                         }

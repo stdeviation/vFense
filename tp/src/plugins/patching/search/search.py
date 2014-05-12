@@ -65,12 +65,20 @@ class RetrieveApps(object):
 
         self.joined_map_hash = (
             {                                                                                                                                                      
-                self.CurrentAppsKey.AppId: r.row['right'][self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row['right'][self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row['right'][self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate: r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row['right'][self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.Hidden: r.row['right'][self.CurrentAppsKey.Hidden],
+                self.CurrentAppsKey.AppId:
+                    r.row['right'][self.CurrentAppsKey.AppId],
+                self.CurrentAppsKey.Version:
+                    r.row['right'][self.CurrentAppsKey.Version],
+                self.CurrentAppsKey.Name:
+                    r.row['right'][self.CurrentAppsKey.Name],
+                self.CurrentAppsKey.ReleaseDate:
+                    r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
+                self.CurrentAppsKey.RvSeverity:
+                    r.row['right'][self.CurrentAppsKey.RvSeverity],
+                self.CurrentAppsKey.VulnerabilityId:
+                    r.row['right'][self.CurrentAppsKey.VulnerabilityId],
+                self.CurrentAppsKey.Hidden:
+                    r.row['right'][self.CurrentAppsKey.Hidden],
             }
         )
 
@@ -81,6 +89,7 @@ class RetrieveApps(object):
                 self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
                 self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
                 self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
+                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
             }
         )
         self.pluck_list = (
@@ -90,6 +99,7 @@ class RetrieveApps(object):
                 self.CurrentAppsKey.Name,
                 self.CurrentAppsKey.ReleaseDate,
                 self.CurrentAppsKey.RvSeverity,
+                self.CurrentAppsKey.VulnerabilityId,
             ]
         )
 
@@ -108,7 +118,9 @@ class RetrieveApps(object):
                 )
 
                 if self.show_hidden == CommonKeys.NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
+                    base = base.filter(
+                        {self.CurrentAppsKey.Hidden: CommonKeys.NO}
+                    )
 
                 packages = list(
                     base

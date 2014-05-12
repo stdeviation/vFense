@@ -4,15 +4,15 @@ import logging
 import logging.config
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.decorators import results_message
-from vFense.operations import *
+from vFense.operations import AgentOperationKey
 from vFense.operations._constants import AgentOperations
 from vFense.operations.search._db_agent_search import FetchAgentOperations
-from vFense.core.agent import *
+#from vFense.core.agent import *
 from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
 from vFense.errorz._constants import ApiResultKeys
-from vFense.plugins.patching import *
-from vFense.plugins.patching.rv_db_calls import *
-from vFense.utils.common import *
+#from vFense.plugins.patching import *
+#from vFense.plugins.patching.rv_db_calls import *
+#from vFense.utils.common import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -21,12 +21,12 @@ logger = logging.getLogger('rvapi')
 class AgentOperationRetriever(object):
     """Retrieve operations, by various filters."""
     def __init__(
-        self, customer_name=None,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.DESC,
-        sort_key=AgentOperationKey.CreatedTime,
-        user_name=None, uri=None, method=None
+            self, customer_name=None,
+            count=DefaultQueryValues.COUNT,
+            offset=DefaultQueryValues.OFFSET,
+            sort=SortValues.DESC,
+            sort_key=AgentOperationKey.CreatedTime,
+            user_name=None, uri=None, method=None
         ):
         """
         Kwargs:
@@ -108,9 +108,9 @@ class AgentOperationRetriever(object):
                         "agents_completed_with_errors_count": 0,
                         "created_by": "admin",
                         "agents_pending_pickup_count": 0,
-                        "completed_time": 1398092303, 
-                        "operation_status": 6006, 
-                        "agents_completed_count": 1, 
+                        "completed_time": 1398092303,
+                        "operation_status": 6006,
+                        "agents_completed_count": 1,
                         "operation_id": "6c0209d5-b350-48b7-808a-158ddacb6940",
                         "created_time": 1398092302,
                         "agents_pending_results_count": 0,
@@ -140,7 +140,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
+        return results
 
     @results_message
     def get_all_by_agentid(self, agent_id, conn=None):
@@ -166,29 +166,29 @@ class AgentOperationRetriever(object):
                 "message": "dataset retrieved",
                 "data": [
                     {
-                        "agents_expired_count": 0, 
-                        "created_time": 1398126651, 
-                        "agents_pending_results_count": 0, 
-                        "operation": "install_os_apps", 
-                        "net_throttle": 0, 
-                        "customer_name": "default", 
-                        "cpu_throttle": "normal", 
-                        "agents_total_count": 1, 
-                        "agents_completed_with_errors_count": 0, 
-                        "action_performed_on": "agent", 
+                        "agents_expired_count": 0,
+                        "created_time": 1398126651,
+                        "agents_pending_results_count": 0,
+                        "operation": "install_os_apps",
+                        "net_throttle": 0,
+                        "customer_name": "default",
+                        "cpu_throttle": "normal",
+                        "agents_total_count": 1,
+                        "agents_completed_with_errors_count": 0,
+                        "action_performed_on": "agent",
                         "agent_ids": [
                             "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
-                        ], 
-                        "created_by": "admin", 
-                        "tag_id": null, 
-                        "completed_time": 0, 
-                        "agents_completed_count": 0, 
-                        "agents_pending_pickup_count": 1, 
-                        "restart": "none", 
-                        "plugin": "rv", 
-                        "updated_time": 1398126651, 
-                        "operation_status": 6009, 
-                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                        ],
+                        "created_by": "admin",
+                        "tag_id": null,
+                        "completed_time": 0,
+                        "agents_completed_count": 0,
+                        "agents_pending_pickup_count": 1,
+                        "restart": "none",
+                        "plugin": "rv",
+                        "updated_time": 1398126651,
+                        "operation_status": 6009,
+                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb",
                         "agents_failed_count": 0
                     }
                 ]
@@ -212,8 +212,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @results_message
     def get_all_by_tagid(self, tag_id, conn=None):
@@ -230,29 +229,29 @@ class AgentOperationRetriever(object):
         Returns:
             Dictionary
             {
-                "count": 1, 
-                "uri": null, 
-                "rv_status_code": 1001, 
-                "http_method": null, 
-                "http_status": 200, 
-                "message": "dataset retrieved", 
+                "count": 1,
+                "uri": null,
+                "rv_status_code": 1001,
+                "http_method": null,
+                "http_status": 200,
+                "message": "dataset retrieved",
                 "data": [
                     {
-                        "agents_expired_count": 0, 
-                        "agents_total_count": 2, 
-                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297", 
-                        "agents_completed_with_errors_count": 0, 
-                        "created_by": "admin", 
-                        "agents_pending_pickup_count": 1, 
-                        "completed_time": 1398110835, 
-                        "operation_status": 6009, 
-                        "agents_completed_count": 1, 
-                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88", 
-                        "created_time": 1398110770, 
-                        "agents_pending_results_count": 0, 
-                        "operation": "install_os_apps", 
-                        "updated_time": 1398110835, 
-                        "agents_failed_count": 0, 
+                        "agents_expired_count": 0,
+                        "agents_total_count": 2,
+                        "tag_id": "78076908-e93f-4116-8d49-ad42b4ad0297",
+                        "agents_completed_with_errors_count": 0,
+                        "created_by": "admin",
+                        "agents_pending_pickup_count": 1,
+                        "completed_time": 1398110835,
+                        "operation_status": 6009,
+                        "agents_completed_count": 1,
+                        "operation_id": "d6956a46-165f-49b6-a3df-872a1453ab88",
+                        "created_time": 1398110770,
+                        "agents_pending_results_count": 0,
+                        "operation": "install_os_apps",
+                        "updated_time": 1398110835,
+                        "agents_failed_count": 0,
                         "customer_name": "default"
                     }
                 ]
@@ -276,8 +275,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @results_message
     def get_all_by_operation(self, action):
@@ -295,37 +293,37 @@ class AgentOperationRetriever(object):
         Returns:
             Dictionary
             {
-                "count": 1, 
-                "uri": null, 
-                "rv_status_code": 1001, 
-                "http_method": null, 
-                "http_status": 200, 
-                "message": "dataset retrieved", 
+                "count": 1,
+                "uri": null,
+                "rv_status_code": 1001,
+                "http_method": null,
+                "http_status": 200,
+                "message": "dataset retrieved",
                 "data": [
                     {
-                        "agents_expired_count": 0, 
-                        "created_time": 1398126651, 
-                        "agents_pending_results_count": 0, 
-                        "operation": "install_os_apps", 
-                        "net_throttle": 0, 
-                        "customer_name": "default", 
-                        "cpu_throttle": "normal", 
-                        "agents_total_count": 1, 
-                        "agents_completed_with_errors_count": 0, 
-                        "action_performed_on": "agent", 
+                        "agents_expired_count": 0,
+                        "created_time": 1398126651,
+                        "agents_pending_results_count": 0,
+                        "operation": "install_os_apps",
+                        "net_throttle": 0,
+                        "customer_name": "default",
+                        "cpu_throttle": "normal",
+                        "agents_total_count": 1,
+                        "agents_completed_with_errors_count": 0,
+                        "action_performed_on": "agent",
                         "agent_ids": [
                             "33ba8521-b2e5-47dc-9bdc-0f1e3384049d"
-                        ], 
-                        "created_by": "admin", 
-                        "tag_id": null, 
-                        "completed_time": 0, 
-                        "agents_completed_count": 0, 
-                        "agents_pending_pickup_count": 1, 
-                        "restart": "none", 
-                        "plugin": "rv", 
-                        "updated_time": 1398126651, 
-                        "operation_status": 6009, 
-                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb", 
+                        ],
+                        "created_by": "admin",
+                        "tag_id": null,
+                        "completed_time": 0,
+                        "agents_completed_count": 0,
+                        "agents_pending_pickup_count": 1,
+                        "restart": "none",
+                        "plugin": "rv",
+                        "updated_time": 1398126651,
+                        "operation_status": 6009,
+                        "operation_id": "267486ef-850f-47e7-a0c4-0da5d5a38efb",
                         "agents_failed_count": 0
                     }
                 ]
@@ -358,8 +356,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @results_message
     def get_install_operation_by_id(self, operation_id, conn=None):
@@ -416,9 +413,7 @@ class AgentOperationRetriever(object):
                             "apps_total_count": 1,
                             "operation_id": "48854d9d-a705-45d2-bab6-a448bc75f7d2",
                             "expired_time": 0
-                            
                         }
-                        
                     ],
                     "created_time": 1398118321,
                     "agents_pending_results_count": 0,
@@ -466,7 +461,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
+        return results
 
     @results_message
     def get_operation_by_id(self, operation_id, conn=None):
@@ -547,7 +542,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(results)
+        return results
 
     def get_install_operation_for_email_alert(self, operation_id):
         count, data = (
@@ -556,8 +551,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(operations)
-
+        return data
 
     def get_operation_for_email_alert(self, operation_id):
         count, data = (
@@ -566,7 +560,7 @@ class AgentOperationRetriever(object):
             )
         )
 
-        return(operations)
+        return data
 
     def _set_results(self, gen_status_code, vfense_status_code,
                      msg, count, data):
@@ -582,4 +576,4 @@ class AgentOperationRetriever(object):
             ApiResultKeys.HTTP_METHOD: self.method
         }
 
-        return(results)
+        return results

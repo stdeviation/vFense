@@ -67,6 +67,7 @@ class ListenerURIs():
     REBOOT = 'core/results/reboot'
     SHUTDOWN = 'core/results/shutdown'
     REFRESH_APPS = 'rv/updatesapplications'
+    AVAILABLE_AGENT_UPDATE = 'rv/available_agent_update'
     START_UP = 'core/results/startup'
     CHECK_IN = 'core/checkin'
     MONITOR_DATA = 'monitoring/monitordata'
@@ -74,7 +75,7 @@ class ListenerURIs():
 
 
 class AgentOperations():
-    NEWAGENT = 'new_agent'
+    NEW_AGENT = 'new_agent'
     REFRESH_APPS = 'updatesapplications'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
@@ -89,9 +90,10 @@ class AgentOperations():
     SHUTDOWN = 'shutdown'
     RA = 'ra'
     REFRESH_RESPONSE_URIS = 'refresh_response_uris'
+    AVAILABLE_AGENT_UPDATE = 'available_agent_update'
 
     OPERATIONS = (
-        NEWAGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
+        NEW_AGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
         START_UP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
         INSTALL_SUPPORTED_APPS, INSTALL_AGENT_APPS,
         UNINSTALL, UNINSTALL_AGENT,
