@@ -50,7 +50,7 @@ def fetch_file_servers_addresses(customer_name, conn=None):
 
 @db_create_close
 def fetch_app_data(
-        app_id, table=AppCollections.UniqueApplications,
+        app_id, collection=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
@@ -58,15 +58,15 @@ def fetch_app_data(
         app_id (str): 64 character ID of the application.
 
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
             default = unique_applications
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_data
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> table = 'unique_applications'
-        >>> fetch_app_data(app_id, table)
+        >>> collection = 'unique_applications'
+        >>> fetch_app_data(app_id, collection)
 
     Returns:
         Dictionary
@@ -77,7 +77,7 @@ def fetch_app_data(
         if fields_to_pluck:
             data = (
                 r
-                .table(table)
+                .table(collection)
                 .get(app_id)
                 .merge(merge)
                 .pluck(fields_to_pluck)
@@ -87,7 +87,7 @@ def fetch_app_data(
         else:
             data = (
                 r
-                .table(table)
+                .table(collection)
                 .get(app_id)
                 .merge(merge)
                 .run(conn)
@@ -100,7 +100,7 @@ def fetch_app_data(
 
 @db_create_close
 def fetch_app_data_by_appids(
-        app_ids, table=AppCollections.UniqueApplications,
+        app_ids, collection=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None
     ):
     """Fetch application data by application ids
@@ -108,15 +108,15 @@ def fetch_app_data_by_appids(
         app_ids (str): List of application ids.
 
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when searching for the application data.
             default = unique_applications
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_data_by_appids
         >>> app_ids = ['15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb']
-        >>> table = 'unique_applications'
-        >>> fetch_app_data_by_appids(app_ids, table)
+        >>> collection = 'unique_applications'
+        >>> fetch_app_data_by_appids(app_ids, collection)
 
     Returns:
         Dictionary
@@ -130,7 +130,7 @@ def fetch_app_data_by_appids(
                 .map(
                     lambda app_id:
                     r
-                    .table(table)
+                    .table(collection)
                     .get(app_id)
                     .merge(
                         lambda x: 
@@ -152,7 +152,7 @@ def fetch_app_data_by_appids(
                 .map(
                     lambda app_id:
                     r
-                    .table(table)
+                    .table(collection)
                     .get(app_id)
                     .merge(
                         lambda x:
@@ -173,7 +173,7 @@ def fetch_app_data_by_appids(
 
 @db_create_close
 def fetch_app_data_by_appid_and_agentid(
-        app_id, agent_id, table=AppCollections.AppsPerAgent,
+        app_id, agent_id, collection=AppCollections.AppsPerAgent,
         fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
@@ -182,15 +182,15 @@ def fetch_app_data_by_appid_and_agentid(
         agent_id (str): 36 character UUID of the agent.
 
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_data
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> table = 'unique_applications'
-        >>> fetch_app_data_by_agentid(app_id, agent_id, table)
+        >>> collection = 'unique_applications'
+        >>> fetch_app_data_by_agentid(app_id, agent_id, collection)
 
     Returns:
         Dictionary
@@ -226,7 +226,7 @@ def fetch_app_data_by_appid_and_agentid(
         if fields_to_pluck:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .get_all([agent_id, app_id], index=index_to_use)
                 .pluck(fields_to_pluck)
                 .run(conn)
@@ -237,7 +237,7 @@ def fetch_app_data_by_appid_and_agentid(
         else:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .get_all([agent_id, app_id], index=index_to_use)
                 .run(conn)
             )
@@ -252,7 +252,7 @@ def fetch_app_data_by_appid_and_agentid(
 @db_create_close
 def fetch_apps_data_by_os_code(
         os_code, customer_name=None,
-        table=AppCollections.UniqueApplications,
+        collection=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None
     ):
     """Fetch application data by app id
@@ -262,17 +262,17 @@ def fetch_apps_data_by_os_code(
     Kwargs:
         customer_name (str, optional): The name of the customer
             you are searching on.
-        table (str, optional): The name of the collection,
+        collection (str, optional): The name of the collection,
             default = unique_applications.
         fields_to_pluck (list, optional): Fields you want to pluck from
             the database.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_apps_data_by_os_code
-        >>> table = 'unique_applications'
+        >>> collection = 'unique_applications'
         >>> os_code = 'linux'
         >>> customer_name = 'default'
-        >>> fetch_apps_data_by_os_code(os_code, customer_name. table)
+        >>> fetch_apps_data_by_os_code(os_code, customer_name. collection)
 
     Returns:
         List of dictionaries.
@@ -311,7 +311,7 @@ def fetch_apps_data_by_os_code(
         if customer_name and fields_to_pluck:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .get_all(customer_name, index=index_to_use)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
@@ -322,7 +322,7 @@ def fetch_apps_data_by_os_code(
         elif customer_name and not fields_to_pluck:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .get_all(customer_name, index=index_to_use)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
@@ -332,7 +332,7 @@ def fetch_apps_data_by_os_code(
         elif not customer_name and fields_to_pluck:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
                 .pluck(fields_to_pluck)
@@ -342,7 +342,7 @@ def fetch_apps_data_by_os_code(
         else:
             data = list(
                 r
-                .table(table)
+                .table(collection)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
                 .run(conn)
@@ -358,7 +358,7 @@ def fetch_apps_data_by_os_code(
 @db_create_close
 def fetch_app_data_to_send_to_agent(
         app_id, agent_id,
-        table=AppCollections.UniqueApplications,
+        collection=AppCollections.UniqueApplications,
         conn=None
     ):
     """Fetch application data by app id
@@ -367,15 +367,15 @@ def fetch_app_data_to_send_to_agent(
         agent_id (str): 36 character UUID of the agent.
 
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_data
         >>> app_id = 'c726edf62d1d17ca8b420f24bbdc9c8fa58d000b51d31614e3826c2fb37a2929'
         >>> agent_id = '33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
-        >>> table = 'unique_applications'
-        >>> fetch_app_data_by_agentid(app_id, agent_id, table)
+        >>> collection = 'unique_applications'
+        >>> fetch_app_data_by_agentid(app_id, agent_id, collection)
 
     Returns:
         Dictionary
@@ -398,7 +398,7 @@ def fetch_app_data_to_send_to_agent(
     try:
         data = list(
             r
-            .table(table)
+            .table(collection)
             .get_all(app_id)
             .map(
                 lambda app:
@@ -438,29 +438,26 @@ def fetch_app_data_to_send_to_agent(
     return data
 
 @db_create_close
-def fetch_appids_by_agentid_and_status(
-        agent_id, status, sev=None,
-        table=AppCollections.AppsPerAgent,
-        conn=None
-    ):
+def fetch_appids_by_agentid_and_status(agent_id, status, sev=None,
+        collection=AppCollections.AppsPerAgent, conn=None):
 
-    if table == AppCollections.AppsPerAgent:
+    if collection == AppCollections.AppsPerAgent:
         join_table = AppCollections.UniqueApplications
 
-    elif table == AppCollections.CustomAppsPerAgent:
+    elif collection == AppCollections.CustomAppsPerAgent:
         join_table = AppCollections.CustomApps
 
-    elif table == AppCollections.SupportedAppsPerAgent:
+    elif collection == AppCollections.SupportedAppsPerAgent:
         join_table = AppCollections.SupportedApps
 
-    elif table == AppCollections.vFenseAppsPerAgent:
+    elif collection == AppCollections.vFenseAppsPerAgent:
         join_table = AppCollections.vFenseApps
 
 
     if sev:
         appids = list(
             r
-            .table(table)
+            .table(collection)
             .get_all(
                 [
                     status, agent_id
@@ -485,7 +482,7 @@ def fetch_appids_by_agentid_and_status(
     else:
         appids = list(
             r
-            .table(table)
+            .table(collection)
             .get_all(
                 [
                     status, agent_id
@@ -503,11 +500,9 @@ def fetch_appids_by_agentid_and_status(
 
 @time_it
 @db_create_close
-def fetch_app_id_by_name_and_version(
-        app_name, app_version,
-        table=AppCollections.UniqueApplications,
-        conn=None
-    ):
+def fetch_app_id_by_name_and_version(app_name, app_version,
+        collection=AppCollections.UniqueApplications, conn=None):
+
     """Fetch app_id by searching for the app name and version.
     Args:
         app_name (str): Name of the application you are removing
@@ -516,15 +511,15 @@ def fetch_app_id_by_name_and_version(
             you are removing.
 
     Kwargs:
-        table (str): The name of the table you are perfoming the delete on.
+        collection (str): The name of the collection you are perfoming the delete on.
             default = 'unique_applications'
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_app_id_by_name_and_version
         >>> app_name = 'libpangoxft-1.0-0'
         >>> app_version = '1.36.3-1ubuntu1'
-        >>> table = 'apps_per_agent'
-        >>> fetch_app_id_by_name_and_version(name, version, table)
+        >>> collection = 'apps_per_agent'
+        >>> fetch_app_id_by_name_and_version(name, version, collection)
 
     Returns:
         String
@@ -533,7 +528,7 @@ def fetch_app_id_by_name_and_version(
     try:
         app_ids = list(
             r
-            .table(table)
+            .table(collection)
             .get_all(
                 [app_name, app_version],
                 index=DbCommonAppIndexes.NameAndVersion
@@ -551,10 +546,9 @@ def fetch_app_id_by_name_and_version(
 
 @time_it
 @db_create_close
-def return_valid_appids_for_agent(
-        app_ids, agent_id,
-        table=AppCollections.AppsPerAgent, conn=None
-    ):
+def return_valid_appids_for_agent(app_ids, agent_id,
+        collection=AppCollections.AppsPerAgent, conn=None):
+
     """Return the valid application ids, from the list of application ids
         that were passed into this function
     Args:
@@ -569,8 +563,8 @@ def return_valid_appids_for_agent(
         >>> from vFense.plugins.patching._db import return_valid_appids_for_agent
         >>> app_ids = ['c726edf62d1d17ca8b420f24bbdc9c8fa58d000b51d31614e3826c2fb37a2929', 'foo']
         >>> agent_id = '33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
-        >>> table = 'apps_per_agent'
-        >>> return_valid_appids_for_agent(app_ids, agent_id, table)
+        >>> collection = 'apps_per_agent'
+        >>> return_valid_appids_for_agent(app_ids, agent_id, collection)
 
     Returns:
         List
@@ -586,7 +580,7 @@ def return_valid_appids_for_agent(
             .map(
                 lambda app_id:
                 r
-                .table(table)
+                .table(collection)
                 .get_all(
                     [agent_id, app_id],
                     index=DbCommonAppPerAgentIndexes.AgentIdAndAppId
@@ -604,17 +598,14 @@ def return_valid_appids_for_agent(
 
 
 @time_it
-def insert_app_data(
-        app_data,
-        table=AppCollections.UniqueApplications,
-    ):
+def insert_app_data(app_data, collection=AppCollections.UniqueApplications):
     """Insert application data in the unique_applications collection.
         This function should not be called directly.
     Args:
         app_data(list|dict): List of dictionaires or a
             dictionary of the application data.
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
             default = unique_applications
 
@@ -635,23 +626,22 @@ def insert_app_data(
                 "uninstallable": "yes", "vulnerability_id": "",
                 "name": "gwibber-service-facebook"
             }
-        >>> insert_app_data(app_data, table)
+        >>> insert_app_data(app_data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    return insert_data_in_table(app_data, table)
+    return insert_data_in_table(app_data, collection)
 
 
 @time_it
 @db_create_close
 @return_status_tuple
-def update_customers_in_apps_by_customer(
-        current_customer, new_customer, remove_customer=False,
-        collection=AppCollections.UniqueApplications,
-        conn=None
-    ):
+def update_customers_in_apps_by_customer(current_customer, new_customer,
+        remove_customer=False, collection=AppCollections.UniqueApplications,
+        conn=None):
+
     """ Update the customers list of all applications for the current customer.
     Args:
         current_customer (str): Name of the current customer.
@@ -876,7 +866,7 @@ def delete_apps_by_customer(
 @return_status_tuple
 def update_app_data_by_agentid(
         agent_id, app_data,
-        table=AppCollections.AppsPerAgent,
+        collection=AppCollections.AppsPerAgent,
         conn=None
     ):
     """Update app data for an agent.
@@ -886,15 +876,15 @@ def update_app_data_by_agentid(
         data(dict): Dictionary of the application data that
             is being updated for the agent.
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_app_data_by_agentid
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> data = {'status': 'pending'}
-        >>> table = 'apps_per_agent'
-        >>> update_app_data_by_agentid(agent_id, data, table)
+        >>> collection = 'apps_per_agent'
+        >>> update_app_data_by_agentid(agent_id, data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -905,7 +895,7 @@ def update_app_data_by_agentid(
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .get_all(agent_id, index=index_to_use)
             .update(app_data)
             .run(conn)
@@ -921,7 +911,7 @@ def update_app_data_by_agentid(
 @return_status_tuple
 def update_app_data_by_agentid_and_appid(
         agent_id, app_id, app_data,
-        table=AppCollections.AppsPerAgent,
+        collection=AppCollections.AppsPerAgent,
         conn=None
     ):
     """Update app data for an agent.
@@ -932,7 +922,7 @@ def update_app_data_by_agentid_and_appid(
         data(dict): Dictionary of the application data that
             is being updated for the agent.
     Kwargs:
-        table (str): The name of the apps per agent collection,
+        collection (str): The name of the apps per agent collection,
             that will be used when updating the application data.
 
     Basic Usage:
@@ -940,8 +930,8 @@ def update_app_data_by_agentid_and_appid(
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
         >>> data = {'status': 'pending'}
-        >>> table = 'apps_per_agent'
-        >>> update_app_data_by_agentid_and_appid(agent_id, app_id, data, table)
+        >>> collection = 'apps_per_agent'
+        >>> update_app_data_by_agentid_and_appid(agent_id, app_id, data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -952,7 +942,7 @@ def update_app_data_by_agentid_and_appid(
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .get_all([agent_id, app_id], index=index_to_use)
             .update(app_data)
             .run(conn)
@@ -968,7 +958,7 @@ def update_app_data_by_agentid_and_appid(
 @return_status_tuple
 def delete_app_data_for_agentid(
         agent_id,
-        table=AppCollections.AppsPerAgent,
+        collection=AppCollections.AppsPerAgent,
         conn=None
     ):
     """Delete all apps for an agent_id.
@@ -976,7 +966,7 @@ def delete_app_data_for_agentid(
         agent_id (str): The 36 character UUID of the agent
 
     Kwargs:
-        table (str): The name of the table.
+        collection (str): The name of the collection.
             default = apps_per_agent
 
     Basic Usage:
@@ -992,7 +982,7 @@ def delete_app_data_for_agentid(
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .get_all(agent_id, index=DbCommonAppPerAgentIndexes.AgentId)
             .delete()
             .run(conn)
@@ -1008,7 +998,7 @@ def delete_app_data_for_agentid(
 @return_status_tuple
 def update_customers_in_app_by_app_id(
         customer_name, app_id,
-        table=AppCollections.UniqueApplications,
+        collection=AppCollections.UniqueApplications,
         conn=None
     ):
     """Update the list of customers that require this application id.
@@ -1017,14 +1007,14 @@ def update_customers_in_app_by_app_id(
         app_id (str): The 64 character application id.
 
     Kwargs:
-        table (str): The name of the collection.
+        collection (str): The name of the collection.
             default = unique_applications
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_customers_in_app_by_app_id
         >>> customer_name = 'default'
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> table = 'unique_applications'
+        >>> collection = 'unique_applications'
         >>> update_customers_in_app_by_app_id(customer_name, app_id)
 
     Returns:
@@ -1035,7 +1025,7 @@ def update_customers_in_app_by_app_id(
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .get(app_id)
             .update(
                 {
@@ -1055,10 +1045,9 @@ def update_customers_in_app_by_app_id(
 
 
 @time_it
-def update_app_data_by_app_id(
-        app_id, app_data,
-        table=AppCollections.UniqueApplications
-    ):
+def update_app_data_by_app_id(app_id, app_data,
+        collection=AppCollections.UniqueApplications):
+
     """Update the data of an application.
 
     Args:
@@ -1066,7 +1055,7 @@ def update_app_data_by_app_id(
         app_data (dict): Dictionary of the data you are updateing.
 
     Kwargs:
-        table (str): The name of the collection you are updating
+        collection (str): The name of the collection you are updating
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -1075,97 +1064,20 @@ def update_app_data_by_app_id(
     """
     data = {}
     try:
-        data = update_data_in_table(app_id, app_data, table)
+        data = update_data_in_table(app_id, app_data, collection)
 
     except Exception as e:
         logger.exception(e)
 
     return data
 
-@time_it
-def update_custom_app_data_by_app_id(
-        app_id, app_data,
-        table=AppCollections.CustomApps,
-    ):
-    """Update the data of an application.
-    Args:
-        app_id (str): The 64 character hex digest of the application.
-        app_data (dict): Dictionary of the data you are updateing.
-
-    Kwargs:
-        table (str): The name of the collection you are updating
-
-    Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = update_data_in_table(app_id, app_data, table)
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
-
-@time_it
-def update_supported_app_data_by_app_id(
-        app_id, app_data,
-        table=AppCollections.SupportedApps,
-    ):
-    """Update the data of an application.
-    Args:
-        app_id (str): The 64 character hex digest of the application.
-        app_data (dict): Dictionary of the data you are updateing.
-
-    Kwargs:
-        table (str): The name of the collection you are updating
-
-    Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = update_data_in_table(app_id, app_data, table)
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
-
-@time_it
-def update_vfense_app_data_by_app_id(
-        app_id, app_data,
-        table=AppCollections.vFenseApps,
-    ):
-    """Update the data of an application.
-    Args:
-        app_id (str): The 64 character hex digest of the application.
-        app_data (dict): Dictionary of the data you are updateing.
-
-    Kwargs:
-        table (str): The name of the collection you are updating
-
-    Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = update_data_in_table(app_id, app_data, table)
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
 
 @time_it
 @db_create_close
 @return_status_tuple
 def delete_apps_per_agent_older_than(
         agent_id, now,
-        table=AppCollections.AppsPerAgent,
+        collection=AppCollections.AppsPerAgent,
         conn=None
     ):
     """Delete all apps_per_agent that are older than now,
@@ -1174,15 +1086,15 @@ def delete_apps_per_agent_older_than(
         now (rethinkdb.ast.EpochTime): RQL epoch time object.
 
     Kwargs:
-        table (str): The name of the table you are perfoming the delete on.
+        collection (str): The name of the collection you are perfoming the delete on.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
         >>> from vFense.core._db_constants import DbTime
         >>> now = DbTime.time_now()
-        >>> table = 'apps_per_agent'
+        >>> collection = 'apps_per_agent'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> delete_apps_per_agent_older_than(now, table)
+        >>> delete_apps_per_agent_older_than(now, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -1192,7 +1104,7 @@ def delete_apps_per_agent_older_than(
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .get_all(
                 agent_id,
                 index=DbCommonAppPerAgentIndexes.AgentId
@@ -1212,7 +1124,7 @@ def delete_apps_per_agent_older_than(
 @time_it
 def update_apps_per_agent(
         pkg_list,
-        table=AppCollections.AppsPerAgent
+        collection=AppCollections.AppsPerAgent
     ):
     """Insert or Update into the apps_per_agent collection
     Args:
@@ -1220,12 +1132,12 @@ def update_apps_per_agent(
             or update into the database.
 
     Kwargs:
-        table (str, optional): The name of the table you want to update.
+        collection (str, optional): The name of the collection you want to update.
             default = apps_per_agent
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_apps_per_agent
-        >>> table = 'apps_per_agent'
+        >>> collection = 'apps_per_agent'
         >>> pkg_list = [
                 {
                     "status": "installed",
@@ -1239,13 +1151,13 @@ def update_apps_per_agent(
                     "customer_name": "default"
                 }
             ]
-        >>> update_apps_per_agent(pkg_list, table)
+        >>> update_apps_per_agent(pkg_list, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = insert_data_in_table(pkg_list, table)
+    data = insert_data_in_table(pkg_list, collection)
     return data
 
 @time_it
@@ -1253,7 +1165,7 @@ def update_apps_per_agent(
 @return_status_tuple
 def update_hidden_status(
         app_ids, hidden=CommonKeys.TOGGLE,
-        table=AppCollections.UniqueApplications,
+        collection=AppCollections.UniqueApplications,
         conn=None
     ):
     """Update the global hidden status of an application
@@ -1263,8 +1175,8 @@ def update_hidden_status(
     Kwargs:
         hidden (str, optional): yes, no, or toggle
             default = toggle
-        table (str, optional): The table you are updating for.
-            table = unique_applications
+        collection (str, optional): The collection you are updating for.
+            collection = unique_applications
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_hidden_status
@@ -1285,7 +1197,7 @@ def update_hidden_status(
                 .for_each(
                     lambda app_id:
                     r
-                    .table(table)
+                    .table(collection)
                     .get(app_id)
                     .update(
                         {
@@ -1300,7 +1212,7 @@ def update_hidden_status(
             for app_id in app_ids:
                 data = (
                     r
-                    .table(table)
+                    .table(collection)
                     .get(app_id)
                     .update(
                         {

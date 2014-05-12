@@ -120,9 +120,9 @@ class InstallCustomAppsResults(BaseHandler):
                 )
             )
             print results_data
-            self.set_status(data['http_status'])
+            self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(data, indent=4))
+            self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
@@ -165,25 +165,26 @@ class InstallSupportedAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = (
-                PatchingOperationResults(
-                    username, agent_id,
-                    operation_id, success, error,
-                    status_code, uri, method
-                )
+            results = PatchingOperationResults(
+                username,
+                agent_id,
+                operation_id,
+                success,
+                error,
+                status_code,
+                uri,
+                method
             )
-            results_data = (
-                results.install_supported_apps(
-                    app_id, reboot_required,
-                    apps_to_delete, apps_to_add
-                )
+            results_data = results.install_supported_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
             )
+
             print results_data
-            self.set_status(data['http_status'])
+            self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.set_header('Content-Type', 'application/json')
-            self.write(dumps(data, indent=4))
+            self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
+
         except Exception as e:
             results = (
                 GenericResults(
@@ -240,12 +241,12 @@ class InstallAgentAppsResults(BaseHandler):
                 )
             )
             print results_data
+            # TODO: what is this meant for?
             data = results.install_agent_update(data)
 
-            self.set_status(data['http_status'])
+            self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.set_header('Content-Type', 'application/json')
-            self.write(dumps(data, indent=4))
+            self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
         except Exception as e:
             results = (
@@ -307,6 +308,7 @@ class UninstallAppsResults(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
+
         except Exception as e:
             results = (
                 GenericResults(

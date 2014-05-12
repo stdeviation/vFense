@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import re
 import logging
 import logging.config
@@ -33,8 +32,8 @@ from vFense.plugins.patching.patching import \
 from vFense.plugins.patching.operations.patching_operations import \
     PatchingOperation
 
-from vFense.plugins.patching.os_apps.incoming_updates import \
-    incoming_packages_from_agent
+from vFense.plugins.patching.apps.incoming_apps import \
+    incoming_applications_from_agent
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -59,59 +58,6 @@ class PatchingOperationResults(OperationResults):
                 self.username, self.customer_name,
             )
         )
-
-    def apps_refresh(self):
-        operation_type = AgentOperations.REFRESH_APPS
-        results = self.update_operation(operation_type)
-        return results
-
-    def install_os_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        results = self._update_app_status()
-        return results
-
-    def install_custom_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.CustomApps
-        results = self._update_app_status()
-        return results
-
-    def install_supported_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.SupportedApps
-        results = self._update_app_status()
-        return results
-
-    def install_agent_apps(
-            self, app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        ):
-        self._set_global_properties(
-            app_id, reboot_required,
-            apps_to_delete, apps_to_add
-        )
-        self.CurrentAppsCollection = AppCollections.vFenseApps
-        results = self._update_app_status()
-        return results
 
     def _set_global_properties(
             self, app_id, reboot_required,
@@ -139,6 +85,58 @@ class PatchingOperationResults(OperationResults):
         self.reboot_required = reboot_required
         self.operation_type = self.operation_data[AgentOperationKey.Operation]
 
+    def apps_refresh(self):
+        operation_type = AgentOperations.REFRESH_APPS
+        results = self.update_operation(operation_type)
+        return results
+
+    def install_os_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        results = self._update_app_status(AppCollections.UniqueApplications)
+
+        return results
+
+    def install_custom_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        results = self._update_app_status(AppCollections.CustomApps)
+
+        return results
+
+    def install_supported_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        results = self._update_app_status(AppCollections.SupportedApps)
+
+        return results
+
+    def install_agent_apps(
+            self, app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        ):
+        self._set_global_properties(
+            app_id, reboot_required,
+            apps_to_delete, apps_to_add
+        )
+        results = self._update_app_status(AppCollections.vFenseApps)
+        return results
+
     def _apps_to_add(self):
         """Add apps to agent
         """
@@ -147,12 +145,14 @@ class PatchingOperationResults(OperationResults):
         except Exception as e:
             pass
 
-        incoming_packages_from_agent(
-            self.username, self.agent_id,
+        incoming_applications_from_agent(
+            self.username,
             self.customer_name,
+            self.agent_id,
             self.agent_data[AgentKey.OsCode],
             self.agent_data[AgentKey.OsString],
-            self.apps_to_add, delete_afterwards=False
+            self.apps_to_add,
+            delete_afterwards=False
         )
 
     def _apps_to_delete(self):
@@ -171,7 +171,7 @@ class PatchingOperationResults(OperationResults):
             )
 
     @results_message
-    def _update_app_status(self):
+    def _update_app_status(self, collection):
         """Update the application status per agent as well as update the
             operation
         """
@@ -219,7 +219,7 @@ class PatchingOperationResults(OperationResults):
                     SharedAppKeys.InstallDate: install_date
                 }
             )
-            app_exist = fetch_app_data(self.app_id)
+            app_exist = fetch_app_data(self.app_id, collection)
 
             if app_exist:
                 if (self.operation_type == AgentOperations.INSTALL_OS_APPS or

@@ -22,7 +22,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
     if app_id and not agent_id:
         app_info = (
             fetch_app_data(
-                app_id, table=AppCollections.CustomApps
+                app_id, collection=AppCollections.CustomApps
             )
         )
 
@@ -39,33 +39,31 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
-                insert_app_data(agent_info_to_insert, table=AppCollections.CustomAppsPerAgent)
+                insert_app_data(
+                    agent_info_to_insert,
+                    collection=AppCollections.CustomAppsPerAgent
+                )
 
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
-        apps_info = (
-            fetch_apps_data_by_os_code(
-                agent_info[AgentKey.OsCode], customer_name,
-                table=AppCollections.CustomApps
-            )
+        apps_info = fetch_apps_data_by_os_code(
+            agent_info[AgentKey.OsCode], customer_name,
+            collection=AppCollections.CustomApps
         )
-        if len(apps_info) > 0:
-            for app_info in apps_info:
-                app_id = app_info.get(CustomAppsKey.AppId)
-                file_data = fetch_file_data(app_id)
-                add_file_data(
-                    app_id, file_data, agent_id
-                )
-                agent_info_to_insert = (
-                    {
-                        CustomAppsPerAgentKey.AgentId: agent_id,
-                        CustomAppsPerAgentKey.AppId: app_id,
-                        CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
-                        CustomAppsPerAgentKey.CustomerName: customer_name,
-                        CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
-                    }
-                )
-                insert_app_data(
-                    agent_info_to_insert,
-                    table=AppCollections.CustomAppsPerAgent
-                )
+
+        for app_info in apps_info:
+            app_id = app_info.get(CustomAppsKey.AppId)
+            file_data = fetch_file_data(app_id)
+            add_file_data(app_id, file_data, agent_id)
+
+            agent_info_to_insert = {
+                CustomAppsPerAgentKey.AgentId: agent_id,
+                CustomAppsPerAgentKey.AppId: app_id,
+                CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
+                CustomAppsPerAgentKey.CustomerName: customer_name,
+                CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
+            }
+
+            insert_app_data(
+                agent_info_to_insert, collection=AppCollections.CustomAppsPerAgent
+            )

@@ -139,18 +139,18 @@ def object_exist(primary_key, collection, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def insert_data_in_table(data, table, conn=None):
+def insert_data_in_table(data, collection, conn=None):
     """Insert data in a collection
     Args:
         data (list|dict): List of dictionaries or a dictionary of the data
             you are inserting.
-        table (str): The name of the collection you are removing all data from.
+        collection (str): The name of the collection you are removing all data from.
 
     Basic Usage:
         >>> from vFense.core._db import insert_data_in_table
         >>> data = [{'name': 'foo'}]
-        >>> table = 'agents'
-        >>> insert_data_in_table(data, table)
+        >>> collection = 'agents'
+        >>> insert_data_in_table(data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -161,7 +161,7 @@ def insert_data_in_table(data, table, conn=None):
     try:
         results = (
             r
-            .table(table)
+            .table(collection)
             .insert(data, upsert=True)
             .run(conn)
         )
@@ -174,18 +174,18 @@ def insert_data_in_table(data, table, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_data_in_table(primary_key, table, conn=None):
+def delete_data_in_table(primary_key, collection, conn=None):
     """Delete data in a collection
     Args:
         primary_key (str): The primary key of the collection
             you are searching for,
-        table (str): The name of the collection you are removing all data from.
+        collection (str): The name of the collection you are removing all data from.
 
     Basic Usage:
         >>> from vFense.core._db import delete_data_in_table
         >>> primary_key = 'default'
-        >>> table = 'agents'
-        >>> delete_data_in_table(primary_key, table)
+        >>> collection = 'agents'
+        >>> delete_data_in_table(primary_key, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -196,7 +196,7 @@ def delete_data_in_table(primary_key, table, conn=None):
     try:
         results = (
             r
-            .table(table)
+            .table(collection)
             .get(primary_key)
             .delete()
             .run(conn)
@@ -210,20 +210,20 @@ def delete_data_in_table(primary_key, table, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def update_data_in_table(primary_key, data, table, conn=None):
+def update_data_in_table(primary_key, data, collection, conn=None):
     """Update data by the primary key of the collection
     Args:
         primary_key (str): The primary key, of the object you are searching.
         data (dict): Dictionary of the data you are updating.
             you are inserting.
-        table (str): The name of the collection you are updating.
+        collection (str): The name of the collection you are updating.
 
     Basic Usage:
         >>> from vFense.core._db import update_data_in_table
         >>> primary_key = 'default'
         >>> data = {'enabled': 'no'}
-        >>> table = 'users'
-        >>> update_data_in_table(primary_key, data, table)
+        >>> collection = 'users'
+        >>> update_data_in_table(primary_key, data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -234,7 +234,7 @@ def update_data_in_table(primary_key, data, table, conn=None):
     try:
         results = (
             r
-            .table(table)
+            .table(collection)
             .get(primary_key)
             .update(data)
             .run(conn)
@@ -249,16 +249,16 @@ def update_data_in_table(primary_key, data, table, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_all_in_table(table, conn=None):
+def delete_all_in_table(collection, conn=None):
     """Delete all data in a collection
         WARNING, ALL DATA INSIDE COLLECTION WILL BE DELETED!!!
     Args:
-        table (str): The name of the collection you are removing all data from.
+        collection (str): The name of the collection you are removing all data from.
 
     Basic Usage:
         >>> from vFense.core._db import delete_all_in_table
-        >>> table = 'agents'
-        >>> delete_all_in_table(table)
+        >>> collection = 'agents'
+        >>> delete_all_in_table(collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -269,7 +269,7 @@ def delete_all_in_table(table, conn=None):
     try:
         data = (
             r
-            .table(table)
+            .table(collection)
             .delete()
             .run(conn)
         )

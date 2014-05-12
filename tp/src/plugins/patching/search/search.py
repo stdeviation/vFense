@@ -118,7 +118,9 @@ class RetrieveApps(object):
                 )
 
                 if self.show_hidden == CommonKeys.NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
+                    base = base.filter(
+                        {self.CurrentAppsKey.Hidden: CommonKeys.NO}
+                    )
 
                 packages = list(
                     base

@@ -453,27 +453,27 @@ def get_all_app_stats_by_customer(username, customer_name,
 @db_create_close
 def delete_app_from_rv(
         app_id,
-        table=AppCollections.UniqueApplications,
-        per_agent_table=AppCollections.AppsPerAgent,
+        collection=AppCollections.UniqueApplications,
+        per_agent_collection=AppCollections.AppsPerAgent,
         conn=None
         ):
     completed = True
     try:
         (
             r
-            .table(table)
+            .table(collection)
             .filter({AppsKey.AppId: app_id})
             .delete()
             .run(conn)
         )
         (
             r
-            .table(per_agent_table)
+            .table(per_agent_collection)
             .filter({AppsKey.AppId: app_id})
             .delete()
             .run(conn)
         )
-        if table == AppCollections.CustomApps:
+        if collection == AppCollections.CustomApps:
             (
                 r
                 .table(FileCollections.Files)

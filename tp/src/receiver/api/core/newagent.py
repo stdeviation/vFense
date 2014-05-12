@@ -74,8 +74,11 @@ class NewAgentV1(BaseHandler):
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
-                            username, customer_name, uri, method, agent_id,
-                            plugins['rv']['data'], agent_info
+                            username, customer_name, uri, method
+                        ).new_agent_operation(
+                            agent_id,
+                            plugins['rv']['data'],
+                            agent_info
                         )
 
                     if 'ra' in plugins:

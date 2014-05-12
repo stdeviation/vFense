@@ -1,5 +1,6 @@
 class AppCollections():
     UniqueApplications = 'unique_applications'
+    OsApps = 'os_apps'
     AppsPerAgent = 'apps_per_agent'
     CustomApps = 'custom_apps'
     CustomAppsPerAgent = 'custom_apps_per_agent'
@@ -350,8 +351,8 @@ class vFenseAppsKey():
     VendorName = 'vendor_name'
     CliOptions = 'cli_options'
     Arch = 'arch'
-    VulnerabiltyId = 'vulnerability_id'
-    VulnerabiltyCategories = 'vulnerability_categories'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
 
 

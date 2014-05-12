@@ -38,23 +38,20 @@ class UpdateApplicationsV1(BaseHandler):
             operation_id = self.arguments.get('operation_id', None)
             error = self.arguments.get('error', None)
             success = self.arguments.get('success', 'true')
-            app_data = self.arguments.get('data')
+            apps_data = self.arguments.get('data')
             status_code = self.arguments.get('status_code', None)
 
             RvHandOff(
-               username, customer_name, uri, method, agent_id,
-               app_data, oper_type=AgentOperations.REFRESH_APPS
-            )
+                username, customer_name, uri, method
+            ).refresh_apps_operation(agent_id, apps_data)
 
             if operation_id:
                 print self.arguments
 
-                results = (
-                    PatchingOperationResults(
-                        username, agent_id,
-                        operation_id, success, error,
-                        status_code, uri, method
-                    )
+                results = PatchingOperationResults(
+                    username, agent_id,
+                    operation_id, success, error,
+                    status_code, uri, method
                 )
 
                 results_data = results.apps_refresh()
@@ -66,7 +63,7 @@ class UpdateApplicationsV1(BaseHandler):
             else:
                 results = (
                     UpdateApplicationsResults(username, uri, method)
-                    .applications_updated(agent_id, app_data)
+                    .applications_updated(agent_id, apps_data)
                 )
 
                 results['data'] = []
@@ -74,11 +71,9 @@ class UpdateApplicationsV1(BaseHandler):
                 self.write(dumps(results))
 
         except Exception as e:
-            results = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
-            )
+            results = GenericResults(
+                username, uri, method
+            ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
             logger.exception(results)
 
             self.set_status(results['http_status'])

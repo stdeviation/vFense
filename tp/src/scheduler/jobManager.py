@@ -287,7 +287,8 @@ def remove_job(sched, jobname, customer_name, username, uri=None, method=None):
     return results
 
 
-def get_appid_list(agent_id, severity=None, table=AppCollections.AppsPerAgent):
+def get_appid_list(agent_id, severity=None,
+        collection=AppCollections.AppsPerAgent):
 
     severities = ['Critical', 'Recommended', 'Optional']
 
@@ -296,21 +297,21 @@ def get_appid_list(agent_id, severity=None, table=AppCollections.AppsPerAgent):
 
     if severity in severities:
         appids = fetch_appids_by_agentid_and_status(
-            agent_id, CommonAppKeys.AVAILABLE, severity, table
+            agent_id, CommonAppKeys.AVAILABLE, severity, collection
         )
 
     else:
         appids = fetch_appids_by_agentid_and_status(
-            agent_id, CommonAppKeys.AVAILABLE, table=table
+            agent_id, CommonAppKeys.AVAILABLE, collection=collection
         )
 
     return appids
 
 
-def get_app_for_appids(table, app_id, conn=None):
+def get_app_for_appids(collection, app_id, conn=None):
     fields_to_pluck = [AppsKey.AppId, AppsKey.Name, AppsKey.RvSeverity]
     app = fetch_app_data(
-        app_id, table=table, fields_to_pluck=fields_to_pluck
+        app_id, collection=collection, fields_to_pluck=fields_to_pluck
     )
 
     return app
@@ -364,7 +365,7 @@ def get_agent_apps_details(job, agent_id, details=True, conn=None):
 
     if app_ids_needed and details:
         apps = fetch_app_data_by_appids(
-            app_ids_needed, table=CurrentAppsCollection,
+            app_ids_needed, collection=CurrentAppsCollection,
             fields_to_pluck=app_keys_to_pluck
         )
 

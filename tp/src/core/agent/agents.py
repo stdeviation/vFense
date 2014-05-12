@@ -120,6 +120,7 @@ def get_all_agent_ids(customer_name=None, agent_os=None):
 @time_it
 def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
     """Retrieve a list of agents by os code and or customer name.
+
     Kwargs:
         customer_name (str, optional): Name of the customer, where the agent
             is located
@@ -133,16 +134,20 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
         >>> os_code = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
         >>> get_agents_info(customer_name, os_code, keys_to_pluck=pluck)
-        [
-            {
-                u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
-                u'computer_name': u'ubuntu'
-            },
-            {
-                u'agent_id': u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766',
-                u'computer_name': u'localhost.localdomain'
-            }
-        ]
+
+    Returns:
+        (list): list of dictionaries with agent data
+            Ex:
+                [
+                    {
+                        u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+                        u'computer_name': u'ubuntu'
+                    },
+                    {
+                        u'agent_id': u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766',
+                        u'computer_name': u'localhost.localdomain'
+                    }
+                ]
     """
 
     if agent_os and not keys_to_pluck and customer_name:
