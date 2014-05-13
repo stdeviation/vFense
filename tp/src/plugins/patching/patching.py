@@ -620,11 +620,15 @@ def update_all_app_data_for_agent(agent_id, app_data):
         >>> app_data = {'customer_name': 'default'}
         >>> update_all_app_data_for_agent(agent_id, app_data)
     """
-    update_app_data_by_agentid(agent_id, app_data)
-    update_custom_app_data_by_agentid(agent_id, app_data)
-    update_supported_app_data_by_agentid(agent_id, app_data)
-    update_vfense_app_data_by_agentid(agent_id, app_data)
+    collections = [
+        AppCollections.AppsPerAgent,
+        AppCollections.CustomAppsPerAgent,
+        AppCollections.SupportedAppsPerAgent,
+        AppCollections.vFenseAppsPerAgent
+    ]
 
+    for collection in collections:
+        update_app_data_by_agentid(agent_id, app_data, collection)
 
 @time_it
 def update_app_status_by_agentid_and_appid(
