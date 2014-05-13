@@ -499,6 +499,6 @@ def update_app_status(agent_id, app_id, oper_type, data):
     elif oper_type == AgentOperations.INSTALL_SUPPORTED_APPS:
         update_supported_app_per_agent(agent_id, app_id, data)
 
-    elif oper_type == AgentOperations.INSTALL_AGENT_APPS:
+    elif oper_type == AgentOperations.INSTALL_AGENT_UPDATE:
         update_agent_app_per_agent(agent_id, app_id, data)
 

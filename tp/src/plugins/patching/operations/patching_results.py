@@ -247,7 +247,7 @@ class PatchingOperationResults(OperationResults):
                         AppCollections.SupportedAppsPerAgent
                     )
 
-                elif self.operation_type == AgentOperations.INSTALL_AGENT_APPS:
+                elif self.operation_type == AgentOperations.INSTALL_AGENT_UPDATE:
 
                     update_app_data_by_agentid_and_appid(
                         self.agent_id,

@@ -127,7 +127,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
                     )
                 )
                 results = (
-                    operation.install_agent_apps(
+                    operation.install_agent_update(
                         app_ids, cpu_throttle,
                         net_throttle, restart,
                         agentids=[agent_id]
@@ -165,7 +165,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(agent_id, 'install_agent_apps', e)
+                ).something_broke(agent_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -232,7 +232,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(agent_id, 'install_agent_apps', e)
+                ).something_broke(agent_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -332,7 +332,7 @@ class TagIdAgentAppsHandler(BaseHandler):
                     )
                 )
                 results = (
-                    operation.install_agent_apps(
+                    operation.install_agent_update(
                         app_ids, cpu_throttle,
                         net_throttle, restart,
                         tag_id=tag_id
@@ -369,7 +369,7 @@ class TagIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(tag_id, 'install_agent_apps', e)
+                ).something_broke(tag_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -436,7 +436,7 @@ class TagIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(tag_id, 'install_agent_apps', e)
+                ).something_broke(tag_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -538,7 +538,7 @@ class AppIdAgentAppsHandler(BaseHandler):
                     )
                 )
                 results = (
-                    operation.install_agent_apps(
+                    operation.install_agent_update(
                         [app_id], cpu_throttle,
                         net_throttle, restart,
                         agentids=agent_ids
@@ -576,7 +576,7 @@ class AppIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(app_id, 'install_agent_apps', e)
+                ).something_broke(app_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -644,7 +644,7 @@ class AppIdAgentAppsHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(app_id, 'install_agent_apps', e)
+                ).something_broke(app_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -722,7 +722,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
                     )
                 )
                 results = (
-                    operation.install_agent_apps(
+                    operation.install_agent_update(
                         [app_id], cpu_throttle,
                         net_throttle, restart,
                         agentids=agent_ids
@@ -759,7 +759,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(app_id, 'install_agent_apps', e)
+                ).something_broke(app_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -828,7 +828,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).something_broke(app_id, 'install_agent_apps', e)
+                ).something_broke(app_id, 'install_agent_update', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
