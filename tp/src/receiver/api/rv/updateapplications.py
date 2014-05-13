@@ -46,7 +46,7 @@ class UpdateApplicationsV1(BaseHandler):
             ).refresh_apps_operation(agent_id, apps_data)
 
             if operation_id:
-                print self.arguments
+                logger.info("self.arguments: {0}".format(self.arguments))
 
                 results = PatchingOperationResults(
                     username, agent_id,

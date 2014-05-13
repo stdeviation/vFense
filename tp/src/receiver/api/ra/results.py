@@ -36,7 +36,7 @@ class RemoteDesktopResults(BaseHandler):
         processor = Processor()
         processor.handle(self.arguments)
 
-        print self.arguments
+        logger.info("self.arguments: {0}".format(self.arguments))
         results = (
             RaOperationResults(
                 username, agent_id,

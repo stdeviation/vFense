@@ -99,7 +99,7 @@ class InstallCustomAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
-            print self.arguments
+            logger.info("self.arguments: {0}".format(self.arguments))
 
             if not isinstance(reboot_required, bool):
                 if reboot_required == CommonKeys.TRUE:
@@ -158,7 +158,7 @@ class InstallSupportedAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
-            print self.arguments
+            logger.info("self.arguments: {0}".format(self.arguments))
 
             if not isinstance(reboot_required, bool):
                 if reboot_required == CommonKeys.TRUE:
@@ -220,7 +220,7 @@ class InstallAgentAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
-            print self.arguments
+            logger.info("self.arguments: {0}".format(self.arguments))
 
             if not isinstance(reboot_required, bool):
                 if reboot_required == CommonKeys.TRUE:
@@ -284,7 +284,7 @@ class UninstallAppsResults(BaseHandler):
             app_id = self.arguments.get('app_id')
             success = self.arguments.get('success')
             status_code = self.arguments.get('status_code', None)
-            print self.arguments
+            logger.info("self.arguments: {0}".format(self.arguments))
 
             if not isinstance(reboot_required, bool):
                 if reboot_required == CommonKeys.TRUE:
