@@ -155,100 +155,6 @@ def get_download_urls(customer_name, app_id, file_data):
     return uris
 
 @time_it
-def update_custom_app_data_by_agentid(agent_id, data, conn=None):
-    """Update app data for an agent.
-        This function should not be called directly.
-    Args:
-        agent_id (str): 36 character UUID of the agent.
-        data(dict): Dictionary of the application data that
-            is being updated for the agent.
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_custom_app_data_by_agentid
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> data = {'status': 'pending'}
-        >>> update_custom_app_data_by_agentid(agent_id, data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    collection = AppCollections.CustomAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, collection)
-
-@time_it
-def update_supported_app_data_by_agentid(agent_id, data, conn=None):
-    """Update app data for an agent.
-        This function should not be called directly.
-    Args:
-        agent_id (str): 36 character UUID of the agent.
-        data(dict): Dictionary of the application data that
-            is being updated for the agent.
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_supported_app_data_by_agentid
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> data = {'status': 'pending'}
-        >>> update_supported_app_data_by_agentid(agent_id, data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    collection = AppCollections.SupportedAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, collection)
-
-@time_it
-def update_vfense_app_data_by_agentid(agent_id, data, conn=None):
-    """Update app data for an agent.
-        This function should not be called directly.
-    Args:
-        agent_id (str): 36 character UUID of the agent.
-        data(dict): Dictionary of the application data that
-            is being updated for the agent.
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_vfense_app_data_by_agentid
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> data = {'status': 'pending'}
-        >>> update_vfense_app_data_by_agentid(agent_id, data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    collection = AppCollections.vFenseAppsPerAgent
-    return update_app_data_by_agentid(agent_id, data, collection)
-
-@time_it
-def update_os_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
-    """Update the apps_per_agent collection by agent_id and app_id.
-        This function should not be called directly.
-    Args:
-        agent_id (str): 36 character UUID of the agent.
-        app_id (str): 64 character ID of the application.
-        app_data(dict): Dictionary of the application data that
-            is being updated for the agent.
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_os_app_data_by_agentid_and_appid
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> app_data = {'status': 'pending'}
-        >>> update_os_app_data_by_agentid_and_appid(agent_id, app_id, app_data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    collection = AppCollections.AppsPerAgent
-    data = update_app_data_by_agentid_and_appid(
-        agent_id, app_id, app_data, collection=collection
-    )
-
-    return data
-
-@time_it
 def update_custom_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
     """Update the custom_apps_per_agent collection by agent_id and app_id.
         This function should not be called directly.
@@ -298,34 +204,6 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
         >>> (2001, 1, None, [])
     """
     collection = AppCollections.SupportedAppsPerAgent
-    data = update_app_data_by_agentid_and_appid(
-        agent_id, app_id, app_data, collection=collection
-    )
-
-    return data
-
-@time_it
-def update_vfense_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
-    """Update the vfense_apps_per_agent collection by agent_id and app_id.
-        This function should not be called directly.
-    Args:
-        agent_id (str): 36 character UUID of the agent.
-        app_id (str): 64 character ID of the application.
-        app_data(dict): Dictionary of the application data that
-            is being updated for the agent.
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_vfense_app_data_by_agentid_and_appid
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> app_data = {'status': 'pending'}
-        >>> update_vfense_app_data_by_agentid_and_appid(agent_id, app_id, app_data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    collection = AppCollections.vFenseAppsPerAgent
     data = update_app_data_by_agentid_and_appid(
         agent_id, app_id, app_data, collection=collection
     )
@@ -742,28 +620,37 @@ def update_all_app_data_for_agent(agent_id, app_data):
         >>> app_data = {'customer_name': 'default'}
         >>> update_all_app_data_for_agent(agent_id, app_data)
     """
-    update_app_data_by_agentid(agent_id, app_data)
-    update_custom_app_data_by_agentid(agent_id, app_data)
-    update_supported_app_data_by_agentid(agent_id, app_data)
-    update_vfense_app_data_by_agentid(agent_id, app_data)
+    collections = [
+        AppCollections.AppsPerAgent,
+        AppCollections.CustomAppsPerAgent,
+        AppCollections.SupportedAppsPerAgent,
+        AppCollections.vFenseAppsPerAgent
+    ]
 
+    for collection in collections:
+        update_app_data_by_agentid(agent_id, app_data, collection)
 
 @time_it
 def update_app_status_by_agentid_and_appid(
-        agent_id, app_id,
-        status=CommonAppKeys.PENDING
+        agent_id, app_id, status, collection=AppCollections.AppsPerAgent
     ):
+
     """Update the application status for an agent
+
     Args:
         agent_id (str): 36 character UUID of the agent.
         app_id (str): 64 character ID of the application.
+        status (str): The new status for the application.
+
+    Kwargs:
+        collection (str): Collection where the status update is done.
 
     Basic Usage:
         >>> from vFense.plugins.patching.patching import update_app_status_by_agentid_and_appid
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
-        >>> app_status = {'status': 'pending'}
-        >>> update_app_status_by_agentid_and_appid(agent_id, app_id, app_status)
+        >>> status = 'pending'
+        >>> update_app_status_by_agentid_and_appid(agent_id, app_id, status)
 
     Returns:
         Boolean
@@ -772,34 +659,12 @@ def update_app_status_by_agentid_and_appid(
 
     if status in CommonAppKeys.ValidPackageStatuses:
         app_status = {DbCommonAppPerAgentKeys.Status: status}
-        status_code, count, error, generated_ids = (
-            update_os_app_data_by_agentid_and_appid(
-                agent_id, app_id, app_status
-            )
+
+        status_code, _, _, _ = update_app_data_by_agentid_and_appid(
+            agent_id, app_id, app_status, collection
         )
 
-        if status_code != DbCodes.Replaced and count < 1:
-            status_code, count, error, generated_ids = (
-                update_custom_app_data_by_agentid(
-                    agent_id, app_id, app_status
-                )
-            )
-
-            if status_code != DbCodes.Replaced and count < 1:
-                status_code, count, error, generated_ids = (
-                    update_supported_app_data_by_agentid(
-                        agent_id, app_id, app_status
-                    )
-                )
-
-                if status_code != DbCodes.Replaced and count < 1:
-                    status_code, count, error, generated_ids = (
-                        update_vfense_app_data_by_agentid(
-                            agent_id, app_id, app_status
-                        )
-                    )
-
-        elif status_code == DbCodes.Replaced:
+        if status_code == DbCodes.Replaced:
             updated = True
 
     return updated

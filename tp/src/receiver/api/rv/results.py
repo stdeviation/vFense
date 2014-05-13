@@ -6,7 +6,8 @@ from vFense.core.decorators import agent_authenticated_request
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core._constants import CommonKeys
 
-from vFense.plugins.patching.operations.patching_results import PatchingOperationResults
+from vFense.plugins.patching.operations.patching_results import \
+    PatchingOperationResults
 
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
@@ -248,6 +249,7 @@ class InstallAgentAppsResults(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
             send_notifications(username, customer_name, operation_id, agent_id)
+
         except Exception as e:
             results = (
                 GenericResults(

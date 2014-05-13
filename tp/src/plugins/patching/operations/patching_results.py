@@ -23,10 +23,7 @@ from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
 from vFense.plugins.patching._db import fetch_app_data
 
 from vFense.plugins.patching.patching import \
-    update_os_app_data_by_agentid_and_appid, \
-    update_custom_app_data_by_agentid_and_appid, \
-    update_supported_app_data_by_agentid_and_appid, \
-    update_vfense_app_data_by_agentid_and_appid, \
+    update_app_data_by_agentid_and_appid, \
     delete_apps_from_agent_by_name_and_version
 
 from vFense.plugins.patching.operations.patching_operations import \
@@ -225,23 +222,38 @@ class PatchingOperationResults(OperationResults):
                 if (self.operation_type == AgentOperations.INSTALL_OS_APPS or
                         self.operation_type == AgentOperations.UNINSTALL):
 
-                    update_os_app_data_by_agentid_and_appid(
-                        self.agent_id, self.app_id, data_to_update
+                    update_app_data_by_agentid_and_appid(
+                        self.agent_id,
+                        self.app_id,
+                        data_to_update,
+                        AppCollections.AppsPerAgent
                     )
 
                 elif self.operation_type == AgentOperations.INSTALL_CUSTOM_APPS:
-                    update_custom_app_data_by_agentid_and_appid(
-                        self.agent_id, self.app_id, data_to_update
+
+                    update_app_data_by_agentid_and_appid(
+                        self.agent_id,
+                        self.app_id,
+                        data_to_update,
+                        AppCollections.CustomAppsPerAgent
                     )
 
                 elif self.operation_type == AgentOperations.INSTALL_SUPPORTED_APPS:
-                    update_supported_app_data_by_agentid_and_appid(
-                        self.agent_id, self.app_id, data_to_update
+
+                    update_app_data_by_agentid_and_appid(
+                        self.agent_id,
+                        self.app_id,
+                        data_to_update,
+                        AppCollections.SupportedAppsPerAgent
                     )
 
-                elif self.operation_type == AgentOperations.INSTALL_AGENT_APPS:
-                    update_vfense_app_data_by_agentid_and_appid(
-                        self.agent_id, self.app_id, data_to_update
+                elif self.operation_type == AgentOperations.INSTALL_AGENT_UPDATE:
+
+                    update_app_data_by_agentid_and_appid(
+                        self.agent_id,
+                        self.app_id,
+                        data_to_update,
+                        AppCollections.vFenseAppsPerAgent
                     )
 
             oper_app_exists = (

@@ -249,12 +249,12 @@ class StorePatchingOperation(StoreAgentOperation):
             )
         )
 
-    def install_agent_apps(
+    def install_agent_update(
             self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
             net_throttle=0, restart=RebootValues.NONE,
             agentids=None, tag_id=None
         ):
-        """Send the install_agent_apps operation to the agent,
+        """Send the install_agent_update operation to the agent,
             This will install the agent update on n
             number of agents or tag id.
         Args:
@@ -288,27 +288,28 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
             >>> operation = StorePatchingOperation(username, customer_name, uri, method)
-            >>> operation.install_agent_apps(
+            >>> operation.install_agent_update(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
                 )
         """
 
-        oper_type = AgentOperations.INSTALL_AGENT_APPS
+        oper_type = AgentOperations.INSTALL_AGENT_UPDATE
 
         self.CurrentAppsCollection = AppCollections.vFenseApps
         self.CurrentAppsKey = DbCommonAppKeys
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
-        return(
-            self.install_apps(
-                oper_type, appids,
-                cpu_throttle, net_throttle,
-                restart, agentids, tag_id
-            )
+        return self.install_apps(
+            oper_type,
+            appids,
+            cpu_throttle,
+            net_throttle,
+            restart,
+            agentids,
+            tag_id
         )
-
 
     def uninstall_apps(
             self, appids, cpu_throttle=CPUThrottleValues.NORMAL,
@@ -439,6 +440,7 @@ class StorePatchingOperation(StoreAgentOperation):
             results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
             results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
             results[ApiResultKeys.MESSAGE] = msg
+
             for agent_id in agentids:
                 valid_appids = (
                     return_valid_appids_for_agent(
@@ -450,7 +452,10 @@ class StorePatchingOperation(StoreAgentOperation):
                 pkg_data = []
                 for app_id in valid_appids:
                     update_app_status_by_agentid_and_appid(
-                        agent_id, app_id, CommonAppKeys.PENDING
+                        agent_id,
+                        app_id,
+                        CommonAppKeys.PENDING,
+                        self.CurrentAppsPerAgentCollection
                     )
 
                     pkg_data.append(

@@ -343,6 +343,7 @@ define(
                         spans.splice(titles.indexOf('Installed Date'), 1);
                     }
                     _.each(titles, function (title, i) {
+                        console.log(title);
                         if (title !== 'Severity') {
                             if (title === 'Name') {
                                 $(legend).append(crel('strong',{class: spans[i]}, crel('input', {type: 'checkbox', 'data-toggle': 'all'}), ' ' + title));

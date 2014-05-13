@@ -94,9 +94,9 @@ def _get_result_uris_dict(agent_id):
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
-        AgentOperations.INSTALL_AGENT_APPS: {
+        AgentOperations.INSTALL_AGENT_UPDATE: {
             CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_AGENT_APPS
+                base, ListenerURIs.INSTALL_AGENT_UPDATE
             ),
             CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
         },
