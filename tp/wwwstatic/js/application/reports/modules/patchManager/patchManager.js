@@ -180,17 +180,19 @@ define(
                     $.ajaxSetup({ traditional: true });
                 },
                 events: {
-                    'click [data-action=toggleDependenciesPanel]': 'toggleDependenciesPanel',
-                    'click button[data-submit=operation]'   : 'submitOperation',
-                    'click li a[data-toggle=tab]'           : 'changeTab',
-                    'click input[data-toggle=all]'          : 'selectAll',
-                    'click input[data-update]'              : 'togglePatch',
-                    'click input[data-id=schedule]'         : 'toggleSchedule',
-                    'keyup input[data-id=search]'           : 'debouncedSearch',
-                    'change select[data-id=filter]'         : 'filterBySeverity',
-                    'click button[data-id=addSchedule]'     : 'addSchedule',
-                    'click button[data-action=toggleOptions]': 'toggleOptions',
-                    'click #showHidden'                     :   'showHidden'
+                    'click [data-action=toggleDependenciesPanel]'   :   'toggleDependenciesPanel',
+                    'click button[data-submit=operation]'           :   'submitOperation',
+                    'click li a[data-toggle=tab]'                   :   'changeTab',
+                    'click input[data-toggle=all]'                  :   'selectAll',
+                    'click input[data-update]'                      :   'togglePatch',
+                    'click input[data-id=schedule]'                 :   'toggleSchedule',
+                    'keyup input[data-id=search]'                   :   'debouncedSearch',
+                    'change select[data-id=filter]'                 :   'filterBySeverity',
+                    'click button[data-id=addSchedule]'             :   'addSchedule',
+                    'click button[data-action=toggleOptions]'       :   'toggleOptions',
+                    'click #showHidden'                             :   'showHidden',
+                    'change select[name=sort]'                      :   'sortBy',
+                    'click a[name=order]'                           :   'orderBy'
                 },
                 beforeRender: $.noop,
                 onRender: $.noop,
@@ -332,6 +334,14 @@ define(
                             $select.append(crel('option', {value: option.value}, option.text));
                         });
                         $right.append(
+                            crel('small', 'Sort By '),
+                            crel('Select', {name: 'sort'},
+                                crel('option', {value: ''}, 'None'),
+                                crel('option', {value: 'vulnerability_id'}, 'Vulnerability ID')
+                            ),
+                            crel('span', ' '),
+                            crel('a', {href: '#', title: 'Ascending Order', name: 'order', 'data-name': 'asc'}, crel('i', {class: 'icon-arrow-up'})),
+                            crel('a', {href: '#', title: 'Descending Order', name: 'order', 'data-name': 'desc'}, crel('i', {class: 'icon-arrow-down'})),
                             crel('label', {class: 'checkbox inline'}, crel('small', 'Schedule')), ' ',
                             crel('input', {type: 'checkbox', 'data-id': 'schedule'}),
                             ' ', $restart, ' ', $netThrottle, ' ', $cpuThrottle, ' ', $select, ' ',
@@ -373,6 +383,17 @@ define(
                             crel('input', {type: 'checkbox', id: 'showHidden'}), crel('small', 'Show Hidden'))
                     );
                     return this;
+                },
+                sortBy: function (event) {
+                    this.pager.collection.params.sort_by = $(event.currentTarget).val();
+                    this.pager.collection.params.offset = 0;
+                    this.pager.collection.fetch();
+                },
+                orderBy: function (event) {
+                    event.preventDefault();
+                    this.pager.collection.params.sort = $(event.currentTarget).data('name');
+                    this.pager.collection.params.offset = 0;
+                    this.pager.collection.fetch();
                 },
                 toggleOptions: function (event) {
                     event.preventDefault();
