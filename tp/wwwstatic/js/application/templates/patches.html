@@ -9,7 +9,7 @@
         </label>
     <% } else { %>
         <div class="pull-right">
-            <small>Sort By:</small>
+            <small>Sort By</small>
             <select name="sort">
                 <option value="name">Name</option>
                 <option value="release_date">Release Date</option>
@@ -20,7 +20,7 @@
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
             </select>
-            <small>Filter By:</small>
+            <small>Filter By</small>
             <select name="filter">
                 <option value="">None</option>
                 <option value="available" <% if (query.status === 'available') { print('SELECTED'); } %>>Available</option>
