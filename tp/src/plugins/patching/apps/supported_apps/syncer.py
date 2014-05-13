@@ -114,8 +114,7 @@ class IncomingSupportedApps(object):
                             self._set_app_per_agent_properties(agent, app_id)
 
                         agent_has_app = self.check_if_agent_has_app(
-                            agent_id,
-                            app_id
+                            agent_id, app_id
                         )
 
                         if not agent_has_app:
@@ -300,6 +299,7 @@ def update_supported_apps(json_data):
             json_data[i][SupportedAppsKey.FilesDownloadStatus] = \
                 PackageCodes.FilePendingDownload
             json_data[i][SupportedAppsKey.Hidden] = 'no'
+            json_data[i][SupportedAppsKey.VulnerabilityId] = ''
 
             insert_app_data(
                 json_data[i], DownloadCollections.LatestDownloadedSupported
