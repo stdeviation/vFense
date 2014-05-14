@@ -243,7 +243,7 @@ class InstallAgentAppsResults(BaseHandler):
             )
             print results_data
             # TODO: what is this meant for?
-            data = results.install_agent_update(data)
+            #data = results.install_agent_update(data)
 
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')

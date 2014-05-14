@@ -834,11 +834,11 @@ class RetrieveAgentAppsByAppId(RetrieveAppsByAppId):
         self.method = method
         self.app_id = app_id
         self.CurrentAppsCollection = AppCollections.vFenseApps
-        self.CurrentAppsIndexes = AgentAppsIndexes
+        self.CurrentAppsIndexes = vFenseAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
-        self.CurrentAppsKey = AgentAppsKey
-        self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
+        self.CurrentAppsKey = vFenseAppsKey
+        self.CurrentAppsPerAgentKey = vFenseAppsPerAgentKey
+        self.CurrentAppsPerAgentIndexes = vFenseAppsPerAgentIndexes
 
         self.map_hash = (
             {
@@ -938,11 +938,11 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
         self.method = method
         self.app_id = app_id
         self.CurrentAppsCollection = AppCollections.vFenseApps
-        self.CurrentAppsIndexes = AgentAppsIndexes
+        self.CurrentAppsIndexes = vFenseAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
-        self.CurrentAppsKey = AgentAppsKey
-        self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
+        self.CurrentAppsKey = vFenseAppsKey
+        self.CurrentAppsPerAgentKey = vFenseAppsPerAgentKey
+        self.CurrentAppsPerAgentIndexes = vFenseAppsPerAgentIndexes
 
         self.map_hash = (
             {
