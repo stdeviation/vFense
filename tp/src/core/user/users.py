@@ -809,6 +809,7 @@ def create_user(
     valid_user_length = (
         len(username) <= DefaultStringLength.USER_NAME
     )
+
     try:
         if (not user_exist and pass_strength[0] and
                 valid_user_length and valid_user_name):
@@ -879,7 +880,7 @@ def create_user(
             generic_status_code = GenericFailureCodes.FailedToCreateObject
             vfense_status_code = UserFailureCodes.WeakPassword
 
-        elif not valid_group_length or not valid_group_name:
+        elif not valid_user_name or not valid_user_length:
             status_code = DbCodes.Errors
             msg = (
                 'user name is not within the 24 character range '+
