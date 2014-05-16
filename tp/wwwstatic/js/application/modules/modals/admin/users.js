@@ -249,14 +249,25 @@ define(
                     else if(!passwordRegExp.test(password))
                     {
                         that.$el.find('#password').parents('.control-group').addClass('error');
-//                        that.$el.find('#password').siblings('.help-block').html('Password should have atleast 1 Lowercase, 1 Uppercase, 1 Numeric, 1 Special Character and minimum 8 characters.').show();
-                        that.$el.find('#password').siblings('.help-block').html('Invalid Password').show();
+                        that.$el.find('#password').siblings('.help-block').html('Password should have atleast 1 Lowercase letter, 1 Uppercase letter,' + '<br>' + '1 Numeric, 1 Special Character and minimum of 8 characters.').show();
                         return false;
                     }
                     else
                     {
                         that.$el.find('#password').parents('.control-group').removeClass('error');
                         that.$el.find('#password').siblings('.help-block').empty().hide();
+                    }
+
+                    if(group.length === 0)
+                    {
+                        that.$el.find('input[name=groups]').parents('.control-group').addClass('error');
+                        that.$el.find('input[name=groups]').siblings('.help-block').html('At least one Group must be selected.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('input[name=groups]').parents('.control-group').removeClass('error');
+                        that.$el.find('input[name=groups]').siblings('.help-block').empty().hide();
                     }
 
                     $.ajax({
