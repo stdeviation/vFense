@@ -13,8 +13,8 @@ define(
                         _.extend(this, _.pick(options, viewOptions));
                     }
                     Panel.View.prototype.initialize.call(this);
-                    this.setHeaderHTML(this.renderAgentHeader());
-                    this.setContentHTML(this.renderAgentTags());
+                    this.setHeaderHTML(this.renderAppHeader());
+                    this.setContentHTML(this.renderRemovedApps());
                     return this;
                 },
                 events: function () {
@@ -28,19 +28,15 @@ define(
                     this.hide();
                     return this;
                 },
-                renderAgentHeader: function() {
-                    return crel('h4', 'Tags for Agent ',
-                        crel('em', this.agentName)
-                    );
+                renderAppHeader: function() {
+                    return crel('h4', 'Removed Apps');
                 },
-                renderAgentTags: function () {
+                renderRemovedApps: function () {
                     var fragment = crel('div', {class: 'list'}),
                         items = crel('div', {class: 'items row-fluid'});
-                    _.each(this.tags, function (tag) {
+                    _.each(this.removedApps, function (app) {
                         $(items).append(crel('div', {class: 'item'},
-                            crel('a', {href: '#tags/' + tag.tag_id},
-                                crel('span', {class: 'span12'}, tag.tag_name)
-                            )
+                            crel('span', {class: 'span12'}, app)
                         ));
                     });
                     fragment.appendChild(items);
