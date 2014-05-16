@@ -289,7 +289,7 @@ def add_users_to_customer(
                 data_list.append(data_to_add)
 
         if len(data_list) == len(usernames):
-            status_code, object_count, error, generated_ids = (
+            status_code, _, _, generated_ids = (
                 insert_user_per_customer(data_list)
             )
 
@@ -384,7 +384,7 @@ def remove_users_from_customer(
     admin_in_list = DefaultUsers.ADMIN in usernames
     try:
         if not admin_in_list:
-            status_code, count, errors, generated_ids = (
+            status_code, _, _, _ = (
                 delete_users_in_customer(usernames, customer_name)
             )
             if status_code == DbCodes.Deleted:
@@ -506,7 +506,7 @@ def add_users_to_group(
                 data_list.append(data_to_add)
 
         if len(data_list) == len(usernames):
-            status_code, object_count, error, generated_ids = (
+            status_code, _, _, generated_ids = (
                 insert_group_per_user(data_list)
             )
 
@@ -597,7 +597,7 @@ def remove_users_from_group(
     admin_in_list = DefaultUsers.ADMIN in usernames
     try:
         if not admin_in_list:
-            status_code, count, errors, generated_ids = (
+            status_code, _, _, _ = (
                 delete_users_in_group(usernames, group_id)
             )
             if status_code == DbCodes.Deleted:
@@ -692,7 +692,7 @@ def toggle_user_status(username, user_name=None, uri=None, method=None):
         }
     """
     status = toggle_user_status.func_name + ' - '
-    status_code, object_count, error, generated_ids = (
+    status_code, _, _, _ = (
         user_status_toggle(username)
     )
     if status_code == DbCodes.Replaced:
@@ -809,16 +809,19 @@ def create_user(
     valid_user_length = (
         len(username) <= DefaultStringLength.USER_NAME
     )
+
     try:
         if (not user_exist and pass_strength[0] and
                 valid_user_length and valid_user_name):
             encrypted_password = Crypto().hash_bcrypt(password)
             user_data[UserKeys.Password] = encrypted_password
             customer_is_valid = get_customer(customer_name)
-            groups_are_valid = validate_group_ids(group_ids, customer_name)
+            validated_groups, _, invalid_groups = validate_group_ids(
+                group_ids, customer_name
+            )
 
-            if customer_is_valid and groups_are_valid[0]:
-                object_status, object_count, error, generated_ids = (
+            if customer_is_valid and validated_groups:
+                object_status, _, _, generated_ids = (
                     insert_user(user_data)
                 )
                 generated_ids.append(username)
@@ -838,21 +841,21 @@ def create_user(
                     vfense_status_code = UserCodes.UserCreated
                     user_data.pop(UserKeys.Password)
 
-            elif not customer_is_valid and groups_are_valid[0]:
+            elif not customer_is_valid and validated_groups:
                 msg = 'customer name %s does not exist' % (customer_name)
                 object_status = DbCodes.Skipped
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
 
-            elif not groups_are_valid[0] and customer_is_valid:
-                msg = 'group ids %s does not exist' % (groups_are_valid[2])
+            elif not validated_groups and customer_is_valid:
+                msg = 'group ids %s does not exist' % (invalid_groups)
                 object_status = DbCodes.Skipped
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = GroupFailureCodes.InvalidGroupId
 
             else:
                 group_error = (
-                    'group ids %s does not exist' % (groups_are_valid[2])
+                    'group ids %s does not exist' % (invalid_groups)
                 )
                 customer_error = (
                     'customer name %s does not exist' % (customer_name)
@@ -877,7 +880,7 @@ def create_user(
             generic_status_code = GenericFailureCodes.FailedToCreateObject
             vfense_status_code = UserFailureCodes.WeakPassword
 
-        elif not valid_group_length or not valid_group_name:
+        elif not valid_user_name or not valid_user_length:
             status_code = DbCodes.Errors
             msg = (
                 'user name is not within the 24 character range '+
@@ -947,7 +950,7 @@ def remove_user(username, user_name=None, uri=None, method=None):
             remove_customers_from_user(username)
             usernames_to_delete.append(username)
 
-            object_status, object_count, error, generated_ids = (
+            object_status, _, _, _ = (
                 delete_user(username)
             )
 
@@ -1055,7 +1058,7 @@ def remove_users(usernames, user_name=None, uri=None, method=None):
                 object_status = DbCodes.Skipped
 
         if len(usernames_to_delete) > 0:
-            object_status, object_count, error, generated_ids = (
+            object_status, _, _, _ = (
                 delete_users(usernames_to_delete)
             )
 
@@ -1161,7 +1164,7 @@ def change_password(
 
                 user_data = {UserKeys.Password: encrypted_new_password}
 
-                object_status, object_count, error, generated_ids = (
+                object_status, _, _, _ = (
                     update_user(username, user_data)
                 )
 
@@ -1307,7 +1310,7 @@ def edit_user_properties(username, **kwargs):
         if user_exist:
             data_validated = _validate_user_data(username, **kwargs)
             if data_validated:
-                object_status, object_count, error, generated_ids = (
+                object_status, _, _, _ = (
                     update_user(username, kwargs)
                 )
 

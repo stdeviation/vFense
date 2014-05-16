@@ -306,6 +306,9 @@ def validate_group_ids(group_ids, customer_name=None):
             else:
                 invalid_groups.append(group_id)
                 validated = False
+    else:
+        validated = False
+        invalid_groups = [group_ids]
 
     return(validated, valid_groups, invalid_groups)
 
