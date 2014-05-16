@@ -250,7 +250,7 @@ define(
                     else if(!passwordRegExp.test(password))
                     {
                         that.$el.find('#password').parents('.control-group').addClass('error');
-                        that.$el.find('#password').siblings('.help-block').html('Password should have at least 1 Lowercase, 1 Uppercase, 1 Numeric,'  + '<br>' + '1 Special Character excluding +=<>,"{}\/:;' + ' and minimum of 8 characters.').show();
+                        that.$el.find('#password').siblings('.help-block').html('Password must have at least 1 Lowercase, 1 Uppercase, 1 Numeric,'  + '<br>' + '1 Special Character excluding +=<>,"{}\/:;' + ' and minimum 8 characters.').show();
                         return false;
                     }
                     else
