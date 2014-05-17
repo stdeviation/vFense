@@ -660,8 +660,6 @@ def edit_customer(customer, **kwargs):
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    print results
-
     return results
 
 

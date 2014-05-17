@@ -76,10 +76,16 @@ class Customer(object):
                 {CustomerKeys.CustomerName: self.name}
             )
 
-        if self.net_throttle and not isinstance(self.net_throttle, int):
-            invalid_fields.append(
-                {CustomerKeys.NetThrottle: self.net_throttle}
-            )
+        if self.net_throttle:
+            if isinstance(self.net_throttle, int):
+                if self.net_throttle < 0:
+                    invalid_fields.append(
+                        {CustomerKeys.NetThrottle: self.net_throttle}
+                    )
+            else:
+                invalid_fields.append(
+                    {CustomerKeys.NetThrottle: self.net_throttle}
+                )
 
         if self.cpu_throttle:
             if self.cpu_throttle not in CPUThrottleValues.VALID_VALUES:
@@ -87,12 +93,24 @@ class Customer(object):
                     {CustomerKeys.CpuThrottle: self.cpu_throttle}
                 )
 
-        if self.server_queue_ttl and not isinstance(self.server_queue_ttl, int):
-            invalid_fields.append(
-                {CustomerKeys.ServerQueueTTL: self.server_queue_ttl}
-            )
+        if self.server_queue_ttl:
+            if isinstance(self.server_queue_ttl, int):
+                if self.server_queue_ttl <= 0:
+                    invalid_fields.append(
+                        {CustomerKeys.ServerQueueTTL: self.server_queue_ttl}
+                    )
+            else:
+                invalid_fields.append(
+                    {CustomerKeys.ServerQueueTTL: self.server_queue_ttl}
+                )
 
-        if self.agent_queue_ttl and not isinstance(self.agent_queue_ttl, int):
+        if self.agent_queue_ttl:
+            if isinstance(self.agent_queue_ttl, int):
+                if self.agent_queue_ttl <= 0:
+                    invalid_fields.append(
+                        {CustomerKeys.AgentQueueTTL: self.agent_queue_ttl}
+                    )
+        else:
             invalid_fields.append(
                 {CustomerKeys.AgentQueueTTL: self.agent_queue_ttl}
             )
