@@ -440,6 +440,7 @@ def create_customer(
         #elif invalid_field.get(CustomerKeys.PackageUrl):
 
     elif not customer_exist:
+        # Fill in any empty fields
         customer.fill_in_defaults()
 
         if not customer.package_download_url:
