@@ -538,7 +538,7 @@ def update_customer(customer_name, customer_data, conn=None):
     """Update verious fields of a customer
     Args:
         customer_name(str): customer_name.
-        customer_data(dict): Dictionary of the data you are updateing.
+        customer_data(dict): Dictionary of the data you are updating.
 
     Basic Usage::
         >>> from vFense.customer._db import update_customer
@@ -553,17 +553,17 @@ def update_customer(customer_name, customer_data, conn=None):
     data = {}
     try:
         data = (
-                r
-                .table(CustomerCollections.Customers)
-                .get(customer_name)
-                .update(customer_data)
-                .run(conn)
-                )
+            r
+            .table(CustomerCollections.Customers)
+            .get(customer_name)
+            .update(customer_data)
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it

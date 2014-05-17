@@ -187,61 +187,6 @@ def get_properties_for_all_customers(username=None):
     data = fetch_properties_for_all_customers(username)
     return(data)
 
-def _validate_customer_data(**kwargs):
-    data_validated = False
-    if kwargs.get(CustomerKeys.NetThrottle):
-        valid_net_throttle = True
-        net_throttle = kwargs.get(CustomerKeys.NetThrottle)
-        if not isinstance(net_throttle, int):
-            try:
-                net_throttle = int(net_throttle)
-
-            except ValueError:
-                valid_net_throttle = False
-
-        return(valid_net_throttle)
-
-    if kwargs.get(CustomerKeys.CpuThrottle):
-        cpu_throttle = kwargs.get(CustomerKeys.CpuThrottle)
-        valid_cpu_throttle = cpu_throttle in CPUThrottleValues.VALID_VALUES
-
-        return(valid_cpu_throttle)
-
-    if kwargs.get(CustomerKeys.PackageUrl):
-        valid_pkg_url = False
-        pkg_url = kwargs.get(CustomerKeys.PackageUrl)
-        if re.search(r'^http(s)?://', pkg_url):
-            valid_pkg_url = True
-
-        return(valid_pkg_url)
-
-    if kwargs.get(CustomerKeys.ServerQueueTTL):
-        valid_operation_ttl = True
-        operation_queue_ttl = kwargs.get(CustomerKeys.ServerQueueTTL)
-        if not isinstance(operation_queue_ttl, int):
-            try:
-                operation_queue_ttl = int(operation_queue_ttl)
-
-            except ValueError:
-                valid_operation_ttl = False
-
-        return(valid_operation_ttl)
-
-    if kwargs.get(CustomerKeys.AgentQueueTTL):
-        valid_operation_ttl = True
-        operation_queue_ttl = kwargs.get(CustomerKeys.AgentQueueTTL)
-        if not isinstance(operation_queue_ttl, int):
-            try:
-                operation_queue_ttl = int(operation_queue_ttl)
-
-            except ValueError:
-                valid_operation_ttl = False
-
-        return(valid_operation_ttl)
-
-
-    return(data_validated)
-
 
 @time_it
 def validate_customer_names(customer_names):
@@ -612,22 +557,11 @@ def create_customer(
 
 @time_it
 @results_message
-def edit_customer(customer_name, **kwargs):
+def edit_customer(customer, **kwargs):
     """ Edit the properties of a customer. 
     Args:
-        customer_name (str): Name  of the customer you are editing.
-
-    Kwargs:
-        http_application_url_location (str): This is the http url from
-            which the agents will download its applications from.
-        net_throttle (int): Bandwidth throttling is calculated in kb.
-        cpu_throttle (int): Throttle how much CPU is being used
-            during any operation.
-            possbile values (idle, below_normal, normal, above_noraml, high)
-        server_queue_ttl (int):minutes until an operation is
-            considered expired inside the server queue
-        agent_queue_ttl (int):minutes until an operation is
-            considered expired inside the agent queue
+        customer (Customer): A customer instance filled with values
+            that should be changed.
         user_name (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
@@ -667,71 +601,65 @@ def edit_customer(customer_name, **kwargs):
         method = kwargs.pop(ApiResultKeys.HTTP_METHOD)
 
     status = edit_customer.func_name + ' - '
+    update_data = customer.to_dict_non_null()
 
+    msg = ''
+    generic_status_code = None
+    vfense_status_code = None
     try:
-        invalid_data = []
-        for key, val in kwargs.items():
-            if not _validate_customer_data(**{key:val}):
-                invalid_data.append({key:val})
+        invalid_data = customer.get_invalid_fields()
 
         if invalid_data:
             msg = (
                 'data was invalid for customer %s: %s- ' %
-                (customer_name, invalid_data)
+                (customer.name, invalid_data)
             )
             status_code = DbCodes.Unchanged
             generic_status_code = GenericCodes.ObjectUnchanged
             vfense_status_code = CustomerCodes.CustomerUnchanged
 
         else:
-            status_code, count, error, generated_ids = (
-                update_customer(customer_name, kwargs)
+            status_code, _, _, _ = update_customer(
+                customer.name, update_data
             )
+
             if status_code == DbCodes.Replaced:
-                msg = 'customer %s updated - ' % (customer_name)
+                msg = 'customer %s updated - ' % (customer.name)
                 generic_status_code = GenericCodes.ObjectUpdated
                 vfense_status_code = CustomerCodes.CustomerUpdated
 
             elif status_code == DbCodes.Unchanged:
-                msg = 'customer %s unchanged - ' % (customer_name)
+                msg = 'customer %s unchanged - ' % (customer.name)
                 generic_status_code = GenericCodes.ObjectUnchanged
                 vfense_status_code = CustomerCodes.CustomerUnchanged
 
             elif status_code == DbCodes.Skipped:
-                msg = 'customer %s does not exist - ' % (customer_name)
+                msg = 'customer %s does not exist - ' % (customer.name)
+                # TODO: what happened to 'Invalid'?
                 generic_status_code = GenericCodes.Invalid
                 vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [kwargs],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
     except Exception as e:
         logger.exception(e)
-        msg = 'Failed to modify customer %s: %s' % (customer_name, str(e))
+        msg = 'Failed to modify customer %s: %s' % (customer.name, str(e))
         status_code = DbCodes.Errors
         generic_status_code = GenericFailureCodes.FailedToUpdateObject
         vfense_status_code = CustomerFailureCodes.FailedToRemoveCustomer
 
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [kwargs],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
+    results = {
+        ApiResultKeys.DB_STATUS_CODE: status_code,
+        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.DATA: [update_data],
+        ApiResultKeys.USERNAME: user_name,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
-    return(results)
+    print results
+
+    return results
 
 
 @time_it

@@ -2,6 +2,7 @@ class CustomerCollections():
     Customers = 'customers'
     CustomersPerUser = 'customers_per_user'
 
+
 class CustomerKeys():
     CustomerName = 'customer_name'
     Properties = 'properties'
@@ -13,10 +14,12 @@ class CustomerKeys():
     Users = 'users' #Mapped Keys
     Groups = 'groups' #Mapped Keys
 
+
 class CustomerPerUserKeys():
     CustomerName = 'customer_name'
     UserName = 'user_name'
     Id = 'id'
+
 
 class CustomerPerUserIndexes():
     CustomerName = 'customer_name'
