@@ -14,6 +14,7 @@ from vFense.core.agent._db import fetch_production_levels_from_agent, \
     move_agents_to_customer, move_agent_to_customer, \
     move_all_agents_to_customer
 
+from vFense.core.customer import Customer
 from vFense.core.customer.customers import get_customer, create_customer
 from vFense.core.decorators import time_it, results_message
 
@@ -489,9 +490,10 @@ def add_agent(
         if customer_name != 'default':
             cexists = get_customer(customer_name)
             if not cexists and len(customer_name) >= 1:
+                customer = Customer(customer_name)
+
                 create_customer(
-                    customer_name, username=username,
-                    uri=uri, method=method
+                    customer, username=username, uri=uri, method=method
                 )
 
         for key, value in system_info.items():

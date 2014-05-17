@@ -484,13 +484,11 @@ def create_customer(
                     DefaultUsers.ADMIN, [customer.name], user_name, uri, method
                 )
 
-
     elif customer_exist:
         status_code = DbCodes.Unchanged
         msg = 'customer name %s already exists' % (customer.name)
         generic_status_code = GenericCodes.ObjectExists
         vfense_status_code = CustomerFailureCodes.CustomerExists
-
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,

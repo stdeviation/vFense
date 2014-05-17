@@ -30,9 +30,7 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
+        customer_name = self.arguments.get(AgentKey.CustomerName)
         plugins = self.arguments.get(AgentKey.Plugins)
         rebooted = self.arguments.get(AgentKey.Rebooted)
         system_info = self.arguments.get(AgentKey.SystemInfo)
