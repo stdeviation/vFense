@@ -559,9 +559,12 @@ def create_customer(
 @results_message
 def edit_customer(customer, **kwargs):
     """ Edit the properties of a customer. 
+
     Args:
         customer (Customer): A customer instance filled with values
             that should be changed.
+
+    Kwargs:
         user_name (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
