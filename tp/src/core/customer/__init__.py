@@ -1,4 +1,6 @@
-from vFense.core._constants import CPUThrottleValues
+import re
+
+from vFense.core._constants import CPUThrottleValues, DefaultStringLength
 
 class CustomerCollections():
     Customers = 'customers'
@@ -36,6 +38,23 @@ class Customer(object):
         server_queue_ttl=None, agent_queue_ttl=None,
         package_download_url=None
     ):
+        """
+        Args:
+            name (str): The name of the customer
+            net_throttle (int): The default net throttling for downloading
+                packages for agents in this customer, in KB/s.
+            cpu_throttle (str): The default cpu throttling for operations
+                in this customer. Has to be a valid cpu throttling keyword.
+                    valid: ['idle', 'below_normal', 'normal', 'above_normal', 'high']
+            server_queue_ttl (int): The default time an operation will sit
+                on the server queue, in minutes. Must be above 0.
+            agent_queue_ttl (int): The default time an operation will sit
+                on the agent queue, in minutes. Must be above 0.
+            package_download_url (str): The base url used to construct the
+                urls where the packages will be downloaded from.
+                    Ex:
+                        'https://192.168.1.1/packages/'
+        """
         self.name = name
         self.net_throttle = net_throttle
         self.cpu_throttle = cpu_throttle
@@ -52,16 +71,55 @@ class Customer(object):
         if agent_queue_ttl:
             self.agent_queue_ttl = int(agent_queue_ttl)
 
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+        
+        Use case(s):
+            Useful when creating a new customer instance and only want to fill
+            in a few fields, then allow the create customer functions call this
+            method to fill in the rest.
+        """
+        # TODO: Use defined constants for the defaults
+
+        if not self.net_throttle:
+            self.net_throttle = 0
+
+        if not self.cpu_throttle:
+            self.cpu_throttle = 'normal'
+
+        if not self.server_queue_ttl:
+            self.server_queue_ttl = 10
+
+        if not self.agent_queue_ttl:
+            self.agent_queue_ttl = 10
+
     def get_invalid_fields(self):
         """Check the customer for any invalid fields.
-        
+
         Returns:
             (list): List of key/value pair dictionaries corresponding
                 to the invalid fields.
+
+                Ex:
+                    [
+                        {'customer_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
         """
         invalid_fields = []
 
-        if not isinstance(self.name, basestring):
+        if isinstance(self.name, basestring):
+            valid_symbols = re.search(
+                '((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})', self.name
+            )
+            valid_length = len(self.name) <= DefaultStringLength.CUSTOMER_NAME
+
+            if not valid_symbols or not valid_length:
+                invalid_fields.append(
+                    {CustomerKeys.CustomerName: self.name}
+                )
+        else:
             invalid_fields.append(
                 {CustomerKeys.CustomerName: self.name}
             )
@@ -110,6 +168,24 @@ class Customer(object):
         return invalid_fields
 
     def to_dict(self):
+        """ Turn the customer fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                customer.
+
+                Ex:
+                {
+                    "agent_queue_ttl": 100 ,
+                    "cpu_throttle":  "high" ,
+                    "customer_name":  "default" ,
+                    "net_throttle": 100 ,
+                    "package_download_url_base": https://192.168.8.14/packages/,
+                    "server_queue_ttl": 100
+                }
+                    
+        """
+
         return {
             CustomerKeys.CustomerName: self.name,
             CustomerKeys.NetThrottle: self.net_throttle,
@@ -120,11 +196,11 @@ class Customer(object):
         }
 
     def to_dict_non_null(self):
-        """ Use to get non None attributes of customer. Useful when
+        """ Use to get non None fields of customer. Useful when
         filling out just a few fields to update the customer in the db.
 
         Returns:
-            (dict): a dictionary with non None items.
+            (dict): a dictionary with the non None fields of this customer.
         """
         customer_dict = self.to_dict()
 

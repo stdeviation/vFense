@@ -377,14 +377,20 @@ class CustomersHandler(BaseHandler):
                 self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
             )
 
-            results = (
-                create_customer(
-                    customer_name, active_user, pkg_url,
-                    net_throttle, cpu_throttle, server_queue_ttl,
-                    agent_queue_ttl, user_name=active_user, uri=uri,
-                    method=method
-                )
+            customer = Customer(
+                customer_name,
+                net_throttle,
+                cpu_throttle,
+                server_queue_ttl,
+                agent_queue_ttl,
+                pkg_url
             )
+
+            results = create_customer(
+                customer, active_user,
+                user_name=active_user, uri=uri, method=method
+            )
+
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

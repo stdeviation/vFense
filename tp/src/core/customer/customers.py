@@ -327,41 +327,30 @@ def add_user_to_customers(
     return(results)
 
 
+#def create_customer(
+#    customer_name, username=None,
+#    http_application_url_location=None,
+#    net_throttle=0, cpu_throttle='normal',
+#    server_queue_ttl=10, agent_queue_ttl=10,
+#    init=False, user_name=None, uri=None, method=None
+#    ):
 @time_it
 @results_message
 def create_customer(
-    customer_name, username=None,
-    http_application_url_location=None,
-    net_throttle=0, cpu_throttle='normal',
-    server_queue_ttl=10, agent_queue_ttl=10,
-    init=False, user_name=None, uri=None, method=None
+        customer, username=None, init=None,
+        user_name=None, uri=None, method=None
     ):
     """Create a new customer inside of vFense
+
     Args:
-        customer_name (str): Name of the customer you are creating.
-            The customer name can be a total length of 36 characters,
-            with a combination of characters, numbers, - _ and spaces.
+        customer (Customer): A customer instance filled out with the
+            appropriate fields.
 
     Kwargs:
         username (str): Name of the user that you are adding to this customer.
             Default=None
             If init is set to True, then it can stay as None
             else, then a valid user must be passed
-        http_application_url_location (str): This is the http url from
-            which the agents will download its applications from.
-            Default=Use the same url, that the default customer uses
-        net_throttle (int): Bandwidth throttling is calculated in kb.
-            Default=0 (0, means not to throttle)
-        cpu_throttle (int): Throttle how much CPU is being used
-            during any operation.
-            Default=normal 
-            possbile values (idle, below_normal, normal, above_noraml, high)
-        server_queue_ttl (int):minutes until an operation is
-            considered expired inside the server queue
-            Default=10
-        agent_queue_ttl (int):minutes until an operation is
-            considered expired inside the agent queue
-            Default=10
         init (boolean): Create the customer, without adding a user into it.
             Default=False
         user_name (str): The name of the user who called this function.
@@ -369,14 +358,11 @@ def create_customer(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.customer.customers import create_customer
-        >>> customer_name = 'vFense'
+        >>> from vFense.core.customer import Customer
+        >>> from vFense.core.customer.customers import create_customer
+        >>> customer = Customer('NewCustomer', package_download_url='https://10.0.0.16/packages/')
         >>> username = 'api_user'
-        >>> http_application_url_location='https://10.0.0.16/packages/'
-        >>> create_customer(
-                customer_name, api_user,
-                http_application_url_location
-            )
+        >>> create_customer(customer, api_user)
 
     Return:
         Dictionary of the status of the operation.
@@ -396,83 +382,92 @@ def create_customer(
             }
         }
     """
-    customer_exist = get_customer(customer_name)
+    customer_exist = get_customer(customer.name)
+
     status = create_customer.func_name + ' - '
     msg = ''
     status_code = 0
     generic_status_code = 0
     vfense_status_code = 0
-    data = {}
     generated_ids = []
-    valid_net_throttle = True
-    valid_server_queue_ttl = True
-    valid_agent_queue_ttl = True
-    valid_cpu_throttle = cpu_throttle in CPUThrottleValues.VALID_VALUES
-    valid_customer_name = (
-        re.search('((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})', customer_name)
-    )
-    valid_customer_length = (
-        len(customer_name) <= DefaultStringLength.CUSTOMER_NAME
-    )
-    if not isinstance(net_throttle, int):
-        try:
-            net_throttle = int(net_throttle)
 
-        except ValueError:
-            valid_net_throttle = False
+    invalid_fields = customer.get_invalid_fields()
 
-    if not isinstance(server_queue_ttl, int):
-        try:
-            server_queue_ttl = int(server_queue_ttl)
+    if invalid_fields:
+        # TODO: Inform about more than just the first invalid field
+        invalid_field = invalid_fields[0]
 
-        except ValueError:
-            valid_server_queue_ttl = False
+        status_code = DbCodes.Errors
+        generic_status_code = GenericCodes.InvalidId
 
-    if not isinstance(agent_queue_ttl, int):
-        try:
-            agent_queue_ttl = int(agent_queue_ttl)
+        if invalid_field.get(CustomerKeys.CustomerName):
+            msg = (
+                'customer name is not within the 36 character range '
+                'or contains unsupported characters :%s' %
+                (invalid_field.get(CustomerKeys.CustomerName))
+            )
+            vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
-        except ValueError:
-            valid_agent_queue_ttl = False
+        elif invalid_field.get(CustomerKeys.NetThrottle):
+            msg = (
+                'network throttle was not given a valid integer :%s' %
+                (invalid_field.get(CustomerKeys.NetThrottle))
+            )
+            vfense_status_code = CustomerFailureCodes.InvalidNetworkThrottle
 
-    if (not customer_exist and valid_server_queue_ttl and
-        valid_agent_queue_ttl and
-        valid_net_throttle and valid_cpu_throttle and
-        valid_customer_name and valid_customer_length):
+        elif invalid_field.get(CustomerKeys.CpuThrottle):
+            msg = (
+                'cpu throttle was not given a valid value :%s' %
+                (invalid_field.get(CustomerKeys.CpuThrottle))
+            )
+            vfense_status_code = CustomerFailureCodes.InvalidCpuThrottle
 
-        if not http_application_url_location:
-            http_application_url_location = (
+        elif invalid_field.get(CustomerKeys.ServerQueueTTL):
+            msg = (
+                'server queue ttl was not given a valid value :%s' %
+                (invalid_field.get(CustomerKeys.ServerQueueTTL))
+            )
+            vfense_status_code = CustomerFailureCodes.InvalidOperationTTL
+
+        elif invalid_field.get(CustomerKeys.AgentQueueTTL):
+            msg = (
+                'agent queue ttl was not given a valid value :%s' %
+                (invalid_field.get(CustomerKeys.AgentQueueTTL))
+            )
+            vfense_status_code = CustomerFailureCodes.InvalidOperationTTL
+
+        # TODO: handle invalid base package url string
+        #elif invalid_field.get(CustomerKeys.PackageUrl):
+
+    elif not customer_exist:
+        customer.fill_in_defaults()
+
+        if not customer.package_download_url:
+            customer.package_download_url = (
                 get_customer(
                     DefaultCustomers.DEFAULT,
                     [CustomerKeys.PackageUrl]
                 ).get(CustomerKeys.PackageUrl)
             )
 
-        data = {
-            CustomerKeys.CustomerName: customer_name,
-            CustomerKeys.PackageUrl: http_application_url_location,
-            CustomerKeys.NetThrottle: net_throttle,
-            CustomerKeys.CpuThrottle: cpu_throttle,
-            CustomerKeys.ServerQueueTTL: server_queue_ttl,
-            CustomerKeys.AgentQueueTTL: agent_queue_ttl,
-        }
-        object_status, object_count, error, generated_ids = (
-            insert_customer(data)
+        object_status, _, _, generated_ids = (
+            insert_customer(customer.to_dict())
         )
+
         if object_status == DbCodes.Inserted:
-            generated_ids.append(customer_name)
-            msg = 'customer %s created - ' % (customer_name)
+            generated_ids.append(customer.name)
+            msg = 'customer %s created - ' % (customer.name)
             generic_status_code = GenericCodes.ObjectCreated
             vfense_status_code = CustomerCodes.CustomerCreated
 
         if object_status == DbCodes.Inserted and not init and username:
             add_user_to_customers(
-                username, [customer_name], user_name, uri, method
+                username, [customer.name], user_name, uri, method
             )
 
             if username != DefaultUsers.ADMIN:
                 add_user_to_customers(
-                    DefaultUsers.ADMIN, [customer_name], user_name, uri, method
+                    DefaultUsers.ADMIN, [customer.name], user_name, uri, method
                 )
 
         #The admin user should be part of every group
@@ -485,74 +480,29 @@ def create_customer(
             
             if admin_exist:
                 add_user_to_customers(
-                    DefaultUsers.ADMIN, [customer_name], user_name, uri, method
+                    DefaultUsers.ADMIN, [customer.name], user_name, uri, method
                 )
 
 
     elif customer_exist:
         status_code = DbCodes.Unchanged
-        msg = 'customer_name %s already exists' % (customer_name)
+        msg = 'customer name %s already exists' % (customer.name)
         generic_status_code = GenericCodes.ObjectExists
         vfense_status_code = CustomerFailureCodes.CustomerExists
 
-    elif not valid_net_throttle:
-        status_code = DbCodes.Errors
-        msg = (
-            'network throttle was not given a valid integer :%s' %
-            (net_throttle)
-        )
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.InvalidNetworkThrottle
-
-    elif not valid_cpu_throttle:
-        status_code = DbCodes.Errors
-        msg = (
-            'cpu throttle was not given a valid value :%s' %
-            (cpu_throttle)
-        )
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.InvalidCpuThrottle
-
-    elif not valid_server_queue_ttl:
-        status_code = DbCodes.Errors
-        msg = (
-            'server queue ttl was not given a valid value :%s' %
-            (server_queue_ttl)
-        )
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.InvalidOperationTTL
-
-    elif not valid_agent_queue_ttl:
-        status_code = DbCodes.Errors
-        msg = (
-            'agent queue ttl was not given a valid value :%s' %
-            (agent_queue_ttl)
-        )
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.InvalidOperationTTL
-
-    elif not valid_customer_length or not valid_customer_name:
-        status_code = DbCodes.Errors
-        msg = (
-            'customer name is not within the 36 character range '+
-            'or contains unsupported characters :%s' %
-            (customer_name)
-        )
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
         ApiResultKeys.MESSAGE: status + msg,
-        ApiResultKeys.DATA: [data],
+        ApiResultKeys.DATA: [customer.to_dict()],
         ApiResultKeys.USERNAME: user_name,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
+    return results
 
 
 @time_it
