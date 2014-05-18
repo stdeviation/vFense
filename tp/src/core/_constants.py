@@ -16,10 +16,12 @@ class CommonKeys():
     RESPONSE_URI = 'response_uri'
     REQUEST_METHOD = 'request_method'
 
+
 class DefaultStringLength():
     CUSTOMER_NAME = 36
     GROUP_NAME = 36
     USER_NAME = 24
+
 
 class HTTPMethods():
     PUT = 'PUT'
@@ -28,6 +30,7 @@ class HTTPMethods():
     GET = 'GET'
     HEAD = 'HEAD'
 
+
 class CPUThrottleValues():
     IDLE = 'idle'
     BELOW_NORMAL = 'below_normal'
@@ -35,6 +38,7 @@ class CPUThrottleValues():
     ABOVE_NORMAL = 'above_normal'
     HIGH = 'high'
     VALID_VALUES = (IDLE, BELOW_NORMAL, NORMAL, ABOVE_NORMAL, HIGH)
+
 
 class RebootValues():
     NONE = 'none' #Do not reboot

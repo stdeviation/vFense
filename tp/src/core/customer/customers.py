@@ -587,8 +587,7 @@ def edit_customer(customer, **kwargs):
 
             elif status_code == DbCodes.Skipped:
                 msg = 'customer %s does not exist - ' % (customer.name)
-                # TODO: what happened to 'Invalid'?
-                generic_status_code = GenericCodes.Invalid
+                generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
     except Exception as e:
