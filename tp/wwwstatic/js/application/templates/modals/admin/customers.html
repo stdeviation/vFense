@@ -56,8 +56,8 @@
                             <option value="normal">Normal</option>
                             <option value="idle">Idle</option>
                             <option value="high">High</option>
-                            <option value="below normal">Below Normal</option>
-                            <option value="above normal">Above Normal</option>
+                            <option value="below_normal">Below Normal</option>
+                            <option value="above_normal">Above Normal</option>
                         </select>
                     </div>
                 </div>
@@ -149,7 +149,10 @@
                                     <strong>CPU Throttle:</strong>
                                 </span>
                                 <div class="span9" data-type="content">
-                                    <span><%= customer.cpu_throttle || 'N/A' %></span>
+                                    <%  var cpuThrottle = customer.cpu_throttle;
+                                        cpuThrottle = cpuThrottle.replace('_', ' ');
+                                    %>
+                                    <span><%= cpuThrottle || 'N/A' %></span>
                                     <button class="btn btn-link noPadding pull-right" data-id="options">
                                         <i class="icon-pencil" style="color: #daa520"></i>
                                     </button>
@@ -163,32 +166,32 @@
                                                     <option value="normal" selected>Normal</option>
                                                     <option value="idle">Idle</option>
                                                     <option value="high">High</option>
-                                                    <option value="below normal">Below Normal</option>
-                                                    <option value="above normal">Above Normal</option>
+                                                    <option value="below_normal">Below Normal</option>
+                                                    <option value="above_normal">Above Normal</option>
                                                     <% } else if(customer.cpu_throttle === 'idle') { %>
                                                     <option value="normal">Normal</option>
                                                     <option value="idle" selected>Idle</option>
                                                     <option value="high">High</option>
-                                                    <option value="below normal">Below Normal</option>
-                                                    <option value="above normal">Above Normal</option>
+                                                    <option value="below_normal">Below Normal</option>
+                                                    <option value="above_normal">Above Normal</option>
                                                     <% } else if(customer.cpu_throttle === 'high') { %>
                                                     <option value="normal">Normal</option>
                                                     <option value="idle">Idle</option>
                                                     <option value="high" selected>High</option>
-                                                    <option value="below normal">Below Normal</option>
-                                                    <option value="above normal">Above Normal</option>
-                                                    <% } else if(customer.cpu_throttle === 'below normal') { %>
+                                                    <option value="below_normal">Below Normal</option>
+                                                    <option value="above_normal">Above Normal</option>
+                                                    <% } else if(customer.cpu_throttle === 'below_normal') { %>
                                                     <option value="normal">Normal</option>
                                                     <option value="idle">Idle</option>
                                                     <option value="high">High</option>
-                                                    <option value="below normal" selected>Below Normal</option>
-                                                    <option value="above normal">Above Normal</option>
-                                                    <% } else if(customer.cpu_throttle === 'above normal') { %>
+                                                    <option value="below_normal" selected>Below Normal</option>
+                                                    <option value="above_normal">Above Normal</option>
+                                                    <% } else if(customer.cpu_throttle === 'above_normal') { %>
                                                     <option value="normal">Normal</option>
                                                     <option value="idle">Idle</option>
                                                     <option value="high">High</option>
-                                                    <option value="below normal">Below Normal</option>
-                                                    <option value="above normal" selected>Above Normal</option>
+                                                    <option value="below_normal">Below Normal</option>
+                                                    <option value="above_normal" selected>Above Normal</option>
                                                     <% } %>
                                                 </select>
                                                 <span data-name="message" class="help-online"></span>

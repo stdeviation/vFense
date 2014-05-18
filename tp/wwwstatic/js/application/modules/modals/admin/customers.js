@@ -232,7 +232,7 @@ define(
                             server_queue_ttl: serverQueueTTL,
                             agent_queue_ttl: agentQueueTTL
                         };
-
+                        console.log(cpuThrottle);
                     /*this.$el.find('#newCustomerDiv input').focus(function() {
                         $(this).parents('.control-group').removeClass('error');
                         $(this).siblings('.help-block').empty().hide();
