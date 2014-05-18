@@ -98,7 +98,7 @@ class WidgetHandler(BaseHandler):
             results = (
                 GenericResults(
                     username, uri, method
-                ).information_retrieved([app_stats])
+                ).information_retrieved(app_stats)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
