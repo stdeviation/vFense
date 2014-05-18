@@ -6,8 +6,12 @@ from datetime import datetime
 
 from vFense.plugins.patching import *
 from vFense.operations import *
+from vFense.operations._constants import AgentOperations
 from vFense.operations.agent_operations import AgentOperation
-from vFense.plugins.patching.rv_db_calls import update_app_status
+from vFense.plugins.patching.patching import (
+    update_app_status_by_agentid_and_appid
+)
+
 from vFense.core.queue._db import get_all_expired_jobs, delete_all_expired_jobs
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -34,16 +38,25 @@ def remove_expired_jobs_and_update_operations():
         )
 
         if job[OperationKey.Plugin] == RV_PLUGIN:
+            collection = AppCollections.UniqueApplications
 
             if re.search('^install', job['operation']):
                 app_status = {STATUS:  AVAILABLE}
+                if job['operation'] == AgentOperations.INSTALL_CUSTOM_APPS:
+                    collection = AppCollections.CustomApps
+
+                if job['operation'] == AgentOperations.INSTALL_SUPPORTED_APPS:
+                    collection = AppCollections.SupportedApps
+
+                if job['operation'] == AgentOperations.INSTALL_AGENT_UPDATE:
+                    collection = AppCollections.vFenseApps
 
             elif re.search('^uninstall', job['operation']):
                 app_status = {STATUS:  INSTALLED}
             for app in job[AppsKey.FileData]:
-                update_app_status(
+                update_app_status_by_agentid_and_appid(
                     job[OperationPerAgentKey.AgentId],
+                    collection,
                     app[AppsKey.AppId],
-                    job[OperationKey.Operation],
                     app_status
                 )

@@ -7,7 +7,6 @@ from vFense.core.tag import *
 from vFense.core.agent import *
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
-from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_customer
 from vFense.errorz.error_messages import GenericResults
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -126,27 +125,6 @@ def tag_stats_by_os(username, customer_name,
         logger.exception(results)
 
     return(results)
-
-def customer_apps_by_type_count(username, customer_name,
-                                uri, method):
-    try:
-        results = (
-            get_all_app_stats_by_customer(
-                username, customer_name,
-                uri, method
-            )
-        )
-
-    except Exception as e:
-        results = (
-            GenericResults(
-                username, uri, method
-            ).something_broke('widget stats', 'widget', e)
-        )
-        logger.exception(results)
-
-    return(results)
-
 
 @db_create_close
 def bar_chart_for_appid_by_status(app_id=None, customer_name='default',

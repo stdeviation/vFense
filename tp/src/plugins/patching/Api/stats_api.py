@@ -7,7 +7,7 @@ from vFense.db.client import *
 from vFense.utils.common import *
 
 from vFense.errorz.error_messages import GenericResults
-from vFense.plugins.patching.rv_db_calls import *
+from vFense.plugins.patching._db_stats import get_all_app_stats_by_customer
 from vFense.plugins.patching.stats import *
 from vFense.core.decorators import authenticated_request
 
@@ -92,11 +92,13 @@ class WidgetHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
+            app_stats = (
+                get_all_app_stats_by_customer(customer_name)
+            )
             results = (
-                customer_apps_by_type_count(
-                    username, customer_name,
-                    uri, method
-                )
+                GenericResults(
+                    username, uri, method
+                ).information_retrieved([app_stats])
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')

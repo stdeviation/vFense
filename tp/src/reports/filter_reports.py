@@ -9,7 +9,7 @@ from time import ctime
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
 from vFense.db.client import db_create_close, r
-from vFense.plugins.patching.rv_db_calls import get_all_app_stats_by_agentid
+from vFense.plugins.patching._db_stats import get_all_app_stats_by_agentid
 from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
@@ -41,14 +41,10 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
             )
 
         if data:
-            print data
             for agent in data:
                 agent[BASIC_RV_STATS] = (
-                        get_all_app_stats_by_agentid(
-                            username, customer_name,
-                            uri,  method, agent[AgentKey.AgentId]
-                            )['data']
-                        )
+                    get_all_app_stats_by_agentid(agent[AgentKey.AgentId])
+                )
         status = (
                 GenericResults(
                     username,  uri, method
@@ -69,8 +65,6 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
 def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.ComputerName,
         count=30, offset=0, query=None, uri=None, method=None, conn=None):
     
-    print key
-    print query
     if query:
         count = (
                 r

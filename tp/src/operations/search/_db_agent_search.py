@@ -3,11 +3,7 @@
 import logging
 import logging.config
 from vFense.db.client import db_create_close, r
-#from vFense.operations import *
 from vFense.operations.search._constants import OperationSearchValues
-#from vFense.plugins.patching import *
-#from vFense.plugins.patching.rv_db_calls import *
-#from vFense.utils.common import *
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent import AgentKey, AgentCollections
 

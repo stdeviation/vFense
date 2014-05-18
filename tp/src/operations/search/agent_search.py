@@ -7,12 +7,8 @@ from vFense.core.decorators import results_message
 from vFense.operations import AgentOperationKey
 from vFense.operations._constants import AgentOperations
 from vFense.operations.search._db_agent_search import FetchAgentOperations
-#from vFense.core.agent import *
 from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
 from vFense.errorz._constants import ApiResultKeys
-#from vFense.plugins.patching import *
-#from vFense.plugins.patching.rv_db_calls import *
-#from vFense.utils.common import *
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')

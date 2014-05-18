@@ -99,5 +99,3 @@ class AgentOperations():
         UNINSTALL, UNINSTALL_AGENT,
         REBOOT, SHUTDOWN, RA, REFRESH_RESPONSE_URIS
     )
-    
-

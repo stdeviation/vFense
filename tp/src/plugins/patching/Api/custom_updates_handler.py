@@ -16,7 +16,7 @@ from vFense.plugins.patching import *
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status
 
-from vFense.plugins.patching.rv_db_calls import delete_app_from_rv
+from vFense.plugins.patching._db import delete_app_from_vfense
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.search.search import RetrieveCustomApps
 from vFense.plugins.patching.search.search_by_agentid import RetrieveCustomAppsByAgentId
@@ -1088,7 +1088,7 @@ class CustomAppsHandler(BaseHandler):
             appids_failed = 0
             for appid in app_ids:
                 deleted = (
-                    delete_app_from_rv(
+                    delete_app_from_vfense(
                         appid, CustomAppsCollection,
                         CustomAppsPerAgentCollection
                     )
