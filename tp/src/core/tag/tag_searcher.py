@@ -8,9 +8,10 @@ from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching.rv_db_calls import get_all_avail_stats_by_tagid, \
-    get_all_app_stats_by_tagid
-from vFense.errorz.error_messages import GenericResults, TagResults
+from vFense.plugins.patching._db_stats import (
+    get_all_avail_stats_by_tagid, get_all_app_stats_by_tagid
+)
+from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
@@ -58,9 +59,8 @@ class TagSearcher():
                 for tag in xrange(len(data)):
                     data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                         get_all_avail_stats_by_tagid(
-                            self.username, self.customer_name,
-                            self.uri, self.method, data[tag][TagsKey.TagId]
-                        )['data']
+                            data[tag][TagsKey.TagId]
+                        )
                     )
 
                     agents_in_tag = list(
@@ -136,9 +136,8 @@ class TagSearcher():
                     for tag in xrange(len(data)):
                         data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                             get_all_avail_stats_by_tagid(
-                                self.username, self.customer_name,
-                                self.uri, self.method, tag[TagsKey.TagId]
-                            )['data']
+                                tag[TagsKey.TagId]
+                            )
                         )
 
                         agents_in_tag = list(
@@ -207,9 +206,8 @@ class TagSearcher():
                 for tag in xrange(len(data)):
                     data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                         get_all_avail_stats_by_tagid(
-                            self.username, self.customer_name,
-                            self.uri, self.method, data[tag][TagsKey.TagId]
-                        )['data']
+                            data[tag][TagsKey.TagId]
+                        )
                     )
 
                     agents_in_tag = list(
@@ -269,10 +267,7 @@ class TagSearcher():
                 )
 
                 tag_info[CommonAppKeys.BASIC_RV_STATS] = (
-                    get_all_app_stats_by_tagid(
-                        self.username, self.customer_name,
-                        self.uri, self.method, tag_id
-                    )['data']
+                    get_all_app_stats_by_tagid(tag_id)
                 )
 
                 tag_info['agents'] = agents_in_tag

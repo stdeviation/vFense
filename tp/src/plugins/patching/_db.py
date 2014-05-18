@@ -6,11 +6,12 @@ from vFense.core._db import insert_data_in_table, \
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching import AppCollections,\
-    FileCollections, AppsKey, \
-    DbCommonAppKeys, DbCommonAppPerAgentKeys, \
-    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey, \
+from vFense.plugins.patching import (
+    AppCollections, FileCollections, AppsKey,
+    DbCommonAppKeys, DbCommonAppPerAgentKeys,
+    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey,
     FileServerIndexes, FileServerKeys
+)
 
 from vFense.db.client import db_create_close, r
 
@@ -1232,3 +1233,63 @@ def update_hidden_status(
         logger.exception(e)
 
     return data
+
+
+@time_it
+@db_create_close
+def delete_app_from_vfense(
+        app_id, collection=AppCollections.UniqueApplications,
+        per_agent_collection=AppCollections.AppsPerAgent, conn=None
+    ):
+    """Delete the application from vFense.
+    Args:
+        app_id (str): The application id.
+
+    Kwargs:
+        collection (str, optional): The collection you are deleteing from.
+            collection = unique_applications
+        per_agent_collection (str, optional): The apps_per_agent collection
+            you are deleteing from.
+            per_agent_collection = apps_per_agent
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db import delete_app_from_vfense
+        >>> app_id = 'c71c32209119ad585dd77e67c082f57f1d18395763a5fb5728c02631d511df5c'
+        >>> collection = 'unique_applications'
+        >>> per_agent_collection = 'apps_per_agent'
+        >>> delete_app_from_vfense(app_ids, collection, per_agent_collection)
+
+    Returns:
+        Boolean
+        >>> True
+    """
+
+    completed = False
+    try:
+        (
+            r
+            .table(collection)
+            .filter({DbCommonAppKeys.AppId: app_id})
+            .delete()
+            .run(conn)
+        )
+        (
+            r
+            .table(per_agent_collection)
+            .filter({DbCommonAppKeys.AppId: app_id})
+            .delete()
+            .run(conn)
+        )
+        (
+            r
+            .table(FileCollections.Files)
+            .filter(lambda x: x[FilesKey.AppIds].contains(app_id))
+            .delete()
+            .run(conn)
+        )
+        completed = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(completed)
