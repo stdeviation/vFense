@@ -484,13 +484,11 @@ def create_customer(
                     DefaultUsers.ADMIN, [customer.name], user_name, uri, method
                 )
 
-
     elif customer_exist:
         status_code = DbCodes.Unchanged
         msg = 'customer name %s already exists' % (customer.name)
         generic_status_code = GenericCodes.ObjectExists
         vfense_status_code = CustomerFailureCodes.CustomerExists
-
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
@@ -589,8 +587,7 @@ def edit_customer(customer, **kwargs):
 
             elif status_code == DbCodes.Skipped:
                 msg = 'customer %s does not exist - ' % (customer.name)
-                # TODO: what happened to 'Invalid'?
-                generic_status_code = GenericCodes.Invalid
+                generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = CustomerFailureCodes.InvalidCustomerName
 
     except Exception as e:

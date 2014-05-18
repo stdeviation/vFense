@@ -21,10 +21,11 @@ from vFense.db.client import db_connect, r
 
 from vFense.core.user._constants import *
 from vFense.core.group._constants import *
+from vFense.core.customer import Customer
 from vFense.core.customer._constants import *
 from vFense.core.permissions._constants import *
 import vFense.core.group.groups as group
-import vFense.core.customer.customers as customer
+import vFense.core.customer.customers as customers
 import vFense.core.user.users as user
 
 from vFense.plugins import monit
@@ -216,12 +217,14 @@ def initialize_db():
         ci.initialize_indexes_and_create_tables()
         conn = db_connect()
 
-        customer.create_customer(
+        default_customer = Customer(
             DefaultCustomers.DEFAULT,
-            http_application_url_location=url,
             server_queue_ttl=args.queue_ttl,
-            init=True
+            package_download_url=url
         )
+
+        customers.create_customer(default_customer, init=True)
+
         group_data = group.create_group(
             DefaultGroups.ADMIN,
             DefaultCustomers.DEFAULT,

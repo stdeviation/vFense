@@ -1,6 +1,7 @@
 import re
 
 from vFense.core._constants import CPUThrottleValues, DefaultStringLength
+from vFense.core.customer._constants import CustomerDefaults
 
 class CustomerCollections():
     Customers = 'customers'
@@ -80,19 +81,18 @@ class Customer(object):
             in a few fields, then allow the create customer functions call this
             method to fill in the rest.
         """
-        # TODO: Use defined constants for the defaults
 
         if not self.net_throttle:
-            self.net_throttle = 0
+            self.net_throttle = CustomerDefaults.NET_THROTTLE
 
         if not self.cpu_throttle:
-            self.cpu_throttle = 'normal'
+            self.cpu_throttle = CustomerDefaults.CPU_THROTTLE
 
         if not self.server_queue_ttl:
-            self.server_queue_ttl = 10
+            self.server_queue_ttl = CustomerDefaults.SERVER_QUEUE_TTL
 
         if not self.agent_queue_ttl:
-            self.agent_queue_ttl = 10
+            self.agent_queue_ttl = CustomerDefaults.AGENT_QUEUE_TTL
 
     def get_invalid_fields(self):
         """Check the customer for any invalid fields.
