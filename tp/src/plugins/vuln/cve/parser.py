@@ -2,6 +2,7 @@ import os
 import gc
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from lxml import etree
 from re import sub
@@ -21,7 +22,7 @@ from vFense.plugins.vuln.cve.downloader import start_nvd_xml_download
 from vFense.utils.common import date_parser, timestamp_verifier
 from vFense.db.client import r
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 

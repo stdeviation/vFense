@@ -1,13 +1,14 @@
 import json
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request
 
 from vFense.plugins.monit import api
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 ROOT_USER = 'root'

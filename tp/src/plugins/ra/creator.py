@@ -2,6 +2,7 @@ import threading
 import time
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.settings import Default
 from vFense.tunnels import TunnelKey, reverse_tunnel_params
@@ -12,7 +13,7 @@ from vFense.plugins.ra.raoperation import RaOperation
 from vFense.plugins.ra.novnc import stop_novnc
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

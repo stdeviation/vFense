@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent import *
 from vFense.utils.common import *

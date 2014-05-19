@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.errorz.error_messages import GenericResults, NotificationResults
 from vFense.notifications import *
@@ -14,7 +15,7 @@ from vFense.notifications.alerts import Notifier, get_valid_fields, get_all_noti
 from vFense.core.user import UserKeys
 from vFense.core.user.users import get_user_property
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class GetAllValidFieldsForNotifications(BaseHandler):

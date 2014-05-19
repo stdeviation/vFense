@@ -1,6 +1,7 @@
 import json
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CPUThrottleValues
 from vFense.core.api._constants import ApiArguments, ApiValues
@@ -34,7 +35,7 @@ from vFense.errorz.status_codes import CustomerFailureCodes, CustomerCodes
 from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
     change_customer_for_apps_in_customer
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

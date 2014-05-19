@@ -1,5 +1,9 @@
 import logging
 import logging.config
+from vFense import (
+    VFENSE_LOGGING_CONFIG, VFENSE_APP_PATH,
+    VFENSE_APP_DEP_PATH
+)
 import os
 import re
 
@@ -12,18 +16,15 @@ from vFense.plugins.patching import AppsKey, AppCollections
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 
-PACKAGES_DIRECTORY = '/opt/TopPatch/var/packages'
-DEPENDENCIES_DIRECTORY = '/opt/TopPatch/var/packages/dependencies'
-
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
 def create_necessary_dirs():
-    if not os.path.exists(PACKAGES_DIRECTORY):
-        os.mkdir(PACKAGES_DIRECTORY)
-    if not os.path.exists(DEPENDENCIES_DIRECTORY):
-        os.mkdir(DEPENDENCIES_DIRECTORY)
+    if not os.path.exists(VFENSE_APP_PATH):
+        os.mkdir(VFENSE_APP_PATH)
+    if not os.path.exists(VFENSE_APP_DEP_PATH):
+        os.mkdir(VFENSE_APP_DEP_PATH)
 
 
 def check_if_redhat(os_string):
@@ -58,7 +59,7 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
         update_app_data_by_app_id(app_id, download_status, collection)
 
     elif len(file_data) > 0:
-        app_path = os.path.join(PACKAGES_DIRECTORY, str(app_id))
+        app_path = os.path.join(VFENSE_APP_PATH, str(app_id))
         if not os.path.exists(app_path):
             os.mkdir(app_path)
 
@@ -79,7 +80,7 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
             fsize = file_info[CommonFileKeys.PKG_SIZE]
 
             if os_code == 'linux':
-                file_path = os.path.join(DEPENDENCIES_DIRECTORY, fname)
+                file_path = os.path.join(VFENSE_APP_DEP_PATH, fname)
             else:
                 file_path = os.path.join(app_path, fname)
 

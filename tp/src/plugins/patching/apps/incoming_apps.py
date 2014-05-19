@@ -2,6 +2,7 @@ import traceback
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
@@ -24,7 +25,7 @@ RQ_PORT = 6379
 RQ_DB = 0
 RQ_PKG_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

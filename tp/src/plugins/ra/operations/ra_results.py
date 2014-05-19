@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.operations._constants import AgentOperations
 from vFense.operations.results import OperationResults
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class RaOperationResults(OperationResults):

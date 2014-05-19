@@ -1,6 +1,7 @@
 import os
 import socket
 import logging, logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from OpenSSL import crypto
 from vFense.utils._constants import SSLConstants
 
@@ -12,7 +13,7 @@ LOAD_CERT = crypto.load_certificate
 LOAD_CERT_REQUEST = crypto.load_certificate_request
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 def load_private_key(privkey=SSLConstants.PRIV_KEY):

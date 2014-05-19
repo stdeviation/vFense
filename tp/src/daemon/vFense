@@ -1,11 +1,9 @@
 #!/bin/sh
 
-PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/TopPatch/tp/src/daemon"
-export PATH
 NAME="vFense"
 DESC="vFense"
 USERNAME="toppatch"
-DAEMON="/opt/TopPatch/tp/src/daemon/vFensed"
+DAEMON="/usr/local/bin/vFensed"
 DEPENDENCIES_RUNNING="true"
 NGINX_RUNNING=`pidof nginx`
 REDIS_RUNNING=`pidof redis-server`

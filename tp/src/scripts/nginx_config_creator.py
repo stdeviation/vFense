@@ -1,4 +1,8 @@
-from vFense import get_nginx_config_location
+from vFense import (
+    get_nginx_config_location, VFENSE_TEMPLATE_PATH,
+    VFENSE_WWW_PATH, VFENSE_APP_PATH, VFENSE_APP_TMP_PATH,
+    VFENSE_SSL_PATH
+)
 
 NGINX_CONFIG_FILE = get_nginx_config_location()
 base_nginx_config = """server {
@@ -11,8 +15,8 @@ server {
     listen                      443;
     server_name                 _;
     ssl                         on;
-    ssl_certificate             /opt/TopPatch/tp/data/ssl/%(server_crt)s;
-    ssl_certificate_key         /opt/TopPatch/tp/data/ssl/%(server_key)s;
+    ssl_certificate             %(ssl_path)s/%(server_crt)s;
+    ssl_certificate_key         %(ssl_path)s/%(server_key)s;
 
     ssl_session_timeout         5m;
 
@@ -31,7 +35,7 @@ server {
     }
 
     location /upload/package {
-        upload_store /opt/TopPatch/var/packages/tmp/;
+        upload_store %(app_tmp_path)s/;
         upload_store_access user:rw group:rw all:rw;
         upload_set_form_field $upload_field_name.name "$upload_file_name";
         upload_set_form_field $upload_field_name.content_type "$upload_content_type";
@@ -96,14 +100,14 @@ server {
     }
 
     location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
-        root                    /opt/TopPatch/tp/wwwstatic;
+        root                    %(www_path)s;
         expires                 max;
         add_header              Pragma public;
         add_header              Cache-Control "public, must-revalidate, proxy-revalidate";
     }
 
-    location ~ /var/packages {
-        root                    /opt/TopPatch/var/packages;
+    location ~ %(app_path)s {
+        root                    %(app_path)s;
         expires                 max;
         add_header              Pragma public;
         add_header              Cache-Control "public, must-revalidate, proxy-revalidate";
@@ -159,7 +163,11 @@ def nginx_config_builder(
         {
             'server_name': server_name,
             'server_crt': server_cert,
-            'server_key': server_key
+            'server_key': server_key,
+            'app_path': VFENSE_APP_PATH,
+            'app_tmp_path': VFENSE_APP_TMP_PATH,
+            'ssl_path': VFENSE_SSL_PATH,
+            'www_path': VFENSE_WWW_PATH,
         }
     )
     new_config = rvlistener_config + rvweb_config + replace_config

@@ -1,6 +1,8 @@
 import json
 import logging
 
+from vFense import VFENSE_LOGGING_CONFIG
+
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request
 from vFense.errorz.error_messages import GenericResults
@@ -10,7 +12,7 @@ from vFense.core.decorators import agent_authenticated_request, \
 from vFense.plugins.monit import api
 from vFense.plugins.monit.utils import update_agent_monit_stats
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 list_log = logging.getLogger('rvlistener')
 web_log = logging.getLogger('rvlistener')
 

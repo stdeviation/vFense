@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.queue.queue import AgentQueue
 from vFense.settings import Default
@@ -10,7 +11,7 @@ from vFense.errorz.error_messages import AgentOperationCodes
 from vFense.plugins import ra
 from vFense.plugins.ra import DesktopProtocol
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('raapi')
 
 

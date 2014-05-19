@@ -1,6 +1,7 @@
 import logging
 import re
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CPUThrottleValues, DefaultStringLength
 from vFense.core._db import retrieve_object
 from vFense.core.customer import *
@@ -18,7 +19,7 @@ from vFense.core.decorators import results_message, time_it
 from vFense.errorz.status_codes import *
 from vFense.errorz._constants import ApiResultKeys
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

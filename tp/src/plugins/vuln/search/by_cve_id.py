@@ -2,6 +2,7 @@ import re
 import sys
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r, db_connect
 from vFense.errorz.error_messages import GenericResults, PackageResults
@@ -9,7 +10,7 @@ from vFense.plugins.vuln.cve import *
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.cve.cve import get_cve_data
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 class RetrieveByCveId(object):

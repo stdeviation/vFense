@@ -1,12 +1,13 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
 from vFense.plugins.vuln.windows import WindowsSecurityBulletinKey
 from vFense.plugins.vuln.windows._db import fetch_vuln_ids, \
     fetch_vuln_data
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 @time_it

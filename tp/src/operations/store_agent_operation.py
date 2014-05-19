@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
 from vFense.operations._constants import vFenseObjects
 from vFense.operations.agent_operations import AgentOperation
@@ -11,7 +12,7 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

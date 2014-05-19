@@ -1,6 +1,7 @@
 import re
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.errorz.error_messages import GenericResults
 from vFense.plugins.vuln.cve import *
@@ -8,7 +9,7 @@ from vFense.plugins.vuln.cve._constants import *
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.windows.ms as ms
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 class RetrieveByVulnerabilityId(object):

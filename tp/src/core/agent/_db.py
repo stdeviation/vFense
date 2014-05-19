@@ -1,5 +1,6 @@
 import logging
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.agent import AgentCollections, \
     AgentIndexes, AgentKey
@@ -8,7 +9,7 @@ from vFense.core.agent._db_sub_queries import Merge
 #from vFense.plugins.patching import *
 from vFense.core.decorators import return_status_tuple, time_it
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

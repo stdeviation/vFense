@@ -1,20 +1,22 @@
 import os
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from  functools import wraps
 import ConfigParser
 import types
 
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_DB_CONFIG
+
 import rethinkdb as r
 import redis
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
-db_config='/opt/TopPatch/conf/database.conf'
 Config = ConfigParser.ConfigParser()
-Config.read(db_config)
+Config.read(VFENSE_DB_CONFIG)
 
 def db_connect(new_db_config=None):
     conn = None

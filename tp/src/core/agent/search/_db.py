@@ -1,5 +1,6 @@
 import logging
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._constants import AgentCommonKeys
@@ -13,7 +14,7 @@ from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.decorators import time_it
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

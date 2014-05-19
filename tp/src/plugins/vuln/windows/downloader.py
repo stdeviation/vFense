@@ -5,12 +5,13 @@ from time import sleep
 import requests
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from time import sleep
 from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
     WindowsBulletinStrings
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 def get_msft_bulletin_xlsx(xls_url, count=0):

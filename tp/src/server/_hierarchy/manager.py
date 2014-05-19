@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 import server.hierarchy._db as _db
 from vFense.server.hierarchy.groups import *
@@ -10,7 +11,7 @@ from vFense.server.hierarchy import *
 from vFense.server.hierarchy.permissions import Permission
 from vFense.utils.security import Crypto
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

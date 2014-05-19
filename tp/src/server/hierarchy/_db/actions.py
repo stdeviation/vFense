@@ -1,11 +1,12 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 
 from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
 from vFense.server.hierarchy import GroupsPerUserKey, UsersPerCustomerKey
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

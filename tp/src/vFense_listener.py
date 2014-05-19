@@ -6,6 +6,9 @@ import uuid
 import os
 import logging
 import logging.config
+from vFense import (
+    VFENSE_LOGGING_CONFIG, VFENSE_SSL_PATH, VFENSE_TEMPLATE_PATH
+)
 
 import tornado.httpserver
 import tornado.ioloop
@@ -23,9 +26,6 @@ from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
 from vFense.receiver.api.ra.results import RemoteDesktopResults
 
 from tornado.options import define, options
-
-#import newrelic.agent
-#newrelic.agent.initialize('/opt/TopPatch/conf/newrelic.ini')
 
 define("port", default=9001, help="run on port", type=int)
 define("debug", default=True, help="enable debugging features", type=bool)
@@ -63,7 +63,7 @@ class Application(tornado.web.Application):
         handlers.extend(core_loader.get_core_listener_api_handlers())
         handlers.extend(plugin_loader.get_plugins_listener_api_handlers())
 
-        template_path = "/opt/TopPatch/tp/templates"
+        template_path = VFENSE_TEMPLATE_PATH
         settings = {
             "cookie_secret": "patching-0.7",
             "login_url": "/rvl/login",
@@ -73,7 +73,7 @@ class Application(tornado.web.Application):
         )
 
     def log_request(self, handler):
-        logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+        logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
         log = logging.getLogger('rvweb')
         log_method = log.debug
         if handler.get_status() <= 299:
@@ -110,10 +110,10 @@ if __name__ == '__main__':
         Application(options.debug),
         ssl_options={
             "certfile": os.path.join(
-                "/opt/TopPatch/tp/data/ssl/",
+                VFENSE_SSL_PATH,
                 "server.crt"),
             "keyfile": os.path.join(
-                "/opt/TopPatch/tp/data/ssl/", 
+                VFENSE_SSL_PATH, 
                 "server.key"),
         }
     )

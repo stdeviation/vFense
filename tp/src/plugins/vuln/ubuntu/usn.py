@@ -1,13 +1,14 @@
 import sys
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import return_status_tuple, time_it
 
 from vFense.plugins.vuln.ubuntu import *
 from vFense.plugins.vuln.ubuntu._db import fetch_vuln_ids, \
     fetch_vuln_data
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 @time_it

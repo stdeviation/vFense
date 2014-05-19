@@ -2,6 +2,7 @@
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.decorators import results_message
 from vFense.operations import AgentOperationKey
@@ -10,7 +11,7 @@ from vFense.operations.search._db_agent_search import FetchAgentOperations
 from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
 from vFense.errorz._constants import ApiResultKeys
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

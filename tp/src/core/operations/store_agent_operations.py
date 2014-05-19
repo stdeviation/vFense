@@ -1,9 +1,10 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.operations._constants import AgentOperations, vFensePlugins
 from vFense.operations.store_agent_operation import StoreAgentOperation
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class StoreAgentOperations(StoreAgentOperation):

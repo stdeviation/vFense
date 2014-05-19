@@ -1,8 +1,8 @@
 from time import sleep
 import logging 
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.scheduler.jobManager import start_scheduler, job_exists, remove_job
-#from vFense.plugins.patching.apps.supported_apps.syncer import get_agents_apps, get_supported_apps
 from vFense.plugins.patching.apps.supported_apps.syncer import get_supported_apps
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
@@ -12,7 +12,7 @@ from vFense.core.agent.agent_uptime_verifier import all_agent_status
 from vFense.jobs.jobs import remove_expired_jobs_and_update_operations
 from vFense.errorz.status_codes import SchedulerCodes
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('admin_scheduler')
 get_supported_apps()
 #get_agents_apps()

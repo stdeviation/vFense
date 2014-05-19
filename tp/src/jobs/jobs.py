@@ -1,6 +1,7 @@
 import re
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime
 
@@ -14,7 +15,7 @@ from vFense.plugins.patching.patching import (
 
 from vFense.core.queue._db import get_all_expired_jobs, delete_all_expired_jobs
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('admin_scheduler')
 
 def remove_expired_jobs_and_update_operations():

@@ -4,6 +4,7 @@ import simplejson as json
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from server.handlers import BaseHandler
 from db.client import *
 from errorz.error_messages import GenericResults
@@ -18,7 +19,7 @@ from datetime import datetime
 
 from jsonpickle import encode
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentsOsQueryDetailsHandler(BaseHandler):

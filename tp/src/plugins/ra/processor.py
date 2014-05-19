@@ -1,6 +1,7 @@
 import time
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 import redis
 
 import settings
@@ -13,7 +14,7 @@ from vFense.plugins.ra import novnc
 from vFense.plugins.ra.raoperation import save_result
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 rq_pool = redis.StrictRedis(

@@ -11,8 +11,9 @@ from vFense.plugins.patching.file_data import add_file_data
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

@@ -1,7 +1,9 @@
 import os
+import re
 import logging
 import urllib
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_customer
 from vFense.core._db_constants import DbTime
@@ -35,7 +37,7 @@ import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
@@ -724,7 +726,10 @@ def get_vulnerability_info_for_app(
     if kb != "" and os_string.find('Windows') == 0:
         vuln_info = ms.get_vuln_ids(kb)
 
-    elif os_string.find('Ubuntu') == 0 and app_name and app_version:
+    elif (
+            re.search(r'Ubuntu|Mint', os_string, re.IGNORECASE)
+            and app_name and app_version
+         ):
         vuln_info = (
             usn.get_vuln_ids(
                 app_name, app_version, os_string

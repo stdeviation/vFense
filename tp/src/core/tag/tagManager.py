@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.tag import *
 from vFense.core.agent import *
@@ -18,7 +19,7 @@ rq_db = 0
 
 rq_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 @db_create_close

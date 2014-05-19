@@ -1,5 +1,5 @@
-import logging
-import logging.config
+import logging, logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 import json
 from datetime import datetime
 from functools import wraps
@@ -12,7 +12,7 @@ from vFense.errorz.status_codes import DbCodes, \
 from vFense.errorz.results import Results
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vFense_stats')
 
 

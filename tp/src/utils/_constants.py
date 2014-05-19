@@ -1,11 +1,12 @@
 import os
 from OpenSSL.crypto import TYPE_RSA, TYPE_DSA, FILETYPE_PEM
+from vFense import VFENSE_SSL_PATH
 
 class SSLConstants():
     RSA = TYPE_RSA
     DSA = TYPE_DSA
     PEM = FILETYPE_PEM
-    SSL_DIR = '/opt/TopPatch/tp/data/ssl'
+    SSL_DIR = VFENSE_SSL_PATH
     SERVER = 'server'
     PRIV_NAME = 'server.key'
     CERT_NAME   = 'server.crt'

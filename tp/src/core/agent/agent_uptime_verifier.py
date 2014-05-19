@@ -2,10 +2,11 @@ import logging
 
 from time import mktime
 from datetime import datetime
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent import *
 from vFense.db.client import r, db_connect
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('agentstatus')
 
 def all_agent_status():

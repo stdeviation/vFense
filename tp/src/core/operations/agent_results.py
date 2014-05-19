@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.operations._constants import AgentOperations
@@ -8,7 +9,7 @@ from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import update_agent_field
 from vFense.operations.results import OperationResults
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentOperationResults(OperationResults):

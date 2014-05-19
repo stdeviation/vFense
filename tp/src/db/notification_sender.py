@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_BASE_SRC_PATH
 from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
 from vFense.operations import *
@@ -10,9 +11,9 @@ from emailer.mailer import MailClient
 
 from tornado.template import Loader
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvnotifications')
-TEMPLATE_DIR = ('/opt/TopPatch/tp/src/emailer/templates')
+TEMPLATE_DIR = (os.path.join(VFENSE_BASE_SRC_PATH, 'emailer/templates'))
 
 def send_data(customer_name, subject, msg_body, sender_addresses, html=True):
     try:

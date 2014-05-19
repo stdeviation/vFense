@@ -7,6 +7,17 @@ import shutil
 import signal
 import subprocess
 from time import sleep
+from vFense import (
+    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
+    VFENSE_LOG_PATH, VFENSE_CONF_PATH,
+    VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
+    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
+    VFENSE_TMP_PATH
+)
+from vFense.core.logger.logger import vFenseLogger
+vfense_logger = vFenseLogger()
+vfense_logger.create_config()
+
 import logging, logging.config
 
 import create_indexes as ci
@@ -33,7 +44,7 @@ from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
@@ -120,8 +131,8 @@ ncc.nginx_config_builder(
 
 def initialize_db():
     os.umask(0)
-    if not os.path.exists('/opt/TopPatch/var/tmp'):
-        os.mkdir('/opt/TopPatch/var/tmp', 0755)
+    if not os.path.exists(VFENSE_TMP_PATH):
+        os.mkdir(VFENSE_TMP_PATH, 0755)
     if not os.path.exists(RETHINK_CONF):
         subprocess.Popen(
             [
@@ -138,20 +149,20 @@ def initialize_db():
             ],
         )
 
-    if not os.path.exists('/opt/TopPatch/var/log'):
-        os.mkdir('/opt/TopPatch/var/log', 0755)
-    if not os.path.exists('/opt/TopPatch/var/scheduler'):
-        os.mkdir('/opt/TopPatch/var/scheduler', 0755)
-    if not os.path.exists('/opt/TopPatch/var/packages'):
-        os.mkdir('/opt/TopPatch/var/packages', 0755)
-    if not os.path.exists('/opt/TopPatch/var/packages/tmp'):
-        os.mkdir('/opt/TopPatch/var/packages/tmp', 0775)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/windows/data/xls', 0755)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/cve/data/xml', 0755)
-    if not os.path.exists('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html'):
-        os.makedirs('/opt/TopPatch/tp/src/plugins/vuln/ubuntu/data/html', 0755)
+    if not os.path.exists(VFENSE_LOG_PATH):
+        os.mkdir(VFENSE_LOG_PATH, 0755)
+    if not os.path.exists(VFENSE_SCHEDULER_PATH):
+        os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
+    if not os.path.exists(VFENSE_APP_PATH):
+        os.mkdir(VFENSE_APP_PATH, 0755)
+    if not os.path.exists(VFENSE_APP_TMP_PATH):
+        os.mkdir(VFENSE_APP_TMP_PATH, 0775)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
@@ -164,7 +175,7 @@ def initialize_db():
             subprocess.Popen(
                 [
                     'ln', '-s',
-                    '/opt/TopPatch/tp/src/daemon/vFense',
+                    os.path.join(VFENSE_BASE_SRC_PATH,'daemon/vFense'),
                     '/etc/init.d/vFense'
                 ],
         )
@@ -184,17 +195,17 @@ def initialize_db():
             [
                 'patch', '-N',
                 get_sheduler_location(),
-                '/opt/TopPatch/conf/patches/scheduler.patch'
+                os.path.join(VFENSE_CONF_PATH, 'patches/scheduler.patch')
             ],
         )
     try:
-        tp_exists = pwd.getpwnam('toppatch')
+        tp_exists = pwd.getpwnam('vfense')
 
     except Exception as e:
         if get_distro() in DEBIAN_DISTROS:
             subprocess.Popen(
                 [
-                    'adduser', '--disabled-password', '--gecos', 'GECOS','toppatch',
+                    'adduser', '--disabled-password', '--gecos', '', 'toppatch',
                 ],
             )
         elif get_distro() in REDHAT_DISTROS:
@@ -211,8 +222,8 @@ def initialize_db():
     completed = True
     if completed:
         conn = db_connect()
-        r.db_create('toppatch_server').run(conn)
-        db = r.db('toppatch_server')
+        r.db_create('vFense').run(conn)
+        db = r.db('vFense')
         conn.close()
         ci.initialize_indexes_and_create_tables()
         conn = db_connect()
@@ -320,7 +331,7 @@ if __name__ == '__main__':
         print 'vFense environment has been succesfully initialized\n'
         subprocess.Popen(
             [
-                'chown', '-R', 'toppatch.toppatch', '/opt/TopPatch'
+                'chown', '-R', 'vfense.vfense', VFENSE_BASE_PATH
             ],
         )
 

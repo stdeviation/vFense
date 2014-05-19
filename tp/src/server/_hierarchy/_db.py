@@ -3,6 +3,7 @@
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
 from vFense.db.client import *
 
@@ -10,7 +11,7 @@ from vFense.groups import *
 from vFense.users import *
 from vFense.customers import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

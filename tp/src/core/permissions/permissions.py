@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
@@ -17,7 +18,7 @@ from vFense.core._db import retrieve_object
 from vFense.core.decorators import time_it
 from vFense.utils.security import Crypto
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

@@ -5,6 +5,7 @@ import requests
 from time import mktime
 from datetime import datetime
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._db import delete_all_in_table
 from vFense.core.agent import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info 
@@ -35,7 +36,7 @@ BASE_URL = 'http://updater2.toppatch.com'
 #GET_AGENT_UPDATES = 'api/new_updater/rvpkglist'
 GET_SUPPORTED_UPDATES = 'api/new_updater/pkglist'
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

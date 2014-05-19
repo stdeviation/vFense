@@ -2,9 +2,10 @@ import Queue
 from time import sleep
 from random import randint
 import logging, logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.threading import Thread
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""

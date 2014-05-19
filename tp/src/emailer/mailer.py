@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 import smtplib
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.notifications import *
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -9,7 +10,7 @@ from email.mime.text import MIMEText
 from vFense.db.client import db_create_close, r
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

@@ -1,11 +1,12 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import r, db_create_close
 from vFense.core.queue import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

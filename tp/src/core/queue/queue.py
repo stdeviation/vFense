@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime, timedelta
 
@@ -16,7 +17,7 @@ from vFense.operations import AgentOperationKey
 
 from vFense.errorz.status_codes import DbCodes
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentQueue(object):

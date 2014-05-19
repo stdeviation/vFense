@@ -2,6 +2,7 @@ from uuid import uuid4
 import logging
 import os
 import shutil
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import PackageCodes
@@ -10,10 +11,10 @@ from vFense.plugins.patching import *
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-TMP_DIR = '/opt/TopPatch/var/packages/tmp/'
+TMP_DIR = VFENSE_APP_TMP_PATH
 
 if not os.path.exists(TMP_DIR):
     os.mkdir(TMP_DIR)

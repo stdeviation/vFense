@@ -1,6 +1,7 @@
 import re
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from json import loads
 
@@ -32,7 +33,7 @@ from vFense.plugins.patching.operations.patching_operations import \
 from vFense.plugins.patching.apps.incoming_apps import \
     incoming_applications_from_agent
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class PatchingOperationResults(OperationResults):

@@ -1,6 +1,7 @@
 import logging
 from time import time
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.agent import AgentKey
@@ -26,7 +27,7 @@ from vFense.errorz.status_codes import DbCodes, GenericCodes,\
     AgentResultCodes, AgentFailureResultCodes
 #from vFense.plugins.patching import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

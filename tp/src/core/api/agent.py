@@ -2,6 +2,7 @@ import simplejson as json
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
@@ -27,7 +28,7 @@ from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

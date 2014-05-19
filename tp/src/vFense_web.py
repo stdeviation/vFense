@@ -6,6 +6,10 @@ import uuid
 import os
 import logging
 import logging.config
+from vFense import (
+    VFENSE_LOGGING_CONFIG, VFENSE_TEMPLATE_PATH, VFENSE_SSL_PATH,
+    VFENSE_APP_PATH
+)
 
 import tornado.httpserver
 import tornado.ioloop
@@ -38,9 +42,6 @@ from vFense.plugins.ra.api.rdsession import RDSession
 from vFense.plugins.ra.api.settings import SetPassword
 from vFense.server.hierarchy import db as hierarchy_db
 from vFense.server.api.tag_api import *
-#from vFense.server.api.users_api import *
-#from vFense.server.api.groups_api import *
-#from vFense.server.api.customer_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
 from vFense.operations.api.agent_operations import GetTransactionsHandler, \
@@ -63,7 +64,7 @@ rq_pool = StrictRedis(host=rq_host, port=rq_port, db=rq_db)
 class HeaderModule(tornado.web.UIModule):
     def render(self):
         return self.render_string(
-            "../templates/header.html"
+            os.path.join(VFENSE_TEMPLATE_PATH, "header.html")
         )
 
 
@@ -131,15 +132,15 @@ class Application(tornado.web.Application):
 
             ##### File system access whitelist
             (r"/css/(.*?)", tornado.web.StaticFileHandler,
-                {"path": "wwwstatic/css"}),
+                {"path": os.path.join(VFENSE_WWW_PATH, "css")}),
             (r"/font/(.*?)", tornado.web.StaticFileHandler,
-                {"path": "wwwstatic/font"}),
+                {"path": os.path.join(VFENSE_WWW_PATH, "font")}),
             (r"/img/(.*?)", tornado.web.StaticFileHandler,
-                {"path": "wwwstatic/img"}),
+                {"path": os.path.join(VFENSE_WWW_PATH, "img")}),
             (r"/js/(.*?)", tornado.web.StaticFileHandler,
-                {"path": "wwwstatic/js"}),
+                {"path": os.path.join(VFENSE_WWW_PATH, "js")}),
             (r"/packages/*/(.*?)", tornado.web.StaticFileHandler,
-                {"path": "/opt/TopPatch/var/packages"})
+                {"path": VFENSE_APP_PATH})
         ]
 
         core_loader = vFense_module_loader.CoreLoader()
@@ -149,7 +150,6 @@ class Application(tornado.web.Application):
         handlers.extend(core_loader.get_core_web_api_handlers())
         handlers.extend(plugin_loader.get_plugins_web_api_handlers())
 
-        template_path = "/opt/TopPatch/tp/templates"
         settings = {
             "cookie_secret": base64.b64encode(uuid.uuid4().bytes +
                                               uuid.uuid4().bytes),
@@ -160,11 +160,11 @@ class Application(tornado.web.Application):
         hierarchy_db.init()
 
         tornado.web.Application.__init__(self, handlers,
-                                         template_path=template_path,
+                                         template_path=VFENSE_TEMPLATE_PATH,
                                          debug=debug, **settings)
 
     def log_request(self, handler):
-        logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+        logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
         log = logging.getLogger('rvweb')
         log_method = log.debug
         if handler.get_status() <= 299:
@@ -194,8 +194,8 @@ if __name__ == '__main__':
     https_server = tornado.httpserver.HTTPServer(
         Application(options.debug),
         ssl_options={
-            "certfile": os.path.join("/opt/TopPatch/tp/data/ssl/", "server.crt"),
-            "keyfile": os.path.join("/opt/TopPatch/tp/data/ssl/", "server.key")
+            "certfile": os.path.join(VFENSE_SSL_PATH, "server.crt"),
+            "keyfile": os.path.join(VFENSE_SSL_PATH, "server.key")
         }
     )
     https_server.listen(options.port)

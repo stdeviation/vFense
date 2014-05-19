@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import *
 
 from vFense.server.hierarchy import *
@@ -7,7 +8,7 @@ from vFense.server.hierarchy import *
 #from server.hierarchy.user import *
 #from server.hierarchy.customer import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 _main_db = 'toppatch_server'

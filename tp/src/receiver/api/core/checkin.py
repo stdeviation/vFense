@@ -1,5 +1,7 @@
 import logging
 from json import dumps
+
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent.agents import update_agent_status
 from vFense.errorz.error_messages import GenericResults, AgentResults
 from vFense.core.api.base import BaseHandler
@@ -10,7 +12,7 @@ from vFense.receiver.corehandler import process_queue_data
 from vFense.core.user import UserKeys
 from vFense.core.user.users import get_user_property
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 

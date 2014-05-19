@@ -4,6 +4,7 @@ import sys
 import gc
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from time import mktime
 from datetime import datetime
@@ -18,7 +19,7 @@ from vFense.plugins.vuln.windows._db import insert_bulletin_data
 from vFense.plugins.vuln.windows.downloader import download_latest_xls_from_msft
 from vFense.db.client import r
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 def parse_spread_sheet(bulletin_file):

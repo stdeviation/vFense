@@ -1,6 +1,7 @@
 import json
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments
@@ -32,7 +33,7 @@ from vFense.errorz._constants import *
 from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

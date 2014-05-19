@@ -9,12 +9,16 @@ import shutil
 import signal
 import subprocess
 import logging, logging.config
+from vFense import (
+    VFENSE_LOGGING_CONFIG, VFENSE_TMP_PATH, VFENSE_BASE_PATH,
+    VFENSE_LOG_PATH, VFENSE_TP_PATH
+)
 from vFense.db.client import db_connect
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-PID_DIR = '/opt/TopPatch/var/tmp/'
+PID_DIR = VFENSE_TMP_PATH
 PIDS =[]
 SERVICES =[]
 ALLSERVICES =[]
@@ -58,21 +62,21 @@ for port in RVW_PORTS:
     ALLSERVICES.append((RVWEB, pid_file, rvw, port))
 
 ##################################################################
-TOPPATCH_HOME = '/opt/TopPatch/'
+VFENSE_HOME = VFENSE_BASE_PATH
 PROGRAM = 'python'
-PIDFILE = '/opt/TopPatch/var/tmp/process.pid'
-RVSCHEDULER_PIDFILE='/opt/TopPatch/var/tmp/rvscheduler-9002.pid'
+PIDFILE = os.path.join(VFENSE_TMP_PATH, 'process.pid')
+RVSCHEDULER_PIDFILE= os.path.join(VFENSE_TMP_PATH, 'rvscheduler-9002.pid')
 
-WORKERS_DIR = '/opt/TopPatch/tp/src/receiver/rqworkers'
-PATH = '/opt/TopPatch/tp/'
+WORKERS_DIR = os.path.join(VFENSE_BASE_SRC_PATH, 'receiver/rqworkers'
+PATH = VFENSE_TP_PATH
 RVSCHEDULER='src/scheduler/rvscheduler.py'
 
 PIDS.append((RVSCHEDULER_PIDFILE, 'RvScheduler'))
 
-if not os.path.exists('/opt/TopPatch/var/tmp/'):
-    os.mkdir('/opt/TopPatch/var/tmp/')
-if not os.path.exists('/opt/TopPatch/var/log/'):
-    os.mkdir('/opt/TopPatch/var/log/')
+if not os.path.exists(VFENSE_TMP_PATH):
+    os.mkdir(VFENSE_TMP_PATH)
+if not os.path.exists(VFENSE_LOG_PATH):
+    os.mkdir(VFENSE_LOG_PATH)
 
 SERVICES.append((RVSCHEDULER, RVSCHEDULER_PIDFILE, 'RvScheduler'))
 ALLSERVICES.append((RVSCHEDULER, RVSCHEDULER_PIDFILE, 'RvScheduler'))

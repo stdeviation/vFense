@@ -5,14 +5,15 @@ import signal
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_WWW_PATH
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 websockify_path = os.path.join(os.path.dirname(__file__), 'websockify')
 
 # Directory where vnc.html is located in.
-web_dir = '/opt/TopPatch/tp/wwwstatic/js/libs/vnc'
+web_dir = os.path.join(VFENSE_WWW_PATH, 'js', 'libs', 'vnc')
 
 _open_processes = {}
 

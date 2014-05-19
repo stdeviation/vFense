@@ -4,6 +4,7 @@ import gc
 import sys
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime
 
@@ -18,7 +19,7 @@ from vFense.plugins.vuln.ubuntu._db import insert_bulletin_data
 import requests
 from BeautifulSoup import BeautifulSoup
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 def format_data_to_insert_into_db(

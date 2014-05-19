@@ -1,6 +1,7 @@
 import logging
 import simplejson as json
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
@@ -9,7 +10,7 @@ from vFense.plugins.ra.operations.ra_results import RaOperationResults
 
 from vFense.plugins.ra.processor import Processor
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 

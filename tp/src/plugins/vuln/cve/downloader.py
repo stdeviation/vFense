@@ -3,10 +3,11 @@ import os
 import requests
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.plugins.vuln.cve._constants import CVEDataDir, CVEStrings
 from vFense.plugins.vuln._constants import DateValues
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 

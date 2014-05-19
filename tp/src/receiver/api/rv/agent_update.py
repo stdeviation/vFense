@@ -2,6 +2,7 @@ import logging
 
 from json import dumps
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, \
     convert_json_to_arguments
@@ -15,7 +16,7 @@ from vFense.receiver.rvhandler import RvHandOff
 
 from vFense.operations._constants import AgentOperations
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 

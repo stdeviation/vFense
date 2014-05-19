@@ -1,11 +1,12 @@
 import time
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 import vFense.settings as settings
 from vFense.db.client import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

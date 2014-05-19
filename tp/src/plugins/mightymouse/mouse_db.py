@@ -1,12 +1,13 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r, db_connect
 from vFense.errorz.error_messages import GenericResults, MightyMouseResults
 
 from vFense.plugins.mightymouse import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 def mouse_exists(mouse_name):

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import logging
-import logging.config
+from vFense import logging
 from datetime import datetime
 from time import mktime
 from vFense.operations import AgentOperationKey, OperationPerAgentKey
@@ -19,7 +18,6 @@ from vFense.errorz.status_codes import DbCodes, AgentOperationCodes, \
     OperationPerAgentCodes
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('rvapi')
 
 

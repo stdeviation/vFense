@@ -2,6 +2,7 @@
 import json
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 import apscheduler
 
 from datetime import datetime
@@ -26,7 +27,7 @@ from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.errorz.error_messages import GenericResults, SchedulerResults
 from vFense.server.hierarchy import *
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

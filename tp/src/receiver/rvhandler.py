@@ -3,6 +3,7 @@ import logging
 import redis
 from rq import Connection, Queue
 
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import get_agent_info
 from vFense.plugins.patching import AppCollections
@@ -19,7 +20,7 @@ RQ_PORT = 6379
 RQ_DB = 0
 RQ_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

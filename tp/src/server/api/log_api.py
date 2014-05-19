@@ -2,14 +2,15 @@ import simplejson as json
 
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
-from vFense.logger.rvlogger import RvLogger
+from vFense.core.logger.logger import vFenseLogger, VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import authenticated_request
 
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
@@ -24,7 +25,7 @@ class LoggingModifyerHandler(BaseHandler):
         proto = proto.upper()
         level = level.upper()
         if host and port and proto and level:
-            rvlogger = RvLogger()
+            rvlogger = vFenseLogger()
             connected = rvlogger.connect_to_loghost(host, port, proto)
             if connected:
                 rvlogger.create_config(loglevel=level, loghost=host,
@@ -37,7 +38,7 @@ class LoggingModifyerHandler(BaseHandler):
                                 (host, port, proto)
                         }
         elif level and not host and not port:
-            rvlogger = RvLogger()
+            rvlogger = vFenseLogger()
             rvlogger.create_config(loglevel=level)
             results = rvlogger.results
         else:
@@ -52,7 +53,7 @@ class LoggingModifyerHandler(BaseHandler):
 class LoggingListerHandler(BaseHandler):
     @authenticated_request
     def get(self):
-        rvlogger = RvLogger()
+        rvlogger = vFenseLogger()
         rvlogger.get_logging_config()
         results = rvlogger.results
         self.set_header('Content-Type', 'application/json')

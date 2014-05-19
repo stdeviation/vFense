@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching import *
@@ -9,7 +10,7 @@ from vFense.plugins.patching.apps.db_calls import get_all_stats_by_appid
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

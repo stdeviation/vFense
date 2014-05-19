@@ -4,6 +4,7 @@ from __future__ import division, print_function, unicode_literals
 import itertools
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_BASE_PATH
 import os
 import six
 import smtplib
@@ -14,10 +15,10 @@ from email.mime.text import MIMEText
 
 # TODO: we need some sort of SMTPConnection Lock here
 
-DEFAULT_WORKING_DIRECTORY = '/opt/TopPatch'
+DEFAULT_WORKING_DIRECTORY = VFENSE_BASE_PATH
 RELATIVE_LOGGING_CONFIG = 'conf/logging.config'
-ABSOLUTE_LOGGING_CONFIG = os.path.join(DEFAULT_WORKING_DIRECTORY,
-                                       RELATIVE_LOGGING_CONFIG)
+ABSOLUTE_LOGGING_CONFIG = VFENSE_LOGGING_CONFIG
+
 
 #logger = None
 logging.config.fileConfig(ABSOLUTE_LOGGING_CONFIG)
@@ -264,7 +265,7 @@ def notify(from_address, to_addresses, subject, body,
     global logger
 
     if not log:
-        logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+        logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
         logger = logging.getLogger('rvapi')
     else:
         logging.basicConfig(level='DEBUG')

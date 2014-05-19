@@ -2,6 +2,8 @@
 from time import mktime
 from datetime import datetime
 import logging
+
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent import *
 from vFense.core.tag import *
 from datetime import datetime
@@ -13,7 +15,7 @@ from vFense.rv_exceptions.broken import *
 
 from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

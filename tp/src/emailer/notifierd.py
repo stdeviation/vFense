@@ -7,6 +7,7 @@ import json
 import lockfile
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_BASE_PATH
 import notifier
 import os
 import re
@@ -15,7 +16,7 @@ import signal
 import sys
 from tornado.template import Loader
 
-DEFAULT_WORKING_DIRECTORY = '/opt/TopPatch'
+DEFAULT_WORKING_DIRECTORY = VFENSE_BASE_PATH
 DEFAULT_UMASK = 0
 RELATIVE_PIDFILE = 'var/run/notifier.pid'
 ABSOLUTE_PIDFILE = os.path.join(DEFAULT_WORKING_DIRECTORY, RELATIVE_PIDFILE)

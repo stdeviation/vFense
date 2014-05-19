@@ -3,6 +3,7 @@ import simplejson as json
 from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.plugins.vuln.search.by_cve_id import RetrieveByCveId
 
@@ -11,7 +12,7 @@ from vFense.core.decorators import authenticated_request
 from vFense.core.user import UserKeys
 from vFense.core.user.users import get_user_property
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
