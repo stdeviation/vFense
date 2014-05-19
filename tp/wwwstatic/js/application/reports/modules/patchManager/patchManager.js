@@ -142,6 +142,10 @@ define(
                             url: function () {
                                 this.params.status = that.tabStatus;
                                 return this.baseUrl + id + exports.keys[that.page].urlSuffix + that.patchType + '?' + $.param(this.params);
+                            },
+                            _defaultParams: {
+                                sort_by: 'vulnerability_id',
+                                sort: 'desc'
                             }
                         }))(),
                         renderModel: this.renderModel,
@@ -336,7 +340,6 @@ define(
                         $right.append(
                             crel('small', 'Sort By '),
                             crel('Select', {name: 'sort'},
-                                crel('option', {value: ''}, 'None'),
                                 crel('option', {value: 'vulnerability_id'}, 'Vulnerability ID')
                             ),
                             crel('span', ' '),
