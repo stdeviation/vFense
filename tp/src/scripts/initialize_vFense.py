@@ -253,7 +253,7 @@ def initialize_db():
         print 'Admin username = admin'
         print 'Admin password = %s' % (args.admin_password)
         agent_pass = generate_pass()
-        while not check_password(agent_pass):
+        while not check_password(agent_pass)[0]:
             agent_pass = generate_pass()
 
         user.create_user(
