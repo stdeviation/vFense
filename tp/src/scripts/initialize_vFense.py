@@ -12,7 +12,7 @@ from vFense import (
     VFENSE_LOG_PATH, VFENSE_CONF_PATH,
     VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
     VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
-    VFENSE_TMP_PATH
+    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED
 )
 from vFense.core.logger.logger import vFenseLogger
 vfense_logger = vFenseLogger()
@@ -139,6 +139,15 @@ def initialize_db():
                 'ln', '-s',
                 RETHINK_SOURCE_CONF,
                 RETHINK_CONF
+            ],
+        )
+
+    if not os.path.exists(VFENSED_SYMLINK):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                VFENSED,
+                VFENSED_SYMLINK
             ],
         )
     if not os.path.exists('/var/lib/rethinkdb/vFense'):
