@@ -64,7 +64,7 @@ define(
             node: {
                 url: '/api/v1/agent/',
                 urlSuffix: '/apps/',
-                titles: ['Name', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
+                titles: ['Name', 'Release Date', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
                 name: 'name',
                 id: 'app_id',
                 link: '/#patches/',
@@ -92,7 +92,7 @@ define(
             tag: {
                 url: '/api/v1/tag/',
                 urlSuffix: '/apps/',
-                titles: ['Name', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
+                titles: ['Name', 'Release Date', 'Vulnerability ID', 'Version', 'Severity', 'Info'],
                 name: 'name',
                 id: 'app_id',
                 link: '/#patches/',
@@ -142,6 +142,10 @@ define(
                             url: function () {
                                 this.params.status = that.tabStatus;
                                 return this.baseUrl + id + exports.keys[that.page].urlSuffix + that.patchType + '?' + $.param(this.params);
+                            },
+                            _defaultParams: {
+                                sort_by: 'vulnerability_id',
+                                sort: 'desc'
                             }
                         }))(),
                         renderModel: this.renderModel,
@@ -286,7 +290,7 @@ define(
                 layoutHeader: function ($left, $right) {
                     var $select, $cpuThrottle = [], $netThrottle = [], $restart = [],
                         titles = exports.keys[this.page].titles,
-                        spans = ['span5', 'span2', 'span2', 'span2', 'span1 alignRight'],
+                        spans = ['span3', 'span2', 'span2', 'span2', 'span2', 'span1 alignRight'],
                         $header = this.$el.find('header'),
                         legend = crel('div', {class: 'legend row-fluid'}),
                         options = {
@@ -321,27 +325,41 @@ define(
                                     'data-id': 'net_throttle'
                                 }
                             ));*/
-                        } else {
-                            titles.splice(1, 0, 'Installed Date');
-                            spans.splice(1, 0, 'span2');
-                            spans[0] = 'span3';
                         }
+                        else if (this.tab === '#softwareinventory' && titles.indexOf('Release Date') !== -1) {
+                            var releaseDateTitle = titles.splice(titles.indexOf('Release Date'), 1);
+                            releaseDateTitle = releaseDateTitle[0].replace('Release Date', 'Installed Date');
+                            titles.splice(1, 0, releaseDateTitle);
+                        }
+
                         $select = $(crel('select', {'data-id': 'operation'}));
                         var that = this;
                         _.each(options[this.tab], function (option) {
                             $select.append(crel('option', {value: option.value}, option.text));
                         });
                         $right.append(
+                            crel('small', 'Sort By '),
+                            crel('Select', {name: 'sort'},
+                                crel('option', {value: 'app_name'}, 'Application Name'),
+                                crel('option', {value: 'release_date'}, 'Release Date'),
+                                crel('option', {value: 'vulnerability_id', selected: 'selected'}, 'Vulnerability ID')
+                            ),
+                            crel('span', ' '),
+                            crel('a', {href: '#', title: 'Ascending Order', name: 'order', 'data-name': 'asc'}, crel('i', {class: 'icon-arrow-up'})),
+                            crel('a', {href: '#', title: 'Descending Order', name: 'order', 'data-name': 'desc'}, crel('i', {class: 'icon-arrow-down'})),
                             crel('label', {class: 'checkbox inline'}, crel('small', 'Schedule')), ' ',
                             crel('input', {type: 'checkbox', 'data-id': 'schedule'}),
                             ' ', $restart, ' ', $netThrottle, ' ', $cpuThrottle, ' ', $select, ' ',
                             crel('button', {class: 'btn btn-mini btn-primary', 'data-submit': 'operation'}, 'Submit')
                         );
                     }
+
                     if (this.tab !== '#softwareinventory' && titles.indexOf('Installed Date') !== -1) {
-                        titles.splice(titles.indexOf('Installed Date'), 1);
-                        spans.splice(titles.indexOf('Installed Date'), 1);
+                        var installedDateTitle = titles.splice(titles.indexOf('Installed Date'), 1);
+                        installedDateTitle = installedDateTitle[0].replace('Installed Date', 'Release Date');
+                        titles.splice(1, 0, installedDateTitle);
                     }
+
                     _.each(titles, function (title, i) {
                         console.log(title);
                         if (title !== 'Severity') {
@@ -374,6 +392,25 @@ define(
                             crel('input', {type: 'checkbox', id: 'showHidden'}), crel('small', 'Show Hidden'))
                     );
                     return this;
+                },
+                sortBy: function (event) {
+                    this.pager.collection.params.sort_by = $(event.currentTarget).val();
+                    if(this.pager.collection.params.sort_by === 'app_name')
+                    {
+                        this.pager.collection.params.sort = 'asc';
+                    }
+                    else
+                    {
+                        this.pager.collection.params.sort = 'desc';
+                    }
+                    this.pager.collection.params.offset = 0;
+                    this.pager.collection.fetch();
+                },
+                orderBy: function (event) {
+                    event.preventDefault();
+                    this.pager.collection.params.sort = $(event.currentTarget).data('name');
+                    this.pager.collection.params.offset = 0;
+                    this.pager.collection.fetch();
                 },
                 toggleOptions: function (event) {
                     event.preventDefault();
@@ -542,7 +579,7 @@ define(
                     var fragment = document.createDocumentFragment(),
                         page = this.page,
                         patchType = this.parentView.patchType ? this.parentView.patchType + '/' : '',
-                        patchNameSpan = 'span5',
+                        patchNameSpan = 'span3',
                         link = exports.keys[page].link,
                         name = model.get(exports.keys[page].name),
                         id = model.get(exports.keys[page].id),
@@ -552,7 +589,10 @@ define(
                         dependencies = helpers.getDependencies(model),
                         downloadStatus,
                         input = '',
-                        installedDateDiv = '', installedDate,
+                        releaseDateDiv = '',
+                        installedDateDiv = '',
+                        releaseDate,
+                        installedDate,
                         warning = '';
                     if (this.tab !== '#pending') {
                         input = crel('input', {type: 'checkbox', 'data-update': model.get('update') || false, value: id});
@@ -573,6 +613,8 @@ define(
                         if (model.get('update') === 5014) {
                             name = '(update) ' + name;
                         }
+                        releaseDate = model.get('release_date') ? moment(model.get('release_date') * 1000).format('L') : 'N/A';
+                        releaseDateDiv = crel('span', {class: 'span2'}, releaseDate);
                     }
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
@@ -585,6 +627,7 @@ define(
                                 )
                             ),
                             installedDateDiv,
+                            releaseDateDiv,
                             crel('span', {class: 'span2'}, vulnerabilityID || '-'),
                             crel('span', {class: 'span2'}, version || ' '),
                             crel('span', {class: 'span2'}, severity || ' '),
