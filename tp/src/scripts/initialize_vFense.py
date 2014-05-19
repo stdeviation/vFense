@@ -205,13 +205,13 @@ def initialize_db():
         if get_distro() in DEBIAN_DISTROS:
             subprocess.Popen(
                 [
-                    'adduser', '--disabled-password', '--gecos', '', 'toppatch',
+                    'adduser', '--disabled-password', '--gecos', '', 'vfense',
                 ],
             )
         elif get_distro() in REDHAT_DISTROS:
             subprocess.Popen(
                 [
-                    'useradd', 'toppatch',
+                    'useradd', 'vfense',
                 ],
             )
 
@@ -242,8 +242,6 @@ def initialize_db():
             [Permissions.ADMINISTRATOR]
         )
         admin_group_id = group_data['generated_ids']
-        print group_data
-        print admin_group_id
         user.create_user(
             DefaultUsers.ADMIN,
             'vFense Admin Account',
@@ -252,8 +250,12 @@ def initialize_db():
             DefaultCustomers.DEFAULT,
             '',
         )
-        print 'Admin user and password = admin:%s' % (args.admin_password)
+        print 'Admin username = admin'
+        print 'Admin password = %s' % (args.admin_password)
         agent_pass = generate_pass()
+        while not check_password(agent_pass):
+            agent_pass = generate_pass()
+
         user.create_user(
             DefaultUsers.AGENT,
             'vFense Agent Communication Account',
@@ -262,7 +264,8 @@ def initialize_db():
             DefaultCustomers.DEFAULT,
             '',
         )
-        print 'Agent user and password = agent:%s' % (agent_pass)
+        print 'Agent api user = agent_api'
+        print 'Agent password = %s' % (agent_pass)
 
         monit.monit_initialization()
 
