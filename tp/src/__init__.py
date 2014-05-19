@@ -11,6 +11,7 @@ VFENSE_BASE_PATH = (
     )
 )
 BIN_DIR = '/usr/local/bin'
+VFENSE_INIT_D = '/etc/init.d/vFense'
 VFENSED = os.path.join(VFENSE_BASE_SRC_PATH, 'daemon', 'vFensed')
 VFENSED_SYMLINK = os.path.join(BIN_DIR, 'vFensed')
 VFENSE_TP_PATH = os.path.join(VFENSE_BASE_PATH, 'tp')
