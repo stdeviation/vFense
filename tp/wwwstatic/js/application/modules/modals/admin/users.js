@@ -188,13 +188,14 @@ define(
                     params.group_ids = this.groupsArray;
                     params.customer_names = this.customersArray;
 
-                    var alphaNumRegExp = /^[A-Za-z0-9 ]+$/,
-                        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/,
+                    var fullNameRegExp = /^[A-Za-z0-9 -_]+$/,
+                        userNameRegExp = /^[A-Za-z0-9-_]+$/,
+                        passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*[+=\\\/<>,:;\{\}'"])(?!.*\s).{8,}$/,
                         emailRegExp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
                     if(!_.isEmpty(fullName))
                     {
-                        if(!alphaNumRegExp.test(fullName))
+                        if(!fullNameRegExp.test(fullName))
                         {
                             that.$el.find('#fullname').parents('.control-group').addClass('error');
                             that.$el.find('#fullname').siblings('.help-block').html('Full Name should have alphanumeric characters only.').show();
@@ -228,7 +229,7 @@ define(
                         that.$el.find('#username').siblings('.help-block').html('Username should not be empty.').show();
                         return false;
                     }
-                    else if(!alphaNumRegExp.test(username))
+                    else if(!userNameRegExp.test(username))
                     {
                         that.$el.find('#username').parents('.control-group').addClass('error');
                         that.$el.find('#username').siblings('.help-block').html('Username should have alphanumeric characters only.').show();
@@ -249,14 +250,25 @@ define(
                     else if(!passwordRegExp.test(password))
                     {
                         that.$el.find('#password').parents('.control-group').addClass('error');
-//                        that.$el.find('#password').siblings('.help-block').html('Password should have atleast 1 Lowercase, 1 Uppercase, 1 Numeric, 1 Special Character and minimum 8 characters.').show();
-                        that.$el.find('#password').siblings('.help-block').html('Invalid Password').show();
+                        that.$el.find('#password').siblings('.help-block').html('Password must have at least 1 Lowercase, 1 Uppercase, 1 Numeric,'  + '<br>' + '1 Special Character excluding +=<>,"{}\/:;' + ' and minimum 8 characters.').show();
                         return false;
                     }
                     else
                     {
                         that.$el.find('#password').parents('.control-group').removeClass('error');
                         that.$el.find('#password').siblings('.help-block').empty().hide();
+                    }
+
+                    if(group.length === 0)
+                    {
+                        that.$el.find('input[name=groups]').parents('.control-group').addClass('error');
+                        that.$el.find('input[name=groups]').siblings('.help-block').html('At least one Group must be selected.').show();
+                        return false;
+                    }
+                    else
+                    {
+                        that.$el.find('input[name=groups]').parents('.control-group').removeClass('error');
+                        that.$el.find('input[name=groups]').siblings('.help-block').empty().hide();
                     }
 
                     $.ajax({
