@@ -11,7 +11,7 @@ import subprocess
 import logging, logging.config
 from vFense import (
     VFENSE_LOGGING_CONFIG, VFENSE_TMP_PATH, VFENSE_BASE_PATH,
-    VFENSE_LOG_PATH, VFENSE_TP_PATH
+    VFENSE_LOG_PATH, VFENSE_TP_PATH, VFENSE_BASE_SRC_PATH
 )
 from vFense.db.client import db_connect
 
@@ -19,11 +19,11 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 PID_DIR = VFENSE_TMP_PATH
-PIDS =[]
-SERVICES =[]
-ALLSERVICES =[]
-RVLSERVICES =[]
-RVWSERVICES =[]
+PIDS = []
+SERVICES = []
+ALLSERVICES = []
+RVLSERVICES = []
+RVWSERVICES = []
 
 #################################################################
 RQWORKER = '/usr/local/bin/rqworker'
@@ -37,7 +37,7 @@ RQ_WORKER_QUEUES = (
 RQ_PID_FILES = []
 
 for queue in RQ_WORKER_QUEUES:
-    pid_file = '%sRQW_PID_%s.pid' % (PID_DIR,queue)
+    pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue))
     PIDS.append((pid_file, queue))
     RQ_PID_FILES.append(pid_file)
 
@@ -45,7 +45,7 @@ for queue in RQ_WORKER_QUEUES:
 RVL_PORTS = range(9020, 9030)
 RVLISTENER = 'src/vFense_listener.py'
 for port in RVL_PORTS:
-    pid_file = '%sRVL_PID_%s.pid' % (PID_DIR, str(port))
+    pid_file = os.path.join(PID_DIR, 'RVL_PID_%s.pid' % (str(port)))
     rvl = 'RvListener port %s' % (str(port))
     PIDS.append((pid_file, rvl))
     RVLSERVICES.append((RVLISTENER, pid_file, rvl, port))
@@ -55,7 +55,7 @@ for port in RVL_PORTS:
 RVW_PORTS = range(9060, 9061)
 RVWEB = 'src/vFense_web.py'
 for port in RVW_PORTS:
-    pid_file = '%sRVW_PID_%s.pid' % (PID_DIR, str(port))
+    pid_file = os.path.join(PID_DIR, 'RVW_PID_%s.pid' % (str(port)))
     rvw = 'RvWeb port %s' % (str(port))
     PIDS.append((pid_file, rvw))
     RVWSERVICES.append((RVWEB, pid_file, rvw, port))
@@ -67,7 +67,7 @@ PROGRAM = 'python'
 PIDFILE = os.path.join(VFENSE_TMP_PATH, 'process.pid')
 RVSCHEDULER_PIDFILE= os.path.join(VFENSE_TMP_PATH, 'rvscheduler-9002.pid')
 
-WORKERS_DIR = os.path.join(VFENSE_BASE_SRC_PATH, 'receiver/rqworkers'
+WORKERS_DIR = os.path.join(VFENSE_BASE_SRC_PATH, 'receiver', 'rqworkers')
 PATH = VFENSE_TP_PATH
 RVSCHEDULER='src/scheduler/rvscheduler.py'
 

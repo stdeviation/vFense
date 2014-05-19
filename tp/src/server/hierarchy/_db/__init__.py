@@ -11,7 +11,7 @@ from vFense.server.hierarchy import *
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-_main_db = 'toppatch_server'
+_main_db = 'vFense'
 
 
 @db_create_close
