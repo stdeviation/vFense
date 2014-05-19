@@ -44,9 +44,6 @@ def fetch_vuln_ids(name, version, os_string, conn=None):
                 [name, version],
                 index=UbuntuSecurityBulletinIndexes.NameAndVersion
             )
-            .filter(
-                lambda x: x[UbuntuSecurityBulletinKey.OsString].match(os_string)
-            )
             .pluck(UbuntuSecurityBulletinKey.BulletinId, UbuntuSecurityBulletinKey.CveIds)
             .run(conn)
         )
