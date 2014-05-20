@@ -7,6 +7,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.tag import *
 from vFense.core.agent import *
+from vFense.core._constants import CommonKeys
 from vFense.plugins.patching import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.errorz.error_messages import GenericResults
@@ -39,6 +40,16 @@ def customer_stats_by_os(username, customer_name,
             .get_all(
                 [CommonAppKeys.AVAILABLE, customer_name],
                 index=AppsPerAgentIndexes.StatusAndCustomer
+            )
+            .eq_join(AppsKey.AppId, r.table(AppCollections.UniqueApplications))
+            .filter(
+                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
+            )
+            .map(
+                {
+                    AppsPerAgentKey.AppId: r.row['left'][AppsPerAgentKey.AppId],
+                    AppsPerAgentKey.AgentId: r.row['left'][AppsPerAgentKey.AgentId],
+                }
             )
             .eq_join(AgentKey.AgentId, r.table(AgentCollections.Agents))
             .map(
@@ -97,6 +108,11 @@ def tag_stats_by_os(username, customer_name,
             )
             .zip()
             .eq_join(AgentKey.AgentId, r.table(AgentCollections.Agents))
+            .zip()
+            .eq_join(AppsPerAgentKey.AppId, r.table(AppCollections.UniqueApplications))
+            .filter(
+                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
+            )
             .zip()
             .pluck(CommonAppKeys.APP_ID, AgentKey.OsString)
             .distinct()
@@ -219,6 +235,9 @@ def get_severity_bar_chart_stats_for_customer(username, customer_name,
             .pluck(AppsKey.AppId)
             .distinct()
             .eq_join(AppsKey.AppId, r.table(AppCollections.UniqueApplications))
+            .filter(
+                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
+            )
             .map(
                 {
                     AppsKey.AppId: r.row['right'][AppsKey.AppId],
@@ -262,6 +281,9 @@ def get_severity_bar_chart_stats_for_agent(username, customer_name,
                 index=AppsPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(AppsKey.AppId, r.table(AppCollections.UniqueApplications))
+            .filter(
+                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
+            )
             .map(
                 {
                     AppsKey.AppId: r.row['right'][AppsKey.AppId],
@@ -316,6 +338,9 @@ def get_severity_bar_chart_stats_for_tag(username, customer_name,
                 }
             )
             .eq_join(AppsKey.AppId, r.table(AppCollections.UniqueApplications))
+            .filter(
+                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
+            )
             .map(
                 {
                     AppsKey.AppId: r.row['right'][AppsKey.AppId],
