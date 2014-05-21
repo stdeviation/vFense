@@ -5,156 +5,51 @@ from datetime import datetime, timedelta
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core.tag import *
-from vFense.core.agent import *
 from vFense.core._constants import CommonKeys
-from vFense.plugins.patching import *
+from vFense.core.decorators import results_message, time_it
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
+from vFense.plugins.patching._db_stats import (
+    group_avail_app_stats_by_os_for_customer,
+    group_avail_app_stats_by_os_for_tag
+)
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import GenericCodes
+from vFense.errorz._constants import ApiResultKeys
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def app_stats_by_os(stats):
-    try:
-        for i in xrange(len(stats)):
-            stats[i] = (
-                {
-                    'os': stats[i]['group'],
-                    'count': stats[i]['reduction']
-                }
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(stats)
-
-@db_create_close
-def customer_stats_by_os(username, customer_name,
-                         uri, method, count=3, conn=None):
-    try:
-        stats = (
-            r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, customer_name],
-                index=AppsPerAgentIndexes.StatusAndCustomer
-            )
-            .eq_join(AppsKey.AppId, r.table(AppCollections.UniqueApplications))
-            .filter(
-                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
-            )
-            .map(
-                {
-                    AppsPerAgentKey.AppId: r.row['left'][AppsPerAgentKey.AppId],
-                    AppsPerAgentKey.AgentId: r.row['left'][AppsPerAgentKey.AgentId],
-                }
-            )
-            .eq_join(AgentKey.AgentId, r.table(AgentCollections.Agents))
-            .map(
-                {
-                    AppsKey.AppId: r.row['left'][AppsKey.AppId],
-                    AgentKey.OsString: r.row['right'][AgentKey.OsString]
-                }
-            )
-            .pluck(AppsKey.AppId, AgentKey.OsString)
-            .distinct()
-            .group(AgentKey.OsString)
-            .count()
-            .ungroup()
-            .map(
-                lambda x:
-                {
-                    'os': x['group'],
-                    'count': x['reduction']
-                }
-            )
-            .order_by(r.desc('count'))
-            .limit(count)
-            .run(conn)
-        )
-        data = []
-        #if stats:
-        #    data = app_stats_by_os(stats)
-
-        results = (
-            GenericResults(
-                username, uri, method
-            ).information_retrieved(stats, count)
-        )
-
-    except Exception as e:
-        results = (
-            GenericResults(
-                username, uri, method
-            ).something_broke('widget stats', 'widget', e)
-        )
-        logger.exception(results)
-
+@time_it
+@results_message
+def customer_stats_by_os(
+        customer_name, count=3,
+        username=None, uri=None, method=None
+    ):
+    data = group_avail_app_stats_by_os_for_customer(customer_name, count)
+    results = {
+        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
+        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
+        ApiResultKeys.DATA: data,
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
     return(results)
 
 
-@db_create_close
-def tag_stats_by_os(username, customer_name,
-                    uri, method, tag_id,
-                    count=3, conn=None):
-    try:
-        stats = (
-            r
-            .table(TagsPerAgentCollection, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.AVAILABLE,
-                    x[AppsPerAgentKey.AgentId]
-                ],
-                r.table(AppCollections.AppsPerAgent),
-                index=AppsPerAgentIndexes.StatusAndAgentId
-            )
-            .zip()
-            .eq_join(AgentKey.AgentId, r.table(AgentCollections.Agents))
-            .zip()
-            .eq_join(AppsPerAgentKey.AppId, r.table(AppCollections.UniqueApplications))
-            .filter(
-                lambda x: x['right'][AppsKey.Hidden] == CommonKeys.NO
-            )
-            .zip()
-            .pluck(CommonAppKeys.APP_ID, AgentKey.OsString)
-            .distinct()
-            .group(AgentKey.OsString)
-            .count()
-            .ungroup()
-            .map(
-                lambda x:
-                {
-                    'os': x['group'],
-                    'count': x['reduction']
-                }
-            )
-            .order_by(r.desc('count'))
-            .limit(count)
-            .run(conn)
-        )
-
-        #data = []
-        #if stats:
-        #    data = app_stats_by_os(stats)
-
-        results = (
-            GenericResults(
-                username, uri, method
-            ).information_retrieved(stats, count)
-        )
-
-    except Exception as e:
-        results = (
-            GenericResults(
-                username, uri, method
-            ).something_broke('tag widget stats', 'widget', e)
-        )
-        logger.exception(results)
+def tag_stats_by_os(
+        tag_id, count=3,
+        username=None, uri=None, method=None
+    ):
+    data = group_avail_app_stats_by_os_for_tag(tag_id, count)
+    results = {
+        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
+        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
+        ApiResultKeys.DATA: data,
+        ApiResultKeys.USERNAME: username,
+        ApiResultKeys.URI: uri,
+        ApiResultKeys.HTTP_METHOD: method
+    }
 
     return(results)
 

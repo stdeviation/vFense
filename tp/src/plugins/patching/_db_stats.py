@@ -4,8 +4,9 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import time_it
 from vFense.core._constants import CommonKeys
+from vFense.core.agent import AgentKey, AgentCollections
 from vFense.core.tag import (
-    TagCollections, TagsPerAgentKey, TagsPerAgentIndexes
+    TagCollections, TagsPerAgentKey, TagsPerAgentIndexes,
 )
 from vFense.plugins.patching import (
     AppCollections, DbCommonAppPerAgentIndexes,
@@ -558,3 +559,195 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
         logger.exception(e)
 
     return(data)
+
+@time_it
+@db_create_close
+def group_avail_app_stats_by_os_for_customer(
+        customer_name, count=3, conn=None
+    ):
+    """Retrieve an array of the total count of update available, grouped by 
+        operating system for a customer.
+    Args:
+        customer_name (str): The name of the customer.
+
+    Kwargs:
+        count (int, optional): The number of results to return.
+            default = 3
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_customer
+        >>> group_avail_app_stats_by_os_for_customer('default')
+
+    """
+    stats = []
+    try:
+        stats = (
+            r
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
+            .get_all(
+                [CommonAppKeys.AVAILABLE, customer_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        r.row['left'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                    DbCommonAppPerAgentKeys.AgentId: (
+                        r.row['left'][DbCommonAppPerAgentKeys.AgentId]
+                    ),
+                }
+            )
+            .eq_join(
+                AgentKey.AgentId,
+                r.table(AgentCollections.Agents)
+            )
+            .map(
+                {
+                    DbCommonAppKeys.AppId: (
+                        r.row['left'][DbCommonAppKeys.AppId]
+                    ),
+                    AgentKey.OsString: (
+                        r.row['right'][AgentKey.OsString]
+                    )
+                }
+            )
+            .pluck(DbCommonAppKeys.AppId, AgentKey.OsString)
+            .distinct()
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    'os': x['group'],
+                    'count': x['reduction']
+                }
+            )
+            .order_by(r.desc('count'))
+            .limit(count)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return stats
+
+
+@time_it
+@db_create_close
+def group_avail_app_stats_by_os_for_tag(
+        tag_id, count=3, conn=None
+    ):
+    """Retrieve an array of the total count of update available, grouped by 
+        operating system for a tag.
+    Args:
+        tag_id (str): 36 character UUID of the tag.
+
+    Kwargs:
+        count (int, optional): The number of results to return.
+            default = 3
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_tag
+        >>> group_avail_app_stats_by_os_for_tag('default')
+
+    """
+    try:
+        stats = (
+            r
+            .table(TagCollections.PerAgent, use_outdated=True)
+            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+            .pluck(TagsPerAgentKey.AgentId)
+            .eq_join(
+                lambda x: [
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .eq_join(
+                lambda x:
+                x['right'][AgentKey.AgentId],
+                r.table(AgentCollections.Agents)
+            )
+            .zip()
+            .eq_join(
+                DbCommonAppPerAgentKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .pluck(
+                r.row['right'][CommonAppKeys.APP_ID],
+                r.row['left'][AgentKey.OsString]
+            )
+            .distinct()
+            .group(AgentKey.OsString)
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    'os': x['group'],
+                    'count': x['reduction']
+                }
+            )
+            .order_by(r.desc('count'))
+            .limit(count)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(stats)
+
+
+@db_create_close
+def fetch_bar_chart_for_appid_by_status(
+        app_id, customer_name, conn=None
+    ):
+    statuses = ['installed', 'available'] 
+    try:
+        status = (
+            r
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
+            .get_all(
+                [app_id, customer_name],
+                index=DbCommonAppPerAgentIndexes.AppIdAndCustomer
+            )
+            .group(DbCommonAppPerAgentKeys.Status)
+            .count()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    new_status = {}
+    for stat in status:
+        new_status[stat['group']['status']] = stat['reduction']
+    for s in statuses:
+        if not s in new_status:
+            new_status[s] = 0.0
+
+    return(
+        {
+            'pass': True,
+            'message': '',
+            'data': [new_status]
+        }
+    )
+
+

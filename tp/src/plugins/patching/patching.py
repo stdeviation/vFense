@@ -552,24 +552,6 @@ def remove_all_apps_for_customer(customer_name):
 
 
 @time_it
-def remove_all_apps_for_customer(customer_name):
-    """Remove all apps for customer.
-    Args:
-        customer_name (str): The name of the customer
-
-    Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_all_apps_for_customer
-        >>> customer_name = 'default'
-        >>> remove_all_apps_for_customer(customer_name)
-    """
-    remove_os_apps_for_agent_by_customer(customer_name)
-    remove_supported_apps_for_agent_by_customer(customer_name)
-    remove_custom_apps_for_agent_by_customer(customer_name)
-    remove_vfense_apps_for_agent_by_customer(customer_name)
-
-
-
-@time_it
 def change_customer_for_apps_in_customer(
         original_customer, new_customer
     ):
