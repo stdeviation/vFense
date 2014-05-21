@@ -32,8 +32,8 @@ class CustomerStatsByOsHandler(BaseHandler):
             count = self.get_argument('limit', 3)
             results = (
                 customer_stats_by_os(
-                    username, customer_name,
-                    uri, method, count
+                    customer_name, count,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -64,8 +64,8 @@ class TagStatsByOsHandler(BaseHandler):
             count = self.get_argument('limit', 3)
             results = (
                 tag_stats_by_os(
-                    username, customer_name,
-                    uri, method, tag_id, count
+                    tag_id, count,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -149,9 +149,8 @@ class OsAppsOverTimeHandler(BaseHandler):
 
             results = (
                 get_os_apps_history(
-                    username, customer_name,
-                    uri, method, status,
-                    start_date, end_date
+                    customer_name, status, start_date, end_date,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -190,9 +189,8 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
 
             results = (
                 get_os_apps_history_for_agent(
-                    username, customer_name,
-                    uri, method, agent_id, status,
-                    start_date, end_date
+                    agent_id, status, start_date, end_date,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -231,9 +229,8 @@ class TagOsAppsOverTimeHandler(BaseHandler):
 
             results = (
                 get_os_apps_history_for_tag(
-                    username, customer_name,
-                    uri, method, tag_id, status,
-                    start_date, end_date
+                    tag_id, status, start_date, end_date,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -252,49 +249,6 @@ class TagOsAppsOverTimeHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-
-
-class AgentPackageSeverityOverTimeHandler(BaseHandler):
-    @authenticated_request
-    def get(self, agent_id):
-        username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
-        available = self.get_argument('available', True)
-        if not isinstance(available, bool):
-            available = return_bool(available)
-
-        results = (
-            get_avail_over_time(
-                agent_id=agent_id, available=available,
-                customer_name=customer_name
-            )
-        )
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
-
-class TagPackageSeverityOverTimeHandler(BaseHandler):
-    @authenticated_request
-    def get(self, tag_id):
-        username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
-        )
-        available = self.get_argument('available', True)
-        if not isinstance(available, bool):
-            available = return_bool(available)
-
-        results = (
-            get_avail_over_time(
-                tag_id=tag_id, available=available,
-                customer_name=customer_name
-            )
-        )
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
-
-
 class TopAppsNeededHandler(BaseHandler):
     @authenticated_request
     def get(self):
@@ -308,8 +262,8 @@ class TopAppsNeededHandler(BaseHandler):
         try:
             results = (
                 top_packages_needed(
-                    username, customer_name,
-                    uri, method, count
+                    customer_name, count,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -341,8 +295,8 @@ class RecentlyReleasedHandler(BaseHandler):
             count = int(self.get_argument('count', 5))
             results = (
                 recently_released_packages(
-                    username, customer_name,
-                    uri, method, count
+                    customer_name, count,
+                    username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -373,8 +327,7 @@ class CustomerSeverityHandler(BaseHandler):
         try:
             results = (
                 get_severity_bar_chart_stats_for_customer(
-                    username, customer_name,
-                    uri, method
+                    customer_name, username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -405,8 +358,7 @@ class AgentSeverityHandler(BaseHandler):
         try:
             results = (
                 get_severity_bar_chart_stats_for_agent(
-                    username, customer_name,
-                    uri, method, agent_id
+                    agent_id, username, uri, method
                 )
             )
             self.set_status(results['http_status'])
@@ -437,8 +389,8 @@ class TagSeverityHandler(BaseHandler):
         try:
             results = (
                 get_severity_bar_chart_stats_for_tag(
-                    username, customer_name,
-                    uri, method, tag_id
+                    tag_id, username,
+                    uri, method
                 )
             )
             self.set_status(results['http_status'])

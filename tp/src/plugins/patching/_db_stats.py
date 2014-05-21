@@ -578,6 +578,13 @@ def group_avail_app_stats_by_os_for_customer(
         >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_customer
         >>> group_avail_app_stats_by_os_for_customer('default')
 
+    Returns:
+        >>> [
+                {
+                    u'count': 253,
+                    u'os': u'LinuxMint 16'
+                }
+            ]
     """
     stats = []
     try:
@@ -658,15 +665,34 @@ def group_avail_app_stats_by_os_for_tag(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_tag
-        >>> group_avail_app_stats_by_os_for_tag('default')
+        >>> group_avail_app_stats_by_os_for_tag('f9be1795-1f3b-45a1-8ea2-3178346a1261')
 
+    Returns:
+        >>> [
+                {
+                    u'count': 253,
+                    u'os': u'LinuxMint 16'
+                }
+            ]
     """
     try:
         stats = (
             r
-            .table(TagCollections.PerAgent, use_outdated=True)
+            .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
             .pluck(TagsPerAgentKey.AgentId)
+            .eq_join(
+                lambda x:
+                x[AgentKey.AgentId],
+                r.table(AgentCollections.Agents)
+            )
+            .map(
+                lambda x:
+                {
+                    AgentKey.AgentId: x['left'][AgentKey.AgentId],
+                    AgentKey.OsString: x['right'][AgentKey.OsString]
+                }
+            )
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -677,20 +703,18 @@ def group_avail_app_stats_by_os_for_tag(
             )
             .eq_join(
                 lambda x:
-                x['right'][AgentKey.AgentId],
-                r.table(AgentCollections.Agents)
-            )
-            .zip()
-            .eq_join(
-                DbCommonAppPerAgentKeys.AppId,
+                x['right'][DbCommonAppPerAgentKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .filter(
                 lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
             )
-            .pluck(
-                r.row['right'][CommonAppKeys.APP_ID],
-                r.row['left'][AgentKey.OsString]
+            .map(
+                lambda x:
+                {
+                    CommonAppKeys.APP_ID: x['right'][CommonAppKeys.APP_ID],
+                    AgentKey.OsString: x['left']['left'][AgentKey.OsString]
+                }
             )
             .distinct()
             .group(AgentKey.OsString)
@@ -711,16 +735,16 @@ def group_avail_app_stats_by_os_for_tag(
     except Exception as e:
         logger.exception(e)
 
-    return(stats)
+    return stats
 
 
 @db_create_close
 def fetch_bar_chart_for_appid_by_status(
         app_id, customer_name, conn=None
     ):
-    statuses = ['installed', 'available'] 
+    data = {}
     try:
-        status = (
+        data = (
             r
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
@@ -735,19 +759,647 @@ def fetch_bar_chart_for_appid_by_status(
     except Exception as e:
         logger.exception(e)
 
-    new_status = {}
-    for stat in status:
-        new_status[stat['group']['status']] = stat['reduction']
-    for s in statuses:
-        if not s in new_status:
-            new_status[s] = 0.0
+    return data
 
-    return(
-        {
-            'pass': True,
-            'message': '',
-            'data': [new_status]
-        }
-    )
+@time_it
+@db_create_close
+def fetch_severity_bar_chart_stats_for_customer(customer_name, conn=None):
+    data = []
+    try:
+        data = (
+            r
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
+            .get_all(
+                [CommonAppKeys.AVAILABLE, customer_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+            )
+            .pluck(DbCommonAppKeys.AppId)
+            .distinct()
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                {
+                    DbCommonAppKeys.AppId: (
+                        r.row['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    )
+                }
+            )
+            .group(DbCommonAppKeys.RvSeverity)
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    'count': x['reduction'],
+                    'severity': x['group'],
+                }
+            )
+            .order_by(r.asc('count'))
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
 
 
+@time_it
+@db_create_close
+def fetch_severity_bar_chart_stats_for_agent(agent_id, conn=None):
+    data = []
+    try:
+        data = (
+            r
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
+            .get_all(
+                [CommonAppKeys.AVAILABLE, agent_id],
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                {
+                    DbCommonAppKeys.AppId: (
+                        r.row['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    )
+                }
+            )
+            .group(DbCommonAppKeys.RvSeverity)
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    'count': x['reduction'],
+                    'severity': x['group'],
+                }
+            )
+            .order_by(r.desc('reduction'))
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
+    data = []
+    try:
+        data = (
+            r
+            .table(TagCollections.TagsPerAgent, use_outdated=True)
+            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+            .pluck(TagsPerAgentKey.AgentId)
+            .eq_join(
+                lambda x: [
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .map(
+                {
+                    DbCommonAppKeys.AppId: (
+                        r.row['right'][DbCommonAppKeys.AppId]
+                    ),
+                }
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                {
+                    DbCommonAppKeys.AppId: (
+                        r.row['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    )
+                }
+            )
+            .group(DbCommonAppKeys.RvSeverity)
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    'count': x['reduction'],
+                    'severity': x['group'],
+                }
+            )
+            .order_by(r.desc('reduction'))
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
+
+    data=[]
+    try:
+        data = (
+            r
+            .table(AppCollections.AppsPerAgent)
+            .get_all(
+                [CommonAppKeys.AVAILABLE, customer_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.Name: x['right'][DbCommonAppKeys.Name],
+                    DbCommonAppKeys.AppId: x['right'][DbCommonAppKeys.AppId],
+                    DbCommonAppKeys.RvSeverity: (
+                        x['right'][DbCommonAppKeys.RvSeverity]
+                    ),
+                    DbCommonAppKeys.ReleaseDate: (
+                        x['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                    ),
+                }
+            )
+            .group(
+                DbCommonAppKeys.Name, DbCommonAppKeys.AppId,
+                DbCommonAppKeys.RvSeverity, DbCommonAppKeys.ReleaseDate
+            )
+            .count()
+            .ungroup()
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.Name: x['group'][0],
+                    DbCommonAppKeys.AppId: x['group'][1],
+                    DbCommonAppKeys.RvSeverity: x['group'][2],
+                    DbCommonAppKeys.ReleaseDate: x['group'][3],
+                    'count': x['reduction'],
+                }
+            )
+            .order_by(r.desc('count'), r.desc(DbCommonAppKeys.ReleaseDate))
+            .limit(count)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+def fetch_recently_released_apps(customer_name, count=5, conn=None):
+    data = []
+    try:
+        data = list(
+            r
+            .table(AppCollections.AppsPerAgent, use_outdated=True)
+            .get_all(
+                [
+                    CommonAppKeys.AVAILABLE, customer_name
+                ],
+                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.Name: (
+                        x['right'][DbCommonAppKeys.Name]
+                    ),
+                    DbCommonAppKeys.AppId: (
+                        x['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        x['right'][DbCommonAppKeys.RvSeverity]
+                    ),
+                    DbCommonAppKeys.Hidden: (
+                        x['right'][DbCommonAppKeys.Hidden]
+                    ),
+                    DbCommonAppKeys.ReleaseDate: (
+                        x['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                    ),
+                    'count': (
+                        r
+                        .table(AppCollections.AppsPerAgent)
+                        .get_all(
+                            [
+                                x['right'][DbCommonAppKeys.AppId],
+                                CommonAppKeys.AVAILABLE
+                            ],
+                            index=DbCommonAppPerAgentIndexes.AppIdAndStatus
+                        )
+                        .eq_join(
+                            DbCommonAppKeys.AppId,
+                            r.table(AppCollections.UniqueApplications)
+                        )
+                        .filter(
+                            lambda y:
+                            y['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+                        )
+                        .count()
+                    )
+                }
+            )
+            .pluck(
+                DbCommonAppKeys.Name, DbCommonAppKeys.AppId,
+                DbCommonAppKeys.Hidden, DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.ReleaseDate, 'count'
+            )
+            .order_by(r.desc(DbCommonAppKeys.ReleaseDate))
+            .limit(count)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+def fetch_os_apps_history(
+        customer_name, status, start_date=None, end_date=None,
+        conn=None
+    ):
+    data = []
+    try:
+        data = (
+            r
+            .table(AppCollections.AppsPerAgent)
+            .get_all(
+                [CommonAppKeys.AVAILABLE, customer_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .zip()
+            .filter(
+                r.row[DbCommonAppKeys.ReleaseDate].during(
+                    r.epoch_time(start_date), r.epoch_time(end_date)
+                )
+            )
+            .pluck(
+                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
+                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.ReleaseDate
+            )
+            .group(
+                lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+            )
+            .map(
+                lambda x:
+                {
+                    'details':
+                        [
+                            {
+                                DbCommonAppKeys.AppId: (
+                                    x[DbCommonAppKeys.AppId]
+                                ),
+                                DbCommonAppKeys.Name: (
+                                    x[DbCommonAppKeys.Name]
+                                ),
+                                DbCommonAppKeys.Version: (
+                                    x[DbCommonAppKeys.Version]
+                                ),
+                                DbCommonAppKeys.RvSeverity: (
+                                    x[DbCommonAppKeys.RvSeverity]
+                                )
+                            }
+                        ],
+                    CommonAppKeys.COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
+                    "count": x["count"] + y["count"],
+                    "details": x["details"] + y["details"],
+                }
+            )
+            .ungroup()
+            .map(
+                {
+                    'timestamp': r.row['group'],
+                    'total_count': r.row['reduction']['count'],
+                    'details': (
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
+                            lambda a:
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            DbCommonAppKeys.AppId: (
+                                                a[DbCommonAppKeys.AppId]
+                                            ),
+                                            DbCommonAppKeys.Name: (
+                                                a[DbCommonAppKeys.Name]
+                                            ),
+                                            DbCommonAppKeys.Version: (
+                                                a[DbCommonAppKeys.Version]
+                                            ),
+                                        }
+                                    ],
+                                CommonAppKeys.COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
+                                "count": a["count"] + b["count"],
+                                "apps": a["apps"] + b["apps"],
+                            }
+                        )
+                        .ungroup()
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@time_it
+@db_create_close
+def fetch_os_apps_history_for_agent(
+        agent_id, status, start_date=None, end_date=None,
+        conn=None
+    ):
+
+    data = []
+    try:
+        data = (
+            r
+            .table(AppCollections.AppsPerAgent)
+            .get_all(
+                [status, agent_id],
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .zip()
+            .filter(
+                r.row[DbCommonAppKeys.ReleaseDate].during(
+                    r.epoch_time(start_date), r.epoch_time(end_date)
+                )
+            )
+            .pluck(
+                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
+                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.ReleaseDate
+            )
+             .group(
+                lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+            )
+            .map(
+                lambda x:
+                {
+                    'details':
+                        [
+                            {
+                                DbCommonAppKeys.AppId: (
+                                    x[DbCommonAppKeys.AppId]
+                                ),
+                                DbCommonAppKeys.Name: (
+                                    x[DbCommonAppKeys.Name]
+                                ),
+                                DbCommonAppKeys.Version: (
+                                    x[DbCommonAppKeys.Version]
+                                ),
+                                DbCommonAppKeys.RvSeverity: (
+                                    x[DbCommonAppKeys.RvSeverity]
+                                )
+                            }
+                        ],
+                    CommonAppKeys.COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
+                    "count": x["count"] + y["count"],
+                    "details": x["details"] + y["details"],
+                }
+            )
+            .ungroup()
+            .map(
+                {
+                    'timestamp': r.row['group'],
+                    'total_count': r.row['reduction']['count'],
+                    'details': (
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
+                            lambda a:
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            DbCommonAppKeys.AppId: (
+                                                a[DbCommonAppKeys.AppId]
+                                            ),
+                                            DbCommonAppKeys.Name: (
+                                                a[DbCommonAppKeys.Name]
+                                            ),
+                                            DbCommonAppKeys.Version: (
+                                                a[DbCommonAppKeys.Version]
+                                            ),
+                                        }
+                                    ],
+                                CommonAppKeys.COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
+                                "count": a["count"] + b["count"],
+                                "apps": a["apps"] + b["apps"],
+                            }
+                        )
+                        .ungroup()
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+def fetch_os_apps_history_for_tag(
+        tag_id, status, start_date=None, end_date=None,
+        conn=None
+    ):
+    data = []
+
+    try:
+        data = (
+            r
+            .table(TagCollections.TagsPerAgent, use_outdated=True)
+            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+            .pluck(TagsPerAgentKey.AgentId)
+            .eq_join(
+                lambda x: [
+                    status,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+            )
+            .zip()
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
+            .zip()
+            .filter(
+                r.row[DbCommonAppKeys.ReleaseDate].during(
+                    r.epoch_time(start_date), r.epoch_time(end_date)
+                )
+            )
+            .pluck(
+                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
+                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.ReleaseDate
+            )
+             .group(
+                lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+            )
+            .map(
+                lambda x:
+                {
+                    'details':
+                        [
+                            {
+                                DbCommonAppKeys.AppId: (
+                                    x[DbCommonAppKeys.AppId]
+                                ),
+                                DbCommonAppKeys.Name: (
+                                    x[DbCommonAppKeys.Name]
+                                ),
+                                DbCommonAppKeys.Version: (
+                                    x[DbCommonAppKeys.Version]
+                                ),
+                                DbCommonAppKeys.RvSeverity: (
+                                    x[DbCommonAppKeys.RvSeverity]
+                                )
+                            }
+                        ],
+                    CommonAppKeys.COUNT: 1,
+                }
+            )
+            .reduce(
+                lambda x, y:
+                {
+                    "count": x["count"] + y["count"],
+                    "details": x["details"] + y["details"],
+                }
+            )
+            .ungroup()
+            .map(
+                {
+                    'timestamp': r.row['group'],
+                    'total_count': r.row['reduction']['count'],
+                    'details': (
+                        r.row['reduction']['details']
+                        .group(
+                            lambda a: a['rv_severity']
+                        )
+                        .map(
+                            lambda a:
+                            {
+                                'apps':
+                                    [
+                                        {
+                                            DbCommonAppKeys.AppId: (
+                                                a[DbCommonAppKeys.AppId]
+                                            ),
+                                            DbCommonAppKeys.Name: (
+                                                a[DbCommonAppKeys.Name]
+                                            ),
+                                            DbCommonAppKeys.Version: (
+                                                a[DbCommonAppKeys.Version]
+                                            ),
+                                        }
+                                    ],
+                                CommonAppKeys.COUNT: 1
+                            }
+                        )
+                        .reduce(
+                            lambda a, b:
+                            {
+                                "count": a["count"] + b["count"],
+                                "apps": a["apps"] + b["apps"],
+                            }
+                        )
+                        .ungroup()
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
