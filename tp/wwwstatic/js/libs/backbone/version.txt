@@ -1,4 +1,0 @@
-Backbone.js
-Home:       http://backbonejs.org
-GitHub:     https://github.com/documentcloud/backbone/tags
-Version:    1.0.0
