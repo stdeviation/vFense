@@ -8,13 +8,15 @@ import signal
 import subprocess
 from time import sleep
 from _magic import *
+print sys.path
 from vFense import (
     VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
     VFENSE_LOG_PATH, VFENSE_CONF_PATH,
     VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
     VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
     VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED,
-    VFENSE_INIT_D
+    VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK,
+    VFENSE_SSL_PATH
 )
 from vFense.core.logger.logger import vFenseLogger
 vfense_logger = vFenseLogger()
@@ -122,6 +124,23 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
+if not os.path.exists(VFENSE_SSL_PATH):
+    os.mkdir(VFENSE_SSL_PATH, 0755)
+if not os.path.exists(VFENSE_LOG_PATH):
+    os.mkdir(VFENSE_LOG_PATH, 0755)
+if not os.path.exists(VFENSE_SCHEDULER_PATH):
+    os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
+if not os.path.exists(VFENSE_APP_PATH):
+    os.mkdir(VFENSE_APP_PATH, 0755)
+if not os.path.exists(VFENSE_APP_TMP_PATH):
+    os.mkdir(VFENSE_APP_TMP_PATH, 0775)
+if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
+    os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
+if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
+    os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
+if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
+    os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
+
 generate_generic_certs()
 ncc.nginx_config_builder(
     nginx_server_name,
@@ -131,19 +150,59 @@ ncc.nginx_config_builder(
     rvweb_count=int(args.web_count)
 )
 
-if not os.path.exists(VFENSED_SYMLINK):
-    subprocess.Popen(
-        [
-            'ln', '-s', VFENSE_BASE_SRC_PATH, SITE_PACKAGES[-1]
-        ],
-    )
+try:
+    if os.path.exists(os.path.join(SITE_PACKAGES[-1], 'vFense')):
+        os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
 
-if not os.path.exists(VFENSED_SYMLINK):
-    subprocess.Popen(
-        [
-            'ln', '-s', VFENSED, VFENSED_SYMLINK
-        ],
-    )
+    elif (
+            not os.path.exists(
+                os.readlink(os.path.join(SITE_PACKAGES[-1], 'vFense'))
+            )
+        ):
+        os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
+
+except Exception as e:
+    pass
+
+subprocess.Popen(
+    [
+        'ln', '-s', VFENSE_BASE_SRC_PATH, SITE_PACKAGES[-1]
+    ],
+)
+
+try:
+    if os.path.exists(VFENSED_SYMLINK):
+        os.remove(VFENSED_SYMLINK)
+
+    elif not os.path.exists(os.readlink(VFENSED_SYMLINK)):
+        os.remove(VFENSED_SYMLINK)
+
+except Exception as e:
+    pass
+
+subprocess.Popen(
+    [
+        'ln', '-s', VFENSED, VFENSED_SYMLINK
+    ],
+)
+
+try:
+    if os.path.exists(VFENSE_INIT_D_SYMLINK):
+        os.remove(VFENSE_INIT_D_SYMLINK)
+
+    elif not os.path.exists(os.readlink(VFENSE_INIT_D_SYMLINK)):
+        os.remove(VFENSE_INIT_D_SYMLINK)
+
+except Exception as e:
+    pass
+
+subprocess.Popen(
+    [
+        'ln', '-s',
+        VFENSE_INIT_D_SCRIPT,
+        VFENSE_INIT_D_SYMLINK
+    ],
+)
 
 def initialize_db():
     os.umask(0)
@@ -164,21 +223,6 @@ def initialize_db():
                 'chown', '-R', 'rethinkdb.rethinkdb', '/var/lib/rethinkdb/vFense'
             ],
         )
-
-    if not os.path.exists(VFENSE_LOG_PATH):
-        os.mkdir(VFENSE_LOG_PATH, 0755)
-    if not os.path.exists(VFENSE_SCHEDULER_PATH):
-        os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
-    if not os.path.exists(VFENSE_APP_PATH):
-        os.mkdir(VFENSE_APP_PATH, 0755)
-    if not os.path.exists(VFENSE_APP_TMP_PATH):
-        os.mkdir(VFENSE_APP_TMP_PATH, 0775)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
@@ -186,15 +230,6 @@ def initialize_db():
                 'defaults'
             ],
         )
-
-        if not os.path.exists('/etc/init.d/vFense'):
-            subprocess.Popen(
-                [
-                    'ln', '-s',
-                    os.path.join(VFENSE_BASE_SRC_PATH,'daemon/vFense'),
-                    VFENSE_INIT_D
-                ],
-            )
 
     if get_distro() in REDHAT_DISTROS:
         if os.path.exists('/usr/bin/rqworker'):

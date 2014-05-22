@@ -11,8 +11,11 @@ VFENSE_BASE_PATH = (
     )
 )
 BIN_DIR = '/usr/local/bin'
-VFENSE_INIT_D = '/etc/init.d/vFense'
-VFENSED = os.path.join(VFENSE_BASE_SRC_PATH, 'vFensed')
+VFENSE_INIT_D_PATH = os.path.join(VFENSE_BASE_PATH, 'init.d')
+VFENSE_BIN_PATH = os.path.join(VFENSE_BASE_PATH, 'bin')
+VFENSE_INIT_D_SCRIPT = os.path.join(VFENSE_INIT_D_PATH, 'vFense')
+VFENSE_INIT_D_SYMLINK = '/etc/init.d/vFense'
+VFENSED = os.path.join(VFENSE_BIN_PATH, 'vFensed')
 VFENSED_SYMLINK = os.path.join(BIN_DIR, 'vFensed')
 VFENSE_TEMPLATE_PATH = os.path.join(VFENSE_BASE_PATH, 'templates')
 VFENSE_WWW_PATH = os.path.join(VFENSE_BASE_PATH, 'wwwstatic')
