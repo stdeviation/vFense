@@ -318,7 +318,6 @@ def get_os_apps_history_for_tag(
 
     elif not start_date and end_date:
         start_date = 0.0
-    print start_date, end_date
     data = (
         fetch_os_apps_history_for_tag(
             tag_id, status, start_date, end_date

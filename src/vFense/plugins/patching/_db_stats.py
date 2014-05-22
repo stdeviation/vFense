@@ -986,6 +986,46 @@ def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
 @time_it
 @db_create_close
 def fetch_recently_released_apps(customer_name, count=5, conn=None):
+    """Fetch the latest available updates for a customer.
+    Args:
+        customer_name (str): The name of the customer.
+    Kwargs:
+        count (int): The number of results to return.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_recently_released_apps
+        >>> customer_name = 'default'
+        >>> count = 3
+        >>> fetch_recently_released_apps(customer_name, count)
+
+    Returns:
+    >>> [
+        {
+            "count": 1,
+            "rv_severity": "Recommended",
+            "release_date": 1400644800,
+            "app_id": "4aaad1b2275141e0ccc5ee607377be28a947c0349128d3f066dba6b266fb2cf2",
+            "hidden": "no",
+            "name": "pidgin"
+        },
+        {
+            "count": 1,
+            "rv_severity": "Recommended",
+            "release_date": 1400644800,
+            "app_id": "8bfbffd62cb74869119f28dbbdc06d4ce651286a5105b3c20227b60e4fad741d",
+            "hidden": "no",
+            "name": "libpurple0"
+        },
+        {
+            "count": 1,
+            "rv_severity": "Recommended",
+            "release_date": 1400644800,
+            "app_id": "d081e1372cee5ae368b94d064982ddaad67c40aacd8c845570b97ee69c5adef4",
+            "hidden": "no",
+            "name": "rethinkdb"
+        }
+    ]
+    """
     data = []
     try:
         data = list(
