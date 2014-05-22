@@ -565,7 +565,7 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
 def group_avail_app_stats_by_os_for_customer(
         customer_name, count=3, conn=None
     ):
-    """Retrieve an array of the total count of update available, grouped by 
+    """Retrieve an array of the total count of update available, grouped by
         operating system for a customer.
     Args:
         customer_name (str): The name of the customer.
@@ -654,7 +654,7 @@ def group_avail_app_stats_by_os_for_customer(
 def group_avail_app_stats_by_os_for_tag(
         tag_id, count=3, conn=None
     ):
-    """Retrieve an array of the total count of update available, grouped by 
+    """Retrieve an array of the total count of update available, grouped by
         operating system for a tag.
     Args:
         tag_id (str): 36 character UUID of the tag.
@@ -1060,9 +1060,56 @@ def fetch_recently_released_apps(customer_name, count=5, conn=None):
 @time_it
 @db_create_close
 def fetch_os_apps_history(
-        customer_name, status, start_date=None, end_date=None,
+        customer_name, status, start_date, end_date,
         conn=None
     ):
+    """Retrieve all applications and their posted dates
+        from start date to end date.
+    Args:
+        agent_id (str): The 36 character UUID of the tag.
+        status (str): available or installed.
+        start_date (epoch_time): The date you want the search to begin.
+        end_date (epoch_time): The date you want the search to end.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_os_apps_history
+        >>> customer_name = 'default'
+        >>> status = 'available'
+        >>> start_date = 1369195464.0
+        >>> end_date = 1400731464.0
+        >>> fetch_os_apps_history(customer_name, status, start_date, end_date)
+
+    Returns:
+        >>> {
+            "timestamp": 1383019200,
+            "details": [
+                {
+                    "reduction": {
+                        "count": 3,
+                        "apps": [
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "9da05dc98a2f4fa4ac14bed0b9334831955acc43648fff88c53102b194cc2a34",
+                                "name": "at-spi2-core"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "b2df3c0131248d305d97c953c78635cc8e4c9e3665a571b921d2a91412e7c6b6",
+                                "name": "gir1.2-atspi-2.0"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "683a5d9be358f277fb35171790e13e4ef4a5a4112827a339219cd8694c795c64",
+                                "name": "libatspi2.0-0"
+                            }
+                        ]
+                    },
+                    "group": "Recommended"
+                }
+            ],
+            "total_count": 3
+        }
+    """
     data = []
     try:
         data = (
@@ -1172,10 +1219,56 @@ def fetch_os_apps_history(
 @time_it
 @db_create_close
 def fetch_os_apps_history_for_agent(
-        agent_id, status, start_date=None, end_date=None,
+        agent_id, status, start_date, end_date,
         conn=None
     ):
+    """Retrieve all applications and their posted dates
+        from start date to end date.
+    Args:
+        agent_id (str): The 36 character UUID of the tag.
+        status (str): available or installed.
+        start_date (epoch_time): The date you want the search to begin.
+        end_date (epoch_time): The date you want the search to end.
 
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_os_apps_history_for_agent
+        >>> agent_id = 'fd0988f5-50c6-4b58-876b-ade20f3e272c'
+        >>> status = 'available'
+        >>> start_date = 1369195464.0
+        >>> end_date = 1400731464.0
+        >>> fetch_os_apps_history_for_agent(agent_id, status, start_date, end_date)
+
+    Returns:
+        >>> {
+            "timestamp": 1383019200,
+            "details": [
+                {
+                    "reduction": {
+                        "count": 3,
+                        "apps": [
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "9da05dc98a2f4fa4ac14bed0b9334831955acc43648fff88c53102b194cc2a34",
+                                "name": "at-spi2-core"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "b2df3c0131248d305d97c953c78635cc8e4c9e3665a571b921d2a91412e7c6b6",
+                                "name": "gir1.2-atspi-2.0"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "683a5d9be358f277fb35171790e13e4ef4a5a4112827a339219cd8694c795c64",
+                                "name": "libatspi2.0-0"
+                            }
+                        ]
+                    },
+                    "group": "Recommended"
+                }
+            ],
+            "total_count": 3
+        }
+    """
     data = []
     try:
         data = (
@@ -1286,9 +1379,56 @@ def fetch_os_apps_history_for_agent(
 @time_it
 @db_create_close
 def fetch_os_apps_history_for_tag(
-        tag_id, status, start_date=None, end_date=None,
+        tag_id, status, start_date, end_date,
         conn=None
     ):
+    """Retrieve all applications and their posted dates
+        from start date to end date.
+    Args:
+        tag_id (str): The 36 character UUID of the tag.
+        status (str): available or installed.
+        start_date (epoch_time): The date you want the search to begin.
+        end_date (epoch_time): The date you want the search to end.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_os_apps_history_for_tag
+        >>> tag_id = '1e7403c8-36b9-4f16-b29a-57f55a0b3243'
+        >>> status = 'available'
+        >>> start_date = 1369195464.0
+        >>> end_date = 1400731464.0
+        >>> fetch_os_apps_history_for_tag(tag_id, status, start_date, end_date)
+
+    Returns:
+        >>> {
+            "timestamp": 1383019200,
+            "details": [
+                {
+                    "reduction": {
+                        "count": 3,
+                        "apps": [
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "9da05dc98a2f4fa4ac14bed0b9334831955acc43648fff88c53102b194cc2a34",
+                                "name": "at-spi2-core"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "b2df3c0131248d305d97c953c78635cc8e4c9e3665a571b921d2a91412e7c6b6",
+                                "name": "gir1.2-atspi-2.0"
+                            },
+                            {
+                                "version": "2.10.1-0ubuntu0.1",
+                                "app_id": "683a5d9be358f277fb35171790e13e4ef4a5a4112827a339219cd8694c795c64",
+                                "name": "libatspi2.0-0"
+                            }
+                        ]
+                    },
+                    "group": "Recommended"
+                }
+            ],
+            "total_count": 3
+        }
+    """
     data = []
 
     try:

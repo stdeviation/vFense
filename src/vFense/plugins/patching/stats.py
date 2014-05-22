@@ -57,15 +57,15 @@ def tag_stats_by_os(
             default = 3
     Returns:
         >>> {
-            "count": 0, 
-            "uri": null, 
-            "rv_status_code": 1001, 
-            "http_method": null, 
-            "http_status": 200, 
-            "message": "None - data was retrieved", 
+            "count": 0,
+            "uri": null,
+            "rv_status_code": 1001,
+            "http_method": null,
+            "http_status": 200,
+            "message": "None - data was retrieved",
             "data": [
                 {
-                    "count": 253, 
+                    "count": 253,
                     "os": "LinuxMint 16"
                 }
             ]
@@ -97,19 +97,19 @@ def bar_chart_for_appid_by_status(
 
     Returns:
         >>> {
-            "count": 0, 
-            "uri": null, 
-            "rv_status_code": 1001, 
-            "http_method": null, 
-            "http_status": 200, 
-            "message": "None - data was retrieved", 
+            "count": 0,
+            "uri": null,
+            "rv_status_code": 1001,
+            "http_method": null,
+            "http_status": 200,
+            "message": "None - data was retrieved",
             "data": {
-                "available": 1, 
+                "available": 1,
                 "installed": 0
             }
         }
     """
-    statuses = ['installed', 'available'] 
+    statuses = ['installed', 'available']
     data = fetch_bar_chart_for_appid_by_status(app_id, customer_name)
     for status in statuses:
         if status not in data.keys():
@@ -234,7 +234,7 @@ def recently_released_packages(
 @time_it
 @results_message
 def get_os_apps_history(
-        customer_name, status, start_date=None, end_date=None, 
+        customer_name, status, start_date=None, end_date=None,
         username=None, uri=None, method=None
     ):
 
@@ -318,7 +318,7 @@ def get_os_apps_history_for_tag(
 
     elif not start_date and end_date:
         start_date = 0.0
-
+    print start_date, end_date
     data = (
         fetch_os_apps_history_for_tag(
             tag_id, status, start_date, end_date
