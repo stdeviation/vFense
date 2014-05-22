@@ -13,6 +13,3 @@ tp/src/plugins/vuln
 *.log
 *.oqd
 *.rqd
-tags
-.*
-agent/
