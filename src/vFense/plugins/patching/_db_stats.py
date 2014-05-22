@@ -32,6 +32,34 @@ def get_all_app_stats_by_agentid(agent_id, conn=None):
 
     Returns:
         List of application statistics.
+        >>>
+        [
+            {
+                "count": 2059,
+                "status": "installed",
+                "name": "Software Inventory"
+            },
+            {
+                "count": 21,
+                "status": "available",
+                "name": "OS"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Custom"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Supported"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Agent Updates"
+            }
+        ]
     """
     data = []
     try:
@@ -144,6 +172,34 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
 
     Returns:
         List of application statistics.
+        >>>
+        [
+            {
+                "count": 2059,
+                "status": "installed",
+                "name": "Software Inventory"
+            },
+            {
+                "count": 21,
+                "status": "available",
+                "name": "OS"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Custom"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Supported"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Agent Updates"
+            }
+        ]
     """
     data = []
     try:
@@ -160,13 +216,17 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
                 r.table(AppCollections.AppsPerAgent),
                 index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .eq_join(lambda x: x['right'][DbCommonAppPerAgentKeys.AppId], r.table(AppCollections.UniqueApplications))
+            .eq_join(
+                lambda x: x['right'][DbCommonAppPerAgentKeys.AppId],
+                r.table(AppCollections.UniqueApplications))
             .filter(
                 lambda y: y['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
             )
             .map(
                 {
-                    DbCommonAppPerAgentKeys.AppId: r.row['right'][DbCommonAppPerAgentKeys.AppId],
+                    DbCommonAppPerAgentKeys.AppId: (
+                        r.row['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
                 }
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
@@ -285,7 +345,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @db_create_close
@@ -302,6 +362,30 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
 
     Returns:
         List of application statistics.
+        >>>
+        [
+            {
+                "count": 21,
+                "status": "available",
+                "name": "OS"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Custom"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Supported"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Agent Updates"
+            }
+        ]
+
     """
     data = []
     try:
@@ -318,13 +402,18 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
                 r.table(AppCollections.AppsPerAgent),
                 index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .eq_join(lambda x: x['right'][DbCommonAppPerAgentKeys.AppId], r.table(AppCollections.UniqueApplications))
+            .eq_join(
+                lambda x: x['right'][DbCommonAppPerAgentKeys.AppId],
+                r.table(AppCollections.UniqueApplications)
+            )
             .filter(
                 lambda y: y['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
             )
             .map(
                 {
-                    DbCommonAppPerAgentKeys.AppId: r.row['right'][DbCommonAppPerAgentKeys.AppId],
+                    DbCommonAppPerAgentKeys.AppId: (
+                        r.row['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
                 }
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
@@ -418,7 +507,7 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -435,6 +524,29 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
 
     Returns:
         List of application statistics.
+        >>>
+        [
+            {
+                "count": 21,
+                "status": "available",
+                "name": "OS"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Custom"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Supported"
+            },
+            {
+                "count": 0,
+                "status": "available",
+                "name": "Agent Updates"
+            }
+        ]
     """
     data = []
     try:
@@ -447,13 +559,18 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
                 ],
                 index=DbCommonAppPerAgentIndexes.StatusAndCustomer
             )
-            .eq_join(DbCommonAppKeys.AppId, r.table(AppCollections.UniqueApplications))
+            .eq_join(
+                DbCommonAppKeys.AppId,
+                r.table(AppCollections.UniqueApplications)
+            )
             .filter(
                 lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
             )
             .map(
                 {
-                    DbCommonAppPerAgentKeys.AppId: r.row['left'][DbCommonAppPerAgentKeys.AppId],
+                    DbCommonAppPerAgentKeys.AppId: (
+                        r.row['left'][DbCommonAppPerAgentKeys.AppId]
+                    ),
                 }
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
@@ -558,7 +675,7 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -742,6 +859,25 @@ def group_avail_app_stats_by_os_for_tag(
 def fetch_bar_chart_for_appid_by_status(
         app_id, customer_name, conn=None
     ):
+    """Retreive  the number of nodes that  either have this installed
+        or need it to be installed.
+    Args:
+        app_id (str): The 64 character UUID of the application
+        customer_name (str): The name of the customer.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_bar_chart_for_appid_by_status
+        >>> app_id = 'e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7'
+        >>> customer_name = 'default'
+        >>> fetch_bar_chart_for_appid_by_status(app_id, customer_name)
+
+    Returns:
+        Dictionary
+        >>>
+        {
+            u'available': 1
+        }
+    """
     data = {}
     try:
         data = (
@@ -764,6 +900,33 @@ def fetch_bar_chart_for_appid_by_status(
 @time_it
 @db_create_close
 def fetch_severity_bar_chart_stats_for_customer(customer_name, conn=None):
+    """Retrieve a list of stats per severity for customer.
+    Args:
+        customer_name (str): The name of ther customer.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_severity_bar_chart_stats_for_customer
+        >>> customer_name = 'default'
+        >>> fetch_severity_bar_chart_stats_for_customer(customer_name)
+
+    Returns:
+        List of dictionaries, Number of updates per severity.
+        >>>
+        [
+            {
+                "count": 1,
+                "severity": "Optional"
+            },
+            {
+                "count": 3,
+                "severity": "Critical"
+            },
+            {
+                "count": 18,
+                "severity": "Recommended"
+            }
+        ]
+    """
     data = []
     try:
         data = (
@@ -815,6 +978,33 @@ def fetch_severity_bar_chart_stats_for_customer(customer_name, conn=None):
 @time_it
 @db_create_close
 def fetch_severity_bar_chart_stats_for_agent(agent_id, conn=None):
+    """Retrieve a list of stats per severity for  an agent.
+    Args:
+        agent_id (str): 36 character UUID of an agent.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_severity_bar_chart_stats_for_agent
+        >>> agent_id = '114ef1ea-7fbc-4505-b702-1500f89e969c'
+        >>> fetch_severity_bar_chart_stats_for_agent(agent_id)
+
+    Returns:
+        List of dictionaries, Number of updates per severity.
+        >>>
+        [
+            {
+                "count": 1,
+                "severity": "Optional"
+            },
+            {
+                "count": 3,
+                "severity": "Critical"
+            },
+            {
+                "count": 18,
+                "severity": "Recommended"
+            }
+        ]
+    """
     data = []
     try:
         data = (
@@ -864,6 +1054,34 @@ def fetch_severity_bar_chart_stats_for_agent(agent_id, conn=None):
 @time_it
 @db_create_close
 def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
+    """Retrieve a list of stats per severity for an tag.
+    Args:
+        agent_id (str): 36 character UUID of an agent.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_severity_bar_chart_stats_for_tag
+        >>> tag_id = '14dc332d-6ae1-46ba-8290-2619413816f9'
+        >>> fetch_severity_bar_chart_stats_for_tag(tag_id)
+
+    Returns:
+        List of dictionaries, Number of updates per severity.
+        >>>
+        [
+            {
+                "count": 1,
+                "severity": "Optional"
+            },
+            {
+                "count": 3,
+                "severity": "Critical"
+            },
+            {
+                "count": 18,
+                "severity": "Recommended"
+            }
+        ]
+    """
+
     data = []
     try:
         data = (
@@ -926,7 +1144,46 @@ def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
 @time_it
 @db_create_close
 def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
+    """Retrieve the top applications upadtes that are needed for a customer.
+    Args:
+        customer_name (str): The name of the customer.
 
+    Kwargs:
+        count (int, optional): The number of results to return.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import fetch_top_apps_needed_for_customer
+        >>> customer_name = 'default'
+        >>> count = 3
+        >>> fetch_top_apps_needed_for_customer(customer_name, count)
+
+    Returns:
+        List of dictionaries.
+        >>>
+        [
+            {
+                "count": 1,
+                "rv_severity": "Recommended",
+                "release_date": 1400644800,
+                "app_id": "1a3c80714af0eeb7f739e8f42f80d41fe33ffce1d012fff7648b6e5658594e90",
+                "name": "rethinkdb"
+            },
+            {
+                "count": 1,
+                "rv_severity": "Recommended",
+                "release_date": 1400644800,
+                "app_id": "e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7",
+                "name": "python3-lxml"
+            },
+            {
+                "count": 1,
+                "rv_severity": "Recommended",
+                "release_date": 1400644800,
+                "app_id": "8683a443a58aefcd5cef3025e6307569c6b722eccb64c9573750a4d11c0ffbe8",
+                "name": "python-lxml"
+            }
+        ]
+    """
     data=[]
     try:
         data = (
