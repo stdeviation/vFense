@@ -526,7 +526,61 @@ def get_os_apps_history(
         customer_name, status, start_date=None, end_date=None,
         username=None, uri=None, method=None
     ):
+    """Retrieve all applications from within a time frame
+        for a customer.
+    Args:
+        customer_name (str): The name of the customer.
+        status (str): The status of the applictions you want to see.
+            example... installed or available or pending
 
+    Kwargs:
+        start_date (epoch_time): The date you want the search to begin.
+            default is 365 days from now, example..
+            start_date = 1369315938.0
+        end_date (epoch_time): The date you want the search to end.
+            default is today, example
+            end_date = 1400852008.0
+        username (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import get_os_apps_history
+        >>> customer_name = 'default'
+        >>> get_os_apps_history(customer_name)
+
+    Returns:
+        >>>
+        {
+            "count": 1,
+            "uri": "/api/v1/dashboard/graphs/column/range/apps/os",
+            "rv_status_code": 1001,
+            "http_method": "GET",
+            "http_status": 200,
+            "message": "admin - data was retrieved",
+            "data": [
+                {
+                    "timestamp": 1398398400,
+                    "details": [
+                        {
+                            "reduction": {
+                                "count": 1,
+                                "apps": [
+                                    {
+                                        "version": "1:0.9.11+14.04.20140423-0ubuntu1",
+                                        "app_id": "14ccb5aec245468786081a28de59e840b961a14e9113c41e57db977846b78ded",
+                                        "name": "libcompizconfig0"
+                                    }
+                                ]
+                            },
+                            "group": "Optional"
+                        },
+                    ],
+                    "total_count": 1
+                },
+            ]
+        }
+    """
     if not start_date and not end_date:
         start_date = (
             mktime((datetime.now() - timedelta(days=1*365)).timetuple())
@@ -545,6 +599,7 @@ def get_os_apps_history(
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
+        ApiResultKeys.COUNT: len(data),
         ApiResultKeys.USERNAME: username,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method
@@ -558,6 +613,61 @@ def get_os_apps_history_for_agent(
         agent_id, status, start_date=None, end_date=None,
         username=None, uri=None, method=None
     ):
+    """Retrieve all applications from within a time frame
+        for an agent.
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+        status (str): The status of the applictions you want to see.
+            example... installed or available or pending
+
+    Kwargs:
+        start_date (epoch_time): The date you want the search to begin.
+            default is 365 days from now, example..
+            start_date = 1369315938.0
+        end_date (epoch_time): The date you want the search to end.
+            default is today, example
+            end_date = 1400852008.0
+        username (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import get_os_apps_history_for_agent
+        >>> agent_id = '114ef1ea-7fbc-4505-b702-1500f89e969c'
+        >>> get_os_apps_history_for_agent(agent_id)
+
+    Returns:
+        >>>
+        {
+            "count": 1,
+            "uri": "/api/v1/agent/114ef1ea-7fbc-4505-b702-1500f89e969c/graphs/column/range/apps/os",
+            "rv_status_code": 1001,
+            "http_method": "GET",
+            "http_status": 200,
+            "message": "admin - data was retrieved",
+            "data": [
+                {
+                    "timestamp": 1398398400,
+                    "details": [
+                        {
+                            "reduction": {
+                                "count": 1,
+                                "apps": [
+                                    {
+                                        "version": "1:0.9.11+14.04.20140423-0ubuntu1",
+                                        "app_id": "14ccb5aec245468786081a28de59e840b961a14e9113c41e57db977846b78ded",
+                                        "name": "libcompizconfig0"
+                                    }
+                                ]
+                            },
+                            "group": "Optional"
+                        },
+                    ],
+                    "total_count": 1
+                },
+            ]
+        }
+    """
 
     if not start_date and not end_date:
         start_date = (
@@ -581,6 +691,7 @@ def get_os_apps_history_for_agent(
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
+        ApiResultKeys.COUNT: len(data),
         ApiResultKeys.USERNAME: username,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method
@@ -595,6 +706,62 @@ def get_os_apps_history_for_tag(
         end_date=None, username=None, uri=None,
         method=None
     ):
+    """Retrieve all applications from within a time frame
+        for a customer.
+    Args:
+        tag_id (str): The 36 character UUID of the tag.
+        status (str): The status of the applictions you want to see.
+            example... installed or available or pending
+
+    Kwargs:
+        start_date (epoch_time): The date you want the search to begin.
+            default is 365 days from now, example..
+            start_date = 1369315938.0
+        end_date (epoch_time): The date you want the search to end.
+            default is today, example
+            end_date = 1400852008.0
+        username (str): The name of the user who called this function.
+        uri (str): The uri that was used to call this function.
+        method (str): The HTTP methos that was used to call this function.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching._db_stats import get_os_apps_history_for_tag
+        >>> tag_id = '14dc332d-6ae1-46ba-8290-2619413816f9'
+        >>> get_os_apps_history_for_tag(tag_id)
+
+    Returns:
+        >>>
+        {
+            "count": 1,
+            "uri": "/api/v1/tag/14dc332d-6ae1-46ba-8290-2619413816f9/graphs/column/range/apps/os",
+            "rv_status_code": 1001,
+            "http_method": "GET",
+            "http_status": 200,
+            "message": "admin - data was retrieved",
+            "data": [
+                {
+                    "timestamp": 1398398400,
+                    "details": [
+                        {
+                            "reduction": {
+                                "count": 1,
+                                "apps": [
+                                    {
+                                        "version": "1:0.9.11+14.04.20140423-0ubuntu1",
+                                        "app_id": "14ccb5aec245468786081a28de59e840b961a14e9113c41e57db977846b78ded",
+                                        "name": "libcompizconfig0"
+                                    }
+                                ]
+                            },
+                            "group": "Optional"
+                        },
+                    ],
+                    "total_count": 1
+                },
+            ]
+        }
+    """
+
 
     if not start_date and not end_date:
         start_date = (
@@ -617,6 +784,7 @@ def get_os_apps_history_for_tag(
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
+        ApiResultKeys.COUNT: len(data),
         ApiResultKeys.USERNAME: username,
         ApiResultKeys.URI: uri,
         ApiResultKeys.HTTP_METHOD: method
