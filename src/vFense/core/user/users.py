@@ -1,5 +1,5 @@
 import re
-import logging                                                                                                     
+import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import *
 from vFense.errorz._constants import *
@@ -100,21 +100,21 @@ def get_user_properties(username):
     Return:
         Dictionary of user properties.
         {
-            "current_customer": "default", 
+            "current_customer": "default",
             "customers": [
                 {
-                    "admin": true, 
+                    "admin": true,
                     "name": "default"
                 }
-            ], 
+            ],
             "groups": [
                 {
-                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
                     "group_name": "Administrator"
                 }
-            ], 
-                "default_customer": "default", 
-                "user_name": "admin", 
+            ],
+                "default_customer": "default",
+                "user_name": "admin",
                 "permissions": [
                     "administrator"
                 ]
@@ -139,21 +139,21 @@ def get_properties_for_all_users(customer_name=None):
         List of users and their properties.
         [
             {
-                "current_customer": "default", 
+                "current_customer": "default",
                 "customers": [
                     {
-                        "admin": true, 
+                        "admin": true,
                         "name": "default"
                     }
-                ], 
+                ],
                 "groups": [
                     {
-                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
                         "group_name": "Administrator"
                     }
-                ], 
-                    "default_customer": "default", 
-                    "user_name": "admin", 
+                ],
+                    "default_customer": "default",
+                    "user_name": "admin",
                     "permissions": [
                         "administrator"
                     ]
@@ -187,17 +187,17 @@ def get_users(customer_name=None, username=None, without_fields=None):
         List of users:
         [
             {
-                "current_customer": "default", 
-                "email": "test@test.org", 
-                "full_name": "is doing it", 
-                "default_customer": "default", 
-                "user_name": "alien", 
-                "id": "ba9682ef-7adf-4916-8002-9637485b30d8", 
+                "current_customer": "default",
+                "email": "test@test.org",
+                "full_name": "is doing it",
+                "default_customer": "default",
+                "user_name": "alien",
+                "id": "ba9682ef-7adf-4916-8002-9637485b30d8",
                 "customer_name": "default"
             }
         ]
     """
-    data = fetch_users(customer_name, username, without_fields) 
+    data = fetch_users(customer_name, username, without_fields)
     return(data)
 
 
@@ -426,7 +426,7 @@ def remove_users_from_customer(
     except Exception as e:
         logger.exception(e)
         msg = (
-            'Failed to remove users %s from customer %s: %s' % 
+            'Failed to remove users %s from customer %s: %s' %
             (' and '.join(usernames), customer_name, str(e))
         )
         status_code = DbCodes.Errors
@@ -638,7 +638,7 @@ def remove_users_from_group(
     except Exception as e:
         logger.exception(e)
         msg = (
-            'Failed to remove users %s from group %s: %s' % 
+            'Failed to remove users %s from group %s: %s' %
             (' and '.join(usernames), group_id, str(e))
         )
         status_code = DbCodes.Errors
@@ -679,15 +679,15 @@ def toggle_user_status(username, user_name=None, uri=None, method=None):
     Return:
         Dictionary of the status of the operation.
         {
-            "rv_status_code": 13001, 
-            "http_method": null, 
+            "rv_status_code": 13001,
+            "http_method": null,
             "updated_ids": [
                 "tester"
-            ], 
-            "http_status": 200, 
-            "unchanged_ids": [], 
-            "message": "toggle_user_status - user tester is enabled", 
-            "data": [], 
+            ],
+            "http_status": 200,
+            "unchanged_ids": [],
+            "message": "toggle_user_status - user tester is enabled",
+            "data": [],
             "uri": null
         }
     """
@@ -1259,7 +1259,7 @@ def _validate_user_data(username, **kwargs):
 @time_it
 @results_message
 def edit_user_properties(username, **kwargs):
-    """ Edit the properties of a customer. 
+    """ Edit the properties of a customer.
     Args:
         username (str): Name of the user you are editing.
 

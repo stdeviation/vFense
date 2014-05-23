@@ -62,6 +62,8 @@ def fetch_user(username, without_fields=None, conn=None):
             )
             if data:
                 data = data[0]
+            else:
+                data = {}
 
     except Exception as e:
         logger.exception(e)
@@ -85,21 +87,21 @@ def fetch_user_and_all_properties(username, conn=None):
     Returns:
         Dictionary of user properties.
         {
-            "current_customer": "default", 
+            "current_customer": "default",
             "customers": [
                 {
-                    "admin": true, 
+                    "admin": true,
                     "name": "default"
                 }
-            ], 
+            ],
             "groups": [
                 {
-                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                    "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
                     "group_name": "Administrator"
                 }
-            ], 
-                "default_customer": "default", 
-                "user_name": "admin", 
+            ],
+                "default_customer": "default",
+                "user_name": "admin",
                 "permissions": [
                     "administrator"
                 ]
@@ -113,6 +115,7 @@ def fetch_user_and_all_properties(username, conn=None):
             UserKeys.Email: r.row[UserKeys.Email],
             UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
+            UserKeys.Enabled: r.row[UserKeys.Enabled],
             UserKeys.Groups: (
                 r
                 .table(GroupCollections.GroupsPerUser)
@@ -200,21 +203,21 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
         List of users and their properties.
         [
             {
-                "current_customer": "default", 
+                "current_customer": "default",
                 "customers": [
                     {
-                        "admin": true, 
+                        "admin": true,
                         "name": "default"
                     }
-                ], 
+                ],
                 "groups": [
                     {
-                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
                         "group_name": "Administrator"
                     }
-                ], 
-                    "default_customer": "default", 
-                    "user_name": "admin", 
+                ],
+                    "default_customer": "default",
+                    "user_name": "admin",
                     "permissions": [
                         "administrator"
                     ]
@@ -391,12 +394,12 @@ def fetch_users(
         List of users:
         [
             {
-                "current_customer": "default", 
-                "email": "test@test.org", 
-                "full_name": "is doing it", 
-                "default_customer": "default", 
-                "user_name": "alien", 
-                "id": "ba9682ef-7adf-4916-8002-9637485b30d8", 
+                "current_customer": "default",
+                "email": "test@test.org",
+                "full_name": "is doing it",
+                "default_customer": "default",
+                "user_name": "alien",
+                "id": "ba9682ef-7adf-4916-8002-9637485b30d8",
                 "customer_name": "default"
             }
         ]

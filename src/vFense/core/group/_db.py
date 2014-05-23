@@ -64,16 +64,16 @@ def fetch_group_properties(group_id, conn=None):
             "users": [
                 {
                     "user_name": "admin"
-                }, 
+                },
                 {
                     "user_name": "agent_api"
                 }
-            ], 
+            ],
             "permissions": [
                 "administrator"
-            ], 
-            "group_name": "Administrator", 
-            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+            ],
+            "group_name": "Administrator",
+            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
             "customer_name": "default"
         }
     """
@@ -127,19 +127,19 @@ def fetch_properties_for_all_groups(customer_name=None, conn=None):
                 "users": [
                     {
                         "user_name": "admin"
-                    }, 
+                    },
                     {
                         "user_name": "agent_api"
                     }
-                ], 
+                ],
                 "permissions": [
-                    "install", 
+                    "install",
                     "uninstall"
-                ], 
-                "group_name": "JR ADMIN", 
-                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7", 
+                ],
+                "group_name": "JR ADMIN",
+                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7",
                 "customer_name": "Test"
-            }, 
+            },
         ]
     """
     map_hash = (lambda x:
@@ -194,7 +194,7 @@ def fetch_group_by_name(
     Args:
         group_name (str): Name of group.
         customer_name (str): name of the customer, that the group belongs to.
-    
+
     Kwargs:
         fields_to_pluck (list): List of fields you want to retrieve.
 
@@ -367,6 +367,38 @@ def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
 
 @time_it
 @db_create_close
+def fetch_groupids_for_user(username, conn=None):
+    """Retrieve a list of group ids that the user belongs to.
+    Args:
+        username (str): Get all groups for which this user is part of.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_groupids_for_user
+        >>> username = 'alien'
+        >>> fetch_groupids_for_user(username)
+
+    Returns:
+        Returns a list of group ids that the user belongs to.
+        ['']
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(username, index=GroupsPerUserIndexes.UserName)
+            .map(lambda group_id: group_id[GroupsPerUserKeys.GroupId])
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
 def user_exist_in_group(username, group_id, conn=None):
     """Return True if and user is part of group_id
     Args:
@@ -506,7 +538,7 @@ def fetch_groups(
                     u'shutdown',
                     u'reboot'
                 ]
-                                                
+
             },
             {
                 u'group_name': u'FooLah',
