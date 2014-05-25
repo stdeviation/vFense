@@ -3,11 +3,11 @@ import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import *
 from vFense.errorz._constants import *
-from vFense.core.user import *
+from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.group import *
 from vFense.core.group._db import (
-    fetch_groups_for_user, delete_groups_from_user,
+    delete_groups_from_user,
     fetch_group_by_name, user_exist_in_group,
     fetch_groupids_for_user
 )
@@ -192,20 +192,13 @@ class UserManager(object):
 
     @time_it
     def create(
-        self, fullname, password, group_ids,
-        customer_name, email, enabled=CommonKeys.YES
+        self, user, group_ids,
     ):
         """Add a new user into vFense
         Args:
-            fullname (str): The full name of the user you are creating.
-            password (str): The unencrypted password of the user.
+            user (User): A user instance filled out with the
+                appropriate fields.
             group_ids (list): List of vFense group ids to add the user too.
-            customer_name (str): The customer, this user will be part of.
-            email (str): Email address of the user.
-
-        Kwargs:
-            enabled (str): yes or no
-                Default=yes
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
@@ -246,19 +239,7 @@ class UserManager(object):
         generated_ids = []
         generic_status_code = 0
         vfense_status_code = 0
-        user_data = (
-            {
-                UserKeys.CurrentCustomer: customer_name,
-                UserKeys.DefaultCustomer: customer_name,
-                UserKeys.FullName: fullname,
-                UserKeys.UserName: self.username,
-                UserKeys.Enabled: enabled,
-                UserKeys.Email: email
-            }
-        )
-        if enabled != CommonKeys.YES or enabled != CommonKeys.NO:
-            enabled = CommonKeys.NO
-
+        user_data = user.to_dict()
 
         valid_user_name = (
             re.search('([A-Za-z0-9_-]{1,24})', self.username)
@@ -267,111 +248,86 @@ class UserManager(object):
             len(self.username) <= DefaultStringLength.USER_NAME
         )
 
-        try:
-            if (not user_exist and pass_strength[0] and
-                valid_user_length and valid_user_name):
+        if (not user_exist and pass_strength[0] and
+            valid_user_length and valid_user_name):
 
-                encrypted_password = Crypto().hash_bcrypt(password)
-                user_data[UserKeys.Password] = encrypted_password
-                customer_is_valid = get_customer(customer_name)
-                validated_groups, _, invalid_groups = validate_group_ids(
-                    group_ids, customer_name
+            encrypted_password = Crypto().hash_bcrypt(password)
+            user_data[UserKeys.Password] = encrypted_password
+            customer_is_valid = get_customer(customer_name)
+            validated_groups, _, invalid_groups = validate_group_ids(
+                group_ids, customer_name
+            )
+
+            if customer_is_valid and validated_groups:
+                object_status, _, _, generated_ids = (
+                    insert_user(user_data)
                 )
+                generated_ids.append(self.username)
+                self.add_to_customers([customer_name])
+                self.add_to_groups(group_ids)
 
-                if customer_is_valid and validated_groups:
-                    object_status, _, _, generated_ids = (
-                        insert_user(user_data)
-                    )
-                    generated_ids.append(self.username)
+                if object_status == DbCodes.Inserted:
+                    msg = 'user name %s created' % (self.username)
+                    generic_status_code = GenericCodes.ObjectCreated
+                    vfense_status_code = UserCodes.UserCreated
+                    user_data.pop(UserKeys.Password)
 
-                    self.add_to_customers([customer_name])
-                    self.add_to_groups(group_ids)
-
-                    if object_status == DbCodes.Inserted:
-                        msg = 'user name %s created' % (self.username)
-                        generic_status_code = GenericCodes.ObjectCreated
-                        vfense_status_code = UserCodes.UserCreated
-                        user_data.pop(UserKeys.Password)
-
-                elif not customer_is_valid and validated_groups:
-                    msg = 'customer name %s does not exist' % (customer_name)
-                    object_status = DbCodes.Skipped
-                    generic_status_code = GenericCodes.InvalidId
-                    vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
-
-                elif not validated_groups and customer_is_valid:
-                    msg = 'group ids %s does not exist' % (invalid_groups)
-                    object_status = DbCodes.Skipped
-                    generic_status_code = GenericCodes.InvalidId
-                    vfense_status_code = GroupFailureCodes.InvalidGroupId
-
-                else:
-                    group_error = (
-                        'group ids %s does not exist' % (invalid_groups)
-                    )
-                    customer_error = (
-                        'customer name %s does not exist' % (customer_name)
-                    )
-                    msg = group_error + ' and ' + customer_error
-                    object_status = DbCodes.Errors
-                    generic_status_code = GenericFailureCodes.FailedToCreateObject
-                    vfense_status_code = UserFailureCodes.FailedToCreateUser
-
-            elif user_exist:
-                msg = 'username %s already exists' % (self.username)
-                object_status = GenericCodes.ObjectExists
-                generic_status_code = GenericCodes.ObjectExists
-                vfense_status_code = UserFailureCodes.UserNameExists
-
-            elif not pass_strength[0]:
-                msg = (
-                    'password does not meet the min requirements: strength=%s'
-                    % (pass_strength[1])
-                )
-                object_status = GenericFailureCodes.FailedToCreateObject
-                generic_status_code = GenericFailureCodes.FailedToCreateObject
-                vfense_status_code = UserFailureCodes.WeakPassword
-
-            elif not valid_user_name or not valid_user_length:
-                status_code = DbCodes.Errors
-                msg = (
-                    'user name is not within the 24 character range '+
-                    'or contains unsupported characters :%s' %
-                    (self.username)
-                )
+            elif not customer_is_valid and validated_groups:
+                msg = 'customer name %s does not exist' % (customer_name)
                 generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = UserFailureCodes.InvalidUserName
+                vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
 
-            results = {
-                ApiResultKeys.DB_STATUS_CODE: object_status,
-                ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-                ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-                ApiResultKeys.MESSAGE: status + msg,
-                ApiResultKeys.GENERATED_IDS: generated_ids,
-                ApiResultKeys.DATA: [user_data],
-            }
+            elif not validated_groups and customer_is_valid:
+                msg = 'group ids %s does not exist' % (invalid_groups)
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = GroupFailureCodes.InvalidGroupId
 
-        except Exception as e:
-            logger.exception(e)
-            msg = 'Failed to create user %s: %s' % (self.username, str(e))
-            status_code = DbCodes.Errors
+            else:
+                group_error = (
+                    'group ids %s does not exist' % (invalid_groups)
+                )
+                customer_error = (
+                    'customer name %s does not exist' % (customer_name)
+                )
+                msg = group_error + ' and ' + customer_error
+                generic_status_code = GenericFailureCodes.FailedToCreateObject
+                vfense_status_code = UserFailureCodes.FailedToCreateUser
+
+        elif user_exist:
+            msg = 'username %s already exists' % (self.username)
+            generic_status_code = GenericCodes.ObjectExists
+            vfense_status_code = UserFailureCodes.UserNameExists
+
+        elif not pass_strength[0]:
+            msg = (
+                'password does not meet the min requirements: strength=%s'
+                % (pass_strength[1])
+            )
             generic_status_code = GenericFailureCodes.FailedToCreateObject
-            vfense_status_code = UserFailureCodes.FailedToCreateUser
+            vfense_status_code = UserFailureCodes.WeakPassword
 
-            results = {
-                ApiResultKeys.DB_STATUS_CODE: status_code,
-                ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-                ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-                ApiResultKeys.MESSAGE: status + msg,
-                ApiResultKeys.GENERATED_IDS: [],
-                ApiResultKeys.DATA: [user_data],
-            }
+        elif not valid_user_name or not valid_user_length:
+            object_status = GenericFailureCodes.FailedToCreateObject
+            msg = (
+                'user name is not within the 24 character range '+
+                'or contains unsupported characters :%s' %
+                (self.username)
+            )
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = UserFailureCodes.InvalidUserName
+
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: status + msg,
+            ApiResultKeys.GENERATED_IDS: generated_ids,
+            ApiResultKeys.DATA: [user_data],
+        }
 
         return results
 
 
     @time_it
-    @results_message
     def remove(self):
         """Remove a user from vFense
         Return:
@@ -470,92 +426,142 @@ class UserManager(object):
             {
                 'rv_status_code': 1004,
                 'message': 'None - remove_groups_from_user - group ids: 0834e656-27a5-4b13-ba56-635797d0d1fc, 8757b79c-7321-4446-8882-65457f28c78b does not exist',
-                'http_method': None,
-                'uri': None,
-                'http_status': 409
             }
         """
         status = self.remove_from_groups.func_name + ' - '
-        user_does_not_exist_in_group = False
+        exist_in_groupids = False
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
+        group_ids_in_db = fetch_groupids_for_user(self.username)
         if self.username == DefaultUsers.ADMIN:
             admin_group_id = fetch_group_by_name(
                 DefaultGroups.ADMIN, DefaultCustomers.DEFAULT,
                 GroupKeys.GroupId)[GroupKeys.GroupId]
 
-        try:
-            if not group_ids:
-                group_ids = fetch_groupids_for_user(self.username)
+        if group_ids:
+            exist_in_groupids = set(group_ids).issubset(group_ids_in_db)
+        if not group_ids:
+            group_ids = group_ids_in_db
+            exist_in_groupids = True
 
-            if group_ids:
-                if not admin_group_id in group_ids:
-                    msg = 'group ids: ' + 'and '.join(group_ids)
-                    for gid in group_ids:
-                        user_in_group = user_exist_in_group(self.username, gid)
-                        if not user_in_group:
-                            user_does_not_exist_in_group = True
-                else:
-                    admin_group_id_exists_in_group_ids = True
-                    msg = (
-                        'Cannot remove the %s group from the %s user' %
-                        (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
-                    )
-            else:
-                user_does_not_exist_in_group = True
-
-            if (not user_does_not_exist_in_group and
-                not admin_group_id_exists_in_group_ids):
-
-                status_code, count, errors, generated_ids = (
-                    delete_groups_from_user(self.username, group_ids)
-                )
-                if status_code == DbCodes.Deleted:
-                    generic_status_code = GenericCodes.ObjectDeleted
-                    vfense_status_code = GroupCodes.GroupsRemovedFromUser
-
-                elif status_code == DbCodes.Unchanged:
-                    generic_status_code = GenericCodes.ObjectUnchanged
-                    vfense_status_code = GroupCodes.GroupUnchanged
-
-                elif status_code == DbCodes.Skipped:
-                    generic_status_code = GenericCodes.InvalidId
-                    vfense_status_code = GroupFailureCodes.InvalidGroupId
-
-            elif admin_group_id_exists_in_group_ids:
-                status_code = DbCodes.Skipped
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
+        if exist_in_groupids:
+            if not admin_group_id in group_ids:
+                msg = 'group ids: ' + 'and '.join(group_ids)
 
             else:
+                admin_group_id_exists_in_group_ids = True
                 msg = (
-                    'groups %s do not exist for user %s' %
-                    (' and '.join(group_ids), self.username)
+                    'Cannot remove the %s group from the %s user' %
+                    (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
                 )
-                status_code = DbCodes.Skipped
+
+        if exist_in_groupids and not admin_group_id_exists_in_group_ids:
+
+            status_code, count, errors, generated_ids = (
+                delete_groups_from_user(self.username, group_ids)
+            )
+            if status_code == DbCodes.Deleted:
+                generic_status_code = GenericCodes.ObjectDeleted
+                vfense_status_code = GroupCodes.GroupsRemovedFromUser
+
+            elif status_code == DbCodes.Unchanged:
+                generic_status_code = GenericCodes.ObjectUnchanged
+                vfense_status_code = GroupCodes.GroupUnchanged
+
+            elif status_code == DbCodes.Skipped:
                 generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = GroupFailureCodes.GroupDoesNotExistForUser
+                vfense_status_code = GroupFailureCodes.InvalidGroupId
 
-            results = {
-                ApiResultKeys.DB_STATUS_CODE: status_code,
-                ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-                ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-                ApiResultKeys.MESSAGE: status + msg,
-                ApiResultKeys.DATA: [],
-            }
+        elif admin_group_id_exists_in_group_ids:
+            status_code = DbCodes.Skipped
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
 
-        except Exception as e:
-            logger.exception(e)
-            status_code = DbCodes.Errors
-            generic_status_code = GenericFailureCodes.FailedToDeleteObject
-            vfense_status_code = GroupFailureCodes.FailedToRemoveGroupFromUser
+        else:
+            msg = (
+                'groups %s do not exist for user %s' %
+                (' and '.join(group_ids), self.username)
+            )
+            status_code = DbCodes.Skipped
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = GroupFailureCodes.GroupDoesNotExistForUser
 
-            results = {
-                ApiResultKeys.DB_STATUS_CODE: status_code,
-                ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-                ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-                ApiResultKeys.MESSAGE: status + msg,
-                ApiResultKeys.DATA: [],
-            }
+        results = {
+            ApiResultKeys.DB_STATUS_CODE: status_code,
+            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: status + msg,
+            ApiResultKeys.DATA: [],
+        }
 
         return results
+
+    @time_it
+    def remove_from_customers(self, customer_names=None):
+        """Remove a customer from a user
+        Args:
+            username (str): Username of the user, you are
+                removing the customer from.
+
+        Kwargs:
+            customer_names (list): List of customer_names,
+                you want to remove from this user
+
+        Basic Usage:
+            >>> from vFense.customer.customers remove_customers_from_user
+            >>> username = 'agent_api'
+            >>> remove_customers_from_user(username)
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>> 
+            {
+                'rv_status_code': 1004,
+                'message': 'None - remove_customers_from_user - removed customers from user alien: TopPatch and vFense does not exist',
+            }
+        """
+        status = self.remove_from_customers.func_name + ' - '
+        customer_names_in_db = fetch_customer_names_for_user(self.username)
+        exist = False
+        if not customer_names:
+            customer_names = customer_names_in_db
+            exist = True
+        else:
+            exist = set(customer_names).issubset(customer_names_in_db)
+
+        if exist:
+            status_code, count, errors, generated_ids = (
+                delete_user_in_customers(self.username, customer_names)
+            )
+            if status_code == DbCodes.Deleted:
+                msg = 'removed customers from user %s' % (self.username)
+                generic_status_code = GenericCodes.ObjectDeleted
+                vfense_status_code = CustomerCodes.CustomersRemovedFromUser
+
+            elif status_code == DbCodes.Skipped:
+                msg = 'invalid customer name or invalid username'
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = CustomerFailureCodes.InvalidCustomerName
+
+            elif status_code == DbCodes.DoesNotExist:
+                msg = 'customer name or username does not exist'
+                generic_status_code = GenericCodes.DoesNotExist
+                vfense_status_code = CustomerFailureCodes.UsersDoNotExistForCustomer
+
+        else:
+            msg = 'customer names do not exist: %s' % (', '.join(customer_names))
+            generic_status_code = GenericCodes.DoesNotExist
+            vfense_status_code = CustomerFailureCodes.UsersDoNotExistForCustomer
+
+        results = {
+            ApiResultKeys.DB_STATUS_CODE: status_code,
+            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: status + msg,
+            ApiResultKeys.DATA: [],
+            ApiResultKeys.USERNAME: user_name,
+            ApiResultKeys.URI: uri,
+            ApiResultKeys.HTTP_METHOD: method
+        }
+
+        return(results)

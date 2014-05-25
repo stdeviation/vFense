@@ -6,7 +6,7 @@ from vFense.core._constants import CPUThrottleValues, DefaultStringLength
 from vFense.core._db import retrieve_object
 from vFense.core.customer import *
 from vFense.core.customer._constants import DefaultCustomers
-from vFense.core.user import *
+from vFense.core.user._db_model import UserCollections
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.customer._db import insert_customer, fetch_customer, \
     insert_user_per_customer, delete_user_in_customers , delete_customer, \

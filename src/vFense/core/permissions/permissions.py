@@ -6,7 +6,7 @@ from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.core._constants import *
-from vFense.core.user import *
+from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.user.users import get_user
 

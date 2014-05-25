@@ -8,7 +8,6 @@ from vFense.core.decorators import authenticated_request
 
 from vFense.core.permissions._constants import *
 from vFense.core.agent import *
-from vFense.core.user import *
 from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

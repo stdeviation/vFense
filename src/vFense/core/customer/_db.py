@@ -4,7 +4,6 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.customer import *
 from vFense.core.group._constants import *
 from vFense.core.group import *
-from vFense.core.user import *
 from vFense.core.user._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
@@ -61,6 +60,42 @@ def fetch_customer(customer_name, keys_to_pluck=None, conn=None):
 
     return(data)
 
+
+@time_it
+@db_create_close
+def fetch_customer_names_for_user(username, conn=None):
+    """Retrieve customer information
+    Args:
+        customer_name (str):   Name of the customer.
+
+    Kwargs:
+        keys_to_pluck (array): list of keys you want to retreive from the db.
+
+    Basic Usage::
+        >>> from vFense.customer._db import fetch_customer
+        >>> customer_name = 'default'
+        >>> fetch_customer(customer_name)
+
+    Returns:
+        Returns a list of customer names
+        [
+            'default'
+        ]
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(CustomerCollections.CustomersPerUser)
+            .get_all(username, index=CustomerPerUserIndexes.UserName)
+            .map(lambda x: x[CustomerPerUserKeys.CustomerName])
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
 
 @time_it
 @db_create_close
@@ -160,7 +195,8 @@ def fetch_properties_for_customer(customer_name, conn=None):
     Return:
         Dictionary of customer properties.
     """
-    map_hash = (lambda x:
+    map_hash = (
+        lambda x:
         {
             CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
             CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
@@ -241,7 +277,8 @@ def fetch_properties_for_all_customers(username=None, conn=None):
             }
         ]
     """
-    map_hash = (lambda x:
+    map_hash = (
+        lambda x:
         {
             CustomerKeys.CustomerName: x[CustomerKeys.CustomerName],
             CustomerKeys.CpuThrottle: x[CustomerKeys.CpuThrottle],
@@ -344,19 +381,25 @@ def fetch_users_for_customer(customer_name, keys_to_pluck=None, conn=None):
     try:
         if customer_name and keys_to_pluck:
             data = list(
-                    r
-                    .table(CustomerCollections.CustomersPerUser)
-                    .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-                    .pluck(keys_to_pluck)
-                    .run(conn)
-                    )
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    customer_name,
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
         elif customer_name and not keys_to_pluck:
             data = list(
-                    r
-                    .table(CustomerCollections.CustomersPerUser)
-                    .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-                    .run(conn)
-                    )
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(
+                    customer_name,
+                    index=CustomerPerUserIndexes.CustomerName
+                )
+                .run(conn)
+            )
 
     except Exception as e:
         logger.exception(e)
@@ -393,19 +436,19 @@ def fetch_customers_for_user(username, keys_to_pluck=None, conn=None):
     try:
         if username and keys_to_pluck:
             data = list(
-                    r
-                    .table(CustomerCollections.CustomersPerUser)
-                    .get_all(username, index=CustomerPerUserIndexes.UserName)
-                    .pluck(keys_to_pluck)
-                    .run(conn)
-                    )
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
         elif username and not keys_to_pluck:
             data = list(
-                    r
-                    .table(CustomerCollections.CustomersPerUser)
-                    .get_all(username, index=CustomerPerUserIndexes.UserName)
-                    .run(conn)
-                    )
+                r
+                .table(CustomerCollections.CustomersPerUser)
+                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .run(conn)
+            )
 
     except Exception as e:
         logger.exception(e)
@@ -434,13 +477,13 @@ def users_exists_in_customer(username, customer_name, conn=None):
     exist = False
     try:
         empty = (
-                r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
-                .filter({CustomerPerUserKeys.UserName: username})
-                .is_empty()
-                .run(conn)
-                )
+            r
+            .table(CustomerCollections.CustomersPerUser)
+            .get_all(customer_name, index=CustomerPerUserIndexes.CustomerName)
+            .filter({CustomerPerUserKeys.UserName: username})
+            .is_empty()
+            .run(conn)
+        )
         if not empty:
             exist = True
 
@@ -453,7 +496,7 @@ def users_exists_in_customer(username, customer_name, conn=None):
 @time_it
 @db_create_close
 def users_exists_in_customers(customer_names, conn=None):
-    """Verify if username is part of customer
+    """Verify if users exists in these customers.
     Args:
         customer_names (list):  List of the customer names.
 

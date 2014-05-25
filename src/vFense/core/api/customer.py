@@ -18,7 +18,6 @@ from vFense.core.user._constants import DefaultUsers
 from vFense.core.agent.agents import change_customer_for_all_agents_in_customer, \
     remove_all_agents_for_customer
 
-from vFense.core.user import *
 from vFense.core.customer import Customer, CustomerKeys
 
 from vFense.core.customer.customers import get_properties_for_customer, \

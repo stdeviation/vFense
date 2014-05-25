@@ -16,7 +16,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 from vFense.core.permissions.decorators import check_permissions
 
 from vFense.core.agent import *
-from vFense.core.user import *
+from vFense.core.user._db_model import UserKeys
 
 from vFense.core.user.users import get_user_property, \
     get_user_properties, get_properties_for_all_users, \

@@ -15,12 +15,17 @@ class CommonKeys():
     METHOD = 'method'
     RESPONSE_URI = 'response_uri'
     REQUEST_METHOD = 'request_method'
+    REASON = 'reason'
 
 
 class DefaultStringLength():
     CUSTOMER_NAME = 36
     GROUP_NAME = 36
     USER_NAME = 24
+
+class RegexPattern():
+    USERNAME = r'([A-Za-z0-9_-]{1,24})'
+    CUSTOMER_NAME = r'((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})'
 
 
 class HTTPMethods():

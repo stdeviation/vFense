@@ -4,7 +4,7 @@ from vFense.db.client import db_connect, r
 
 from vFense.core.agent import *
 from vFense.core.tag import *
-from vFense.core.user import *
+from vFense.core.user._db_model import *
 from vFense.core.group import *
 from vFense.core.customer import *
 

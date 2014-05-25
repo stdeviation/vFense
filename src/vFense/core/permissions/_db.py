@@ -1,7 +1,6 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.user import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
 from vFense.core.permissions._constants import *

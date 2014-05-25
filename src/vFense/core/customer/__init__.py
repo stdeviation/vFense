@@ -1,6 +1,8 @@
 import re
 
-from vFense.core._constants import CPUThrottleValues, DefaultStringLength
+from vFense.core._constants import (
+    CPUThrottleValues, DefaultStringLength, RegexPattern
+)
 from vFense.core.customer._constants import CustomerDefaults
 
 class CustomerCollections():
@@ -111,7 +113,7 @@ class Customer(object):
 
         if isinstance(self.name, basestring):
             valid_symbols = re.search(
-                '((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})', self.name
+               RegexPattern.CUSTOMER_NAME, self.name
             )
             valid_length = len(self.name) <= DefaultStringLength.CUSTOMER_NAME
 

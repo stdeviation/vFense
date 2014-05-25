@@ -16,7 +16,7 @@ from vFense.core.decorators import convert_json_to_arguments, \
     authenticated_request
 
 from vFense.core.agent import *
-from vFense.core.user import *
+from vFense.core.user._db_model import UserKeys
 from vFense.core.user.users import get_user_property, \
     add_users_to_group, remove_users_from_group
 

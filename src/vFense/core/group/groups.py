@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
-from vFense.core.user import *
+from vFense.core.user._db_model import UserCollections
 from vFense.core.user._constants import *
 from vFense.core.customer import *
 from vFense.core.customer._constants import *
