@@ -705,7 +705,7 @@ def get_vulnerability_info_for_app(
     vuln_data[AppsKey.VulnerabilityId] = ""
     vuln_data[AppsKey.VulnerabilityCategories] = []
 
-    if kb != "" and os_string.find('Windows') == 0:
+    if kb != "" and re.search(r'Windows', os_string, re.IGNORECASE):
         vuln_info = ms.get_vuln_ids(kb)
 
     elif (
