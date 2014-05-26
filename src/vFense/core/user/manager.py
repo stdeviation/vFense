@@ -36,7 +36,7 @@ from vFense.core.customer.customers import get_customer, \
     add_user_to_customers, remove_customers_from_user, \
     validate_customer_names
 
-from vFense.utils.security import Crypto
+from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
 from vFense.errorz.status_codes import (
     UserFailureCodes, UserCodes, GenericFailureCodes, GenericCodes,
@@ -708,10 +708,6 @@ class UserManager(object):
     @time_it
     def remove_from_customers(self, customer_names=None):
         """Remove a customer from a user
-        Args:
-            username (str): Username of the user, you are
-                removing the customer from.
-
         Kwargs:
             customer_names (list): List of customer_names,
                 you want to remove from this user
@@ -723,7 +719,7 @@ class UserManager(object):
 
         Returns:
             Dictionary of the status of the operation.
-            >>> 
+            >>>
             {
                 'rv_status_code': 1004,
                 'message': 'None - remove_customers_from_user - removed customers from user alien: TopPatch and vFense does not exist',
@@ -774,5 +770,226 @@ class UserManager(object):
             ApiResultKeys.MESSAGE: status + msg,
             ApiResultKeys.DATA: [],
         }
+
+        return(results)
+
+    @time_it
+    def change_password(self, password, new_password):
+        """Change password for a user.
+        Args:
+            password (str): Original password.
+            new_password (str): New password.
+
+        Return:
+            Dictionary of the status of the operation.
+            {
+                'uri': None,
+                'rv_status_code': 1008,
+                'http_method': None,
+                'http_status': 200,
+                'message': 'None - change_password - Password changed for user admin - admin was updated',
+                'data': []
+            }
+        """
+        user_exist = self.properaties
+        status = self.change_password.func_name + ' - '
+        generic_status_code = 0
+        vfense_status_code = 0
+        results = {}
+        if user_exist:
+            valid_passwd, strength = check_password(new_password)
+            original_encrypted_password = (
+                user_exist[UserKeys.Password].encode('utf-8')
+            )
+            original_password_verified = (
+                Crypto().verify_bcrypt_hash(
+                    password, original_encrypted_password
+                )
+            )
+            encrypted_new_password = Crypto().hash_bcrypt(new_password)
+            new_password_verified_against_orignal_password = (
+                Crypto().verify_bcrypt_hash(
+                    new_password, original_encrypted_password
+                )
+            )
+            if (original_password_verified and valid_passwd and
+                    not new_password_verified_against_orignal_password):
+
+                user_data = {UserKeys.Password: encrypted_new_password}
+
+                object_status, _, _, _ = (
+                    update_user(self.username, user_data)
+                )
+
+                if object_status == DbCodes.Replaced:
+                    msg = 'Password changed for user %s - ' % (self.username)
+                    generic_status_code = GenericCodes.ObjectUpdated
+                    vfense_status_code = UserCodes.PasswordChanged
+
+            elif new_password_verified_against_orignal_password:
+                msg = (
+                    'New password is the same as the original - user %s - ' %
+                    (self.username)
+                )
+                generic_status_code = GenericFailureCodes.FailedToUpdateObject
+                vfense_status_code = UserFailureCodes.NewPasswordSameAsOld
+
+            elif original_password_verified and not valid_passwd:
+                msg = (
+                    'New password is to weak for user %s - ' %
+                    (self.username)
+                )
+                generic_status_code = GenericFailureCodes.FailedToUpdateObject
+                vfense_status_code = UserFailureCodes.WeakPassword
+
+            elif not original_password_verified:
+                msg = (
+                    'Password not verified for user %s - ' %
+                    (self.username)
+                )
+                generic_status_code = GenericFailureCodes.FailedToUpdateObject
+                vfense_status_code = UserFailureCodes.InvalidPassword
+
+            results[ApiResultKeys.UPDATED_IDS] = [self.username]
+
+        else:
+            msg = 'User %s does not exist - ' % (self.username)
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+        results[ApiResultKeys.MESSAGE] = status + msg
+        results[ApiResultKeys.DATA] = []
+        results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        return results
+
+    @time_it
+    def change_customer(self, user):
+        user_exist = self.properties
+        status = self.change_current_customer.func_name + ' - '
+        results = {}
+        results[ApiResultKeys.DATA] = []
+        customer_name = None
+        customer_names_in_db = (
+            fetch_customer_names_for_user(self.username)
+        )
+        data = user.to_dict_non_null()
+        data.pop(UserKeys.UserName)
+        data.pop(UserKeys.Password)
+        if data.get(UserKeys.CurrentCustomer):
+            customer_name = data.get(UserKeys.CurrentCustomer)
+
+        elif data.get(UserKeys.DefaultCustomer):
+            customer_name = data.get(UserKeys.CurrentCustomer)
+
+        if user_exist and customer_name:
+
+            if user_exist[UserKeys.Global] and customer_name:
+                results = self.__edit_user_properties(user)
+            elif customer_name in customer_names_in_db:
+                results = self.__edit_user_properties(user)
+            else:
+                msg = (
+                    'Customer %s is not valid for user %s' %
+                    (customer_name, self.username)
+                )
+                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.FailedToUpdateUser
+                )
+        elif not user_exist and customer_name:
+            msg = (
+                'User %s is not valid' % (self.username)
+            )
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.FailedToUpdateUser
+            )
+        else:
+            msg = (
+                'current_customer or default_customer ' +
+                'was not set in the User instance'
+            )
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.FailedToUpdateUser
+            )
+
+        return results
+
+
+    @time_it
+    def __edit_user_properties(self, user):
+        """ Edit the properties of a customer.
+        Args:
+            user (User): The User instance with all of its properties.
+
+        Return:
+            Dictionary of the status of the operation.
+            {
+                'rv_status_code': 1008,
+                'message': 'None - edit_user_properties - admin was updated',
+                'data': {
+                    'full_name': 'vFense Admin'
+                }
+            }
+        """
+
+        user_exist = self.properties
+        status = self.__edit_user_properties.func_name + ' - '
+        generic_status_code = 0
+        vfense_status_code = 0
+        results = {}
+        data = []
+        results[ApiResultKeys.DATA] = data
+        if user_exist:
+            invalid_fields = user.get_invalid_fields()
+            data = user.to_dict_non_null()
+            data.pop(UserKeys.UserName)
+            data.pop(UserKeys.Password)
+            if not invalid_fields:
+                object_status, _, _, _ = (
+                    update_user(self.username, data)
+                )
+
+                if object_status == DbCodes.Replaced:
+                    msg = 'User %s was updated - ' % (self.username)
+                    generic_status_code = GenericCodes.ObjectUpdated
+                    vfense_status_code = UserCodes.UserUpdated
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results[ApiResultKeys.DATA] = [data]
+
+                elif object_status == DbCodes.Unchanged:
+                    msg = 'User %s was not updated - ' % (self.username)
+                    generic_status_code = GenericCodes.ObjectUnchanged
+                    vfense_status_code = UserCodes.UserUnchanged
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+            else:
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = UserFailureCodes.FailedToUpdateUser
+                msg = 'User %s properties were invalid - ' % (self.username)
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        else:
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+            msg = 'User %s does not exist - ' % (self.username)
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+        results[ApiResultKeys.MESSAGE] = status + msg
 
         return results

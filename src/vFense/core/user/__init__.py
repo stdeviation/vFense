@@ -190,13 +190,14 @@ class User(object):
                     "package_download_url_base": https://192.168.8.14/packages/,
                     "server_queue_ttl": 100
                 }
-                    
+
         """
 
         return {
             UserKeys.UserName: self.name,
             UserKeys.CurrentCustomer: self.current_customer,
             UserKeys.DefaultCustomer: self.default_customer,
+            UserKeys.Password: self.password,
             UserKeys.FullName: self.full_name,
             UserKeys.Email: self.email,
             UserKeys.Global: self.is_global,

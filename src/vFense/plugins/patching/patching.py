@@ -214,7 +214,7 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
 
 @time_it
 def remove_os_apps_for_agent_by_customer(customer_name):
-    """Delete all apps for all agents by customer for 
+    """Delete all apps for all agents by customer for
     Args:
         customer_name (str): Name of the customer.
 
