@@ -708,10 +708,6 @@ class UserManager(object):
     @time_it
     def remove_from_customers(self, customer_names=None):
         """Remove a customer from a user
-        Args:
-            username (str): Username of the user, you are
-                removing the customer from.
-
         Kwargs:
             customer_names (list): List of customer_names,
                 you want to remove from this user
@@ -783,11 +779,6 @@ class UserManager(object):
         Args:
             password (str): Original password.
             new_password (str): New password.
-
-        Kwargs:
-            user_name (str): The name of the user who called this function.
-            uri (str): The uri that was used to call this function.
-            method (str): The HTTP methos that was used to call this function.
 
         Return:
             Dictionary of the status of the operation.
@@ -875,6 +866,70 @@ class UserManager(object):
         return results
 
     @time_it
+    def change_customer(self, user):
+        user_exist = self.properties
+        status = self.change_current_customer.func_name + ' - '
+        results = {}
+        results[ApiResultKeys.DATA] = []
+        customer_name = None
+        customer_names_in_db = (
+            fetch_customer_names_for_user(self.username)
+        )
+        data = user.to_dict_non_null()
+        data.pop(UserKeys.UserName)
+        data.pop(UserKeys.Password)
+        if data.get(UserKeys.CurrentCustomer):
+            customer_name = data.get(UserKeys.CurrentCustomer)
+
+        elif data.get(UserKeys.DefaultCustomer):
+            customer_name = data.get(UserKeys.CurrentCustomer)
+
+        if user_exist and customer_name:
+
+            if user_exist[UserKeys.Global] and customer_name:
+                results = self.__edit_user_properties(user)
+            elif customer_name in customer_names_in_db:
+                results = self.__edit_user_properties(user)
+            else:
+                msg = (
+                    'Customer %s is not valid for user %s' %
+                    (customer_name, self.username)
+                )
+                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.FailedToUpdateUser
+                )
+        elif not user_exist and customer_name:
+            msg = (
+                'User %s is not valid' % (self.username)
+            )
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.FailedToUpdateUser
+            )
+        else:
+            msg = (
+                'current_customer or default_customer ' +
+                'was not set in the User instance'
+            )
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.FailedToUpdateUser
+            )
+
+        return results
+
+
+    @time_it
     def __edit_user_properties(self, user):
         """ Edit the properties of a customer.
         Args:
@@ -901,6 +956,8 @@ class UserManager(object):
         if user_exist:
             invalid_fields = user.get_invalid_fields()
             data = user.to_dict_non_null()
+            data.pop(UserKeys.UserName)
+            data.pop(UserKeys.Password)
             if not invalid_fields:
                 object_status, _, _, _ = (
                     update_user(self.username, data)
