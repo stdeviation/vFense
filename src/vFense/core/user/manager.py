@@ -775,4 +775,4 @@ class UserManager(object):
             ApiResultKeys.DATA: [],
         }
 
-        return(results)
+        return results
