@@ -5,8 +5,10 @@ class GroupCollections():
 class GroupKeys():
     GroupName = 'group_name'
     CustomerName = 'customer_name'
+    Customers = 'customers'
     Permissions = 'permissions'
     GroupId = 'id'
+    Global = 'is_global'
     Users = 'users' #Mapped Keys
 
 
@@ -21,6 +23,7 @@ class GroupsPerUserKeys():
     UserName = 'user_name'
     GroupName = 'group_name'
     GroupId = 'group_id'
+    Global = 'global'
     Id = 'id'
 
 
@@ -29,3 +32,4 @@ class GroupsPerUserIndexes():
     UserName = 'user_name'
     GroupName = 'group_name'
     GroupId = 'group_id'
+    Global = 'global'

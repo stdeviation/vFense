@@ -2,7 +2,9 @@ import logging
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import *
-from vFense.core.user._db_model import UserKeys, UserCollections
+from vFense.core.user._db_model import (
+    UserKeys, UserCollections, UserMappedKeys
+)
 from vFense.core.user._constants import *
 from vFense.core.group import *
 from vFense.core.group._constants import *
@@ -116,14 +118,15 @@ def fetch_user_and_all_properties(username, conn=None):
             UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
             UserKeys.Enabled: r.row[UserKeys.Enabled],
-            UserKeys.Groups: (
+            UserKeys.Global: r.row[UserKeys.Global],
+            UserMappedKeys.Groups: (
                 r
                 .table(GroupCollections.GroupsPerUser)
                 .get_all(username, index=GroupsPerUserIndexes.UserName)
                 .coerce_to('array')
                 .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
             ),
-            UserKeys.Customers: (
+            UserMappedKeys.Customers: (
                 r
                 .table(CustomerCollections.CustomersPerUser)
                 .get_all(username, index=CustomerPerUserIndexes.UserName)
@@ -153,7 +156,7 @@ def fetch_user_and_all_properties(username, conn=None):
                     }
                 )
             ),
-            UserKeys.Permissions: (
+            UserMappedKeys.Permissions: (
                 r
                 .table(GroupCollections.GroupsPerUser)
                 .get_all(username, index=GroupsPerUserIndexes.UserName)
@@ -351,9 +354,9 @@ def user_status_toggle(username, conn=None):
                 {
                     UserKeys.Enabled: (
                         r.branch(
-                            r.row[UserKeys.Enabled] == CommonKeys.YES,
-                            CommonKeys.NO,
-                            CommonKeys.YES
+                            r.row[UserKeys.Enabled] == True,
+                            False,
+                            True
                         )
                     )
                 }

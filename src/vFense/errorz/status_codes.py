@@ -23,6 +23,7 @@ class GenericCodes(object):
     AuthorizationDenied = 1022
     MissingUsername = 1023
     MissingPassword = 1024
+    InvalidValue = 1025
 
 
 class GenericFailureCodes(object):

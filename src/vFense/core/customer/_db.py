@@ -97,6 +97,38 @@ def fetch_customer_names_for_user(username, conn=None):
 
     return(data)
 
+
+@time_it
+@db_create_close
+def fetch_all_customer_names(conn=None):
+    """Retrieve all customer names
+
+    Basic Usage:
+        >>> from vFense.customer._db import fetch_all_customer_names
+        >>> fetch_all_customer_names()
+
+    Returns:
+        Returns a list of customer names
+        >>> 
+        [
+            'default'
+        ]
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(CustomerCollections.Customers)
+            .map(lambda x: x[CustomerKeys.CustomerName])
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
 @time_it
 @db_create_close
 def fetch_customers(match=None, keys_to_pluck=None, conn=None):

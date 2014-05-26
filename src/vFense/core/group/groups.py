@@ -161,38 +161,6 @@ def get_groups_for_user(username, fields_to_pluck=None):
 
     return(data)
 
-
-@time_it
-def get_group_by_name(group_name, customer_name, fields_to_pluck=None):
-    """Retrieve a group by its name from the database
-    Args:
-        group_name (str): Name of group.
-        customer_name (str): name of the customer, that the group belongs to.
-    
-    Kwargs:
-        fields_to_pluck (list): List of fields you want to retrieve.
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_group_by_name
-        >>> group_name = 'Administrator'
-        >>> customer_name = 'default'
-        >>> get_group_by_name(group_name, customer_name)
-
-    Returns:
-        Returns a Dict of the properties of a customer
-        {
-            u'group_name': u'Administrator',
-            u'customer_name': u'default',
-            u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
-            u'Permissions': [
-                u'administrator'
-            ]
-        }
-    """
-    data = fetch_group_by_name(group_name, customer_name)
-    return(data)
-
-
 @time_it
 def get_users_in_group(group_id, fields_to_pluck=None,):
     """Fetch all users for group_id
@@ -271,7 +239,7 @@ def get_groups(
 
 
 @time_it
-def validate_group_ids(group_ids, customer_name=None):
+def validate_group_ids(group_ids, customer_name=None, is_global=False):
     """Validate a list if group ids exist in the database.
     Args:
         group_ids (list): List of group ids
@@ -297,12 +265,20 @@ def validate_group_ids(group_ids, customer_name=None):
             if group:
                 if customer_name:
                     if group.get(GroupKeys.CustomerName) == customer_name:
-                        valid_groups.append(group_id)
+                        if group.get(GroupKeys.Global) == is_global:
+                            valid_groups.append(group_id)
+                        else:
+                            invalid_groups.append(group_id)
+                            validated = False
                     else:
                         invalid_groups.append(group_id)
                         validated = False
                 else:
-                    valid_groups.append(group_id)
+                    if group.get(GroupKeys.Global) == is_global:
+                        valid_groups.append(group_id)
+                    else:
+                        invalid_groups.append(group_id)
+                        validated = False
             else:
                 invalid_groups.append(group_id)
                 validated = False
@@ -444,7 +420,7 @@ def add_user_to_groups(
 @time_it
 @results_message
 def create_group(
-        group_name, customer_name, permissions,
+        group_name, customer_name, permissions, is_global=False,
         user_name=None, uri=None, method=None
     ):
     """Create a group in vFense
@@ -454,6 +430,8 @@ def create_group(
         permissions (list): List of permissions, this group has.
 
     Kwargs:
+        is_global (bool): Global group or local to the customer.
+            default = False
         user_name (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
@@ -486,7 +464,7 @@ def create_group(
     status = create_group.func_name + ' - '
     generated_ids = []
     valid_group_name = (
-        re.search('((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})', group_name)
+        re.search(RegexPattern.GROUP_NAME, group_name)
     )
     valid_group_length = (
         len(group_name) <= DefaultStringLength.GROUP_NAME
@@ -494,12 +472,14 @@ def create_group(
     group_data = (
         {
             GroupKeys.CustomerName: customer_name,
+            GroupKeys.Customers: [customer_name],
             GroupKeys.GroupName: group_name,
             GroupKeys.Permissions: permissions,
+            GroupKeys.Global: is_global,
         }
     )
     try:
-        group_exist = get_group_by_name(group_name, customer_name)
+        group_exist = fetch_group_by_name(group_name, customer_name)
         permissions_valid = (
             set(permissions).issubset(set(Permissions.VALID_PERMISSIONS))
         )

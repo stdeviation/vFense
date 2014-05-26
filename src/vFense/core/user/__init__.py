@@ -4,6 +4,9 @@ from vFense.core._constants import (
     RegexPattern, DefaultStringLength, CommonKeys
 )
 from vFense.core.user._constants import UserDefaults
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import UserFailureCodes, GenericCodes
+from vFense.utils.security import check_password
 
 
 class User(object):
@@ -84,14 +87,24 @@ class User(object):
                 invalid_fields.append(
                     {
                         UserKeys.UserName: self.name,
-                        CommonKeys.REASON: 'Invalid characters in username'
+                        CommonKeys.REASON: 'Invalid characters in username',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            UserFailureCodes.InvalidUserName
+                        )
                     }
                 )
             elif not valid_length and valid_symbols:
                 invalid_fields.append(
                     {
                         UserKeys.UserName: self.name,
-                        CommonKeys.REASON: 'Username is too long'
+                        CommonKeys.REASON: (
+                            'Username is too long. The username must be ' +
+                            'less than %d characters long' %
+                            (DefaultStringLength.USER_NAME)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            UserFailureCodes.InvalidUserName
+                        )
                     }
                 )
             elif not valid_length and not valid_symbols:
@@ -99,8 +112,13 @@ class User(object):
                     {
                         UserKeys.UserName: self.name,
                         CommonKeys.REASON: (
-                            'Username is too long and ' +
-                            'Invalid characters in username'
+                            'Username is too long. The username must be ' +
+                            'less than %d characters long' %
+                            (DefaultStringLength.USER_NAME) +
+                            '\nInvalid characters in username'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            UserFailureCodes.InvalidUserName
                         )
                     }
                 )
@@ -108,25 +126,51 @@ class User(object):
             invalid_fields.append(
                 {
                     UserKeys.UserName: self.name,
-                    CommonKeys.REASON: 'username is not a valid string'
+                    CommonKeys.REASON: 'username is not a valid string',
+                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                        UserFailureCodes.InvalidUserName
+                    )
                 }
             )
 
-        if not isinstance(self.enabled, bool):
-            invalid_fields.append(
-                {
-                    UserKeys.Enabled: self.enabled,
-                    CommonKeys.REASON: 'Must be a boolean value'
-                }
-            )
+        if self.enabled:
+            if not isinstance(self.enabled, bool):
+                invalid_fields.append(
+                    {
+                        UserKeys.Enabled: self.enabled,
+                        CommonKeys.REASON: 'Must be a boolean value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
 
-        if not isinstance(self.is_global, bool):
-            invalid_fields.append(
-                {
-                    UserKeys.Global: self.is_global,
-                    CommonKeys.REASON: 'Must be a boolean value'
-                }
-            )
+        if self.is_global:
+            if not isinstance(self.is_global, bool):
+                invalid_fields.append(
+                    {
+                        UserKeys.Global: self.is_global,
+                        CommonKeys.REASON: 'Must be a boolean value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.password and isinstance(self.password, basestring):
+            valid_passwd, _ = check_password(self.password)
+            if not valid_passwd:
+                invalid_fields.append(
+                    {
+                        UserKeys.Password: self.password,
+                        CommonKeys.REASON: (
+                            'Password does not meet the minimum requirements'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            UserFailureCodes.InvalidPassword
+                        )
+                    }
+                )
 
         return invalid_fields
 

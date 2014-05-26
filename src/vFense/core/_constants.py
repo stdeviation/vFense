@@ -23,10 +23,19 @@ class DefaultStringLength():
     GROUP_NAME = 36
     USER_NAME = 24
 
-class RegexPattern():
-    USERNAME = r'([A-Za-z0-9_-]{1,24})'
-    CUSTOMER_NAME = r'((?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,36})'
 
+class RegexPattern():
+    USERNAME = (
+        r'(^[A-Za-z0-9_-]{1,%d}$)' %
+        (DefaultStringLength.USER_NAME)
+    )
+    CUSTOMER_NAME = (
+        r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)' %
+        (DefaultStringLength.CUSTOMER_NAME)
+    )
+    GROUP_NAME = (
+        r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)'
+    )
 
 class HTTPMethods():
     PUT = 'PUT'
