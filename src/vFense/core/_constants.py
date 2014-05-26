@@ -34,7 +34,8 @@ class RegexPattern():
         (DefaultStringLength.CUSTOMER_NAME)
     )
     GROUP_NAME = (
-        r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)'
+        r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)' %
+        (DefaultStringLength.GROUP_NAME)
     )
 
 class HTTPMethods():

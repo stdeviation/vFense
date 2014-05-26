@@ -51,7 +51,7 @@ logger = logging.getLogger('rvapi')
 class UserManager(object):
     def __init__(self, username):
         self.username = username
-        self.properties = self._all_attributes_for_user()
+        self.properties = self._user_attributes()
 
     @time_it
     def _user_attributes(self, without_fields=[UserKeys.Password]):
@@ -244,9 +244,9 @@ class UserManager(object):
         generic_status_code = 0
         vfense_status_code = 0
         errors = []
+        user_data = user.to_dict()
         if isinstance(user, User) and not user_exist:
             invalid_fields = user.get_invalid_fields()
-            user_data = user.to_dict()
 
             if invalid_fields:
                 generic_status_code = GenericFailureCodes.FailedToCreateObject
@@ -275,7 +275,7 @@ class UserManager(object):
 
                     if object_status == DbCodes.Inserted:
                         msg = 'user name %s created' % (self.username)
-                        self.properties = self._all_attributes_for_user()
+                        self.properties = self._user_attributes()
                         generated_ids.append(self.username)
                         customers = (
                             list(
@@ -381,7 +381,7 @@ class UserManager(object):
         results = None
         user_exist = self.properties
         data_list = []
-        status = self.add_user_to_customers.func_name + ' - '
+        status = self.add_to_customers.func_name + ' - '
         msg = ''
         status_code = 0
         generic_status_code = 0
@@ -473,7 +473,7 @@ class UserManager(object):
         status = add_user_to_groups.func_name + ' - '
         groups_are_valid = (
             validate_group_ids(
-                group_ids, is_global=self.is_global
+                group_ids, is_global=self.properties[UserKeys.Global]
             )
         )
         user_exist = self.properties
