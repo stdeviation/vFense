@@ -233,7 +233,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
             UserKeys.DefaultCustomer: x[UserKeys.DefaultCustomer],
             UserKeys.CurrentCustomer: x[UserKeys.CurrentCustomer],
             UserKeys.UserName: x[UserKeys.UserName],
-            UserKeys.Groups: (
+            UserMappedKeys.Groups: (
                 r
                 .table(GroupCollections.GroupsPerUser)
                 .get_all(x
@@ -243,7 +243,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                 .coerce_to('array')
                 .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
             ),
-            UserKeys.Customers: (
+            UserMappedKeys.Customers: (
                 r
                 .table(CustomerCollections.CustomersPerUser)
                 .get_all(
@@ -280,7 +280,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                     }
                 )
             ),
-            UserKeys.Permissions: (
+            UserMappedKeys.Permissions: (
                 r
                 .table(GroupCollections.GroupsPerUser)
                 .get_all(x[GroupsPerUserKeys.UserName], index=GroupsPerUserIndexes.UserName)
