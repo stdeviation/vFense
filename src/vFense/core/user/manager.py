@@ -791,7 +791,7 @@ class UserManager(object):
                 'data': []
             }
         """
-        user_exist = self.properaties
+        user_exist = self.properties
         status = self.change_password.func_name + ' - '
         generic_status_code = 0
         vfense_status_code = 0
@@ -799,7 +799,7 @@ class UserManager(object):
         if user_exist:
             valid_passwd, strength = check_password(new_password)
             original_encrypted_password = (
-                user_exist[UserKeys.Password].encode('utf-8')
+                password.encode('utf-8')
             )
             original_password_verified = (
                 Crypto().verify_bcrypt_hash(
@@ -864,6 +864,67 @@ class UserManager(object):
         results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         return results
+
+    @time_it
+    def reset_password(self, password):
+        """Change password for a user.
+        Args:
+            password (str): Original password.
+
+        Return:
+            Dictionary of the status of the operation.
+            {
+                'uri': None,
+                'rv_status_code': 1008,
+                'http_method': None,
+                'http_status': 200,
+                'message': 'None - change_password - Password changed for user admin - admin was updated',
+                'data': []
+            }
+        """
+        user_exist = self.properties
+        status = self.reset_password.func_name + ' - '
+        generic_status_code = 0
+        vfense_status_code = 0
+        results = {}
+        if user_exist:
+            valid_passwd, strength = check_password(password)
+            encrypted_password = Crypto().hash_bcrypt(password)
+            if valid_passwd:
+                user_data = {UserKeys.Password: encrypted_password}
+
+                object_status, _, _, _ = (
+                    update_user(self.username, user_data)
+                )
+
+                if object_status == DbCodes.Replaced:
+                    msg = 'Password changed for user %s - ' % (self.username)
+                    generic_status_code = GenericCodes.ObjectUpdated
+                    vfense_status_code = UserCodes.PasswordChanged
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+
+            else:
+                msg = (
+                    'New password is to weak for user %s - ' %
+                    (self.username)
+                )
+                generic_status_code = GenericFailureCodes.FailedToUpdateObject
+                vfense_status_code = UserFailureCodes.WeakPassword
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        else:
+            msg = 'User %s does not exist - ' % (self.username)
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+        results[ApiResultKeys.MESSAGE] = status + msg
+        results[ApiResultKeys.DATA] = []
+
+        return results
+
 
     @time_it
     def change_customer(self, user):

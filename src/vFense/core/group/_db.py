@@ -306,6 +306,47 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
     return(data)
 
 
+
+@time_it
+@db_create_close
+def fetch_usernames_in_group(group_id, conn=None):
+    """Fetch all users for group_id
+    Args:
+        group_id (str): 36 Character UUID
+
+    Kwargs:
+        fields_to_pluck (list): List of fields you want to
+        pluck from the database.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_usernames_in_group
+        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
+        >>> fetch_usernames_in_group(group_id)
+
+    Returns:
+        Returns a list of users
+        [
+            'testing123'
+            'tester'
+            'testing'
+        ]
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
+            .map(lambda x: x[GroupsPerUserKeys.UserName])
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
 @time_it
 @db_create_close
 def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):

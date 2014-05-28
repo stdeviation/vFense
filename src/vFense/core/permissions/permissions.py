@@ -6,7 +6,7 @@ from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.core._constants import *
-from vFense.core.user._db_model import UserKeys
+from vFense.core.user._db_model import UserKeys, UserCollections
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.user.users import get_user
 
@@ -133,7 +133,7 @@ def authenticate_user(username, password):
     try:
         user_exist = retrieve_object(username, UserCollections.Users)
         if user_exist:
-            if user_exist[UserKeys.Enabled] == CommonKeys.YES:
+            if user_exist[UserKeys.Enabled]:
                 original_encrypted_password = (
                     user_exist[UserKeys.Password].encode('utf-8')
                 )
