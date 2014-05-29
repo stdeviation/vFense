@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import time_it, return_status_tuple
-from vFense.plugins.patching import FileCollections, FilesKey
+from vFense.plugins.patching._db_model import FileCollections, FilesKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

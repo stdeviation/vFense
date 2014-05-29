@@ -8,7 +8,7 @@ from vFense.core.agent import AgentKey, AgentCollections
 from vFense.core.tag import (
     TagCollections, TagsPerAgentKey, TagsPerAgentIndexes,
 )
-from vFense.plugins.patching import (
+from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppPerAgentIndexes,
     DbCommonAppPerAgentKeys, DbCommonAppKeys
 )

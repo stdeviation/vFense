@@ -16,7 +16,7 @@ from vFense.errorz.status_codes import DbCodes, GenericCodes, \
 
 from vFense.plugins.patching.file_data import add_file_data
 from vFense.plugins.patching.utils import build_agent_app_id
-from vFense.plugins.patching import AppsKey, AppCollections, \
+from vFense.plugins.patching._db_model import AppsKey, AppCollections, \
         DbCommonAppKeys, DbCommonAppPerAgentKeys, FileServerKeys
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys

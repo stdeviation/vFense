@@ -3,7 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.apps.db_calls import get_all_stats_by_appid

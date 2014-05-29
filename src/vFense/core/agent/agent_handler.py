@@ -12,7 +12,7 @@ from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.patching import remove_all_app_data_for_agent, \
     update_all_app_data_for_agent
 from vFense.plugins.patching._db_stats import  get_all_app_stats_by_agentid
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.server.hierarchy import Collection
 import redis

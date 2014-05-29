@@ -6,7 +6,7 @@ from vFense.core.agent import AgentCollections, \
     AgentIndexes, AgentKey
 from vFense.core.agent._db_sub_queries import Merge
 #from vFense.core.tag import *
-#from vFense.plugins.patching import *
+#from vFense.plugins.patching._db_model import *
 from vFense.core.decorators import return_status_tuple, time_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

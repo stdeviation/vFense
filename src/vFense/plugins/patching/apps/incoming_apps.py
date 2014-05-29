@@ -8,7 +8,7 @@ from vFense.db.client import r
 from vFense.errorz.status_codes import PackageCodes
 from vFense.core._db_constants import DbTime
 
-from vFense.plugins.patching import AppsKey, AppsPerAgentKey, AppCollections
+from vFense.plugins.patching._db_model import AppsKey, AppsPerAgentKey, AppCollections
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.utils import build_app_id, build_agent_app_id, \
     get_proper_severity

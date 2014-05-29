@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from vFense.db.client import r
-from vFense.plugins.patching import DbCommonAppKeys
+from vFense.plugins.patching._db_model import DbCommonAppKeys
 
 
 class AppsMerge(object):

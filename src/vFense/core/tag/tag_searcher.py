@@ -7,7 +7,7 @@ from vFense.core.agent import *
 
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db_stats import (
     get_all_avail_stats_by_tagid, get_all_app_stats_by_tagid

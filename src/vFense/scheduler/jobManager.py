@@ -17,7 +17,7 @@ from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
 from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
     get_tags_info_from_tag_ids, get_agent_ids_from_tag
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
     fetch_app_data, fetch_app_data_by_appids

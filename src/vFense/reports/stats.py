@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent import *
 from vFense.utils.common import *
 from vFense.core.agent.agents import *
-from vFense.plugins.patching import * 
+from vFense.plugins.patching._db_model import * 
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
 from vFense.errorz.error_messages import *
 

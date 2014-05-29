@@ -12,7 +12,7 @@ from vFense.core.agent.agents import get_agents_info, get_agent_info
 
 from vFense.errorz.status_codes import PackageCodes
 
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
     insert_app_data

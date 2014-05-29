@@ -10,7 +10,7 @@ from vFense.core.customer import *
 
 from vFense.notifications import *
 from vFense.operations import *
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve import *
 from vFense.plugins.vuln.ubuntu import *

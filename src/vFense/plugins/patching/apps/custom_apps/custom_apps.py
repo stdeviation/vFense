@@ -3,7 +3,7 @@ import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent import *
 from vFense.db.client import r
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *

@@ -20,7 +20,7 @@ from vFense.plugins.patching.search.search_by_appid import \
 from vFense.plugins.patching.search.search import \
     RetrieveApps
 
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.decorators import check_permissions

@@ -10,7 +10,7 @@ from vFense.core.tag.tagManager import delete_agent_from_all_tags
 from vFense.core.tag import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching.patching import remove_all_app_data_for_agent, \
     update_all_app_data_for_agent
 

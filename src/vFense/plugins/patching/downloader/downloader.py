@@ -12,7 +12,7 @@ from urlgrabber import urlgrab
 from vFense.errorz.status_codes import PackageCodes
 from vFense.utils.common import hash_verify
 
-from vFense.plugins.patching import AppsKey, AppCollections
+from vFense.plugins.patching._db_model import AppsKey, AppCollections
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 

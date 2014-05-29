@@ -19,7 +19,7 @@ from vFense.operations.agent_operations import \
 from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
 
-from vFense.plugins.patching import AppCollections
+from vFense.plugins.patching._db_model import AppCollections
 from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
 from vFense.plugins.patching._db import fetch_app_data
 

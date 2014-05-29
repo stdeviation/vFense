@@ -9,7 +9,7 @@ from vFense.operations.store_agent_operation import StoreAgentOperation
 from vFense.operations import AgentOperationKey, OperationPerAgentKey
 from vFense.core.decorators import results_message
 from vFense.core._constants import CPUThrottleValues, RebootValues
-from vFense.plugins.patching import AppCollections, DbCommonAppKeys, \
+from vFense.plugins.patching._db_model import AppCollections, DbCommonAppKeys, \
         DbCommonAppPerAgentKeys
 from vFense.plugins.patching._db import fetch_app_data_to_send_to_agent, \
     return_valid_appids_for_agent

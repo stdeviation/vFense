@@ -13,7 +13,7 @@ from vFense.core.permissions.decorators import check_permissions
 
 from vFense.core.decorators import convert_json_to_arguments, authenticated_request
 
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status
 

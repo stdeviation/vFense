@@ -18,7 +18,7 @@ from vFense.scheduler.jobManager import schedule_once
 
 from vFense.plugins.patching.operations.store_operations import \
     StorePatchingOperation
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status

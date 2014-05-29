@@ -7,7 +7,7 @@ from vFense.core._db import insert_data_in_table, \
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
-from vFense.plugins.patching import (
+from vFense.plugins.patching._db_model import (
     AppCollections, FileCollections, AppsKey,
     DbCommonAppKeys, DbCommonAppPerAgentKeys,
     DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey,

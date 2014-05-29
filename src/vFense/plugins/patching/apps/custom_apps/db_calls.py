@@ -1,5 +1,5 @@
 from vFense.db.client import db_create_close, r
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.core.agent import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 

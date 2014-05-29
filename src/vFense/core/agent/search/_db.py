@@ -8,9 +8,9 @@ from vFense.core.agent import AgentKey, AgentCollections, \
     HardwarePerAgentIndexes, HardwarePerAgentKey
 from vFense.core.tag import TagCollections, TagsKey, TagsPerAgentKey, \
     TagsPerAgentIndexes
-from vFense.plugins.patching import AppCollections, AppsKey, \
+from vFense.plugins.patching._db_model import AppCollections, AppsKey, \
      AppsPerAgentIndexes
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.decorators import time_it
 

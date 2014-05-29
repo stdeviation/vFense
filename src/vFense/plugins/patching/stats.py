@@ -7,7 +7,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message, time_it
-from vFense.plugins.patching import *
+from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.plugins.patching._db_stats import (
     group_avail_app_stats_by_os_for_customer,

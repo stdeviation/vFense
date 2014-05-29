@@ -25,7 +25,7 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import DbCodes, GenericCodes,\
     AgentCodes, AgentFailureCodes, GenericFailureCodes, \
     AgentResultCodes, AgentFailureResultCodes
-#from vFense.plugins.patching import *
+#from vFense.plugins.patching._db_model import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
