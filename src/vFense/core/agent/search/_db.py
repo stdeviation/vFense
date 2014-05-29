@@ -73,22 +73,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -143,22 +143,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -211,22 +211,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -259,7 +259,7 @@ class FetchAgents(object):
             logger.exception(e)
 
         return(count, data)
-    
+
     @time_it
     @db_create_close
     def by_key_and_value_and_query(self, fkey, fval, query, conn=None):
@@ -282,22 +282,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -358,22 +358,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -436,22 +436,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -507,22 +507,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -581,22 +581,22 @@ class FetchAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -682,7 +682,7 @@ class FetchAgents(object):
                     )
                     .eq_join(
                         lambda y:
-                        y[AppsKey.AppId], 
+                        y[AppsKey.AppId],
                         r.table(AppCollections.UniqueApplications)
                     )
                     .zip()
@@ -723,7 +723,7 @@ class FetchAgents(object):
             .table(AgentCollections.Hardware)
             .eq_join(
                 HardwarePerAgentKey.AgentId,
-                r.table(AgentCollections.Agent)
+                r.table(AgentCollections.Agents)
             )
             .zip()
         )
