@@ -258,16 +258,19 @@ try:
     current_collections = retrieve_collections()
     for collection in app_collections:
         initialize_collections(collection, current_collections)
-        indexes = retrieve_indexes(collection)
-        initialize_app_indexes(collection, indexes)
+        name, _ = collection
+        indexes = retrieve_indexes(name)
+        initialize_app_indexes(name, indexes)
     for collection in apps_per_agent_collections:
         initialize_collections(collection, current_collections)
-        indexes = retrieve_indexes(collection)
-        initialize_apps_per_agent_indexes(collection, indexes)
+        name, _ = collection
+        indexes = retrieve_indexes(name)
+        initialize_apps_per_agent_indexes(name, indexes)
     for collection in file_collections:
         initialize_collections(collection, current_collections)
-        indexes = retrieve_indexes(collection)
-        initialize_file_indexes(collection, indexes)
+        name, _ = collection
+        indexes = retrieve_indexes(name)
+        initialize_file_indexes(name, indexes)
 
 
 except Exception as e:
