@@ -4,9 +4,16 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.plugins.patching._db_model import *
-from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
+from vFense.core._constants import (
+    SortValues, DefaultQueryValues, CommonKeys
+)
+from vFense.plugins.patching._db_model import (
+    AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
+    DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
+)
+from vFense.plugins.patching._constants import (
+    CommonAppKeys, CommonSeverityKeys
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -17,30 +24,22 @@ class FetchApps(object):
     """
     def __init__(self, customer_name=None,
                  count=30, offset=0, sort='asc',
-                 sort_key=AppsKey.Name,
+                 sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
         """
+        self._set_global_properties(
+            count, offset, show_hidden, sort_key, sort, customer_name
+        )
 
     def _set_global_properties(
-            self, count, offset,
-            show_hidden, sort_key, sort,
-            customer_name
+            self, count, offset, show_hidden, sort_key, sort, customer_name
             ):
         self.count = count
         self.offset = offset
         self.customer_name = customer_name
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
-            self.show_hidden = CommonKeys.NO
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
-            self.sort_key = self.CurrentAppsKey.Name
-
+        self.show_hidden = show_hidden
+        self.sort_key = sort_key
         if sort == 'asc':
             self.sort = r.asc
         else:
@@ -54,40 +53,82 @@ class FetchApps(object):
 
         self.joined_map_hash = (
             {
-                self.CurrentAppsKey.AppId:
-                    r.row['right'][self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version:
-                    r.row['right'][self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name:
-                    r.row['right'][self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate:
-                    r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity:
-                    r.row['right'][self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VulnerabilityId:
-                    r.row['right'][self.CurrentAppsKey.VulnerabilityId],
-                self.CurrentAppsKey.Hidden:
-                    r.row['right'][self.CurrentAppsKey.Hidden],
+                DbCommonAppKeys.Id:
+                    r.row['right'][DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version:
+                    r.row['right'][DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name:
+                    r.row['right'][DbCommonAppKeys.Name],
+                DbCommonAppKeys.ReleaseDate:
+                    r.row['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time(),
+                DbCommonAppKeys.RvSeverity:
+                    r.row['right'][DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.VulnerabilityId:
+                    r.row['right'][DbCommonAppKeys.VulnerabilityId],
+                DbCommonAppKeys.Hidden:
+                    r.row['right'][DbCommonAppKeys.Hidden],
             }
         )
 
         self.map_hash = (
             {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
+                DbCommonAppKeys.AppId: r.row[DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version: r.row[DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name: r.row[DbCommonAppKeys.Name],
+                DbCommonAppKeys.ReleaseDate: (
+                    r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                ),
+                DbCommonAppKeys.RvSeverity: r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.VulnerabilityId: (
+                    r.row[DbCommonAppKeys.VulnerabilityId],
+                )
             }
         )
         self.pluck_list = (
             [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.VulnerabilityId,
+                DbCommonAppKeys.AppId,
+                DbCommonAppKeys.Version,
+                DbCommonAppKeys.Name,
+                DbCommonAppKeys.ReleaseDate,
+                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.VulnerabilityId,
             ]
         )
+
+    def _base_filter(self):
+        if self.customer_name:
+            base = (
+                r
+                .table(self.CurrentAppsCollection)
+                .get_all(
+                    self.customer_name,
+                    index=DbCommonAppIndexes.Customers
+                )
+            )
+
+        else:
+            base = (
+                r
+                .table(self.CurrentAppsCollection)
+            )
+
+        return base
+
+    def _base_per_agent_filter(self):
+        if self.customer_name:
+            base = (
+                r
+                .table(self.CurrentAppsPerAgentCollection)
+                .get_all(
+                    self.customer_name,
+                    index=DbCommonAppPerAgentIndexes.Customers
+                )
+            )
+
+        else:
+            base = (
+                r
+                .table(self.CurrentAppsPerAgentCollection)
+            )
+
+        return base

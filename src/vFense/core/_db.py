@@ -3,11 +3,35 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbInfoKeys
 from vFense.core.decorators import time_it, return_status_tuple
 from vFense.core.customer import *
-import logging
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
+
+
+@db_create_close
+def retrieve_collections(conn=None):
+    """Retrieve a list of collections
+    Basic Usage:
+        >>> from vFense._db import retrieve_collections
+        >>> retrieve_collections()
+
+    Returns:
+        List
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table_list()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
 
 @db_create_close
 def retrieve_primary_key(collection, conn=None):
@@ -136,6 +160,35 @@ def object_exist(primary_key, collection, conn=None):
         logger.exception(e)
 
     return exist
+
+@db_create_close
+def create_collection(name, primary_key, conn=None):
+    """Create a new collection
+    Args:
+        name (str):  The name of the collection you are creating.
+        primary_key (str):  The primary key of this collection.
+
+    Basic Usage:
+        >>> from vFense._db import create_collection
+        >>> name = "apps_per_agent"
+        >>> key = "id"
+        >>> create_collection(name, key)
+
+    Returns:
+        Dictionary
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table_create(name, primary_key)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
 
 
 @time_it
