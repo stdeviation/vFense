@@ -511,16 +511,16 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
 
 @time_it
 @db_create_close
-def get_all_app_stats_by_customer(customer_name, conn=None):
-    """Retrieve the application stats for a customer.
+def get_all_app_stats_by_view(view_name, conn=None):
+    """Retrieve the application stats for a view.
     Args:
-        customer_name (str): The name of the customer you are retrieving
+        view_name (str): The name of the view you are retrieving
             application statistics for.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import get_all_app_stats_by_customer
-        >>> customer_name = 'default'
-        >>> get_all_app_stats_by_customer(customer_name)
+        >>> from vFense.plugins.patching._db_stats import get_all_app_stats_by_view
+        >>> view_name = 'default'
+        >>> get_all_app_stats_by_view(view_name)
 
     Returns:
         List of application statistics.
@@ -555,9 +555,9 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .eq_join(
                 DbCommonAppKeys.AppId,
@@ -590,9 +590,9 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
             .table(AppCollections.CustomAppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
             .distinct()
@@ -611,9 +611,9 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
             .table(AppCollections.SupportedAppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
             .distinct()
@@ -632,9 +632,9 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
             .table(AppCollections.vFenseAppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .pluck(DbCommonAppPerAgentKeys.AppId)
             .distinct()
@@ -654,9 +654,9 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.PENDING, customer_name
+                    CommonAppKeys.PENDING, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .pluck((CommonAppKeys.APP_ID))
             .distinct()
@@ -679,21 +679,21 @@ def get_all_app_stats_by_customer(customer_name, conn=None):
 
 @time_it
 @db_create_close
-def group_avail_app_stats_by_os_for_customer(
-        customer_name, count=3, conn=None
+def group_avail_app_stats_by_os_for_view(
+        view_name, count=3, conn=None
     ):
     """Retrieve an array of the total count of update available, grouped by
-        operating system for a customer.
+        operating system for a view.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         count (int, optional): The number of results to return.
             default = 3
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_customer
-        >>> group_avail_app_stats_by_os_for_customer('default')
+        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_view
+        >>> group_avail_app_stats_by_os_for_view('default')
 
     Returns:
         >>> [
@@ -709,8 +709,8 @@ def group_avail_app_stats_by_os_for_customer(
             r
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
-                [CommonAppKeys.AVAILABLE, customer_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                [CommonAppKeys.AVAILABLE, view_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .eq_join(
                 DbCommonAppKeys.AppId,
@@ -857,19 +857,19 @@ def group_avail_app_stats_by_os_for_tag(
 
 @db_create_close
 def fetch_bar_chart_for_appid_by_status(
-        app_id, customer_name, conn=None
+        app_id, view_name, conn=None
     ):
     """Retreive  the number of nodes that  either have this installed
         or need it to be installed.
     Args:
         app_id (str): The 64 character UUID of the application
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import fetch_bar_chart_for_appid_by_status
         >>> app_id = 'e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7'
-        >>> customer_name = 'default'
-        >>> fetch_bar_chart_for_appid_by_status(app_id, customer_name)
+        >>> view_name = 'default'
+        >>> fetch_bar_chart_for_appid_by_status(app_id, view_name)
 
     Returns:
         Dictionary
@@ -884,8 +884,8 @@ def fetch_bar_chart_for_appid_by_status(
             r
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
-                [app_id, customer_name],
-                index=DbCommonAppPerAgentIndexes.AppIdAndCustomer
+                [app_id, view_name],
+                index=DbCommonAppPerAgentIndexes.AppIdAndView
             )
             .group(DbCommonAppPerAgentKeys.Status)
             .count()
@@ -899,15 +899,15 @@ def fetch_bar_chart_for_appid_by_status(
 
 @time_it
 @db_create_close
-def fetch_severity_bar_chart_stats_for_customer(customer_name, conn=None):
-    """Retrieve a list of stats per severity for customer.
+def fetch_severity_bar_chart_stats_for_view(view_name, conn=None):
+    """Retrieve a list of stats per severity for view.
     Args:
-        customer_name (str): The name of ther customer.
+        view_name (str): The name of ther view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import fetch_severity_bar_chart_stats_for_customer
-        >>> customer_name = 'default'
-        >>> fetch_severity_bar_chart_stats_for_customer(customer_name)
+        >>> from vFense.plugins.patching._db_stats import fetch_severity_bar_chart_stats_for_view
+        >>> view_name = 'default'
+        >>> fetch_severity_bar_chart_stats_for_view(view_name)
 
     Returns:
         List of dictionaries, Number of updates per severity.
@@ -933,8 +933,8 @@ def fetch_severity_bar_chart_stats_for_customer(customer_name, conn=None):
             r
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
-                [CommonAppKeys.AVAILABLE, customer_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                [CommonAppKeys.AVAILABLE, view_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .pluck(DbCommonAppKeys.AppId)
             .distinct()
@@ -1143,19 +1143,19 @@ def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
 
 @time_it
 @db_create_close
-def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
-    """Retrieve the top applications upadtes that are needed for a customer.
+def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
+    """Retrieve the top applications upadtes that are needed for a view.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         count (int, optional): The number of results to return.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import fetch_top_apps_needed_for_customer
-        >>> customer_name = 'default'
+        >>> from vFense.plugins.patching._db_stats import fetch_top_apps_needed_for_view
+        >>> view_name = 'default'
         >>> count = 3
-        >>> fetch_top_apps_needed_for_customer(customer_name, count)
+        >>> fetch_top_apps_needed_for_view(view_name, count)
 
     Returns:
         List of dictionaries.
@@ -1190,8 +1190,8 @@ def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
             r
             .table(AppCollections.AppsPerAgent)
             .get_all(
-                [CommonAppKeys.AVAILABLE, customer_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                [CommonAppKeys.AVAILABLE, view_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .eq_join(
                 DbCommonAppKeys.AppId,
@@ -1242,18 +1242,18 @@ def fetch_top_apps_needed_for_customer(customer_name, count=5, conn=None):
 
 @time_it
 @db_create_close
-def fetch_recently_released_apps(customer_name, count=5, conn=None):
-    """Fetch the latest available updates for a customer.
+def fetch_recently_released_apps(view_name, count=5, conn=None):
+    """Fetch the latest available updates for a view.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
     Kwargs:
         count (int): The number of results to return.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import fetch_recently_released_apps
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> count = 3
-        >>> fetch_recently_released_apps(customer_name, count)
+        >>> fetch_recently_released_apps(view_name, count)
 
     Returns:
     >>> [
@@ -1290,9 +1290,9 @@ def fetch_recently_released_apps(customer_name, count=5, conn=None):
             .table(AppCollections.AppsPerAgent, use_outdated=True)
             .get_all(
                 [
-                    CommonAppKeys.AVAILABLE, customer_name
+                    CommonAppKeys.AVAILABLE, view_name
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .eq_join(
                 DbCommonAppKeys.AppId,
@@ -1357,7 +1357,7 @@ def fetch_recently_released_apps(customer_name, count=5, conn=None):
 @time_it
 @db_create_close
 def fetch_os_apps_history(
-        customer_name, status, start_date, end_date,
+        view_name, status, start_date, end_date,
         conn=None
     ):
     """Retrieve all applications and their posted dates
@@ -1370,11 +1370,11 @@ def fetch_os_apps_history(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import fetch_os_apps_history
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> status = 'available'
         >>> start_date = 1369195464.0
         >>> end_date = 1400731464.0
-        >>> fetch_os_apps_history(customer_name, status, start_date, end_date)
+        >>> fetch_os_apps_history(view_name, status, start_date, end_date)
 
     Returns:
         >>> {
@@ -1413,8 +1413,8 @@ def fetch_os_apps_history(
             r
             .table(AppCollections.AppsPerAgent)
             .get_all(
-                [CommonAppKeys.AVAILABLE, customer_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndCustomer
+                [CommonAppKeys.AVAILABLE, view_name],
+                index=DbCommonAppPerAgentIndexes.StatusAndView
             )
             .eq_join(
                 DbCommonAppKeys.AppId,

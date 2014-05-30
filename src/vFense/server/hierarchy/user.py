@@ -1,11 +1,11 @@
-from vFense.server.hierarchy import UserKey, DefaultCustomer
+from vFense.server.hierarchy import UserKey, DefaultView
 
 
 class User():
 
     def __init__(
         self, user_name, password, full_name, email,
-        current_customer=DefaultCustomer, default_customer=DefaultCustomer,
+        current_view=DefaultView, default_view=DefaultView,
         enabled=True
     ):
 
@@ -15,8 +15,8 @@ class User():
         self.email = email
         self.enabled = enabled
 
-        self.current_customer = current_customer
-        self.default_customer = default_customer
+        self.current_view = current_view
+        self.default_view = default_view
 
     def dict(self):
 
@@ -25,8 +25,8 @@ class User():
             UserKey.FullName: self.full_name,
             UserKey.Email: self.email,
             UserKey.Enabled: self.enabled,
-            UserKey.CurrentCustomer: self.current_customer,
-            UserKey.DefaultCustomer: self.default_customer
+            UserKey.CurrentView: self.current_view,
+            UserKey.DefaultView: self.default_view
         }
 
     @staticmethod
@@ -37,8 +37,8 @@ class User():
             user.get(UserKey.Password),
             user.get(UserKey.FullName),
             user.get(UserKey.Email),
-            user.get(UserKey.CurrentCustomer),
-            user.get(UserKey.DefaultCustomer),
+            user.get(UserKey.CurrentView),
+            user.get(UserKey.DefaultView),
             user.get(UserKey.Enabled)
         )
 

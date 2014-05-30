@@ -13,7 +13,7 @@ from vFense.receiver.api.core.results import RebootResultsV1, ShutdownResultsV1
 from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
-from vFense.core.api.customer import CustomerHandler, CustomersHandler
+from vFense.core.api.view import ViewHandler, ViewsHandler
 from vFense.core.api.agent import AgentHandler, AgentResultURIs, \
     AgentsHandler, FetchSupportedOperatingSystems, FetchValidProductionLevels
 from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
@@ -94,9 +94,9 @@ class CoreLoader():
             (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
             (r"/api/v1/groups?", GroupsHandler),
 
-            ##### New Customer API
-            (r'/api/v1/customer/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', CustomerHandler),
-            (r"/api/v1/customers?", CustomersHandler),
+            ##### New View API
+            (r'/api/v1/view/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', ViewHandler),
+            (r"/api/v1/views?", ViewsHandler),
 
             ##### Email API Handlers
             (r"/api/email/config/create?", CreateEmailConfigHandler),

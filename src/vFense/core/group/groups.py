@@ -2,12 +2,12 @@ import re
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import *
-from vFense.core.group import *
+from vFense.core.group._db_model import *
 from vFense.core.group._constants import *
 from vFense.core.user._db_model import UserCollections
 from vFense.core.user._constants import *
-from vFense.core.customer import *
-from vFense.core.customer._constants import *
+from vFense.core.view import *
+from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
 from vFense.core._db import retrieve_object
 from vFense.core.group._db import insert_group, fetch_group, fetch_groups, \
@@ -39,7 +39,7 @@ def get_group(group_id):
         Returns a Dict of the properties of a group
         {
             u'group_name': u'Administrator',
-            u'customer_name': u'default',
+            u'view_name': u'default',
             u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
             u'Permissions': [
                 u'administrator'
@@ -77,7 +77,7 @@ def get_group_properties(group_id):
             ], 
             "group_name": "Administrator", 
             "id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
-            "customer_name": "default"
+            "view_name": "default"
         }
     """
 
@@ -86,15 +86,15 @@ def get_group_properties(group_id):
 
 
 @time_it
-def get_properties_for_all_groups(customer_name=None):
+def get_properties_for_all_groups(view_name=None):
     """Retrieve properties for all groupcs.
     Kwargs:
-        customer_name: Name of the customer, which the group is part of.
+        view_name: Name of the view, which the group is part of.
 
     Basic Usage:
         >>> from vFense.group.groups import get_properties_for_all_groups
-        >>> customer_name = 'test'
-        >>> get_properties_for_all_groups(customer_name)
+        >>> view_name = 'test'
+        >>> get_properties_for_all_groups(view_name)
 
     Returns:
         Returns a List of a groups and their properties.
@@ -114,12 +114,12 @@ def get_properties_for_all_groups(customer_name=None):
                 ], 
                 "group_name": "JR ADMIN", 
                 "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7", 
-                "customer_name": "Test"
+                "view_name": "Test"
             }, 
         ]
     """
 
-    data = fetch_properties_for_all_groups(customer_name)
+    data = fetch_properties_for_all_groups(view_name)
     return(data)
 
 
@@ -146,14 +146,14 @@ def get_groups_for_user(username, fields_to_pluck=None):
                 u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
                 u'user_name': u'alien',
                 u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             },
             {
                 u'group_name': u'Administrator',
                 u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
                 u'user_name': u'alien',
                 u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             }
         ]
     """
@@ -184,14 +184,14 @@ def get_users_in_group(group_id, fields_to_pluck=None,):
                 u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
                 u'user_name': u'alllllen',
                 u'id': u'3477f6d9-731e-4313-a765-e4bd05277f2d',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             },
             {
                 u'group_name': u'Administrator',
                 u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
                 u'user_name': u'alien',
                 u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             }
         ]
     """
@@ -201,14 +201,14 @@ def get_users_in_group(group_id, fields_to_pluck=None,):
 
 @time_it
 def get_groups(
-    customer_name=None, groupname=None,
+    view_name=None, groupname=None,
     fields_to_pluck=None
     ):
-    """Retrieve all groups that is in the database by customer_name or
+    """Retrieve all groups that is in the database by view_name or
         all of the groups or by regex.
 
     Kwargs:
-        customer_name (str):  Name of the customer,
+        view_name (str):  Name of the view,
         groupname (str):  Name of the group you are searching for.
             This is a regular expression match.
         fields_to_pluck (list):  List of fields you want to pluck
@@ -216,9 +216,9 @@ def get_groups(
 
     Basic Usage:
         >>> from vFense.group.groups import get_groups
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> groupname = 'Ad'
-        >>> get_groups(customer_name, groupname)
+        >>> get_groups(view_name, groupname)
 
     Returns:
         Returns a List of dictionaries of the properties of a group
@@ -229,23 +229,23 @@ def get_groups(
                 ],
                 u'group_name': u'Administrator',
                 u'id': u'3ffc2a67-1203-4cb0-ada2-2ae870072680',
-                u'customer_name': u'default'
+                u'view_name': u'default'
                                                 
             }
         ]
     """
-    data = fetch_groups(customer_name, groupname, fields_to_pluck)
+    data = fetch_groups(view_name, groupname, fields_to_pluck)
     return(data)
 
 
 @time_it
-def validate_group_ids(group_ids, customer_name=None, is_global=False):
+def validate_group_ids(group_ids, view_name=None, is_global=False):
     """Validate a list if group ids exist in the database.
     Args:
         group_ids (list): List of group ids
 
     Kwargs:
-        customer_name (str): Name of the customer the group belongs too.
+        view_name (str): Name of the view the group belongs too.
 
     Basic Usage:
         >>> from vFense.group.groups import validate_group_ids
@@ -263,8 +263,8 @@ def validate_group_ids(group_ids, customer_name=None, is_global=False):
         for group_id in group_ids:
             group = get_group(group_id)
             if group:
-                if customer_name:
-                    if group.get(GroupKeys.CustomerName) == customer_name:
+                if view_name:
+                    if group.get(GroupKeys.ViewName) == view_name:
                         if group.get(GroupKeys.Global) == is_global:
                             valid_groups.append(group_id)
                         else:
@@ -292,13 +292,13 @@ def validate_group_ids(group_ids, customer_name=None, is_global=False):
 @time_it
 @results_message
 def add_user_to_groups(
-    username, customer_name, group_ids,
+    username, view_name, group_ids,
     user_name=None, uri=None, method=None
     ):
     """Add a user into a vFense group
     Args:
         username (str):  Name of the user already in vFense.
-        customer_name (str): The customer this user is part of.
+        view_name (str): The view this user is part of.
         group_ids (list): List of group ids.
 
     Kwargs:
@@ -309,9 +309,9 @@ def add_user_to_groups(
     Basic Usage:
         >>> from vFense.group.groups import add_user_to_groups
         >>> username = 'alien'
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
-        >>> add_user_to_groups(username, customer_name, group_ids)
+        >>> add_user_to_groups(username, view_name, group_ids)
 
     Returns:
         Returns the results in a dictionary
@@ -325,20 +325,20 @@ def add_user_to_groups(
             'group_name': u'FooLah',
             'user_name': 'alien',
             'group_id': '0834e656-27a5-4b13-ba56-635797d0d1fc',
-            'customer_name': 'default'
+            'view_name': 'default'
         }
     }
     """
     status = add_user_to_groups.func_name + ' - '
-    groups_are_valid = validate_group_ids(group_ids, customer_name)
+    groups_are_valid = validate_group_ids(group_ids, view_name)
     user_exist = retrieve_object(username, UserCollections.Users)
-    customer_exist = retrieve_object(customer_name, CustomerCollections.Customers)
+    view_exist = retrieve_object(view_name, ViewCollections.Views)
     results = None
     generated_ids = []
     users_group_exist = []
     generic_status_code = 0
     vfense_status_code = 0
-    if groups_are_valid[0] and user_exist and customer_exist:
+    if groups_are_valid[0] and user_exist and view_exist:
         data_list = []
         for group_id in group_ids:
             group_exist = get_group(group_id)
@@ -348,7 +348,7 @@ def add_user_to_groups(
             if not user_in_group:
                 data_to_add = (
                     {
-                        GroupsPerUserKeys.CustomerName: customer_name,
+                        GroupsPerUserKeys.ViewName: view_name,
                         GroupsPerUserKeys.UserName: username,
                         GroupsPerUserKeys.GroupName: group_exist[GroupKeys.GroupName],
                         GroupsPerUserKeys.GroupId: group_id
@@ -396,11 +396,11 @@ def add_user_to_groups(
         generic_status_code = GenericCodes.InvalidId
         vfense_status_code = UserFailureCodes.InvalidUserName
 
-    elif not customer_exist:
-        msg = 'Customer name is invalid: %s' % (customer_name)
+    elif not view_exist:
+        msg = 'View name is invalid: %s' % (view_name)
         status_code = DbCodes.Errors
         generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = CustomerFailureCodes.CustomerDoesNotExist
+        vfense_status_code = ViewFailureCodes.ViewDoesNotExist
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
@@ -420,17 +420,17 @@ def add_user_to_groups(
 @time_it
 @results_message
 def create_group(
-        group_name, customer_name, permissions, is_global=False,
+        group_name, view_name, permissions, is_global=False,
         user_name=None, uri=None, method=None
     ):
     """Create a group in vFense
     Args:
         group_name (str): The name of the group.
-        customer_name (str): The name of the customer you are adding this group too.
+        view_name (str): The name of the view you are adding this group too.
         permissions (list): List of permissions, this group has.
 
     Kwargs:
-        is_global (bool): Global group or local to the customer.
+        is_global (bool): Global group or local to the view.
             default = False
         user_name (str): The name of the user who called this function.
         uri (str): The uri that was used to call this function.
@@ -439,9 +439,9 @@ def create_group(
     Basic Usage:
         >>> from vFense.group.groups import create_group
         >>> group_name = 'Linux Admins'
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> permissions = ['administrator']
-        >>> create_group(group_name, customer_name, permissions)
+        >>> create_group(group_name, view_name, permissions)
 
     Returns:
         Returns the results in a dictionary
@@ -456,7 +456,7 @@ def create_group(
                     'administrator'
                 ],
                 'group_name': 'Linux Admins',
-                'customer_name': 'default'
+                'view_name': 'default'
             }
         }
     """
@@ -471,15 +471,15 @@ def create_group(
     )
     group_data = (
         {
-            GroupKeys.CustomerName: customer_name,
-            GroupKeys.Customers: [customer_name],
+            GroupKeys.ViewName: view_name,
+            GroupKeys.Views: [view_name],
             GroupKeys.GroupName: group_name,
             GroupKeys.Permissions: permissions,
             GroupKeys.Global: is_global,
         }
     )
     try:
-        group_exist = fetch_group_by_name(group_name, customer_name)
+        group_exist = fetch_group_by_name(group_name, view_name)
         permissions_valid = (
             set(permissions).issubset(set(Permissions.VALID_PERMISSIONS))
         )
@@ -594,7 +594,7 @@ def remove_groups_from_user(
         admin_user = True
         admin_group_id = (
             fetch_group_by_name(
-                DefaultGroups.ADMIN, DefaultCustomers.DEFAULT,
+                DefaultGroups.ADMIN, DefaultViews.DEFAULT,
                 GroupKeys.GroupId
             )[GroupKeys.GroupId]
         )

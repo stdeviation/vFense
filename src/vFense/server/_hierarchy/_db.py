@@ -1,5 +1,5 @@
 # This is the backend for hierarchy package. _db should not be used directly.
-# Safer to use hierarchy and its User, Group, Customer class.
+# Safer to use hierarchy and its User, Group, View class.
 
 import logging
 import logging.config
@@ -9,7 +9,7 @@ from vFense.db.client import *
 
 from vFense.groups import *
 from vFense.users import *
-from vFense.customers import *
+from vFense.views import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -69,7 +69,7 @@ class _RawModels():
         _raw[GroupKey.Name] = group.name
         _raw[GroupKey.Id] = group.id
         _raw[GroupKey.Permissions] = group.get_permissions()
-        _raw[GroupKey.Customer] = group.get_customer(raw=True)
+        _raw[GroupKey.View] = group.get_view(raw=True)
         _raw[GroupKey.Users] = group.get_users(raw=True)
 
         return _raw
@@ -100,94 +100,94 @@ class _RawModels():
         _raw[UserKey.Password] = user.hash_password
         _raw[UserKey.Enabled] = user.enabled
 
-        _raw[UserKey.CurrentCustomer] = user.get_current_customer(raw=True)
-        _raw[UserKey.DefaultCustomer] = user.get_default_customer(raw=True)
+        _raw[UserKey.CurrentView] = user.get_current_view(raw=True)
+        _raw[UserKey.DefaultView] = user.get_default_view(raw=True)
 
-        _raw[UserKey.Customers] = user.get_customers(raw=True)
+        _raw[UserKey.Views] = user.get_views(raw=True)
         _raw[UserKey.Groups] = user.get_groups(raw=True)
 
         return _raw
 
     @staticmethod
-    def _db_raw_customer(customer):
-        """Creates a raw dict with Customer properties.
+    def _db_raw_view(view):
+        """Creates a raw dict with View properties.
 
         Args:
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
-            A dict with customer properties.
+            A dict with view properties.
         """
 
         _raw = {}
 
-        if not customer:
+        if not view:
 
             return _raw
 
-        _raw[CustomerKey.Name] = customer.name
-        _raw[CustomerKey.Id] = customer.id
-        _raw[CustomerKey.NetThrottle] = customer.net_throttle
+        _raw[ViewKey.Name] = view.name
+        _raw[ViewKey.Id] = view.id
+        _raw[ViewKey.NetThrottle] = view.net_throttle
 
-        _raw[CustomerKey.Groups] = customer.get_groups(raw=True)
-        _raw[CustomerKey.Users] = customer.get_users(raw=True)
+        _raw[ViewKey.Groups] = view.get_groups(raw=True)
+        _raw[ViewKey.Users] = view.get_users(raw=True)
 
         return _raw
 
 
 @db_create_close
-def get_all_customers(conn=None):
+def get_all_views(conn=None):
 
-    customers = list(
-        r.table("customers")
-        .pluck(CustomerKey.Name)
+    views = list(
+        r.table("views")
+        .pluck(ViewKey.Name)
         .run(conn)
     )
 
-    return customers
+    return views
 
 
-def _db_build_customer(data_doc):
-    """ Builds a Customer instance.
+def _db_build_view(data_doc):
+    """ Builds a View instance.
 
-    Based on the data document passed, a Customer object is built.
+    Based on the data document passed, a View object is built.
 
     Args:
-        data_doc: A dict with data representing a Customer.
+        data_doc: A dict with data representing a View.
 
     Returns:
-        A Customer instance.
+        A View instance.
     """
 
     if not data_doc:
 
         return None
 
-    customer = Customer()
-    customer.name = data_doc.get(CustomerKey.Name)
+    view = View()
+    view.name = data_doc.get(ViewKey.Name)
 
-    customer.id = data_doc.get(CustomerKey.Name)
-    customer.cpu_throttle = data_doc.get(CustomerKey.CpuThrottle)
-    customer.net_throttle = data_doc.get(CustomerKey.NetThrottle)
+    view.id = data_doc.get(ViewKey.Name)
+    view.cpu_throttle = data_doc.get(ViewKey.CpuThrottle)
+    view.net_throttle = data_doc.get(ViewKey.NetThrottle)
 
-    if data_doc.get(CustomerKey.Users):
+    if data_doc.get(ViewKey.Users):
 
-        for doc in data_doc[CustomerKey.Users]:
+        for doc in data_doc[ViewKey.Users]:
 
             u = _db_document_exist(_id=doc[UserKey.Name],
                                    collection_name=UserCollection)
 
             if u:
 
-                u = User(doc[CustomerKey.Name])
+                u = User(doc[ViewKey.Name])
 
-                customer.add_user(u)
+                view.add_user(u)
 
-    if data_doc.get(CustomerKey.Groups):
+    if data_doc.get(ViewKey.Groups):
 
-        for doc in data_doc[CustomerKey.Groups]:
+        for doc in data_doc[ViewKey.Groups]:
 
             g = _db_document_exist(_id=doc[GroupKey.Id],
                                    collection_name=GroupCollection)
@@ -197,9 +197,9 @@ def _db_build_customer(data_doc):
                 g = Group(doc[GroupKey.Name])
                 g.id = doc[GroupKey.Id]
 
-                customer.add_group(g)
+                view.add_group(g)
 
-    return customer
+    return view
 
 
 def _db_build_group(data_doc):
@@ -228,18 +228,18 @@ def _db_build_group(data_doc):
 
             group.add_permission(perm)
 
-    if data_doc.get(GroupKey.Customer):
+    if data_doc.get(GroupKey.View):
 
         c = _db_document_exist(
-            _id=data_doc[GroupKey.Customer][CustomerKey.Name],
-            collection_name=CustomerCollection
+            _id=data_doc[GroupKey.View][ViewKey.Name],
+            collection_name=ViewCollection
         )
 
         if c:
 
-            c = Customer(data_doc[GroupKey.Customer][CustomerKey.Name])
+            c = View(data_doc[GroupKey.View][ViewKey.Name])
 
-            group.set_customer(c)
+            group.set_view(c)
 
     if data_doc.get(GroupKey.Users):
 
@@ -296,44 +296,44 @@ def _db_build_user(data_doc):
 
                 user.add_group(g)
 
-    if data_doc.get(UserKey.Customers):
+    if data_doc.get(UserKey.Views):
 
-        for doc in data_doc[UserKey.Customers]:
+        for doc in data_doc[UserKey.Views]:
 
-            c = _db_document_exist(_id=doc[CustomerKey.Name],
-                                   collection_name=CustomerCollection)
+            c = _db_document_exist(_id=doc[ViewKey.Name],
+                                   collection_name=ViewCollection)
 
             if c:
 
-                c = Customer(doc[CustomerKey.Name])
+                c = View(doc[ViewKey.Name])
 
-                user.add_customer(c)
+                user.add_view(c)
 
-    if data_doc.get(UserKey.CurrentCustomer):
+    if data_doc.get(UserKey.CurrentView):
 
-        current_customer = data_doc[UserKey.CurrentCustomer]
+        current_view = data_doc[UserKey.CurrentView]
 
-        c = _db_document_exist(_id=current_customer[CustomerKey.Name],
-                               collection_name=CustomerCollection)
-
-        if c:
-
-            c = Customer(current_customer[CustomerKey.Name])
-
-            user.set_current_customer(c)
-
-    if data_doc.get(UserKey.DefaultCustomer):
-
-        default_customer = data_doc[UserKey.DefaultCustomer]
-
-        c = _db_document_exist(_id=default_customer[CustomerKey.Name],
-                               collection_name=CustomerCollection)
+        c = _db_document_exist(_id=current_view[ViewKey.Name],
+                               collection_name=ViewCollection)
 
         if c:
 
-            c = Customer(default_customer[CustomerKey.Name])
+            c = View(current_view[ViewKey.Name])
 
-            user.set_default_customer(c)
+            user.set_current_view(c)
+
+    if data_doc.get(UserKey.DefaultView):
+
+        default_view = data_doc[UserKey.DefaultView]
+
+        c = _db_document_exist(_id=default_view[ViewKey.Name],
+                               collection_name=ViewCollection)
+
+        if c:
+
+            c = View(default_view[ViewKey.Name])
+
+            user.set_default_view(c)
 
     return user
 
@@ -458,34 +458,34 @@ def _db_delete(collection_name=None, _id=None, conn=None):
     return success
 
 
-def save_customer(customer):
-    """Saves the customer to DB.
+def save_view(view):
+    """Saves the view to DB.
 
     If an id attribute is found, the document representing that id is updated.
     Otherwise we create a new document.
 
     Args:
 
-        customer: A Customer instance.
+        view: A View instance.
 
     Returns:
 
-        True is customer was saved successfully, False otherwise.
+        True is view was saved successfully, False otherwise.
 
     """
 
-    _customer = {}
+    _view = {}
 
-    _customer[CustomerKey.Name] = customer.name
-    _customer[CustomerKey.NetThrottle] = customer.net_throttle
-    _customer[CustomerKey.CpuThrottle] = customer.cpu_throttle
+    _view[ViewKey.Name] = view.name
+    _view[ViewKey.NetThrottle] = view.net_throttle
+    _view[ViewKey.CpuThrottle] = view.cpu_throttle
 
-    _customer[CustomerKey.Groups] = customer.get_groups(raw=True)
+    _view[ViewKey.Groups] = view.get_groups(raw=True)
 
-    _customer[CustomerKey.Users] = customer.get_users(raw=True)
+    _view[ViewKey.Users] = view.get_users(raw=True)
 
-    success = _db_save(_id=customer.id, collection_name=CustomerCollection,
-                       data=_customer)
+    success = _db_save(_id=view.id, collection_name=ViewCollection,
+                       data=_view)
 
     return success
 
@@ -502,7 +502,7 @@ def save_user(user):
 
     Returns:
 
-        True is customer was saved successfully, False otherwise.
+        True is view was saved successfully, False otherwise.
 
     """
 
@@ -516,9 +516,9 @@ def save_user(user):
 
     _user[UserKey.Groups] = user.get_groups(raw=True)
 
-    _user[UserKey.Customers] = user.get_customers(raw=True)
-    _user[UserKey.CurrentCustomer] = user.get_current_customer(raw=True)
-    _user[UserKey.DefaultCustomer] = user.get_default_customer(raw=True)
+    _user[UserKey.Views] = user.get_views(raw=True)
+    _user[UserKey.CurrentView] = user.get_current_view(raw=True)
+    _user[UserKey.DefaultView] = user.get_default_view(raw=True)
 
     success = _db_save(_id=user.id, collection_name=UserCollection, data=_user)
 
@@ -537,14 +537,14 @@ def save_group(group):
 
     Returns:
 
-        True is customer was saved successfully, False otherwise.
+        True is view was saved successfully, False otherwise.
 
     """
 
     _group = {}
 
     _group[GroupKey.Name] = group.name
-    _group[GroupKey.Customer] = group.get_customer(raw=True)
+    _group[GroupKey.View] = group.get_view(raw=True)
     _group[GroupKey.Permissions] = group.get_permissions()
 
     _group[GroupKey.Users] = group.get_users(raw=True)
@@ -555,20 +555,20 @@ def save_group(group):
     return success
 
 
-def get_customer(name=None):
-    """Gets the Customer from the DB.
+def get_view(name=None):
+    """Gets the View from the DB.
 
-    Based on the id or name given, retrieve said customer.
+    Based on the id or name given, retrieve said view.
 
     Args:
 
-        _id: Id representing the customer to retrieve.
+        _id: Id representing the view to retrieve.
 
-        name: Name representing the customer to retrieve.
+        name: Name representing the view to retrieve.
 
     Returns:
 
-        A Customer instance.
+        A View instance.
 
     """
 
@@ -576,17 +576,17 @@ def get_customer(name=None):
 
     if name:
 
-        data_doc = _db_get(collection_name=CustomerCollection, _id=name)
+        data_doc = _db_get(collection_name=ViewCollection, _id=name)
 
     if data_doc:
 
-        customer = _db_build_customer(data_doc)
+        view = _db_build_view(data_doc)
 
     else:
 
-        customer = None
+        view = None
 
-    return customer
+    return view
 
 
 def get_user(name=None):

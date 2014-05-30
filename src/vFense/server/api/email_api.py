@@ -20,10 +20,10 @@ class GetEmailConfigHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
-        mail = MailClient(customer_name)
+        mail = MailClient(view_name)
         result = {
             'host': mail.server,
             'username': mail.username,
@@ -42,8 +42,8 @@ class CreateEmailConfigHandler(BaseHandler):
     @authenticated_request
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         mail_host = self.get_argument('host', None)
         mail_user = self.get_argument('user', None)
@@ -60,13 +60,13 @@ class CreateEmailConfigHandler(BaseHandler):
         if mail_host and mail_user and mail_password and \
                 mail_port and from_email and len(to_email) >0:
             create_or_modify_mail_config(
-                modifying_username=username, customer_name=customer_name,
+                modifying_username=username, view_name=view_name,
                 server=mail_host, username=mail_user,
                 password=mail_password, port=mail_port,
                 is_tls=is_tls, is_ssl=is_ssl,
                 from_email=from_email, to_email=to_email
             )
-            mail = MailClient(customer_name)
+            mail = MailClient(view_name)
             mail.connect()
             if mail.logged_in:
                 message = '%s - Valid Mail Settings' % (username)

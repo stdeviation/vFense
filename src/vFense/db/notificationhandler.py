@@ -5,7 +5,7 @@ from vFense.db.client import db_create_close, r
 from vFense.errorz.status_codes import AgentOperationCodes
 from vFense.operations import *
 from vFense.notifications import *
-from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
+from vFense.server.hierarchy import Collection, GroupKey, UserKey, ViewKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -48,11 +48,11 @@ def notification_rule_exists(
 
 
 class RvNotificationHandler():
-    def __init__(self, customer_name, operation_id, agent_id):
+    def __init__(self, view_name, operation_id, agent_id):
 
         self.agent_id = agent_id
         self.operation_id = operation_id
-        self.customer_name = customer_name
+        self.view_name = view_name
 
     def rule_exist_for_install(self, threshold):
         return(
@@ -68,7 +68,7 @@ class RvNotificationHandler():
         return(
             self.rule_exist_for_rv_plugin(
                 threshold,
-                NotificationIndexes.RebootThresholdAndCustomer
+                NotificationIndexes.RebootThresholdAndView
             )
         )
 
@@ -76,20 +76,20 @@ class RvNotificationHandler():
         return(
             self.rule_exist_for_rv_plugin(
                 threshold,
-                NotificationIndexes.ShutdownThresholdAndCustomer
+                NotificationIndexes.ShutdownThresholdAndView
             )
         )
 
     @db_create_close
     def rule_exist_for_rv_plugin(self, threshold,
-                                 index_to_use=NotificationIndexes.AppThresholdAndCustomer,
+                                 index_to_use=NotificationIndexes.AppThresholdAndView,
                                  conn=None):
         try:
             rules_exist = list(
                 r
                 .table(NotificationCollections.Notifications)
                 .get_all(
-                    [threshold, self.customer_name],
+                    [threshold, self.view_name],
                     index=index_to_use
                 )
                 .run(conn)
@@ -110,8 +110,8 @@ class RvNotificationHandler():
                         .table(Collection.Groups)
                         .filter({'name': notif['group']})
                         .filter(
-                                lambda x: x['customer']['name'] ==
-                                notif['customer_name']
+                                lambda x: x['view']['name'] ==
+                                notif['view_name']
                             )
                             .map(lambda x: x['users'])
                             .run(conn)

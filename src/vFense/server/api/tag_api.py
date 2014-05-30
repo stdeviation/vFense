@@ -24,8 +24,8 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -36,7 +36,7 @@ class TagsHandler(BaseHandler):
         sort_by = self.get_argument('sort_by', TagsKey.TagName)
         tag = (
             TagSearcher(
-                username, customer_name, uri, method,
+                username, view_name, uri, method,
                 count, offset, sort, sort_by
             )
         )
@@ -53,14 +53,14 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         tag_name = self.arguments.get('name', None)
         uri = self.request.uri
         method = self.request.method
         if tag_name:
-            tag = TagsManager(username, customer_name, uri, method)
+            tag = TagsManager(username, view_name, uri, method)
             results = tag.create_tag(tag_name)
 
         else:
@@ -78,15 +78,15 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def delete(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             tag_id = self.arguments.get('id', None)
             if tag_id:
-                tag = TagsManager(username, customer_name, uri, method)
+                tag = TagsManager(username, view_name, uri, method)
                 results = tag.remove_tag(tag_id)
 
             else:
@@ -116,12 +116,12 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
-        tag = TagSearcher(username, customer_name, uri, method)
+        tag = TagSearcher(username, view_name, uri, method)
         results = tag.get_tag(tag_id)
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
@@ -132,8 +132,8 @@ class TagHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self, tag_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -143,7 +143,7 @@ class TagHandler(BaseHandler):
             apps_refresh = self.arguments.get('apps_refresh', None)
             operation = (
                     StoreOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
             )
             if reboot:
@@ -185,15 +185,15 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def put(self, tag_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         agent_id = self.arguments.get('agent_id', None)
         uri = self.request.uri
         method = self.request.method
         tag = (
             TagsManager(
-                username, customer_name,
+                username, view_name,
                 uri, method
             )
         )
@@ -215,15 +215,15 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def delete(self, tag_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         agent_id = self.arguments.get('agent_id', None)
         uri = self.request.uri
         method = self.request.method
         tag = (
             TagsManager(
-                username, customer_name, uri, method
+                username, view_name, uri, method
             )
         )
         if agent_id:
@@ -245,17 +245,17 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         name = self.get_argument('query', None)
         uri = self.request.uri
         method = self.request.method
         if name:
-            tag = TagSearcher(username, customer_name, uri, method)
+            tag = TagSearcher(username, view_name, uri, method)
             results = tag.search_by_name(name)
         else:
-            tag = AgentManager(agent_id, customer_name, username)
+            tag = AgentManager(agent_id, view_name, username)
             results = tag.get_tags(uri, method)
 
         self.set_status(results['http_status'])
@@ -267,8 +267,8 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         tag_name = self.arguments.get('tag_name', None)
         tag_id = self.arguments.get('tag_id', None)
@@ -276,7 +276,7 @@ class TagsAgentHandler(BaseHandler):
         method = self.request.method
         tag = (
             TagsManager(
-                username, customer_name,
+                username, view_name,
                 uri, method
             )
         )
@@ -339,15 +339,15 @@ class TagsAgentHandler(BaseHandler):
     @authenticated_request
     def delete(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         tag_id = self.arguments.get('tag_id', None)
         uri = self.request.uri
         method = self.request.method
         tag = (
             TagsManager(
-                username, customer_name,
+                username, view_name,
                 uri, method
             )
         )

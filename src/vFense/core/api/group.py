@@ -162,37 +162,37 @@ class GroupsHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        active_customer = (
-            get_user_property(active_user, UserKeys.CurrentCustomer)
+        active_view = (
+            get_user_property(active_user, UserKeys.CurrentView)
         )
-        customer_context = self.get_argument('customer_context', None)
+        view_context = self.get_argument('view_context', None)
         group_id = self.get_argument('group_id', None)
-        all_customers = self.get_argument('all_customers', None)
+        all_views = self.get_argument('all_views', None)
         count = 0
         group_data = {}
         try:
             granted, status_code = (
                 verify_permission_for_user(
-                    active_user, Permissions.ADMINISTRATOR, customer_context
+                    active_user, Permissions.ADMINISTRATOR, view_context
                 )
             )
-            if granted and not customer_context and not all_customers and not group_id:
-                group_data = get_properties_for_all_groups(active_customer)
+            if granted and not view_context and not all_views and not group_id:
+                group_data = get_properties_for_all_groups(active_view)
 
-            elif granted and customer_context and not all_customers and not group_id:
-                group_data = get_properties_for_all_groups(customer_context)
+            elif granted and view_context and not all_views and not group_id:
+                group_data = get_properties_for_all_groups(view_context)
 
-            elif granted and all_customers and not customer_context and not group_id:
+            elif granted and all_views and not view_context and not group_id:
                 group_data = get_properties_for_all_groups()
 
-            elif granted and group_id and not customer_context and not all_customers:
+            elif granted and group_id and not view_context and not all_views:
                 group_data = get_group_properties(group_id)
                 if group_data:
                     group_data = [group_data]
                 else:
                     group_data = []
 
-            elif customer_context and not granted or all_customers and not granted:
+            elif view_context and not granted or all_views and not granted:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
@@ -231,22 +231,22 @@ class GroupsHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         results = None
-        active_customer = (
-            get_user_property(active_user, UserKeys.CurrentCustomer)
+        active_view = (
+            get_user_property(active_user, UserKeys.CurrentView)
         )
         try:
             ###Create Group###
             group_name = self.arguments.get(ApiArguments.GROUP_NAME)
             permissions = self.arguments.get(ApiArguments.PERMISSIONS)
-            customer_context = (
+            view_context = (
                     self.arguments.get(
                         ApiArguments.CUSTOMER_CONTEXT,
-                        active_customer
+                        active_view
                     )
             )
             results = (
                 create_group(
-                    group_name, customer_context, permissions,
+                    group_name, view_context, permissions,
                     active_user, uri, method
                 )
             )

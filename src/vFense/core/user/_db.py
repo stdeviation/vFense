@@ -6,10 +6,10 @@ from vFense.core.user._db_model import (
     UserKeys, UserCollections, UserMappedKeys
 )
 from vFense.core.user._constants import *
-from vFense.core.group import *
+from vFense.core.group._db_model import *
 from vFense.core.group._constants import *
-from vFense.core.customer import *
-from vFense.core.customer._constants import *
+from vFense.core.view import *
+from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
@@ -36,10 +36,10 @@ def fetch_user(username, without_fields=None, conn=None):
     Returns:
         Dictionary of user properties.
         {
-            u'current_customer': u'default',
+            u'current_view': u'default',
             u'enabled': True,
             u'full_name': u'TopPatchAgentCommunicationAccount',
-            u'default_customer': u'default',
+            u'default_view': u'default',
             u'user_name': u'agent',
             u'email': u'admin@toppatch.com'
         }
@@ -89,8 +89,8 @@ def fetch_user_and_all_properties(username, conn=None):
     Returns:
         Dictionary of user properties.
         {
-            "current_customer": "default",
-            "customers": [
+            "current_view": "default",
+            "views": [
                 {
                     "admin": true,
                     "name": "default"
@@ -102,7 +102,7 @@ def fetch_user_and_all_properties(username, conn=None):
                     "group_name": "Administrator"
                 }
             ],
-                "default_customer": "default",
+                "default_view": "default",
                 "user_name": "admin",
                 "permissions": [
                     "administrator"
@@ -112,8 +112,8 @@ def fetch_user_and_all_properties(username, conn=None):
     data = {}
     map_hash = (
         {
-            UserKeys.DefaultCustomer: r.row[UserKeys.DefaultCustomer],
-            UserKeys.CurrentCustomer: r.row[UserKeys.CurrentCustomer],
+            UserKeys.DefaultView: r.row[UserKeys.DefaultView],
+            UserKeys.CurrentView: r.row[UserKeys.CurrentView],
             UserKeys.Email: r.row[UserKeys.Email],
             UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
@@ -126,10 +126,10 @@ def fetch_user_and_all_properties(username, conn=None):
                 .coerce_to('array')
                 .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
             ),
-            UserMappedKeys.Customers: (
+            UserMappedKeys.Views: (
                 r
-                .table(CustomerCollections.CustomersPerUser)
-                .get_all(username, index=CustomerPerUserIndexes.UserName)
+                .table(ViewCollections.ViewsPerUser)
+                .get_all(username, index=ViewPerUserIndexes.UserName)
                 .coerce_to('array')
                 .map(lambda x:
                     {
@@ -152,7 +152,7 @@ def fetch_user_and_all_properties(username, conn=None):
                             True,
                             False
                         ),
-                        CustomerPerUserKeys.CustomerName: x[CustomerPerUserKeys.CustomerName]
+                        ViewPerUserKeys.ViewName: x[ViewPerUserKeys.ViewName]
                     }
                 )
             ),
@@ -191,23 +191,23 @@ def fetch_user_and_all_properties(username, conn=None):
 
 @time_it
 @db_create_close
-def fetch_users_and_all_properties(customer_name=None, conn=None):
+def fetch_users_and_all_properties(view_name=None, conn=None):
     """Retrieve a user and all of its properties
         This query is beautiful :)
     Kwargs:
-        customer_name (str): Name of the customer, where the users belong to.
+        view_name (str): Name of the view, where the users belong to.
 
     Basic Usage:
         >>> from vFense.user._db import fetch_users_and_all_properties
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> fetch_user_and_all_properties(username')
 
     Returns:
         List of users and their properties.
         [
             {
-                "current_customer": "default",
-                "customers": [
+                "current_view": "default",
+                "views": [
                     {
                         "admin": true,
                         "name": "default"
@@ -219,7 +219,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                         "group_name": "Administrator"
                     }
                 ],
-                    "default_customer": "default",
+                    "default_view": "default",
                     "user_name": "admin",
                     "permissions": [
                         "administrator"
@@ -230,8 +230,8 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
     data = []
     map_hash = (lambda x:
         {
-            UserKeys.DefaultCustomer: x[UserKeys.DefaultCustomer],
-            UserKeys.CurrentCustomer: x[UserKeys.CurrentCustomer],
+            UserKeys.DefaultView: x[UserKeys.DefaultView],
+            UserKeys.CurrentView: x[UserKeys.CurrentView],
             UserKeys.UserName: x[UserKeys.UserName],
             UserMappedKeys.Groups: (
                 r
@@ -243,12 +243,12 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                 .coerce_to('array')
                 .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
             ),
-            UserMappedKeys.Customers: (
+            UserMappedKeys.Views: (
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    x[CustomerPerUserKeys.UserName],
-                    index=CustomerPerUserIndexes.UserName
+                    x[ViewPerUserKeys.UserName],
+                    index=ViewPerUserIndexes.UserName
                 )
                 .coerce_to('array')
                 .map(lambda y:
@@ -276,7 +276,7 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                             True,
                             False
                         ),
-                        CustomerPerUserKeys.CustomerName: y[CustomerPerUserKeys.CustomerName]
+                        ViewPerUserKeys.ViewName: y[ViewPerUserKeys.ViewName]
                     }
                 )
             ),
@@ -297,14 +297,14 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
     )
 
     try:
-        if customer_name:
+        if view_name:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                    view_name, index=ViewPerUserIndexes.ViewName
                 )
-                .pluck(CustomerPerUserKeys.CustomerName, CustomerPerUserKeys.UserName)
+                .pluck(ViewPerUserKeys.ViewName, ViewPerUserKeys.UserName)
                 .distinct()
                 .eq_join(lambda x:
                     x[UserKeys.UserName],
@@ -373,14 +373,14 @@ def user_status_toggle(username, conn=None):
 @time_it
 @db_create_close
 def fetch_users(
-    customer_name=None, username=None,
+    view_name=None, username=None,
     without_fields=None, conn=None
     ):
-    """Retrieve all users that is in the database by customer_name or
-        all of the customers or by regex.
+    """Retrieve all users that is in the database by view_name or
+        all of the views or by regex.
 
     Kwargs:
-        customer_name (str): Name of the customer, where the agent
+        view_name (str): Name of the view, where the agent
             is located.
         username (str): Name of the user you are searching for.
             This is a regular expression match.
@@ -388,35 +388,35 @@ def fetch_users(
 
     Basic Usage:
         >>> from vFense.user._db import fetch_users
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> username = 'al'
         >>> without_fields = ['password']
-        >>> fetch_users(customer_name, username, without_field)
+        >>> fetch_users(view_name, username, without_field)
 
     Returns:
         List of users:
         [
             {
-                "current_customer": "default",
+                "current_view": "default",
                 "email": "test@test.org",
                 "full_name": "is doing it",
-                "default_customer": "default",
+                "default_view": "default",
                 "user_name": "alien",
                 "id": "ba9682ef-7adf-4916-8002-9637485b30d8",
-                "customer_name": "default"
+                "view_name": "default"
             }
         ]
     """
     data = []
     try:
-        if not customer_name and not username and not without_fields:
+        if not view_name and not username and not without_fields:
             data = list(
                 r
                 .table(UserCollections.Users)
                 .run(conn)
             )
 
-        elif not customer_name and not username and without_fields:
+        elif not view_name and not username and without_fields:
             data = list(
                 r
                 .table(UserCollections.Users)
@@ -424,17 +424,17 @@ def fetch_users(
                 .run(conn)
             )
 
-        elif not customer_name and username and without_fields:
+        elif not view_name and username and without_fields:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .filter(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
+                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
                 )
                 .eq_join(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName],
+                    x[ViewPerUserKeys.UserName],
                     r.table(UserCollections.Users)
                 )
                 .zip()
@@ -442,20 +442,20 @@ def fetch_users(
                 .run(conn)
             )
 
-        elif customer_name and username and without_fields:
+        elif view_name and username and without_fields:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                    view_name, index=ViewPerUserIndexes.ViewName
                 )
                 .filter(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
+                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
                 )
                 .eq_join(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName],
+                    x[ViewPerUserKeys.UserName],
                     r.table(UserCollections.Users)
                 )
                 .zip()
@@ -463,32 +463,32 @@ def fetch_users(
                 .run(conn)
             )
 
-        elif customer_name and not username and not without_fields:
+        elif view_name and not username and not without_fields:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                    view_name, index=ViewPerUserIndexes.ViewName
                 )
                 .eq_join(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName],
+                    x[ViewPerUserKeys.UserName],
                     r.table(UserCollections.Users)
                 )
                 .zip()
                 .run(conn)
             )
 
-        elif customer_name and not username and without_fields:
+        elif view_name and not username and without_fields:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                    view_name, index=ViewPerUserIndexes.ViewName
                 )
                 .eq_join(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName],
+                    x[ViewPerUserKeys.UserName],
                     r.table(UserCollections.Users)
                 )
                 .zip()
@@ -496,20 +496,20 @@ def fetch_users(
                 .run(conn)
             )
 
-        elif customer_name and username and not without_fields:
+        elif view_name and username and not without_fields:
             data = list(
                 r
-                .table(CustomerCollections.CustomersPerUser)
+                .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    customer_name, index=CustomerPerUserIndexes.CustomerName
+                    view_name, index=ViewPerUserIndexes.ViewName
                 )
                 .filter(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName].match("(?i)" + username)
+                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
                 )
                 .eq_join(
                     lambda x:
-                    x[CustomerPerUserKeys.UserName],
+                    x[ViewPerUserKeys.UserName],
                     r.table(UserCollections.Users)
                 )
                 .zip()
@@ -534,7 +534,7 @@ def insert_user(user_data, conn=None):
 
     Basic Usage:
         >>> from vFense.user._db import insert_user_data
-        >>> user_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
+        >>> user_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_user_data(user_data)
 
     Returns:

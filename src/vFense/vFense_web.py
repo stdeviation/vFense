@@ -113,9 +113,9 @@ class Application(tornado.web.Application):
             (r"/api/v1/apps/remediationvault?", AgentAppsHandler),
 
             ##### Dashboard API Handlers
-            (r"/api/v1/dashboard/graphs/bar/severity?",CustomerSeverityHandler),
+            (r"/api/v1/dashboard/graphs/bar/severity?",ViewSeverityHandler),
             #(r"/api/v1/dashboard/graphs/linear/severity?",PackageSeverityOverTimeHandler),
-            (r"/api/v1/dashboard/graphs/bar/stats_by_os?", CustomerStatsByOsHandler),
+            (r"/api/v1/dashboard/graphs/bar/stats_by_os?", ViewStatsByOsHandler),
             (r"/api/v1/dashboard/graphs/column/range/apps/os?", OsAppsOverTimeHandler),
             (r"/api/v1/dashboard/widgets/unique_count?", WidgetHandler),
             (r"/api/v1/dashboard/widgets/top_needed?", TopAppsNeededHandler),

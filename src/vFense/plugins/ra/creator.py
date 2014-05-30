@@ -20,7 +20,7 @@ logger = logging.getLogger('rvapi')
 def new_rd_session(
     agent_id=None,
     user=Default.User,
-    customer=Default.Customer
+    view=Default.View
 ):
 
     if not agent_id:
@@ -91,7 +91,7 @@ def new_rd_session(
         ra.RaValue.RemoteDesktop,
         agent_id,
         username=user,
-        customer=customer,
+        view=view,
         uri=ra.RaUri.StartRemoteDesktop % agent_id,
         method='POST'
     )
@@ -165,7 +165,7 @@ def new_rd_session(
 def terminate_rd_session(
     agent_id=None,
     user=Default.User,
-    customer=Default.Customer
+    view=Default.View
 ):
 
     if not agent_id:
@@ -288,7 +288,7 @@ def set_session_to_timeout(agent_id, user, timeout=120):
 def remove_session(
     agent_id=None,
     user=Default.User,
-    customer=Default.Customer
+    view=Default.View
 ):
 
     pid = ra.db.get_rd_pid(agent_id=agent_id)
@@ -314,7 +314,7 @@ def remove_session(
         ra.RaValue.StopRemoteDesktop,
         agent_id,
         username=user,
-        customer=customer
+        view=view
     )
 
     operation_id = save_operation(operation)

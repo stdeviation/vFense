@@ -10,13 +10,13 @@ from vFense.core.agent._constants import AgentVirtualKeys, \
 
 from vFense.core.agent._db import fetch_production_levels_from_agent, \
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
-    fetch_all_agents_for_customer, fetch_agent_info, \
-    update_agent_data, insert_agent_data, delete_all_agents_for_customer, \
-    move_agents_to_customer, move_agent_to_customer, \
-    move_all_agents_to_customer
+    fetch_all_agents_for_view, fetch_agent_info, \
+    update_agent_data, insert_agent_data, delete_all_agents_for_view, \
+    move_agents_to_view, move_agent_to_view, \
+    move_all_agents_to_view
 
-from vFense.core.customer import Customer
-from vFense.core.customer.customers import get_customer, create_customer
+from vFense.core.view import View
+from vFense.core.view.views import get_view, create_view
 from vFense.core.decorators import time_it, results_message
 
 from vFense.db.hardware import Hardware
@@ -32,21 +32,21 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def get_production_levels(customer_name):
+def get_production_levels(view_name):
     """Retrieve all the production levels that is in the database.
     Args:
-        customer_name (str): Name of the customer, where the agent is located.
+        view_name (str): Name of the view, where the agent is located.
 
     Basic Usage:
         >>> from vFense.core.agent.agents import get_production_levels
-        >>> customer_name = 'default'
-        >>> get_production_levels(customer_name)
+        >>> view_name = 'default'
+        >>> get_production_levels(view_name)
         [
             u'Development',
             u'Production'
         ]
     """
-    data = fetch_production_levels_from_agent(customer_name)
+    data = fetch_production_levels_from_agent(view_name)
     return data
 
 @time_it
@@ -67,15 +67,15 @@ def get_supported_os_codes():
     return oses
 
 @time_it
-def get_supported_os_strings(customer_name):
+def get_supported_os_strings(view_name):
     """Retrieve all the operating systems that is in the database.
     Args:
-        customer_name (str): Name of the customer, where the agent is located.
+        view_name (str): Name of the view, where the agent is located.
 
     Basic Usage:
         >>> from vFense.core.agent.agents import get_supported_os_strings
-        >>> customer_name = 'default'
-        >>> get_supported_os_strings(customer_name)
+        >>> view_name = 'default'
+        >>> get_supported_os_strings(view_name)
         [
             u'CentOS 6.5',
             u'Ubuntu 12.04',
@@ -83,48 +83,48 @@ def get_supported_os_strings(customer_name):
             u'Windows 8.1 '
         ]
     """
-    data = fetch_supported_os_strings(customer_name)
+    data = fetch_supported_os_strings(view_name)
     return data
 
 @time_it
-def get_all_agent_ids(customer_name=None, agent_os=None):
-    """Retrieve all agent_ids by either customer_name or os code.
+def get_all_agent_ids(view_name=None, agent_os=None):
+    """Retrieve all agent_ids by either view_name or os code.
     Kwargs:
-        customer_name (str, optional): Name of the customer, where the agent
+        view_name (str, optional): Name of the view, where the agent
             is located
         agent_os (str, optional): linux or windows or darwin
 
     Basic Usage::
         >>> from vFense.core.agent.agents import get_all_agent_ids
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> agent_os = 'os_code'
-        >>> get_all_agent_ids(customer_name, agent_os)
+        >>> get_all_agent_ids(view_name, agent_os)
         [
             u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
             u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
         ]
     """
 
-    if agent_os and customer_name:
-        agents = fetch_agent_ids(customer_name, agent_os)
+    if agent_os and view_name:
+        agents = fetch_agent_ids(view_name, agent_os)
 
-    elif agent_os and not customer_name:
+    elif agent_os and not view_name:
         agents = fetch_agent_ids(agent_os=agent_os)
 
-    elif not agent_os and customer_name:
-        agents = fetch_agent_ids(customer_name)
+    elif not agent_os and view_name:
+        agents = fetch_agent_ids(view_name)
 
-    elif not agent_os and not customer_name:
+    elif not agent_os and not view_name:
         agents = fetch_agent_ids()
 
     return agents
 
 @time_it
-def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
-    """Retrieve a list of agents by os code and or customer name.
+def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
+    """Retrieve a list of agents by os code and or view name.
 
     Kwargs:
-        customer_name (str, optional): Name of the customer, where the agent
+        view_name (str, optional): Name of the view, where the agent
             is located
         agent_os (str, optional): The operating system you are filtering for.
             Ex: linux or windows or darwin
@@ -135,7 +135,7 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
         >>> from vFense.core.agent.agents import get_agents_info
         >>> os_code = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
-        >>> get_agents_info(customer_name, os_code, keys_to_pluck=pluck)
+        >>> get_agents_info(view_name, os_code, keys_to_pluck=pluck)
 
     Returns:
         (list): list of dictionaries with agent data
@@ -152,16 +152,16 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
                 ]
     """
 
-    if agent_os and not keys_to_pluck and customer_name:
+    if agent_os and not keys_to_pluck and view_name:
         agents = (
             fetch_agents(
-                customer_name=customer_name,
+                view_name=view_name,
                 filter_key=AgentKey.OsCode,
                 filter_val=agent_os
             )
         )
 
-    elif agent_os and not keys_to_pluck and not customer_name:
+    elif agent_os and not keys_to_pluck and not view_name:
         agents = (
             fetch_agents(
                 filter_key=AgentKey.OsCode,
@@ -169,17 +169,17 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
             )
         )
 
-    elif agent_os and keys_to_pluck and customer_name:
+    elif agent_os and keys_to_pluck and view_name:
         agents = (
             fetch_agents(
-                customer_name=customer_name,
+                view_name=view_name,
                 filter_key=AgentKey.OsCode,
                 filter_val=agent_os,
                 keys_to_pluck=keys_to_pluck,
             )
         )
 
-    elif agent_os and keys_to_pluck and not customer_name:
+    elif agent_os and keys_to_pluck and not view_name:
         agents = (
             fetch_agents(
                 filter_key=AgentKey.OsCode,
@@ -188,29 +188,29 @@ def get_agents_info(customer_name=None, agent_os=None, keys_to_pluck=None):
             )
         )
 
-    elif not agent_os and keys_to_pluck and customer_name:
+    elif not agent_os and keys_to_pluck and view_name:
         agents = (
             fetch_agents(
-                customer_name=customer_name,
+                view_name=view_name,
                 keys_to_pluck=keys_to_pluck,
             )
         )
 
-    elif not agent_os and keys_to_pluck and not customer_name:
+    elif not agent_os and keys_to_pluck and not view_name:
         agents = (
             fetch_agents(
                 keys_to_pluck=keys_to_pluck,
             )
         )
 
-    elif not agent_os and not keys_to_pluck and not customer_name:
+    elif not agent_os and not keys_to_pluck and not view_name:
         agents = (
             fetch_agents()
         )
 
-    elif not agent_os and not keys_to_pluck and customer_name:
+    elif not agent_os and not keys_to_pluck and view_name:
         agents = (
-            fetch_all_agents_for_customer(customer_name)
+            fetch_all_agents_for_view(view_name)
         )
 
     return agents
@@ -449,7 +449,7 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
 @results_message
 def add_agent(
         system_info, hardware, username=None,
-        customer_name=None, uri=None, method=None
+        view_name=None, uri=None, method=None
     ):
     """Add a new agent to the database
     Args:
@@ -458,7 +458,7 @@ def add_agent(
 
     Kwargs:
         user_name (str): The name of the user who called this function.
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
 
@@ -482,19 +482,19 @@ def add_agent(
         agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
         agent_data[AgentKey.DisplayName] = None
         agent_data[AgentKey.HostName] = None
-        agent_data[AgentKey.CustomerName] = customer_name
+        agent_data[AgentKey.ViewName] = view_name
         agent_data[AgentKey.Hardware] = hardware
 
         if not AgentKey.ProductionLevel in system_info:
             agent_data[AgentKey.ProductionLevel] = ProductionLevels.PRODUCTION
 
-        if customer_name != 'default':
-            cexists = get_customer(customer_name)
-            if not cexists and len(customer_name) >= 1:
-                customer = Customer(customer_name)
+        if view_name != 'default':
+            cexists = get_view(view_name)
+            if not cexists and len(view_name) >= 1:
+                view = View(view_name)
 
-                create_customer(
-                    customer, username=username, uri=uri, method=method
+                create_view(
+                    view, username=username, uri=uri, method=method
                 )
 
         for key, value in system_info.items():
@@ -512,7 +512,7 @@ def add_agent(
             Hardware().add(agent_id, agent_data[AgentKey.Hardware])
             data = {
                 AgentKey.AgentId: agent_id,
-                AgentKey.CustomerName: agent_data[AgentKey.CustomerName],
+                AgentKey.ViewName: agent_data[AgentKey.ViewName],
                 AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
                 AgentKey.Hardware: agent_data[AgentKey.Hardware],
                 AgentKey.Tags: agent_data[AgentKey.Tags],
@@ -551,7 +551,7 @@ def add_agent(
 @results_message
 def update_agent(
         agent_id, system_info, hardware, rebooted,
-        username=None, customer_name=None,
+        username=None, view_name=None,
         uri=None, method=None
     ):
     """Update various aspects of agent
@@ -563,7 +563,7 @@ def update_agent(
 
     Kwargs:
         user_name (str): The name of the user who called this function.
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
     """
@@ -666,13 +666,13 @@ def update_agent(
 
 @time_it
 @results_message
-def remove_all_agents_for_customer(
-        customer_name,
+def remove_all_agents_for_view(
+        view_name,
         user_name=None, uri=None, method=None
     ):
-    """Remove all agents from the system, filtered by customer_name
+    """Remove all agents from the system, filtered by view_name
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -680,14 +680,14 @@ def remove_all_agents_for_customer(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import remove_all_agents_for_customer
-        >>> customer_name = 'tester'
-        >>> remove_all_agents_for_customer(customer_name)
+        >>> from vFense.core.agent.agents import remove_all_agents_for_view
+        >>> view_name = 'tester'
+        >>> remove_all_agents_for_view(view_name)
     """
-    status = remove_all_agents_for_customer.func_name + ' - '
+    status = remove_all_agents_for_view.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        delete_all_agents_for_customer(customer_name)
+        delete_all_agents_for_view(view_name)
     )
     msg = 'total number of agents deleted: %s' % (str(count))
     if status_code == DbCodes.Deleted:
@@ -721,14 +721,14 @@ def remove_all_agents_for_customer(
 
 @time_it
 @results_message
-def change_customer_for_all_agents_in_customer(
-        current_customer, new_customer,
+def change_view_for_all_agents_in_view(
+        current_view, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move all agents from one customer to another 
+    """Move all agents from one view to another 
     Args:
-        current_customer (str): The name of the current customer.
-        new_customer (str): The name of the new customer.
+        current_view (str): The name of the current view.
+        new_view (str): The name of the new view.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -736,15 +736,15 @@ def change_customer_for_all_agents_in_customer(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import change_customer_for_all_agents_in_customer
-        >>> current_customer = 'default'
-        >>> new_customer = 'tester'
-        >>> change_customer_for_all_agents_in_customer(current_customer, new_customer)
+        >>> from vFense.core.agent.agents import change_view_for_all_agents_in_view
+        >>> current_view = 'default'
+        >>> new_view = 'tester'
+        >>> change_view_for_all_agents_in_view(current_view, new_view)
     """
-    status = change_customer_for_agents.func_name + ' - '
+    status = change_view_for_agents.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        move_all_agents_to_customer(current_customer, new_customer)
+        move_all_agents_to_view(current_view, new_view)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:
@@ -778,14 +778,14 @@ def change_customer_for_all_agents_in_customer(
 
 @time_it
 @results_message
-def change_customer_for_agents(
-        agent_ids, new_customer,
+def change_view_for_agents(
+        agent_ids, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move a list of agents from one customer to another 
+    """Move a list of agents from one view to another 
     Args:
         agent_ids (list): List of agent ids
-        new_customer (str): The name of the new customer.
+        new_view (str): The name of the new view.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -793,15 +793,15 @@ def change_customer_for_agents(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import change_customer_for_agents
-        >>> new_customer = 'tester'
+        >>> from vFense.core.agent.agents import change_view_for_agents
+        >>> new_view = 'tester'
         >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
-        >>> change_customer_for_agents(agent_ids, new_customer)
+        >>> change_view_for_agents(agent_ids, new_view)
     """
-    status = change_customer_for_agents.func_name + ' - '
+    status = change_view_for_agents.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        move_agents_to_customer(agent_ids, new_customer)
+        move_agents_to_view(agent_ids, new_view)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:
@@ -835,14 +835,14 @@ def change_customer_for_agents(
 
 @time_it
 @results_message
-def change_customer_for_agent(
-        agent_id, new_customer,
+def change_view_for_agent(
+        agent_id, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move an agent from one customer to another 
+    """Move an agent from one view to another 
     Args:
         agent_id (str): 36 character UUID of the agent.
-        new_customer (str): The name of the new customer.
+        new_view (str): The name of the new view.
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -850,15 +850,15 @@ def change_customer_for_agent(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import change_customer_for_agent
-        >>> new_customer = 'tester'
+        >>> from vFense.core.agent.agents import change_view_for_agent
+        >>> new_view = 'tester'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> change_customer_for_agent(agent_id, new_customer)
+        >>> change_view_for_agent(agent_id, new_view)
     """
-    status = change_customer_for_agent.func_name + ' - '
+    status = change_view_for_agent.func_name + ' - '
 
     status_code, count, error, generated_ids = (
-        move_agent_to_customer(agent_id, new_customer)
+        move_agent_to_view(agent_id, new_view)
     )
     msg = 'total number of agents moved: %s' % (str(count))
     if status_code == DbCodes.Replaced:

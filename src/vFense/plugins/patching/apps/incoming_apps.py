@@ -31,10 +31,10 @@ logger = logging.getLogger('rvapi')
 
 class IncomingApplications():
 
-    def __init__(self, username, customer_name, agent_id, os_code, os_string):
+    def __init__(self, username, view_name, agent_id, os_code, os_string):
         self.username = username
         self.agent_id = agent_id
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.os_code = os_code
         self.os_string = os_string
         self.inserted_count = 0
@@ -63,7 +63,7 @@ class IncomingApplications():
             AppsPerAgentKey.AppId: app_dict[AppsPerAgentKey.AppId],
             AppsPerAgentKey.InstallDate: app_dict[AppsPerAgentKey.InstallDate],
             AppsPerAgentKey.AgentId: self.agent_id,
-            AppsPerAgentKey.CustomerName: self.customer_name,
+            AppsPerAgentKey.ViewName: self.view_name,
             AppsPerAgentKey.Status: app_dict[AppsPerAgentKey.Status],
             AppsPerAgentKey.Dependencies:
                 app_dict.pop(AppsPerAgentKey.Dependencies),
@@ -115,7 +115,7 @@ class IncomingApplications():
 
                 # Mutates app_dict
                 counts = application_updater(
-                    self.customer_name, app_dict, self.os_string, app_collection
+                    self.view_name, app_dict, self.os_string, app_collection
                 )
                 self.inserted_count += counts[0]
                 self.updated_count += counts[1]
@@ -145,13 +145,13 @@ class IncomingApplications():
         logger.info(log_msg)
 
 
-def incoming_applications_from_agent(username, customer_name, agent_id, 
+def incoming_applications_from_agent(username, view_name, agent_id, 
         agent_os_code, agent_os_string, apps, delete_afterwards=True,
         app_collection=AppCollections.UniqueApplications,
         apps_per_agent_collection=AppCollections.AppsPerAgent):
 
     app = IncomingApplications(
-        username, customer_name, agent_id, agent_os_code, agent_os_string
+        username, view_name, agent_id, agent_os_code, agent_os_string
     )
     app.add_or_update_applications(
         apps,

@@ -15,9 +15,9 @@ logger = logging.getLogger('rvapi')
 
 
 class AlertSearcher(object):
-    def __init__(self, username, customer_name, uri, method):
+    def __init__(self, username, view_name, uri, method):
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         self.map_list = (
@@ -36,7 +36,7 @@ class AlertSearcher(object):
                 NotificationKeys.AllAgents: r.row[NotificationKeys.AllAgents],
                 NotificationKeys.Agents: r.row[NotificationKeys.Agents],
                 NotificationKeys.Tags: r.row[NotificationKeys.Tags],
-                NotificationKeys.CustomerName: r.row[NotificationKeys.CustomerName],
+                NotificationKeys.ViewName: r.row[NotificationKeys.ViewName],
                 NotificationKeys.AppThreshold: r.row[NotificationKeys.AppThreshold],
                 NotificationKeys.RebootThreshold: r.row[NotificationKeys.RebootThreshold],
                 NotificationKeys.ShutdownThreshold: r.row[NotificationKeys.ShutdownThreshold],

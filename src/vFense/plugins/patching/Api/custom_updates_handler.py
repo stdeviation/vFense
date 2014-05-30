@@ -40,8 +40,8 @@ class GetThirdPartyUuidHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -60,8 +60,8 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -74,7 +74,7 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
         if uuid and name and md5 and path and size:
             result = (
                 move_packages(
-                    username, customer_name, uri, method,
+                    username, view_name, uri, method,
                     name=name, path=path, size=size,
                     md5=md5, uuid=uuid
                 )
@@ -90,8 +90,8 @@ class ThirdPartyUploadHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -113,7 +113,7 @@ class ThirdPartyUploadHandler(BaseHandler):
 
         result = (
             store_package_info_in_db(
-                username, customer_name, uri, method,
+                username, view_name, uri, method,
                 size, md5, operating_system, uuid, name,
                 severity, arch, major_version, minor_version,
                 release_date, vendor_name, description,
@@ -129,8 +129,8 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -148,7 +148,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
         method = self.request.method
         patches = (
             RetrieveCustomAppsByAgentId(
-                username, customer_name, agent_id,
+                username, view_name, agent_id,
                 uri, method, count, offset,
                 sort, sort_by, show_hidden=hidden
             )
@@ -203,8 +203,8 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -218,7 +218,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -246,7 +246,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         [agent_id], operation='install',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -272,8 +272,8 @@ class AgentIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -287,7 +287,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -313,7 +313,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         [agent_id], operation='uninstall',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -339,8 +339,8 @@ class TagIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -353,7 +353,7 @@ class TagIdCustomAppsHandler(BaseHandler):
         method = self.request.method
         patches = (
             RetrieveCustomAppsByTagId(
-                username, customer_name, tag_id,
+                username, view_name, tag_id,
                 uri, method, count, offset,
                 sort, sort_by
             )
@@ -408,8 +408,8 @@ class TagIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -423,7 +423,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -451,7 +451,7 @@ class TagIdCustomAppsHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         tag_ids=[tag_id], operation='install',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -477,8 +477,8 @@ class TagIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -492,7 +492,7 @@ class TagIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -518,7 +518,7 @@ class TagIdCustomAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         tag_ids=[tag_id], operation='uninstall',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -544,14 +544,14 @@ class AppIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         patches = (
             RetrieveCustomAppsByAppId(
-                username, customer_name, app_id,
+                username, view_name, app_id,
                 uri, method
             )
         )
@@ -565,8 +565,8 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -642,8 +642,8 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -657,7 +657,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and agent_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -685,7 +685,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         agent_ids=[agent_ids], operation='install',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -712,8 +712,8 @@ class AppIdCustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -727,7 +727,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -753,7 +753,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         agent_ids=[agent_ids], operation='uninstall',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -779,8 +779,8 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -790,7 +790,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
         method = self.request.method
         agents = (
             RetrieveAgentsByCustomAppId(
-                username, customer_name, app_id,
+                username, view_name, app_id,
                 uri, method, count, offset
             )
         )
@@ -826,8 +826,8 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -841,7 +841,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -869,7 +869,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         agent_ids=agent_ids, operation='install',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -896,8 +896,8 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -911,7 +911,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (
@@ -937,7 +937,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, customer_name, username,
+                        sched, view_name, username,
                         agent_ids=agent_ids, operation='uninstall',
                         name=label, date=date_time, uri=uri,
                         method=method, job_extra=job
@@ -963,8 +963,8 @@ class CustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -982,7 +982,7 @@ class CustomAppsHandler(BaseHandler):
         method = self.request.method
         patches = (
             RetrieveCustomApps(
-                username, customer_name,
+                username, view_name,
                 uri, method, count, offset,
                 sort, sort_by, show_hidden=hidden
             )
@@ -1077,8 +1077,8 @@ class CustomAppsHandler(BaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

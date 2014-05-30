@@ -27,8 +27,8 @@ class RelayServersHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -55,14 +55,14 @@ class RelayServersHandler(BaseHandler):
     @authenticated_request
     def delete(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             mouse_names = self.arguments.get('names')
-            mm = MightyMouse(username, customer_name, uri, method)
+            mm = MightyMouse(username, view_name, uri, method)
             for mouse in mouse_names:
                 results = mm.remove(mouse_name)
             self.set_status(results['http_status'])
@@ -84,17 +84,17 @@ class RelayServersHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             mouse_name = self.arguments.get('name')
             address = self.arguments.get('address')
-            customers = self.arguments.get('customers', None)
-            mm = MightyMouse(username, customer_name, uri, method)
-            results = mm.add(mouse_name, address, customers)
+            views = self.arguments.get('views', None)
+            mm = MightyMouse(username, view_name, uri, method)
+            results = mm.add(mouse_name, address, views)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -115,8 +115,8 @@ class RelayServerHandler(BaseHandler):
     @authenticated_request
     def get(self, mouse_name):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -147,16 +147,16 @@ class RelayServerHandler(BaseHandler):
     @convert_json_to_arguments
     def put(self, mouse_name):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             address = self.arguments.get('address', None)
-            customers = self.arguments.get('customers', None)
-            mm = MightyMouse(username, customer_name, uri, method)
-            results = mm.update(mouse_name, customers, address)
+            views = self.arguments.get('views', None)
+            mm = MightyMouse(username, view_name, uri, method)
+            results = mm.update(mouse_name, views, address)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -175,13 +175,13 @@ class RelayServerHandler(BaseHandler):
     @authenticated_request
     def delete(self, mouse_name):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            mm = MightyMouse(username, customer_name, uri, method)
+            mm = MightyMouse(username, view_name, uri, method)
             results = mm.remove(mouse_name)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')

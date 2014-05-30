@@ -13,7 +13,7 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
+def get_all_stats_by_appid(username, view_name, uri, method, app_id,
         collection=AppCollections.AppsPerAgent, conn=None):
 
     if collection == AppCollections.AppsPerAgent:
@@ -42,8 +42,8 @@ def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
             r
             .table(CurrentAppsPerAgentCollection)
             .get_all(
-                [app_id, customer_name],
-                index=CurrentAppsPerAgentIndexes.AppIdAndCustomer
+                [app_id, view_name],
+                index=CurrentAppsPerAgentIndexes.AppIdAndView
             )
             .group(CurrentAppsPerAgentKey.Status)
             .count()
@@ -93,7 +93,7 @@ def get_all_stats_by_appid(username, customer_name, uri, method, app_id,
 
 
 @db_create_close
-def get_all_agents_per_appid(username, customer_name, uri, method, app_id,
+def get_all_agents_per_appid(username, view_name, uri, method, app_id,
     collection=AppCollections.AppsPerAgent, conn=None):
 
     if collection == AppCollections.AppsPerAgent:
@@ -189,7 +189,7 @@ def get_all_agents_per_appid(username, customer_name, uri, method, app_id,
 
 
 @db_create_close
-def get_all_stats_by_agentid(username, customer_name,
+def get_all_stats_by_agentid(username, view_name,
                              uri, method, agent_id,
                              collection=AppCollections.AppsPerAgent,
                              conn=None):

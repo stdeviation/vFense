@@ -69,8 +69,8 @@ class UserCodes(object):
     UserDeleted = 13002
     UserUnchanged = 13003
     PasswordChanged = 13004
-    UsersAddedToCustomer = 13005
-    UsersRemovedFromCustomer = 13006
+    UsersAddedToView = 13005
+    UsersRemovedFromView = 13006
     UsersAddedToGroup = 13007
     UsersRemovedFromGroup = 13008
 
@@ -86,34 +86,34 @@ class UserFailureCodes(object):
     WeakPassword = 13507
     NewPasswordSameAsOld = 13508
     AdminUserCanNotBeDeleted = 13509
-    FailedToAddUsersToCustomer = 13510
-    FailedToRemoveUsersFromCustomer = 13511
-    CantDeleteAdminFromCustomer = 13512
+    FailedToAddUsersToView = 13510
+    FailedToRemoveUsersFromView = 13511
+    CantDeleteAdminFromView = 13512
     CantDeleteAdminUser = 13513
     FailedToAddUsersToGroup = 13514
     FailedToRemoveUsersFromGroup = 13515
 
 
-class CustomerCodes(object):
-    CustomerCreated = 14000
-    CustomerUpdated = 14001
-    CustomerDeleted = 14002
-    CustomerUnchanged = 14003
-    CustomersAddedToUser = 14004
-    CustomersRemovedFromUser = 14005
+class ViewCodes(object):
+    ViewCreated = 14000
+    ViewUpdated = 14001
+    ViewDeleted = 14002
+    ViewUnchanged = 14003
+    ViewsAddedToUser = 14004
+    ViewsRemovedFromUser = 14005
 
 
-class CustomerFailureCodes(object):
-    CustomerExists = 14500
-    CustomerDoesNotExist = 14501
-    FailedToCreateCustomer = 14502
-    FailedToRemoveCustomer = 14503
-    FailedToRemoveUserFromCustomer = 14504
-    FailedToUpdateCustomer = 14505
-    InvalidCustomerName = 14506
-    UsersExistForCustomer = 14507
-    UsersDoNotExistForCustomer = 14508
-    CantDeleteDefaultCustomer = 124509
+class ViewFailureCodes(object):
+    ViewExists = 14500
+    ViewDoesNotExist = 14501
+    FailedToCreateView = 14502
+    FailedToRemoveView = 14503
+    FailedToRemoveUserFromView = 14504
+    FailedToUpdateView = 14505
+    InvalidViewName = 14506
+    UsersExistForView = 14507
+    UsersDoNotExistForView = 14508
+    CantDeleteDefaultView = 124509
     InvalidNetworkThrottle = 124509
     InvalidCpuThrottle = 124510
     InvalidOperationTTL = 124511

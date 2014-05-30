@@ -5,7 +5,7 @@ import urllib
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
-from vFense.core.agent._db import total_agents_in_customer
+from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime
 from vFense.core._db import object_exist, insert_data_in_table, \
     delete_data_in_table
@@ -21,17 +21,17 @@ from vFense.plugins.patching._db_model import AppsKey, AppCollections, \
 from vFense.plugins.patching._constants import CommonAppKeys, \
     FileLocationUris, CommonFileKeys
 from vFense.plugins.patching._db import (fetch_file_servers_addresses,
-    delete_app_data_for_agentid, update_apps_per_agent_by_customer,
+    delete_app_data_for_agentid, update_apps_per_agent_by_view,
     update_app_data_by_agentid, update_app_data_by_agentid_and_appid,
-    update_customers_in_apps_by_customer, update_apps_per_agent,
+    update_views_in_apps_by_view, update_apps_per_agent,
     delete_apps_per_agent_older_than, update_hidden_status,
-    fetch_app_id_by_name_and_version, update_customers_in_app_by_app_id,
-    update_app_data_by_app_id, delete_apps_by_customer)
+    fetch_app_id_by_name_and_version, update_views_in_app_by_app_id,
+    update_app_data_by_app_id, delete_apps_by_view)
 
 
 from vFense.core.decorators import time_it, results_message
-from vFense.core.customer import CustomerKeys
-from vFense.core.customer.customers import get_customer_property
+from vFense.core.view import ViewKeys
+from vFense.core.view.views import get_view_property
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
@@ -70,39 +70,39 @@ def get_remote_file_size(url):
     return str(remote_size)
 
 
-def get_base_url(customer_name):
+def get_base_url(view_name):
     """Retrieve the base url for downloading packages
     Args:
-        customer_name (str): The name of the customer
+        view_name (str): The name of the view
 
     Basic Usage:
         >>> vFense.plugins.patching.patching import get_base_url
-        >>> customer_name = 'default'
-        >>> get_base_url(customer_name)
+        >>> view_name = 'default'
+        >>> get_base_url(view_name)
 
     Returns:
         String
     """
     return(
-        get_customer_property(
-            customer_name, CustomerKeys.PackageUrl
+        get_view_property(
+            view_name, ViewKeys.PackageUrl
         )
     )
 
-def get_download_urls(customer_name, app_id, file_data):
+def get_download_urls(view_name, app_id, file_data):
     """Replace the vendor supplied url with the vFense Server urls
     Args:
-        customer_name (str): The name of the customer
+        view_name (str): The name of the view
         app_id (str): The 64 character ID of the app
         file_data (list): List of the file_data that will be manipulated
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_files import fetch_file_data
         >>> from vFense.plugins.patching.patching import get_download_urls
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> app_id = 'c726edf62d1d17ca8b420f24bbdc9c8fa58d000b51d31614e3826c2fb37a2929'
         >>> file_data = fetch_file_data(app_id)
-        >>> get_download_urls(customer_name, app_id, file_data)
+        >>> get_download_urls(view_name, app_id, file_data)
 
     Returns:
         List of dictionaries
@@ -119,16 +119,16 @@ def get_download_urls(customer_name, app_id, file_data):
         ]
     """
     uris = []
-    url_base = get_base_url(customer_name)
+    url_base = get_base_url(view_name)
     file_uris_base = None
     url_base = os.path.join(url_base, app_id)
     file_uris_base = os.path.join(FileLocationUris.PACKAGES, app_id)
 
     for pkg in file_data:
-        file_servers = fetch_file_servers_addresses(customer_name)
+        file_servers = fetch_file_servers_addresses(view_name)
         file_uris = []
 
-        # If customer defined file_servers exist then add those to the
+        # If view defined file_servers exist then add those to the
         # beginning of the file_uris list.
         if file_servers:
             for server in file_servers:
@@ -213,15 +213,15 @@ def update_supported_app_data_by_agentid_and_appid(agent_id, app_id, app_data):
     return data
 
 @time_it
-def remove_os_apps_for_agent_by_customer(customer_name):
-    """Delete all apps for all agents by customer for
+def remove_os_apps_for_agent_by_view(view_name):
+    """Delete all apps for all agents by view for
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_os_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> remove_os_apps_for_agent_by_customer(customer_name)
+        >>> from vFense.plugins.patching.patching import remove_os_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> remove_os_apps_for_agent_by_view(view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -229,22 +229,22 @@ def remove_os_apps_for_agent_by_customer(customer_name):
     """
     collection_name = AppCollections.AppsPerAgent
     return(
-        delete_apps_by_customer(
-            customer_name,
+        delete_apps_by_view(
+            view_name,
             collection_name,
         )
     )
 
 @time_it
-def remove_supported_apps_for_agent_by_customer(customer_name):
-    """Delete all apps for all agents by customer.
+def remove_supported_apps_for_agent_by_view(view_name):
+    """Delete all apps for all agents by view.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_supported_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> remove_supported_apps_for_agent_by_customer(customer_name)
+        >>> from vFense.plugins.patching.patching import remove_supported_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> remove_supported_apps_for_agent_by_view(view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -252,22 +252,22 @@ def remove_supported_apps_for_agent_by_customer(customer_name):
     """
     collection_name = AppCollections.SupportedAppsPerAgent
     return(
-        delete_apps_by_customer(
-            customer_name,
+        delete_apps_by_view(
+            view_name,
             collection_name,
         )
     )
 
 @time_it
-def remove_custom_apps_for_agent_by_customer(customer_name):
-    """Delete all apps for all agents by customer.
+def remove_custom_apps_for_agent_by_view(view_name):
+    """Delete all apps for all agents by view.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_custom_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> remove_custom_apps_for_agent_by_customer(customer_name)
+        >>> from vFense.plugins.patching.patching import remove_custom_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> remove_custom_apps_for_agent_by_view(view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -275,22 +275,22 @@ def remove_custom_apps_for_agent_by_customer(customer_name):
     """
     collection_name = AppCollections.CustomAppsPerAgent
     return(
-        delete_apps_by_customer(
-            customer_name,
+        delete_apps_by_view(
+            view_name,
             collection_name,
         )
     )
 
 @time_it
-def remove_vfense_apps_for_agent_by_customer(customer_name):
-    """Delete all apps for all agents by customer.
+def remove_vfense_apps_for_agent_by_view(view_name):
+    """Delete all apps for all agents by view.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_vfense_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> remove_vfense_apps_for_agent_by_customer(customer_name)
+        >>> from vFense.plugins.patching.patching import remove_vfense_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> remove_vfense_apps_for_agent_by_view(view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -298,24 +298,24 @@ def remove_vfense_apps_for_agent_by_customer(customer_name):
     """
     collection_name = AppCollections.vFenseAppsPerAgent
     return(
-        delete_apps_by_customer(
-            customer_name,
+        delete_apps_by_view(
+            view_name,
             collection_name,
         )
     )
 
 @time_it
-def update_os_apps_for_agent_by_customer(customer_name, app_data):
-    """Update all apps for all agents by customer name.
+def update_os_apps_for_agent_by_view(view_name, app_data):
+    """Update all apps for all agents by view name.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
         app_data (dict): The data that you are updating.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_os_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'}
-        >>> update_os_apps_for_agent_by_customer(customer_name, app_data)
+        >>> from vFense.plugins.patching.patching import update_os_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> app_data = {'view_name': 'vFense'}
+        >>> update_os_apps_for_agent_by_view(view_name, app_data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -323,23 +323,23 @@ def update_os_apps_for_agent_by_customer(customer_name, app_data):
     """
     collection_name = AppCollections.AppsPerAgent
     return(
-        update_apps_per_agent_by_customer(
-            customer_name, app_data, collection_name
+        update_apps_per_agent_by_view(
+            view_name, app_data, collection_name
         )
     )
 
 @time_it
-def update_supported_apps_for_agent_by_customer(customer_name, app_data):
-    """Update all apps for all agents by customer name.
+def update_supported_apps_for_agent_by_view(view_name, app_data):
+    """Update all apps for all agents by view name.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
         app_data (dict): The data that you are updating.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_supported_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'}
-        >>> update_supported_apps_for_agent_by_customer(customer_name, app_data)
+        >>> from vFense.plugins.patching.patching import update_supported_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> app_data = {'view_name': 'vFense'}
+        >>> update_supported_apps_for_agent_by_view(view_name, app_data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -347,23 +347,23 @@ def update_supported_apps_for_agent_by_customer(customer_name, app_data):
     """
     collection_name = AppCollections.SupportedAppsPerAgent
     return(
-        update_apps_per_agent_by_customer(
-            customer_name, app_data, collection_name
+        update_apps_per_agent_by_view(
+            view_name, app_data, collection_name
         )
     )
 
 @time_it
-def update_custom_apps_for_agent_by_customer(customer_name, app_data):
-    """Update all apps for all agents by customer name.
+def update_custom_apps_for_agent_by_view(view_name, app_data):
+    """Update all apps for all agents by view name.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
         app_data (dict): The data that you are updating.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_custom_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'}
-        >>> update_custom_apps_for_agent_by_customer(customer_name, app_data)
+        >>> from vFense.plugins.patching.patching import update_custom_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> app_data = {'view_name': 'vFense'}
+        >>> update_custom_apps_for_agent_by_view(view_name, app_data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -371,23 +371,23 @@ def update_custom_apps_for_agent_by_customer(customer_name, app_data):
     """
     collection_name = AppCollections.CustomAppsPerAgent
     return(
-        update_apps_per_agent_by_customer(
-            customer_name, app_data, collection_name
+        update_apps_per_agent_by_view(
+            view_name, app_data, collection_name
         )
     )
 
 @time_it
-def update_vfense_apps_for_agent_by_customer(customer_name, app_data):
-    """Update all apps for all agents by customer name.
+def update_vfense_apps_for_agent_by_view(view_name, app_data):
+    """Update all apps for all agents by view name.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
         app_data (dict): The data that you are updating.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_agent_apps_for_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'}
-        >>> update_agent_apps_for_agent_by_customer(customer_name, app_data)
+        >>> from vFense.plugins.patching.patching import update_agent_apps_for_agent_by_view
+        >>> view_name = 'vFense'
+        >>> app_data = {'view_name': 'vFense'}
+        >>> update_agent_apps_for_agent_by_view(view_name, app_data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -395,34 +395,34 @@ def update_vfense_apps_for_agent_by_customer(customer_name, app_data):
     """
     collection_name = AppCollections.CustomAppsPerAgent
     return(
-        update_apps_per_agent_by_customer(
-            customer_name, app_data, collection_name
+        update_apps_per_agent_by_view(
+            view_name, app_data, collection_name
         )
     )
 
 
 @time_it
-def update_customers_in_supported_apps(
-        current_customer, new_customer,
-        remove_customer=False,
+def update_views_in_supported_apps(
+        current_view, new_view,
+        remove_view=False,
         conn=None
     ):
-    """ Update the customers list of all applications for the current customer.
+    """ Update the views list of all applications for the current view.
     Args:
-        current_customer (str): Name of the current customer.
-        new_customer (str): Name of the new customer.
+        current_view (str): Name of the current view.
+        new_view (str): Name of the new view.
 
     Kwargs:
-        remove_customer (bool): True or False
+        remove_view (bool): True or False
             default = False
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_customers_in_supported_apps
-        >>> current_customer = 'default'
-        >>> new_customer = 'test'
-        >>> remove_customer = True
-        >>> update_customers_in_supported_apps(
-                current_customer, new_customer, remove_customer
+        >>> from vFense.plugins.patching.patching import update_views_in_supported_apps
+        >>> current_view = 'default'
+        >>> new_view = 'test'
+        >>> remove_view = True
+        >>> update_views_in_supported_apps(
+                current_view, new_view, remove_view
             )
 
     Returns:
@@ -431,35 +431,35 @@ def update_customers_in_supported_apps(
     """
     collection = AppCollections.SupportedApps
     return(
-        update_customers_in_apps_by_customer(
-            current_customer, new_customer,
-            remove_customer, collection
+        update_views_in_apps_by_view(
+            current_view, new_view,
+            remove_view, collection
         )
     )
 
 
 @time_it
-def update_customers_in_custom_apps(
-        current_customer, new_customer,
-        remove_customer=False,
+def update_views_in_custom_apps(
+        current_view, new_view,
+        remove_view=False,
         conn=None
     ):
-    """ Update the customers list of all applications for the current customer.
+    """ Update the views list of all applications for the current view.
     Args:
-        current_customer (str): Name of the current customer.
-        new_customer (str): Name of the new customer.
+        current_view (str): Name of the current view.
+        new_view (str): Name of the new view.
 
     Kwargs:
-        remove_customer (bool): True or False
+        remove_view (bool): True or False
             default = False
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_customers_in_custom_apps
-        >>> current_customer = 'default'
-        >>> new_customer = 'test'
-        >>> remove_customer = True
-        >>> update_customers_in_custom_apps(
-                current_customer, new_customer, remove_customer
+        >>> from vFense.plugins.patching.patching import update_views_in_custom_apps
+        >>> current_view = 'default'
+        >>> new_view = 'test'
+        >>> remove_view = True
+        >>> update_views_in_custom_apps(
+                current_view, new_view, remove_view
             )
 
     Returns:
@@ -468,34 +468,34 @@ def update_customers_in_custom_apps(
     """
     collection = AppCollections.CustomApps
     return(
-        update_customers_in_apps_by_customer(
-            current_customer, new_customer,
-            remove_customer, collection
+        update_views_in_apps_by_view(
+            current_view, new_view,
+            remove_view, collection
         )
     )
 
 
 @time_it
-def update_customers_in_vfense_apps(
-        current_customer, new_customer,
-        remove_customer=False,
+def update_views_in_vfense_apps(
+        current_view, new_view,
+        remove_view=False,
     ):
-    """ Update the customers list of all applications for the current customer.
+    """ Update the views list of all applications for the current view.
     Args:
-        current_customer (str): Name of the current customer.
-        new_customer (str): Name of the new customer.
+        current_view (str): Name of the current view.
+        new_view (str): Name of the new view.
 
     Kwargs:
-        remove_customer (bool): True or False
+        remove_view (bool): True or False
             default = False
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_customers_in_vfense_apps
-        >>> current_customer = 'default'
-        >>> new_customer = 'test'
-        >>> remove_customer = True
-        >>> update_customers_in_vfense_apps(
-                current_customer, new_customer, remove_customer
+        >>> from vFense.plugins.patching.patching import update_views_in_vfense_apps
+        >>> current_view = 'default'
+        >>> new_view = 'test'
+        >>> remove_view = True
+        >>> update_views_in_vfense_apps(
+                current_view, new_view, remove_view
             )
 
     Returns:
@@ -504,9 +504,9 @@ def update_customers_in_vfense_apps(
     """
     collection = AppCollections.vFenseApps
     return(
-        update_customers_in_apps_by_customer(
-            current_customer, new_customer,
-            remove_customer, collection
+        update_views_in_apps_by_view(
+            current_view, new_view,
+            remove_view, collection
         )
     )
 
@@ -535,77 +535,77 @@ def remove_all_app_data_for_agent(agent_id):
 
 
 @time_it
-def remove_all_apps_for_customer(customer_name):
-    """Remove all apps for customer.
+def remove_all_apps_for_view(view_name):
+    """Remove all apps for view.
     Args:
-        customer_name (str): The name of the customer
+        view_name (str): The name of the view
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import remove_all_apps_for_customer
-        >>> customer_name = 'default'
-        >>> remove_all_apps_for_customer(customer_name)
+        >>> from vFense.plugins.patching.patching import remove_all_apps_for_view
+        >>> view_name = 'default'
+        >>> remove_all_apps_for_view(view_name)
     """
-    remove_os_apps_for_agent_by_customer(customer_name)
-    remove_supported_apps_for_agent_by_customer(customer_name)
-    remove_custom_apps_for_agent_by_customer(customer_name)
-    remove_vfense_apps_for_agent_by_customer(customer_name)
+    remove_os_apps_for_agent_by_view(view_name)
+    remove_supported_apps_for_agent_by_view(view_name)
+    remove_custom_apps_for_agent_by_view(view_name)
+    remove_vfense_apps_for_agent_by_view(view_name)
 
 
 @time_it
-def change_customer_for_apps_in_customer(
-        original_customer, new_customer
+def change_view_for_apps_in_view(
+        original_view, new_view
     ):
-    """Update the customer name for all apps in original customer.
+    """Update the view name for all apps in original view.
     Args:
-        current_customer (str): The name of the current customer.
-        new_customer (str): The name of the new customer.
+        current_view (str): The name of the current view.
+        new_view (str): The name of the new view.
 
     Basic Usage:
-        >>> from vFense.plugins.patching.patching import update_all_apps_for_customer
-        >>> original_customer = 'default'
-        >>> new_customer = 'test'
-        >>> app_data = {'customer_name': 'test'}
-        >>> update_all_apps_for_customer(
-                original_customer, new_customer, app_data
+        >>> from vFense.plugins.patching.patching import update_all_apps_for_view
+        >>> original_view = 'default'
+        >>> new_view = 'test'
+        >>> app_data = {'view_name': 'test'}
+        >>> update_all_apps_for_view(
+                original_view, new_view, app_data
             )
     """
-    remove_customer = False
-    agent_count = total_agents_in_customer(original_customer)
+    remove_view = False
+    agent_count = total_agents_in_view(original_view)
     if agent_count == 0:
-        remove_customer = True
+        remove_view = True
 
-    app_data = {CommonAppKeys.CustomerName: new_customer}
+    app_data = {CommonAppKeys.ViewName: new_view}
 
-    update_os_apps_for_agent_by_customer(
-        original_customer, app_data
+    update_os_apps_for_agent_by_view(
+        original_view, app_data
     )
 
-    update_customers_in_apps_by_customer(
-        original_customer, new_customer, remove_customer
+    update_views_in_apps_by_view(
+        original_view, new_view, remove_view
     )
 
-    update_supported_apps_for_agent_by_customer(
-        original_customer, app_data
+    update_supported_apps_for_agent_by_view(
+        original_view, app_data
     )
 
-    update_customers_in_supported_apps(
-        original_customer, new_customer, remove_customer
+    update_views_in_supported_apps(
+        original_view, new_view, remove_view
     )
 
-    update_custom_apps_for_agent_by_customer(
-        original_customer, app_data
+    update_custom_apps_for_agent_by_view(
+        original_view, app_data
     )
 
-    update_customers_in_custom_apps(
-        original_customer, new_customer, remove_customer
+    update_views_in_custom_apps(
+        original_view, new_view, remove_view
     )
 
-    update_vfense_apps_for_agent_by_customer(
-        original_customer, app_data
+    update_vfense_apps_for_agent_by_view(
+        original_view, app_data
     )
 
-    update_customers_in_vfense_apps(
-        original_customer, new_customer, remove_customer
+    update_views_in_vfense_apps(
+        original_view, new_view, remove_view
     )
 
 
@@ -619,7 +619,7 @@ def update_all_app_data_for_agent(agent_id, app_data):
     Basic Usage:
         >>> from vFense.plugins.patching.patching import update_all_app_data_for_agent
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> app_data = {'customer_name': 'default'}
+        >>> app_data = {'view_name': 'default'}
         >>> update_all_app_data_for_agent(agent_id, app_data)
     """
     collections = [
@@ -735,12 +735,12 @@ def get_vulnerability_info_for_app(
     return vuln_data
 
 @time_it
-def application_updater(customer_name, app_data, os_string,
+def application_updater(view_name, app_data, os_string,
         collection=AppCollections.UniqueApplications):
     """Insert or update an existing application in the provided collection.
 
     Args:
-        customer_name (str): The name of the customer, this application
+        view_name (str): The name of the view, this application
             is a part of.
         app_data (dict): Dictionary of the application data.
         os_string (str): The name of the operating system... Ubuntu 12.04
@@ -751,7 +751,7 @@ def application_updater(customer_name, app_data, os_string,
 
     Basic Usage:
         >>> from vFense.plugins.patching.patching import application_updater
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> app_data = {
                 "kb": "",
                 "vendor_name": "",
@@ -769,7 +769,7 @@ def application_updater(customer_name, app_data, os_string,
                 "name": "gwibber-service-facebook"
             }
         >>> os_string = 'Ubuntu 12.04 '
-        >>> application_updater(customer_name, app_data, os_string[ ,'unique_applications'])
+        >>> application_updater(view_name, app_data, os_string[ ,'unique_applications'])
 
     Returns:
         Tuple (inserted_count, updated_count)
@@ -789,7 +789,7 @@ def application_updater(customer_name, app_data, os_string,
 
     if exists:
         add_file_data(app_id, file_data, agent_id)
-        update_customers_in_app_by_app_id(customer_name, app_id)
+        update_views_in_app_by_app_id(view_name, app_id)
         vuln_data = get_vulnerability_info_for_app(
             os_string, app_name, app_version, app_kb
         )
@@ -803,7 +803,7 @@ def application_updater(customer_name, app_data, os_string,
 
     else:
         add_file_data(app_id, file_data, agent_id)
-        app_data[AppsKey.Customers] = [customer_name]
+        app_data[AppsKey.Views] = [view_name]
         app_data[AppsKey.Hidden] = CommonKeys.NO
 
         if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
@@ -863,7 +863,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
                     "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3",
                     "last_modified_time": 1398997520,
                     "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f",
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         >>> add_or_update_apps_per_agent(

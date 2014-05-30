@@ -2,8 +2,8 @@ from collections import namedtuple
 
 UserCollection = 'users'
 GroupCollection = 'groups'
-CustomerCollection = 'customers'
-DefaultCustomer = 'default'
+ViewCollection = 'views'
+DefaultView = 'default'
 
 
 class UserKey():
@@ -15,9 +15,9 @@ class UserKey():
     Password = 'password'
     Enabled = 'enabled'
     Groups = 'groups'
-    Customers = 'customers'
-    CurrentCustomer = 'current_customer'
-    DefaultCustomer = 'default_customer'
+    Views = 'views'
+    CurrentView = 'current_view'
+    DefaultView = 'default_view'
 
 UserInfo = namedtuple('UserInfo', [UserKey.Name])
 
@@ -26,14 +26,14 @@ class GroupKey():
 
     Id = 'id'
     Name = 'name'
-    Customer = 'customer'
+    View = 'view'
     Users = 'users'
     Permissions = 'permissions'
 
 GroupInfo = namedtuple('GroupInfo', [GroupKey.Id, GroupKey.Name])
 
 
-class CustomerKey():
+class ViewKey():
 
     Name = 'name'  # Primary key!!
     Id = 'id'
@@ -44,4 +44,4 @@ class CustomerKey():
     NetThrottle = 'net_throttle'
     CpuThrottle = 'cpu_throttle'
 
-CustomerInfo = namedtuple('CustomerInfo', [CustomerKey.Name])
+ViewInfo = namedtuple('ViewInfo', [ViewKey.Name])

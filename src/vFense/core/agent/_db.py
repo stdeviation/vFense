@@ -15,15 +15,15 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 @db_create_close
-def fetch_production_levels_from_agent(customer_name, conn=None):
+def fetch_production_levels_from_agent(view_name, conn=None):
     """Retrieve all the production levels that is in the database
     Args:
-        customer_name (str): Name of the customer, where the agent is located
+        view_name (str): Name of the view, where the agent is located
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_production_levels_from_agent
-        >>> customer_name = 'default'
-        >>> fetch_production_levels_from_agent(customer_name)
+        >>> view_name = 'default'
+        >>> fetch_production_levels_from_agent(view_name)
 
     Returns:
         List of Production levels in the system
@@ -37,7 +37,7 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
         data = (
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(view_name, index=AgentIndexes.ViewName)
             .pluck(AgentKey.ProductionLevel)
             .distinct()
             .map(lambda x: x[AgentKey.ProductionLevel])
@@ -51,15 +51,15 @@ def fetch_production_levels_from_agent(customer_name, conn=None):
 
 @time_it
 @db_create_close
-def total_agents_in_customer(customer_name, conn=None):
-    """Retrieve the total number of agents in customer.
+def total_agents_in_view(view_name, conn=None):
+    """Retrieve the total number of agents in view.
     Args:
-        customer_name (str): Name of the customer, where the agent is located
+        view_name (str): Name of the view, where the agent is located
 
     Basic Usage:
-        >>> from vFense.core.agent._db import total_agents_in_customer
-        >>> customer_name = 'default'
-        >>> total_agents_in_customer(customer_name)
+        >>> from vFense.core.agent._db import total_agents_in_view
+        >>> view_name = 'default'
+        >>> total_agents_in_view(view_name)
 
     Returns:
         Integer
@@ -69,7 +69,7 @@ def total_agents_in_customer(customer_name, conn=None):
         count = (
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(view_name, index=AgentIndexes.ViewName)
             .count()
             .run(conn)
         )
@@ -81,15 +81,15 @@ def total_agents_in_customer(customer_name, conn=None):
 
 @time_it
 @db_create_close
-def fetch_supported_os_strings(customer_name, conn=None):
+def fetch_supported_os_strings(view_name, conn=None):
     """Retrieve all the operating systems that is in the database
     Args:
-        customer_name (str): Name of the customer, where the agent is located
+        view_name (str): Name of the view, where the agent is located
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_supported_os_strings
-        >>> customer_name = 'default'
-        >>> fetch_supported_os_strings(customer_name)
+        >>> view_name = 'default'
+        >>> fetch_supported_os_strings(view_name)
 
     Returns:
         List of available operating system strings in the database
@@ -105,7 +105,7 @@ def fetch_supported_os_strings(customer_name, conn=None):
         data = (
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(view_name, index=AgentIndexes.ViewName)
             .pluck(AgentKey.OsString)
             .distinct()
             .map(lambda x: x[AgentKey.OsString])
@@ -119,18 +119,18 @@ def fetch_supported_os_strings(customer_name, conn=None):
 
 @time_it
 @db_create_close
-def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
+def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
     """Retrieve a list of agent ids
     Kwargs:
-        customer_name (str): Name of the customer, where the agent is located
+        view_name (str): Name of the view, where the agent is located
         agent_os (str):  The os code you are filtering on.
             (linux or windows or darwin)
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_agent_ids
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> os_code = 'os_code'
-        >>> fetch_agent_ids(customer_name, os_code)
+        >>> fetch_agent_ids(view_name, os_code)
 
     Returns:
         List of agent ids
@@ -141,26 +141,26 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
     """
     data = []
     try:
-        if customer_name and agent_os:
+        if view_name and agent_os:
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .get_all(view_name, index=AgentIndexes.ViewName)
                 .filter({AgentKey.OsCode: agent_os})
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
             )
 
-        elif customer_name and not agent_os:
+        elif view_name and not agent_os:
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .get_all(view_name, index=AgentIndexes.ViewName)
                 .map(lambda x: x[AgentKey.AgentId])
                 .run(conn)
             )
 
-        elif agent_os and not customer_name:
+        elif agent_os and not view_name:
             data = list(
                 r
                 .table(AgentCollections.Agents)
@@ -169,7 +169,7 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
                 .run(conn)
             )
 
-        elif not agent_os and not customer_name:
+        elif not agent_os and not view_name:
             data = list(
                 r
                 .table(AgentCollections.Agents)
@@ -185,13 +185,13 @@ def fetch_agent_ids(customer_name=None, agent_os=None, conn=None):
 @time_it
 @db_create_close
 def fetch_agents(
-        customer_name=None, filter_key=None,
+        view_name=None, filter_key=None,
         filter_val=None, keys_to_pluck=None,
         conn=None
     ):
     """Retrieve all agents by any key in the agent collection
     Kwargs:
-        customer_name (str): Name of the customer, where the agent is located
+        view_name (str): Name of the view, where the agent is located
         filter_key (str): The name of the key that you are filtering on.
         filter_val (str):  The value that you are searching for.
         keys_to_pluck (list): Specific keys that you are retrieving from the database
@@ -201,7 +201,7 @@ def fetch_agents(
         >>> key = 'os_code'
         >>> val = 'linux'
         >>> pluck = ['computer_name', 'agent_id']
-        >>> fetch_agents(customer_name, key, val, pluck)
+        >>> fetch_agents(view_name, key, val, pluck)
 
     Return:
         List of agents
@@ -219,7 +219,7 @@ def fetch_agents(
     data = []
     try:
         if (
-                filter_key and filter_val and not customer_name
+                filter_key and filter_val and not view_name
                 and not keys_to_pluck
             ):
 
@@ -231,43 +231,43 @@ def fetch_agents(
                 .run(conn)
             )
 
-        elif filter_key and filter_val and customer_name and not keys_to_pluck:
+        elif filter_key and filter_val and view_name and not keys_to_pluck:
 
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .get_all(view_name, index=AgentIndexes.ViewName)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
                 .run(conn)
             )
 
-        elif filter_key and filter_val and keys_to_pluck and not customer_name:
+        elif filter_key and filter_val and keys_to_pluck and not view_name:
 
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .filter({filter_key: filter_val})
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-
-        elif filter_key and filter_val and keys_to_pluck and customer_name:
-
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
                 .filter({filter_key: filter_val})
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
 
+        elif filter_key and filter_val and keys_to_pluck and view_name:
+
+            data = list(
+                r
+                .table(AgentCollections.Agents)
+                .get_all(view_name, index=AgentIndexes.ViewName)
+                .filter({filter_key: filter_val})
+                .merge(Merge.TAGS)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
+
         elif (
                 not filter_key and not filter_val
-                and not customer_name and keys_to_pluck
+                and not view_name and keys_to_pluck
             ):
 
             data = list(
@@ -280,13 +280,13 @@ def fetch_agents(
 
         elif (
                 not filter_key and not filter_val
-                and customer_name and keys_to_pluck
+                and view_name and keys_to_pluck
             ):
 
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .get_all(view_name, index=AgentIndexes.ViewName)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -294,7 +294,7 @@ def fetch_agents(
 
         elif (
                 not filter_key and not filter_val
-                and not customer_name and not keys_to_pluck
+                and not view_name and not keys_to_pluck
             ):
 
             data = list(
@@ -306,13 +306,13 @@ def fetch_agents(
 
         elif (
                 not filter_key and not filter_val
-                and customer_name and not keys_to_pluck
+                and view_name and not keys_to_pluck
             ):
 
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(customer_name, index=AgentIndexes.CustomerName)
+                .get_all(view_name, index=AgentIndexes.ViewName)
                 .merge(Merge.TAGS)
                 .run(conn)
             )
@@ -375,15 +375,15 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def fetch_all_agents_for_customer(customer_name, conn=None):
-    """Retrieve all agents for a customer.
+def fetch_all_agents_for_view(view_name, conn=None):
+    """Retrieve all agents for a view.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.agent._db import fetch_all_agents_for_customer
-        >>> customer_name = 'test'
-        >>> fetch_all_agents_for_customer(customer_nam)
+        >>> from vFense.agent._db import fetch_all_agents_for_view
+        >>> view_name = 'test'
+        >>> fetch_all_agents_for_view(view_nam)
 
     Return:
         List of dictionaries.
@@ -393,7 +393,7 @@ def fetch_all_agents_for_customer(customer_name, conn=None):
         data = list(
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(view_name, index=AgentIndexes.ViewName)
             .run(conn)
         )
 
@@ -449,7 +449,7 @@ def insert_agent_data(agent_data, conn=None):
 
     Basic Usage:
         >>> from vFense.core.agent._db import insert_agent_data
-        >>> agent_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
+        >>> agent_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_agent_data(agent_data)
 
     Return:
@@ -473,15 +473,15 @@ def insert_agent_data(agent_data, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_all_agents_for_customer(customer_name, conn=None):
+def delete_all_agents_for_view(view_name, conn=None):
     """Retrieve a user from the database
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Basic Usage:
-        >>> from vFense.agent._db import delete_all_agents_for_customer
-        >>> customer_name = 'test'
-        >>> delete_all_agents_for_customer(customer_nam)
+        >>> from vFense.agent._db import delete_all_agents_for_view
+        >>> view_name = 'test'
+        >>> delete_all_agents_for_view(view_nam)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -492,7 +492,7 @@ def delete_all_agents_for_customer(customer_name, conn=None):
         data = (
             r
             .table(AgentCollections.Agents)
-            .get_all(customer_name, index=AgentIndexes.CustomerName)
+            .get_all(view_name, index=AgentIndexes.ViewName)
             .delete()
             .run(conn)
         )
@@ -505,17 +505,17 @@ def delete_all_agents_for_customer(customer_name, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def move_all_agents_to_customer(current_customer, new_customer, conn=None):
-    """Move all agents in current customer to the new customer.
+def move_all_agents_to_view(current_view, new_view, conn=None):
+    """Move all agents in current view to the new view.
     Args:
-        current_customer (str): Name of the current customer.
-        new_customer (str): Name of the new customer.
+        current_view (str): Name of the current view.
+        new_view (str): Name of the new view.
 
     Basic Usage:
-        >>> from vFense.agent._db import move_all_agents_to_customer
-        >>> current_customer = 'default'
-        >>> new_customer = 'test'
-        >>> move_all_agents_to_customer(current_customer, new_customer)
+        >>> from vFense.agent._db import move_all_agents_to_view
+        >>> current_view = 'default'
+        >>> new_view = 'test'
+        >>> move_all_agents_to_view(current_view, new_view)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -526,10 +526,10 @@ def move_all_agents_to_customer(current_customer, new_customer, conn=None):
         data = (
             r
             .table(AgentCollections.Agents)
-            .get_all(current_customer, index=AgentIndexes.CustomerName)
+            .get_all(current_view, index=AgentIndexes.ViewName)
             .update(
                 {
-                    AgentKey.CustomerName: new_customer
+                    AgentKey.ViewName: new_view
                 }
             )
             .run(conn)
@@ -543,17 +543,17 @@ def move_all_agents_to_customer(current_customer, new_customer, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def move_agents_to_customer(agent_ids, new_customer, conn=None):
-    """Move a list of agents into another customer
+def move_agents_to_view(agent_ids, new_view, conn=None):
+    """Move a list of agents into another view
     Args:
         agent_ids (list): List of agent ids
-        new_customer (str): Name of the new customer.
+        new_view (str): Name of the new view.
 
     Basic Usage:
-        >>> from vFense.agent._db import move_agents_to_customer
-        >>> new_customer = 'test'
+        >>> from vFense.agent._db import move_agents_to_view
+        >>> new_view = 'test'
         >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
-        >>> move_agents_to_customer(agent_ids, new_customer)
+        >>> move_agents_to_view(agent_ids, new_view)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -571,7 +571,7 @@ def move_agents_to_customer(agent_ids, new_customer, conn=None):
                 .get(agent_id)
                 .update(
                     {
-                        AgentKey.CustomerName: new_customer
+                        AgentKey.ViewName: new_view
                     }
                 )
             )
@@ -586,17 +586,17 @@ def move_agents_to_customer(agent_ids, new_customer, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def move_agent_to_customer(agent_id, new_customer, conn=None):
-    """Move an agent into another customer
+def move_agent_to_view(agent_id, new_view, conn=None):
+    """Move an agent into another view
     Args:
         agent_id (str): The 36 character UUID of an agent.
-        new_customer (str): Name of the new customer.
+        new_view (str): Name of the new view.
 
     Basic Usage:
-        >>> from vFense.agent._db import move_agent_to_customer
-        >>> new_customer = 'test'
+        >>> from vFense.agent._db import move_agent_to_view
+        >>> new_view = 'test'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> move_agent_to_customer(agent_id, new_customer)
+        >>> move_agent_to_view(agent_id, new_view)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -610,7 +610,7 @@ def move_agent_to_customer(agent_id, new_customer, conn=None):
             .get(agent_id)
             .update(
                 {
-                    AgentKey.CustomerName: new_customer
+                    AgentKey.ViewName: new_view
                 }
             )
             .run(conn)

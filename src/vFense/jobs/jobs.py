@@ -29,7 +29,7 @@ def remove_expired_jobs_and_update_operations():
     logger.info(msg)
     for job in expired_jobs:
         operation = (
-            AgentOperation('admin', job[OperationKey.CustomerName], None, None)
+            AgentOperation('admin', job[OperationKey.ViewName], None, None)
         )
 
         operation.update_operation_expire_time(

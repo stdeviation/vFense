@@ -28,9 +28,9 @@ logger = logging.getLogger('rvapi')
 
 
 class AgentManager():
-    def __init__(self, agent_id, customer_name='default',
+    def __init__(self, agent_id, view_name='default',
                  username='system_user'):
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.agent_id = agent_id
         self.username = username
 
@@ -261,20 +261,20 @@ class AgentManager():
         return(status)
 
     @db_create_close
-    def change_customer(self, customer_name, uri, method, conn=None):
+    def change_view(self, view_name, uri, method, conn=None):
         try:
             cexists = (
                 r
-                .table(Collection.Customers)
-                .get(customer_name)
+                .table(Collection.Views)
+                .get(view_name)
                 .run(conn)
             )
-            customer_data = {AgentKey.CustomerName: customer_name}
+            view_data = {AgentKey.ViewName: view_name}
             if cexists:
                 update_agent_field(
                     self.agent_id,
-                    AgentKey.CustomerName,
-                    customer_name,
+                    AgentKey.ViewName,
+                    view_name,
                     self.username,
                     uri, method
                 )
@@ -282,13 +282,13 @@ class AgentManager():
                 rv_q = Queue('move_agent', connection=rq_pool)
                 rv_q.enqueue_call(
                     func=update_all_app_data_for_agent,
-                    args=(self.agent_id, customer_data),
+                    args=(self.agent_id, view_data),
                     timeout=3600,
                 )
                 status = (
                     GenericResults(
                         self.username, uri, method
-                    ).object_updated(self.agent_id, 'agent', customer_data)
+                    ).object_updated(self.agent_id, 'agent', view_data)
                 )
             else:
                 status = (

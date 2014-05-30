@@ -5,16 +5,16 @@ from vFense.core.user._constants import *
 from vFense.core.user.users import *
 from vFense.core.group.groups import *
 from vFense.core.group._constants import *
-from vFense.core.customer.customers import *
-from vFense.core.customer._constants import *
+from vFense.core.view.views import *
+from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
 from vFense.errorz._constants import *
 
-class UsersGroupsAndCustomersTests(unittest.TestCase):
+class UsersGroupsAndViewsTests(unittest.TestCase):
 
-    def test_a_create_customer(self):
+    def test_a_create_view(self):
         results = (
-            create_customer(
+            create_view(
                 'test',
                 http_application_url_location='https://10.0.0.1/packages',
                 init=True
@@ -23,11 +23,11 @@ class UsersGroupsAndCustomersTests(unittest.TestCase):
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
 
-    def test_b_edit_customer(self):
+    def test_b_edit_view(self):
         props = {
-            CustomerKeys.OperationTtl: 20
+            ViewKeys.OperationTtl: 20
         }
-        results = edit_customer('test', **props)
+        results = edit_view('test', **props)
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
 
@@ -120,8 +120,8 @@ class UsersGroupsAndCustomersTests(unittest.TestCase):
         self.failUnless(http_status_code == 200)
 #"""
 
-    def test_l_remove_customers_from_user(self):
-        results = remove_customers_from_user('test3', ['test'])
+    def test_l_remove_views_from_user(self):
+        results = remove_views_from_user('test3', ['test'])
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
 
@@ -152,8 +152,8 @@ class UsersGroupsAndCustomersTests(unittest.TestCase):
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
 
-    def test_q_remove_customer1(self):
-        results = remove_customer('test')
+    def test_q_remove_view1(self):
+        results = remove_view('test')
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
 

@@ -1,7 +1,7 @@
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.group import *
+from vFense.core.group._db_model import *
 from vFense.core.group._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
@@ -25,7 +25,7 @@ def fetch_group(group_id, conn=None):
         Returns a Dict of the properties of a group
         {
             u'group_name': u'Administrator',
-            u'customer_name': u'default',
+            u'view_name': u'default',
             u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
             u'Permissions': [
                 u'administrator'
@@ -74,14 +74,14 @@ def fetch_group_properties(group_id, conn=None):
             ],
             "group_name": "Administrator",
             "id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
-            "customer_name": "default"
+            "view_name": "default"
         }
     """
     map_hash = (lambda x:
         {
             GroupKeys.GroupId: x[GroupKeys.GroupId],
             GroupKeys.GroupName: x[GroupKeys.GroupName],
-            GroupKeys.CustomerName: x[GroupKeys.CustomerName],
+            GroupKeys.ViewName: x[GroupKeys.ViewName],
             GroupKeys.Permissions: x[GroupKeys.Permissions],
             GroupKeys.Users: (
                 r
@@ -110,15 +110,15 @@ def fetch_group_properties(group_id, conn=None):
     return(data)
 
 @db_create_close
-def fetch_properties_for_all_groups(customer_name=None, conn=None):
+def fetch_properties_for_all_groups(view_name=None, conn=None):
     """Retrieve properties for all groupcs.
     Kwargs:
-        customer_name: Name of the customer, which the group is part of.
+        view_name: Name of the view, which the group is part of.
 
     Basic Usage:
         >>> from vFense.group._db import fetch_properties_for_all_groups
-        >>> customer_name = 'test'
-        >>> fetch_properties_for_all_groups(customer_name)
+        >>> view_name = 'test'
+        >>> fetch_properties_for_all_groups(view_name)
 
     Returns:
         Returns a List of a groups and their properties.
@@ -138,7 +138,7 @@ def fetch_properties_for_all_groups(customer_name=None, conn=None):
                 ],
                 "group_name": "JR ADMIN",
                 "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7",
-                "customer_name": "Test"
+                "view_name": "Test"
             },
         ]
     """
@@ -146,7 +146,7 @@ def fetch_properties_for_all_groups(customer_name=None, conn=None):
         {
             GroupKeys.GroupId: x[GroupKeys.GroupId],
             GroupKeys.GroupName: x[GroupKeys.GroupName],
-            GroupKeys.CustomerName: x[GroupKeys.CustomerName],
+            GroupKeys.ViewName: x[GroupKeys.ViewName],
             GroupKeys.Permissions: x[GroupKeys.Permissions],
             GroupKeys.Users: (
                 r
@@ -162,11 +162,11 @@ def fetch_properties_for_all_groups(customer_name=None, conn=None):
     )
     data = {}
     try:
-        if customer_name:
+        if view_name:
             data = list(
                 r
                 .table(GroupCollections.Groups)
-                .get_all(customer_name, index=GroupsPerUserIndexes.CustomerName)
+                .get_all(view_name, index=GroupsPerUserIndexes.ViewName)
                 .map(map_hash)
                 .run(conn)
             )
@@ -188,12 +188,12 @@ def fetch_properties_for_all_groups(customer_name=None, conn=None):
 @time_it
 @db_create_close
 def fetch_group_by_name(
-    group_name, customer_name,
+    group_name, view_name,
     fields_to_pluck=None, conn=None):
     """Retrieve a group by its name from the database
     Args:
         group_name (str): Name of group.
-        customer_name (str): name of the customer, that the group belongs to.
+        view_name (str): name of the view, that the group belongs to.
 
     Kwargs:
         fields_to_pluck (list): List of fields you want to retrieve.
@@ -201,14 +201,14 @@ def fetch_group_by_name(
     Basic Usage:
         >>> from vFense.group._db import fetch_group_by_name
         >>> group_name = 'Administrator'
-        >>> customer_name = 'default'
-        >>> fetch_group_by_name(group_name, customer_name)
+        >>> view_name = 'default'
+        >>> fetch_group_by_name(group_name, view_name)
 
     Returns:
-        Returns a Dict of the properties of a customer
+        Returns a Dict of the properties of a view
         {
             u'group_name': u'Administrator',
-            u'customer_name': u'default',
+            u'view_name': u'default',
             u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
             u'Permissions': [
                 u'administrator'
@@ -223,7 +223,7 @@ def fetch_group_by_name(
                 .filter(
                     {
                         GroupKeys.GroupName: group_name,
-                        GroupKeys.CustomerName: customer_name
+                        GroupKeys.ViewName: view_name
                     }
                 )
                 .pluck(fields_to_pluck)
@@ -236,7 +236,7 @@ def fetch_group_by_name(
                 .filter(
                     {
                         GroupKeys.GroupName: group_name,
-                        GroupKeys.CustomerName: customer_name
+                        GroupKeys.ViewName: view_name
                     }
                 )
                 .run(conn)
@@ -371,14 +371,14 @@ def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
                 u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
                 u'user_name': u'alien',
                 u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             },
             {
                 u'group_name': u'Administrator',
                 u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
                 u'user_name': u'alien',
                 u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'customer_name': u'default'
+                u'view_name': u'default'
             }
         ]
     """
@@ -549,14 +549,14 @@ def users_exist_in_group_ids(group_ids, conn=None):
 @time_it
 @db_create_close
 def fetch_groups(
-    customer_name=None, groupname=None,
+    view_name=None, groupname=None,
     fields_to_pluck=None, conn=None
     ):
-    """Retrieve all groups that is in the database by customer_name or
+    """Retrieve all groups that is in the database by view_name or
         all of the groups or by regex.
 
     Kwargs:
-        customer_name (str):  Name of the customer,
+        view_name (str):  Name of the view,
         groupname (str):  Name of the group you are searching for.
             This is a regular expression match.
         fields_to_pluck (list):  List of fields you want to pluck
@@ -564,16 +564,16 @@ def fetch_groups(
 
     Basic Usage:
         >>> from vFense.group._db import fetch_groups
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> groupname = 'fo'
-        >>> fetch_groups(customer_name, groupname)
+        >>> fetch_groups(view_name, groupname)
 
     Returns:
         Returns a Dict of the properties of a group
         [
             {
                 u'group_name': u'FooLee',
-                u'customer_name': u'default',
+                u'view_name': u'default',
                 u'id': u'5215a906-4b05-46fa-b0fc-4f55f974ebbc',
                 u'Permissions': [
                     u'shutdown',
@@ -583,7 +583,7 @@ def fetch_groups(
             },
             {
                 u'group_name': u'FooLah',
-                u'customer_name': u'default',
+                u'view_name': u'default',
                 u'id': u'1fbdd995-1a6b-4dc8-80a4-9ed23e32864e',
                 u'Permissions': [
                     u'install',
@@ -594,14 +594,14 @@ def fetch_groups(
     """
     data = []
     try:
-        if not customer_name and not groupname and not fields_to_pluck:
+        if not view_name and not groupname and not fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
                 .run(conn)
             )
 
-        elif not customer_name and not groupname and fields_to_pluck:
+        elif not view_name and not groupname and fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
@@ -609,7 +609,7 @@ def fetch_groups(
                 .run(conn)
             )
 
-        elif not customer_name and groupname and not fields_to_pluck:
+        elif not view_name and groupname and not fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
@@ -620,7 +620,7 @@ def fetch_groups(
                 .run(conn)
             )
 
-        elif not customer_name and groupname and fields_to_pluck:
+        elif not view_name and groupname and fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
@@ -632,33 +632,33 @@ def fetch_groups(
                 .run(conn)
             )
 
-        elif customer_name and not groupname and not fields_to_pluck:
+        elif view_name and not groupname and not fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    customer_name, index=GroupIndexes.CustomerName
+                    view_name, index=GroupIndexes.ViewName
                 )
                 .run(conn)
             )
 
-        elif customer_name and not groupname and fields_to_pluck:
+        elif view_name and not groupname and fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    customer_name, index=GroupIndexes.CustomerName
+                    view_name, index=GroupIndexes.ViewName
                 )
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
 
-        elif customer_name and groupname and not fields_to_pluck:
+        elif view_name and groupname and not fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    customer_name, index=GroupIndexes.CustomerName
+                    view_name, index=GroupIndexes.ViewName
                 )
                 .filter(
                     lambda x:
@@ -667,12 +667,12 @@ def fetch_groups(
                 .run(conn)
             )
 
-        elif customer_name and groupname and fields_to_pluck:
+        elif view_name and groupname and fields_to_pluck:
             data = list(
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    customer_name, index=GroupIndexes.CustomerName
+                    view_name, index=GroupIndexes.ViewName
                 )
                 .filter(
                     lambda x:
@@ -699,7 +699,7 @@ def insert_group(group_data, conn=None):
 
     Basic Usage:
         >>> from vFense.group._db import insert_group
-        >>> group_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
+        >>> group_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_group(group_data)
 
     Return:
@@ -732,7 +732,7 @@ def insert_group_per_user(group_data, conn=None):
 
     Basic Usage:
         >>> from vFense.group._db import insert_group_per_user
-        >>> group_data = {'customer_name': 'vFense', 'needs_reboot': 'no'}
+        >>> group_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
         >>> insert_group_per_user(group_data)
 
     Return:
@@ -968,15 +968,15 @@ def delete_groups(group_ids, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_groups_from_customer(customer_name, conn=None):
-    """Delete groups that belong to a customer.
+def delete_groups_from_view(view_name, conn=None):
+    """Delete groups that belong to a view.
     Args:
-        customer_name (str): the name of the customer, that the groups belong too.
+        view_name (str): the name of the view, that the groups belong too.
 
     Basic Usage::
-        >>> from vFense.group._db import delete_groups_from_customer
-        >>> customer_name = 'test'
-        >>> delete_groups_from_customer(customer_name)
+        >>> from vFense.group._db import delete_groups_from_view
+        >>> view_name = 'test'
+        >>> delete_groups_from_view(view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -988,7 +988,7 @@ def delete_groups_from_customer(customer_name, conn=None):
         data = (
             r
             .table(GroupCollections.Groups)
-            .get_all(customer_name, index=GroupIndexes.CustomerName)
+            .get_all(view_name, index=GroupIndexes.ViewName)
             .delete()
             .run(conn)
         )

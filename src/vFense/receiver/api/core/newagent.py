@@ -30,7 +30,7 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = self.arguments.get(AgentKey.CustomerName)
+        view_name = self.arguments.get(AgentKey.ViewName)
         plugins = self.arguments.get(AgentKey.Plugins)
         rebooted = self.arguments.get(AgentKey.Rebooted)
         system_info = self.arguments.get(AgentKey.SystemInfo)
@@ -43,7 +43,7 @@ class NewAgentV1(BaseHandler):
         try:
             new_agent_results = (
                 add_agent(
-                    system_info, hardware, username, customer_name, uri, method
+                    system_info, hardware, username, view_name, uri, method
                 )
             )
             self.set_status(
@@ -72,7 +72,7 @@ class NewAgentV1(BaseHandler):
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
-                            username, customer_name, uri, method
+                            username, view_name, uri, method
                         ).new_agent_operation(
                             agent_id,
                             plugins['rv']['data'],

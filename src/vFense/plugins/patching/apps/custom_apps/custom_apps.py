@@ -18,7 +18,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def add_custom_app_to_agents(username, customer_name, uri, method,
+def add_custom_app_to_agents(username, view_name, uri, method,
                              file_data, agent_id=None, app_id=None):
 
     if app_id and not agent_id:
@@ -28,7 +28,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
             )
         )
 
-        agent_ids = get_all_agent_ids(customer_name, agent_os=app_info[AgentKey.OsCode])
+        agent_ids = get_all_agent_ids(view_name, agent_os=app_info[AgentKey.OsCode])
         if len(agent_ids) > 0:
             for agentid in agent_ids:
                 add_file_data(app_id, file_data, agent_id)
@@ -37,7 +37,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                         CustomAppsPerAgentKey.AgentId: agentid,
                         CustomAppsPerAgentKey.AppId: app_id,
                         CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
-                        CustomAppsPerAgentKey.CustomerName: customer_name,
+                        CustomAppsPerAgentKey.ViewName: view_name,
                         CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
@@ -49,7 +49,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
         apps_info = fetch_apps_data_by_os_code(
-            agent_info[AgentKey.OsCode], customer_name,
+            agent_info[AgentKey.OsCode], view_name,
             collection=AppCollections.CustomApps
         )
 
@@ -62,7 +62,7 @@ def add_custom_app_to_agents(username, customer_name, uri, method,
                 CustomAppsPerAgentKey.AgentId: agent_id,
                 CustomAppsPerAgentKey.AppId: app_id,
                 CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
-                CustomAppsPerAgentKey.CustomerName: customer_name,
+                CustomAppsPerAgentKey.ViewName: view_name,
                 CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
             }
 

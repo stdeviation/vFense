@@ -5,8 +5,8 @@ from vFense.db.client import db_connect, r
 from vFense.core.agent import *
 from vFense.core.tag import *
 from vFense.core.user._db_model import *
-from vFense.core.group import *
-from vFense.core.customer import *
+from vFense.core.group._db_model import *
+from vFense.core.view import *
 
 from vFense.notifications import *
 from vFense.operations import *
@@ -54,8 +54,8 @@ def initialize_indexes_and_create_tables():
         (UserCollections.Users, UserKeys.UserName),
         (GroupCollections.Groups, GroupKeys.GroupId),
         (GroupCollections.GroupsPerUser, GroupsPerUserKeys.Id),
-        (CustomerCollections.Customers, CustomerKeys.CustomerName),
-        (CustomerCollections.CustomersPerUser, CustomerPerUserKeys.Id),
+        (ViewCollections.Views, ViewKeys.ViewName),
+        (ViewCollections.ViewsPerUser, ViewPerUserKeys.Id),
     ]
     conn = db_connect()
 #################################### If Collections do not exist, create them #########################
@@ -93,11 +93,11 @@ def initialize_indexes_and_create_tables():
     agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
     groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
     groups_per_user_list = r.table(GroupCollections.GroupsPerUser).index_list().run(conn)
-    customer_per_user_list = r.table(CustomerCollections.CustomersPerUser).index_list().run(conn)
+    view_per_user_list = r.table(ViewCollections.ViewsPerUser).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
-    if not AgentIndexes.CustomerName in agents_list:
-        r.table(AgentsCollection).index_create(AgentIndexes.CustomerName).run(conn)
+    if not AgentIndexes.ViewName in agents_list:
+        r.table(AgentsCollection).index_create(AgentIndexes.ViewName).run(conn)
 
     if not AgentIndexes.OsCode in agents_list:
         r.table(AgentsCollection).index_create(AgentIndexes.OsCode).run(conn)
@@ -114,13 +114,13 @@ def initialize_indexes_and_create_tables():
             AppsIndexes.NameAndVersion, lambda x: [
                 x[AppsKey.Name], x[AppsKey.Version]]).run(conn)
 
-    if not AppsIndexes.Customers in unique_app_list:
-        r.table(AppCollections.UniqueApplications).index_create(AppsIndexes.Customers, multi=True).run(conn)
+    if not AppsIndexes.Views in unique_app_list:
+        r.table(AppCollections.UniqueApplications).index_create(AppsIndexes.Views, multi=True).run(conn)
 
-    if not AppsIndexes.CustomerAndRvSeverity in unique_app_list:
+    if not AppsIndexes.ViewAndRvSeverity in unique_app_list:
         r.table(AppCollections.UniqueApplications).index_create(
-            AppsIndexes.CustomerAndRvSeverity, lambda x: [
-                x[AppsKey.Customers],
+            AppsIndexes.ViewAndRvSeverity, lambda x: [
+                x[AppsKey.Views],
                 x[AppsKey.RvSeverity]], multi=True).run(conn)
 
     if not AppsIndexes.AppIdAndRvSeverity in unique_app_list:
@@ -144,35 +144,35 @@ def initialize_indexes_and_create_tables():
     if not AppsPerAgentIndexes.AppId in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(AppsPerAgentIndexes.AppId).run(conn)
 
-    if not AppsPerAgentIndexes.CustomerName in app_list:
-        r.table(AppCollections.AppsPerAgent).index_create(AppsPerAgentIndexes.CustomerName).run(conn)
+    if not AppsPerAgentIndexes.ViewName in app_list:
+        r.table(AppCollections.AppsPerAgent).index_create(AppsPerAgentIndexes.ViewName).run(conn)
 
     if not AppsPerAgentIndexes.AgentIdAndAppId in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
             AppsPerAgentIndexes.AgentIdAndAppId, lambda x: [
                 x[AppsPerAgentKey.AgentId], x[AppsPerAgentKey.AppId]]).run(conn)
 
-    if not AppsPerAgentIndexes.AppIdAndCustomer in app_list:
+    if not AppsPerAgentIndexes.AppIdAndView in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
-            AppsPerAgentIndexes.AppIdAndCustomer, lambda x: [
-                x[AppsPerAgentKey.AppId], x[AppsPerAgentKey.CustomerName]]).run(conn)
+            AppsPerAgentIndexes.AppIdAndView, lambda x: [
+                x[AppsPerAgentKey.AppId], x[AppsPerAgentKey.ViewName]]).run(conn)
 
     if not AppsPerAgentIndexes.AppIdAndStatus in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
             AppsPerAgentIndexes.AppIdAndStatus, lambda x: [
                 x[AppsPerAgentKey.AppId], x[AppsPerAgentKey.Status]]).run(conn)
 
-    if not AppsPerAgentIndexes.StatusAndCustomer in app_list:
+    if not AppsPerAgentIndexes.StatusAndView in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
-            AppsPerAgentIndexes.StatusAndCustomer, lambda x: [
-                x[AppsPerAgentKey.Status], x[AppsPerAgentKey.CustomerName]]).run(conn)
+            AppsPerAgentIndexes.StatusAndView, lambda x: [
+                x[AppsPerAgentKey.Status], x[AppsPerAgentKey.ViewName]]).run(conn)
 
-    if not AppsPerAgentIndexes.AppIdAndStatusAndCustomer in app_list:
+    if not AppsPerAgentIndexes.AppIdAndStatusAndView in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
-            AppsPerAgentIndexes.AppIdAndStatusAndCustomer, lambda x: [
+            AppsPerAgentIndexes.AppIdAndStatusAndView, lambda x: [
                 x[AppsPerAgentKey.AppId],
                 x[AppsPerAgentKey.Status],
-                x[AppsPerAgentKey.CustomerName]]).run(conn)
+                x[AppsPerAgentKey.ViewName]]).run(conn)
 
     if not AppsPerAgentIndexes.StatusAndAgentId in app_list:
         r.table(AppCollections.AppsPerAgent).index_create(
@@ -181,13 +181,13 @@ def initialize_indexes_and_create_tables():
 
 
 #################################### TagsCollection Indexes ###################################################
-    if not TagsIndexes.CustomerName in tags_list:
-        r.table(TagsCollection).index_create(TagsIndexes.CustomerName).run(conn)
+    if not TagsIndexes.ViewName in tags_list:
+        r.table(TagsCollection).index_create(TagsIndexes.ViewName).run(conn)
 
-    if not TagsIndexes.TagNameAndCustomer in tags_list:
+    if not TagsIndexes.TagNameAndView in tags_list:
         r.table(TagsCollection).index_create(
-            TagsIndexes.TagNameAndCustomer, lambda x: [
-                x[TagsKey.CustomerName], x[TagsKey.TagName]]).run(conn)
+            TagsIndexes.TagNameAndView, lambda x: [
+                x[TagsKey.ViewName], x[TagsKey.TagName]]).run(conn)
 
 #################################### TagsPerAgentCollection Indexes ###################################################
     if not TagsPerAgentIndexes.TagId in tag_per_agent_list:
@@ -215,13 +215,13 @@ def initialize_indexes_and_create_tables():
             CustomAppsIndexes.NameAndVersion, lambda x: [
                 x[CustomAppsKey.Name], x[CustomAppsKey.Version]]).run(conn)
 
-    if not CustomAppsIndexes.Customers in custom_app_list:
-        r.table(AppCollections.CustomApps).index_create(CustomAppsIndexes.Customers, multi=True).run(conn)
+    if not CustomAppsIndexes.Views in custom_app_list:
+        r.table(AppCollections.CustomApps).index_create(CustomAppsIndexes.Views, multi=True).run(conn)
 
-    if not CustomAppsIndexes.CustomerAndRvSeverity in custom_app_list:
+    if not CustomAppsIndexes.ViewAndRvSeverity in custom_app_list:
         r.table(AppCollections.CustomApps).index_create(
-            CustomAppsIndexes.CustomerAndRvSeverity, lambda x: [
-                x[CustomAppsKey.Customers], x[CustomAppsKey.RvSeverity]], multi=True).run(conn)
+            CustomAppsIndexes.ViewAndRvSeverity, lambda x: [
+                x[CustomAppsKey.Views], x[CustomAppsKey.RvSeverity]], multi=True).run(conn)
 
     if not CustomAppsIndexes.AppIdAndRvSeverity in custom_app_list:
         r.table(AppCollections.CustomApps).index_create(
@@ -239,35 +239,35 @@ def initialize_indexes_and_create_tables():
     if not CustomAppsPerAgentIndexes.AppId in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(CustomAppsPerAgentIndexes.AppId).run(conn)
 
-    if not CustomAppsPerAgentIndexes.CustomerName in custom_app_per_agent_list:
-        r.table(AppCollections.CustomAppsPerAgent).index_create(CustomAppsPerAgentIndexes.CustomerName).run(conn)
+    if not CustomAppsPerAgentIndexes.ViewName in custom_app_per_agent_list:
+        r.table(AppCollections.CustomAppsPerAgent).index_create(CustomAppsPerAgentIndexes.ViewName).run(conn)
 
     if not CustomAppsPerAgentIndexes.AgentIdAndAppId in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
             CustomAppsPerAgentIndexes.AgentIdAndAppId, lambda x: [
                 x[CustomAppsPerAgentKey.AgentId], x[CustomAppsPerAgentKey.AppId]]).run(conn)
 
-    if not CustomAppsPerAgentIndexes.AppIdAndCustomer in custom_app_per_agent_list:
+    if not CustomAppsPerAgentIndexes.AppIdAndView in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
-            CustomAppsPerAgentIndexes.AppIdAndCustomer, lambda x: [
-                x[CustomAppsPerAgentKey.AppId], x[CustomAppsPerAgentKey.CustomerName]]).run(conn)
+            CustomAppsPerAgentIndexes.AppIdAndView, lambda x: [
+                x[CustomAppsPerAgentKey.AppId], x[CustomAppsPerAgentKey.ViewName]]).run(conn)
 
     if not CustomAppsPerAgentIndexes.AppIdAndStatus in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
             CustomAppsPerAgentIndexes.AppIdAndStatus, lambda x: [
                 x[CustomAppsPerAgentKey.AppId], x[CustomAppsPerAgentKey.Status]]).run(conn)
 
-    if not CustomAppsPerAgentIndexes.StatusAndCustomer in custom_app_per_agent_list:
+    if not CustomAppsPerAgentIndexes.StatusAndView in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
-            CustomAppsPerAgentIndexes.StatusAndCustomer, lambda x: [
-                x[CustomAppsPerAgentKey.Status], x[CustomAppsPerAgentKey.CustomerName]]).run(conn)
+            CustomAppsPerAgentIndexes.StatusAndView, lambda x: [
+                x[CustomAppsPerAgentKey.Status], x[CustomAppsPerAgentKey.ViewName]]).run(conn)
 
-    if not CustomAppsPerAgentIndexes.AppIdAndStatusAndCustomer in custom_app_per_agent_list:
+    if not CustomAppsPerAgentIndexes.AppIdAndStatusAndView in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
-            CustomAppsPerAgentIndexes.AppIdAndStatusAndCustomer, lambda x: [
+            CustomAppsPerAgentIndexes.AppIdAndStatusAndView, lambda x: [
                 x[CustomAppsPerAgentKey.AppId],
                 x[CustomAppsPerAgentKey.Status],
-                x[CustomAppsPerAgentKey.CustomerName]]).run(conn)
+                x[CustomAppsPerAgentKey.ViewName]]).run(conn)
 
     if not CustomAppsPerAgentIndexes.StatusAndAgentId in custom_app_per_agent_list:
         r.table(AppCollections.CustomAppsPerAgent).index_create(
@@ -286,13 +286,13 @@ def initialize_indexes_and_create_tables():
             SupportedAppsIndexes.NameAndVersion, lambda x: [
                 x[SupportedAppsKey.Name], x[SupportedAppsKey.Version]]).run(conn)
 
-    if not SupportedAppsIndexes.Customers in supported_app_list:
-        r.table(AppCollections.SupportedApps).index_create(SupportedAppsIndexes.Customers, multi=True).run(conn)
+    if not SupportedAppsIndexes.Views in supported_app_list:
+        r.table(AppCollections.SupportedApps).index_create(SupportedAppsIndexes.Views, multi=True).run(conn)
 
-    if not SupportedAppsIndexes.CustomerAndRvSeverity in supported_app_list:
+    if not SupportedAppsIndexes.ViewAndRvSeverity in supported_app_list:
         r.table(AppCollections.SupportedApps).index_create(
-            SupportedAppsIndexes.CustomerAndRvSeverity, lambda x: [
-                x[SupportedAppsKey.Customers], x[SupportedAppsKey.RvSeverity]], multi=True).run(conn)
+            SupportedAppsIndexes.ViewAndRvSeverity, lambda x: [
+                x[SupportedAppsKey.Views], x[SupportedAppsKey.RvSeverity]], multi=True).run(conn)
 
     if not SupportedAppsIndexes.AppIdAndRvSeverity in supported_app_list:
         r.table(AppCollections.SupportedApps).index_create(
@@ -310,35 +310,35 @@ def initialize_indexes_and_create_tables():
     if not SupportedAppsPerAgentIndexes.AppId in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(SupportedAppsPerAgentIndexes.AppId).run(conn)
 
-    if not SupportedAppsPerAgentIndexes.CustomerName in supported_app_per_agent_list:
-        r.table(AppCollections.SupportedAppsPerAgent).index_create(SupportedAppsPerAgentIndexes.CustomerName).run(conn)
+    if not SupportedAppsPerAgentIndexes.ViewName in supported_app_per_agent_list:
+        r.table(AppCollections.SupportedAppsPerAgent).index_create(SupportedAppsPerAgentIndexes.ViewName).run(conn)
 
     if not SupportedAppsPerAgentIndexes.AgentIdAndAppId in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
             SupportedAppsPerAgentIndexes.AgentIdAndAppId, lambda x: [
                 x[SupportedAppsPerAgentKey.AgentId], x[SupportedAppsPerAgentKey.AppId]]).run(conn)
 
-    if not SupportedAppsPerAgentIndexes.AppIdAndCustomer in supported_app_per_agent_list:
+    if not SupportedAppsPerAgentIndexes.AppIdAndView in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
-            SupportedAppsPerAgentIndexes.AppIdAndCustomer, lambda x: [
-                x[SupportedAppsPerAgentKey.AppId], x[SupportedAppsPerAgentKey.CustomerName]]).run(conn)
+            SupportedAppsPerAgentIndexes.AppIdAndView, lambda x: [
+                x[SupportedAppsPerAgentKey.AppId], x[SupportedAppsPerAgentKey.ViewName]]).run(conn)
 
     if not SupportedAppsPerAgentIndexes.AppIdAndStatus in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
             SupportedAppsPerAgentIndexes.AppIdAndStatus, lambda x: [
                 x[SupportedAppsPerAgentKey.AppId], x[SupportedAppsPerAgentKey.Status]]).run(conn)
 
-    if not SupportedAppsPerAgentIndexes.StatusAndCustomer in supported_app_per_agent_list:
+    if not SupportedAppsPerAgentIndexes.StatusAndView in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
-            SupportedAppsPerAgentIndexes.StatusAndCustomer, lambda x: [
-                x[SupportedAppsPerAgentKey.Status], x[SupportedAppsPerAgentKey.CustomerName]]).run(conn)
+            SupportedAppsPerAgentIndexes.StatusAndView, lambda x: [
+                x[SupportedAppsPerAgentKey.Status], x[SupportedAppsPerAgentKey.ViewName]]).run(conn)
 
-    if not SupportedAppsPerAgentIndexes.AppIdAndStatusAndCustomer in supported_app_per_agent_list:
+    if not SupportedAppsPerAgentIndexes.AppIdAndStatusAndView in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
-            SupportedAppsPerAgentIndexes.AppIdAndStatusAndCustomer, lambda x: [
+            SupportedAppsPerAgentIndexes.AppIdAndStatusAndView, lambda x: [
                 x[SupportedAppsPerAgentKey.AppId],
                 x[SupportedAppsPerAgentKey.Status],
-                x[SupportedAppsPerAgentKey.CustomerName]]).run(conn)
+                x[SupportedAppsPerAgentKey.ViewName]]).run(conn)
 
     if not SupportedAppsPerAgentIndexes.StatusAndAgentId in supported_app_per_agent_list:
         r.table(AppCollections.SupportedAppsPerAgent).index_create(
@@ -357,13 +357,13 @@ def initialize_indexes_and_create_tables():
             vFenseAppsIndexes.NameAndVersion, lambda x: [
                 x[vFenseAppsKey.Name], x[vFenseAppsKey.Version]]).run(conn)
 
-    if not vFenseAppsIndexes.Customers in vfense_app_list:
-        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.Customers, multi=True).run(conn)
+    if not vFenseAppsIndexes.Views in vfense_app_list:
+        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.Views, multi=True).run(conn)
 
-    if not vFenseAppsIndexes.CustomerAndRvSeverity in vfense_app_list:
+    if not vFenseAppsIndexes.ViewAndRvSeverity in vfense_app_list:
         r.table(AppCollections.vFenseApps).index_create(
-            vFenseAppsIndexes.CustomerAndRvSeverity, lambda x: [
-                x[vFenseAppsKey.Customers], x[vFenseAppsKey.RvSeverity]], multi=True).run(conn)
+            vFenseAppsIndexes.ViewAndRvSeverity, lambda x: [
+                x[vFenseAppsKey.Views], x[vFenseAppsKey.RvSeverity]], multi=True).run(conn)
 
     if not vFenseAppsIndexes.AppIdAndRvSeverity in vfense_app_list:
         r.table(AppCollections.vFenseApps).index_create(
@@ -381,35 +381,35 @@ def initialize_indexes_and_create_tables():
     if not vFenseAppsPerAgentIndexes.AppId in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.AppId).run(conn)
 
-    if not vFenseAppsPerAgentIndexes.CustomerName in vfense_app_per_agent_list:
-        r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.CustomerName).run(conn)
+    if not vFenseAppsPerAgentIndexes.ViewName in vfense_app_per_agent_list:
+        r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.ViewName).run(conn)
 
     if not vFenseAppsPerAgentIndexes.AgentIdAndAppId in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
             vFenseAppsPerAgentIndexes.AgentIdAndAppId, lambda x: [
                 x[vFenseAppsPerAgentKey.AgentId], x[vFenseAppsPerAgentKey.AppId]]).run(conn)
 
-    if not vFenseAppsPerAgentIndexes.AppIdAndCustomer in vfense_app_per_agent_list:
+    if not vFenseAppsPerAgentIndexes.AppIdAndView in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
-            vFenseAppsPerAgentIndexes.AppIdAndCustomer, lambda x: [
-                x[vFenseAppsPerAgentKey.AppId], x[vFenseAppsPerAgentKey.CustomerName]]).run(conn)
+            vFenseAppsPerAgentIndexes.AppIdAndView, lambda x: [
+                x[vFenseAppsPerAgentKey.AppId], x[vFenseAppsPerAgentKey.ViewName]]).run(conn)
 
     if not vFenseAppsPerAgentIndexes.AppIdAndStatus in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
             vFenseAppsPerAgentIndexes.AppIdAndStatus, lambda x: [
                 x[vFenseAppsPerAgentKey.AppId], x[vFenseAppsPerAgentKey.Status]]).run(conn)
 
-    if not vFenseAppsPerAgentIndexes.StatusAndCustomer in vfense_app_per_agent_list:
+    if not vFenseAppsPerAgentIndexes.StatusAndView in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
-            vFenseAppsPerAgentIndexes.StatusAndCustomer, lambda x: [
-                x[vFenseAppsPerAgentKey.Status], x[vFenseAppsPerAgentKey.CustomerName]]).run(conn)
+            vFenseAppsPerAgentIndexes.StatusAndView, lambda x: [
+                x[vFenseAppsPerAgentKey.Status], x[vFenseAppsPerAgentKey.ViewName]]).run(conn)
 
-    if not vFenseAppsPerAgentIndexes.AppIdAndStatusAndCustomer in vfense_app_per_agent_list:
+    if not vFenseAppsPerAgentIndexes.AppIdAndStatusAndView in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
-            vFenseAppsPerAgentIndexes.AppIdAndStatusAndCustomer, lambda x: [
+            vFenseAppsPerAgentIndexes.AppIdAndStatusAndView, lambda x: [
                 x[vFenseAppsPerAgentKey.AppId],
                 x[vFenseAppsPerAgentKey.Status],
-                x[vFenseAppsPerAgentKey.CustomerName]]).run(conn)
+                x[vFenseAppsPerAgentKey.ViewName]]).run(conn)
 
     if not vFenseAppsPerAgentIndexes.StatusAndAgentId in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(
@@ -418,8 +418,8 @@ def initialize_indexes_and_create_tables():
 
 
 #################################### AgentOperationsCollection Indexes ###################################################
-    if not AgentOperationIndexes.CustomerName in agent_operations_list:
-        r.table(OperationCollections.Agent).index_create(AgentOperationKey.CustomerName).run(conn)
+    if not AgentOperationIndexes.ViewName in agent_operations_list:
+        r.table(OperationCollections.Agent).index_create(AgentOperationKey.ViewName).run(conn)
 
     if not AgentOperationIndexes.TagId in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(AgentOperationKey.TagId).run(conn)
@@ -430,45 +430,45 @@ def initialize_indexes_and_create_tables():
     if not AgentOperationIndexes.AgentIds in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(AgentOperationIndexes.AgentIds, multi=True).run(conn)
 
-    if not AgentOperationIndexes.OperationAndCustomer in agent_operations_list:
+    if not AgentOperationIndexes.OperationAndView in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(
-            AgentOperationIndexes.OperationAndCustomer, lambda x: [
+            AgentOperationIndexes.OperationAndView, lambda x: [
                 x[AgentOperationKey.Operation],
-                x[AgentOperationKey.CustomerName]]).run(conn)
+                x[AgentOperationKey.ViewName]]).run(conn)
 
-    if not AgentOperationIndexes.PluginAndCustomer in agent_operations_list:
+    if not AgentOperationIndexes.PluginAndView in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(
-            AgentOperationIndexes.PluginAndCustomer, lambda x: [
+            AgentOperationIndexes.PluginAndView, lambda x: [
                 x[AgentOperationKey.Plugin],
-                x[AgentOperationKey.CustomerName]]).run(conn)
+                x[AgentOperationKey.ViewName]]).run(conn)
 
-    if not AgentOperationIndexes.CreatedByAndCustomer in agent_operations_list:
+    if not AgentOperationIndexes.CreatedByAndView in agent_operations_list:
         r.table(OperationCollections.Agent).index_create(
-            AgentOperationIndexes.CreatedByAndCustomer, lambda x: [
+            AgentOperationIndexes.CreatedByAndView, lambda x: [
                 x[AgentOperationKey.CreatedBy],
-                x[AgentOperationKey.CustomerName]]).run(conn)
+                x[AgentOperationKey.ViewName]]).run(conn)
 
 #################################### OperationsPerAgentCollection Indexes ###################################################
     if not OperationPerAgentIndexes.OperationId in operations_per_agent_list:
         r.table(OperationCollections.OperationPerAgent).index_create(OperationPerAgentKey.OperationId).run(conn)
 
-    if not OperationPerAgentIndexes.AgentIdAndCustomer in operations_per_agent_list:
+    if not OperationPerAgentIndexes.AgentIdAndView in operations_per_agent_list:
         r.table(OperationCollections.OperationPerAgent).index_create(
-            OperationPerAgentIndexes.AgentIdAndCustomer, lambda x: [
+            OperationPerAgentIndexes.AgentIdAndView, lambda x: [
                 x[OperationPerAgentKey.AgentId],
-                x[OperationPerAgentKey.CustomerName]]).run(conn)
+                x[OperationPerAgentKey.ViewName]]).run(conn)
 
-    if not OperationPerAgentIndexes.TagIdAndCustomer in operations_per_agent_list:
+    if not OperationPerAgentIndexes.TagIdAndView in operations_per_agent_list:
         r.table(OperationCollections.OperationPerAgent).index_create(
-            OperationPerAgentIndexes.TagIdAndCustomer, lambda x: [
+            OperationPerAgentIndexes.TagIdAndView, lambda x: [
                 x[OperationPerAgentKey.TagId],
-                x[OperationPerAgentKey.CustomerName]]).run(conn)
+                x[OperationPerAgentKey.ViewName]]).run(conn)
 
-    if not OperationPerAgentIndexes.StatusAndCustomer in operations_per_agent_list:
+    if not OperationPerAgentIndexes.StatusAndView in operations_per_agent_list:
         r.table(OperationCollections.OperationPerAgent).index_create(
-            OperationPerAgentIndexes.StatusAndCustomer, lambda x: [
+            OperationPerAgentIndexes.StatusAndView, lambda x: [
                 x[OperationPerAgentKey.Status],
-                x[OperationPerAgentKey.CustomerName]]).run(conn)
+                x[OperationPerAgentKey.ViewName]]).run(conn)
 
     if not OperationPerAgentIndexes.OperationIdAndAgentId in operations_per_agent_list:
         r.table(OperationCollections.OperationPerAgent).index_create(
@@ -510,65 +510,65 @@ def initialize_indexes_and_create_tables():
                 x['file_name'], x['app_id']]).run(conn)
 
 #################################### NotificationsCollection Indexes ###################################################
-    if not NotificationIndexes.CustomerName in notif_list:
-        r.table(NotificationCollections.Notifications).index_create(NotificationKeys.CustomerName).run(conn)
+    if not NotificationIndexes.ViewName in notif_list:
+        r.table(NotificationCollections.Notifications).index_create(NotificationKeys.ViewName).run(conn)
 
-    if not NotificationIndexes.RuleNameAndCustomer in notif_list:
+    if not NotificationIndexes.RuleNameAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.RuleNameAndCustomer, lambda x: [
+            NotificationIndexes.RuleNameAndView, lambda x: [
                 x[NotificationKeys.RuleName],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.NotificationTypeAndCustomer in notif_list:
+    if not NotificationIndexes.NotificationTypeAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.NotificationTypeAndCustomer, lambda x: [
+            NotificationIndexes.NotificationTypeAndView, lambda x: [
                 x[NotificationKeys.NotificationType],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.AppThresholdAndCustomer in notif_list:
+    if not NotificationIndexes.AppThresholdAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.AppThresholdAndCustomer, lambda x: [
+            NotificationIndexes.AppThresholdAndView, lambda x: [
                 x[NotificationKeys.AppThreshold],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.RebootThresholdAndCustomer in notif_list:
+    if not NotificationIndexes.RebootThresholdAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.RebootThresholdAndCustomer, lambda x: [
+            NotificationIndexes.RebootThresholdAndView, lambda x: [
                 x[NotificationKeys.RebootThreshold],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.ShutdownThresholdAndCustomer in notif_list:
+    if not NotificationIndexes.ShutdownThresholdAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.ShutdownThresholdAndCustomer, lambda x: [
+            NotificationIndexes.ShutdownThresholdAndView, lambda x: [
                 x[NotificationKeys.ShutdownThreshold],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.CpuThresholdAndCustomer in notif_list:
+    if not NotificationIndexes.CpuThresholdAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.CpuThresholdAndCustomer, lambda x: [
+            NotificationIndexes.CpuThresholdAndView, lambda x: [
                 x[NotificationKeys.CpuThreshold],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.MemThresholdAndCustomer in notif_list:
+    if not NotificationIndexes.MemThresholdAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.MemThresholdAndCustomer, lambda x: [
+            NotificationIndexes.MemThresholdAndView, lambda x: [
                 x[NotificationKeys.MemThreshold],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
-    if not NotificationIndexes.FileSystemThresholdAndFileSystemAndCustomer in notif_list:
+    if not NotificationIndexes.FileSystemThresholdAndFileSystemAndView in notif_list:
         r.table(NotificationCollections.Notifications).index_create(
-            NotificationIndexes.FileSystemThresholdAndFileSystemAndCustomer, lambda x: [
+            NotificationIndexes.FileSystemThresholdAndFileSystemAndView, lambda x: [
                 x[NotificationKeys.FileSystemThreshold],
                 x[NotificationKeys.FileSystem],
-                x[NotificationKeys.CustomerName]]).run(conn)
+                x[NotificationKeys.ViewName]]).run(conn)
 
 #################################### NotificationsHistory Indexes ###################################################
     if not NotificationHistoryIndexes.NotificationId in notif_history_list:
         r.table(NotificationCollections.NotificationsHistory).index_create(NotificationHistoryKeys.NotificationId).run(conn)
 
 #################################### NotificationsPlugin Indexes ###################################################
-    if not NotificationPluginIndexes.CustomerName in notif_plugin_list:
-        r.table(NotificationCollections.NotificationPlugins).index_create(NotificationPluginKeys.CustomerName).run(conn)
+    if not NotificationPluginIndexes.ViewName in notif_plugin_list:
+        r.table(NotificationCollections.NotificationPlugins).index_create(NotificationPluginKeys.ViewName).run(conn)
 
 #################################### Cve Indexes ###################################################
     if not CveIndexes.CveCategories in cve_list:
@@ -598,8 +598,8 @@ def initialize_indexes_and_create_tables():
         r.table(QueueCollections.Agent).index_create(AgentQueueIndexes.AgentId).run(conn)
 
 #################################### Group Indexes ###################################################
-    if not GroupIndexes.CustomerName in groups_list:
-        r.table(GroupCollections.Groups).index_create(GroupIndexes.CustomerName).run(conn)
+    if not GroupIndexes.ViewName in groups_list:
+        r.table(GroupCollections.Groups).index_create(GroupIndexes.ViewName).run(conn)
 
     if not GroupIndexes.GroupName in groups_list:
         r.table(GroupCollections.Groups).index_create(GroupIndexes.GroupName).run(conn)
@@ -608,8 +608,8 @@ def initialize_indexes_and_create_tables():
     if not GroupsPerUserIndexes.UserName in groups_per_user_list:
         r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.UserName).run(conn)
 
-    if not GroupsPerUserIndexes.CustomerName in groups_per_user_list:
-        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.CustomerName).run(conn)
+    if not GroupsPerUserIndexes.ViewName in groups_per_user_list:
+        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.ViewName).run(conn)
 
     if not GroupsPerUserIndexes.GroupName in groups_per_user_list:
         r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupName).run(conn)
@@ -617,16 +617,16 @@ def initialize_indexes_and_create_tables():
     if not GroupsPerUserIndexes.GroupId in groups_per_user_list:
         r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupId).run(conn)
 
-#################################### Customer Per User Indexes ###################################################
-    if not CustomerPerUserIndexes.UserName in customer_per_user_list:
-        r.table(CustomerCollections.CustomersPerUser).index_create(CustomerPerUserIndexes.UserName).run(conn)
+#################################### View Per User Indexes ###################################################
+    if not ViewPerUserIndexes.UserName in view_per_user_list:
+        r.table(ViewCollections.ViewsPerUser).index_create(ViewPerUserIndexes.UserName).run(conn)
 
-    if not CustomerPerUserIndexes.CustomerName in customer_per_user_list:
-        r.table(CustomerCollections.CustomersPerUser).index_create(CustomerPerUserIndexes.CustomerName).run(conn)
+    if not ViewPerUserIndexes.ViewName in view_per_user_list:
+        r.table(ViewCollections.ViewsPerUser).index_create(ViewPerUserIndexes.ViewName).run(conn)
 
 #################################### File Server Indexes ###################################################
-    if not FileServerIndexes.CustomerName in file_server_list:
-        r.table(FileCollections.FileServers).index_create(FileServerIndexes.CustomerName).run(conn)
+    if not FileServerIndexes.ViewName in file_server_list:
+        r.table(FileCollections.FileServers).index_create(FileServerIndexes.ViewName).run(conn)
 
 #################################### Close Database Connection ###################################################
     conn.close()

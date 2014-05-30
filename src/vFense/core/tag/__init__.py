@@ -9,7 +9,7 @@ class TagCollections():
 class TagsKey():
     TagId = 'tag_id'
     TagName = 'tag_name'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     ProductionLevel = 'production_level'
 
 class TagsPerAgentKey():
@@ -17,14 +17,14 @@ class TagsPerAgentKey():
     TagId = 'tag_id'
     TagName = 'tag_name'
     AgentId = 'agent_id'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
 
 class TagsIndexes():
-    CustomerName = 'customer_name'
-    TagNameAndCustomer = 'by_tagname_and_customer'
+    ViewName = 'view_name'
+    TagNameAndView = 'by_tagname_and_view'
 
 class TagsPerAgentIndexes():
     AgentId = 'agent_id'
     TagId = 'tag_id'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     AgentIdAndTagId = 'agent_id_and_tag_id'

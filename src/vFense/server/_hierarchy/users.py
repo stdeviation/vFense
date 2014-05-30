@@ -21,8 +21,8 @@ class User():
     """
 
     def __init__(self, name=None, full_name=None, email=None, password='',
-                 groups=None, customers=None, default_customer=None,
-                 current_customer=None, enabled=True):
+                 groups=None, views=None, default_view=None,
+                 current_view=None, enabled=True):
 
         self.name = name
         self.full_name = full_name
@@ -32,14 +32,14 @@ class User():
 
         self.id = None
 
-        self._customers = []
-        self._raw_customers = []
+        self._views = []
+        self._raw_views = []
 
-        self._current_customer = None
-        self._raw_current_customer = {}
+        self._current_view = None
+        self._raw_current_view = {}
 
-        self._default_customer = None
-        self._raw_default_customer = {}
+        self._default_view = None
+        self._raw_default_view = {}
 
         self._groups = []
         self._raw_groups = []
@@ -48,15 +48,15 @@ class User():
             for g in groups:
                 self.add_group(g)
 
-        if customers:
-            for c in customers:
-                self.add_customer(c)
+        if views:
+            for c in views:
+                self.add_view(c)
 
-        if default_customer:
-            self.set_default_customer(default_customer)
+        if default_view:
+            self.set_default_view(default_view)
 
-        if current_customer:
-            self.set_current_customer(current_customer)
+        if current_view:
+            self.set_current_view(current_view)
 
     def add_group(self, group):
         """Adds group to User.
@@ -100,113 +100,113 @@ class User():
         self._raw_groups.remove(g)
         self._groups.remove(gi)
 
-    def add_customer(self, customer):
-        """Adds a customer to the User.
+    def add_view(self, view):
+        """Adds a view to the User.
 
         Args:
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
             True if user was added successfully, False otherwise.
         """
 
-        c = {UserKey.Name: customer.name}
-        ci = CustomerInfo(customer.name)
+        c = {UserKey.Name: view.name}
+        ci = ViewInfo(view.name)
 
-        self._raw_customers.append(c)
-        self._customers.append(ci)
+        self._raw_views.append(c)
+        self._views.append(ci)
 
-    def remove_customer(self, customer):
-        """Removes a customer from the User.
+    def remove_view(self, view):
+        """Removes a view from the User.
 
         Args:
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
             True if user was removed successfully, False otherwise.
         """
 
-        c = {UserKey.Name: customer.name}
-        ci = CustomerInfo(customer.name)
+        c = {UserKey.Name: view.name}
+        ci = ViewInfo(view.name)
 
-        self._raw_customers.remove(c)
-        self._customers.remove(ci)
+        self._raw_views.remove(c)
+        self._views.remove(ci)
 
-    def set_current_customer(self, customer):
-        """Sets the currently selected customer of the User.
+    def set_current_view(self, view):
+        """Sets the currently selected view of the User.
 
-        The customer must be part of the User's list of customers to be the
-        'current customer'.
+        The view must be part of the User's list of views to be the
+        'current view'.
 
         Args:
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
             True if user was removed successfully, False otherwise.
         """
 
-        c = {UserKey.Name: customer.name}
-        ci = CustomerInfo(customer.name)
+        c = {UserKey.Name: view.name}
+        ci = ViewInfo(view.name)
 
-        self._raw_current_customer = c
-        self._current_customer = ci
+        self._raw_current_view = c
+        self._current_view = ci
 
-    def set_default_customer(self, customer):
-        """Sets the default customer of the User.
+    def set_default_view(self, view):
+        """Sets the default view of the User.
 
-        The customer must be part of the User's list of customers to be the
-        'default customer'.
+        The view must be part of the User's list of views to be the
+        'default view'.
 
         Args:
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
             True if user was removed successfully, False otherwise.
         """
 
-        c = {UserKey.Name: customer.name}
-        ci = CustomerInfo(customer.name)
+        c = {UserKey.Name: view.name}
+        ci = ViewInfo(view.name)
 
-        self._raw_default_customer = c
-        self._default_customer = ci
+        self._raw_default_view = c
+        self._default_view = ci
 
-    def get_current_customer(self, raw=False):
-        """Returns the current customer the User has access to.
+    def get_current_view(self, raw=False):
+        """Returns the current view the User has access to.
         """
 
         if raw:
 
-            return self._raw_current_customer
+            return self._raw_current_view
 
-        return self._current_customer
+        return self._current_view
 
-    def get_default_customer(self, raw=False):
-        """Returns the default customer the User has access to.
+    def get_default_view(self, raw=False):
+        """Returns the default view the User has access to.
         """
 
         if raw:
 
-            return self._raw_current_customer
+            return self._raw_current_view
 
-        return self._default_customer
+        return self._default_view
 
-    def get_customers(self, raw=False):
-        """Returns the customers the User has access to.
+    def get_views(self, raw=False):
+        """Returns the views the User has access to.
         """
 
         if raw:
 
-            return self._raw_customers
+            return self._raw_views
 
-        return self._customers
+        return self._views
 
     def get_groups(self, raw=False):
         """Returns the groups the User has access to.
@@ -227,9 +227,9 @@ class User():
         _user['username'] = self.name
         _user['full_name'] = self.full_name
         _user['email'] = self.email
-        _user['current_customer'] = self.get_current_customer(raw=True)
-        _user['default_customer'] = self.get_default_customer(raw=True)
-        _user['customers'] = self.get_customers(raw=True)
+        _user['current_view'] = self.get_current_view(raw=True)
+        _user['default_view'] = self.get_default_view(raw=True)
+        _user['views'] = self.get_views(raw=True)
         _user['groups'] = self.get_groups(raw=True)
 
         return _user

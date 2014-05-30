@@ -53,7 +53,7 @@ def get_agent_operation(operation_id):
             "net_throttle": 0,
             "agents_failed_count": 0,
             "restart": "none",
-            "customer_name": "default"
+            "view_name": "default"
         }
     """
     return fetch_agent_operation(operation_id)
@@ -109,20 +109,20 @@ class AgentOperation(object):
     """This is what creates operations for an agent or multiple agents.
 
     """
-    def __init__(self, username, customer_name):
+    def __init__(self, username, view_name):
         """
         Args:
             username (str): the name of the user who created the operation.
-            customer_name (str): the name of the customer this user is part of.
+            view_name (str): the name of the view this user is part of.
 
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
         """
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.now = mktime(datetime.now().timetuple())
         self.db_time = DbTime.time_now()
         self.INIT_COUNT = 0
@@ -149,8 +149,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation = 'reboot'
             >>> plugin = 'core'
             >>> agent_ids = ['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2']
@@ -171,7 +171,7 @@ class AgentOperation(object):
                 AgentOperationKey.OperationStatus: (
                     AgentOperationCodes.ResultsIncomplete
                 ),
-                AgentOperationKey.CustomerName: self.customer_name,
+                AgentOperationKey.ViewName: self.view_name,
                 AgentOperationKey.CreatedBy: self.username,
                 AgentOperationKey.ActionPerformedOn: performed_on,
                 AgentOperationKey.TagId: tag_id,
@@ -214,8 +214,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.add_agent_to_operation(
@@ -228,7 +228,7 @@ class AgentOperation(object):
         data_to_insert = {
             OperationPerAgentKey.AgentId: agent_id,
             OperationPerAgentKey.OperationId: operation_id,
-            OperationPerAgentKey.CustomerName: self.customer_name,
+            OperationPerAgentKey.ViewName: self.view_name,
             OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
             OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
             OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
@@ -258,8 +258,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.update_operation_expire_time(operation_id, agent_id)
@@ -301,8 +301,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.update_operation_pickup_time(operation_id, agent_id)
@@ -348,8 +348,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> status_code = 6006
@@ -389,8 +389,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper._update_agent_stats(operation_id, agent_id)
@@ -444,8 +444,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper._update_completed_time_on_agents(operation_id, agent_id)
@@ -475,8 +475,8 @@ class AgentOperation(object):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> oper._update_operation_status_code(operation_id)
 

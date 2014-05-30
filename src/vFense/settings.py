@@ -5,5 +5,5 @@ REDIS_DB = 0
 
 class Default():
 
-    Customer = 'default'
+    View = 'default'
     User = 'system'

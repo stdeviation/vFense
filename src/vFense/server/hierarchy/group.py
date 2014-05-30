@@ -6,7 +6,7 @@ class Group():
     def __init__(
         self,
         group_name,
-        customer,
+        view,
         permissions=[],
         group_id=None
     ):
@@ -14,7 +14,7 @@ class Group():
         self.id = group_id
 
         self.group_name = group_name
-        self.customer = customer
+        self.view = view
 
         self.permissions = permissions
 
@@ -32,9 +32,9 @@ class Group():
 
         self.permissions = permissions
 
-    def set_customer(self, customer_name):
+    def set_view(self, view_name):
 
-        self.customer = customer_name
+        self.view = view_name
 
     def dict(self):
 
@@ -42,12 +42,12 @@ class Group():
             GroupKey.Id: self.id,
             GroupKey.GroupName: self.group_name,
             GroupKey.Permissions: self.permissions,
-            GroupKey.CustomerId: self.customer
+            GroupKey.ViewId: self.view
         }
 
     def __repr__(self):
 
         return (
-            "Group(name=%r,id=%r, customer=%r)"
-            % (self.group_name, self.id, self.customer)
+            "Group(name=%r,id=%r, view=%r)"
+            % (self.group_name, self.id, self.view)
         )

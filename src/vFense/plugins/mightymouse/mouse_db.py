@@ -29,7 +29,7 @@ def mouse_exists(mouse_name):
 
     return(exist)
 
-def get_mouse_addresses(customer_name):
+def get_mouse_addresses(view_name):
 
     conn = db_connect()
     try:
@@ -49,12 +49,12 @@ def get_mouse_addresses(customer_name):
     return(exist)
 
 
-def add_mouse(customer_names, mouse_name, address,
+def add_mouse(view_names, mouse_name, address,
               username, uri, method):
     conn = db_connect()
     data = {
         RelayServers.RelayName: mouse_name,
-        RelayServers.Customers: customer_names,
+        RelayServers.Views: view_names,
         RelayServers.Address: address,
     }
     try:
@@ -83,14 +83,14 @@ def add_mouse(customer_names, mouse_name, address,
 
     return(status)
 
-def update_mouse(exist, mouse_name, customer_names, address,
+def update_mouse(exist, mouse_name, view_names, address,
                  username, uri, method):
     conn = db_connect()
     if not address:
         address = exist[RelayServers.Address]
 
     data = {
-        RelayServers.Customers: customer_names,
+        RelayServers.Views: view_names,
         RelayServers.Address: address,
     }
     try:
@@ -149,11 +149,11 @@ def delete_mouse(mouse_name, username, uri, method):
 
     return(status)
 
-def get_all_mouseys(username, uri, method, customer_name=None):
+def get_all_mouseys(username, uri, method, view_name=None):
 
     conn = db_connect()
     try:
-        if not customer_name:
+        if not view_name:
             data = list(
                 r
                 .table(RelayServersCollection)
@@ -164,7 +164,7 @@ def get_all_mouseys(username, uri, method, customer_name=None):
                 r
                 .table(RelayServersCollection)
                 .filter(
-                    lambda x: x[RelayServers.Customers].contains(customer_name)
+                    lambda x: x[RelayServers.Views].contains(view_name)
                 )
                 .run(conn)
             )

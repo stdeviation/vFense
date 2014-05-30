@@ -57,13 +57,13 @@ class FetchValidProductionLevels(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            data = get_production_levels(customer_name)
+            data = get_production_levels(view_name)
             results = (
                 GenericResults(
                     username, uri, method
@@ -89,8 +89,8 @@ class FetchSupportedOperatingSystems(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -101,7 +101,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
                 data = get_supported_os_codes()
 
             elif os_string:
-                data = get_supported_os_strings(customer_name)
+                data = get_supported_os_strings(view_name)
 
             results = (
                 GenericResults(
@@ -136,10 +136,10 @@ class AgentsHandler(BaseHandler):
             query = self.get_argument('query', None)
             filter_key = self.get_argument('filter_key', None)
             filter_val = self.get_argument('filter_val', None)
-            customer_name = self.get_argument('customer_name', None)
-            if not customer_name:
-                customer_name = (
-                    get_user_property(active_user, UserKeys.CurrentCustomer)
+            view_name = self.get_argument('view_name', None)
+            if not view_name:
+                view_name = (
+                    get_user_property(active_user, UserKeys.CurrentView)
                 )
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
@@ -147,7 +147,7 @@ class AgentsHandler(BaseHandler):
             sort_by = self.get_argument('sort_by', AgentKey.ComputerName)
             search_agents = (
                 RetrieveAgents(
-                    customer_name,
+                    view_name,
                     count, offset,
                     sort, sort_by,
                     active_user, uri, method
@@ -221,21 +221,21 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            new_customer = self.arguments.get('customer_name')
+            new_view = self.arguments.get('view_name')
             if not isinstance(agent_ids, list):
                 agent_ids = agent_ids.split()
             agentids_moved =[]
             agentids_not_moved =[]
             for agent_id in agent_ids:
-                agent = AgentManager(agent_id, customer_name=customer_name)
-                results = agent.change_customer(new_customer, uri, method)
+                agent = AgentManager(agent_id, view_name=view_name)
+                results = agent.change_view(new_view, uri, method)
                 if results['http_status'] == 200:
                     agentids_moved.append(agent_id)
                 else:
@@ -265,8 +265,8 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -277,12 +277,12 @@ class AgentsHandler(BaseHandler):
             agentids_deleted =[]
             agentids_not_deleted =[]
             for agent_id in agent_ids:
-                agent = AgentManager(agent_id, customer_name=customer_name)
+                agent = AgentManager(agent_id, view_name=view_name)
                 results = agent.delete_agent(uri, method)
                 if results['http_status'] == 200:
                     delete_oper = (
                         StorePatchingOperation(
-                            username, customer_name, uri, method
+                            username, view_name, uri, method
                         )
                     )
                     delete_oper.uninstall_agent(agent_id)
@@ -313,13 +313,13 @@ class AgentHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            agent = AgentManager(agent_id, customer_name=customer_name)
+            agent = AgentManager(agent_id, view_name=view_name)
             results = agent.get_data(uri=uri, method=method)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -340,8 +340,8 @@ class AgentHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -349,22 +349,22 @@ class AgentHandler(BaseHandler):
             displayname = self.arguments.get('display_name', None)
             hostname = self.arguments.get('hostname', None)
             prod_level = self.arguments.get('production_level', None)
-            new_customer = self.arguments.get('customer_name', None)
-            agent = AgentManager(agent_id, customer_name=customer_name)
+            new_view = self.arguments.get('view_name', None)
+            agent = AgentManager(agent_id, view_name=view_name)
 
             if (displayname and not hostname and not
-                    prod_level and not new_customer):
+                    prod_level and not new_view):
                 results = agent.displayname_changer(displayname, uri, method)
 
             elif (hostname and not prod_level and not displayname
-                    and not new_customer):
+                    and not new_view):
                 results = agent.hostname_changer(hostname, uri, method)
 
             elif (prod_level and not hostname and not displayname
-                    and not new_customer):
+                    and not new_view):
                 results = agent.production_state_changer(prod_level, uri, method)
 
-            elif prod_level and hostname and displayname and not new_customer:
+            elif prod_level and hostname and displayname and not new_view:
                 agent_data = {
                     'host_name': hostname,
                     'production_level': prod_level,
@@ -372,9 +372,9 @@ class AgentHandler(BaseHandler):
                 }
                 results = agent.update_fields(agent_data, uri, method)
 
-            elif (new_customer and not prod_level and not hostname
+            elif (new_view and not prod_level and not hostname
                 and not displayname):
-                results = agent.change_customer(new_customer, uri, method)
+                results = agent.change_view(new_view, uri, method)
 
             else:
                 results = (
@@ -402,14 +402,14 @@ class AgentHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            agent = AgentManager(agent_id, customer_name=customer_name)
-            delete_oper = StorePatchingOperation(username, customer_name, uri, method)
+            agent = AgentManager(agent_id, view_name=view_name)
+            delete_oper = StorePatchingOperation(username, view_name, uri, method)
             delete_oper.uninstall_agent(agent_id)
             results = agent.delete_agent(uri, method)
             self.set_status(results['http_status'])
@@ -431,8 +431,8 @@ class AgentHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -442,7 +442,7 @@ class AgentHandler(BaseHandler):
             apps_refresh = self.arguments.get('apps_refresh', None)
             operation = (
                 StoreAgentOperations(
-                    username, customer_name, uri, method
+                    username, view_name, uri, method
                 )
             )
             if reboot:
@@ -486,7 +486,7 @@ class AgentHandler(BaseHandler):
             elif apps_refresh:
                 operation = (
                     StorePatchingOperation(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     )
                 )
                 results = (

@@ -13,7 +13,7 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def get_all_stats_by_appid(username, customer_name,
+def get_all_stats_by_appid(username, view_name,
                           uri, method, app_id, conn=None):
     data = []
     try:
@@ -21,8 +21,8 @@ def get_all_stats_by_appid(username, customer_name,
             r
             .table(AppCollections.vFenseAppsPerAgent)
             .get_all(
-                [app_id, customer_name],
-                index=AgentAppsPerAgentIndexes.AppIdAndCustomer
+                [app_id, view_name],
+                index=AgentAppsPerAgentIndexes.AppIdAndView
             )
             .group(AgentAppsPerAgentKey.Status)
             .count()
@@ -73,7 +73,7 @@ def get_all_stats_by_appid(username, customer_name,
 
 
 @db_create_close
-def get_all_agents_per_appid(username, customer_name,
+def get_all_agents_per_appid(username, view_name,
                             uri, method, app_id, conn=None):
     data = []
     try:
@@ -148,7 +148,7 @@ def get_all_agents_per_appid(username, customer_name,
 
 
 @db_create_close
-def get_all_stats_by_agentid(username, customer_name,
+def get_all_stats_by_agentid(username, view_name,
                               uri, method, agent_id, conn=None):
     data = []
     try:
@@ -203,7 +203,7 @@ def get_all_stats_by_agentid(username, customer_name,
     return(results)
 
 @db_create_close
-def get_all_stats_by_tagid(username, customer_name,
+def get_all_stats_by_tagid(username, view_name,
                            uri, method, tag_id, conn=None):
     data = []
     try:
@@ -258,7 +258,7 @@ def get_all_stats_by_tagid(username, customer_name,
     return(results)
 
 @db_create_close
-def insert_into_agent_apps(customer_name, app, conn=None):
+def insert_into_agent_apps(view_name, app, conn=None):
 
     collection=AppCollections.vFenseApps
 

@@ -3,8 +3,8 @@ class UserCollections():
 
 
 class UserKeys():
-    CurrentCustomer = 'current_customer' #string
-    DefaultCustomer = 'default_customer' #string
+    CurrentView = 'current_view' #string
+    DefaultView = 'default_view' #string
     Enabled = 'enabled' #bool
     FullName = 'full_name' #string
     Password = 'password' #string
@@ -15,5 +15,5 @@ class UserKeys():
 
 class UserMappedKeys():
     Groups = 'groups' #string
-    Customers = 'customers' #string
+    Views = 'views' #string
     Permissions = 'permissions' #string

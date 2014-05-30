@@ -18,7 +18,7 @@ logger = logging.getLogger('rvapi')
 class AgentOperationRetriever(object):
     """Retrieve operations, by various filters."""
     def __init__(
-            self, customer_name=None,
+            self, view_name=None,
             count=DefaultQueryValues.COUNT,
             offset=DefaultQueryValues.OFFSET,
             sort=SortValues.DESC,
@@ -27,7 +27,7 @@ class AgentOperationRetriever(object):
         ):
         """
         Kwargs:
-            customer_name (str): Name of the current customer.
+            view_name (str): Name of the current view.
                 default = None
             count (int): Maximum number of results to return.
                 default = 30
@@ -48,12 +48,12 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
         """
 
         self.user_name = user_name
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         sort_by_list = (
@@ -64,7 +64,7 @@ class AgentOperationRetriever(object):
                 AgentOperationKey.UpdatedTime,
                 AgentOperationKey.CompletedTime,
                 AgentOperationKey.CreatedBy,
-                AgentOperationKey.CustomerName,
+                AgentOperationKey.ViewName,
             ]
         )
         if sort_key in sort_by_list:
@@ -74,7 +74,7 @@ class AgentOperationRetriever(object):
 
         self.agent_operations = (
             FetchAgentOperations(
-                customer_name, count, offset,
+                view_name, count, offset,
                 sort, sort_key
             )
         )
@@ -84,8 +84,8 @@ class AgentOperationRetriever(object):
         """Get all operations
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> operation.get_all()
 
         Returns:
@@ -114,7 +114,7 @@ class AgentOperationRetriever(object):
                         "operation": "install_os_apps",
                         "updated_time": 1398092303,
                         "agents_failed_count": 0,
-                        "customer_name": "default"
+                        "view_name": "default"
                     }
                 ]
             }
@@ -147,8 +147,8 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> agent_id = '33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
             >>> operation.get_all_by_agentid(agent_id)
 
@@ -168,7 +168,7 @@ class AgentOperationRetriever(object):
                         "agents_pending_results_count": 0,
                         "operation": "install_os_apps",
                         "net_throttle": 0,
-                        "customer_name": "default",
+                        "view_name": "default",
                         "cpu_throttle": "normal",
                         "agents_total_count": 1,
                         "agents_completed_with_errors_count": 0,
@@ -219,8 +219,8 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
             >>> operation.get_all_by_tagid(tag_id)
         Returns:
@@ -249,7 +249,7 @@ class AgentOperationRetriever(object):
                         "operation": "install_os_apps",
                         "updated_time": 1398110835,
                         "agents_failed_count": 0,
-                        "customer_name": "default"
+                        "view_name": "default"
                     }
                 ]
             }
@@ -283,8 +283,8 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> action = 'install_os_apps'
             >>> operation.get_all_by_operation(action)
         Returns:
@@ -303,7 +303,7 @@ class AgentOperationRetriever(object):
                         "agents_pending_results_count": 0,
                         "operation": "install_os_apps",
                         "net_throttle": 0,
-                        "customer_name": "default",
+                        "view_name": "default",
                         "cpu_throttle": "normal",
                         "agents_total_count": 1,
                         "agents_completed_with_errors_count": 0,
@@ -363,8 +363,8 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
             >>> operation.get_install_operation_by_id(operation_id)
 
@@ -416,7 +416,7 @@ class AgentOperationRetriever(object):
                     "agents_pending_results_count": 0,
                     "operation": "install_os_apps",
                     "net_throttle": 0,
-                    "customer_name": "default",
+                    "view_name": "default",
                     "cpu_throttle": "normal",
                     "agents_total_count": 1,
                     "agents_completed_with_errors_count": 0,
@@ -468,8 +468,8 @@ class AgentOperationRetriever(object):
 
         Basic Usage:
             >>> from vFense.operations.search.agent_search import AgentOperationRetriever
-            >>> customer_name = 'default'
-            >>> operation = AgentOperationRetriever(customer_name)
+            >>> view_name = 'default'
+            >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
             >>> operation.get_operation_by_id(operation_id)
 
@@ -500,7 +500,7 @@ class AgentOperationRetriever(object):
                     "agents_pending_results_count": 0,
                     "operation": "updatesapplications",
                     "net_throttle": null,
-                    "customer_name": "default",
+                    "view_name": "default",
                     "cpu_throttle": null,
                     "agents_total_count": 1,
                     "agents_completed_with_errors_count": 0,

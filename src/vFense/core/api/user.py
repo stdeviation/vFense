@@ -23,8 +23,8 @@ from vFense.core.user.users import get_user_property, \
     create_user, remove_user, remove_users, change_password, \
     edit_user_properties, toggle_user_status
 
-from vFense.core.customer.customers import add_user_to_customers, \
-    remove_customers_from_user
+from vFense.core.view.views import add_user_to_views, \
+    remove_views_from_user
 
 from vFense.core.group.groups import add_user_to_groups, \
     remove_groups_from_user
@@ -93,15 +93,15 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, username):
         active_user = self.get_current_user()
-        active_customer = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        active_view = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         results = None
         try:
-            customer_context = (
-                self.arguments.get(ApiArguments.CUSTOMER_CONTEXT, active_customer)
+            view_context = (
+                self.arguments.get(ApiArguments.CUSTOMER_CONTEXT, active_view)
             )
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
 
@@ -111,7 +111,7 @@ class UserHandler(BaseHandler):
                 if action == ApiValues.ADD:
                     results = (
                         add_user_to_groups(
-                            username, customer_context, group_ids,
+                            username, view_context, group_ids,
                             username, uri, method
                         )
                     )
@@ -122,21 +122,21 @@ class UserHandler(BaseHandler):
                             username, uri, method
                         )
                     )
-            ###Update Customers###
-            customer_names = self.arguments.get('customer_names')
-            if customer_names and isinstance(customer_names, list):
+            ###Update Views###
+            view_names = self.arguments.get('view_names')
+            if view_names and isinstance(view_names, list):
                 if action == 'add':
                     results = (
-                        add_user_to_customers(
-                            username, customer_names,
+                        add_user_to_views(
+                            username, view_names,
                             username, uri, method
                         )
                     )
 
                 elif action == 'delete':
                     results = (
-                        remove_customers_from_user(
-                            username, customer_names,
+                        remove_views_from_user(
+                            username, view_names,
                             username, uri, method
                         )
                     )
@@ -209,16 +209,16 @@ class UserHandler(BaseHandler):
                     edit_user_properties(username, **data_dict)
                 )
 
-            current_customer = self.arguments.get('current_customer', None)
-            if current_customer:
-                data_dict[UserKeys.CurrentCustomer] = current_customer
+            current_view = self.arguments.get('current_view', None)
+            if current_view:
+                data_dict[UserKeys.CurrentView] = current_view
                 results = (
                     edit_user_properties(username, **data_dict)
                 )
 
-            default_customer = self.arguments.get('default_customer', None)
-            if default_customer:
-                data_dict[UserKeys.DefaultCustomer] = default_customer
+            default_view = self.arguments.get('default_view', None)
+            if default_view:
+                data_dict[UserKeys.DefaultView] = default_view
                 results = (
                     edit_user_properties(username, **data_dict)
                 )
@@ -294,11 +294,11 @@ class UsersHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        active_customer = (
-            get_user_property(active_user, UserKeys.CurrentCustomer)
+        active_view = (
+            get_user_property(active_user, UserKeys.CurrentView)
         )
-        customer_context = self.get_argument(ApiArguments.CUSTOMER_CONTEXT, None)
-        all_customers = self.get_argument(ApiArguments.ALL_CUSTOMERS, None)
+        view_context = self.get_argument(ApiArguments.CUSTOMER_CONTEXT, None)
+        all_views = self.get_argument(ApiArguments.ALL_CUSTOMERS, None)
         user_name = self.get_argument(ApiArguments.USER_NAME, None)
         count = 0
         user_data = []
@@ -308,24 +308,24 @@ class UsersHandler(BaseHandler):
                     active_user, Permissions.ADMINISTRATOR
                 )
             )
-            if granted and not customer_context and not all_customers and not user_name:
-                user_data = get_properties_for_all_users(active_customer)
+            if granted and not view_context and not all_views and not user_name:
+                user_data = get_properties_for_all_users(active_view)
 
-            elif granted and customer_context and not all_customers and not user_name:
+            elif granted and view_context and not all_views and not user_name:
 
-                user_data = get_properties_for_all_users(customer_context)
+                user_data = get_properties_for_all_users(view_context)
 
-            elif granted and all_customers and not customer_context and not user_name:
+            elif granted and all_views and not view_context and not user_name:
                 user_data = get_properties_for_all_users()
 
-            elif granted and user_name and not customer_context and not all_customers:
+            elif granted and user_name and not view_context and not all_views:
                 user_data = get_properties_for_user(user_name)
                 if user_data:
                     user_data = [user_data]
                 else:
                     user_data = []
 
-            elif customer_context and not granted or all_customers and not granted:
+            elif view_context and not granted or all_views and not granted:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
@@ -365,8 +365,8 @@ class UsersHandler(BaseHandler):
         username = self.arguments.get(ApiArguments.USERNAME)
         password = self.arguments.get(ApiArguments.PASSWORD)
         group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
-        customer_names = self.arguments.get(ApiArguments.CUSTOMER_NAMES, None)
-        customer_context = self.arguments.get(ApiArguments.CUSTOMER_CONTEXT)
+        view_names = self.arguments.get(ApiArguments.CUSTOMER_NAMES, None)
+        view_context = self.arguments.get(ApiArguments.CUSTOMER_CONTEXT)
         fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
         email = self.arguments.get(ApiArguments.EMAIL, None)
         enabled = self.arguments.get(ApiArguments.ENABLED, CommonKeys.YES)
@@ -375,20 +375,20 @@ class UsersHandler(BaseHandler):
                 if not isinstance(group_ids, list):
                     group_ids = group_ids.split()
 
-            if customer_names:
-                if customer_names:
-                    if not isinstance(customer_names, list):
-                        customer_names = customer_names.split(',')
+            if view_names:
+                if view_names:
+                    if not isinstance(view_names, list):
+                        view_names = view_names.split(',')
 
             results = create_user(
                 username, fullname, password,
-                group_ids, customer_context, email,
+                group_ids, view_context, email,
                 enabled, active_user, uri, method
             )
             if results['rv_status_code'] == GenericCodes.ObjectCreated:
-                if customer_names:
-                    add_user_to_customers(
-                        username, customer_names,
+                if view_names:
+                    add_user_to_views(
+                        username, view_names,
                         active_user, uri, method
                     )
             self.set_status(results['http_status'])

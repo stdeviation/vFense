@@ -21,7 +21,7 @@ logger = logging.getLogger('rvapi')
 class FetchAgents(object):
     """Agent database queries"""
     def __init__(
-        self, customer_name=None,
+        self, view_name=None,
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
@@ -29,14 +29,14 @@ class FetchAgents(object):
         ):
         """
         Kwargs:
-            customer_name (str): Fetch all agents in this customer.
+            view_name (str): Fetch all agents in this view.
             count (int): The number of results to return.
             offset (int): The next set of results beginning at offset.
             sort (str): asc or desc.
             sort_key (str): The key you are going to sort the results by.
         """
 
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.count = count
         self.offset = offset
         self.sort_key = sort_key
@@ -65,8 +65,8 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> view_name = 'default'
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_name('ubu')
 
         Returns:
@@ -135,8 +135,8 @@ class FetchAgents(object):
         """Retrieve all agents.
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> view_name = 'default'
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.all()
 
         Returns:
@@ -201,10 +201,10 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_key_and_val(fkey, fval)
 
         Returns:
@@ -271,11 +271,11 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
             >>> query = 'ubu'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_key_and_value_and_query(fkey, fval, query)
 
         Returns:
@@ -349,9 +349,9 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> ip = '192.168.0.101'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_ip(ip)
 
         Returns:
@@ -425,11 +425,11 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> ip = '192.168'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_ip_and_filter(ip, fkey, fval)
 
         Returns:
@@ -498,9 +498,9 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> mac = '000c292672d6'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_mac(mac)
 
         Returns:
@@ -570,11 +570,11 @@ class FetchAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search._db import FetchAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> mac = '000c292672d6'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = FetchAgents(customer_name='default')
+            >>> search_agents = FetchAgents(view_name='default')
             >>> search_agents.by_mac_and_filter(mac, fkey, fval)
 
         Returns:
@@ -705,13 +705,13 @@ class FetchAgents(object):
             r
             .table(AgentCollections.Agents)
         )
-        if self.customer_name:
+        if self.view_name:
             base_filter = (
                 r
                 .table(AgentCollections.Agents)
                 .get_all(
-                    self.customer_name,
-                    index=AgentKey.CustomerName
+                    self.view_name,
+                    index=AgentKey.ViewName
                 )
             )
 
@@ -731,7 +731,7 @@ class FetchAgents(object):
             r
             .table(AgentCollections.Hardware)
         )
-        if self.customer_name:
+        if self.view_name:
             base_count = (
                 r
                 .table(AgentCollections.Hardware)

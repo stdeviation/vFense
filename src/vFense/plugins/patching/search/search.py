@@ -17,7 +17,7 @@ class RetrieveApps(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc', sort_key=AppsKey.Name,
                  show_hidden=CommonKeys.NO):
@@ -25,7 +25,7 @@ class RetrieveApps(object):
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -112,8 +112,8 @@ class RetrieveApps(object):
                     r
                     .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
                     .get_all(
-                        [pkg_status, self.customer_name],
-                        index=self.CurrentAppsPerAgentIndexes.StatusAndCustomer)
+                        [pkg_status, self.view_name],
+                        index=self.CurrentAppsPerAgentIndexes.StatusAndView)
                     .eq_join(self.CurrentAppsKey.AppId, r.table(self.CurrentAppsCollection))
                     .map(self.joined_map_hash)
                 )
@@ -173,7 +173,7 @@ class RetrieveApps(object):
                 base = (
                     r
                     .table(self.CurrentAppsCollection)
-                    .get_all(self.customer_name, sev, index=self.CurrentAppsIndexes.CustomerAndRvSeverity)
+                    .get_all(self.view_name, sev, index=self.CurrentAppsIndexes.ViewAndRvSeverity)
                 )
 
                 if self.show_hidden == CommonKeys.NO:
@@ -230,8 +230,8 @@ class RetrieveApps(object):
                         r
                         .table(self.CurrentAppsPerAgentCollection)
                         .get_all(
-                            [pkg_status, self.customer_name],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndCustomer
+                            [pkg_status, self.view_name],
+                            index=self.CurrentAppsPerAgentIndexes.StatusAndView
                         )
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AppId,
@@ -301,7 +301,7 @@ class RetrieveApps(object):
             base = (
                 r
                 .table(self.CurrentAppsCollection)
-                .get_all(self.customer_name, index=self.CurrentAppsIndexes.Customers)
+                .get_all(self.view_name, index=self.CurrentAppsIndexes.Views)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -347,7 +347,7 @@ class RetrieveApps(object):
             base = (
                 r
                 .table(self.CurrentAppsCollection)
-                .get_all(self.customer_name, index=self.CurrentAppsIndexes.Customers)
+                .get_all(self.view_name, index=self.CurrentAppsIndexes.Views)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -461,8 +461,8 @@ class RetrieveApps(object):
                         r
                         .table(self.CurrentAppsPerAgentCollection)
                         .get_all(
-                            [pkg_status, self.customer_name],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndCustomer
+                            [pkg_status, self.view_name],
+                            index=self.CurrentAppsPerAgentIndexes.StatusAndView
                         )
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AppId,
@@ -539,14 +539,14 @@ class RetrieveCustomApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc', sort_key=CustomAppsKey.Name,
                  show_hidden=CommonKeys.NO):
 
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -577,7 +577,7 @@ class RetrieveSupportedApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
                  sort_key=SupportedAppsKey.Name,
@@ -585,7 +585,7 @@ class RetrieveSupportedApps(RetrieveApps):
 
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -616,7 +616,7 @@ class RetrieveAgentApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
                  sort_key=AgentAppsKey.Name,
@@ -624,7 +624,7 @@ class RetrieveAgentApps(RetrieveApps):
 
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method

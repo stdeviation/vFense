@@ -32,8 +32,8 @@ class StartUpV1(BaseHandler):
     def put(self, agent_id):
         try:
             username = self.get_current_user()
-            customer_name = (
-                get_user_property(username, UserKeys.CurrentCustomer)
+            view_name = (
+                get_user_property(username, UserKeys.CurrentView)
             )
             uri = self.request.uri
             method = self.request.method
@@ -48,7 +48,7 @@ class StartUpV1(BaseHandler):
                 update_agent(
                     agent_id, system_info,
                     hardware, rebooted,
-                    username, customer_name,
+                    username, view_name,
                     uri, method,
                 )
             )
@@ -63,7 +63,7 @@ class StartUpV1(BaseHandler):
             if agent_data['http_status'] == 200:
                 if 'rv' in plugins:
                     RvHandOff(
-                        username, customer_name, uri, method
+                        username, view_name, uri, method
                     ).startup_operation(agent_id, plugins['rv']['data'])
 
                 if 'ra' in plugins:

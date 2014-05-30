@@ -13,7 +13,7 @@ from vFense.operations import *
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *
 
-from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
+from vFense.server.hierarchy import Collection, GroupKey, UserKey, ViewKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -37,7 +37,7 @@ def notification_rule_exists(rule_id, conn=None):
 
 
 @db_create_close
-def get_all_notifications(username, customer_name,
+def get_all_notifications(username, view_name,
                           uri, method, conn=None):
     map_list = (
         {
@@ -55,7 +55,7 @@ def get_all_notifications(username, customer_name,
             NotificationKeys.AllAgents: r.row[NotificationKeys.AllAgents],
             NotificationKeys.Agents: r.row[NotificationKeys.Agents],
             NotificationKeys.Tags: r.row[NotificationKeys.Tags],
-            NotificationKeys.CustomerName: r.row[NotificationKeys.CustomerName],
+            NotificationKeys.ViewName: r.row[NotificationKeys.ViewName],
             NotificationKeys.AppThreshold: r.row[NotificationKeys.AppThreshold],
             NotificationKeys.RebootThreshold: r.row[NotificationKeys.RebootThreshold],
             NotificationKeys.ShutdownThreshold: r.row[NotificationKeys.ShutdownThreshold],
@@ -69,7 +69,7 @@ def get_all_notifications(username, customer_name,
         data = list(
             r
             .table(NotificationCollections.Notifications)
-            .get_all(customer_name, index=NotificationIndexes.CustomerName)
+            .get_all(view_name, index=NotificationIndexes.ViewName)
             .map(map_list)
             .run(conn)
         )
@@ -91,20 +91,20 @@ def get_all_notifications(username, customer_name,
 
 
 @db_create_close
-def get_valid_fields(username, customer_name,
+def get_valid_fields(username, view_name,
                      uri, method, conn=None):
     try:
         agents = list(
             r
             .table(AgentsCollection)
-            .get_all(customer_name, index=AgentKey.CustomerName)
+            .get_all(view_name, index=AgentKey.ViewName)
             .pluck(AgentKey.AgentId, AgentKey.ComputerName)
             .run(conn)
         )
         tags = list(
             r
             .table(TagsCollection)
-            .get_all(customer_name, index=TagsIndexes.CustomerName)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .pluck(TagsKey.TagId, TagsKey.TagName)
             .run(conn)
         )
@@ -117,14 +117,14 @@ def get_valid_fields(username, customer_name,
         groups = list(
             r
             .table(Collection.Groups)
-            .get_all(customer_name, index=GroupKey.CustomerId)
+            .get_all(view_name, index=GroupKey.ViewId)
             .pluck(GroupKey.GroupName)
             .run(conn)
         )
-        customers = list(
+        views = list(
             r
-            .table(Collection.Customers)
-            .pluck(CustomerKey.CustomerName)
+            .table(Collection.Views)
+            .pluck(ViewKey.ViewName)
             .run(conn)
         )
         data = {
@@ -132,7 +132,7 @@ def get_valid_fields(username, customer_name,
             'agents': agents,
             'users': users,
             'groups': groups,
-            'customers': customers,
+            'views': views,
             'plugins': VALID_NOTIFICATION_PLUGINS,
             'rv_operation_types': VALID_RV_NOTIFICATIONS,
             'rv_thresholds': VALID_STATUSES_TO_ALERT_ON,
@@ -158,10 +158,10 @@ def get_valid_fields(username, customer_name,
 
 class Notifier():
 
-    def __init__(self, username, customer_name, uri, method):
+    def __init__(self, username, view_name, uri, method):
 
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         self.now = mktime(datetime.now().timetuple())
@@ -504,7 +504,7 @@ class Notifier():
                 NotificationKeys.AllAgents: 'false',
                 NotificationKeys.Agents: [],
                 NotificationKeys.Tags: [],
-                NotificationKeys.CustomerName: None,
+                NotificationKeys.ViewName: None,
                 NotificationKeys.AppThreshold: None,
                 NotificationKeys.RebootThreshold: None,
                 NotificationKeys.ShutdownThreshold: None,

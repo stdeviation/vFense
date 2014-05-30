@@ -15,53 +15,53 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.agent.agents import change_customer_for_all_agents_in_customer, \
-    remove_all_agents_for_customer
+from vFense.core.agent.agents import change_view_for_all_agents_in_view, \
+    remove_all_agents_for_view
 
-from vFense.core.customer import Customer, CustomerKeys
+from vFense.core.view import View, ViewKeys
 
-from vFense.core.customer.customers import get_properties_for_customer, \
-    get_properties_for_all_customers, get_customer, remove_customer, \
-    remove_customers, edit_customer, create_customer
+from vFense.core.view.views import get_properties_for_view, \
+    get_properties_for_all_views, get_view, remove_view, \
+    remove_views, edit_view, create_view
 
-from vFense.core.user.users import add_users_to_customer, \
-    remove_users_from_customer
+from vFense.core.user.users import add_users_to_view, \
+    remove_users_from_view
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.results import Results
-from vFense.errorz.status_codes import CustomerFailureCodes, CustomerCodes
-from vFense.plugins.patching.patching import remove_all_apps_for_customer, \
-    change_customer_for_apps_in_customer
+from vFense.errorz.status_codes import ViewFailureCodes, ViewCodes
+from vFense.plugins.patching.patching import remove_all_apps_for_view, \
+    change_view_for_apps_in_view
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class CustomerHandler(BaseHandler):
+class ViewHandler(BaseHandler):
 
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
-    def get(self, customer_name):
+    def get(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
         count = 0
-        customer_data = {}
+        view_data = {}
         try:
-            customer_data = get_properties_for_customer(customer_name)
-            if customer_data:
+            view_data = get_properties_for_view(view_name)
+            if view_data:
                 count = 1
                 results = (
                     GenericResults(
                         active_user, uri, method
-                    ).information_retrieved(customer_data, count)
+                    ).information_retrieved(view_data, count)
                 ) 
             else:
                 results = (
                     GenericResults(
                         active_user, uri, method
-                    ).invalid_id(customer_name, 'customer')
+                    ).invalid_id(view_name, 'view')
                 ) 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -82,14 +82,14 @@ class CustomerHandler(BaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def post(self, customer_name):
+    def post(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
         results = None
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            ### Add Users to this customer
+            ### Add Users to this view
             usernames = self.arguments.get(ApiArguments.USERNAMES)
             if not isinstance(usernames, list) and isinstance(usernames, str):
                 usernames = usernames.split(',')
@@ -97,16 +97,16 @@ class CustomerHandler(BaseHandler):
             if usernames:
                 if action == ApiValues.ADD:
                     results = (
-                        add_users_to_customer(
-                            usernames, customer_name,
+                        add_users_to_view(
+                            usernames, view_name,
                             active_user, uri, method
                         )
                     )
 
                 elif action == ApiValues.DELETE:
                     results = (
-                        remove_users_from_customer(
-                            usernames, customer_name,
+                        remove_users_from_view(
+                            usernames, view_name,
                             active_user, uri, method
                         )
                     )
@@ -118,7 +118,7 @@ class CustomerHandler(BaseHandler):
             results = (
                 GenericResults(
                     active_user, uri, method
-                ).something_broke(active_user, 'Customers', e)
+                ).something_broke(active_user, 'Views', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -129,7 +129,7 @@ class CustomerHandler(BaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def put(self, customer_name):
+    def put(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
@@ -141,8 +141,8 @@ class CustomerHandler(BaseHandler):
             agent_queue_ttl = self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, None)
             download_url = self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
 
-            customer = Customer(
-                customer_name,
+            view = View(
+                view_name,
                 net_throttle,
                 cpu_throttle,
                 server_queue_ttl,
@@ -156,7 +156,7 @@ class CustomerHandler(BaseHandler):
                 ApiResultKeys.USERNAME: active_user,
             }
 
-            results = edit_customer(customer, **call_info)
+            results = edit_view(view, **call_info)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -166,7 +166,7 @@ class CustomerHandler(BaseHandler):
             results = (
                 GenericResults(
                     active_user, uri, method
-                ).something_broke(active_user, 'Customers', e)
+                ).something_broke(active_user, 'Views', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -177,7 +177,7 @@ class CustomerHandler(BaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def delete(self, customer_name):
+    def delete(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
@@ -187,20 +187,20 @@ class CustomerHandler(BaseHandler):
                     ApiArguments.DELETE_ALL_AGENTS
                 )
             )
-            move_agents_to_customer = (
+            move_agents_to_view = (
                 self.arguments.get(
                     ApiArguments.MOVE_AGENTS_TO_CUSTOMER, None
                 )
             )
 
-            if move_agents_to_customer:
-                customer_exist = get_customer(move_agents_to_customer)
-                if not customer_exist:
-                    msg = 'customer %s does not exist' % (move_agents_to_customer)
+            if move_agents_to_view:
+                view_exist = get_view(move_agents_to_view)
+                if not view_exist:
+                    msg = 'view %s does not exist' % (move_agents_to_view)
                     data = {
-                        ApiResultKeys.INVALID_ID: move_agents_to_customer,
+                        ApiResultKeys.INVALID_ID: move_agents_to_view,
                         ApiResultKeys.MESSAGE: msg,
-                        ApiResultKeys.VFENSE_STATUS_CODE: CustomerFailureCodes.CustomerDoesNotExist
+                        ApiResultKeys.VFENSE_STATUS_CODE: ViewFailureCodes.ViewDoesNotExist
                     }
                     results = (
                         Results(
@@ -213,8 +213,8 @@ class CustomerHandler(BaseHandler):
 
                 else:
                     results = (
-                        remove_customer(
-                            customer_name,
+                        remove_view(
+                            view_name,
                             active_user, uri, method
                         )
                     )
@@ -222,19 +222,19 @@ class CustomerHandler(BaseHandler):
                     self.set_header('Content-Type', 'application/json')
                     self.write(json.dumps(results, indent=4))
                     if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                            CustomerCodes.CustomerDeleted):
+                            ViewCodes.ViewDeleted):
 
-                        change_customer_for_all_agents_in_customer(
-                            customer_name, move_agents_to_customer
+                        change_view_for_all_agents_in_view(
+                            view_name, move_agents_to_view
                         )
-                        change_customer_for_apps_in_customer(
-                            customer_name, move_agents_to_customer
+                        change_view_for_apps_in_view(
+                            view_name, move_agents_to_view
                         )
 
             elif deleted_agents == ApiValues.YES:
                 results = (
-                    remove_customer(
-                        customer_name,
+                    remove_view(
+                        view_name,
                         active_user, uri, method
                     )
                 )
@@ -242,15 +242,15 @@ class CustomerHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
                 if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                        CustomerCodes.CustomerDeleted):
+                        ViewCodes.ViewDeleted):
 
-                    remove_all_agents_for_customer(customer_name)
-                    remove_all_apps_for_customer(customer_name)
+                    remove_all_agents_for_view(view_name)
+                    remove_all_apps_for_view(view_name)
 
             elif deleted_agents == ApiValues.NO:
                 results = (
-                    remove_customer(
-                        customer_name,
+                    remove_view(
+                        view_name,
                         active_user, uri, method
                     )
                 )
@@ -280,7 +280,7 @@ class CustomerHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-class CustomersHandler(BaseHandler):
+class ViewsHandler(BaseHandler):
 
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -288,18 +288,18 @@ class CustomersHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        all_customers = None
-        customer_context = self.get_argument('customer_context', None)
+        all_views = None
+        view_context = self.get_argument('view_context', None)
         count = 0
-        customer_data = {}
-        if not customer_context and active_user == DefaultUsers.ADMIN:
-            all_customers = True
+        view_data = {}
+        if not view_context and active_user == DefaultUsers.ADMIN:
+            all_views = True
 
         try:
-            if customer_context:
+            if view_context:
                 granted, status_code = (
                     verify_permission_for_user(
-                        active_user, Permissions.ADMINISTRATOR, customer_context
+                        active_user, Permissions.ADMINISTRATOR, view_context
                     )
                 )
             else:
@@ -308,14 +308,14 @@ class CustomersHandler(BaseHandler):
                         active_user, Permissions.ADMINISTRATOR
                     )
                 )
-            if granted and not all_customers and not customer_context:
-                customer_data = get_properties_for_all_customers(active_user)
+            if granted and not all_views and not view_context:
+                view_data = get_properties_for_all_views(active_user)
 
-            elif granted and all_customers and not customer_context:
-                customer_data = get_properties_for_all_customers()
+            elif granted and all_views and not view_context:
+                view_data = get_properties_for_all_views()
 
-            elif granted and customer_context and not all_customers:
-                customer_data = get_properties_for_customer(customer_context)
+            elif granted and view_context and not all_views:
+                view_data = get_properties_for_view(view_context)
 
             elif not granted:
                 results = (
@@ -325,12 +325,12 @@ class CustomersHandler(BaseHandler):
                     )
                 )
 
-            if customer_data:
-                count = len(customer_data)
+            if view_data:
+                count = len(view_data)
                 results = (
                     GenericResults(
                         active_user, uri, method
-                    ).information_retrieved(customer_data, count)
+                    ).information_retrieved(view_data, count)
                 ) 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -340,7 +340,7 @@ class CustomersHandler(BaseHandler):
             results = (
                 GenericResults(
                     active_user, uri, method
-                ).something_broke(active_user, 'Customers', e)
+                ).something_broke(active_user, 'Views', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -356,7 +356,7 @@ class CustomersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            customer_name = (
+            view_name = (
                 self.arguments.get(ApiArguments.CUSTOMER_NAME)
             )
             pkg_url = (
@@ -377,8 +377,8 @@ class CustomersHandler(BaseHandler):
                 self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
             )
 
-            customer = Customer(
-                customer_name,
+            view = View(
+                view_name,
                 net_throttle,
                 cpu_throttle,
                 server_queue_ttl,
@@ -386,8 +386,8 @@ class CustomersHandler(BaseHandler):
                 pkg_url
             )
 
-            results = create_customer(
-                customer, active_user,
+            results = create_view(
+                view, active_user,
                 user_name=active_user, uri=uri, method=method
             )
 
@@ -415,16 +415,16 @@ class CustomersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            customer_names = (
+            view_names = (
                 self.arguments.get(ApiArguments.CUSTOMER_NAMES)
             )
 
-            if not isinstance(customer_names, list):
-                customer_names = customer_names.split(',')
+            if not isinstance(view_names, list):
+                view_names = view_names.split(',')
 
             results = (
-                remove_customers(
-                    customer_names,
+                remove_views(
+                    view_names,
                     active_user, uri, method
                 )
             )
@@ -433,10 +433,10 @@ class CustomersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
             if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                    CustomerCodes.CustomerDeleted):
+                    ViewCodes.ViewDeleted):
 
-                remove_all_agents_for_customer(customer_name)
-                remove_all_apps_for_customer(customer_name)
+                remove_all_agents_for_view(view_name)
+                remove_all_apps_for_view(view_name)
 
         except Exception as e:
             results = (

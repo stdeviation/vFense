@@ -6,7 +6,7 @@ from vFense.db.client import *
 from vFense.server.hierarchy import *
 #from server.hierarchy.group import *
 #from server.hierarchy.user import *
-#from server.hierarchy.customer import *
+#from server.hierarchy.view import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -31,16 +31,16 @@ def _create_tables(conn):
     if Collection.Groups not in tables:
         _create_groups_table(conn)
 
-    if Collection.Customers not in tables:
-        _create_customers_table(conn)
+    if Collection.Views not in tables:
+        _create_views_table(conn)
 
-#    if Collection.GroupsPerCustomer not in tables:
+#    if Collection.GroupsPerView not in tables:
 #        _create_GPC_table(conn)
 
     if Collection.GroupsPerUser not in tables:
         _create_GPU_table(conn)
 
-    if Collection.UsersPerCustomer not in tables:
+    if Collection.UsersPerView not in tables:
         _create_UPC_table(conn)
 
 
@@ -56,13 +56,13 @@ def _create_UPC_table(conn=None):
     try:
 
         r.db(_main_db).table_create(
-            Collection.UsersPerCustomer
+            Collection.UsersPerView
         ).run(conn)
 
     except Exception as e:
 
         logger.error(
-            "Unable to create %s table." % Collection.UsersPerCustomer
+            "Unable to create %s table." % Collection.UsersPerView
         )
         logger.exception(e)
 
@@ -70,34 +70,34 @@ def _create_UPC_indices(conn):
 
     try:
 
-        indices = r.table(Collection.UsersPerCustomer).index_list().run(conn)
+        indices = r.table(Collection.UsersPerView).index_list().run(conn)
 
-        if UsersPerCustomerKey.UserId not in indices:
+        if UsersPerViewKey.UserId not in indices:
             r.table(
-                Collection.UsersPerCustomer
-            ).index_create(UsersPerCustomerKey.UserId).run(conn)
+                Collection.UsersPerView
+            ).index_create(UsersPerViewKey.UserId).run(conn)
 
-        if UsersPerCustomerKey.CustomerId not in indices:
+        if UsersPerViewKey.ViewId not in indices:
             r.table(
-                Collection.UsersPerCustomer
-            ).index_create(UsersPerCustomerKey.CustomerId).run(conn)
+                Collection.UsersPerView
+            ).index_create(UsersPerViewKey.ViewId).run(conn)
 
-        if UsersPerCustomerKey.UserAndCustomerId not in indices:
+        if UsersPerViewKey.UserAndViewId not in indices:
             r.table(
-                Collection.UsersPerCustomer
+                Collection.UsersPerView
             ).index_create(
-                UsersPerCustomerKey.UserAndCustomerId,
+                UsersPerViewKey.UserAndViewId,
                 lambda row:
                 [
-                    row[UsersPerCustomerKey.UserId],
-                    row[UsersPerCustomerKey.CustomerId]
+                    row[UsersPerViewKey.UserId],
+                    row[UsersPerViewKey.ViewId]
                 ]
             ).run(conn)
 
     except Exception as e:
 
         logger.error(
-            "Unable to create indices for %s table." % Collection.UsersPerCustomer
+            "Unable to create indices for %s table." % Collection.UsersPerView
         )
         logger.exception(e)
 
@@ -129,40 +129,40 @@ def _create_GPU_indices(conn=None):
                 Collection.GroupsPerUser
             ).index_create(GroupsPerUserKey.UserId).run(conn)
 
-        if GroupsPerUserKey.GroupIdAndCustomerId not in indices:
+        if GroupsPerUserKey.GroupIdAndViewId not in indices:
             r.table(
                 Collection.GroupsPerUser
             ).index_create(
-                GroupsPerUserKey.GroupIdAndCustomerId,
+                GroupsPerUserKey.GroupIdAndViewId,
                 lambda row:
                 [
                     row[GroupsPerUserKey.GroupId],
-                    row[GroupsPerUserKey.CustomerId]
+                    row[GroupsPerUserKey.ViewId]
                 ]
             ).run(conn)
 
-        if GroupsPerUserKey.UserIdAndCustomerId not in indices:
+        if GroupsPerUserKey.UserIdAndViewId not in indices:
             r.table(
                 Collection.GroupsPerUser
             ).index_create(
-                GroupsPerUserKey.UserIdAndCustomerId,
+                GroupsPerUserKey.UserIdAndViewId,
                 lambda row:
                 [
                     row[GroupsPerUserKey.UserId],
-                    row[GroupsPerUserKey.CustomerId]
+                    row[GroupsPerUserKey.ViewId]
                 ]
             ).run(conn)
 
-        if GroupsPerUserKey.GroupUserAndCustomerId not in indices:
+        if GroupsPerUserKey.GroupUserAndViewId not in indices:
             r.table(
                 Collection.GroupsPerUser
             ).index_create(
-                GroupsPerUserKey.GroupUserAndCustomerId,
+                GroupsPerUserKey.GroupUserAndViewId,
                 lambda row:
                 [
                     row[GroupsPerUserKey.GroupId],
                     row[GroupsPerUserKey.UserId],
-                    row[GroupsPerUserKey.CustomerId]
+                    row[GroupsPerUserKey.ViewId]
                 ]
             ).run(conn)
 
@@ -178,13 +178,13 @@ def _create_GPC_table(conn=None):
     try:
 
         r.db(_main_db).table_create(
-            Collection.GroupsPerCustomer
+            Collection.GroupsPerView
         ).run(conn)
 
     except Exception as e:
 
         logger.error(
-            "Unable to create %s table." % Collection.GroupsPerCustomer
+            "Unable to create %s table." % Collection.GroupsPerView
         )
         logger.exception(e)
 
@@ -193,34 +193,34 @@ def _create_GPC_indices(conn=None):
 
     try:
 
-        indices = r.table(Collection.GroupsPerCustomer).index_list().run(conn)
+        indices = r.table(Collection.GroupsPerView).index_list().run(conn)
 
-        if GroupsPerCustomerKey.GroupId not in indices:
+        if GroupsPerViewKey.GroupId not in indices:
             r.table(
-                Collection.GroupsPerCustomer
-            ).index_create(GroupsPerCustomerKey.GroupId).run(conn)
+                Collection.GroupsPerView
+            ).index_create(GroupsPerViewKey.GroupId).run(conn)
 
-        if GroupsPerCustomerKey.CustomerId not in indices:
+        if GroupsPerViewKey.ViewId not in indices:
             r.table(
-                Collection.GroupsPerCustomer
-            ).index_create(GroupsPerCustomerKey.CustomerId).run(conn)
+                Collection.GroupsPerView
+            ).index_create(GroupsPerViewKey.ViewId).run(conn)
 
-        if GroupsPerCustomerKey.GroupAndCustomerId not in indices:
+        if GroupsPerViewKey.GroupAndViewId not in indices:
             r.table(
-                Collection.GroupsPerCustomer
+                Collection.GroupsPerView
             ).index_create(
-                GroupsPerCustomerKey.GroupAndCustomerId,
+                GroupsPerViewKey.GroupAndViewId,
                 lambda row:
                 [
-                    row[GroupsPerCustomerKey.GroupId],
-                    row[GroupsPerCustomerKey.CustomerId]
+                    row[GroupsPerViewKey.GroupId],
+                    row[GroupsPerViewKey.ViewId]
                 ]
             ).run(conn)
 
     except Exception as e:
 
         logger.error(
-            "Unable to create indices for table  %s." % Collection.GroupsPerCustomer
+            "Unable to create indices for table  %s." % Collection.GroupsPerView
         )
         logger.exception(e)
 
@@ -247,20 +247,20 @@ def _create_groups_indices(conn=None):
                 Collection.Groups
             ).index_create(GroupKey.GroupName).run(conn)
 
-        if GroupKey.CustomerId not in indices:
+        if GroupKey.ViewId not in indices:
             r.table(
                 Collection.Groups
-            ).index_create(GroupKey.CustomerId).run(conn)
+            ).index_create(GroupKey.ViewId).run(conn)
 
-        if GroupKey.GroupNameAndCustomerId not in indices:
+        if GroupKey.GroupNameAndViewId not in indices:
             r.table(
                 Collection.Groups
             ).index_create(
-                GroupKey.GroupNameAndCustomerId,
+                GroupKey.GroupNameAndViewId,
                 lambda row:
                 [
                     row[GroupKey.GroupName],
-                    row[GroupKey.CustomerId]
+                    row[GroupKey.ViewId]
                 ]
             ).run(conn)
 
@@ -269,18 +269,18 @@ def _create_groups_indices(conn=None):
         logger.error("Unable to create indices for table %s." % Collection.Groups)
         logger.exception(e)
 
-def _create_customers_table(conn=None):
+def _create_views_table(conn=None):
 
     try:
 
         r.db(_main_db).table_create(
-            Collection.Customers,
-            primary_key=CustomerKey.CustomerName
+            Collection.Views,
+            primary_key=ViewKey.ViewName
         ).run(conn)
 
     except Exception as e:
 
-        logger.error("Unable to create %s table." % Collection.Customers)
+        logger.error("Unable to create %s table." % Collection.Views)
         logger.exception(e)
 
 

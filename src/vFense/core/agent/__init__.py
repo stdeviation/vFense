@@ -15,7 +15,7 @@ class AgentKey():
     HostName = 'host_name'
     OsCode = 'os_code'
     OsString = 'os_string'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     NeedsReboot = 'needs_reboot'
     AgentStatus = 'agent_status'
     BasicStats = 'basic_stats'
@@ -31,7 +31,7 @@ class AgentKey():
 
 
 class AgentIndexes():
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     OsCode = 'os_code'
 
 

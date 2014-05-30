@@ -96,10 +96,10 @@ def get_agent_ids_from_tag(tag_id=None, conn=None):
 
 
 @db_create_close
-def get_tags_info(customer_name=None,
+def get_tags_info(view_name=None,
                   keys_to_pluck=None, conn=None):
 
-    if keys_to_pluck and not customer_name:
+    if keys_to_pluck and not view_name:
         tags = list(
             r
             .table(TagsCollection)
@@ -107,11 +107,11 @@ def get_tags_info(customer_name=None,
             .run(conn)
         )
 
-    elif keys_to_pluck and customer_name:
+    elif keys_to_pluck and view_name:
         tags = list(
             r
             .table(TagsCollection)
-            .get_all(customer_name, index=TagsIndexes.CustomerName)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -179,12 +179,12 @@ def get_tags_info_from_tag_ids(tag_ids, keys_to_pluck=None, conn=None):
 
 
 @db_create_close
-def get_all_tag_ids(customer_name=None, conn=None):
-    if customer_name:
+def get_all_tag_ids(view_name=None, conn=None):
+    if view_name:
         tag_ids = list(
             r
             .table(TagsCollection)
-            .get_all(customer_name, index=TagsIndexes.CustomerName)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .map(lambda x: x[TagsKey.TagId])
             .run(conn)
         )
@@ -201,7 +201,7 @@ def get_all_tag_ids(customer_name=None, conn=None):
 
 
 @db_create_close
-def tag_lister(customer_name='default', query=None, conn=None):
+def tag_lister(view_name='default', query=None, conn=None):
     """
         return a list of tags in json
     """
@@ -209,7 +209,7 @@ def tag_lister(customer_name='default', query=None, conn=None):
         tags = list(
             r
             .table(TagsCollection)
-            .get_all(customer_name, index=TagsIndexes.CustomerName)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .filter(lambda x: x[TagsKey.TagName].match(query))
             .run(conn)
         )
@@ -218,7 +218,7 @@ def tag_lister(customer_name='default', query=None, conn=None):
         tags = list(
             r
             .table(TagsCollection)
-            .get_all(customer_name, index=TagsIndexes.CustomerName)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .order_by(TagsKey.TagName)
             .run(conn)
         )
@@ -249,9 +249,9 @@ def tag_lister(customer_name='default', query=None, conn=None):
 
 
 class TagsManager(object):
-    def __init__(self, username, customer_name, uri=None, method=None):
+    def __init__(self, username, view_name, uri=None, method=None):
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
 
@@ -260,15 +260,15 @@ class TagsManager(object):
         tag_id = None
         ninsert = {
             TagsKey.TagName: tag_name,
-            TagsKey.CustomerName: self.customer_name,
+            TagsKey.ViewName: self.view_name,
             TagsKey.ProductionLevel: prod_level,
         }
         try:
             tag_exists = list(
                 r
                 .table(TagsCollection)
-                .get_all([self.customer_name, tag_name],
-                         index=TagsIndexes.TagNameAndCustomer)
+                .get_all([self.view_name, tag_name],
+                         index=TagsIndexes.TagNameAndView)
                 .pluck(TagsKey.TagId)
                 .run(conn)
             )

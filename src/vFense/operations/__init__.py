@@ -27,7 +27,7 @@ class AgentOperationKey():
     UpdatedTime = 'updated_time'
     CompletedTime = 'completed_time'
     CreatedBy = 'created_by'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     AgentsTotalCount = 'agents_total_count'
     AgentsFailedCount = 'agents_failed_count'
     AgentsCompletedCount = 'agents_completed_count'
@@ -48,12 +48,12 @@ class AgentOperationKey():
 class AgentOperationIndexes():
     TagId = 'tag_id'
     AgentIds = 'agent_ids'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     Operation = 'operation'
     OperationId = 'operation_id'
-    OperationAndCustomer = 'operation_and_customer'
-    PluginAndCustomer = 'plugin_and_customer'
-    CreatedByAndCustomer = 'createdby_and_customer'
+    OperationAndView = 'operation_and_view'
+    PluginAndView = 'plugin_and_view'
+    CreatedByAndView = 'createdby_and_view'
 
 
 class OperationPerAgentKey():
@@ -61,7 +61,7 @@ class OperationPerAgentKey():
     AgentId = 'agent_id'
     TagId = 'tag_id'
     OperationId = 'operation_id'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     Status = 'status'
     PickedUpTime = 'picked_up_time'
     ExpiredTime = 'expired_time'
@@ -75,10 +75,10 @@ class OperationPerAgentKey():
 
 class OperationPerAgentIndexes():
     OperationId = 'operation_id'
-    AgentIdAndCustomer = 'agentid_and_customer'
+    AgentIdAndView = 'agentid_and_view'
     OperationIdAndAgentId = 'operationid_and_agentid'
-    TagIdAndCustomer = 'tagid_and_customer'
-    StatusAndCustomer = 'status_and_customer'
+    TagIdAndView = 'tagid_and_view'
+    StatusAndView = 'status_and_view'
 
 
 class OperationPerAppKey():
@@ -89,7 +89,7 @@ class OperationPerAppKey():
     AppVersion = 'app_version'
     AppsRemoved = 'apps_removed'
     OperationId = 'operation_id'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     Results = 'results'
     ResultsReceivedTime = 'results_received_time'
     Errors = 'errors'

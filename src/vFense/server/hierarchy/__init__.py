@@ -1,5 +1,5 @@
 
-DefaultCustomer = 'default'
+DefaultView = 'default'
 DefaultUser = 'default'
 AdminUser = 'admin'
 AdminGroup = 'Administrator'
@@ -8,13 +8,13 @@ AdminGroup = 'Administrator'
 class Collection():
 
     Users = 'users'
-    Customers = 'customers'
+    Views = 'views'
     Groups = 'groups'
 
-    GroupsPerCustomer = 'groups_per_customer'
+    GroupsPerView = 'groups_per_view'
     GroupsPerUser = 'groups_per_user'
 
-    UsersPerCustomer = 'users_per_customer'
+    UsersPerView = 'users_per_view'
 
 
 class UserKey():
@@ -24,10 +24,10 @@ class UserKey():
     Email = 'email'
     Password = 'password'
     Enabled = 'enabled'
-    CurrentCustomer = 'current_customer'
-    DefaultCustomer = 'default_customer'
+    CurrentView = 'current_view'
+    DefaultView = 'default_view'
 
-    Customers = 'customers'
+    Views = 'views'
     Groups = 'groups'
     Permissions = 'permissions'
 
@@ -38,16 +38,16 @@ class GroupKey():
 
     GroupName = 'group_name'
     Permissions = 'permissions'
-    CustomerId = 'customer_id'
-    GroupNameAndCustomerId = 'group_name_and_customer_id'
+    ViewId = 'view_id'
+    GroupNameAndViewId = 'group_name_and_view_id'
 
     Users = 'users'
-    Customer = 'customer'
+    View = 'view'
 
 
-class CustomerKey():
+class ViewKey():
 
-    CustomerName = 'customer_name'  # Primary key!!
+    ViewName = 'view_name'  # Primary key!!
     Properties = 'properties'
 
     Groups = 'groups'
@@ -59,26 +59,26 @@ class GroupsPerUserKey():
     Id = 'id'
     GroupId = 'group_id'
     UserId = 'user_id'
-    CustomerId = 'customer_id'
-    GroupIdAndCustomerId = 'group_id_and_customer_id'
-    UserIdAndCustomerId = 'user_id_and_customer_id'
-    GroupUserAndCustomerId = 'group_user_and_customer_id'
+    ViewId = 'view_id'
+    GroupIdAndViewId = 'group_id_and_view_id'
+    UserIdAndViewId = 'user_id_and_view_id'
+    GroupUserAndViewId = 'group_user_and_view_id'
 
 
-class GroupsPerCustomerKey():
+class GroupsPerViewKey():
 
     Id = 'id'
     GroupId = 'group_id'
-    CustomerId = 'customer_id'
-    GroupAndCustomerId = 'group_and_customer_id'
+    ViewId = 'view_id'
+    GroupAndViewId = 'group_and_view_id'
 
 
-class UsersPerCustomerKey():
+class UsersPerViewKey():
 
     Id = 'id'
     UserId = 'user_id'
-    CustomerId = 'customer_id'
-    UserAndCustomerId = 'user_and_customer_id'
+    ViewId = 'view_id'
+    UserAndViewId = 'user_and_view_id'
 
 
 class CoreProperty():

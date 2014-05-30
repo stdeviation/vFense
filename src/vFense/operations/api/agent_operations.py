@@ -22,8 +22,8 @@ class GetTransactionsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -54,7 +54,7 @@ class GetTransactionsHandler(BaseHandler):
 
             operations = (
                 AgentOperationRetriever(
-                    customer_name,
+                    view_name,
                     count, offset, sort, sort_by,
                     username, uri, method
                 )
@@ -85,8 +85,8 @@ class AgentOperationsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -116,7 +116,7 @@ class AgentOperationsHandler(BaseHandler):
 
             operations = (
                 AgentOperationRetriever(
-                    customer_name,
+                    view_name,
                     count, offset, sort, sort_by,
                     username, uri, method
                 )
@@ -144,8 +144,8 @@ class TagOperationsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -175,7 +175,7 @@ class TagOperationsHandler(BaseHandler):
 
             operations = (
                 AgentOperationRetriever(
-                    customer_name,
+                    view_name,
                     count, offset, sort, sort_by,
                     username, uri, method
                 )
@@ -202,8 +202,8 @@ class OperationHandler(BaseHandler):
     @authenticated_request
     def get(self, operation_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -233,7 +233,7 @@ class OperationHandler(BaseHandler):
 
             operations = (
                 AgentOperationRetriever(
-                    customer_name,
+                    view_name,
                     count, offset, sort, sort_by,
                     username, uri, method
                 )

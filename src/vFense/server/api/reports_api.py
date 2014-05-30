@@ -19,15 +19,15 @@ class AgentsOsDetailsHandler(BaseHandler):
     @authenticated_request 
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
         try:
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_os_details(username=username, customer_name=customer_name,
+            results = systems_os_details(username=username, view_name=view_name,
                     os_code=None,tag_id=None, uri=uri, method=method)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -48,8 +48,8 @@ class AgentsHardwareDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -57,7 +57,7 @@ class AgentsHardwareDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_hardware_details(username=username, customer_name=customer_name, 
+            results = systems_hardware_details(username=username, view_name=view_name, 
                     os_code=os_code, tag_id=tag_id, 
                     uri=uri, method=method)
             self.set_status(results['http_status'])
@@ -79,8 +79,8 @@ class AgentsCPUDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -88,7 +88,7 @@ class AgentsCPUDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_cpu_details(username=username, customer_name=customer_name,
+            results = systems_cpu_details(username=username, view_name=view_name,
                     tag_id=tag_id, os_code=os_code,
                     uri=uri, method=method
                     )
@@ -111,8 +111,8 @@ class AgentsMemoryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -122,7 +122,7 @@ class AgentsMemoryDetailsHandler(BaseHandler):
             tag_id=self.get_argument('tag_id', None)
             results = systems_memory_stats(
                 username=username,
-                customer_name=customer_name,
+                view_name=view_name,
                 tag_id=tag_id, os_code=os_code,
                 uri=uri, method=method,
             )
@@ -145,8 +145,8 @@ class AgentsDiskDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -154,7 +154,7 @@ class AgentsDiskDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_disk_stats(username=username, customer_name=customer_name,
+            results = systems_disk_stats(username=username, view_name=view_name,
                     tag_id=tag_id, os_code=os_code,
                     uri=uri, method=method
                     )
@@ -177,8 +177,8 @@ class AgentsNetworkDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -186,7 +186,7 @@ class AgentsNetworkDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_network_details(username=username, customer_name=customer_name,
+            results = systems_network_details(username=username, view_name=view_name,
                     tag_id=tag_id, os_code=os_code,
                     uri=uri, method=method
                     )

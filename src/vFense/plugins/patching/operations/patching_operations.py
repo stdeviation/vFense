@@ -27,8 +27,8 @@ class PatchingOperation(AgentOperation):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> applications = [
@@ -48,7 +48,7 @@ class PatchingOperation(AgentOperation):
         operation_data = {
             OperationPerAgentKey.AgentId: agent_id,
             OperationPerAgentKey.OperationId: operation_id,
-            OperationPerAgentKey.CustomerName: self.customer_name,
+            OperationPerAgentKey.ViewName: self.view_name,
             OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
             OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
             OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
@@ -70,7 +70,7 @@ class PatchingOperation(AgentOperation):
                     {
                         OperationPerAppKey.AgentId: agent_id,
                         OperationPerAppKey.OperationId: operation_id,
-                        OperationPerAppKey.CustomerName: self.customer_name,
+                        OperationPerAppKey.ViewName: self.view_name,
                         OperationPerAppKey.Results: (
                             AgentOperationCodes.ResultsPending
                         ),
@@ -120,8 +120,8 @@ class PatchingOperation(AgentOperation):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
@@ -168,8 +168,8 @@ class PatchingOperation(AgentOperation):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
@@ -222,8 +222,8 @@ class PatchingOperation(AgentOperation):
         Basic Usage:
             >>> from vFense.operations.agent_operations import AgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> oper = AgentOperation(username, customer_name)
+            >>> view_name = 'default'
+            >>> oper = AgentOperation(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> completed_count = 1

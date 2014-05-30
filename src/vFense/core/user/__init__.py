@@ -14,7 +14,7 @@ class User(object):
 
     def __init__(
             self, name, password=None, full_name=None, email=None,
-            current_customer=None, default_customer=None,
+            current_view=None, default_view=None,
             enabled=None, is_global=None
     ):
         """
@@ -25,8 +25,8 @@ class User(object):
             password (str): The users password.
             full_name (str): The full name of the user.
             email (str): The email of the user.
-            current_customer (str): The customer you are currently logged into.
-            default_customer (str): The default customer of the user.
+            current_view (str): The view you are currently logged into.
+            default_view (str): The default view of the user.
             enabled (boolean): Disable or enable this user.
             is_global (boolean):Is this user a global user.
         """
@@ -34,8 +34,8 @@ class User(object):
         self.full_name = full_name
         self.email = email
         self.password = password
-        self.current_customer = current_customer
-        self.default_customer = default_customer
+        self.current_view = current_view
+        self.default_view = default_view
         self.enabled = enabled
         self.is_global = is_global
 
@@ -71,7 +71,7 @@ class User(object):
 
                 Ex:
                     [
-                        {'customer_name': 'the invalid name in question'},
+                        {'view_name': 'the invalid name in question'},
                         {'net_throttle': -10}
                     ]
         """
@@ -175,17 +175,17 @@ class User(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the customer fields into a dictionary.
+        """ Turn the view fields into a dictionary.
 
         Returns:
             (dict): A dictionary with the fields corresponding to the
-                customer.
+                view.
 
                 Ex:
                 {
                     "agent_queue_ttl": 100 ,
                     "cpu_throttle":  "high" ,
-                    "customer_name":  "default" ,
+                    "view_name":  "default" ,
                     "net_throttle": 100 ,
                     "package_download_url_base": https://192.168.8.14/packages/,
                     "server_queue_ttl": 100
@@ -195,8 +195,8 @@ class User(object):
 
         return {
             UserKeys.UserName: self.name,
-            UserKeys.CurrentCustomer: self.current_customer,
-            UserKeys.DefaultCustomer: self.default_customer,
+            UserKeys.CurrentView: self.current_view,
+            UserKeys.DefaultView: self.default_view,
             UserKeys.Password: self.password,
             UserKeys.FullName: self.full_name,
             UserKeys.Email: self.email,
@@ -205,11 +205,11 @@ class User(object):
         }
 
     def to_dict_non_null(self):
-        """ Use to get non None fields of customer. Useful when
-        filling out just a few fields to update the customer in the db.
+        """ Use to get non None fields of view. Useful when
+        filling out just a few fields to update the view in the db.
 
         Returns:
-            (dict): a dictionary with the non None fields of this customer.
+            (dict): a dictionary with the non None fields of this view.
         """
         user_dict = self.to_dict()
 

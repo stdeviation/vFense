@@ -20,15 +20,15 @@ class CheckInV1(BaseHandler):
     @agent_authenticated_request
     def get(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_queue = (
                 process_queue_data(
-                    agent_id, username, customer_name, uri, method
+                    agent_id, username, view_name, uri, method
                 )
             )
             status = (

@@ -22,22 +22,22 @@ class FetchApps(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, customer_name=None,
+    def __init__(self, view_name=None,
                  count=30, offset=0, sort='asc',
                  sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
         """
         self._set_global_properties(
-            count, offset, show_hidden, sort_key, sort, customer_name
+            count, offset, show_hidden, sort_key, sort, view_name
         )
 
     def _set_global_properties(
-            self, count, offset, show_hidden, sort_key, sort, customer_name
+            self, count, offset, show_hidden, sort_key, sort, view_name
             ):
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.show_hidden = show_hidden
         self.sort_key = sort_key
         if sort == 'asc':
@@ -96,13 +96,13 @@ class FetchApps(object):
         )
 
     def _base_filter(self):
-        if self.customer_name:
+        if self.view_name:
             base = (
                 r
                 .table(self.CurrentAppsCollection)
                 .get_all(
-                    self.customer_name,
-                    index=DbCommonAppIndexes.Customers
+                    self.view_name,
+                    index=DbCommonAppIndexes.Views
                 )
             )
 
@@ -115,13 +115,13 @@ class FetchApps(object):
         return base
 
     def _base_per_agent_filter(self):
-        if self.customer_name:
+        if self.view_name:
             base = (
                 r
                 .table(self.CurrentAppsPerAgentCollection)
                 .get_all(
-                    self.customer_name,
-                    index=DbCommonAppPerAgentIndexes.Customers
+                    self.view_name,
+                    index=DbCommonAppPerAgentIndexes.Views
                 )
             )
 

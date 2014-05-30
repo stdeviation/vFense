@@ -9,8 +9,8 @@ from vFense.core.queue._db import insert_into_agent_queue, \
     get_next_avail_order_id_in_agent_queue, get_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
-from vFense.core.customer import *
-from vFense.core.customer.customers import get_customer_property
+from vFense.core.view import *
+from vFense.core.view.views import get_view_property
 
 from vFense.core.queue.uris import get_agent_results_uri
 from vFense.operations import AgentOperationKey
@@ -21,9 +21,9 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentQueue(object):
-    def __init__(self, agent_id, customer_name):
+    def __init__(self, agent_id, view_name):
         self.agent_id = agent_id
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.datetime_now = datetime.now()
         self.epoch_time_now = mktime(self.datetime_now.timetuple())
         self.global_server_queue_expire_minutes = (
@@ -35,7 +35,7 @@ class AgentQueue(object):
 
     def add(self, operation, expire_mins=None, agent_process_time=None):
         """Add an operation to the agent_queue. If expire_mins is not passed,
-            then we will use the global customer ttl value.
+            then we will use the global view ttl value.
         Args:
             operation (dict): the operation data.
 
@@ -48,9 +48,9 @@ class AgentQueue(object):
         Basic Usage:
             >>> from vFense.receiver.agent_queue import AgentQueue
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> operation = {'valid_operation': 'data'}
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue.add(operation)
 
         Returns:
@@ -89,7 +89,7 @@ class AgentQueue(object):
             )
         )
         operation[AgentQueueKey.AgentId] = self.agent_id
-        operation[AgentQueueKey.CustomerName] = self.customer_name
+        operation[AgentQueueKey.ViewName] = self.view_name
         operation[AgentQueueKey.RequestMethod] = request_method
         operation[AgentQueueKey.ResponseURI] = response_uri
         operation[AgentQueueKey.OrderId] = self._get_next_avail_order()
@@ -113,8 +113,8 @@ class AgentQueue(object):
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue._get_next_avail_order()
         
         Returns:
@@ -126,15 +126,15 @@ class AgentQueue(object):
         return(last_id + 1)
 
     def get_global_server_queue_ttl(self):
-        """Return the global server ttl property for a customer.
+        """Return the global server ttl property for a view.
             TTL is in minutes.
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue.get_global_server_queue_ttl()
 
         Returns:
@@ -142,23 +142,23 @@ class AgentQueue(object):
         """
 
         ttl = (
-            get_customer_property(
-                self.customer_name, CustomerKeys.ServerQueueTTL
+            get_view_property(
+                self.view_name, ViewKeys.ServerQueueTTL
             )
         )
 
         return(ttl)
 
     def get_global_agent_queue_ttl(self):
-        """Return the global agent ttl property for a customer.
+        """Return the global agent ttl property for a view.
             TTL is in minutes.
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue.get_global_agent_queue_ttl()
 
         Returns:
@@ -166,8 +166,8 @@ class AgentQueue(object):
         """
 
         ttl = (
-            get_customer_property(
-                self.customer_name, CustomerKeys.AgentQueueTTL
+            get_view_property(
+                self.view_name, ViewKeys.AgentQueueTTL
             )
         )
 
@@ -182,8 +182,8 @@ class AgentQueue(object):
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> expire_mins = 10
             >>> queue.get_queue_expire_time(expire_mins)
 
@@ -206,8 +206,8 @@ class AgentQueue(object):
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue.get_agent_queue()
 
         Returns:
@@ -224,7 +224,7 @@ class AgentQueue(object):
                     "operation": "updatesapplications", 
                     "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
                     "expire_minutes": 10, 
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         """
@@ -239,8 +239,8 @@ class AgentQueue(object):
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> queue.pop_agent_queue()
 
         Returns:
@@ -257,7 +257,7 @@ class AgentQueue(object):
                     "operation": "updatesapplications", 
                     "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
                     "expire_minutes": 10, 
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         """
@@ -282,8 +282,8 @@ class AgentQueue(object):
             >>> from vFense.queue.queue import AgentQueue
             >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> customer_name = 'default'
-            >>> queue = AgentQueue(agent_id, customer_name)
+            >>> view_name = 'default'
+            >>> queue = AgentQueue(agent_id, view_name)
             >>> job_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e02'
             >>> queue.remove_job(job_id)
 

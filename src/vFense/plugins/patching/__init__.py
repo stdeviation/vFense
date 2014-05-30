@@ -53,25 +53,25 @@ def initialize_app_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
-    if not DbCommonAppIndexes.Customers in indexes:
+    if not DbCommonAppIndexes.Views in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppIndexes.Customers, multi=True
+                DbCommonAppIndexes.Views, multi=True
             )
             .run(conn)
         )
 
-    if not DbCommonAppIndexes.CustomerAndRvSeverity in indexes:
+    if not DbCommonAppIndexes.ViewAndRvSeverity in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppIndexes.CustomerAndRvSeverity,
+                DbCommonAppIndexes.ViewAndRvSeverity,
                 lambda x: 
                 [
-                    x[DbCommonAppKeys.Customers],
+                    x[DbCommonAppKeys.Views],
                     x[DbCommonAppKeys.RvSeverity]
                 ],
                 multi=True
@@ -137,12 +137,12 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
             ).run(conn)
         )
 
-    if not DbCommonAppPerAgentIndexes.CustomerName in indexes:
+    if not DbCommonAppPerAgentIndexes.ViewName in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppPerAgentIndexes.CustomerName
+                DbCommonAppPerAgentIndexes.ViewName
             )
             .run(conn)
         )
@@ -163,16 +163,16 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
         )
 
 
-    if not DbCommonAppPerAgentIndexes.AppIdAndCustomer in indexes:
+    if not DbCommonAppPerAgentIndexes.AppIdAndView in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppPerAgentIndexes.AppIdAndCustomer,
+                DbCommonAppPerAgentIndexes.AppIdAndView,
                 lambda x:
                 [
                     x[DbCommonAppPerAgentKeys.AppId],
-                    x[DbCommonAppPerAgentKeys.CustomerName]
+                    x[DbCommonAppPerAgentKeys.ViewName]
                 ]
             )
             .run(conn)
@@ -193,32 +193,32 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
-    if not DbCommonAppPerAgentIndexes.StatusAndCustomer in indexes:
+    if not DbCommonAppPerAgentIndexes.StatusAndView in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppPerAgentIndexes.StatusAndCustomer,
+                DbCommonAppPerAgentIndexes.StatusAndView,
                 lambda x:
                 [
                     x[DbCommonAppPerAgentKeys.Status],
-                    x[DbCommonAppPerAgentKeys.CustomerName]
+                    x[DbCommonAppPerAgentKeys.ViewName]
                 ]
             )
             .run(conn)
         )
 
-    if not DbCommonAppPerAgentIndexes.AppIdAndStatusAndCustomer in indexes:
+    if not DbCommonAppPerAgentIndexes.AppIdAndStatusAndView in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppPerAgentIndexes.AppIdAndStatusAndCustomer,
+                DbCommonAppPerAgentIndexes.AppIdAndStatusAndView,
                 lambda x:
                 [
                     x[DbCommonAppPerAgentKeys.AppId],
                     x[DbCommonAppPerAgentKeys.Status],
-                    x[DbCommonAppPerAgentKeys.CustomerName]
+                    x[DbCommonAppPerAgentKeys.ViewName]
                 ]
             )
             .run(conn)

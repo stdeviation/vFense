@@ -41,7 +41,7 @@ class NotificationKeys():
     AllAgents = 'all_agents'
     Agents = 'agents'
     Tags = 'tags'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     AppThreshold = 'app_threshold'
     RebootThreshold = 'reboot_threshold'
     ShutdownThreshold = 'shutdown_threshold'
@@ -52,16 +52,16 @@ class NotificationKeys():
 
 
 class NotificationIndexes():
-    CustomerName = 'customer_name'
-    RuleNameAndCustomer = 'rule_name_and_customer'
-    NotificationTypeAndCustomer = 'notification_type_and_customer'
-    AppThresholdAndCustomer = 'app_threshold_and_customer'
-    RebootThresholdAndCustomer = 'reboot_threshold_and_customer'
-    ShutdownThresholdAndCustomer = 'shutdown_threshold_and_customer'
-    MemThresholdAndCustomer = 'mem_threshold_and_customer'
-    CpuThresholdAndCustomer = 'cpu_threshold_and_customer'
-    FileSystemThresholdAndFileSystemAndCustomer = (
-        'fs_threshold_and_fs_and_customer'
+    ViewName = 'view_name'
+    RuleNameAndView = 'rule_name_and_view'
+    NotificationTypeAndView = 'notification_type_and_view'
+    AppThresholdAndView = 'app_threshold_and_view'
+    RebootThresholdAndView = 'reboot_threshold_and_view'
+    ShutdownThresholdAndView = 'shutdown_threshold_and_view'
+    MemThresholdAndView = 'mem_threshold_and_view'
+    CpuThresholdAndView = 'cpu_threshold_and_view'
+    FileSystemThresholdAndFileSystemAndView = (
+        'fs_threshold_and_fs_and_view'
     )
 
 
@@ -78,7 +78,7 @@ class NotificationHistoryIndexes():
 
 class NotificationPluginKeys():
     Id = 'id'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     PluginName = 'plugin_name'
     CreatedTime = 'created_time'
     ModifiedTime = 'modified_time'
@@ -95,7 +95,7 @@ class NotificationPluginKeys():
 
 
 class NotificationPluginIndexes():
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
 
 
 def return_notif_type_from_operation(oper_type):

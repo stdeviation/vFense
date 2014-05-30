@@ -20,7 +20,7 @@ logger = logging.getLogger('rvapi')
 class FetchAgentOperations(object):
     """Agent operation database queries"""
     def __init__(
-            self, customer_name=None,
+            self, view_name=None,
             count=DefaultQueryValues.COUNT,
             offset=DefaultQueryValues.OFFSET,
             sort=SortValues.ASC,
@@ -28,7 +28,7 @@ class FetchAgentOperations(object):
         ):
         """
         Kwargs:
-            customer_name (str): Name of the current customer.
+            view_name (str): Name of the current view.
                 default = None
             count (int): Maximum number of results to return.
                 default = 30
@@ -43,11 +43,11 @@ class FetchAgentOperations(object):
 
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> view_name = 'default'
+            >>> operation = FetchAgentOperations(view_name)
         """
 
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.count = count
         self.offset = offset
         self.sort_key = sort_key
@@ -62,8 +62,8 @@ class FetchAgentOperations(object):
         """Fetch all operations
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> view_name = 'default'
+            >>> operation = FetchAgentOperations(view_name)
             >>> operation.fetch_all()
         Returns:
             List
@@ -84,7 +84,7 @@ class FetchAgentOperations(object):
                     "operation": "install_os_apps",
                     "updated_time": 1398092303,
                     "agents_failed_count": 0,
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         """
@@ -118,9 +118,9 @@ class FetchAgentOperations(object):
         """Fetch all operations by agent id
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> agent_id = '6c0209d5-b350-48b7-808a-158ddacb6940'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation = FetchAgentOperations(view_name)
             >>> operation.fetch_all_by_agentid(agent_id)
         Returns:
             List
@@ -141,7 +141,7 @@ class FetchAgentOperations(object):
                     "operation": "install_os_apps",
                     "updated_time": 1398092303,
                     "agents_failed_count": 0,
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         """
@@ -185,9 +185,9 @@ class FetchAgentOperations(object):
         """Fetch all operations by tag id
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> operation = FetchAgentOperations(view_name)
             >>> operation.fetch_all_by_tagid(tag_id)
         Returns:
             List [count, data]
@@ -215,7 +215,7 @@ class FetchAgentOperations(object):
                         "net_throttle": 0,
                         "agents_failed_count": 0,
                         "restart": "none",
-                        "customer_name": "default"
+                        "view_name": "default"
                     }
                 ]
             ]
@@ -259,8 +259,8 @@ class FetchAgentOperations(object):
 
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> view_name = 'default'
+            >>> operation = FetchAgentOperations(view_name)
             >>> action = 'install_os_apps'
             >>> operation.fetch_all_by_operation(action)
         Returns:
@@ -272,7 +272,7 @@ class FetchAgentOperations(object):
                     "agents_pending_results_count": 0,
                     "operation": "install_os_apps",
                     "net_throttle": 0,
-                    "customer_name": "default",
+                    "view_name": "default",
                     "cpu_throttle": "normal",
                     "agents_total_count": 1,
                     "agents_completed_with_errors_count": 0,
@@ -303,8 +303,8 @@ class FetchAgentOperations(object):
                 r
                 .table(OperationCollections.Agent)
                 .get_all(
-                    [action, self.customer_name],
-                    index=AgentOperationIndexes.OperationAndCustomer
+                    [action, self.view_name],
+                    index=AgentOperationIndexes.OperationAndView
                 )
                 .count()
                 .run(conn)
@@ -314,8 +314,8 @@ class FetchAgentOperations(object):
                 r
                 .table(OperationCollections.Agent)
                 .get_all(
-                    [action, self.customer_name],
-                    index=AgentOperationIndexes.OperationAndCustomer
+                    [action, self.view_name],
+                    index=AgentOperationIndexes.OperationAndView
                 )
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -338,8 +338,8 @@ class FetchAgentOperations(object):
 
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> view_name = 'default'
+            >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
             >>> operation.fetch_install_operation_by_id(operation_id)
 
@@ -384,7 +384,7 @@ class FetchAgentOperations(object):
                 "agents_pending_results_count": 0,
                 "operation": "install_os_apps",
                 "net_throttle": 0,
-                "customer_name": "default",
+                "view_name": "default",
                 "cpu_throttle": "normal",
                 "agents_total_count": 1,
                 "agents_completed_with_errors_count": 0,
@@ -433,8 +433,8 @@ class FetchAgentOperations(object):
 
         Basic Usage:
             >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
-            >>> customer_name = 'default'
-            >>> operation = FetchAgentOperations(customer_name)
+            >>> view_name = 'default'
+            >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
             >>> operation.fetch_operation_by_id(operation_id)
 
@@ -458,7 +458,7 @@ class FetchAgentOperations(object):
                 "agents_pending_results_count": 0,
                 "operation": "updatesapplications",
                 "net_throttle": null,
-                "customer_name": "default",
+                "view_name": "default",
                 "cpu_throttle": null,
                 "agents_total_count": 1,
                 "agents_completed_with_errors_count": 0,
@@ -813,13 +813,13 @@ class FetchAgentOperations(object):
             r
             .table(OperationCollections.Agent)
         )
-        if self.customer_name:
+        if self.view_name:
             base_filter = (
                 r
                 .table(OperationCollections.Agent)
                 .get_all(
-                    self.customer_name,
-                    index=AgentOperationIndexes.CustomerName
+                    self.view_name,
+                    index=AgentOperationIndexes.ViewName
                 )
             )
 
@@ -830,13 +830,13 @@ class FetchAgentOperations(object):
             r
             .table(OperationCollections.OperationPerAgent)
         )
-        if self.customer_name:
+        if self.view_name:
             base_filter = (
                 r
                 .table(OperationCollections.OperationPerAgent)
                 .get_all(
-                    self.customer_name,
-                    index=OperationPerAgentIndexes.CustomerName
+                    self.view_name,
+                    index=OperationPerAgentIndexes.ViewName
                 )
             )
 
@@ -875,7 +875,7 @@ class FetchAgentOperations(object):
         without = (
             [
                 OperationPerAppKey.AgentId,
-                OperationPerAppKey.CustomerName,
+                OperationPerAppKey.ViewName,
                 OperationPerAppKey.Id,
                 OperationPerAppKey.OperationId,
             ]

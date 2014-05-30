@@ -3,8 +3,8 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 
-from vFense.server.hierarchy import Collection, GroupKey, UserKey, CustomerKey
-from vFense.server.hierarchy import GroupsPerUserKey, UsersPerCustomerKey
+from vFense.server.hierarchy import Collection, GroupKey, UserKey, ViewKey
+from vFense.server.hierarchy import GroupsPerUserKey, UsersPerViewKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -26,30 +26,30 @@ def get_user(user_name=None, conn=None):
 
 
 @db_create_close
-def get_customer(customer_name=None, conn=None):
+def get_view(view_name=None, conn=None):
 
-    if not customer_name:
+    if not view_name:
         return None
 
-    customer = (
-        r.table(Collection.Customers)
-        .get(customer_name)
+    view = (
+        r.table(Collection.Views)
+        .get(view_name)
         .run(conn)
     )
 
-    return customer
+    return view
 
 
 #@db_create_close
 #def get_group(
 #    group_name=None,
-#    customer_name=None,
+#    view_name=None,
 #    conn=None
 #):
 #
 #    if(
 #        not group_name
-#        and not customer_name
+#        and not view_name
 #    ):
 #        return None
 #
@@ -57,9 +57,9 @@ def get_customer(customer_name=None, conn=None):
 #            collections=Collection.Groups,
 #            values=[
 #                    group_name,
-#                    customer_name
+#                    view_name
 #                ],
-#                index=GroupKey.GroupNameAndCustomerId
+#                index=GroupKey.GroupNameAndViewId
 #            )
 #            .run(conn)
 #        )
@@ -73,49 +73,49 @@ def get_customer(customer_name=None, conn=None):
 
 
 @db_create_close
-def get_customers_of_user(user_name=None, conn=None):
+def get_views_of_user(user_name=None, conn=None):
 
     if not user_name:
         return None
 
-    customers = (
-        r.table(Collection.UsersPerCustomer)
+    views = (
+        r.table(Collection.UsersPerView)
         .get_all(
             user_name,
-            index=UsersPerCustomerKey.UserId
+            index=UsersPerViewKey.UserId
         )
-        .pluck(UsersPerCustomerKey.CustomerId)
+        .pluck(UsersPerViewKey.ViewId)
         .eq_join(
-            UsersPerCustomerKey.CustomerId,
-            r.table(Collection.Customers),
-            index=CustomerKey.CustomerName
+            UsersPerViewKey.ViewId,
+            r.table(Collection.Views),
+            index=ViewKey.ViewName
         )
         .zip()
         .run(conn)
     )
 
     c = []
-    for customer in customers:
-        c.append(customer)
+    for view in views:
+        c.append(view)
 
     return c
 
 
 @db_create_close
-def get_users_of_customer(customer_name=None, conn=None):
+def get_users_of_view(view_name=None, conn=None):
 
-    if not customer_name:
+    if not view_name:
         return None
 
     users = (
-        r.table(Collection.UsersPerCustomer)
+        r.table(Collection.UsersPerView)
         .get_all(
-            customer_name,
-            index=UsersPerCustomerKey.CustomerId
+            view_name,
+            index=UsersPerViewKey.ViewId
         )
-        .pluck(UsersPerCustomerKey.UserId)
+        .pluck(UsersPerViewKey.UserId)
         .eq_join(
-            UsersPerCustomerKey.UserId,
+            UsersPerViewKey.UserId,
             r.table(Collection.Users),
             index=UserKey.UserName
         )
@@ -133,13 +133,13 @@ def get_users_of_customer(customer_name=None, conn=None):
 @db_create_close
 def get_users_of_group(
     group_name=None,
-    customer_name=None,
+    view_name=None,
     conn=None
 ):
 
     if (
         not group_name
-        and not customer_name
+        and not view_name
     ):
         return None
 
@@ -148,9 +148,9 @@ def get_users_of_group(
         .get_all(
             [
                 group_name,
-                customer_name
+                view_name
             ],
-            index=GroupsPerUserKey.GroupIdAndCustomerId
+            index=GroupsPerUserKey.GroupIdAndViewId
         )
         .pluck(GroupsPerUserKey.UserId)
         .run(conn)
@@ -172,13 +172,13 @@ def get_users_of_group(
 @db_create_close
 def get_groups_of_user(
     user_name=None,
-    customer_name=None,
+    view_name=None,
     conn=None
 ):
 
     if (
         not user_name
-        and not customer_name
+        and not view_name
     ):
         return None
 
@@ -187,9 +187,9 @@ def get_groups_of_user(
         .get_all(
             [
                 user_name,
-                customer_name
+                view_name
             ],
-            index=GroupsPerUserKey.UserIdAndCustomerId
+            index=GroupsPerUserKey.UserIdAndViewId
         )
         .pluck(GroupsPerUserKey.GroupId)
         .run(conn)
@@ -203,9 +203,9 @@ def get_groups_of_user(
                 collection=Collection.Groups,
                 values=[
                     group_name[GroupsPerUserKey.GroupId],
-                    customer_name
+                    view_name
                 ],
-                index=GroupKey.GroupNameAndCustomerId
+                index=GroupKey.GroupNameAndViewId
             )
         )
 
@@ -213,16 +213,16 @@ def get_groups_of_user(
 
 
 @db_create_close
-def get_groups_of_customer(customer_name=None, conn=None):
+def get_groups_of_view(view_name=None, conn=None):
 
-    if not customer_name:
+    if not view_name:
         return None
 
     groups = (
         r.table(Collection.Groups)
         .get_all(
-            customer_name,
-            index=GroupKey.CustomerId
+            view_name,
+            index=GroupKey.ViewId
         )
         .order_by(GroupKey.GroupName)
         .run(conn)
@@ -236,21 +236,21 @@ def get_groups_of_customer(customer_name=None, conn=None):
 
 
 #@db_create_close
-#def toggle_user_of_customer(user=None, customer=None, conn=None):
+#def toggle_user_of_view(user=None, view=None, conn=None):
 #
 #    result = False
 #
 #    if (
 #        not user
-#        or not customer
+#        or not view
 #    ):
 #        return result
 #
 #    result = list(
-#        r.table(Collection.UsersPerCustomer)
+#        r.table(Collection.UsersPerView)
 #        .get_all(
-#            [user.user_name, customer.customer_name],
-#            index=UsersPerCustomerKey.UserAndCustomerId
+#            [user.user_name, view.view_name],
+#            index=UsersPerViewKey.UserAndViewId
 #        )
 #        .run(conn)
 #    )
@@ -258,14 +258,14 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #    if len(result) >= 1:
 #
 #        result = db_delete_by_secondary(
-#            Collection.UsersPerCustomer,
-#            [user.user_name, customer.customer_name],
-#            UsersPerCustomerKey.UserAndCustomerId
+#            Collection.UsersPerView,
+#            [user.user_name, view.view_name],
+#            UsersPerViewKey.UserAndViewId
 #        )
 #
 #    else:
 #
-#        res = save_user_per_customer(user, customer)
+#        res = save_user_per_view(user, view)
 #        if res:
 #            result = True
 #
@@ -273,21 +273,21 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #
 #
 #@db_create_close
-#def toggle_group_of_customer(group=None, customer=None, conn=None):
+#def toggle_group_of_view(group=None, view=None, conn=None):
 #
 #    result = False
 #
 #    if (
 #        not group
-#        or not customer
+#        or not view
 #    ):
 #        return result
 #
 #    result = list(
 #        r.table(Collection.Groups)
 #        .get_all(
-#            [group.group_name, customer.customer_name],
-#            index=GroupKey.GroupNameAndCustomerId
+#            [group.group_name, view.view_name],
+#            index=GroupKey.GroupNameAndViewId
 #        )
 #        .run(conn)
 #    )
@@ -296,13 +296,13 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #
 #        result = db_delete_by_secondary(
 #            Collection.Groups,
-#            [group.group_name, customer.customer_name],
-#            GroupKey.GroupNameAndCustomerId
+#            [group.group_name, view.view_name],
+#            GroupKey.GroupNameAndViewId
 #        )
 #
 #    else:
 #
-#        res = save_group_per_customer(group, customer)
+#        res = save_group_per_view(group, view)
 #        if res:
 #            result = True
 #
@@ -313,7 +313,7 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #def toggle_group_of_user(
 #    group=None,
 #    user=None,
-#    customer=None,
+#    view=None,
 #    conn=None
 #):
 #
@@ -322,7 +322,7 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #    if (
 #        not group
 #        or not user
-#        or not customer
+#        or not view
 #    ):
 #        return result
 #
@@ -332,9 +332,9 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #            [
 #                group.group_name,
 #                user.user_name,
-#                customer.customer_name
+#                view.view_name
 #            ],
-#            index=GroupsPerUserKey.GroupUserAndCustomerId
+#            index=GroupsPerUserKey.GroupUserAndViewId
 #        )
 #        .run(conn)
 #    )
@@ -343,13 +343,13 @@ def get_groups_of_customer(customer_name=None, conn=None):
 #
 #        result = db_delete_by_secondary(
 #            Collection.GroupsPerUser,
-#            [group.group_name, user.user_name, customer.customer_name],
-#            GroupsPerUserKey.GroupUserAndCustomerId
+#            [group.group_name, user.user_name, view.view_name],
+#            GroupsPerUserKey.GroupUserAndViewId
 #        )
 #
 #    else:
 #
-#        res = save_group_per_user(group, user, customer)
+#        res = save_group_per_user(group, user, view)
 #        if res:
 #            result = True
 #
@@ -544,22 +544,22 @@ def save_user(user):
     return success
 
 
-def save_customer(customer):
-    """Saves the customer to DB.
+def save_view(view):
+    """Saves the view to DB.
 
     Args:
 
-        customer: Customer data to be saved.
+        view: View data to be saved.
 
     Returns:
 
-        True is customer was saved successfully, False otherwise.
+        True is view was saved successfully, False otherwise.
 
     """
 
     success = _db_save(
-        data=customer,
-        collection_name=Collection.Customers
+        data=view,
+        collection_name=Collection.Views
     )
 
     return success
@@ -575,7 +575,7 @@ def save_group(group):
     return success
 
 
-def save_group_per_customer(data):
+def save_group_per_view(data):
 
     success = _db_save(
         data=data,
@@ -595,11 +595,11 @@ def save_group_per_user(data):
     return success
 
 
-def save_user_per_customer(data):
+def save_user_per_view(data):
 
     success = _db_save(
         data=data,
-        collection_name=Collection.UsersPerCustomer
+        collection_name=Collection.UsersPerView
     )
 
     return success

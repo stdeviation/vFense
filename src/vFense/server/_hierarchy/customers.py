@@ -1,14 +1,14 @@
 from vFense.server.hierarchy import *
 
 
-class Customer():
-    """Represents a Customer.
+class View():
+    """Represents a View.
 
     Attributes:
 
-        name: Name (string) of the Customer.
+        name: Name (string) of the View.
 
-        id: For a Customer id == name. Used to determine if it exist in DB.
+        id: For a View id == name. Used to determine if it exist in DB.
 
         net_throttle: An integer that states how much an agent should
             throttle it's bandwidth by.
@@ -40,7 +40,7 @@ class Customer():
         self.cpu_throttle = 'idle'
 
     def add_group(self, group):
-        """Adds a group to the Customer.
+        """Adds a group to the View.
 
         Args:
 
@@ -51,14 +51,14 @@ class Customer():
             True if group was added successfully, False otherwise.
         """
 
-        g = {CustomerKey.Name: group.name, CustomerKey.Id: group.id}
+        g = {ViewKey.Name: group.name, ViewKey.Id: group.id}
         gi = GroupInfo(group.id, group.name)
 
         self._raw_groups.append(g)
         self._groups.append(gi)
 
     def remove_group(self, group):
-        """Removes a group from the Customer.
+        """Removes a group from the View.
 
         Args:
 
@@ -69,14 +69,14 @@ class Customer():
             True if group was removed successfully, False otherwise.
         """
 
-        g = {CustomerKey.Name: group.name, CustomerKey.Id: group.id}
+        g = {ViewKey.Name: group.name, ViewKey.Id: group.id}
         gi = GroupInfo(group.id, group.name)
 
         self._raw_groups.remove(g)
         self._groups.remove(gi)
 
     def add_user(self, user):
-        """Adds a user to the Customer.
+        """Adds a user to the View.
 
         Args:
 
@@ -87,14 +87,14 @@ class Customer():
             True if user was added successfully, False otherwise.
         """
 
-        u = {CustomerKey.Name: user.name}
+        u = {ViewKey.Name: user.name}
         ui = UserInfo(user.name)
 
         self._raw_users.append(u)
         self._users.append(ui)
 
     def remove_user(self, user):
-        """Removes a user to the Customer.
+        """Removes a user to the View.
 
         Args:
 
@@ -105,14 +105,14 @@ class Customer():
             True if user was removed successfully, False otherwise.
         """
 
-        u = {CustomerKey.Name: user.name}
+        u = {ViewKey.Name: user.name}
         ui = UserInfo(user.name)
 
         self._raw_users.remove(u)
         self._users.remove(ui)
 
     def get_users(self, raw=False):
-        """Returns the Customer's users.
+        """Returns the View's users.
         """
 
         if raw:
@@ -122,7 +122,7 @@ class Customer():
         return self._users
 
     def get_groups(self, raw=False):
-        """Returns the Customer's groups.
+        """Returns the View's groups.
         """
 
         if raw:
@@ -135,17 +135,17 @@ class Customer():
         """
         """
 
-        _customer = {}
+        _view = {}
 
-        _customer[CustomerKey.Name] = self.name
-        _customer[CustomerKey.NetThrottle] = self.net_throttle
-        _customer[CustomerKey.CpuThrottle] = self.cpu_throttle
+        _view[ViewKey.Name] = self.name
+        _view[ViewKey.NetThrottle] = self.net_throttle
+        _view[ViewKey.CpuThrottle] = self.cpu_throttle
 
-        _customer[CustomerKey.Groups] = self.get_groups(raw=True)
-        _customer[CustomerKey.Users] = self.get_users(raw=True)
+        _view[ViewKey.Groups] = self.get_groups(raw=True)
+        _view[ViewKey.Users] = self.get_users(raw=True)
 
-        return _customer
+        return _view
 
     def __repr__(self):
 
-        return 'Customer(name=%r)' % self.name
+        return 'View(name=%r)' % self.name

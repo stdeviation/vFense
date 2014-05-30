@@ -22,7 +22,7 @@ from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
 
 from vFense.db.client import db_connect, r, db_create_close
-from vFense.server.hierarchy import Collection, CustomerKey
+from vFense.server.hierarchy import Collection, ViewKey
 
 import redis
 from rq import Queue
@@ -170,8 +170,8 @@ class IncomingSupportedApps(object):
         return {
             SupportedAppsPerAgentKey.AgentId:
                 agent[AgentKey.AgentId],
-            SupportedAppsPerAgentKey.CustomerName:
-                agent[AgentKey.CustomerName],
+            SupportedAppsPerAgentKey.ViewName:
+                agent[AgentKey.ViewName],
             SupportedAppsPerAgentKey.Status:
                 CommonAppKeys.AVAILABLE,
             SupportedAppsPerAgentKey.LastModifiedTime:
@@ -286,15 +286,15 @@ def update_supported_apps(json_data):
         conn = db_connect()
 
         inserted_count = 0
-        all_customers = list(
+        all_views = list(
             r
-            .table(Collection.Customers)
-            .map(lambda x: x[CustomerKey.CustomerName])
+            .table(Collection.Views)
+            .map(lambda x: x[ViewKey.ViewName])
             .run(conn)
         )
 
         for i in range(len(json_data)):
-            json_data[i][SupportedAppsKey.Customers] = all_customers
+            json_data[i][SupportedAppsKey.Views] = all_views
             json_data[i][SupportedAppsKey.ReleaseDate] = \
                 r.epoch_time(json_data[i][SupportedAppsKey.ReleaseDate])
             json_data[i][SupportedAppsKey.FilesDownloadStatus] = \
@@ -308,7 +308,7 @@ def update_supported_apps(json_data):
             file_data = json_data[i].get(SupportedAppsKey.FileData)
             add_file_data(json_data[i][SupportedAppsKey.AppId], file_data)
             data_to_update = {
-                SupportedAppsKey.Customers: all_customers
+                SupportedAppsKey.Views: all_views
             }
             exists = (
                 r

@@ -25,8 +25,8 @@ class ScheduleListerHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -34,7 +34,7 @@ class ScheduleListerHandler(BaseHandler):
             self.sched = self.application.scheduler
             results = job_lister(
                 sched=self.sched, username=username,
-                customer_name=customer_name.encode('utf-8'),
+                view_name=view_name.encode('utf-8'),
                 uri=uri, method=method
             )
 
@@ -59,8 +59,8 @@ class ScheduleAppDetailHandler(BaseHandler):
     @authenticated_request
     def get(self, jobname):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -69,7 +69,7 @@ class ScheduleAppDetailHandler(BaseHandler):
             results = (
                 get_schedule_details(
                     self.sched, job_name=jobname,
-                    username=username, customer_name=customer_name,
+                    username=username, view_name=view_name,
                     uri=uri, method=method
                 )
             )
@@ -91,8 +91,8 @@ class ScheduleAppDetailHandler(BaseHandler):
     @authenticated_request
     def delete(self, jobname):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -102,7 +102,7 @@ class ScheduleAppDetailHandler(BaseHandler):
                 remove_job(
                     self.sched, jobname,
                     uri=uri,method=method,
-                    customer_name=customer_name,
+                    view_name=view_name,
                     username=username
                 )
             )
@@ -129,8 +129,8 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -153,7 +153,7 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
                 results = (
                     add_yearly_recurrent(
                         sched,
-                        customer_name=customer_name,
+                        view_name=view_name,
                         username=username,
                         agent_ids=node_ids,
                         all_agents=all_agents,
@@ -193,8 +193,8 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -220,7 +220,7 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
                 results = (
                     add_monthly_recurrent(
                         sched,
-                        customer_name,
+                        view_name,
                         username,
                         agent_ids=node_ids,
                         all_agents=all_agents,
@@ -260,8 +260,8 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -284,7 +284,7 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
                 results = (
                     add_daily_recurrent(
                         sched,
-                        customer_name=customer_name,
+                        view_name=view_name,
                         username=username,
                         agent_ids=node_ids,
                         all_agents=all_agents,
@@ -324,8 +324,8 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -347,7 +347,7 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
             results = (
                 add_weekly_recurrent(
                     sched,
-                    customer_name=customer_name,
+                    view_name=view_name,
                     username=username,
                     agent_ids=node_ids,
                     all_agents=all_agents,
@@ -388,8 +388,8 @@ class SchedulerDateBasedJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -410,7 +410,7 @@ class SchedulerDateBasedJobHandler(BaseHandler):
             results = (
                 schedule_once(
                     sched,
-                    customer_name=customer_name,
+                    view_name=view_name,
                     username=username,
                     agent_ids=node_ids,
                     all_agents=all_agents,
@@ -449,8 +449,8 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -473,7 +473,7 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
             results = (
                 add_custom_recurrent(
                     sched,
-                    customer_name=customer_name,
+                    view_name=view_name,
                     username=username,
                     agent_ids=node_ids,
                     all_agents=all_agents,

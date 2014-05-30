@@ -25,7 +25,7 @@ def gen_uuid():
 
 
 @db_create_close
-def move_packages(username, customer_name, uri, method,
+def move_packages(username, view_name, uri, method,
                   name=None, path=None, size=None, md5=None,
                   uuid=None, conn=None):
 
@@ -73,7 +73,7 @@ def move_packages(username, customer_name, uri, method,
 
 @db_create_close
 def store_package_info_in_db(
-        username, customer_name, uri, method,
+        username, view_name, uri, method,
         size, md5, operating_system,
         uuid, name, severity, arch, major_version,
         minor_version, release_date=0.0,
@@ -122,7 +122,7 @@ def store_package_info_in_db(
             CustomAppsKey.Arch: arch,
             CustomAppsKey.RebootRequired: 'possible',
             CustomAppsKey.SupportUrl: support_url,
-            CustomAppsKey.Customers: [customer_name],
+            CustomAppsKey.Views: [view_name],
             CustomAppsPerAgentKey.Update: PackageCodes.ThisIsNotAnUpdate,
             CustomAppsKey.FilesDownloadStatus: PackageCodes.FileCompletedDownload,
             CustomAppsKey.AppId: uuid
@@ -146,7 +146,7 @@ def store_package_info_in_db(
             )
 
             add_custom_app_to_agents(
-                username, customer_name,
+                username, view_name,
                 uri, method, file_data,
                 app_id=uuid
             )

@@ -58,7 +58,7 @@ class OperationResults(object):
         self.method = method
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
-        self.customer_name = self.agent_data[AgentKey.CustomerName]
+        self.view_name = self.agent_data[AgentKey.ViewName]
         self.date_now = DbTime.time_now()
         self.begining_of_time = DbTime.begining_of_time()
         self.error = error
@@ -66,7 +66,7 @@ class OperationResults(object):
         self.status_code = status_code
         self.operation = (
             AgentOperation(
-                self.username, self.customer_name,
+                self.username, self.view_name,
             )
         )
 

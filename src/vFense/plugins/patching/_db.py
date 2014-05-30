@@ -21,16 +21,16 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 @db_create_close
-def fetch_file_servers_addresses(customer_name, conn=None):
-    """Fetch file servers for customer name. This will
+def fetch_file_servers_addresses(view_name, conn=None):
+    """Fetch file servers for view name. This will
         retrieve a list of addresses (ip_addresses or hostnames)
     Args:
-        customer_name (str): The name of the customer
+        view_name (str): The name of the view
 
     Basic Usage:
         >>> from vFense.plugins.patching._db import fetch_file_servers_addresses
-        >>> customer_name = 'default'
-        >>> fetch_file_servers_addresses(customer_name)
+        >>> view_name = 'default'
+        >>> fetch_file_servers_addresses(view_name)
 
     Returns:
         List of addresses
@@ -40,8 +40,8 @@ def fetch_file_servers_addresses(customer_name, conn=None):
         data = list(
             r
             .table(FileCollections.FileServers)
-            .get_all(customer_name, index=FileServerIndexes.CustomerName)
-            .map(lambda x: x[FileServerKeys.Customers])
+            .get_all(view_name, index=FileServerIndexes.ViewName)
+            .map(lambda x: x[FileServerKeys.Views])
             .run(conn)
         )
 
@@ -198,7 +198,7 @@ def fetch_app_data_by_appid_and_agentid(
         Dictionary
         {
             "kb": "",
-            "customers": [
+            "views": [
                 "default"
             ],
             "vendor_name": "",
@@ -253,7 +253,7 @@ def fetch_app_data_by_appid_and_agentid(
 
 @db_create_close
 def fetch_apps_data_by_os_code(
-        os_code, customer_name=None,
+        os_code, view_name=None,
         collection=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None
     ):
@@ -262,7 +262,7 @@ def fetch_apps_data_by_os_code(
         os_code (str): linux or darwin or windows
 
     Kwargs:
-        customer_name (str, optional): The name of the customer
+        view_name (str, optional): The name of the view
             you are searching on.
         collection (str, optional): The name of the collection,
             default = unique_applications.
@@ -273,15 +273,15 @@ def fetch_apps_data_by_os_code(
         >>> from vFense.plugins.patching._db import fetch_apps_data_by_os_code
         >>> collection = 'unique_applications'
         >>> os_code = 'linux'
-        >>> customer_name = 'default'
-        >>> fetch_apps_data_by_os_code(os_code, customer_name. collection)
+        >>> view_name = 'default'
+        >>> fetch_apps_data_by_os_code(os_code, view_name. collection)
 
     Returns:
         List of dictionaries.
         [
             {
                 "kb": "",
-                "customers": [
+                "views": [
                     "default"
                 ],
                 "vendor_name": "",
@@ -307,31 +307,31 @@ def fetch_apps_data_by_os_code(
     """
 
     data = {}
-    index_to_use = DbCommonAppIndexes.Customers
+    index_to_use = DbCommonAppIndexes.Views
     merge = AppsMerge.RELEASE_DATE
     try:
-        if customer_name and fields_to_pluck:
+        if view_name and fields_to_pluck:
             data = list(
                 r
                 .table(collection)
-                .get_all(customer_name, index=index_to_use)
+                .get_all(view_name, index=index_to_use)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
 
-        elif customer_name and not fields_to_pluck:
+        elif view_name and not fields_to_pluck:
             data = list(
                 r
                 .table(collection)
-                .get_all(customer_name, index=index_to_use)
+                .get_all(view_name, index=index_to_use)
                 .filter({AppsKey.OsCode: os_code})
                 .merge(merge)
                 .run(conn)
             )
 
-        elif not customer_name and fields_to_pluck:
+        elif not view_name and fields_to_pluck:
             data = list(
                 r
                 .table(collection)
@@ -614,7 +614,7 @@ def insert_app_data(app_data, collection=AppCollections.UniqueApplications):
     Basic Usage:
         >>> from vFense.plugins.patching._db import insert_app_data
         >>> app_data = {
-                "kb": "", "customers": ["default"],
+                "kb": "", "views": ["default"],
                 "vendor_name": "",
                 "description": "Facebook plugin for Gwibber\n Gwibber is a social networking client for GNOME. It supports Facebook,\n Twitter, Identi.ca, StatusNet, FriendFeed, Qaiku, Flickr, and Digg.\n .",
                 "vulnerability_categories": [], "files_download_status": 5004,
@@ -640,30 +640,30 @@ def insert_app_data(app_data, collection=AppCollections.UniqueApplications):
 @time_it
 @db_create_close
 @return_status_tuple
-def update_customers_in_apps_by_customer(current_customer, new_customer,
-        remove_customer=False, collection=AppCollections.UniqueApplications,
+def update_views_in_apps_by_view(current_view, new_view,
+        remove_view=False, collection=AppCollections.UniqueApplications,
         conn=None):
 
-    """ Update the customers list of all applications for the current customer.
+    """ Update the views list of all applications for the current view.
     Args:
-        current_customer (str): Name of the current customer.
-        new_customer (str): Name of the new customer.
+        current_view (str): Name of the current view.
+        new_view (str): Name of the new view.
 
     Kwargs:
-        remove_customer (bool): True or False
+        remove_view (bool): True or False
             default = False
         collection (str): The Application Collection that is going to be used.
             default = unique_applications
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import update_customers_in_apps
-        >>> current_customer = 'default'
-        >>> new_customer = 'test'
-        >>> remove_customer = True
+        >>> from vFense.plugins.patching._db import update_views_in_apps
+        >>> current_view = 'default'
+        >>> new_view = 'test'
+        >>> remove_view = True
         >>> collection = 'apps_per_agent'
-        >>> update_customers_in_apps(
-                current_customer, new_customer,
-                remove_customer, collection
+        >>> update_views_in_apps(
+                current_view, new_view,
+                remove_view, collection
             )
 
     Returns:
@@ -671,22 +671,22 @@ def update_customers_in_apps_by_customer(current_customer, new_customer,
         >>> (2001, 1, None, [])
     """
 
-    index_name = DbCommonAppIndexes.Customers
+    index_name = DbCommonAppIndexes.Views
     data = {}
     try:
-        if remove_customer:
+        if remove_view:
             data = (
                 r
                 .table(collection)
                 .get_all(
-                    current_customer, index=index_name
+                    current_view, index=index_name
                 )
                 .update(
                     {
-                        DbCommonAppKeys.Customers: (
-                            r.row[DbCommonAppKeys.Customers]
-                            .difference([current_customer])
-                            .set_insert(new_customer)
+                        DbCommonAppKeys.Views: (
+                            r.row[DbCommonAppKeys.Views]
+                            .difference([current_view])
+                            .set_insert(new_view)
                         )
                     }
                 )
@@ -698,13 +698,13 @@ def update_customers_in_apps_by_customer(current_customer, new_customer,
                 r
                 .table(collection)
                 .get_all(
-                    current_customer, index=index_name
+                    current_view, index=index_name
                 )
                 .update(
                     {
-                        DbCommonAppKeys.Customers: (
-                            r.row[DbCommonAppKeys.Customers]
-                            .set_insert(new_customer)
+                        DbCommonAppKeys.Views: (
+                            r.row[DbCommonAppKeys.Views]
+                            .set_insert(new_view)
                         )
                     }
                 )
@@ -720,40 +720,40 @@ def update_customers_in_apps_by_customer(current_customer, new_customer,
 @time_it
 @db_create_close
 @return_status_tuple
-def update_apps_per_agent_by_customer(
-        customer_name, app_data,
+def update_apps_per_agent_by_view(
+        view_name, app_data,
         collection=AppCollections.AppsPerAgent,
         conn=None
     ):
-    """ Update any keys for any apps collection by customer name
+    """ Update any keys for any apps collection by view name
         This function should not be called directly.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
         app_data (dict): Dictionary of the key and values that you are updating.
 
     Kwargs:
         collection (str): The Application Collection that is going to be used.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import update_apps_per_agent_by_customer
-        >>> customer_name = 'vFense'
-        >>> app_data = {'customer_name': 'vFense'}
+        >>> from vFense.plugins.patching._db import update_apps_per_agent_by_view
+        >>> view_name = 'vFense'
+        >>> app_data = {'view_name': 'vFense'}
         >>> collection = 'apps_per_agent'
-        >>> update_apps_per_agent_by_customer(customer_name,_app_data, collection)
+        >>> update_apps_per_agent_by_view(view_name,_app_data, collection)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
 
-    index_name = DbCommonAppPerAgentIndexes.CustomerName
+    index_name = DbCommonAppPerAgentIndexes.ViewName
     data = {}
     try:
         data = (
             r
             .table(collection)
             .get_all(
-                customer_name, index=index_name
+                view_name, index=index_name
             )
             .update(app_data)
             .run(conn)
@@ -772,7 +772,7 @@ def update_apps_per_agent_by_agentids(
         collection=AppCollections.AppsPerAgent,
         conn=None
     ):
-    """ Update any keys for any apps collection by customer name
+    """ Update any keys for any apps collection by view name
         This function should not be called directly.
     Args:
         agent_ids (list): List of agent ids.
@@ -784,7 +784,7 @@ def update_apps_per_agent_by_agentids(
     Basic Usage:
         >>> from vFense.plugins.patching._db import update_apps_per_agent_by_agentids
         >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
-        >>> app_data = {'customer_name': 'vFense'}
+        >>> app_data = {'view_name': 'vFense'}
         >>> collection = 'apps_per_agent'
         >>> update_apps_per_agent_by_agentids(agent_ids,_app_data, collection)
 
@@ -820,39 +820,39 @@ def update_apps_per_agent_by_agentids(
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_apps_by_customer(
-        customer_name,
+def delete_apps_by_view(
+        view_name,
         collection=AppCollections.AppsPerAgent,
         conn=None
     ):
-    """Delete all apps for all agents by customer and app type
+    """Delete all apps for all agents by view and app type
         This function should not be called directly.
     Args:
-        customer_name (str): Name of the customer.
+        view_name (str): Name of the view.
 
     Kwargs:
         collection (str): The Application Collection that is going to be used.
         index_name (str): The name of the index that will be used during the search.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import delete_apps_by_customer
-        >>> customer_name = 'vFense'
+        >>> from vFense.plugins.patching._db import delete_apps_by_view
+        >>> view_name = 'vFense'
         >>> collection = 'apps_per_agent'
-        >>> index_name = 'customer_name'
-        >>> delete_apps_by_customer(customer_name,_collection, index_name)
+        >>> index_name = 'view_name'
+        >>> delete_apps_by_view(view_name,_collection, index_name)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    index_name = DbCommonAppPerAgentIndexes.CustomerName
+    index_name = DbCommonAppPerAgentIndexes.ViewName
     data = {}
     try:
         data = (
             r
             .table(collection)
             .get_all(
-                customer_name, index=index_name
+                view_name, index=index_name
             )
             .delete()
             .run(conn)
@@ -998,14 +998,14 @@ def delete_app_data_for_agentid(
 @time_it
 @db_create_close
 @return_status_tuple
-def update_customers_in_app_by_app_id(
-        customer_name, app_id,
+def update_views_in_app_by_app_id(
+        view_name, app_id,
         collection=AppCollections.UniqueApplications,
         conn=None
     ):
-    """Update the list of customers that require this application id.
+    """Update the list of views that require this application id.
     Args:
-        customer_name (str): The name of the customer you are adding to the app.
+        view_name (str): The name of the view you are adding to the app.
         app_id (str): The 64 character application id.
 
     Kwargs:
@@ -1013,11 +1013,11 @@ def update_customers_in_app_by_app_id(
             default = unique_applications
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db import update_customers_in_app_by_app_id
-        >>> customer_name = 'default'
+        >>> from vFense.plugins.patching._db import update_views_in_app_by_app_id
+        >>> view_name = 'default'
         >>> app_id = '15fa819554aca425d7f699e81a2097898b06f00a0f2dd6e8d51a18405360a6eb'
         >>> collection = 'unique_applications'
-        >>> update_customers_in_app_by_app_id(customer_name, app_id)
+        >>> update_views_in_app_by_app_id(view_name, app_id)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -1031,9 +1031,9 @@ def update_customers_in_app_by_app_id(
             .get(app_id)
             .update(
                 {
-                    DbCommonAppKeys.Customers: (
-                        r.row[DbCommonAppKeys.Customers]
-                        .set_insert(customer_name)
+                    DbCommonAppKeys.Views: (
+                        r.row[DbCommonAppKeys.Views]
+                        .set_insert(view_name)
                     ),
                 }
             )
@@ -1150,7 +1150,7 @@ def update_apps_per_agent(
                     "agent_id": "78211125-3c1e-476a-98b6-ea7f683142b3",
                     "last_modified_time": 1398997520,
                     "id": "000182347981c7b54577817fd93aa6cab39477c6dc59fd2dd8ba32e15914b28f",
-                    "customer_name": "default"
+                    "view_name": "default"
                 }
             ]
         >>> update_apps_per_agent(pkg_list, collection)

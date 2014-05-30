@@ -8,7 +8,7 @@ class User():
     def get(
         active_user=None,
         user_info=None,
-        customer_context=None,
+        view_context=None,
         all_users=False
     ):
 
@@ -31,7 +31,7 @@ class User():
             info_user = Hierarchy.get_user(user_info)
             user = User._user_presentation_hack(
                 info_user,
-                active_user.current_customer
+                active_user.current_view
             )
 
             return {
@@ -42,11 +42,11 @@ class User():
 
         elif all_users:
 
-            if not customer_context:
-                customer_context = active_user.current_customer
+            if not view_context:
+                view_context = active_user.current_view
 
-            _users = Hierarchy.get_users_of_customer(
-                customer_context
+            _users = Hierarchy.get_users_of_view(
+                view_context
             )
 
             users = []
@@ -56,7 +56,7 @@ class User():
                 users.append(
                     User._user_presentation_hack(
                         u,
-                        customer_context
+                        view_context
                     )
                 )
 
@@ -82,24 +82,24 @@ class User():
         }
 
     @staticmethod
-    def _user_presentation_hack(user, active_customer=None):
+    def _user_presentation_hack(user, active_view=None):
         # The word hack is in the method's name.
         # Prepare for the worst!
 
         user_dict = user.dict()
 
-        customers_list = Hierarchy.get_customers_of_user(user.user_name)
+        views_list = Hierarchy.get_views_of_user(user.user_name)
 
-        if not active_customer:
-            active_customer = user.current_customer
+        if not active_view:
+            active_view = user.current_view
 
-        customers = []
-        for c in customers_list:
+        views = []
+        for c in views_list:
             is_admin = False
 
             gpu = Hierarchy.get_groups_of_user(
                 user.user_name,
-                c.customer_name
+                c.view_name
             )
 
             for g in gpu:
@@ -107,23 +107,23 @@ class User():
                     is_admin = True
                     break
 
-            customers.append(
+            views.append(
                 {
-                    'name': c.customer_name,
+                    'name': c.view_name,
                     'admin': is_admin
                 }
             )
 
-        current_customer = {
-            'name': user.current_customer
+        current_view = {
+            'name': user.current_view
         }
-        default_customer = {
-            'name': user.default_customer
+        default_view = {
+            'name': user.default_view
         }
 
         gpu = Hierarchy.get_groups_of_user(
             user.user_name,
-            active_customer
+            active_view
         )
 
         groups = []
@@ -141,10 +141,10 @@ class User():
 
         permissions = list(set(permissions))
 
-        user_dict[UserKey.Customers] = customers
+        user_dict[UserKey.Views] = views
         user_dict[UserKey.Permissions] = permissions
-        user_dict[UserKey.CurrentCustomer] = current_customer
-        user_dict[UserKey.DefaultCustomer] = default_customer
+        user_dict[UserKey.CurrentView] = current_view
+        user_dict[UserKey.DefaultView] = default_view
         user_dict[UserKey.Groups] = groups
         user_dict['username'] = user.user_name
 
@@ -161,13 +161,13 @@ class User():
         data[UserKey.FullName] = kwargs.get('fullname', None)
         data[UserKey.Email] = kwargs.get('email', None)
 
-        data[UserKey.Customers] = kwargs.get('customer_ids', None)
-        data['customer_context'] = kwargs.get('customer_context', None)
+        data[UserKey.Views] = kwargs.get('view_ids', None)
+        data['view_context'] = kwargs.get('view_context', None)
 
-        data[UserKey.DefaultCustomer] = kwargs.get(
-            'default_customer_id', None)
-        data[UserKey.CurrentCustomer] = kwargs.get(
-            'current_customer_id', None)
+        data[UserKey.DefaultView] = kwargs.get(
+            'default_view_id', None)
+        data[UserKey.CurrentView] = kwargs.get(
+            'current_view_id', None)
 
         group_names = kwargs.get('group_names', None)
         group_ids = kwargs.get('group_ids', None)
@@ -250,9 +250,9 @@ class User():
                 'message': 'Please provide a username and/or password.'
             }
 
-        parameters['customers'] = kwargs.get('customer_ids', None)
-        parameters['default_customer'] = kwargs.get(
-            'default_customer_id',
+        parameters['views'] = kwargs.get('view_ids', None)
+        parameters['default_view'] = kwargs.get(
+            'default_view_id',
             None
         )
 
@@ -293,57 +293,57 @@ class User():
         }
 
 
-class Customer():
+class View():
 
     @staticmethod
     def get(name=None, user_name=None):
 
         if name:
-            customer = Hierarchy.get_customer(name)
+            view = Hierarchy.get_view(name)
 
-            if customer:
+            if view:
 
                 return {
                     'pass': True,
-                    'message': 'Customer found.',
-                    'data': customer.dict()
+                    'message': 'View found.',
+                    'data': view.dict()
                 }
 
         elif user_name:
 
             if Hierarchy.is_admin(user_name):
 
-                _customers = get_all_customers()
-                customers = []
-                for c in _customers:
+                _views = get_all_views()
+                views = []
+                for c in _views:
 
-                    customers.append(
-                        {'name': c.customer_name}
+                    views.append(
+                        {'name': c.view_name}
                     )
 
                 return {
                     'pass': True,
-                    'message': 'Customers found.',
-                    'data': customers
+                    'message': 'Views found.',
+                    'data': views
                 }
 
             user = Hierarchy.get_user(user_name)
             if user:
 
-                _customers = Hierarchy.get_customers_of_user(user_name)
-                customers = []
-                for c in _customers:
-                    customers.append(c.dict())
+                _views = Hierarchy.get_views_of_user(user_name)
+                views = []
+                for c in _views:
+                    views.append(c.dict())
 
                 return {
                     'pass': True,
-                    'message': 'Customers found.',
-                    'data': customers
+                    'message': 'Views found.',
+                    'data': views
                 }
 
         return {
             'pass': False,
-            'message': 'Customers were not found for user {}.'.format(
+            'message': 'Views were not found for user {}.'.format(
                 user_name
             )
         }
@@ -352,15 +352,15 @@ class Customer():
     def edit(**kwargs):
 
         data = {}
-        customer_name = kwargs.get('customer_name')
+        view_name = kwargs.get('view_name')
         user_name = kwargs.get('user_name')
         users = kwargs.get('users')
 
-        if not customer_name:
+        if not view_name:
 
             return {
                 'pass': False,
-                'message': 'Customer name was not provided.'
+                'message': 'View name was not provided.'
             }
 
         if AdminUser in users:
@@ -372,16 +372,16 @@ class Customer():
                 )
             }
 
-        customer = Hierarchy.get_customer(customer_name)
-        if not customer:
+        view = Hierarchy.get_view(view_name)
+        if not view:
 
             return {
                 'pass': False,
-                'message': 'Customer `%s` was not found' % customer_name
+                'message': 'View `%s` was not found' % view_name
             }
 
 #        user_found = False
-#        for user in customer.get_users():
+#        for user in view.get_users():
 #
 #            if user.name == user_name:
 #                user_found = True
@@ -391,9 +391,9 @@ class Customer():
 #
 #            return {
 #                'pass': False,
-#                'message': 'User {} does not belong to Customer "{}"'.format(
+#                'message': 'User {} does not belong to View "{}"'.format(
 #                    user_name,
-#                    customer.name
+#                    view.name
 #                )
 #            }
 
@@ -412,7 +412,7 @@ class Customer():
         if pkg_url:
             properties[CoreProperty.PackageUrl] = pkg_url
 
-        data[CustomerKey.Properties] = properties
+        data[ViewKey.Properties] = properties
 
         group_names = kwargs.get('group_names', None)
         group_ids = kwargs.get('group_ids', None)
@@ -429,20 +429,20 @@ class Customer():
 
                     groups.append(g.group_name)
 
-        data[CustomerKey.Groups] = groups
+        data[ViewKey.Groups] = groups
 
-        result = Hierarchy.edit_customer(customer.customer_name, data)
+        result = Hierarchy.edit_view(view.view_name, data)
 
         if result:
 
             return {
                 'pass': True,
-                'message': 'Customer `%s` was updated.' % customer_name
+                'message': 'View `%s` was updated.' % view_name
             }
 
         return {
             'pass': False,
-            'message': 'Customer `%s` could not be updated.' % customer_name
+            'message': 'View `%s` could not be updated.' % view_name
         }
 
     @staticmethod
@@ -451,27 +451,27 @@ class Customer():
         if not name:
             return {
                 'pass': False,
-                'message': 'Customer name not provided.'
+                'message': 'View name not provided.'
             }
 
         if name == 'default':
             return {
                 'pass': False,
-                'message': 'Default customer cannot be deleted.'
+                'message': 'Default view cannot be deleted.'
             }
 
-        customer = Hierarchy.get_customer(name)
+        view = Hierarchy.get_view(name)
         user = Hierarchy.get_user(user_name)
-        if customer:
+        if view:
 
             # *** Leaving this as reference for Miguel ***
-            # customer_users = customer.get_users()
+            # view_users = view.get_users()
 
-            customer_users = \
-                Hierarchy.get_users_of_customer(customer.customer_name)
+            view_users = \
+                Hierarchy.get_users_of_view(view.view_name)
 
             #user_found = False
-            #for cu in customer_users:
+            #for cu in view_users:
 
             #    if cu.user_name == user.user_name:
             #        user_found = True
@@ -484,90 +484,90 @@ class Customer():
 
                 # TODO: returning success and error on this call
                 # but nothing is being done with the error
-                #result = Hierarchy.delete_customer(customer.customer_name)
+                #result = Hierarchy.delete_view(view.view_name)
 
             success, error = \
-                Hierarchy.delete_customer(customer.customer_name)
+                Hierarchy.delete_view(view.view_name)
 
             if success:
 
 
                 return {
                     'pass': True,
-                    'message': 'Customers {} deleted.'.format(name)
+                    'message': 'Views {} deleted.'.format(name)
                 }
 
             else:
 
                 return {
                     'pass': False,
-                    'message': 'Customers {} could not deleted.'.format(name)
+                    'message': 'Views {} could not deleted.'.format(name)
                 }
 
         return {
             'pass': False,
-            'message': 'Customers {} was not found.'.format(name)
+            'message': 'Views {} was not found.'.format(name)
         }
 
     @staticmethod
     def create(name, user_name):
 
-        # Hack to set new customer properites...
-        default = Hierarchy.get_customer(DefaultCustomer)
+        # Hack to set new view properites...
+        default = Hierarchy.get_view(DefaultView)
         props = default.properties
 
-        customer, msg = Hierarchy.create_customer(name, props)
+        view, msg = Hierarchy.create_view(name, props)
         user = Hierarchy.get_user(user_name)
 
-        if customer:
+        if view:
 
-            Hierarchy.toggle_user_from_customer(
+            Hierarchy.toggle_user_from_view(
                 user,
-                customer,
+                view,
             )
 
             # TODO(urgent): undo hack
-            Customer._admin_customer_hack(customer)
+            View._admin_view_hack(view)
 
             return {
                 'pass': True,
-                'message': 'Customer `%s` created.' % customer.customer_name,
-                'data': customer.customer_name
+                'message': 'View `%s` created.' % view.view_name,
+                'data': view.view_name
             }
 
         return {
             'pass': False,
-            'message': 'Customer `%s` could not be created.' % name
+            'message': 'View `%s` could not be created.' % name
         }
 
     @staticmethod
-    def _admin_customer_hack(customer):
-        # admin user always needs to be added to every customer
+    def _admin_view_hack(view):
+        # admin user always needs to be added to every view
         # with Administrator group.
 
         admin_user = Hierarchy.get_user('admin')
         admin_group = Hierarchy.get_group(
             'Administrator',
-            customer.customer_name
+            view.view_name
         )
 
         if admin_user:
-            Hierarchy.toggle_user_from_customer(
+            Hierarchy.toggle_user_from_view(
                 admin_user,
-                customer,
+                view,
             )
 
             Hierarchy.toggle_group_of_user(
                 admin_group,
                 admin_user,
-                customer
+                view
             )
 
 
 class Group():
 
     @staticmethod
-    def get(group_name=None, user_name=None, customer_context=None):
+    def get(group_name=None, user_name=None, view_context=None):
 
         if(
             not group_name
@@ -587,15 +587,15 @@ class Group():
                 'message': 'User `%s` was not found' % user_name
             }
 
-        if not customer_context:
-            customer_context = user.current_customer
+        if not view_context:
+            view_context = user.current_view
 
         if group_name:
 
-            _group = Hierarchy.get_group(group_name, customer_context)
+            _group = Hierarchy.get_group(group_name, view_context)
             group = Group._group_presentation_hack(
                 _group,
-                customer_context
+                view_context
             )
             return {
                 'pass': True,
@@ -607,18 +607,18 @@ class Group():
 
             try:
 
-                if customer_context:
+                if view_context:
 
                     raw_groups = Hierarchy.get_groups_of_user(
                         user.user_name,
-                        customer_context
+                        view_context
                     )
 
                     groups = []
                     for _group in raw_groups:
                         group = Group._group_presentation_hack(
                             _group,
-                            customer_context
+                            view_context
                         )
 
                         groups.append(group)
@@ -640,30 +640,30 @@ class Group():
         }
 
     @staticmethod
-    def get_groups(customer_context=None, user=None):
+    def get_groups(view_context=None, user=None):
 
         if(
-            not customer_context
+            not view_context
             and not user
         ):
             return {
                 'pass': False,
-                'message': 'A customer context neither user was not provided.',
+                'message': 'A view context neither user was not provided.',
                 'data': []
         }
 
         try:
 
-            if not customer_context:
+            if not view_context:
                 user = Hierarchy.get_user(user)
-                customer_context = user.current_customer
+                view_context = user.current_view
 
-            _groups = Hierarchy.get_groups_of_customer(customer_context)
+            _groups = Hierarchy.get_groups_of_view(view_context)
             groups = []
             for _group in _groups:
                 group = Group._group_presentation_hack(
                     _group,
-                    customer_context
+                    view_context
                 )
 
                 if group:
@@ -678,19 +678,19 @@ class Group():
         except Exception as e:
             return {
                 'pass': False,
-                'message': 'Groups were not found for customer %s.' % customer_context,
+                'message': 'Groups were not found for view %s.' % view_context,
                 'data': []
             }
 
     @staticmethod
-    def _group_presentation_hack(group, customer_name):
+    def _group_presentation_hack(group, view_name):
         group_dict = group.dict()
 
-        customer = {'name': customer_name}
+        view = {'name': view_name}
 
         upg = Hierarchy.get_users_of_group(
             group.group_name,
-            customer_name
+            view_name
         )
 
         users = []
@@ -702,7 +702,7 @@ class Group():
             )
 
         group_dict[GroupKey.Users] = users
-        group_dict[GroupKey.Customer] = customer
+        group_dict[GroupKey.View] = view
         group_dict['name'] = group.group_name
 
         return group_dict
@@ -729,9 +729,9 @@ class Group():
         group = None
         user = Hierarchy.get_user(user_name)
 
-        customer_context = kwargs.get('customer_context', None)
-        if not customer_context:
-            customer_context = user.current_customer
+        view_context = kwargs.get('view_context', None)
+        if not view_context:
+            view_context = user.current_view
 
         if group_id:
 
@@ -742,12 +742,12 @@ class Group():
             if user:
                 group = Hierarchy.get_group(
                     group_name,
-                    customer_context
+                    view_context
                 )
 
         if group:
 
-            data[GroupKey.Customer] = kwargs.get('customer')
+            data[GroupKey.View] = kwargs.get('view')
             data[GroupKey.Users] = kwargs.get('users')
             data[GroupKey.Permissions] = kwargs.get('permissions')
 
@@ -772,7 +772,7 @@ class Group():
 
             result = Hierarchy.edit_group(
                 group.group_name,
-                customer_context,
+                view_context,
                 data
             )
 
@@ -797,7 +797,7 @@ class Group():
         group_id=None,
         group_name=None,
         user_name=None,
-        customer_context=None
+        view_context=None
     ):
 
         if (
@@ -818,12 +818,12 @@ class Group():
             user = Hierarchy.get_user(user_name)
             if user:
 
-                if not customer_context:
-                    customer_context = user.current_customer
+                if not view_context:
+                    view_context = user.current_view
 
                 group = Hierarchy.get_group(
                     group_name,
-                    customer_context
+                    view_context
                 )
 
         if group:
@@ -838,7 +838,7 @@ class Group():
 
             result = Hierarchy.delete_group(
                 group.group_name,
-                group.customer
+                group.view
             )
 
             if result:
@@ -857,7 +857,7 @@ class Group():
         }
 
     @staticmethod
-    def create(group_name=None, user_name=None, customer_name=None):
+    def create(group_name=None, user_name=None, view_name=None):
 
         if not group_name:
 
@@ -866,16 +866,16 @@ class Group():
                 'message': 'Name for group not provided.'
             }
 
-        if not customer_name:
-            customer_name = get_current_customer_name(user_name)
+        if not view_name:
+            view_name = get_current_view_name(user_name)
 
-        if Hierarchy.get_group(group_name, customer_name):
+        if Hierarchy.get_group(group_name, view_name):
             return {
                 'pass': False,
-                'message': 'Group with this name and customer already exist.'
+                'message': 'Group with this name and view already exist.'
             }
 
-        group = Hierarchy.create_group(group_name, customer_name=customer_name)
+        group = Hierarchy.create_group(group_name, view_name=view_name)
 
         if group:
 

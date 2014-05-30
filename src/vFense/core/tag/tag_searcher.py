@@ -19,14 +19,14 @@ logger = logging.getLogger('rvapi')
 
 
 class TagSearcher():
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
                  sort_key=TagsKey.TagName):
 
         self.qcount = count
         self.qoffset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -50,8 +50,8 @@ class TagSearcher():
             data = list(
                 r
                 .table(TagsCollection)
-                .get_all(self.customer_name,
-                    index=TagsIndexes.CustomerName)
+                .get_all(self.view_name,
+                    index=TagsIndexes.ViewName)
                 .filter(lambda x: x[self.sort_key].match("(?i)"+query))
                 .order_by(self.sort(self.sort_key))
                 .run(conn)
@@ -113,7 +113,7 @@ class TagSearcher():
                     .filter(
                         {
                             fkey: fval,
-                            TagsKey.CustomerName: self.customer_name
+                            TagsKey.ViewName: self.view_name
                         }
                     )
                     .count()
@@ -125,7 +125,7 @@ class TagSearcher():
                     .filter(
                         {
                             fkey: fval,
-                            TagsKey.CustomerName: self.customer_name
+                            TagsKey.ViewName: self.view_name
                         }
                     )
                     .order_by(self.sort(self.sort_key))
@@ -189,14 +189,14 @@ class TagSearcher():
             count = (
                 r
                 .table(TagsCollection)
-                .get_all(self.customer_name, index=TagsIndexes.CustomerName)
+                .get_all(self.view_name, index=TagsIndexes.ViewName)
                 .count()
                 .run(conn)
             )
             data = list(
                 r
                 .table(TagsCollection)
-                .get_all(self.customer_name, index=TagsIndexes.CustomerName)
+                .get_all(self.view_name, index=TagsIndexes.ViewName)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.qoffset)
                 .limit(self.qcount)

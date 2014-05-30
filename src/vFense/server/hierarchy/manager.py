@@ -6,7 +6,7 @@ from vFense.server.hierarchy import *
 from vFense.server.hierarchy._db import actions
 from vFense.server.hierarchy.group import Group
 from vFense.server.hierarchy.user import User
-from vFense.server.hierarchy.customer import Customer
+from vFense.server.hierarchy.view import View
 
 from vFense.server.hierarchy.permissions import Permission
 from vFense.utils.security import Crypto
@@ -46,8 +46,8 @@ class Hierarchy():
                     u[UserKey.Password],
                     u[UserKey.FullName],
                     u[UserKey.Email],
-                    u[UserKey.CurrentCustomer],
-                    u[UserKey.DefaultCustomer],
+                    u[UserKey.CurrentView],
+                    u[UserKey.DefaultView],
                     u[UserKey.Enabled]
                 )
 
@@ -58,52 +58,52 @@ class Hierarchy():
         return user
 
     @staticmethod
-    def get_customers_of_user(user_name=None):
+    def get_views_of_user(user_name=None):
 
         if not user_name:
             return None
 
-        customers = []
+        views = []
 
         try:
 
             if user_name == AdminUser:
 
-                all_customers = actions.db_get_all(
-                    Collection.Customers
+                all_views = actions.db_get_all(
+                    Collection.Views
                 )
 
             else:
 
-                all_customers = actions.get_customers_of_user(
+                all_views = actions.get_views_of_user(
                     user_name=user_name
                 )
 
-            for c in all_customers:
+            for c in all_views:
                 try:
-                    customer = Customer(
-                        c[CustomerKey.CustomerName],
-                        c[CustomerKey.Properties],
+                    view = View(
+                        c[ViewKey.ViewName],
+                        c[ViewKey.Properties],
                     )
 
-                    customers.append(customer)
+                    views.append(view)
 
                 except Exception as e:
-                    logger.error('Skipping customer `%s`' % u)
+                    logger.error('Skipping view `%s`' % u)
                     logger.exception(e)
 
         except Exception as e:
 
             logger.error(
-                'Could not get customers of user `%s` .'
+                'Could not get views of user `%s` .'
                 % user_name
             )
             logger.exception(e)
 
-        return customers
+        return views
 
     @staticmethod
-    def get_users_of_group(group_name=None, customer_name=None):
+    def get_users_of_group(group_name=None, view_name=None):
         """Gets all of the user's belonging to a group.
 
         Returns:
@@ -113,7 +113,7 @@ class Hierarchy():
 
         if (
             not group_name
-            and not customer_name
+            and not view_name
         ):
 
             return None
@@ -123,7 +123,7 @@ class Hierarchy():
 
             group_users = actions.get_users_of_group(
                 group_name=group_name,
-                customer_name=customer_name
+                view_name=view_name
             )
 
             for u in group_users:
@@ -133,8 +133,8 @@ class Hierarchy():
                         u[UserKey.Password],
                         u[UserKey.FullName],
                         u[UserKey.Email],
-                        u[UserKey.CurrentCustomer],
-                        u[UserKey.DefaultCustomer],
+                        u[UserKey.CurrentView],
+                        u[UserKey.DefaultView],
                         u[UserKey.Enabled]
                     )
 
@@ -155,38 +155,38 @@ class Hierarchy():
         return users
 
     @staticmethod
-    def get_users_of_customer(customer_name=None):
-        """Gets all of the user's belonging to a Customer.
+    def get_users_of_view(view_name=None):
+        """Gets all of the user's belonging to a View.
 
         Args:
 
-            customer: Customer name to check users against.
+            view: View name to check users against.
 
         Returns:
 
             A list of users.
         """
 
-        if not customer_name:
+        if not view_name:
 
             return None
 
         users = []
         try:
 
-            customer_users = actions.get_users_of_customer(
-                customer_name=customer_name
+            view_users = actions.get_users_of_view(
+                view_name=view_name
             )
 
-            for u in customer_users:
+            for u in view_users:
                 try:
                     user = User(
                         u[UserKey.UserName],
                         u[UserKey.Password],
                         u[UserKey.FullName],
                         u[UserKey.Email],
-                        u[UserKey.CurrentCustomer],
-                        u[UserKey.DefaultCustomer],
+                        u[UserKey.CurrentView],
+                        u[UserKey.DefaultView],
                         u[UserKey.Enabled]
                     )
 
@@ -199,15 +199,15 @@ class Hierarchy():
         except Exception as e:
 
             logger.error(
-                'Could not get users of customer "%s" .'
-                % customer_name
+                'Could not get users of view "%s" .'
+                % view_name
             )
             logger.exception(e)
 
         return users
 
     @staticmethod
-    def get_group(group_name=None, customer_name=None):
+    def get_group(group_name=None, view_name=None):
         """Gets a Group instance.
 
         Args:
@@ -219,7 +219,7 @@ class Hierarchy():
         """
         if(
             not group_name
-            and not customer_name
+            and not view_name
         ):
             return None
 
@@ -227,14 +227,14 @@ class Hierarchy():
             collection=Collection.Groups,
             values=[
                 group_name,
-                customer_name
+                view_name
             ],
-            index=GroupKey.GroupNameAndCustomerId
+            index=GroupKey.GroupNameAndViewId
         )
 
         if len(group) >= 1:
             for gp in group:
-                if gp[GroupKey.CustomerId] == customer_name:
+                if gp[GroupKey.ViewId] == view_name:
                     g = gp
                     break
 
@@ -247,7 +247,7 @@ class Hierarchy():
 
             group = Group(
                 g[GroupKey.GroupName],
-                g[GroupKey.CustomerId],
+                g[GroupKey.ViewId],
                 g[GroupKey.Permissions],
                 g[GroupKey.Id]
             )
@@ -281,7 +281,7 @@ class Hierarchy():
 
                 group = Group(
                     g[GroupKey.GroupName],
-                    g[GroupKey.CustomerId],
+                    g[GroupKey.ViewId],
                     g[GroupKey.Permissions],
                     g[GroupKey.Id]
                 )
@@ -296,7 +296,7 @@ class Hierarchy():
         return None
 
     @staticmethod
-    def get_groups_of_user(user_name=None, customer_name=None):
+    def get_groups_of_user(user_name=None, view_name=None):
         """Gets the groups of a user.
 
         Args:
@@ -309,7 +309,7 @@ class Hierarchy():
         """
 
         if(
-            not customer_name
+            not view_name
             and not user_name
         ):
             return []
@@ -321,8 +321,8 @@ class Hierarchy():
 #
 #                print 'getting all groups'
 #
-#                groups = Hierarchy.get_groups_of_customer(
-#                    customer_name
+#                groups = Hierarchy.get_groups_of_view(
+#                    view_name
 #                )
 #
 #                g = groups
@@ -331,7 +331,7 @@ class Hierarchy():
 
                 groups = actions.get_groups_of_user(
                     user_name=user_name,
-                    customer_name=customer_name
+                    view_name=view_name
                 )
 
                 for group in groups:
@@ -339,7 +339,7 @@ class Hierarchy():
 
                         tmp = Group(
                             group[GroupKey.GroupName],
-                            group[GroupKey.CustomerId],
+                            group[GroupKey.ViewId],
                             group[GroupKey.Permissions],
                             group[GroupKey.Id]
                         )
@@ -361,26 +361,26 @@ class Hierarchy():
         return g
 
     @staticmethod
-    def get_groups_of_customer(customer_name=None):
-        """Gets the groups of a customer.
+    def get_groups_of_view(view_name=None):
+        """Gets the groups of a view.
 
         Args:
 
-            name: Name of the customer.
+            name: Name of the view.
 
         Returns:
 
             A list of Group instances if found, empty list otherwise.
         """
 
-        if not customer_name:
+        if not view_name:
             return []
 
         g = []
         try:
 
-            groups = actions.get_groups_of_customer(
-                customer_name=customer_name
+            groups = actions.get_groups_of_view(
+                view_name=view_name
             )
 
             for group in groups:
@@ -388,7 +388,7 @@ class Hierarchy():
 
                     tmp = Group(
                         group[GroupKey.GroupName],
-                        group[GroupKey.CustomerId],
+                        group[GroupKey.ViewId],
                         group[GroupKey.Permissions],
                         group[GroupKey.Id]
                     )
@@ -402,40 +402,40 @@ class Hierarchy():
         except Exception as e:
 
             logger.error(
-                'Could not get groups of customer `%s`.'
-                % customer_name
+                'Could not get groups of view `%s`.'
+                % view_name
             )
             logger.exception(e)
 
         return g
 
     @staticmethod
-    def get_customer(customer_name=None):
-        """Gets a Customer instance.
+    def get_view(view_name=None):
+        """Gets a View instance.
 
         Args:
 
-            name: Name of the customer.
+            name: Name of the view.
 
         Returns:
 
-            A Customer instance if found, None otherwise.
+            A View instance if found, None otherwise.
         """
 
-        if not customer_name:
+        if not view_name:
             return None
 
-        customer = None
-        c = actions.get_customer(customer_name=customer_name)
+        view = None
+        c = actions.get_view(view_name=view_name)
 
         if c:
 
-            customer = Customer(
-                c[CustomerKey.CustomerName],
-                c[CustomerKey.Properties]
+            view = View(
+                c[ViewKey.ViewName],
+                c[ViewKey.Properties]
             )
 
-        return customer
+        return view
 
     @staticmethod
     def create_user(
@@ -444,12 +444,12 @@ class Hierarchy():
         email=None,
         password=None,
         groups=None,
-        default_customer=None,
-        customers=None
+        default_view=None,
+        views=None
     ):
         """Create a new User and save it.
 
-        All parameters are required *except* groups and customers.
+        All parameters are required *except* groups and views.
 
         Args:
 
@@ -464,10 +464,10 @@ class Hierarchy():
             groups: A list of dicts consisting of either an id key or name key
                 describing the group.
 
-            customers: Customers this user should be added to. List of customer
+            views: Views this user should be added to. List of view
                 names.
 
-            default_customer: The default customer for this user. Will be the
+            default_view: The default view for this user. Will be the
                 first data available to the user.
 
         Returns:
@@ -486,56 +486,56 @@ class Hierarchy():
                     "Username `%s` already exist." % user_name
                 )
 
-            # Get the Customer(s) that will be added to this user.
-            customers_to_add = []
-            if customers:
+            # Get the View(s) that will be added to this user.
+            views_to_add = []
+            if views:
 
-                for customer_name in customers:
+                for view_name in views:
 
-                    c = Hierarchy.get_customer(customer_name)
+                    c = Hierarchy.get_view(view_name)
 
                     if c:
 
-                        customers_to_add.append(c)
+                        views_to_add.append(c)
 
-            if default_customer:
+            if default_view:
 
-                defult_cusomter = Hierarchy.get_customer(default_customer)
-                add_customer = True
+                defult_cusomter = Hierarchy.get_view(default_view)
+                add_view = True
 
-                if default_customer:
+                if default_view:
 
-                    for c in customer_to_add:
-                        if c.customer_name == dc.customer_name:
-                            add_customer = False
+                    for c in view_to_add:
+                        if c.view_name == dc.view_name:
+                            add_view = False
                             break
 
-                    if add_customer:
-                        customers_to_add.append(default_cusotmer)
+                    if add_view:
+                        views_to_add.append(default_cusotmer)
 
             else:
 
-                if customers_to_add:
+                if views_to_add:
 
-                    default_customer = customers_to_add[0]
+                    default_view = views_to_add[0]
 
                 else:
 
-                    default_customer = Hierarchy.get_customer(DefaultCustomer)
-                    customers_to_add.append(default_customer)
+                    default_view = Hierarchy.get_view(DefaultView)
+                    views_to_add.append(default_view)
 
-            #if not customers:
-            #    customers = [default_customer]
+            #if not views:
+            #    views = [default_view]
 
             #if added_default:
-            #    if DefaultCustomer not in customers:
-            #        customers.append(DefaultCustomer)
+            #    if DefaultView not in views:
+            #        views.append(DefaultView)
 
-            # Now a Customer type.
-            #default_customer = Hierarchy.get_customer(default_customer)
+            # Now a View type.
+            #default_view = Hierarchy.get_view(default_view)
 
-            #if not customers_to_add:
-            #    customers_to_add.append(default_customer)
+            #if not views_to_add:
+            #    views_to_add.append(default_view)
 
             #############################################################
 
@@ -549,7 +549,7 @@ class Hierarchy():
 
                     g = Hierarchy.get_group(
                         group_name,
-                        default_customer.customer_name
+                        default_view.view_name
                     )
 
                     if g:
@@ -562,7 +562,7 @@ class Hierarchy():
 
                 g = Hierarchy.get_group(
                     DefaultGroup.ReadOnly,
-                    default_customer.customer_name
+                    default_view.view_name
                 )
 
                 if g:
@@ -583,8 +583,8 @@ class Hierarchy():
                 password,
                 full_name,
                 email,
-                default_customer.customer_name,
-                default_customer.customer_name
+                default_view.view_name,
+                default_view.view_name
             )
 
             saved = Hierarchy.save_user(user)
@@ -596,14 +596,14 @@ class Hierarchy():
                     Hierarchy.toggle_group_of_user(
                         group=group,
                         user=user,
-                        customer=default_customer
+                        view=default_view
                     )
 
-                for customer in customers_to_add:
+                for view in views_to_add:
 
-                    Hierarchy.toggle_user_from_customer(
+                    Hierarchy.toggle_user_from_view(
                         user=user,
-                        customer=customer
+                        view=view
                     )
 
                 return user, ''
@@ -619,7 +619,7 @@ class Hierarchy():
     def create_group(
         name=None,
         permissions=None,
-        customer_name=None
+        view_name=None
     ):
         """Create a new Group and save it.
 
@@ -637,13 +637,13 @@ class Hierarchy():
         if not name:
             return False
 
-        if not customer_name:
-                customer_name = DefaultCustomer
+        if not view_name:
+                view_name = DefaultView
 
-        if Hierarchy.get_group(name, customer_name):
+        if Hierarchy.get_group(name, view_name):
             return False, (
-                "Group with name `%s` already exist for customer `%s`"
-                % (name, customer_name)
+                "Group with name `%s` already exist for view `%s`"
+                % (name, view_name)
             )
 
         name = name.strip()
@@ -651,22 +651,22 @@ class Hierarchy():
         if not permissions:
             permissions = []
 
-        customer = Hierarchy.get_customer(customer_name)
-        if not customer:
-            return None, "Customer `%s` does not exist." % customer_name
+        view = Hierarchy.get_view(view_name)
+        if not view:
+            return None, "View `%s` does not exist." % view_name
 
-        group = Group(name, customer_name, permissions)
+        group = Group(name, view_name, permissions)
         saved = Hierarchy.save_group(group)
 
         if saved:
 
             # No need to toggle because its added during the save.
-            #customer = Hierarchy.get_customer(customer_name)
-            #if customer:
+            #view = Hierarchy.get_view(view_name)
+            #if view:
 
-            #    toggled = Hierarchy.toggle_group_from_customer(
+            #    toggled = Hierarchy.toggle_group_from_view(
             #        group,
-            #        customer,
+            #        view,
             #    )
 
             group.id = saved
@@ -675,25 +675,25 @@ class Hierarchy():
         return None, "Unable to create group `%s`" % name
 
     @staticmethod
-    def default_groups(customer_name=None):
+    def default_groups(view_name=None):
 
         try:
 
             admin = Hierarchy.create_group(
                 DefaultGroup.Administrator,
                 [Permission.Admin],
-                customer_name
+                view_name
             )
 
             read = Hierarchy.create_group(
                 DefaultGroup.ReadOnly,
-                customer_name=customer_name
+                view_name=view_name
             )
 
             install = Hierarchy.create_group(
                 DefaultGroup.InstallOnly,
                 [Permission.Install],
-                customer_name
+                view_name
             )
 
             success = admin[0] and read[0] and install[0]
@@ -709,37 +709,37 @@ class Hierarchy():
             return None
 
     @staticmethod
-    def create_customer(name=None, properties={}):
-        """Create a new Customer and save it.
+    def create_view(name=None, properties={}):
+        """Create a new View and save it.
 
         Args:
 
-            name: Name of the customer.
+            name: Name of the view.
 
         Returns:
 
-            The newly created Customer if added successfully, None otherwise.
+            The newly created View if added successfully, None otherwise.
         """
 
         if not name:
-            return False, "A customer name is needed."
+            return False, "A view name is needed."
 
-        if Hierarchy.get_customer(name):
+        if Hierarchy.get_view(name):
             return False, (
-                "Customer with name `%s` already exist." % name
+                "View with name `%s` already exist." % name
             )
 
         name = name.strip()
 
-        customer = Customer(name, properties)
-        results = Hierarchy.save_customer(customer)
+        view = View(name, properties)
+        results = Hierarchy.save_view(view)
 
         if results:
             Hierarchy.default_groups(name)
-            return customer, ""
+            return view, ""
 
         return None, (
-            "Unable to create customer `%s`. Customer already exist?" % name
+            "Unable to create view `%s`. View already exist?" % name
         )
 
     @staticmethod
@@ -780,32 +780,32 @@ class Hierarchy():
 
             user.email = email
 
-        current_customer = mod_data.get(UserKey.CurrentCustomer)
-        if current_customer:
+        current_view = mod_data.get(UserKey.CurrentView)
+        if current_view:
 
-            customer = Hierarchy.get_customer(current_customer)
+            view = Hierarchy.get_view(current_view)
 
-            if customer:
-                user.current_customer = current_customer
+            if view:
+                user.current_view = current_view
 
-        default_customer = mod_data.get(UserKey.DefaultCustomer)
-        if default_customer:
+        default_view = mod_data.get(UserKey.DefaultView)
+        if default_view:
 
-            customer = Hierarchy.get_customer(default_customer)
+            view = Hierarchy.get_view(default_view)
 
-            if customer:
-                user.default_customer = default_customer
+            if view:
+                user.default_view = default_view
 
-        customers = mod_data.get(UserKey.Customers)
-        if customers:
+        views = mod_data.get(UserKey.Views)
+        if views:
 
-            for customer in customers:
+            for view in views:
 
-                c = Hierarchy.get_customer(customer)
+                c = Hierarchy.get_view(view)
 
                 if c:
 
-                    Hierarchy.toggle_user_from_customer(
+                    Hierarchy.toggle_user_from_view(
                         user,
                         c,
                     )
@@ -813,14 +813,14 @@ class Hierarchy():
         groups = mod_data.get(UserKey.Groups)
         if groups:
 
-            customer_context = mod_data.get('customer_context')
-            if customer_context:
+            view_context = mod_data.get('view_context')
+            if view_context:
 
-                c = Hierarchy.get_customer(customer_context)
+                c = Hierarchy.get_view(view_context)
 
             else:
 
-                c = Hierarchy.get_customer(user.current_customer)
+                c = Hierarchy.get_view(user.current_view)
 
             if c:
                 for group in groups:
@@ -841,12 +841,12 @@ class Hierarchy():
         return False
 
     @staticmethod
-    def edit_customer(name, mod_data=None):
-        """Edit customer properties.
+    def edit_view(name, mod_data=None):
+        """Edit view properties.
 
         Args:
 
-            name: Name of the customer.
+            name: Name of the view.
 
             mod_data: A dic of GroupKeys as the key with the new values.
 
@@ -865,29 +865,29 @@ class Hierarchy():
 
         try:
 
-            customer = Hierarchy.get_customer(name)
-            if not customer:
+            view = Hierarchy.get_view(name)
+            if not view:
                 return False
 
-            groups = mod_data.get(CustomerKey.Groups)
+            groups = mod_data.get(ViewKey.Groups)
             if groups:
 
                 for group_names in groups:
 
                     g = Hierarchy.get_group(
                         group_name,
-                        customer.customer_name
+                        view.view_name
                     )
 
                     if g:
 
-                        Hierarchy.toggle_group_from_customer(
+                        Hierarchy.toggle_group_from_view(
                             g,
-                            customer
+                            view
                         )
                         groups_changed = True
 
-            users = mod_data.get(CustomerKey.Users)
+            users = mod_data.get(ViewKey.Users)
             if users:
 
                 for user in users:
@@ -896,9 +896,9 @@ class Hierarchy():
 
                     if u:
 
-                        Hierarchy.toggle_user_from_customer(
+                        Hierarchy.toggle_user_from_view(
                             u,
-                            customer,
+                            view,
                         )
                         users_changed = True
 
@@ -909,17 +909,17 @@ class Hierarchy():
             ):
                 return True
 
-            return Hierarchy.save_customer(customer)
+            return Hierarchy.save_view(view)
 
         except Exception as e:
 
-            logger.error("Unable to edit customer `%s`" % name)
+            logger.error("Unable to edit view `%s`" % name)
             logger.exception(e)
 
     @staticmethod
     def edit_group(
         group_name=None,
-        customer_name=None,
+        view_name=None,
         mod_data=None
     ):
         """Edit group's properties.
@@ -928,7 +928,7 @@ class Hierarchy():
 
             group: the Group instance to edit.
 
-            customer_context: Customer which the group belongs to.
+            view_context: View which the group belongs to.
 
             mod_data: A dic of GroupKeys as the key with the new values.
 
@@ -939,29 +939,29 @@ class Hierarchy():
 
         if (
             not group_name
-            and not customer_name
+            and not view_name
             and not mod_data
         ):
 
             return False
 
-        group = Hierarchy.get_group(group_name, customer_name)
+        group = Hierarchy.get_group(group_name, view_name)
 
         ### Hacky variables....
-        customer_changed = False
+        view_changed = False
         perm_changed = False
 
-        # Change group from one customer to another!?
+        # Change group from one view to another!?
         c = None
-        customer = mod_data.get(GroupKey.CustomerId)
-        if customer:
+        view = mod_data.get(GroupKey.ViewId)
+        if view:
 
-            c = Hierarchy.get_customer(customer)
+            c = Hierarchy.get_view(view)
 
             if c:
 
-                group.set_customer(c.customer_name)
-                customer_changed = True
+                group.set_view(c.view_name)
+                view_changed = True
 
         permissions = mod_data.get(GroupKey.Permissions)
         group_permissions = group.permissions
@@ -995,7 +995,7 @@ class Hierarchy():
 
             for user in new_users:
 
-                c = Hierarchy.get_customer(customer_name)
+                c = Hierarchy.get_view(view_name)
                 if not c:
                     continue
 
@@ -1007,7 +1007,7 @@ class Hierarchy():
 
         ### HACK UNTIL API IS SEPARATED!!! #####
         if(
-            not customer_changed
+            not view_changed
             and not perm_changed
         ):
             return True
@@ -1017,8 +1017,8 @@ class Hierarchy():
     # Famous toggle functions!!
     # Only brave souls shall pass.
     @staticmethod
-    def toggle_group_of_user(group=None, user=None, customer=None):
-        """Toggles the user for the group for a particular customer.
+    def toggle_group_of_user(group=None, user=None, view=None):
+        """Toggles the user for the group for a particular view.
 
          If the user is part of group then it's removed. If the user is not
          part of the group then it's added.
@@ -1029,7 +1029,7 @@ class Hierarchy():
 
             group: A Group instance.
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
@@ -1043,7 +1043,7 @@ class Hierarchy():
             if (
                 not group
                 or not user
-                or not customer
+                or not view
             ):
                 return result
 
@@ -1052,9 +1052,9 @@ class Hierarchy():
                 values=[
                     group.group_name,
                     user.user_name,
-                    customer.customer_name
+                    view.view_name
                 ],
-                index=GroupsPerUserKey.GroupUserAndCustomerId
+                index=GroupsPerUserKey.GroupUserAndViewId
             )
 
             if len(result) >= 1:
@@ -1064,14 +1064,14 @@ class Hierarchy():
                     values=[
                         group.group_name,
                         user.user_name,
-                        customer.customer_name
+                        view.view_name
                     ],
-                    index=GroupsPerUserKey.GroupUserAndCustomerId
+                    index=GroupsPerUserKey.GroupUserAndViewId
                 )
 
             else:
 
-                res = Hierarchy.save_group_per_user(group, user, customer)
+                res = Hierarchy.save_group_per_user(group, user, view)
                 if res:
                     result = True
 
@@ -1088,17 +1088,17 @@ class Hierarchy():
         return False
 
     @staticmethod
-    def toggle_user_from_customer(user=None, customer=None):
-        """Toggles the user for the customer.
+    def toggle_user_from_view(user=None, view=None):
+        """Toggles the user for the view.
 
-         If the user is part of customer then it's removed. If the user is not
-         part of the customer then it's added. Changes are not saved to the DB.
+         If the user is part of view then it's removed. If the user is not
+         part of the view then it's added. Changes are not saved to the DB.
 
          Args:
 
             user: A User instance.
 
-            customer: A Customer instance.
+            view: A View instance.
 
         Returns:
 
@@ -1110,76 +1110,76 @@ class Hierarchy():
 
             if (
                 not user
-                or not customer
+                or not view
             ):
                 return result
 
             result = actions.db_get_by_secondary(
-                collection=Collection.UsersPerCustomer,
+                collection=Collection.UsersPerView,
                 values=[
                     user.user_name,
-                    customer.customer_name
+                    view.view_name
                 ],
-                index=UsersPerCustomerKey.UserAndCustomerId
+                index=UsersPerViewKey.UserAndViewId
             )
 
             if len(result) >= 1:
 
                 result = actions.db_delete_by_secondary(
-                    collection=Collection.UsersPerCustomer,
+                    collection=Collection.UsersPerView,
                     values=[
                         user.user_name,
-                        customer.customer_name
+                        view.view_name
                     ],
-                    index=UsersPerCustomerKey.UserAndCustomerId
+                    index=UsersPerViewKey.UserAndViewId
                 )
 
                 ### SAFETY HACK
-                ### Make sure a user has at least one customer.
-                customer_count = actions.db_get_by_secondary(
-                    collection=Collection.UsersPerCustomer,
+                ### Make sure a user has at least one view.
+                view_count = actions.db_get_by_secondary(
+                    collection=Collection.UsersPerView,
                     values=user.user_name,
-                    index=UsersPerCustomerKey.UserId
+                    index=UsersPerViewKey.UserId
                 )
 
-                if len(customer_count) <= 0:
-                    def_customer = Hierarchy.get_customer(DefaultCustomer)
-                    res = Hierarchy.save_user_per_customer(user, def_customer)
+                if len(view_count) <= 0:
+                    def_view = Hierarchy.get_view(DefaultView)
+                    res = Hierarchy.save_user_per_view(user, def_view)
                     if res:
                         result = True
 
             else:
 
-                res = Hierarchy.save_user_per_customer(user, customer)
+                res = Hierarchy.save_user_per_view(user, view)
                 if res:
                     result = True
 
         except Exception as e:
 
             logger.error(
-                "Uable to toggle user `%s` from customer `%s`"
-                % (user, customer)
+                "Uable to toggle user `%s` from view `%s`"
+                % (user, view)
             )
             logger.exception(e)
 
         return result
 
     @staticmethod
-    def toggle_group_from_customer(group=None, customer=None, both=False):
-        """Toggles the group for the customer.
+    def toggle_group_from_view(group=None, view=None, both=False):
+        """Toggles the group for the view.
 
-         If the group is part of customer then it's removed. If the group is
-         not part of the customer then it's added. Changes are not saved
+         If the group is part of view then it's removed. If the group is
+         not part of the view then it's added. Changes are not saved
          to the DB.
 
          Args:
 
             group: A Group instance.
 
-            customer: A Customer instance.
+            view: A View instance.
 
-            both: Whether to toggle both Group and Customer instances or just
-                customer.
+            both: Whether to toggle both Group and View instances or just
+                view.
 
         Returns:
 
@@ -1189,7 +1189,7 @@ class Hierarchy():
 
             if (
                 not group
-                or not customer
+                or not view
             ):
                 return result
 
@@ -1197,9 +1197,9 @@ class Hierarchy():
                 collection=Collection.Groups,
                 values=[
                     group.group_name,
-                    customer.customer_name
+                    view.view_name
                 ],
-                index=GroupKey.GroupNameAndCustomerId
+                index=GroupKey.GroupNameAndViewId
             )
 
             if len(result) >= 1:
@@ -1208,14 +1208,14 @@ class Hierarchy():
                     collection=Collection.Groups,
                     values=[
                         group.group_name,
-                        customer.customer_name
+                        view.view_name
                     ],
-                    index=GroupKey.GroupNameAndCustomerId
+                    index=GroupKey.GroupNameAndViewId
                 )
 
             else:
 
-                res = Hierarchy.save_group_per_customer(group, customer)
+                res = Hierarchy.save_group_per_view(group, view)
                 if res:
                     result = True
 
@@ -1224,8 +1224,8 @@ class Hierarchy():
             result = False
 
             logger.error(
-                "Uable to toggle group `%s` from customer `%s`"
-                % (group, customer)
+                "Uable to toggle group `%s` from view `%s`"
+                % (group, view)
             )
             logger.exception(e)
 
@@ -1257,12 +1257,12 @@ class Hierarchy():
                 return False, 'Did not find user `%s`' % name
 
             deleted = actions.db_delete_by_secondary(
-                collection=Collection.UsersPerCustomer,
+                collection=Collection.UsersPerView,
                 values=name,
-                index=UsersPerCustomerKey.UserId
+                index=UsersPerViewKey.UserId
             )
             if not deleted:
-                msg = 'Unable to delete users per customer.'
+                msg = 'Unable to delete users per view.'
                 logger.error(msg)
 
             deleted = actions.db_delete_by_secondary(
@@ -1295,7 +1295,7 @@ class Hierarchy():
         return False, "Unable to delete user `%s`" % name
 
     @staticmethod
-    def delete_group(group_name=None, customer_name=None):
+    def delete_group(group_name=None, view_name=None):
         """Delete a Group for good.
 
         Returns:
@@ -1305,33 +1305,33 @@ class Hierarchy():
 
         if (
             not group_name
-            and not customer_name
+            and not view_name
         ):
-            return False, "Group and customer name is needed."
+            return False, "Group and view name is needed."
 
         if group_name in SafeGroups:
             return False, "Can not delete the `%s` group." % group_name
 
         error_msg = (
-            "Unable to delete group `%s` from customer `%s`"
-            % (group_name, customer_name)
+            "Unable to delete group `%s` from view `%s`"
+            % (group_name, view_name)
         )
 
         try:
 
-            if not Hierarchy.get_group(group_name, customer_name):
+            if not Hierarchy.get_group(group_name, view_name):
                 return False, (
-                    'Did not find group `%s` for customer `%s`'
-                    % (group_name, customer_name)
+                    'Did not find group `%s` for view `%s`'
+                    % (group_name, view_name)
                 )
 
             deleted = actions.db_delete_by_secondary(
                 collection=Collection.GroupsPerUser,
                 values=[
                     group_name,
-                    customer_name
+                    view_name
                 ],
-                index=GroupsPerUserKey.GroupUserAndCustomerId
+                index=GroupsPerUserKey.GroupUserAndViewId
             )
 
             if not deleted:
@@ -1342,9 +1342,9 @@ class Hierarchy():
                 collection=Collection.Groups,
                 values=[
                     group_name,
-                    customer_name
+                    view_name
                 ],
-                index=GroupKey.GroupNameAndCustomerId
+                index=GroupKey.GroupNameAndViewId
             )
 
             if not deleted:
@@ -1364,58 +1364,58 @@ class Hierarchy():
         return False, error_msg
 
     @staticmethod
-    def delete_customer(name=None):
-        """Delete a Customer for good.
+    def delete_view(name=None):
+        """Delete a View for good.
 
          Args:
 
-            name: Name of the customer to delete.
+            name: Name of the view to delete.
 
         Returns:
 
-            True if customer was deleted, False otherwise.
+            True if view was deleted, False otherwise.
         """
 
 
         if not name:
-            return False, "Customer name was not provided."
+            return False, "View name was not provided."
 
 
-        if name == DefaultCustomer:
+        if name == DefaultView:
             return False, (
-                "Can not delete the `%s` customer." % DefaultCustomer
+                "Can not delete the `%s` view." % DefaultView
             )
 
 
-        error_msg = "Unable to delete customer `%s`." % name
+        error_msg = "Unable to delete view `%s`." % name
 
         try:
 
-            if not Hierarchy.get_customer(name):
-                return False, 'Did not find customer `%s`' % name
+            if not Hierarchy.get_view(name):
+                return False, 'Did not find view `%s`' % name
 
             deleted = actions.db_delete_by_secondary(
                 collection=Collection.Groups,
                 values=name,
-                index=GroupKey.CustomerId
+                index=GroupKey.ViewId
             )
 
             if not deleted:
-                msg = 'Unable to delete groups from customer.'
+                msg = 'Unable to delete groups from view.'
                 logger.error(msg)
 
             deleted = actions.db_delete_by_secondary(
-                collection=Collection.UsersPerCustomer,
+                collection=Collection.UsersPerView,
                 values=name,
-                index=UsersPerCustomerKey.CustomerId
+                index=UsersPerViewKey.ViewId
             )
 
             if not deleted:
-                msg = 'Unable to delete users from customer.'
+                msg = 'Unable to delete users from view.'
                 logger.error(msg)
 
             deleted = actions.db_delete(
-                collection=Collection.Customers,
+                collection=Collection.Views,
                 _id=name
             )
 
@@ -1423,7 +1423,7 @@ class Hierarchy():
                 logger.error(error_msg)
                 return False, error_msg
 
-            Hierarchy._users_of_delete_customer(name)
+            Hierarchy._users_of_delete_view(name)
 
             return True, ''
 
@@ -1435,9 +1435,9 @@ class Hierarchy():
         return False, error_msg
 
     @staticmethod
-    def _users_of_delete_customer(customer_name=None):
+    def _users_of_delete_view(view_name=None):
 
-        if not customer_name:
+        if not view_name:
             return False
 
         try:
@@ -1445,14 +1445,14 @@ class Hierarchy():
             users = actions.filter(
                 collection=Collection.Users,
                 filter_value={
-                    UserKey.CurrentCustomer: customer_name
+                    UserKey.CurrentView: view_name
                 }
             )
 
             u2 = actions.filter(
                 collection=Collection.Users,
                 filter_value={
-                    UserKey.DefaultCustomer: customer_name
+                    UserKey.DefaultView: view_name
                 }
             )
 
@@ -1462,12 +1462,12 @@ class Hierarchy():
 
                 user = User.from_dict(u)
 
-                if user.current_customer == customer_name:
-                    user.current_customer = DefaultCustomer
+                if user.current_view == view_name:
+                    user.current_view = DefaultView
                     changes = True
 
-                if user.default_customer == customer_name:
-                    user.default_customer = DefaultCustomer
+                if user.default_view == view_name:
+                    user.default_view = DefaultView
                     changes = True
 
                 if changes:
@@ -1475,7 +1475,7 @@ class Hierarchy():
 
         except Exception as e:
 
-            logger.error('Unable to change users of deleted customer')
+            logger.error('Unable to change users of deleted view')
             logger.exception(e)
 
     @staticmethod
@@ -1492,8 +1492,8 @@ class Hierarchy():
                 _user[UserKey.Enabled] = user.enabled
                 _user[UserKey.Password] = user.password
 
-                _user[UserKey.CurrentCustomer] = user.current_customer
-                _user[UserKey.DefaultCustomer] = user.default_customer
+                _user[UserKey.CurrentView] = user.current_view
+                _user[UserKey.DefaultView] = user.default_view
 
                 return actions.save_user(_user)
 
@@ -1505,48 +1505,48 @@ class Hierarchy():
         return None
 
     @staticmethod
-    def save_user_per_customer(user=None, customer=None):
+    def save_user_per_view(user=None, view=None):
 
         try:
 
             if(
                 user
-                and customer
+                and view
             ):
                 data = {
-                    UsersPerCustomerKey.UserId: user.user_name,
-                    UsersPerCustomerKey.CustomerId: customer.customer_name
+                    UsersPerViewKey.UserId: user.user_name,
+                    UsersPerViewKey.ViewId: view.view_name
                 }
 
-                return actions.save_user_per_customer(data)
+                return actions.save_user_per_view(data)
 
         except Exception as e:
 
             logger.error(
-                "Uable to add user `%s` to customer `%s`."
-                % (user, customer)
+                "Uable to add user `%s` to view `%s`."
+                % (user, view)
             )
             logger.exception(e)
 
         return False
 
     @staticmethod
-    def save_customer(customer=None):
+    def save_view(view=None):
 
         try:
 
-            if customer:
+            if view:
 
-                _customer = {}
+                _view = {}
 
-                _customer[CustomerKey.CustomerName] = customer.customer_name
-                _customer[CustomerKey.Properties] = customer.properties
+                _view[ViewKey.ViewName] = view.view_name
+                _view[ViewKey.Properties] = view.properties
 
-                return actions.save_customer(_customer)
+                return actions.save_view(_view)
 
         except Exception as e:
 
-            logger.error('Unable to save customer: %s' % customer)
+            logger.error('Unable to save view: %s' % view)
             logger.exception(e)
 
         return None
@@ -1565,7 +1565,7 @@ class Hierarchy():
 
                 _group[GroupKey.GroupName] = group.group_name
                 _group[GroupKey.Permissions] = group.permissions
-                _group[GroupKey.CustomerId] = group.customer
+                _group[GroupKey.ViewId] = group.view
 
                 return actions.save_group(_group)
 
@@ -1577,19 +1577,19 @@ class Hierarchy():
         return None
 
     @staticmethod
-    def save_group_per_user(group=None, user=None, customer=None):
+    def save_group_per_user(group=None, user=None, view=None):
 
         try:
 
             if(
                 group
                 and user
-                and customer
+                and view
             ):
 
                 data = {
                     GroupsPerUserKey.GroupId: group.group_name,
-                    GroupsPerUserKey.CustomerId: customer.customer_name,
+                    GroupsPerUserKey.ViewId: view.view_name,
                     GroupsPerUserKey.UserId: user.user_name
                 }
 
@@ -1606,26 +1606,26 @@ class Hierarchy():
         return False
 
     @staticmethod
-    def save_group_per_customer(group=None, customer=None):
+    def save_group_per_view(group=None, view=None):
 
         try:
 
             if(
                 group
-                and customer
+                and view
             ):
                 data = {
                     GroupKey.GroupName: group.group_name,
-                    GroupKey.CustomerId: customer.customer_name
+                    GroupKey.ViewId: view.view_name
                 }
 
-                return actions.save_group_per_customer(data)
+                return actions.save_group_per_view(data)
 
         except Exception as e:
 
             logger.error(
-                "Uable to add group `%s` to customer `%s`."
-                % (group, customer)
+                "Uable to add group `%s` to view `%s`."
+                % (group, view)
             )
             logger.exception(e)
 
@@ -1650,10 +1650,10 @@ class Hierarchy():
         return False
 
     @staticmethod
-    def get_customer_property(customer_name=None, property_name=None):
+    def get_view_property(view_name=None, property_name=None):
 
         if (
-            not customer_name
+            not view_name
             and not property_name
         ):
             return None
@@ -1661,12 +1661,12 @@ class Hierarchy():
         try:
 
             properties = actions.db_get(
-                collection=Collection.Customers,
-                primary_id=customer_name,
-                pluck=CustomerKey.Properties
+                collection=Collection.Views,
+                primary_id=view_name,
+                pluck=ViewKey.Properties
             )
 
-            properties = properties[CustomerKey.Properties]
+            properties = properties[ViewKey.Properties]
 
             return properties.get(property_name)
 
@@ -1678,7 +1678,7 @@ class Hierarchy():
         return None
 
     @staticmethod
-    def is_admin(user_name=None, customer_name=None):
+    def is_admin(user_name=None, view_name=None):
 
         if not user_name:
             return False
@@ -1689,12 +1689,12 @@ class Hierarchy():
             if not user:
                 return False
 
-            if not customer_name:
-                customer_name = user.current_customer
+            if not view_name:
+                view_name = user.current_view
 
             groups = actions.get_groups_of_user(
                 user_name=user_name,
-                customer_name=customer_name
+                view_name=view_name
             )
 
             admin_perm = False
@@ -1718,8 +1718,8 @@ class Hierarchy():
             return False
 
 
-def get_current_customer_name(user):
-    """Gets the current customer name for a user.
+def get_current_view_name(user):
+    """Gets the current view name for a user.
 
      Args:
 
@@ -1727,7 +1727,7 @@ def get_current_customer_name(user):
 
     Returns:
 
-        The name of the current customer if it's found. Default customer
+        The name of the current view if it's found. Default view
             otherwise.
     """
 
@@ -1735,34 +1735,34 @@ def get_current_customer_name(user):
 
     if user:
 
-        if user.current_customer:
+        if user.current_view:
 
-            return user.current_customer
+            return user.current_view
 
-    return DefaultCustomer
+    return DefaultView
 
 
-def get_all_customers():
+def get_all_views():
 
-    customers = []
+    views = []
     try:
 
         cs = actions.db_get_all(
-            collection=Collection.Customers,
+            collection=Collection.Views,
         )
 
         for c in cs:
 
-            customers.append(
-                Customer(
-                    c[CustomerKey.CustomerName],
-                    c[CustomerKey.Properties]
+            views.append(
+                View(
+                    c[ViewKey.ViewName],
+                    c[ViewKey.Properties]
                 )
             )
 
     except Exception as e:
 
-        logger.error("Unable to get all customers")
+        logger.error("Unable to get all views")
         logger.exception(e)
 
-    return customers
+    return views

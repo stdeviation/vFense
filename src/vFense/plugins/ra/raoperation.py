@@ -19,7 +19,7 @@ def save_operation(operation):
 
     _oper = (
         AgentOperation(
-            operation.username, operation.customer,
+            operation.username, operation.view,
             operation.uri, operation.method
         )
     )
@@ -104,7 +104,7 @@ def save_result(
 def store_in_agent_queue(operation):
 
     operation = operation.to_dict()
-    agent_queue = AgentQueue(operation.agent_id, operation.customer_name)
+    agent_queue = AgentQueue(operation.agent_id, operation.view_name)
     agent_queue.add(operation)
 
 
@@ -115,7 +115,7 @@ class RaOperation():
         operation_type,
         agent_id,
         username=None,
-        customer='default',
+        view='default',
         password='',
         uri=None,
         method=None
@@ -130,12 +130,12 @@ class RaOperation():
 
             - username: User performing the operation.
 
-            - customer: Customer for which user is performing the operation.
+            - view: View for which user is performing the operation.
         """
 
         self.agent_id = agent_id
         self.username = username
-        self.customer = customer
+        self.view = view
         self.operation_type = operation_type
         self.password = password
         self.uri = uri

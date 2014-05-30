@@ -20,14 +20,14 @@ class CveIdHandler(BaseHandler):
     @authenticated_request
     def get(self, cve_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         vuln = (
             RetrieveByCveId(
-                username, customer_name, cve_id,
+                username, view_name, cve_id,
                 uri, method
             )
         )

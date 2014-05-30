@@ -17,14 +17,14 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=None):
+def add_supported_app_to_agents(username, view_name, uri, method, agent_id=None):
 
     if agent_id:
         agent_info = get_agent_info(agent_id)
         apps_info = (
             fetch_apps_data_by_os_code(
                 agent_info[AgentKey.OsCode],
-                customer_name,
+                view_name,
                 collection=AppCollections.SupportedApps,
             )
         )
@@ -40,7 +40,7 @@ def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=N
                         SupportedAppsPerAgentKey.AgentId: agent_id,
                         SupportedAppsPerAgentKey.AppId: app_id,
                         SupportedAppsPerAgentKey.Status: AVAILABLE,
-                        SupportedAppsPerAgentKey.CustomerName: customer_name,
+                        SupportedAppsPerAgentKey.ViewName: view_name,
                         SupportedAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
                     }
                 )
@@ -51,7 +51,7 @@ def add_supported_app_to_agents(username, customer_name, uri, method, agent_id=N
 
 
 @db_create_close
-def get_all_stats_by_appid(username, customer_name,
+def get_all_stats_by_appid(username, view_name,
                           uri, method, app_id, conn=None):
     data = []
     try:
@@ -59,8 +59,8 @@ def get_all_stats_by_appid(username, customer_name,
             r
             .table(AppCollections.SupportedAppsPerAgent)
             .get_all(
-                [app_id, customer_name],
-                index=SupportedAppsPerAgentIndexes.AppIdAndCustomer
+                [app_id, view_name],
+                index=SupportedAppsPerAgentIndexes.AppIdAndView
             )
             .group(SupportedAppsPerAgentKey.Status)
             .count()
@@ -111,7 +111,7 @@ def get_all_stats_by_appid(username, customer_name,
 
 
 @db_create_close
-def get_all_agents_per_appid(username, customer_name,
+def get_all_agents_per_appid(username, view_name,
                             uri, method, app_id, conn=None):
     data = []
     try:
@@ -186,7 +186,7 @@ def get_all_agents_per_appid(username, customer_name,
 
 
 @db_create_close
-def get_all_stats_by_agentid(username, customer_name,
+def get_all_stats_by_agentid(username, view_name,
                               uri, method, agent_id, conn=None):
     data = []
     try:
@@ -241,7 +241,7 @@ def get_all_stats_by_agentid(username, customer_name,
     return(results)
 
 @db_create_close
-def get_all_stats_by_tagid(username, customer_name,
+def get_all_stats_by_tagid(username, view_name,
                            uri, method, tag_id, conn=None):
     data = []
     try:

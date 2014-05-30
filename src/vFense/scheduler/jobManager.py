@@ -35,34 +35,34 @@ logger = logging.getLogger('rvapi')
 def start_scheduler(redis_db=10, conn=None):
     started = False
     sched = Scheduler(daemonic=False)
-    list_of_customers = []
+    list_of_views = []
 
     if redis_db == 11:
         sched.add_jobstore(RedisJobStore(db=11), 'administrative')
-        list_of_customers.append({'name': 'administrative'})
+        list_of_views.append({'name': 'administrative'})
 
     elif redis_db == 10:
-        customers = (
+        views = (
             r
-            .table(Collection.Customers)
-            .pluck(CustomerKey.CustomerName)
+            .table(Collection.Views)
+            .pluck(ViewKey.ViewName)
             .run(conn)
         )
 
-        if customers:
-            for customer in customers:
+        if views:
+            for view in views:
                 sched.add_jobstore(
-                    RedisJobStore(db=10), customer[CustomerKey.CustomerName]
+                    RedisJobStore(db=10), view[ViewKey.ViewName]
                 )
-                list_of_customers.append(
+                list_of_views.append(
                     {
-                        'name': customer[CustomerKey.CustomerName]
+                        'name': view[ViewKey.ViewName]
                     }
                 )
 
-    if list_of_customers:
-        msg = 'Starting Job Scheduler for customers %s' % \
-            (', '.join(map(lambda x: x['name'], list_of_customers)))
+    if list_of_views:
+        msg = 'Starting Job Scheduler for views %s' % \
+            (', '.join(map(lambda x: x['name'], list_of_views)))
         logger.info(msg)
 
         try:
@@ -111,8 +111,8 @@ def restart_scheduler():
     return sched
 
 
-def job_exists(sched, jobname, customer_name, username):
-    jobs = sched.get_jobs(name=customer_name)
+def job_exists(sched, jobname, view_name, username):
+    jobs = sched.get_jobs(name=view_name)
     job_exists = False
     msg = ''
     count = 0
@@ -127,10 +127,10 @@ def job_exists(sched, jobname, customer_name, username):
 
 
 @db_create_close
-def job_lister(sched, customer_name, username, uri=None, method=None,
+def job_lister(sched, view_name, username, uri=None, method=None,
         conn=None):
 
-    jobs = sched.get_jobs(name=customer_name)
+    jobs = sched.get_jobs(name=view_name)
     job_listing = []
     username = None
     cname = None
@@ -175,7 +175,7 @@ def job_lister(sched, customer_name, username, uri=None, method=None,
         json_job['job_name'] = schedule.name
         json_job['runs'] = schedule.runs
         json_job['username'] = username
-        json_job['customer_name'] = customer_name
+        json_job['view_name'] = view_name
         json_job['schedule_type'] = schedule_type
         json_job['uri'] = uri
         json_job['method'] = method
@@ -201,7 +201,7 @@ def job_lister(sched, customer_name, username, uri=None, method=None,
     return results
 
 @db_create_close
-def get_agentids_per_job(job_info, customer_name, username,  conn=None):
+def get_agentids_per_job(job_info, view_name, username,  conn=None):
 
     agent_ids = job_info['agent_ids']
     tag_ids = job_info['tag_ids']
@@ -210,7 +210,7 @@ def get_agentids_per_job(job_info, customer_name, username,  conn=None):
 
     if (all_agents and not job_info['agent_ids']
             and not job_info['tag_ids'] and not all_tags):
-        agent_ids = get_all_agent_ids(customer_name)
+        agent_ids = get_all_agent_ids(view_name)
 
     elif (job_info['agent_ids'] and not all_agents
             and not job_info['tag_ids'] and not all_tags):
@@ -219,7 +219,7 @@ def get_agentids_per_job(job_info, customer_name, username,  conn=None):
     elif (all_tags and not all_agents and not
             job_info['agent_ids'] and not job_info['tag_ids']):
         agent_ids = []
-        tag_ids = get_all_tag_ids(customer_name)
+        tag_ids = get_all_tag_ids(view_name)
 
         if tag_ids:
             for tag_id in tag_ids:
@@ -240,13 +240,13 @@ def get_agentids_per_job(job_info, customer_name, username,  conn=None):
     return agent_ids
 
 
-def get_tags_per_job(job_info, username, customer_name, conn=None):
+def get_tags_per_job(job_info, username, view_name, conn=None):
 
     tags = []
     keys_to_pluck = [TagsKey.TagId, TagsKey.TagName]
 
     if job_info['all_tags']:
-        tags = get_tags_info(customer_name, keys_to_pluck)
+        tags = get_tags_info(view_name, keys_to_pluck)
 
     elif job_info['tag_ids']:
         tags = get_tags_info_from_tag_ids(job_info['tag_ids'], keys_to_pluck)
@@ -254,9 +254,9 @@ def get_tags_per_job(job_info, username, customer_name, conn=None):
     return tags
 
 
-def remove_job(sched, jobname, customer_name, username, uri=None, method=None):
+def remove_job(sched, jobname, view_name, username, uri=None, method=None):
 
-    jobs = sched.get_jobs(name=customer_name)
+    jobs = sched.get_jobs(name=view_name)
     count = 0
 
     for schedule in jobs:
@@ -376,7 +376,7 @@ def get_agent_apps_details(job, agent_id, details=True, conn=None):
     return apps 
 
 
-def get_schedule_details(sched, job_name, username, customer_name,
+def get_schedule_details(sched, job_name, username, view_name,
     uri=None, method=None, conn=None):
 
     agents = []
@@ -384,7 +384,7 @@ def get_schedule_details(sched, job_name, username, customer_name,
     app_details = []
     tags = []
 
-    jobs = sched.get_jobs(name=customer_name)
+    jobs = sched.get_jobs(name=view_name)
     agent_keys_to_pluck = [
         AgentKey.ComputerName,
         AgentKey.DisplayName,
@@ -399,11 +399,11 @@ def get_schedule_details(sched, job_name, username, customer_name,
                 if job:
                     tags = get_tags_per_job(
                         job_info=job, username=username,
-                        customer_name=customer_name
+                        view_name=view_name
                     )
                     agent_ids = get_agentids_per_job(
                         job_info=job,
-                        customer_name=customer_name,
+                        view_name=view_name,
                         username=username
                     )
 
@@ -429,7 +429,7 @@ def get_schedule_details(sched, job_name, username, customer_name,
                         'job_name': schedule.name,
                         'runs': schedule.runs,
                         'username': username,
-                        'customer_name': customer_name,
+                        'view_name': view_name,
                         'operation': job['operation'],
                     }
 
@@ -454,7 +454,7 @@ def get_schedule_details(sched, job_name, username, customer_name,
 
     return results
 
-def scheduled_install_operation(job_info, customer_name, username,
+def scheduled_install_operation(job_info, view_name, username,
         uri=None, method=None):
 
     agent_ids = job_info['agent_ids']
@@ -468,7 +468,7 @@ def scheduled_install_operation(job_info, customer_name, username,
     jobname = job_info['job_name']
 
     store_operation = StorePatchingOperation(
-        username, customer_name, uri, method
+        username, view_name, uri, method
     )
 
     if not agent_ids:
@@ -478,7 +478,7 @@ def scheduled_install_operation(job_info, customer_name, username,
         tag_ids = []
 
     agent_ids = get_agentids_per_job(
-        job_info=job_info, username=username, customer_name=customer_name
+        job_info=job_info, username=username, view_name=view_name
     )
 
     msg = (
@@ -528,16 +528,16 @@ def scheduled_install_operation(job_info, customer_name, username,
             logger.debug(oper)
 
 
-def scheduled_reboot_operation(job_info, customer_name, username,
+def scheduled_reboot_operation(job_info, view_name, username,
         uri=None, method=None, conn=None):
 
     store_operation = StoreAgentOperation(
-        username, customer_name, uri, method
+        username, view_name, uri, method
     )
 
     operation = job_info['operation']
     agent_ids = get_agentids_per_job(
-        job_info=job_info, username=username, customer_name=customer_name
+        job_info=job_info, username=username, view_name=view_name
     )
 
     if operation == 'reboot':
@@ -545,16 +545,16 @@ def scheduled_reboot_operation(job_info, customer_name, username,
         oper = store_operation.reboot(agentids=agent_ids)
         logger.debug(oper)
 
-def scheduled_shutdown_operation(job_info, customer_name, username,
+def scheduled_shutdown_operation(job_info, view_name, username,
         uri=None, method=None, conn=None):
 
     store_operation = StoreAgentOperation(
-        username, customer_name, uri, method
+        username, view_name, uri, method
     )
 
     operation = job_info['operation']
     agent_ids = get_agentids_per_job(
-        job_info=job_info, username=username, customer_name=customer_name
+        job_info=job_info, username=username, view_name=view_name
     )
 
     if operation == 'shutdown':
@@ -581,7 +581,7 @@ def operation_info(operation=None, pkg_type=None, severity=None,
     return(jobby_job)
 
 
-def add_yearly_recurrent(sched, customer_name, username,
+def add_yearly_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None, tag_ids=None, all_tags=None,
         severity=None, pkg_type=None, operation=None, name=None, custom=None,
         every=None, epoch_time=None, uri=None, method=None):
@@ -610,14 +610,14 @@ def add_yearly_recurrent(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
     }
 
     if name:
         job_exist = job_exists(
             sched=sched, jobname=name,
-            username=username, customer_name=customer_name,
+            username=username, view_name=view_name,
         )
 
         if job_exist:
@@ -641,8 +641,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation,month=month, 
                             day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
                     
                     elif custom and every:
@@ -651,8 +651,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, year = year,
                             month=month, day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -672,8 +672,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, month=month,
                             hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
                     
                     elif custom and every:
@@ -682,8 +682,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, year = year,
                             month=month, day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -702,8 +702,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation, month=month,
                             hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif custom and every:
@@ -712,8 +712,8 @@ def add_yearly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation, year = year,
                             month=month, day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -729,7 +729,7 @@ def add_yearly_recurrent(sched, customer_name, username,
     return results
 
 
-def add_monthly_recurrent(sched, customer_name, username,
+def add_monthly_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None, tag_ids=None, all_tags=None,
         severity=None, pkg_type=None, operation=None, name=None, custom=None,
         every=None, epoch_time=None, uri=None, method=None):
@@ -755,7 +755,7 @@ def add_monthly_recurrent(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
         }
     )
@@ -763,7 +763,7 @@ def add_monthly_recurrent(sched, customer_name, username,
     if name:
         job_exist = job_exists(
             sched=sched, jobname=name,
-            customer_name=customer_name, username=username
+            view_name=view_name, username=username
         )
         
         if job_exist:
@@ -786,8 +786,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, 
                             day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif custom and every:
@@ -796,8 +796,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation,month = month, 
                             day=day, hour=hour, minute=minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -816,8 +816,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, day=day,
                             hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif custom and every:
@@ -826,8 +826,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, month=month,
                             day=day, hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -846,8 +846,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation, day=day,
                             hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif custom and every:
@@ -856,8 +856,8 @@ def add_monthly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation, month=month,
                             day=day, hour=hour,minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -872,7 +872,7 @@ def add_monthly_recurrent(sched, customer_name, username,
 
     return results
 
-def add_daily_recurrent(sched, customer_name, username,
+def add_daily_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None,tag_ids=None, all_tags=None,
         severity=None, pkg_type=None, operation=None, name=None, every=None,
         custom=None, epoch_time=None, uri=None, method=None):
@@ -895,7 +895,7 @@ def add_daily_recurrent(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
         }
     )
@@ -906,7 +906,7 @@ def add_daily_recurrent(sched, customer_name, username,
     if name:
         job_exist = job_exists(
             sched=sched, jobname=name,
-            customer_name=customer_name, username=username
+            view_name=view_name, username=username
         )
 
         if job_exist:
@@ -928,8 +928,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, 
                             hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif every:
@@ -937,8 +937,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation,
                             day = day, hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -957,8 +957,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation,
                             hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif every:
@@ -966,8 +966,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, 
                             day = day, hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -986,8 +986,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation,
                             hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     elif every:
@@ -995,8 +995,8 @@ def add_daily_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_shutdown_operation, 
                             day = day, hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                     results = SchedulerResults(
@@ -1012,7 +1012,7 @@ def add_daily_recurrent(sched, customer_name, username,
     return results
        
 
-def add_weekly_recurrent(sched, customer_name, username,
+def add_weekly_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None,tag_ids=None, all_tags=None,
         severity=None, pkg_type=None, operation=None, name=None, every=None,
         custom=None, epoch_time=None, uri=None, method=None):
@@ -1039,7 +1039,7 @@ def add_weekly_recurrent(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
         }
     )
@@ -1049,7 +1049,7 @@ def add_weekly_recurrent(sched, customer_name, username,
     if name:
         job_exist = job_exists(sched=sched, jobname=name,
                                 username=username, 
-                                customer_name=customer_name
+                                view_name=view_name
                                 )
         if job_exist:
             msg = 'Job Name Already Exists. Job Can not be Added'
@@ -1073,8 +1073,8 @@ def add_weekly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, day_of_week=day_of_week,
                             hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                             )
 
                     elif custom and every:
@@ -1085,8 +1085,8 @@ def add_weekly_recurrent(sched, customer_name, username,
                             scheduled_install_operation, week=week,
                             day_of_week=day_of_week,
                             hour=hour, minute=minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                             )
                         
                     results = (
@@ -1110,16 +1110,16 @@ def add_weekly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                                 scheduled_reboot_operation,day_of_week=day_of_week,
                                 hour=hour, minute=minute,
-                                args=[jobby_job, customer_name, username],
-                                name=name, jobstore=customer_name
+                                args=[jobby_job, view_name, username],
+                                name=name, jobstore=view_name
                                 )
                     elif custom:
                         sched.add_cron_job(
                                 scheduled_reboot_operation, week=week,
                                 day_of_week=day_of_week,
                                 hour=hour, minute=minute,
-                                args=[jobby_job, customer_name, username],
-                                name=name, jobstore=customer_name
+                                args=[jobby_job, view_name, username],
+                                name=name, jobstore=view_name
                                 )
 
                     results = (
@@ -1144,16 +1144,16 @@ def add_weekly_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                                 scheduled_shutdown_operation,day_of_week=day_of_week,
                                 hour=hour, minute=minute,
-                                args=[jobby_job, customer_name, username],
-                                name=name, jobstore=customer_name
+                                args=[jobby_job, view_name, username],
+                                name=name, jobstore=view_name
                                 )
                     elif custom:
                         sched.add_cron_job(
                                 scheduled_shutdown_operation, week=week,
                                 day_of_week=day_of_week,
                                 hour=hour, minute=minute,
-                                args=[jobby_job, customer_name, username],
-                                name=name, jobstore=customer_name
+                                args=[jobby_job, view_name, username],
+                                name=name, jobstore=view_name
                                 )
 
                     results = (
@@ -1173,7 +1173,7 @@ def add_weekly_recurrent(sched, customer_name, username,
     return(results)
 
 
-def schedule_once(sched, customer_name, username,
+def schedule_once(sched, view_name, username,
       agent_ids=None, all_agents=None, tag_ids=None, all_tags=None,
       severity=None, pkg_type=None, operation=None, name=None, date=None,
       uri=None, method=None, job_extra=None):
@@ -1188,7 +1188,7 @@ def schedule_once(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
         }
     )
@@ -1196,7 +1196,7 @@ def schedule_once(sched, customer_name, username,
     msg = 'Recurrent Scheduled added successfully'
     if name:
         job_exist = job_exists(
-            sched=sched, jobname=name, customer_name=customer_name,
+            sched=sched, jobname=name, view_name=view_name,
             username=username
         )
 
@@ -1226,9 +1226,9 @@ def schedule_once(sched, customer_name, username,
                     sched.add_date_job(
                         scheduled_install_operation,
                         date=date,
-                        args=[jobby_job, customer_name, username],
+                        args=[jobby_job, view_name, username],
                         name=name,
-                        jobstore=customer_name
+                        jobstore=view_name
                     )
 
                     results = SchedulerResults(
@@ -1247,8 +1247,8 @@ def schedule_once(sched, customer_name, username,
                     sched.add_date_job(
                         scheduled_reboot_operation,
                         date=date,
-                        args=[jobby_job, customer_name, username],
-                        name=name, jobstore=customer_name
+                        args=[jobby_job, view_name, username],
+                        name=name, jobstore=view_name
                     )
                     results = SchedulerResults(
                         username, uri, method
@@ -1266,8 +1266,8 @@ def schedule_once(sched, customer_name, username,
                     sched.add_date_job(
                         scheduled_shutdown_operation,
                         date=date,
-                        args=[jobby_job, customer_name, username],
-                        name=name, jobstore=customer_name
+                        args=[jobby_job, view_name, username],
+                        name=name, jobstore=view_name
                     )
                     results = SchedulerResults(
                         username, uri, method
@@ -1282,7 +1282,7 @@ def schedule_once(sched, customer_name, username,
     return(results)
 
 
-def add_custom_recurrent(sched, customer_name, username,
+def add_custom_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None, tag_ids=None, all_tags=None,
         severity=None, pkg_type=None, operation=None, name=None, uri=None,
         method=None, date=None, every=None, custom=None, frequency=None):
@@ -1300,14 +1300,14 @@ def add_custom_recurrent(sched, customer_name, username,
            'operation': operation,
            'severity': severity,
            'pkg_type': pkg_type,
-           'customer_name': customer_name,
+           'view_name': view_name,
            'created_by': username
         }
     )
 
     if name:
         job_exist = job_exists(sched=sched, jobname=name,
-            customer_name=customer_name, username=username
+            view_name=view_name, username=username
         )
 
         if job_exist:
@@ -1338,9 +1338,9 @@ def add_custom_recurrent(sched, customer_name, username,
                             day = day, 
                             hour=hour,
                             minute=minute, 
-                            args=[jobby_job, customer_name, username],
+                            args=[jobby_job, view_name, username],
                             name=name,
-                            jobstore=customer_name
+                            jobstore=view_name
                         )
 
                         results = SchedulerResults(
@@ -1360,9 +1360,9 @@ def add_custom_recurrent(sched, customer_name, username,
                             day = day,
                             hour=date.hour,
                             minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
+                            args=[jobby_job, view_name, username],
                             name=name,
-                            jobstore=customer_name
+                            jobstore=view_name
                         )
                         
                         results = SchedulerResults(
@@ -1385,8 +1385,8 @@ def add_custom_recurrent(sched, customer_name, username,
                             scheduled_install_operation, week=week,
                             day_of_week=custom, hour=date.hour,
                             minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                         results = SchedulerResults(
@@ -1405,8 +1405,8 @@ def add_custom_recurrent(sched, customer_name, username,
                             scheduled_reboot_operation, week = week,
                             day_of_week=custom, hour=date.hour,
                             minute=date.minute,
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
                         
                         results = SchedulerResults(
@@ -1426,8 +1426,8 @@ def add_custom_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, month = month, 
                             day = custom, hour=date.hour, minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                         results = SchedulerResults(
@@ -1445,8 +1445,8 @@ def add_custom_recurrent(sched, customer_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, month = month,
                             day=custom,hour=date.hour, minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
                         
                         results = SchedulerResults(
@@ -1467,8 +1467,8 @@ def add_custom_recurrent(sched, customer_name, username,
                             scheduled_install_operation, year = year,
                             month = custom, day = date.day, hour=date.hour,
                             minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
 
                         results = SchedulerResults(
@@ -1487,8 +1487,8 @@ def add_custom_recurrent(sched, customer_name, username,
                             scheduled_reboot_operation, year=year,
                             month = custom,day=custom,hour=date.hour,
                             minute=date.minute, 
-                            args=[jobby_job, customer_name, username],
-                            name=name, jobstore=customer_name
+                            args=[jobby_job, view_name, username],
+                            name=name, jobstore=view_name
                         )
                         
                         results = SchedulerResults(

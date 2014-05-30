@@ -18,14 +18,14 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def get_all_agentids(username, customer_name, count=30, offset=0, 
+def get_all_agentids(username, view_name, count=30, offset=0, 
         uri=None, method=None, conn=None):
 
     try:
         count = (
                 r
                 .table(AgentsCollection)
-                .get_all(customer_name, index=AgentKey.CustomerName)
+                .get_all(view_name, index=AgentKey.ViewName)
                 .count()
                 .run(conn)
                 )
@@ -33,7 +33,7 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
         data = list(
                 r
                 .table(AgentsCollection)
-                .get_all(customer_name, index=AgentKey.CustomerName)
+                .get_all(view_name, index=AgentKey.ViewName)
                 .pluck(AgentKey.AgentId)
                 .order_by(AgentKey.ComputerName)
                 .skip(offset)
@@ -63,14 +63,14 @@ def get_all_agentids(username, customer_name, count=30, offset=0,
 
 
 @db_create_close
-def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.ComputerName,
+def filter_by_and_query(username, view_name, keys_to_pluck, key = AgentKey.ComputerName,
         count=30, offset=0, query=None, uri=None, method=None, conn=None):
     
     if query:
         count = (
                 r
                .table(AgentsCollection)
-               .get_all(customer_name, index=AgentKey.CustomerName)
+               .get_all(view_name, index=AgentKey.ViewName)
                .filter(
                    (r.row[AgentKey.ComputerName].match("(?i)"+query))
                    )
@@ -81,7 +81,7 @@ def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.C
         data = list(
                 r
                 .table(AgentsCollection)
-                .get_all(customer_name, index=AgentKey.CustomerName)
+                .get_all(view_name, index=AgentKey.ViewName)
                 .filter(
                     (r.row[key].match("(?i)"+query))
                     )
@@ -95,7 +95,7 @@ def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.C
         count = (
                 r
                 .table(AgentsCollection)
-                .get_all(customer_name, index=AgentKey.CustomerName)
+                .get_all(view_name, index=AgentKey.ViewName)
                 .count()
                 .run(conn)
                 )
@@ -103,7 +103,7 @@ def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.C
         data = list(
                 r
                 .table(AgentsCollection)
-                .get_all(customer_name, index=AgentKey.CustomerName)
+                .get_all(view_name, index=AgentKey.ViewName)
                 .pluck(keys_to_pluck)
                 .skip(offset)
                 .limit(count)
@@ -113,12 +113,12 @@ def filter_by_and_query(username, customer_name, keys_to_pluck, key = AgentKey.C
 
 
 
-def systems_os_details(username, customer_name, key, query, uri=None, method=None):
+def systems_os_details(username, view_name, key, query, uri=None, method=None):
    
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.OsCode, 
             AgentKey.OsString, AgentKey.MachineType, AgentKey.SysArch]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
     try:
@@ -150,11 +150,11 @@ def system_hardware_details(agent_info):
                 } 
         return(data)
 
-def systems_hardware_details (username, customer_name, key, query,  uri=None, method=None):
+def systems_hardware_details (username, view_name, key, query,  uri=None, method=None):
 
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.Hardware]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
     try:
@@ -175,13 +175,13 @@ def systems_hardware_details (username, customer_name, key, query,  uri=None, me
     return(results) 
 
 
-def systems_network_details(username, customer_name, key, query,
+def systems_network_details(username, view_name, key, query,
         uri=None, method=None):
 
     network_stats=[]
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.Hardware]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
     for d in data:
@@ -211,14 +211,14 @@ def systems_network_details(username, customer_name, key, query,
     return(results) 
 
 
-def systems_cpu_details (username, customer_name, key, query, 
+def systems_cpu_details (username, view_name, key, query, 
         uri=None, method=None):
     
     cpu_stats=[]
 
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
     for d in data:
         cpu_data = {
@@ -248,14 +248,14 @@ def systems_cpu_details (username, customer_name, key, query,
     return(results) 
             
 
-def systems_memory_stats(username, customer_name, key, query, 
+def systems_memory_stats(username, view_name, key, query, 
         uri=None, method=None):
 
     memory_stats = []
 
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query, keys_to_pluck=keys_to_pluck)
     for d in data:
         memory_data = {
@@ -300,13 +300,13 @@ def system_disk_stats(agent_info):
                 return(data)
 
 
-def systems_disk_stats(username, customer_name, key, query, 
+def systems_disk_stats(username, view_name, key, query, 
         uri=None, method=None):
     fs_stats =[]
 
     keys_to_pluck = [AgentKey.ComputerName, AgentKey.MonitStats,]
     
-    data = filter_by_and_query(username=username, customer_name=customer_name,
+    data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
     for d in data:
@@ -348,11 +348,11 @@ def agent_status(agent_info):
         agent_status = agent_info.get('agent_status')
         return(agent_status)
 
-def agents_last_updated(username, customer_name, os_code=None, 
+def agents_last_updated(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
 
     agents_uptime_info=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
+    agentids=get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
     for agentid in agentids:
         agent_info=get_agent_info(agentid=agentid)
         last_updated=agent_last_updated(agent_info)
@@ -376,11 +376,11 @@ def agents_last_updated(username, customer_name, os_code=None,
                 )
     return(results)
 
-def agents_reboot_pending(username, customer_name, os_code=None, 
+def agents_reboot_pending(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
     agents_need_reboot = []
     agents_not_need_reboot =[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
+    agentids=get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
     for agentid in agentids:
         agent_info=get_agent_info(agentid=agentid)
         if agent_info:
@@ -412,12 +412,12 @@ def agents_reboot_pending(username, customer_name, os_code=None,
                 )
     return(results)
 
-def agents_status(username, customer_name, os_code=None, 
+def agents_status(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
     nodes_status=[]
     agents_up = []
     agents_down = [] 
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
+    agentids=get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
     for agentid in agentids:
         agent_info=get_agent_info(agentid=agentid)
         computer_name = agent_info.get('computer_name')

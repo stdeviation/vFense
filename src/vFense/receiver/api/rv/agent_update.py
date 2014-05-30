@@ -25,8 +25,8 @@ class AgentUpdateHandler(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
 
         uri = self.request.uri
@@ -40,7 +40,7 @@ class AgentUpdateHandler(BaseHandler):
             status_code = self.arguments.get('status_code', None)
 
             RvHandOff(
-                username, customer_name, uri, method
+                username, view_name, uri, method
             ).available_agent_update_operation(agent_id, app_data)
 
             results = (

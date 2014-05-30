@@ -1,32 +1,32 @@
-from vFense.server.hierarchy import CustomerKey
+from vFense.server.hierarchy import ViewKey
 
 
-class Customer():
+class View():
 
     def __init__(self, name, properties={}):
 
-        self.customer_name = name
+        self.view_name = name
         self.properties = properties
 
     def dict(self):
 
         return {
-            CustomerKey.CustomerName: self.customer_name,
-            CustomerKey.Properties: self.properties
+            ViewKey.ViewName: self.view_name,
+            ViewKey.Properties: self.properties
         }
 
     def __repr__(self):
 
         return (
-            "Customer(name=%r)"
-            % (self.customer_name)
+            "View(name=%r)"
+            % (self.view_name)
         )
 
     def __eq__(self, other):
 
         try:
 
-            return self.customer_name == other.customer_name
+            return self.view_name == other.view_name
 
         except:
 

@@ -11,7 +11,7 @@ class AgentQueueKey():
     AgentQueueTTL = 'agent_queue_ttl'
     ExpireMinutes = 'expire_minutes'
     Expired = 'expired'
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     OperationId = 'OperationId'
     RequestMethod = 'request_method'
     ResponseURI = 'response_uri'

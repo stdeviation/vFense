@@ -21,7 +21,7 @@ class CollectionKeys():
     Status = 'status'
     AgentId = 'agent_id'
     DateTime = 'date_time'
-    Customer = 'customer'
+    View = 'view'
     Timestamp = 'saved_timestamp'
     ProcessId = 'rd_process_id'
 
@@ -45,7 +45,7 @@ def ra_initialization(conn=None):
 @db_create_close
 def connection_exist(
     agent_id=None,
-    customer=settings.Default.Customer,
+    view=settings.Default.View,
     conn=None
 ):
     """Checks if there is a currently opened connection with the specified
@@ -55,7 +55,7 @@ def connection_exist(
 
         - agent_id: Agent ID this connection applies to.
 
-        - customer: Name of customer this connection belongs to.
+        - view: Name of view this connection belongs to.
 
     Returns:
 
@@ -63,7 +63,7 @@ def connection_exist(
 
     """
     if (
-        not customer
+        not view
         or not agent_id
     ):
         return False
@@ -119,7 +119,7 @@ def get_rd_pid(agent_id=None, conn=None):
 def save_connection(
     agent_id=None, web_port=None,
     host_port=None, status=None,
-    process_id=None, customer=settings.Default.Customer,
+    process_id=None, view=settings.Default.View,
     conn=None
 ):
     """Saves a RA connection.
@@ -137,7 +137,7 @@ def save_connection(
 
         - process_id: Process ID this connection is tied to.
 
-        - customer: Name of customer this connection belongs to.
+        - view: Name of view this connection belongs to.
 
     Returns:
 
@@ -146,13 +146,13 @@ def save_connection(
     """
 
     if (
-        not customer
+        not view
         or not agent_id
         or not host_port
     ):
-        return False, 'Please provide a customer, agent id, and/or host port.'
+        return False, 'Please provide a view, agent id, and/or host port.'
 
-    if connection_exist(customer=customer, agent_id=agent_id)[0]:
+    if connection_exist(view=view, agent_id=agent_id)[0]:
         return False, 'Connection already exist for %s' % agent_id
 
     timestamp = long(time.time())
@@ -160,7 +160,7 @@ def save_connection(
     connection = {}
 
     connection[CollectionKeys.AgentId] = agent_id
-    connection[CollectionKeys.Customer] = customer
+    connection[CollectionKeys.View] = view
     connection[CollectionKeys.Timestamp] = timestamp
     connection[CollectionKeys.HostPort] = host_port
     connection[CollectionKeys.WebPort] = web_port
@@ -190,7 +190,7 @@ def save_connection(
 @db_create_close
 def remove_connection(
     agent_id=None,
-    customer=settings.Default.Customer,
+    view=settings.Default.View,
     conn=None
 ):
     """Removes a connection.
@@ -199,7 +199,7 @@ def remove_connection(
 
     Args:
 
-        - customer: Name of customer this connection belongs to.
+        - view: Name of view this connection belongs to.
 
         - agent_id: Agent ID this connection applies to.
 
@@ -238,7 +238,7 @@ def remove_connection(
 def edit_connection(
     agent_id=None, web_port=None, host_port=None,
     status=None, process_id=None,
-    customer=settings.Default.Customer, conn=None
+    view=settings.Default.View, conn=None
 ):
     """Edit values of an existing connection.
 
@@ -254,7 +254,7 @@ def edit_connection(
 
         - process_id: Process ID this connection is tied to.
 
-        - customer: Name of customer this connection belongs to.
+        - view: Name of view this connection belongs to.
 
     Returns:
 

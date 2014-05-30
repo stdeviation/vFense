@@ -24,8 +24,8 @@ class RebootResultsV1(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -43,7 +43,7 @@ class RebootResultsV1(BaseHandler):
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, operation_id, agent_id)
+            send_notifications(username, view_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(
@@ -62,8 +62,8 @@ class ShutdownResultsV1(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         username = self.get_current_user()
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -81,7 +81,7 @@ class ShutdownResultsV1(BaseHandler):
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, customer_name, operation_id, agent_id)
+            send_notifications(username, view_name, operation_id, agent_id)
         except Exception as e:
             results = (
                 GenericResults(

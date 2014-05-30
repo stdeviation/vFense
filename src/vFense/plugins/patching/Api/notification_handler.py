@@ -22,12 +22,12 @@ class GetAllValidFieldsForNotifications(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         result = (
             get_valid_fields(
-                customer_name=customer_name
+                view_name=view_name
             )
         )
         self.set_header('Content-Type', 'application/json')
@@ -38,15 +38,15 @@ class NotificationsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             results = (
                 get_all_notifications(
-                    username, customer_name,
+                    username, view_name,
                     uri, method
                 )
             )
@@ -70,8 +70,8 @@ class NotificationsHandler(BaseHandler):
     @authenticated_request
     def post(self):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -92,7 +92,7 @@ class NotificationsHandler(BaseHandler):
             file_systems = self.arguments.get('file_system', [])
             notification = (
                 Notifier(
-                    username, customer_name,
+                    username, view_name,
                     uri, method
                 )
             )
@@ -109,7 +109,7 @@ class NotificationsHandler(BaseHandler):
                     NotificationKeys.AllAgents: all_agents,
                     NotificationKeys.Agents: agent_ids,
                     NotificationKeys.Tags: tag_ids,
-                    NotificationKeys.CustomerName: customer_name,
+                    NotificationKeys.ViewName: view_name,
                     NotificationKeys.AppThreshold: None,
                     NotificationKeys.RebootThreshold: None,
                     NotificationKeys.ShutdownThreshold: None,
@@ -193,13 +193,13 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def get(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            alert = AlertSearcher(username, customer_name, uri, method)
+            alert = AlertSearcher(username, view_name, uri, method)
             results = alert.get_notification(notification_id)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -220,15 +220,15 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def delete(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             notification = (
                 Notifier(
-                    username, customer_name,
+                    username, view_name,
                     uri, method
                 )
             )
@@ -256,8 +256,8 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def put(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        customer_name = (
-            get_user_property(username, UserKeys.CurrentCustomer)
+        view_name = (
+            get_user_property(username, UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -278,7 +278,7 @@ class NotificationHandler(BaseHandler):
             file_systems = self.arguments.get('file_system', [])
             notification = (
                 Notifier(
-                    username, customer_name,
+                    username, view_name,
                     uri, method
                 )
             )
@@ -296,7 +296,7 @@ class NotificationHandler(BaseHandler):
                     NotificationKeys.AllAgents: all_agents,
                     NotificationKeys.Agents: agent_ids,
                     NotificationKeys.Tags: tag_ids,
-                    NotificationKeys.CustomerName: customer_name,
+                    NotificationKeys.ViewName: view_name,
                     NotificationKeys.AppThreshold: None,
                     NotificationKeys.RebootThreshold: None,
                     NotificationKeys.ShutdownThreshold: None,

@@ -15,13 +15,13 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def email_config_exists(customer_name=None, conn=None):
+def email_config_exists(view_name=None, conn=None):
     mail_exists = False
     try:
         mail_config = list(
             r
             .table(NotificationCollections.NotificationPlugins)
-            .get_all(customer_name, index=NotificationPluginIndexes.CustomerName)
+            .get_all(view_name, index=NotificationPluginIndexes.ViewName)
             .filter(
                 {
                     NotificationPluginKeys.PluginName: 'email'
@@ -40,7 +40,7 @@ def email_config_exists(customer_name=None, conn=None):
 
 
 @db_create_close
-def get_email_config(customer_name=None, conn=None):
+def get_email_config(view_name=None, conn=None):
     mail_config = None
     config_exists = False
     msg = ''
@@ -48,7 +48,7 @@ def get_email_config(customer_name=None, conn=None):
         mail_config = list(
             r
             .table(NotificationCollections.NotificationPlugins)
-            .get_all(customer_name, index=NotificationPluginIndexes.CustomerName)
+            .get_all(view_name, index=NotificationPluginIndexes.ViewName)
             .filter(
                 {
                     NotificationPluginKeys.PluginName: 'email'
@@ -87,13 +87,13 @@ def get_email_config(customer_name=None, conn=None):
 
 
 @db_create_close
-def delete_email_config(customer_name=None, conn=None):
+def delete_email_config(view_name=None, conn=None):
     deleted = False
     try:
         mail_deleted = (
             r
             .table(NotificationCollections.NotificationPlugins)
-            .get_all(customer_name, index=NotificationPluginIndexes.CustomerName)
+            .get_all(view_name, index=NotificationPluginIndexes.ViewName)
             .filter(
                 {
                     NotificationPluginKeys.PluginName: 'email'
@@ -108,8 +108,8 @@ def delete_email_config(customer_name=None, conn=None):
 
     except Exception as e:
         msg = (
-            'Failed to delete mail config for customer %s: %s' %
-            (customer_name, e)
+            'Failed to delete mail config for view %s: %s' %
+            (view_name, e)
         )
 
         logger.error(msg)
@@ -118,7 +118,7 @@ def delete_email_config(customer_name=None, conn=None):
 
 
 @db_create_close
-def create_or_modify_mail_config(modifying_username=None, customer_name=None,
+def create_or_modify_mail_config(modifying_username=None, view_name=None,
                                  server=None, username=None, password=None,
                                  port=25, is_tls=False, is_ssl=False,
                                  from_email=None, to_email=None, conn=None):
@@ -126,7 +126,7 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
     msg = ''
     base_config = []
     email_uuid = None
-    if (server and username and password and port and customer_name
+    if (server and username and password and port and view_name
             and modifying_username and from_email and len(to_email) > 0):
 
         modified_time = str(datetime.now())
@@ -142,11 +142,11 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
             NotificationPluginKeys.FromEmail: from_email,
             NotificationPluginKeys.ToEmail: to_email,
             NotificationPluginKeys.PluginName: 'email',
-            NotificationPluginKeys.CustomerName: customer_name,
+            NotificationPluginKeys.ViewName: view_name,
             NotificationPluginKeys.ModifiedBy: modifying_username,
         }
 
-        config_exists = email_config_exists(customer_name=customer_name)
+        config_exists = email_config_exists(view_name=view_name)
         if config_exists:
             email_uuid = config_exists[1]
             try:
@@ -159,8 +159,8 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
                 )
                 created = True
                 msg = (
-                    'Email config for customer %s has been updated' %
-                    (customer_name)
+                    'Email config for view %s has been updated' %
+                    (view_name)
                 )
 
             except Exception as e:
@@ -180,8 +180,8 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
                             email_uuid = is_created['generated_keys'[0]]
                 created = True
                 msg = (
-                    'Email config for customer %s has been created' %
-                    (customer_name)
+                    'Email config for view %s has been created' %
+                    (view_name)
                 )
 
             except Exception as e:
@@ -198,12 +198,12 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
 
 
 class MailClient():
-    def __init__(self, customer_name):
+    def __init__(self, view_name):
         self.CONFIG = None
         self.validated = False
         self.connected = False
         self.error = None
-        data = get_email_config(customer_name=customer_name)
+        data = get_email_config(view_name=view_name)
         self.config_exists = False
         if data['pass']:
             config = data['data'][0]

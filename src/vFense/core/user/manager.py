@@ -4,7 +4,7 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.group import GroupKeys, GroupsPerUserKeys
+from vFense.core.group._db_model import GroupKeys, GroupsPerUserKeys
 from vFense.core.group._db import (
     delete_groups_from_user,
     fetch_group_by_name, user_exist_in_group,
@@ -13,14 +13,14 @@ from vFense.core.group._db import (
 
 from vFense.core.group._constants import DefaultGroups
 
-from vFense.core.customer._db import (
-    users_exists_in_customer, insert_user_per_customer,
-    delete_user_in_customers, fetch_customer_names_for_user,
-    fetch_all_customer_names
+from vFense.core.view._db import (
+    users_exists_in_view, insert_user_per_view,
+    delete_user_in_views, fetch_views_for_user,
+    fetch_all_views
 )
 
-from vFense.core.customer import CustomerPerUserKeys
-from vFense.core.customer._constants import DefaultCustomers
+from vFense.core.view import ViewPerUserKeys
+from vFense.core.view._constants import Defaultviews
 
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
     delete_user, update_user, fetch_user_and_all_properties, \
@@ -32,16 +32,16 @@ from vFense.core.group._db import user_exist_in_group, insert_group_per_user, \
 from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user, get_group
 
-from vFense.core.customer.customers import get_customer, \
-    add_user_to_customers, remove_customers_from_user, \
-    validate_customer_names
+from vFense.core.view.views import get_view, \
+    add_user_to_views, remove_views_from_user, \
+    validate_views
 
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
 from vFense.errorz.status_codes import (
     UserFailureCodes, UserCodes, GenericFailureCodes, GenericCodes,
-    DbCodes, CustomerFailureCodes, GroupFailureCodes, GroupCodes,
-    CustomerCodes
+    DbCodes, ViewFailureCodes, GroupFailureCodes, GroupCodes,
+    ViewCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -71,10 +71,10 @@ class UserManager(object):
             Dictionary
             >>>
             {
-                "current_customer": "default",
+                "current_view": "default",
                 "enabled": "yes",
                 "full_name": "vFense Admin Account",
-                "default_customer": "default",
+                "default_view": "default",
                 "user_name": "admin",
                 "email": ""
             }
@@ -87,13 +87,13 @@ class UserManager(object):
         """Retrieve user property.
         Args:
             user_atrribute (str): The attribute you want to retrieve.
-                example attributes.. password, current_customer, email
+                example attributes.. password, current_view, email
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
             >>> name = 'admin'
             >>> user = UserManager(name)
-            >>> property = 'current_customer'
+            >>> property = 'current_view'
             >>> user.get_property(property)
 
         Return:
@@ -117,8 +117,8 @@ class UserManager(object):
         Returns:
             Dictionary of user properties.
             {
-                "current_customer": "default",
-                "customers": [
+                "current_view": "default",
+                "views": [
                     {
                         "admin": true,
                         "name": "default"
@@ -130,7 +130,7 @@ class UserManager(object):
                         "group_name": "Administrator"
                     }
                 ],
-                "default_customer": "default",
+                "default_view": "default",
                 "user_name": "admin",
                 "permissions": [
                     "administrator"
@@ -208,7 +208,7 @@ class UserManager(object):
             >>> fullname = 'testing 4 life'
             >>> password = 'Testing123#'
             >>> group_ids = ['8757b79c-7321-4446-8882-65457f28c78b']
-            >>> customer_name = 'default'
+            >>> view = 'default'
             >>> email = 'test@test.org'
             >>> enabled = True
             >>> is_global = False
@@ -219,7 +219,7 @@ class UserManager(object):
                     )
                 )
             >>> manager = UserManager(username)
-            >>> manager.create(user, customer_name, group_ids)
+            >>> manager.create(user, view, group_ids)
 
         Return:
             Dictionary of the status of the operation.
@@ -228,9 +228,9 @@ class UserManager(object):
                 'errors': [],
                 'message': 'None - create user testing123 was created',
                 'data': {
-                    'current_customer': 'default',
+                    'current_view': 'default',
                     'full_name': 'tester4life',
-                    'default_customer': 'default',
+                    'default_view': 'default',
                     'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
                     'user_name': 'testing123',
                     'enabled': 'yes',
@@ -256,17 +256,17 @@ class UserManager(object):
             else:
                 encrypted_password = Crypto().hash_bcrypt(user.password)
                 user_data[UserKeys.Password] = encrypted_password
-                current_customer_is_valid = get_customer(user.current_customer)
-                default_customer_is_valid = get_customer(user.default_customer)
+                current_view_is_valid = get_view(user.current_view)
+                default_view_is_valid = get_view(user.default_view)
                 validated_groups, _, invalid_groups = (
                     validate_group_ids(
-                        group_ids, user.current_customer, user.is_global
+                        group_ids, user.current_view, user.is_global
                     )
                 )
 
                 if (
-                        current_customer_is_valid and
-                        default_customer_is_valid and
+                        current_view_is_valid and
+                        default_view_is_valid and
                         validated_groups
                     ):
                     object_status, _, _, generated_ids = (
@@ -277,42 +277,42 @@ class UserManager(object):
                         msg = 'user name %s created' % (self.username)
                         self.properties = self._user_attributes()
                         generated_ids.append(self.username)
-                        customers = (
+                        views = (
                             list(
                                 set(
                                     [
-                                        user.current_customer,
-                                        user.default_customer
+                                        user.current_view,
+                                        user.default_view
                                     ]
                                 )
                             )
                         )
                         if user.is_global:
-                            customers = fetch_all_customer_names()
+                            views = fetch_all_views()
 
-                        self.add_to_customers(customers)
+                        self.add_to_views(views)
                         self.add_to_groups(group_ids)
                         generic_status_code = GenericCodes.ObjectCreated
                         vfense_status_code = UserCodes.UserCreated
                         user_data.pop(UserKeys.Password)
 
                 elif (
-                        not current_customer_is_valid or
-                        not default_customer_is_valid and
+                        not current_view_is_valid or
+                        not default_view_is_valid and
                         validated_groups
                     ):
                     msg = (
-                        'customer name %s does not exist' %
-                        (user.current_customer)
+                        'view name %s does not exist' %
+                        (user.current_view)
                     )
                     generic_status_code = GenericCodes.InvalidId
                     vfense_status_code = (
-                        CustomerFailureCodes.CustomerDoesNotExist
+                        ViewFailureCodes.ViewDoesNotExist
                     )
 
                 elif (
-                        current_customer_is_valid or
-                        default_customer_is_valid and
+                        current_view_is_valid or
+                        default_view_is_valid and
                         not validated_groups
                     ):
                     msg = 'group ids %s does not exist' % (invalid_groups)
@@ -323,11 +323,11 @@ class UserManager(object):
                     group_error = (
                         'group ids %s does not exist' % (invalid_groups)
                     )
-                    customer_error = (
-                        'customer name %s does not exist' %
-                        (user.current_customer)
+                    view_error = (
+                        'view name %s does not exist' %
+                        (user.current_view)
                     )
-                    msg = group_error + ' and ' + customer_error
+                    msg = group_error + ' and ' + view_error
                     generic_status_code = GenericFailureCodes.FailedToCreateObject
                     vfense_status_code = UserFailureCodes.FailedToCreateUser
 
@@ -354,82 +354,83 @@ class UserManager(object):
 
 
     @time_it
-    def add_to_customers(self, customer_names):
-        """Add a multiple customers to a user
+    def add_to_views(self, views):
+        """Add a multiple views to a user
         Args:
-            customer_names (list): List of customer names,
+            views (list): List of views,
                 this user will be added to.
 
         Basic Usage:
-            >>> from vFense.core.customer.customer import add_user_to_customers
-            >>> username = 'admin'
-            >>> customer_names = ['default', 'TopPatch', 'vFense']
-            >>> add_user_to_customers(username, customer_names)
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'shaolin'
+            >>> views = ['TopPatch', 'vFense']
+            >>> manager = UserManager(username)
+            >>> manager.add_to_views(views)
 
         Returns:
             Dictionary of the status of the operation.
             {
                 'rv_status_code': 1017,
-                'message': "None - add_user_to_customers - customer names existed 'default', 'TopPatch', 'vFense' unchanged",
+                'message': "None - add_user_to_views - view names existed 'default', 'TopPatch', 'vFense' unchanged",
                 'data': []
             }
         """
-        if isinstance(customer_names, str):
-            customer_names = customer_names.split(',')
+        if isinstance(views, str):
+            views = views.split(',')
 
-        customers_are_valid = validate_customer_names(customer_names)
+        views_are_valid = validate_views(views)
         results = None
         user_exist = self.properties
         data_list = []
-        status = self.add_to_customers.func_name + ' - '
+        status = self.add_to_views.func_name + ' - '
         msg = ''
         status_code = 0
         generic_status_code = 0
         vfense_status_code = 0
         generated_ids = []
-        if customers_are_valid[0]:
+        if views_are_valid[0]:
             data_list = []
-            for customer_name in customer_names:
-                if not users_exists_in_customer(self.username, customer_name):
+            for view in views:
+                if not users_exists_in_view(self.username, view):
                     data_to_add = (
                         {
-                            CustomerPerUserKeys.CustomerName: customer_name,
-                            CustomerPerUserKeys.UserName: self.username,
+                            ViewPerUserKeys.ViewName: view,
+                            ViewPerUserKeys.UserName: self.username,
                         }
                     )
                     data_list.append(data_to_add)
 
             if user_exist and data_list:
                 status_code, _, _, generated_ids = (
-                    insert_user_per_customer(data_list)
+                    insert_user_per_view(data_list)
                 )
                 if status_code == DbCodes.Inserted:
                     msg = (
                         'user %s added to %s' % (
-                            self.username, ' and '.join(customer_names)
+                            self.username, ' and '.join(views)
                         )
                     )
                     generic_status_code = GenericCodes.ObjectCreated
-                    vfense_status_code = CustomerCodes.CustomersAddedToUser
+                    vfense_status_code = ViewCodes.viewsAddedToUser
 
             elif user_exist and not data_list:
-                msg = 'customer names existed for user %s' % (self.username)
+                msg = 'view names existed for user %s' % (self.username)
                 generic_status_code = GenericCodes.ObjectExists
-                vfense_status_code = CustomerFailureCodes.UsersExistForCustomer
+                vfense_status_code = ViewFailureCodes.UsersExistForView
 
             elif not user_exist:
                 msg = 'User name is invalid: %s' % (self.username)
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = UserFailureCodes.UserNameDoesNotExist
 
-        elif not customers_are_valid[0]:
+        elif not views_are_valid[0]:
             msg = (
-                'Customer names are invalid: %s' % (
-                    ' and '.join(customers_are_valid[2])
+                'View names are invalid: %s' % (
+                    ' and '.join(views_are_valid[2])
                 )
             )
             generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = CustomerFailureCodes.InvalidCustomerName
+            vfense_status_code = ViewFailureCodes.InvalidViewName
 
         results = {
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
@@ -447,15 +448,15 @@ class UserManager(object):
         """Add a user into a vFense group
         Args:
             username (str):  Name of the user already in vFense.
-            customer_name (str): The customer this user is part of.
+            view (str): The view this user is part of.
             group_ids (list): List of group ids.
 
         Basic Usage:
-            >>> from vFense.group.groups import add_user_to_groups
-            >>> username = 'alien'
-            >>> customer_name = 'default'
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'shaolin'
             >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
-            >>> add_user_to_groups(username, customer_name, group_ids)
+            >>> manager = UserManager(username)
+            >>> manager.add_to_groups(group_ids)
 
         Returns:
             Returns the results in a dictionary
@@ -466,7 +467,7 @@ class UserManager(object):
                 'group_name': u'FooLah',
                 'user_name': 'alien',
                 'group_id': '0834e656-27a5-4b13-ba56-635797d0d1fc',
-                'customer_name': 'default'
+                'view': 'default'
             }
         }
         """
@@ -492,8 +493,8 @@ class UserManager(object):
                 if not user_in_group:
                     data_to_add = (
                         {
-                            GroupsPerUserKeys.CustomerName: (
-                                group.get(GroupKeys.CustomerName)
+                            GroupsPerUserKeys.ViewName: (
+                                group.get(GroupKeys.ViewName)
                             ),
                             GroupsPerUserKeys.UserName: self.username,
                             GroupsPerUserKeys.GroupName: (
@@ -558,6 +559,13 @@ class UserManager(object):
     @time_it
     def remove(self):
         """Remove a user from vFense
+
+        Basic Usage:
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'shaolin'
+            >>> manager = UserManager(username)
+            >>> manager.remove()
+
         Return:
             Dictionary of the status of the operation.
         """
@@ -568,7 +576,7 @@ class UserManager(object):
         results = {}
         if user_exist and self.username != DefaultUsers.ADMIN:
             self.remove_from_groups()
-            self.remove_from_customers()
+            self.remove_from_views()
             username_to_delete.append(self.username)
 
             object_status, _, _, _ = (
@@ -624,11 +632,11 @@ class UserManager(object):
         Kwargs:
             group_ids(list): List of group_ids.
 
-        Basic Usage::
-            >>> from vFense.core.group.groups remove_groups_from_user
-            >>> username = 'alien'
+        Basic Usage:
+            >>> username = 'shaolin'
             >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc', '8757b79c-7321-4446-8882-65457f28c78b']
-            >>> remove_groups_from_user(username, group_ids)
+            >>> manager = UserManager(username)
+            >>> manager.remove_from_groups(group_ids)
 
         Returns:
             Returns the results in a dictionary
@@ -644,7 +652,7 @@ class UserManager(object):
         group_ids_in_db = fetch_groupids_for_user(self.username)
         if self.username == DefaultUsers.ADMIN:
             admin_group_id = fetch_group_by_name(
-                DefaultGroups.ADMIN, DefaultCustomers.DEFAULT,
+                DefaultGroups.ADMIN, Defaultviews.DEFAULT,
                 GroupKeys.GroupId)[GroupKeys.GroupId]
 
         if group_ids:
@@ -706,62 +714,63 @@ class UserManager(object):
         return results
 
     @time_it
-    def remove_from_customers(self, customer_names=None):
-        """Remove a customer from a user
+    def remove_from_views(self, views=None):
+        """Remove a view from a user
         Kwargs:
-            customer_names (list): List of customer_names,
+            views (list): List of views,
                 you want to remove from this user
 
         Basic Usage:
-            >>> from vFense.customer.customers remove_customers_from_user
-            >>> username = 'agent_api'
-            >>> remove_customers_from_user(username)
+            >>> username = 'shaolin'
+            >>> views = ['test']
+            >>> manager = UserManager(username)
+            >>> manager.remove_from_views(views)
 
         Returns:
             Dictionary of the status of the operation.
             >>>
             {
                 'rv_status_code': 1004,
-                'message': 'None - remove_customers_from_user - removed customers from user alien: TopPatch and vFense does not exist',
+                'message': 'None - remove_views_from_user - removed views from user alien: TopPatch and vFense does not exist',
             }
         """
-        status = self.remove_from_customers.func_name + ' - '
-        customer_names_in_db = fetch_customer_names_for_user(self.username)
+        status = self.remove_from_views.func_name + ' - '
+        views_in_db = fetch_views_for_user(self.username)
         exist = False
-        if not customer_names:
-            customer_names = customer_names_in_db
+        if not views:
+            views = views_in_db
             exist = True
         else:
-            exist = set(customer_names).issubset(customer_names_in_db)
+            exist = set(views).issubset(views_in_db)
 
         if exist:
             status_code, count, errors, generated_ids = (
-                delete_user_in_customers(self.username, customer_names)
+                delete_user_in_views(self.username, views)
             )
             if status_code == DbCodes.Deleted:
-                msg = 'removed customers from user %s' % (self.username)
+                msg = 'removed views from user %s' % (self.username)
                 generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = CustomerCodes.CustomersRemovedFromUser
+                vfense_status_code = ViewCodes.viewsRemovedFromUser
 
             elif status_code == DbCodes.Skipped:
-                msg = 'invalid customer name or invalid username'
+                msg = 'invalid view name or invalid username'
                 generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = CustomerFailureCodes.InvalidCustomerName
+                vfense_status_code = ViewFailureCodes.InvalidViewName
 
             elif status_code == DbCodes.DoesNotExist:
-                msg = 'customer name or username does not exist'
+                msg = 'view name or username does not exist'
                 generic_status_code = GenericCodes.DoesNotExist
                 vfense_status_code = (
-                    CustomerFailureCodes.UsersDoNotExistForCustomer
+                    ViewFailureCodes.UsersDoNotExistForView
                 )
 
         else:
             msg = (
-                'customer names do not exist: %s' %
-                (', '.join(customer_names))
+                'view names do not exist: %s' %
+                (', '.join(views))
             )
             generic_status_code = GenericCodes.DoesNotExist
-            vfense_status_code = CustomerFailureCodes.UsersDoNotExistForCustomer
+            vfense_status_code = ViewFailureCodes.UsersDoNotExistForView
 
         results = {
             ApiResultKeys.DB_STATUS_CODE: status_code,
@@ -779,6 +788,13 @@ class UserManager(object):
         Args:
             password (str): Original password.
             new_password (str): New password.
+
+        Basic Usage:
+            >>> username = 'shaolin'
+            >>> password = 'my original password'
+            >>> new_password = 'my new password'
+            >>> manager = UserManager(username)
+            >>> manager.change_password(password, new_password)
 
         Return:
             Dictionary of the status of the operation.
@@ -871,6 +887,12 @@ class UserManager(object):
         Args:
             password (str): Original password.
 
+        Basic Usage:
+            >>> username = 'shaolin'
+            >>> password = 'my new password'
+            >>> manager = UserManager(username)
+            >>> manager.reset_password(password)
+
         Return:
             Dictionary of the status of the operation.
             {
@@ -927,34 +949,50 @@ class UserManager(object):
 
 
     @time_it
-    def change_customer(self, user):
+    def change_view(self, user):
+        """Change current or default view.
+        Args:
+            password (str): Original password.
+        Basic Usage:
+            >>> from vFense.user import User
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'shaolin'
+            >>> current_view = 'default'
+            >>> user = (
+                    User(
+                        username, current_view=current_view,
+                    )
+                )
+            >>> manager = UserManager(username)
+            >>> manager.change_view(user)
+        """
         user_exist = self.properties
-        status = self.change_current_customer.func_name + ' - '
+        status = self.change_view.func_name + ' - '
         results = {}
         results[ApiResultKeys.DATA] = []
-        customer_name = None
-        customer_names_in_db = (
-            fetch_customer_names_for_user(self.username)
+        view = None
+        views_in_db = (
+            fetch_views_for_user(self.username)
         )
         data = user.to_dict_non_null()
         data.pop(UserKeys.UserName)
         data.pop(UserKeys.Password)
-        if data.get(UserKeys.CurrentCustomer):
-            customer_name = data.get(UserKeys.CurrentCustomer)
+        if data.get(UserKeys.CurrentView):
+            view = data.get(UserKeys.CurrentView)
 
-        elif data.get(UserKeys.DefaultCustomer):
-            customer_name = data.get(UserKeys.CurrentCustomer)
+        elif data.get(UserKeys.DefaultView):
+            view = data.get(UserKeys.DefaultView)
 
-        if user_exist and customer_name:
+        if user_exist and view:
 
-            if user_exist[UserKeys.Global] and customer_name:
+            if user_exist[UserKeys.Global] and view:
                 results = self.__edit_user_properties(user)
-            elif customer_name in customer_names_in_db:
+            elif view in views_in_db:
                 results = self.__edit_user_properties(user)
             else:
                 msg = (
-                    'Customer %s is not valid for user %s' %
-                    (customer_name, self.username)
+                    'View %s is not valid for user %s' %
+                    (view, self.username)
                 )
                 results[ApiResultKeys.MESSAGE] = status + msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -963,7 +1001,7 @@ class UserManager(object):
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     UserFailureCodes.FailedToUpdateUser
                 )
-        elif not user_exist and customer_name:
+        elif not user_exist and view:
             msg = (
                 'User %s is not valid' % (self.username)
             )
@@ -976,7 +1014,7 @@ class UserManager(object):
             )
         else:
             msg = (
-                'current_customer or default_customer ' +
+                'current_view or default_view ' +
                 'was not set in the User instance'
             )
             results[ApiResultKeys.MESSAGE] = status + msg
@@ -992,7 +1030,7 @@ class UserManager(object):
 
     @time_it
     def __edit_user_properties(self, user):
-        """ Edit the properties of a customer.
+        """ Edit the properties of a view.
         Args:
             user (User): The User instance with all of its properties.
 

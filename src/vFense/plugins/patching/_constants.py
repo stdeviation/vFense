@@ -1,5 +1,5 @@
 class CommonAppKeys():
-    CustomerName = 'customer_name'
+    ViewName = 'view_name'
     Id = 'id'
     APP_ID = 'app_id'
     APP_NAME = 'app_name'
@@ -55,7 +55,7 @@ class SharedAppKeys():
     Status = 'status'
     Hidden = 'hidden'
     AgentId = 'agent_id'
-    Customers = 'customers'
+    Views = 'views'
     Name = 'name'
     Hidden = 'hidden'
     Description = 'description'

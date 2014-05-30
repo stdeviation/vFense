@@ -10,7 +10,7 @@ from vFense.plugins import ra
 def save_rd_password(
     password=None,
     user=Default.User,
-    customer=Default.Customer,
+    view=Default.View,
     conn=None
 ):
 
@@ -22,7 +22,7 @@ def save_rd_password(
 
     all_agents = list(
         r.table("agents")
-        .filter({"customer_name": customer})
+        .filter({"view_name": view})
         .run(conn)
     )
 
@@ -37,7 +37,7 @@ def save_rd_password(
             agent_id,
             username=user,
             password=password,
-            customer=customer,
+            view=view,
             uri=ra.RaUri.Password,
             method='POST'
         )
