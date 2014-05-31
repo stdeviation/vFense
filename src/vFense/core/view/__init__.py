@@ -3,7 +3,7 @@ import logging
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import (
-    CPUThrottleValues, DefaultStringLength, RegexPattern
+    CPUThrottleValues, DefaultStringLength, RegexPattern, CommonKeys
 )
 
 from vFense.core.view._db_model import (
@@ -11,6 +11,9 @@ from vFense.core.view._db_model import (
 )
 
 from vFense.core.view._constants import ViewDefaults
+from vFense.errorz._constants import ApiResultKeys
+
+from vFense.errorz.status_codes import ViewFailureCodes, GenericCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -21,7 +24,7 @@ class View(object):
 
     def __init__(
         self, name, parent=None, ancestors=None, children=None,
-        net_throttle=None, cpu_throttle=None,
+        users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
         package_download_url=None
     ):
@@ -35,6 +38,7 @@ class View(object):
                 the correct order.
             children (list): The child views of this view in
                 the correct order.
+            users (list): List of users that have access to this view.
             net_throttle (int): The default net throttling for downloading
                 packages for agents in this view, in KB/s.
             cpu_throttle (str): The default cpu throttling for operations
@@ -53,6 +57,7 @@ class View(object):
         self.parent = parent
         self.ancestors = ancestors
         self.children = children
+        self.users = users
         self.net_throttle = net_throttle
         self.cpu_throttle = cpu_throttle
         self.server_queue_ttl = server_queue_ttl
@@ -77,6 +82,9 @@ class View(object):
 
         if not self.children:
             self.children = ViewDefaults.CHILDREN
+
+        if not self.users:
+            self.users = ViewDefaults.USERS
 
         if not self.net_throttle:
             self.net_throttle = ViewDefaults.NET_THROTTLE
@@ -111,20 +119,66 @@ class View(object):
             )
             valid_length = len(self.name) <= DefaultStringLength.view_NAME
 
-            if not valid_symbols or not valid_length:
+            if not valid_symbols and valid_length:
                 invalid_fields.append(
-                    {ViewKeys.ViewName: self.name}
+                    {
+                        ViewKeys.ViewName: self.name,
+                        CommonKeys.REASON: (
+                            'View name contains invalid special characters.'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            ViewFailureCodes.InvalidViewName
+                        )
+                    }
+                )
+
+            elif valid_symbols and not valid_length:
+                invalid_fields.append(
+                    {
+                        ViewKeys.ViewName: self.name,
+                        CommonKeys.REASON: (
+                            'View name is too long.'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            ViewFailureCodes.InvalidViewName
+                        )
+                    }
+                )
+            elif not valid_symbols and not valid_length:
+                invalid_fields.append(
+                    {
+                        ViewKeys.ViewName: self.name,
+                        CommonKeys.REASON: (
+                            'View name contains invalid special characters ' +
+                            'and the name is too long'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            ViewFailureCodes.InvalidViewName
+                        )
+                    }
                 )
         else:
             invalid_fields.append(
-                {ViewKeys.ViewName: self.name}
+                {
+                    ViewKeys.ViewName: self.name,
+                    CommonKeys.REASON: 'View name is not a valid string',
+                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                        ViewFailureCodes.InvalidViewName
+                    )
+                }
             )
 
         if self.net_throttle:
             if isinstance(self.net_throttle, int):
                 if self.net_throttle < 0:
                     invalid_fields.append(
-                        {ViewKeys.NetThrottle: self.net_throttle}
+                        {
+                            ViewKeys.NetThrottle: self.net_throttle,
+                            CommonKeys.REASON: 'Value is below 0',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidNetworkThrottle
+                            )
+                        }
                     )
             else:
                 try:
@@ -133,13 +187,28 @@ class View(object):
                 except Exception as e:
                     logger.exception(e)
                     invalid_fields.append(
-                        {ViewKeys.NetThrottle: self.net_throttle}
+                        {
+                            ViewKeys.NetThrottle: self.net_throttle,
+                            CommonKeys.REASON: 'Invalid value',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidNetworkThrottle
+                            )
+                        }
                     )
 
         if self.cpu_throttle:
             if self.cpu_throttle not in CPUThrottleValues.VALID_VALUES:
                 invalid_fields.append(
                     {ViewKeys.CpuThrottle: self.cpu_throttle}
+                )
+                invalid_fields.append(
+                    {
+                        ViewKeys.CpuThrottle: self.cpu_throttle,
+                        CommonKeys.REASON: 'Invalid value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            ViewFailureCodes.InvalidCpuThrottle
+                        )
+                    }
                 )
 
         if self.server_queue_ttl:
@@ -148,6 +217,15 @@ class View(object):
                     invalid_fields.append(
                         {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
                     )
+                    invalid_fields.append(
+                        {
+                            ViewKeys.ServerQueueTTL: self.server_queue_ttl,
+                            CommonKeys.REASON: 'Value is less than 1',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidServerQueueThrottle
+                            )
+                        }
+                    )
             else:
                 try:
                     self.server_queue_ttl = int(self.server_queue_ttl)
@@ -155,14 +233,26 @@ class View(object):
                 except Exception as e:
                     logger.exception(e)
                     invalid_fields.append(
-                        {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
+                        {
+                            ViewKeys.ServerQueueTTL: self.server_queue_ttl,
+                            CommonKeys.REASON: 'Invalid value',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidServerQueueThrottle
+                            )
+                        }
                     )
 
         if self.agent_queue_ttl:
             if isinstance(self.agent_queue_ttl, int):
                 if self.agent_queue_ttl <= 0:
                     invalid_fields.append(
-                        {ViewKeys.AgentQueueTTL: self.agent_queue_ttl}
+                        {
+                            ViewKeys.AgentQueueTTL: self.agent_queue_ttl,
+                            CommonKeys.REASON: 'Value is less than 1',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidAgentQueueThrottle
+                            )
+                        }
                     )
             else:
                 try:
@@ -171,7 +261,13 @@ class View(object):
                 except Exception as e:
                     logger.exception(e)
                     invalid_fields.append(
-                        {ViewKeys.AgentQueueTTL: self.agent_queue_ttl}
+                        {
+                            ViewKeys.AgentQueueTTL: self.agent_queue_ttl,
+                            CommonKeys.REASON: 'Invalid value',
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                ViewFailureCodes.InvalidAgentQueueThrottle
+                            )
+                        }
                     )
 
         # TODO: check for invalid package url

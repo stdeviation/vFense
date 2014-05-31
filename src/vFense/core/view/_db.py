@@ -119,7 +119,7 @@ def fetch_all_view_names(conn=None):
         data = list(
             r
             .table(ViewCollections.views)
-            .map(lambda x: x[viewKeys.viewName])
+            .map(lambda x: x[ViewKeys.viewName])
             .run(conn)
         )
 
@@ -172,7 +172,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.views)
                 .filter(
                     lambda name:
-                    name[viewKeys.viewName].match("(?i)" + match)
+                    name[ViewKeys.viewName].match("(?i)" + match)
                 )
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -184,7 +184,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.views)
                 .filter(
                     lambda name:
-                    name[viewKeys.viewName].match("(?i)" + match)
+                    name[ViewKeys.viewName].match("(?i)" + match)
                 )
                 .run(conn)
             )
@@ -230,23 +230,14 @@ def fetch_properties_for_view(view_name, conn=None):
     map_hash = (
         lambda x:
         {
-            viewKeys.viewName: x[viewKeys.viewName],
-            viewKeys.CpuThrottle: x[viewKeys.CpuThrottle],
-            viewKeys.NetThrottle: x[viewKeys.NetThrottle],
-            viewKeys.ServerQueueTTL: x[viewKeys.ServerQueueTTL],
-            viewKeys.AgentQueueTTL: x[viewKeys.AgentQueueTTL],
-            viewKeys.PackageUrl: x[viewKeys.PackageUrl],
-            viewKeys.Users: (
-                r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    x[ViewPerUserKeys.viewName],
-                    index=viewPerUserIndexes.viewName
-                )
-                .coerce_to('array')
-                .pluck(ViewPerUserKeys.UserName)
-            ),
-            viewKeys.Groups: (
+            ViewKeys.viewName: x[ViewKeys.viewName],
+            ViewKeys.CpuThrottle: x[ViewKeys.CpuThrottle],
+            ViewKeys.NetThrottle: x[ViewKeys.NetThrottle],
+            ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
+            ViewKeys.AgentQueueTTL: x[ViewKeys.AgentQueueTTL],
+            ViewKeys.PackageUrl: x[ViewKeys.PackageUrl],
+            ViewKeys.Users: x[ViewKeys.Users]
+            ViewKeys.Groups: (
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
@@ -312,13 +303,13 @@ def fetch_properties_for_all_views(username=None, conn=None):
     map_hash = (
         lambda x:
         {
-            viewKeys.viewName: x[viewKeys.viewName],
-            viewKeys.CpuThrottle: x[viewKeys.CpuThrottle],
-            viewKeys.NetThrottle: x[viewKeys.NetThrottle],
-            viewKeys.ServerQueueTTL: x[viewKeys.ServerQueueTTL],
-            viewKeys.AgentQueueTTL: x[viewKeys.AgentQueueTTL],
-            viewKeys.PackageUrl: x[viewKeys.PackageUrl],
-            viewKeys.Users: (
+            ViewKeys.viewName: x[ViewKeys.viewName],
+            ViewKeys.CpuThrottle: x[ViewKeys.CpuThrottle],
+            ViewKeys.NetThrottle: x[ViewKeys.NetThrottle],
+            ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
+            ViewKeys.AgentQueueTTL: x[ViewKeys.AgentQueueTTL],
+            ViewKeys.PackageUrl: x[ViewKeys.PackageUrl],
+            ViewKeys.Users: (
                 r
                 .table(ViewCollections.ViewsPerUser)
                 .get_all(
@@ -328,7 +319,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 .coerce_to('array')
                 .pluck(ViewPerUserKeys.UserName)
             ),
-            viewKeys.Groups: (
+            ViewKeys.Groups: (
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
@@ -354,7 +345,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 )
                 .eq_join(
                     lambda x:
-                    x[viewKeys.viewName],
+                    x[ViewKeys.viewName],
                     r.table(ViewCollections.views)
                 )
                 .zip()

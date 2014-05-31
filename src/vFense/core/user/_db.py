@@ -6,9 +6,11 @@ from vFense.core.user._db_model import (
     UserKeys, UserCollections, UserMappedKeys
 )
 from vFense.core.user._constants import *
-from vFense.core.group._db_model import *
-from vFense.core.group._constants import *
-from vFense.core.view._db_model import *
+from vFense.core.group._db_model import (
+    GroupCollections, GroupKeys, GroupsPerUserKeys,
+    GroupsPerUserIndexes
+)
+from vFense.core.view._db_model import ViewMappedKeys
 from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
 from vFense.core.decorators import return_status_tuple, time_it
@@ -128,9 +130,7 @@ def fetch_user_and_all_properties(username, conn=None):
             ),
             UserMappedKeys.Views: (
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(username, index=ViewPerUserIndexes.UserName)
-                .coerce_to('array')
+                .expr(r.row[UserKeys.Views])
                 .map(lambda x:
                     {
                         Permissions.ADMINISTRATOR: r.branch(
@@ -148,11 +148,16 @@ def fetch_user_and_all_properties(username, conn=None):
                                 lambda z:
                                 z[GroupKeys.Permissions]
                                 .contains(Permissions.ADMINISTRATOR)
+                            )
+                            .filter(
+                                lambda z:
+                                z[GroupKeys.Views]
+                                .contains(x)
                             ),
                             True,
                             False
                         ),
-                        ViewPerUserKeys.ViewName: x[ViewPerUserKeys.ViewName]
+                        ViewMappedKeys.ViewName: x[ViewMappedKeys.ViewName]
                     }
                 )
             ),
@@ -582,6 +587,91 @@ def update_user(username, user_data, conn=None):
             .table(UserCollections.Users)
             .get(username)
             .update(user_data)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_views_for_user(username, views, conn=None):
+    """Update  user's properties
+    Args:
+        username (str): username of the user you are updating
+        views (list): list of views to add to the user.
+
+    Basic Usage::
+        >>> from vFense.user._db import update_views_for_user
+        >>> username = 'admin'
+        >>> views = ['foo', 'bar']
+        >>> update_views_for_user(username, view)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(UserCollections.Users)
+            .get(username)
+            .update(
+                {
+                    UserKeys.Views: (
+                        r.row[UserKeys.Views].set_union(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_views_for_users(usernames, views, conn=None):
+    """Update  user's properties
+    Args:
+        usernames (list): List of usernames that you are updating
+        views (list): list of views to add to the user.
+
+    Basic Usage::
+        >>> from vFense.user._db import update_views_for_users
+        >>> usernames = ['admin', 'shaolin']
+        >>> views = ['foo', 'bar']
+        >>> update_views_for_users(usernames, views)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(usernames)
+            .for_each(
+                lambda x:
+                r
+                .table(UserCollections.Users)
+                .get(x)
+                .update(
+                    {
+                        UserKeys.Views: (
+                            r.row[UserKeys.Views].set_union(views)
+                        )
+                    }
+                )
+            )
             .run(conn)
         )
 

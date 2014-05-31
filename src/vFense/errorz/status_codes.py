@@ -1,4 +1,4 @@
-class GenericCodes(object):
+ GenericCodes(object):
     InformationRetrieved = 1001
     CouldNotRetrieveInformation = 1002
     IncorrectArguments = 1003
@@ -117,6 +117,8 @@ class ViewFailureCodes(object):
     InvalidNetworkThrottle = 124509
     InvalidCpuThrottle = 124510
     InvalidOperationTTL = 124511
+    InvalidServerQueueThrottle = 124512
+    InvalidAgentQueueThrottle = 124513
 
 
 class DbCodes(object):
