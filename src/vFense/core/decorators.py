@@ -170,7 +170,6 @@ def results_message(fn):
                 ).something_broke(**data)
             )
 
-
         return status
 
     return wraps(fn)(db_wrapper)
@@ -211,7 +210,7 @@ def authenticated_request(method):
         #     return method(self, *args, **kwargs)
 
         # If the access token is not provided, assumes is the main ui client.
-        if not self.current_user:     
+        if not self.current_user:
             if self.request.method in ("GET", "HEAD", "POST"):
                 url = self.get_login_url()
                 # if "?" not in url:
