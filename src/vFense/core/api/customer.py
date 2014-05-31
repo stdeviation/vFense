@@ -18,7 +18,7 @@ from vFense.core.user._constants import DefaultUsers
 from vFense.core.agent.agents import change_view_for_all_agents_in_view, \
     remove_all_agents_for_view
 
-from vFense.core.view import View, ViewKeys
+from vFense.core.view._db_model import View, ViewKeys
 
 from vFense.core.view.views import get_properties_for_view, \
     get_properties_for_all_views, get_view, remove_view, \

@@ -4,7 +4,7 @@ import re
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CPUThrottleValues, DefaultStringLength
 from vFense.core._db import retrieve_object
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 from vFense.core.view._constants import DefaultViews
 from vFense.core.user._db_model import UserCollections
 from vFense.core.user._constants import DefaultUsers
@@ -358,7 +358,7 @@ def create_view(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.core.view import View
+        >>> from vFense.core.view._db_model import View
         >>> from vFense.core.view.views import create_view
         >>> view = View('NewView', package_download_url='https://10.0.0.16/packages/')
         >>> username = 'api_user'

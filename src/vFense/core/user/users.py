@@ -7,7 +7,7 @@ from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.group._db_model import *
 from vFense.core.group._constants import *
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 
 from vFense.core.view._db import users_exists_in_view, \
     insert_user_per_view, delete_users_in_view

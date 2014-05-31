@@ -15,7 +15,7 @@ from vFense.core.agent._db import fetch_production_levels_from_agent, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
 
-from vFense.core.view import View
+from vFense.core.view._db_model import View
 from vFense.core.view.views import get_view, create_view
 from vFense.core.decorators import time_it, results_message
 

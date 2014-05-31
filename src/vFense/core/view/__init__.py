@@ -1,52 +1,40 @@
 import re
+import logging
+from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import (
     CPUThrottleValues, DefaultStringLength, RegexPattern
 )
+
+from vFense.core.view._db_model import (
+    ViewKeys
+)
+
 from vFense.core.view._constants import ViewDefaults
 
-class ViewCollections():
-    Views = 'views'
-    ViewsPerUser = 'views_per_user'
-
-
-class ViewKeys():
-    ViewName = 'view_name'
-    Parent = 'parent'
-    Ancestors = 'ancestors'
-    Children = 'children'
-    Properties = 'properties'
-    NetThrottle = 'net_throttle'
-    CpuThrottle = 'cpu_throttle'
-    PackageUrl = 'package_download_url_base'
-    ServerQueueTTL = 'server_queue_ttl' # in minutes
-    AgentQueueTTL = 'agent_queue_ttl' # in minutes
-    Users = 'users' #Mapped Keys
-    Groups = 'groups' #Mapped Keys
-
-
-class ViewPerUserKeys():
-    ViewName = 'view_name'
-    UserName = 'user_name'
-    Id = 'id'
-
-
-class ViewPerUserIndexes():
-    ViewName = 'view_name'
-    UserName = 'user_name'
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
+logger = logging.getLogger('rvapi')
 
 
 class View(object):
     """Used to represent an instance of a view."""
 
     def __init__(
-        self, name, net_throttle=None, cpu_throttle=None,
+        self, name, parent=None, ancestors=None, children=None,
+        net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
         package_download_url=None
     ):
         """
         Args:
-            name (str): The name of the view
+            name (str): The name of the view.
+
+        Kwargs:
+            parent (str): The parent of this view.
+            ancestors (list): The ancestors of this view in
+                the correct order.
+            children (list): The child views of this view in
+                the correct order.
             net_throttle (int): The default net throttling for downloading
                 packages for agents in this view, in KB/s.
             cpu_throttle (str): The default cpu throttling for operations
@@ -62,20 +50,14 @@ class View(object):
                         'https://192.168.1.1/packages/'
         """
         self.name = name
+        self.parent = parent
+        self.ancestors = ancestors
+        self.children = children
         self.net_throttle = net_throttle
         self.cpu_throttle = cpu_throttle
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
         self.package_download_url = package_download_url
-
-        if net_throttle:
-            self.net_throttle = int(net_throttle)
-
-        if server_queue_ttl:
-            self.server_queue_ttl = int(server_queue_ttl)
-
-        if agent_queue_ttl:
-            self.agent_queue_ttl = int(agent_queue_ttl)
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -86,6 +68,15 @@ class View(object):
             in a few fields, then allow the create view functions call this
             method to fill in the rest.
         """
+
+        if not self.parent:
+            self.parent = ViewDefaults.PARENT
+
+        if not self.ancestors:
+            self.ancestors = ViewDefaults.ANCESTORS
+
+        if not self.children:
+            self.children = ViewDefaults.CHILDREN
 
         if not self.net_throttle:
             self.net_throttle = ViewDefaults.NET_THROTTLE
@@ -136,9 +127,14 @@ class View(object):
                         {ViewKeys.NetThrottle: self.net_throttle}
                     )
             else:
-                invalid_fields.append(
-                    {ViewKeys.NetThrottle: self.net_throttle}
-                )
+                try:
+                    self.net_throttle = int(self.net_throttle)
+
+                except Exception as e:
+                    logger.exception(e)
+                    invalid_fields.append(
+                        {ViewKeys.NetThrottle: self.net_throttle}
+                    )
 
         if self.cpu_throttle:
             if self.cpu_throttle not in CPUThrottleValues.VALID_VALUES:
@@ -153,9 +149,14 @@ class View(object):
                         {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
                     )
             else:
-                invalid_fields.append(
-                    {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
-                )
+                try:
+                    self.server_queue_ttl = int(self.server_queue_ttl)
+
+                except Exception as e:
+                    logger.exception(e)
+                    invalid_fields.append(
+                        {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
+                    )
 
         if self.agent_queue_ttl:
             if isinstance(self.agent_queue_ttl, int):
@@ -164,9 +165,14 @@ class View(object):
                         {ViewKeys.AgentQueueTTL: self.agent_queue_ttl}
                     )
             else:
-                invalid_fields.append(
-                    {ViewKeys.AgentQueueTTL: self.agent_queue_ttl}
-                )
+                try:
+                    self.agent_queue_ttl = int(self.agent_queue_ttl)
+
+                except Exception as e:
+                    logger.exception(e)
+                    invalid_fields.append(
+                        {ViewKeys.AgentQueueTTL: self.agent_queue_ttl}
+                    )
 
         # TODO: check for invalid package url
 
@@ -193,6 +199,9 @@ class View(object):
 
         return {
             ViewKeys.ViewName: self.name,
+            ViewKeys.Parent: self.parent,
+            ViewKeys.Ancestors: self.ancestors,
+            ViewKeys.Children: self.children,
             ViewKeys.NetThrottle: self.net_throttle,
             ViewKeys.CpuThrottle: self.cpu_throttle,
             ViewKeys.ServerQueueTTL: self.server_queue_ttl,

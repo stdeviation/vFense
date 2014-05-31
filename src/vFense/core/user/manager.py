@@ -19,7 +19,7 @@ from vFense.core.view._db import (
     fetch_all_views
 )
 
-from vFense.core.view import ViewPerUserKeys
+from vFense.core.view._db_model import ViewPerUserKeys
 from vFense.core.view._constants import Defaultviews
 
 from vFense.core.user._db import insert_user, fetch_user, fetch_users, \

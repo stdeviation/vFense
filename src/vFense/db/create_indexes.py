@@ -6,7 +6,7 @@ from vFense.core.agent import *
 from vFense.core.tag import *
 from vFense.core.user._db_model import *
 from vFense.core.group._db_model import *
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 
 from vFense.notifications import *
 from vFense.operations import *

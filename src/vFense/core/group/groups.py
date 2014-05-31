@@ -6,7 +6,7 @@ from vFense.core.group._db_model import *
 from vFense.core.group._constants import *
 from vFense.core.user._db_model import UserCollections
 from vFense.core.user._constants import *
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
 from vFense.core._db import retrieve_object

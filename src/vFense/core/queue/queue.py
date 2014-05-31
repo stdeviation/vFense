@@ -9,7 +9,7 @@ from vFense.core.queue._db import insert_into_agent_queue, \
     get_next_avail_order_id_in_agent_queue, get_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 from vFense.core.view.views import get_view_property
 
 from vFense.core.queue.uris import get_agent_results_uri

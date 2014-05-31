@@ -30,7 +30,7 @@ from vFense.plugins.patching._db import (fetch_file_servers_addresses,
 
 
 from vFense.core.decorators import time_it, results_message
-from vFense.core.view import ViewKeys
+from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.views import get_view_property
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms

@@ -1,7 +1,7 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.view import *
+from vFense.core.view._db_model import *
 from vFense.core.group._constants import *
 from vFense.core.group._db_model import *
 from vFense.core.user._constants import *
