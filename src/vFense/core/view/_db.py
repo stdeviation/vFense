@@ -588,11 +588,11 @@ def insert_view(view_data, conn=None):
     data = {}
     try:
         data = (
-                r
-                .table(ViewCollections.Views)
-                .insert(view_data)
-                .run(conn)
-                )
+            r
+            .table(ViewCollections.Views)
+            .insert(view_data)
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)
@@ -920,7 +920,7 @@ def update_children_for_view(view, child, conn=None):
             .update(
                 {
                     ViewKeys.Children: (
-                        r.row[ViewKeys.Users].append(child)
+                        r.row[ViewKeys.Children].append(child)
                     )
                 }
             )

@@ -102,6 +102,7 @@ class ViewManager(object):
                 if not view.parent:
                     view.parent = DefaultViews.GLOBAL
                     view.ancestors = [view.parent]
+                    parent_view = fetch_view(view.parent)
 
                 else:
                     parent_view = fetch_view(view.parent)
@@ -140,7 +141,7 @@ class ViewManager(object):
                     update_views_for_users(
                         usernames, [view.name]
                     )
-
+                print parent_view, 'foo bar'
                 if parent_view:
                     update_children_for_view(
                         parent_view[ViewKeys.ViewName], view.name
@@ -155,9 +156,5 @@ class ViewManager(object):
                 ViewFailureCodes.ViewExists
             )
             results[ApiResultKeys.MESSAGE] = status + msg
-
-        results = {
-            ApiResultKeys.DATA: [view.to_dict()],
-        }
 
         return results
