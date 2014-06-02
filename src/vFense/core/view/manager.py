@@ -43,7 +43,7 @@ class ViewManager(object):
         return view_data
 
     @time_it
-    def create(view):
+    def create(self, view):
         """Create a new view inside of vFense
 
         Args:
@@ -105,9 +105,10 @@ class ViewManager(object):
 
                 else:
                     parent_view = fetch_view(view.parent)
-                    parent_view[ViewKeys.Children].append(view.name)
-                    view.ancestors = parent_view[ViewKeys.Ancestors]
-                    view.ancestors.append(view.parent)
+                    if parent_view:
+                        parent_view[ViewKeys.Children].append(view.name)
+                        view.ancestors = parent_view[ViewKeys.Ancestors]
+                        view.ancestors.append(view.parent)
 
             if not view.package_download_url:
                 view.package_download_url = (

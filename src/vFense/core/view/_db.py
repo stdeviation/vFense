@@ -44,7 +44,7 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
         if view_name and keys_to_pluck:
             data = (
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .get(view_name)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -52,7 +52,7 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
         elif view_name and not keys_to_pluck:
             data = (
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .get(view_name)
                 .run(conn)
             )
@@ -120,7 +120,7 @@ def fetch_all_view_names(conn=None):
     try:
         data = list(
             r
-            .table(ViewCollections.views)
+            .table(ViewCollections.Views)
             .map(lambda x: x[ViewKeys.viewName])
             .run(conn)
         )
@@ -171,7 +171,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         if match and keys_to_pluck:
             data = list(
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .filter(
                     lambda name:
                     name[ViewKeys.viewName].match("(?i)" + match)
@@ -183,7 +183,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         elif match and not keys_to_pluck:
             data = list(
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .filter(
                     lambda name:
                     name[ViewKeys.viewName].match("(?i)" + match)
@@ -194,14 +194,14 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         elif not match and not keys_to_pluck:
             data = list(
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .run(conn)
             )
 
         elif not match and keys_to_pluck:
             data = list(
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -256,7 +256,7 @@ def fetch_properties_for_view(view_name, conn=None):
     try:
         data = list(
             r
-            .table(ViewCollections.views)
+            .table(ViewCollections.Views)
             .get_all(view_name)
             .map(map_hash)
             .run(conn)
@@ -348,7 +348,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 .eq_join(
                     lambda x:
                     x[ViewKeys.viewName],
-                    r.table(ViewCollections.views)
+                    r.table(ViewCollections.Views)
                 )
                 .zip()
                 .map(map_hash)
@@ -358,7 +358,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
         else:
             data = list(
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .map(map_hash)
                 .run(conn)
             )
@@ -589,7 +589,7 @@ def insert_view(view_data, conn=None):
     try:
         data = (
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .insert(view_data)
                 .run(conn)
                 )
@@ -623,7 +623,7 @@ def update_view(view_name, view_data, conn=None):
     try:
         data = (
             r
-            .table(ViewCollections.views)
+            .table(ViewCollections.Views)
             .get(view_name)
             .update(view_data)
             .run(conn)
@@ -796,7 +796,7 @@ def delete_view(view_name, conn=None):
     try:
         data = (
             r
-            .table(ViewCollections.views)
+            .table(ViewCollections.Views)
             .get(view_name)
             .delete()
             .run(conn)
@@ -833,7 +833,7 @@ def delete_views(view_names, conn=None):
             .for_each(
                 lambda view_name:
                 r
-                .table(ViewCollections.views)
+                .table(ViewCollections.Views)
                 .get(view_name)
                 .delete()
             )
