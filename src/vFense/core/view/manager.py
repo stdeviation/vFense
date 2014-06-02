@@ -1,9 +1,11 @@
 from vFense.core.view import View
-from vFense.core._constants import DefaultViews
+from vFense.core.view._constants import DefaultViews
 from vFense.core.view._db_model import ViewKeys
+from vFense.core.user._db import (
+    update_views_for_users, fetch_usernames
+)
 from vFense.core.view._db import (
-    fetch_view, update_views_for_users,
-    insert_view
+    fetch_view, insert_view, update_children_for_view
 )
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
@@ -41,7 +43,7 @@ class ViewManager(object):
         return view_data
 
     @time_it
-    def create_view(view, username=None):
+    def create(view):
         """Create a new view inside of vFense
 
         Args:
@@ -53,11 +55,14 @@ class ViewManager(object):
                 Default=None
 
         Basic Usage:
-            >>> from vFense.core.view._db_model import View
-            >>> from vFense.core.view.views import create_view
-            >>> view = View('NewView', package_download_url='https://10.0.0.16/packages/')
-            >>> username = 'api_user'
-            >>> create_view(view, api_user)
+            >>> from vFense.core.view import View
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View(
+                'New View'
+                package_download_url='https://10.0.0.16/packages/'
+            )
+            >>> manager = ViewManager(view.name)
+            >>> manager.create(view)
 
         Returns:
             Dictionary of the status of the operation.
@@ -87,6 +92,23 @@ class ViewManager(object):
         if not invalid_fields and not view_exist:
             # Fill in any empty fields
             view.fill_in_defaults()
+            parent_view = {}
+            if view.name == DefaultViews.GLOBAL:
+                view.parent = None
+                view.ancestors = []
+                view.children = []
+
+            else:
+                if not view.parent:
+                    view.parent = DefaultViews.GLOBAL
+                    view.ancestors = [view.parent]
+
+                else:
+                    parent_view = fetch_view(view.parent)
+                    parent_view[ViewKeys.Children].append(view.name)
+                    view.ancestors = parent_view[ViewKeys.Ancestors]
+                    view.ancestors.append(view.parent)
+
             if not view.package_download_url:
                 view.package_download_url = (
                     fetch_view(
@@ -95,6 +117,8 @@ class ViewManager(object):
                     ).get(ViewKeys.PackageUrl)
                 )
 
+            usernames = list(set(fetch_usernames(True) + view.users))
+            view.users = usernames
             object_status, _, _, generated_ids = (
                 insert_view(view.to_dict())
             )
@@ -109,11 +133,16 @@ class ViewManager(object):
                     ViewCodes.ViewCreated
                 )
                 results[ApiResultKeys.MESSAGE] = status + msg
-                results[ApiResultKeys.DATA] =  [view.to_dict()]
+                results[ApiResultKeys.DATA] = [view.to_dict()]
 
-                if object_status == DbCodes.Inserted and username:
-                    add_user_to_views(
-                        username, [view.name]
+                if usernames:
+                    update_views_for_users(
+                        usernames, [view.name]
+                    )
+
+                if parent_view:
+                    update_children_for_view(
+                        parent_view[ViewKeys.ViewName], view.name
                     )
 
         elif view_exist:
@@ -131,6 +160,3 @@ class ViewManager(object):
         }
 
         return results
-
-    def add_to_users(self):
-

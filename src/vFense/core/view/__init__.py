@@ -115,9 +115,9 @@ class View(object):
 
         if isinstance(self.name, basestring):
             valid_symbols = re.search(
-               RegexPattern.view_NAME, self.name
+               RegexPattern.VIEW_NAME, self.name
             )
-            valid_length = len(self.name) <= DefaultStringLength.view_NAME
+            valid_length = len(self.name) <= DefaultStringLength.VIEW_NAME
 
             if not valid_symbols and valid_length:
                 invalid_fields.append(

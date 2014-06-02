@@ -2,7 +2,6 @@ import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbInfoKeys
 from vFense.core.decorators import time_it, return_status_tuple
-from vFense.core.customer import *
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

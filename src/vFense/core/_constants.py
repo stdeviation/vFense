@@ -19,7 +19,7 @@ class CommonKeys():
 
 
 class DefaultStringLength():
-    CUSTOMER_NAME = 36
+    VIEW_NAME = 36
     GROUP_NAME = 36
     USER_NAME = 24
 
@@ -29,9 +29,9 @@ class RegexPattern():
         r'(^[A-Za-z0-9_-]{1,%d}$)' %
         (DefaultStringLength.USER_NAME)
     )
-    CUSTOMER_NAME = (
+    VIEW_NAME = (
         r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)' %
-        (DefaultStringLength.CUSTOMER_NAME)
+        (DefaultStringLength.VIEW_NAME)
     )
     GROUP_NAME = (
         r'(^(?:[A-Za-z0-9_-](?!\s+")|\s(?!\s*")){1,%d}$)' %

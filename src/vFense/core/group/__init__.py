@@ -12,13 +12,7 @@ from vFense.core.group._db_model import (
     GroupKeys
 )
 
-from vFense.core.view._db import (
-    fetch_all_view_names
-)
-
-from vFense.core.view.views import (
-    validate_view_names
-)
+#from vFense.core.view.views import validate_view_names
 
 class Group(object):
     """Used to represent an instance of a group."""
@@ -181,18 +175,18 @@ class Group(object):
                     }
                 )
 
-            else:
-                valid_views, _, _ = validate_view_names(self.views)
-                if not valid_views:
-                    invalid_fields.append(
-                        {
-                            GroupKeys.Views: self.views,
-                            CommonKeys.REASON: 'Invalid views',
-                            ApiResultKeys.VFENSE_STATUS_CODE: (
-                                GenericCodes.InvalidValue
-                            )
-                        }
-                    )
+            #else:
+            #    valid_views, _, _ = validate_view_names(self.views)
+            #    if not valid_views:
+            #        invalid_fields.append(
+            #            {
+            #                GroupKeys.Views: self.views,
+            #                CommonKeys.REASON: 'Invalid views',
+            #                ApiResultKeys.VFENSE_STATUS_CODE: (
+            #                    GenericCodes.InvalidValue
+            #                )
+            #            }
+            #        )
 
         return invalid_fields
 

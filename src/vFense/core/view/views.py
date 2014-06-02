@@ -190,7 +190,7 @@ def get_properties_for_all_views(username=None):
 
 @time_it
 def validate_view_names(view_names):
-    """Validate a list if view names.
+    """Validate a list of view names.
     Args:
         view_names (list): List of view names.
 

@@ -77,6 +77,47 @@ def fetch_user(username, without_fields=None, conn=None):
 
 @time_it
 @db_create_close
+def fetch_usernames(is_global=False, conn=None):
+    """Retrieve a list of usernames from the database
+    Kwargs:
+        is_global (bool): Only search for global users.
+
+    Basic Usage:
+        >>> from vFense.user._db import fetch_usernames
+        >>> is_global = True
+        >>> fetch_usernames(is_global)
+
+    Returns:
+        List of usernames
+    """
+    data = []
+    try:
+        if is_global:
+            data = list(
+                r
+                .table(UserCollections.Users)
+                .filter(lambda x: x[UserKeys.Global] == False)
+                .map(lambda x: x[UserKeys.UserName])
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .table(UserCollections.Users)
+                .filter(lambda x: x[UserKeys.Global] == False)
+                .map(lambda x: x[UserKeys.UserName])
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
 def fetch_user_and_all_properties(username, conn=None):
     """Retrieve a user and all of its properties
         This query is beautiful :)

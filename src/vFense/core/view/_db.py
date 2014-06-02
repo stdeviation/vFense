@@ -1,10 +1,12 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.view._db_model import *
-from vFense.core.group._constants import *
-from vFense.core.group._db_model import *
-from vFense.core.user._constants import *
+from vFense.core.view._db_model import (
+    ViewCollections, ViewKeys
+)
+from vFense.core.group._db_model import (
+    GroupCollections, GroupKeys
+)
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 
@@ -236,7 +238,7 @@ def fetch_properties_for_view(view_name, conn=None):
             ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
             ViewKeys.AgentQueueTTL: x[ViewKeys.AgentQueueTTL],
             ViewKeys.PackageUrl: x[ViewKeys.PackageUrl],
-            ViewKeys.Users: x[ViewKeys.Users]
+            ViewKeys.Users: x[ViewKeys.Users],
             ViewKeys.Groups: (
                 r
                 .table(GroupCollections.Groups)
@@ -834,6 +836,93 @@ def delete_views(view_names, conn=None):
                 .table(ViewCollections.views)
                 .get(view_name)
                 .delete()
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_usernames_for_views(views, usernames, conn=None):
+    """Update the usernames for views
+    Args:
+        views (list): list of views to add to the user.
+        usernames (list): List of usernames that you are updating
+
+    Basic Usage::
+        >>> from vFense.user._db import update_usernames_for_views
+        >>> usernames = ['admin', 'shaolin']
+        >>> views = ['foo', 'bar']
+        >>> update_usernames_for_views(views, usernames)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(views)
+            .for_each(
+                lambda x:
+                r
+                .table(ViewCollections.Views)
+                .get(x)
+                .update(
+                    {
+                        ViewKeys.Users: (
+                            r.row[ViewKeys.Users].set_union(usernames)
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_children_for_view(view, child, conn=None):
+    """Update the children for views
+    Args:
+        view (string): The view you are updating.
+        child (string): Adding a child to the current children
+
+    Basic Usage::
+        >>> from vFense.user._db import update_children_for_view
+        >>> children = 'shaolin'
+        >>> views = 'foo'
+        >>> update_children_for_view(views, children)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .get(view)
+            .update(
+                {
+                    ViewKeys.Children: (
+                        r.row[ViewKeys.Users].append(child)
+                    )
+                }
             )
             .run(conn)
         )

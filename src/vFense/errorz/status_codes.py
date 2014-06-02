@@ -1,4 +1,4 @@
- GenericCodes(object):
+class GenericCodes(object):
     InformationRetrieved = 1001
     CouldNotRetrieveInformation = 1002
     IncorrectArguments = 1003
