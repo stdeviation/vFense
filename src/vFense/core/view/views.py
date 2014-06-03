@@ -1,4 +1,4 @@
-import logging
+ logging
 import re
 
 from vFense import VFENSE_LOGGING_CONFIG

@@ -8,36 +8,27 @@ from vFense.core.group._db_model import GroupKeys, GroupsPerUserKeys
 from vFense.core.group._db import (
     delete_groups_from_user,
     fetch_group_by_name, user_exist_in_group,
-    fetch_groupids_for_user, fetch_group
+    fetch_groupids_for_user, fetch_group, insert_group_per_user
 )
 
 from vFense.core.group._constants import DefaultGroups
 
 from vFense.core.view._db import (
-    users_exists_in_view, insert_user_per_view,
-    delete_user_in_views, fetch_views_for_user,
+    delete_user_in_views, fetch_views_for_user, fetch_view,
     fetch_all_view_names, update_usernames_for_views
 )
 
-from vFense.core.view._db_model import ViewKeys
-from vFense.core.view._constants import Defaultviews
 
 from vFense.core.user._db import (
-    insert_user, fetch_user, fetch_users,
-    delete_user, update_user, fetch_user_and_all_properties,
-    fetch_users_and_all_properties, delete_users, user_status_toggle,
+    insert_user, fetch_user, delete_user, update_user,
+    fetch_user_and_all_properties, user_status_toggle,
     update_views_for_user
 )
-
-from vFense.core.group._db import user_exist_in_group, insert_group_per_user, \
-    delete_users_in_group
 
 from vFense.core.group.groups import validate_group_ids, \
     add_user_to_groups, remove_groups_from_user, get_group
 
-from vFense.core.view.views import get_view, \
-    add_user_to_views, remove_views_from_user, \
-    validate_views
+from vFense.core.view.views import validate_view_names
 
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
@@ -259,8 +250,8 @@ class UserManager(object):
             else:
                 encrypted_password = Crypto().hash_bcrypt(user.password)
                 user_data[UserKeys.Password] = encrypted_password
-                current_view_is_valid = get_view(user.current_view)
-                default_view_is_valid = get_view(user.default_view)
+                current_view_is_valid = fetch_view(user.current_view)
+                default_view_is_valid = fetch_view(user.default_view)
                 validated_groups, _, invalid_groups = (
                     validate_group_ids(
                         group_ids, user.current_view, user.is_global
@@ -381,7 +372,7 @@ class UserManager(object):
         if isinstance(views, str):
             views = views.split(',')
 
-        views_are_valid = validate_views(views)
+        views_are_valid = validate_view_names(views)
         if self.properties[UserKeys.Global]:
             views = fetch_all_view_names()
 
