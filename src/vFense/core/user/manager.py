@@ -16,15 +16,18 @@ from vFense.core.group._constants import DefaultGroups
 from vFense.core.view._db import (
     users_exists_in_view, insert_user_per_view,
     delete_user_in_views, fetch_views_for_user,
-    fetch_all_views
+    fetch_all_view_names, update_usernames_for_views
 )
 
-from vFense.core.view._db_model import ViewPerUserKeys
+from vFense.core.view._db_model import ViewKeys
 from vFense.core.view._constants import Defaultviews
 
-from vFense.core.user._db import insert_user, fetch_user, fetch_users, \
-    delete_user, update_user, fetch_user_and_all_properties, \
-    fetch_users_and_all_properties, delete_users, user_status_toggle
+from vFense.core.user._db import (
+    insert_user, fetch_user, fetch_users,
+    delete_user, update_user, fetch_user_and_all_properties,
+    fetch_users_and_all_properties, delete_users, user_status_toggle,
+    update_views_for_user
+)
 
 from vFense.core.group._db import user_exist_in_group, insert_group_per_user, \
     delete_users_in_group
@@ -288,7 +291,7 @@ class UserManager(object):
                             )
                         )
                         if user.is_global:
-                            views = fetch_all_views()
+                            views = fetch_all_view_names()
 
                         self.add_to_views(views)
                         self.add_to_groups(group_ids)
@@ -354,11 +357,11 @@ class UserManager(object):
 
 
     @time_it
-    def add_to_views(self, views):
+    def add_to_views(self, views=None):
         """Add a multiple views to a user
-        Args:
-            views (list): List of views,
-                this user will be added to.
+        Kwargs:
+            views (list): List of views this user will be added too.
+                default = None
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
@@ -379,49 +382,38 @@ class UserManager(object):
             views = views.split(',')
 
         views_are_valid = validate_views(views)
-        results = None
+        if self.properties[UserKeys.Global]:
+            views = fetch_all_view_names()
+
+        results = {}
         user_exist = self.properties
-        data_list = []
         status = self.add_to_views.func_name + ' - '
-        msg = ''
-        status_code = 0
-        generic_status_code = 0
-        vfense_status_code = 0
-        generated_ids = []
-        if views_are_valid[0]:
-            data_list = []
-            for view in views:
-                if not users_exists_in_view(self.username, view):
-                    data_to_add = (
-                        {
-                            ViewPerUserKeys.ViewName: view,
-                            ViewPerUserKeys.UserName: self.username,
-                        }
+        if views_are_valid[0] and user_exist:
+            status_code, _, _, _ = update_views_for_user(self.username, views)
+            if status_code == DbCodes.Replaced:
+                update_usernames_for_views(views, [self.username])
+                msg = (
+                    'user %s added to %s' % (
+                        self.username, ' and '.join(views)
                     )
-                    data_list.append(data_to_add)
-
-            if user_exist and data_list:
-                status_code, _, _, generated_ids = (
-                    insert_user_per_view(data_list)
                 )
-                if status_code == DbCodes.Inserted:
-                    msg = (
-                        'user %s added to %s' % (
-                            self.username, ' and '.join(views)
-                        )
-                    )
-                    generic_status_code = GenericCodes.ObjectCreated
-                    vfense_status_code = ViewCodes.viewsAddedToUser
+                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectCreated
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewCodes.viewsAddedToUser
+                )
 
-            elif user_exist and not data_list:
-                msg = 'view names existed for user %s' % (self.username)
-                generic_status_code = GenericCodes.ObjectExists
-                vfense_status_code = ViewFailureCodes.UsersExistForView
-
-            elif not user_exist:
-                msg = 'User name is invalid: %s' % (self.username)
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+        elif not user_exist:
+            msg = 'User name is invalid: %s' % (self.username)
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.UserNameDoesNotExist
+            )
 
         elif not views_are_valid[0]:
             msg = (
@@ -429,17 +421,13 @@ class UserManager(object):
                     ' and '.join(views_are_valid[2])
                 )
             )
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = ViewFailureCodes.InvalidViewName
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.GENERATED_IDS: generated_ids,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.ERRORS: [],
-            ApiResultKeys.DATA: [],
-        }
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.InvalidViewName
+            )
 
         return results
 
