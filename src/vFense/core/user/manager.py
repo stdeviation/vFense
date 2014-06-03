@@ -472,8 +472,8 @@ class UserManager(object):
                 if not user_in_group:
                     data_to_add = (
                         {
-                            GroupsPerUserKeys.ViewName: (
-                                group.get(GroupKeys.ViewName)
+                            GroupsPerUserKeys.Views: (
+                                group.get(GroupKeys.Views)
                             ),
                             GroupsPerUserKeys.UserName: self.username,
                             GroupsPerUserKeys.GroupName: (

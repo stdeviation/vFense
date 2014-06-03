@@ -90,7 +90,7 @@ def fetch_view_names_for_user(username, conn=None):
             r
             .table(ViewCollections.ViewsPerUser)
             .get_all(username, index=viewPerUserIndexes.UserName)
-            .map(lambda x: x[ViewPerUserKeys.viewName])
+            .map(lambda x: x[ViewPerUserKeys.ViewName])
             .run(conn)
         )
 
@@ -121,7 +121,7 @@ def fetch_all_view_names(conn=None):
         data = list(
             r
             .table(ViewCollections.Views)
-            .map(lambda x: x[ViewKeys.viewName])
+            .map(lambda x: x[ViewKeys.ViewName])
             .run(conn)
         )
 
@@ -174,7 +174,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.Views)
                 .filter(
                     lambda name:
-                    name[ViewKeys.viewName].match("(?i)" + match)
+                    name[ViewKeys.ViewName].match("(?i)" + match)
                 )
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -186,7 +186,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.Views)
                 .filter(
                     lambda name:
-                    name[ViewKeys.viewName].match("(?i)" + match)
+                    name[ViewKeys.ViewName].match("(?i)" + match)
                 )
                 .run(conn)
             )
@@ -232,7 +232,7 @@ def fetch_properties_for_view(view_name, conn=None):
     map_hash = (
         lambda x:
         {
-            ViewKeys.viewName: x[ViewKeys.viewName],
+            ViewKeys.ViewName: x[ViewKeys.ViewName],
             ViewKeys.CpuThrottle: x[ViewKeys.CpuThrottle],
             ViewKeys.NetThrottle: x[ViewKeys.NetThrottle],
             ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
@@ -243,8 +243,8 @@ def fetch_properties_for_view(view_name, conn=None):
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    x[GroupKeys.viewName],
-                    index=GroupIndexes.viewName
+                    x[GroupKeys.ViewName],
+                    index=GroupIndexes.ViewName
                 )
                 .coerce_to('array')
                 .pluck(GroupKeys.GroupName, GroupKeys.GroupId)
@@ -305,7 +305,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
     map_hash = (
         lambda x:
         {
-            ViewKeys.viewName: x[ViewKeys.viewName],
+            ViewKeys.ViewName: x[ViewKeys.ViewName],
             ViewKeys.CpuThrottle: x[ViewKeys.CpuThrottle],
             ViewKeys.NetThrottle: x[ViewKeys.NetThrottle],
             ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
@@ -315,8 +315,8 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 r
                 .table(ViewCollections.ViewsPerUser)
                 .get_all(
-                    x[ViewPerUserKeys.viewName],
-                    index=viewPerUserIndexes.viewName
+                    x[ViewPerUserKeys.ViewName],
+                    index=viewPerUserIndexes.ViewName
                 )
                 .coerce_to('array')
                 .pluck(ViewPerUserKeys.UserName)
@@ -325,8 +325,8 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 r
                 .table(GroupCollections.Groups)
                 .get_all(
-                    x[GroupKeys.viewName],
-                    index=GroupIndexes.viewName
+                    x[GroupKeys.ViewName],
+                    index=GroupIndexes.ViewName
                 )
                 .coerce_to('array')
                 .pluck(GroupKeys.GroupName, GroupKeys.GroupId)
@@ -347,7 +347,7 @@ def fetch_properties_for_all_views(username=None, conn=None):
                 )
                 .eq_join(
                     lambda x:
-                    x[ViewKeys.viewName],
+                    x[ViewKeys.ViewName],
                     r.table(ViewCollections.Views)
                 )
                 .zip()
@@ -410,7 +410,7 @@ def fetch_users_for_view(view_name, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.ViewsPerUser)
                 .get_all(
                     view_name,
-                    index=viewPerUserIndexes.viewName
+                    index=viewPerUserIndexes.ViewName
                 )
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -421,7 +421,7 @@ def fetch_users_for_view(view_name, keys_to_pluck=None, conn=None):
                 .table(ViewCollections.ViewsPerUser)
                 .get_all(
                     view_name,
-                    index=viewPerUserIndexes.viewName
+                    index=viewPerUserIndexes.ViewName
                 )
                 .run(conn)
             )
@@ -504,7 +504,7 @@ def users_exists_in_view(username, view_name, conn=None):
         empty = (
             r
             .table(ViewCollections.ViewsPerUser)
-            .get_all(view_name, index=viewPerUserIndexes.viewName)
+            .get_all(view_name, index=viewPerUserIndexes.ViewName)
             .filter({ViewPerUserKeys.UserName: username})
             .is_empty()
             .run(conn)
@@ -546,7 +546,7 @@ def users_exists_in_views(view_names, conn=None):
                 .table(ViewCollections.ViewsPerUser)
                 .get_all(
                     view_name,
-                    index=viewPerUserIndexes.viewName
+                    index=viewPerUserIndexes.ViewName
                 )
                 .is_empty()
                 .run(conn)
@@ -701,7 +701,7 @@ def delete_user_in_views(username, view_names=None, conn=None):
                     .filter(
                         {
                             ViewPerUserKeys.UserName: username,
-                            ViewPerUserKeys.viewName: view_name
+                            ViewPerUserKeys.ViewName: view_name
                         }
                     )
                     .delete()
@@ -761,7 +761,7 @@ def delete_users_in_view(usernames, view_name, conn=None):
                 .filter(
                     {
                         ViewPerUserKeys.UserName: username,
-                        ViewPerUserKeys.viewName: view_name
+                        ViewPerUserKeys.ViewName: view_name
                     }
                 )
                 .delete()

@@ -67,16 +67,16 @@ def get_group_properties(group_id):
             "users": [
                 {
                     "user_name": "admin"
-                }, 
+                },
                 {
                     "user_name": "agent_api"
                 }
-            ], 
+            ],
             "permissions": [
                 "administrator"
-            ], 
-            "group_name": "Administrator", 
-            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066", 
+            ],
+            "group_name": "Administrator",
+            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
             "view_name": "default"
         }
     """
@@ -103,19 +103,19 @@ def get_properties_for_all_groups(view_name=None):
                 "users": [
                     {
                         "user_name": "admin"
-                    }, 
+                    },
                     {
                         "user_name": "agent_api"
                     }
-                ], 
+                ],
                 "permissions": [
-                    "install", 
+                    "install",
                     "uninstall"
-                ], 
-                "group_name": "JR ADMIN", 
-                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7", 
+                ],
+                "group_name": "JR ADMIN",
+                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7",
                 "view_name": "Test"
-            }, 
+            },
         ]
     """
 
@@ -230,7 +230,7 @@ def get_groups(
                 u'group_name': u'Administrator',
                 u'id': u'3ffc2a67-1203-4cb0-ada2-2ae870072680',
                 u'view_name': u'default'
-                                                
+
             }
         ]
     """
@@ -264,7 +264,7 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
             group = get_group(group_id)
             if group:
                 if view_name:
-                    if group.get(GroupKeys.ViewName) == view_name:
+                    if view_name in group.get(GroupKeys.Views):
                         if group.get(GroupKeys.Global) == is_global:
                             valid_groups.append(group_id)
                         else:
