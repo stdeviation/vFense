@@ -27,7 +27,6 @@ class Group(object):
             permissions (list): List of valid permissions.
             views (list): List of views.
             is_global (boolean): Is this group a global group.
-            restricted (boolean): Is this a restricted group for a view.
         """
         self.name = name
         self.permissions = permissions
@@ -152,7 +151,10 @@ class Group(object):
                 )
 
             else:
-                if self.permissions not in Permissions.VALID_PERMISSIONS:
+                if not (
+                        set(self.permissions).issubset(
+                            set(Permissions.VALID_PERMISSIONS)
+                        )):
                     invalid_fields.append(
                         {
                             GroupKeys.Permissions: self.permissions,

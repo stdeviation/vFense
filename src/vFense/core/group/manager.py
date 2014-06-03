@@ -101,7 +101,7 @@ class GroupManager(object):
         generated_ids = []
         group_data = group.to_dict()
         group_exist = self.properties
-        invalid_fields = group.invalid_fields()
+        invalid_fields = group.get_invalid_fields()
         if not invalid_fields and not group_exist:
             status_code, status_count, error, generated_ids = (
                 insert_group(group_data)
