@@ -222,9 +222,11 @@ def fetch_group_by_name(
                 .table(GroupCollections.Groups)
                 .filter(
                     {
-                        GroupKeys.GroupName: group_name,
-                        GroupKeys.ViewName: view_name
+                        GroupKeys.GroupName: group_name
                     }
+                )
+                .filter(
+                    lambda x: x[GroupKeys.Views].contains(view_name)
                 )
                 .pluck(fields_to_pluck)
                 .run(conn)
@@ -235,9 +237,11 @@ def fetch_group_by_name(
                 .table(GroupCollections.Groups)
                 .filter(
                     {
-                        GroupKeys.GroupName: group_name,
-                        GroupKeys.ViewName: view_name
+                        GroupKeys.GroupName: group_name
                     }
+                )
+                .filter(
+                    lambda x: x[GroupKeys.Views].contains(view_name)
                 )
                 .run(conn)
             )
@@ -793,18 +797,17 @@ def update_group(group_id, group_data, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_groups_from_user(username, group_ids=None, conn=None):
+def delete_users_in_group(group_id, usernames, conn=None):
     """Remove a group from a user or remove all groups for a user.
     Args:
-        username (str): Name of the user.
-
-    Kwargs:
-        group_ids(list): List of group_ids
+        group_id (str): 36 character group UUID
+        usernames (list): List of the usernames.
 
     Basic Usage::
-        >>> from vFense.group._db delete_groups_from_user
-        >>> username = 'agent_api'
-        >>> delete_groups_from_user(username)
+        >>> from vFense.group._db delete_users_from_group
+        >>> usernames = ['user names goes here']
+        >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
+        >>> delete_users_from_group(group_id, usernames)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -812,37 +815,190 @@ def delete_groups_from_user(username, group_ids=None, conn=None):
     """
     data = {}
     try:
-        if group_ids:
-            data = (
-                r
-                .expr(group_ids)
-                .for_each(
-                    lambda group_id:
-                    r
-                    .table(GroupCollections.GroupsPerUser)
-                    .filter(
-                        {
-                            GroupsPerUserKeys.UserName: username,
-                            GroupsPerUserKeys.GroupId: group_id
-                        }
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Users: (
+                        x[GroupKeys.Users].set_difference(usernames)
                     )
-                    .delete()
-                )
-                .run(conn)
+                }
             )
+            .run(conn)
+        )
 
-        else:
-            data = (
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_views_in_group(group_id, views, conn=None):
+    """Remove a group from a user or remove all groups for a user.
+    Args:
+        group_id (str): 36 character group UUID
+        views (list): List of views.
+
+    Basic Usage::
+        >>> from vFense.group._db delete_views_in_group
+        >>> views = ['Name of view goes here']
+        >>> delete_views_in_group(group_id, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: (
+                        x[GroupKeys.Views].set_difference(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_groups_from_view(view, conn=None):
+    """Remove a group from a user or remove all groups for a user.
+    Args:
+        view (str): Name of view to remove group from.
+
+    Basic Usage::
+        >>> from vFense.group._db delete_groups_from_view
+        >>> view = 'Name of view goes here'
+        >>> delete_groups_from_view(view)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view, index=GroupIndexes.Views)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: (
+                        x[GroupKeys.Views].set_difference(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def add_users_to_group(group_id, usernames, conn=None):
+    """Add users to a group
+    Args:
+        group_id (str): 36 character group UUID
+        usernames (list): List of the usernames.
+
+    Basic Usage::
+        >>> from vFense.group._db add_users_to_group
+        >>> usernames = ['user names goes here']
+        >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
+        >>> add_users_to_group(group_id, usernames)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Users: (
+                        x[GroupKeys.Users].set_union(usernames)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def add_user_to_groups(group_ids, user, conn=None):
+    """Add 1 or multiple users to multiple groups.
+    Args:
+        group_ids (list): List of group_ids.
+        user (string): username.
+
+    Basic Usage::
+        >>> from vFense.group._db add_user_to_groups
+        >>> users = 'Name of user goes here'
+        >>> group_ids = ['fc88f36c-d911-4a8b-aad3-3728b3d1a607']
+        >>> add_user_to_groups(group_ids, user)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(group_ids)
+            .for_each(
+                lambda group_id:
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .filter(
+                .table(GroupCollections.Groups)
+                .get(group_id)
+                .update(
+                    lambda x:
                     {
-                        GroupsPerUserKeys.UserName: username,
+                        GroupKeys.Users: (
+                            x[GroupKeys.Users].set_insert(user)
+                        )
                     }
                 )
-                .delete()
-                .run(conn)
             )
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)
@@ -853,16 +1009,17 @@ def delete_groups_from_user(username, group_ids=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_users_in_group(usernames, group_id, conn=None):
-    """Remove a group from a user or remove all groups for a user.
+def add_users_to_groups(group_ids, users, conn=None):
+    """Add 1 or multiple users to multiple groups.
     Args:
-        usernames (list): Name of the users.
-        group_id (str): 36 character group UUID
+        group_ids (list): List of group_ids.
+        users (list): List of users.
 
     Basic Usage::
-        >>> from vFense.group._db delete_users_from_group
-        >>> usernames = ['agent_api']
-        >>> delete_users_from_group(usernames, group_id)
+        >>> from vFense.group._db add_users_to_groups
+        >>> users = ['Name of user goes here']
+        >>> group_ids = ['fc88f36c-d911-4a8b-aad3-3728b3d1a607']
+        >>> add_users_to_groups(group_ids, users)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -872,21 +1029,205 @@ def delete_users_in_group(usernames, group_id, conn=None):
     try:
         data = (
             r
-            .expr(usernames)
+            .expr(group_ids)
             .for_each(
-                lambda username:
-                    r
-                    .table(GroupCollections.GroupsPerUser)
-                    .filter(
-                        {
-                            GroupsPerUserKeys.UserName: username,
-                            GroupsPerUserKeys.GroupId: group_id
-                        }
-                    )
-                    .delete()
+                lambda group_id:
+                r
+                .table(GroupCollections.Groups)
+                .get(group_id)
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Users: (
+                            x[GroupKeys.Users].set_union(users)
+                        )
+                    }
                 )
-                .run(conn)
             )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def add_views_to_group(group_id, views, conn=None):
+    """Add 1 or multiple views to which this group belongs too.
+    Args:
+        group_id (str): 36 character group UUID
+        views (list): List of views.
+
+    Basic Usage::
+        >>> from vFense.group._db add_views_to_group
+        >>> views = ['Name of view goes here']
+        >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
+        >>> add_views_to_group(group_id, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: (
+                        x[GroupKeys.Views].set_union(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def add_view_to_groups(group_ids, view, conn=None):
+    """Add 1 or multiple views to multiple groups.
+    Args:
+        group_ids (list): List of group_ids.
+        views (string): The name of the view.
+
+    Basic Usage::
+        >>> from vFense.group._db add_view_to_groups
+        >>> view = 'Name of view goes here'
+        >>> group_ids = ['fc88f36c-d911-4a8b-aad3-3728b3d1a607']
+        >>> add_view_to_groups(group_ids, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(group_ids)
+            .for_each(
+                lambda group_id:
+                r
+                .table(GroupCollections.Groups)
+                .get(group_id)
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Views: (
+                            x[GroupKeys.Views].set_insert(view)
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def add_views_to_groups(group_ids, views, conn=None):
+    """Add 1 or multiple views to multiple groups.
+    Args:
+        group_ids (list): List of group_ids.
+        views (list): List of views.
+
+    Basic Usage::
+        >>> from vFense.group._db add_views_to_groups
+        >>> views = ['Name of view goes here']
+        >>> group_ids = ['fc88f36c-d911-4a8b-aad3-3728b3d1a607']
+        >>> add_views_to_groups(group_ids, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(group_ids)
+            .for_each(
+                lambda group_id:
+                r
+                .table(GroupCollections.Groups)
+                .get(group_id)
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Views: (
+                            x[GroupKeys.Views].set_union(views)
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_views_from_groups(group_ids, views, conn=None):
+    """Remove 1 or multiple views from multiple groups.
+    Args:
+        group_ids (list): List of group_ids.
+        views (list): List of views.
+
+    Basic Usage::
+        >>> from vFense.group._db delete_views_from_groups
+        >>> views = ['Name of view goes here']
+        >>> group_ids = ['fc88f36c-d911-4a8b-aad3-3728b3d1a607']
+        >>> delete_views_from_groups(group_ids, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(group_ids)
+            .for_each(
+                lambda group_id:
+                r
+                .table(GroupCollections.Groups)
+                .get(group_id)
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Views: (
+                            x[GroupKeys.Views].set_difference(views)
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)
@@ -958,40 +1299,6 @@ def delete_groups(group_ids, conn=None):
                 .get(group_id)
                 .delete()
             )
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
-
-@time_it
-@db_create_close
-@return_status_tuple
-def delete_groups_from_view(view_name, conn=None):
-    """Delete groups that belong to a view.
-    Args:
-        view_name (str): the name of the view, that the groups belong too.
-
-    Basic Usage::
-        >>> from vFense.group._db import delete_groups_from_view
-        >>> view_name = 'test'
-        >>> delete_groups_from_view(view_name)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get_all(view_name, index=GroupIndexes.ViewName)
-            .delete()
             .run(conn)
         )
 

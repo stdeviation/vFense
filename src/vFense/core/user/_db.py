@@ -7,8 +7,7 @@ from vFense.core.user._db_model import (
 )
 from vFense.core.user._constants import *
 from vFense.core.group._db_model import (
-    GroupCollections, GroupKeys, GroupsPerUserKeys,
-    GroupsPerUserIndexes
+    GroupCollections, GroupKeys
 )
 from vFense.core.view._db_model import ViewMappedKeys
 from vFense.core.view._constants import *
@@ -164,10 +163,10 @@ def fetch_user_and_all_properties(username, conn=None):
             UserKeys.Global: r.row[UserKeys.Global],
             UserMappedKeys.Groups: (
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
+                .table(GroupCollections.Groups)
+                .get_all(username, index=GroupsIndexes.Users)
                 .coerce_to('array')
-                .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
+                .pluck(GroupKeys.GroupId, GroupKeys.GroupName)
             ),
             UserMappedKeys.Views: (
                 r
@@ -176,15 +175,8 @@ def fetch_user_and_all_properties(username, conn=None):
                     {
                         Permissions.ADMINISTRATOR: r.branch(
                             r
-                            .table(GroupCollections.GroupsPerUser)
-                            .get_all(username, index=GroupsPerUserIndexes.UserName)
-                            .coerce_to('array')
-                            .eq_join(lambda y:
-                                y[GroupKeys.GroupName],
-                                r.table(GroupCollections.Groups),
-                                index=GroupsPerUserIndexes.GroupName
-                            )
-                            .zip()
+                            .table(GroupCollections.Groups)
+                            .get_all(username, index=GroupsIndexes.Users)
                             .filter(
                                 lambda z:
                                 z[GroupKeys.Permissions]
@@ -204,15 +196,8 @@ def fetch_user_and_all_properties(username, conn=None):
             ),
             UserMappedKeys.Permissions: (
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
-                .coerce_to('array')
-                .eq_join(lambda x:
-                    x[GroupKeys.GroupName],
-                    r.table(GroupCollections.Groups),
-                    index=GroupsPerUserIndexes.GroupName
-                )
-                .zip()
+                .table(GroupCollections.Groups)
+                .get_all(username, index=GroupsIndexes.Users)
                 .map(lambda x: x[GroupKeys.Permissions])[0]
             )
         }
@@ -281,39 +266,24 @@ def fetch_users_and_all_properties(view_name=None, conn=None):
             UserKeys.UserName: x[UserKeys.UserName],
             UserMappedKeys.Groups: (
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(x
-                    [GroupsPerUserKeys.UserName],
-                    index=GroupsPerUserIndexes.UserName
-                )
-                .coerce_to('array')
-                .pluck(GroupsPerUserKeys.GroupId, GroupsPerUserKeys.GroupName)
+                .table(GroupCollections.Groups)
+                .get_all(x[GroupKeys.Users], index=GroupIndexes.Users)
+                .pluck(GroupKeys.GroupId, GroupKeys.GroupName)
             ),
             UserMappedKeys.Views: (
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    x[ViewPerUserKeys.UserName],
-                    index=ViewPerUserIndexes.UserName
-                )
+                .table(ViewCollections.Views)
+                .get_all(x[ViewKeys.Users], index=ViewIndexes.Users)
                 .coerce_to('array')
                 .map(lambda y:
                     {
                         Permissions.ADMINISTRATOR: r.branch(
                             r
-                            .table(GroupCollections.GroupsPerUser)
+                            .table(GroupCollections.Groups)
                             .get_all(
-                                y[GroupsPerUserKeys.UserName],
-                                index=GroupsPerUserIndexes.UserName
+                                y[GroupKeys.Users],
+                                index=GroupIndexes.Users
                             )
-                            .coerce_to('array')
-                            .eq_join(lambda z:
-                                z[GroupKeys.GroupName],
-                                r.table(GroupCollections.Groups),
-                                index=GroupsPerUserIndexes.GroupName
-                            )
-                            .zip()
-                            .filter({GroupsPerUserKeys.UserName: y[GroupsPerUserKeys.UserName]})
                             .filter(
                                 lambda a:
                                 a[GroupKeys.Permissions]
@@ -322,21 +292,14 @@ def fetch_users_and_all_properties(view_name=None, conn=None):
                             True,
                             False
                         ),
-                        ViewPerUserKeys.ViewName: y[ViewPerUserKeys.ViewName]
+                        ViewKeys.ViewName: y[ViewKeys.ViewName]
                     }
                 )
             ),
             UserMappedKeys.Permissions: (
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(x[GroupsPerUserKeys.UserName], index=GroupsPerUserIndexes.UserName)
-                .coerce_to('array')
-                .eq_join(lambda b:
-                    b[GroupKeys.GroupName],
-                    r.table(GroupCollections.Groups),
-                    index=GroupsPerUserIndexes.GroupName
-                )
-                .zip()
+                .table(GroupCollections.Groups)
+                .get_all(x[GroupKeys.UserName], index=GroupIndexes.Users)
                 .map(lambda b: b[GroupKeys.Permissions])[0]
             )
         }
@@ -346,17 +309,8 @@ def fetch_users_and_all_properties(view_name=None, conn=None):
         if view_name:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name, index=ViewPerUserIndexes.ViewName
-                )
-                .pluck(ViewPerUserKeys.ViewName, ViewPerUserKeys.UserName)
-                .distinct()
-                .eq_join(lambda x:
-                    x[UserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
+                .table(UserCollections.User)
+                .get_all(view, index=UserIndexes.Views)
                 .map(map_hash)
                 .run(conn)
             )
@@ -473,17 +427,11 @@ def fetch_users(
         elif not view_name and username and without_fields:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
+                .table(UserCollections.Users)
                 .filter(
                     lambda x:
-                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
+                    x[UserKeys.UserName].match("(?i)" + username)
                 )
-                .eq_join(
-                    lambda x:
-                    x[ViewPerUserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
                 .without(without_fields)
                 .run(conn)
             )
@@ -491,20 +439,12 @@ def fetch_users(
         elif view_name and username and without_fields:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name, index=ViewPerUserIndexes.ViewName
-                )
+                .table(UserCollections.Users)
+                .get_all(view_name, index=UserIndexes.Views)
                 .filter(
                     lambda x:
-                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
+                    x[UserKeys.UserName].match("(?i)" + username)
                 )
-                .eq_join(
-                    lambda x:
-                    x[ViewPerUserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
                 .without(without_fields)
                 .run(conn)
             )
@@ -512,32 +452,18 @@ def fetch_users(
         elif view_name and not username and not without_fields:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name, index=ViewPerUserIndexes.ViewName
-                )
-                .eq_join(
-                    lambda x:
-                    x[ViewPerUserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
+                .table(UserCollections.Users)
+                .get_all(view_name, index=UserIndexes.Views)
                 .run(conn)
             )
 
         elif view_name and not username and without_fields:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
+                .table(UserCollections.Users)
                 .get_all(
-                    view_name, index=ViewPerUserIndexes.ViewName
+                    view_name, index=UserIndexes.Views
                 )
-                .eq_join(
-                    lambda x:
-                    x[ViewPerUserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
                 .without(without_fields)
                 .run(conn)
             )
@@ -545,20 +471,12 @@ def fetch_users(
         elif view_name and username and not without_fields:
             data = list(
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name, index=ViewPerUserIndexes.ViewName
-                )
+                .table(UserCollections.Users)
+                .get_all(view_name, index=UserIndexes.Views)
                 .filter(
                     lambda x:
-                    x[ViewPerUserKeys.UserName].match("(?i)" + username)
+                    x[UserKeys.UserName].match("(?i)" + username)
                 )
-                .eq_join(
-                    lambda x:
-                    x[ViewPerUserKeys.UserName],
-                    r.table(UserCollections.Users)
-                )
-                .zip()
                 .run(conn)
             )
 

@@ -4,11 +4,11 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.group._db_model import GroupKeys, GroupsPerUserKeys
+from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import (
-    delete_groups_from_user,
+    delete_users_in_group, add_user_to_groups,
     fetch_group_by_name, user_exist_in_group,
-    fetch_groupids_for_user, fetch_group, insert_group_per_user
+    fetch_groupids_for_user, fetch_group,
 )
 
 from vFense.core.group._constants import DefaultGroups
@@ -25,8 +25,7 @@ from vFense.core.user._db import (
     update_views_for_user, delete_views_in_user
 )
 
-from vFense.core.group.groups import validate_group_ids, \
-    add_user_to_groups, remove_groups_from_user, get_group
+from vFense.core.group.groups import validate_group_ids
 
 from vFense.core.view.views import validate_view_names
 
@@ -490,41 +489,14 @@ class UserManager(object):
         generic_status_code = 0
         vfense_status_code = 0
         if groups_are_valid[0] and user_exist:
-            data_list = []
-            print group_ids, type(group_ids)
-            for group_id in group_ids:
-                group = fetch_group(group_id)
-                user_in_group = (
-                    user_exist_in_group(self.username, group_id)
-                )
-                if not user_in_group:
-                    data_to_add = (
-                        {
-                            GroupsPerUserKeys.Views: (
-                                group.get(GroupKeys.Views)
-                            ),
-                            GroupsPerUserKeys.UserName: self.username,
-                            GroupsPerUserKeys.GroupName: (
-                                group[GroupKeys.GroupName]
-                            ),
-                            GroupsPerUserKeys.Global: group[GroupKeys.Global],
-                            GroupsPerUserKeys.GroupId: group_id
-                        }
-                    )
-                    data_list.append(data_to_add)
+            status_code, _, _, generated_ids = (
+                add_user_to_groups(group_ids, self.username)
+            )
 
-                else:
-                    users_group_exist.append(group_id)
-
-            if len(data_list) == len(group_ids):
-                status_code, _, _, generated_ids = (
-                    insert_group_per_user(data_list)
-                )
-
-                if status_code == DbCodes.Inserted:
-                    msg = 'user %s add to groups' % (self.username)
-                    generic_status_code = GenericCodes.ObjectCreated
-                    vfense_status_code = GroupCodes.GroupCreated
+            if status_code == DbCodes.Inserted:
+                msg = 'user %s add to groups' % (self.username)
+                generic_status_code = GenericCodes.ObjectCreated
+                vfense_status_code = GroupCodes.GroupCreated
 
             else:
                 msg = (
@@ -682,7 +654,7 @@ class UserManager(object):
         if exist_in_groupids and not admin_group_id_exists_in_group_ids:
 
             status_code, _, _, _ = (
-                delete_groups_from_user(self.username, group_ids)
+                (self.username, group_ids)
             )
             if status_code == DbCodes.Deleted:
                 generic_status_code = GenericCodes.ObjectDeleted

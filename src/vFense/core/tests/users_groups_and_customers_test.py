@@ -1,95 +1,69 @@
 import unittest
 
-from vFense.core._constants import *
-from vFense.core.user._constants import *
-from vFense.core.user.users import *
-from vFense.core.group.groups import *
-from vFense.core.group._constants import *
-from vFense.core.view.views import *
-from vFense.core.view._constants import *
-from vFense.core.permissions._constants import *
-from vFense.errorz._constants import *
+from vFense.core.group import Group
+from vFense.core.group._db_model import (
+    GroupKeys
+)
+from vFense.core.group._db import (
+    fetch_group_by_name
+)
+from vFense.core.group.manager import GroupManager
+from vFense.core.view import View
+from vFense.core.view.manager import ViewManager
+from vFense.core.user import User
+from vFense.core.user.manager import UserManager
+from vFense.errorz.status_codes import (
+    ViewCodes, GroupCodes, UserCodes
+)
+from vFense.errorz._constants import ApiResultKeys
+from vFense.core.permissions._constants import Permissions
+from vFense.core.group._constants import DefaultGroups
+from vFense.core.view._constants import DefaultViews
+from vFense.core.user._constants import DefaultUsers
 
 class UsersGroupsAndViewsTests(unittest.TestCase):
 
     def test_a_create_view(self):
-        results = (
-            create_view(
-                'test',
-                http_application_url_location='https://10.0.0.1/packages',
-                init=True
-            )
+        view = View(
+            DefaultViews.GLOBAL,
+            package_download_url='https://10.0.0.15/packages/'
         )
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
-
-    def test_b_edit_view(self):
-        props = {
-            ViewKeys.OperationTtl: 20
-        }
-        results = edit_view('test', **props)
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
-
-    def test_c_create_group1(self):
-        results = (
-            create_group(
-                'Tester 4 life Part 1', 'test', [Permissions.ADMINISTRATOR]
-            )
-        )
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
-
-    def test_d_create_group2(self):
-        results = (
-            create_group(
-                'Tester 4 life Part 2', 'test',
-                [Permissions.INSTALL, Permissions.UNINSTALL]
-            )
-        )
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
+        manager = ViewManager(view.name)
+        results = manager.create(view)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewCreated)
 
 
-    def test_e_create_user1(self):
-        group_test_id = (
-            get_group_by_name('Tester 4 life Part 1', 'test').get(GroupKeys.GroupId)
+    def test_b_create_group(self):
+        group = Group(
+            DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
+            [DefaultViews.GLOBAL], True
         )
-        results = create_user(
-            'test1', 'Unit Test 1', 'T35t#123',
-            [group_test_id], 'test', 'test@test.org', 'yes',
-            'tester', '/test', 'TEST'
-        ) 
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
+        manager = GroupManager()
+        results = manager.create(group)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.GroupCreated)
 
-    def test_f_create_user2(self):
-        group_test_id = (
-            get_group_by_name('Tester 4 life Part 1', 'test').get(GroupKeys.GroupId)
-        )
-        results = create_user(
-            'test2', 'Unit Test 2', 'T35t#123',
-            [group_test_id], 'test', 'test@test.org', 'yes',
-            'tester', '/test', 'TEST'
-        ) 
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
 
-    def test_g_create_user3(self):
-        group_test_id_1 = (
-            get_group_by_name('Tester 4 life Part 1', 'test').get(GroupKeys.GroupId)
+    def test_c_create_user(self):
+        global_group_id = (
+            fetch_group_by_name(
+                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL
+            ).get(GroupKeys.GroupId)
         )
-        group_test_id_2 = (
-            get_group_by_name('Tester 4 life Part 2', 'test').get(GroupKeys.GroupId)
+        user = User(
+            DefaultUsers.GLOBAL_ADMIN,
+            'vFense#123', 'Global Administrator',
+            current_view=DefaultViews.GLOBAL,
+            default_view=DefaultViews.GLOBAL,
+            enabled=True, is_global=True
         )
-        results = create_user(
-            'test3', 'Unit Test 3', 'T35t#123',
-            [group_test_id_1, group_test_id_2],
-            'test', 'test@test.org', 'yes',
-            'tester', '/test', 'TEST'
-        ) 
-        http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
-        self.failUnless(http_status_code == 200)
+        manager = UserManager(user.name)
+        results = manager.create(user, [global_group_id])
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == UserCodes.UserCreated)
+
+"""
 
     def test_h_edit_user(self):
         props = {
@@ -118,7 +92,6 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         results = remove_groups_from_user('test3', [group_test_id])
         http_status_code = results.get(ApiResultKeys.HTTP_STATUS_CODE)
         self.failUnless(http_status_code == 200)
-#"""
 
     def test_l_remove_views_from_user(self):
         results = remove_views_from_user('test3', ['test'])
@@ -158,9 +131,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         self.failUnless(http_status_code == 200)
 
 
-#"""
-    #def testTwo(self):
-    #    self.failIf(IsOdd(2))
+"""
 
 def main():
     unittest.main()

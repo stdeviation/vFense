@@ -739,16 +739,16 @@ def delete_user_in_views(username, view_names=None, conn=None):
 def delete_users_in_view(usernames, view_name, conn=None):
     """Remove users from a view.
     Args:
-        username (list): List of usernames you want
+        usernames (list): List of usernames you want
             to remove from the view.
         view_name (str): The name of the view,
             you want to remove the user from.
 
     Basic Usage::
         >>> from vFense.view._db delete_users_in_view
-        >>> username = ['tester1', 'tester2']
+        >>> usernames = ['tester1', 'tester2']
         >>> view_name = ['Tester']
-        >>> delete_users_in_view(username)
+        >>> delete_users_in_view(usernames, view_name)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -758,18 +758,15 @@ def delete_users_in_view(usernames, view_name, conn=None):
     try:
         data = (
             r
-            .expr(usernames)
-            .for_each(
-                lambda username:
-                r
-                .table(ViewCollections.ViewsPerUser)
-                .filter(
-                    {
-                        ViewPerUserKeys.UserName: username,
-                        ViewPerUserKeys.ViewName: view_name
-                    }
-                )
-                .delete()
+            .table(ViewCollections.Views)
+            .get_all(view_name)
+            .update(
+                lambda x:
+                {
+                    ViewKeys.Users: (
+                        x[ViewKeys.Users].set_difference(usernames)
+                    )
+                }
             )
             .run(conn)
         )

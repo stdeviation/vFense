@@ -17,3 +17,6 @@ class UserKeys():
 class UserMappedKeys():
     Groups = 'groups' #string
     Permissions = 'permissions' #string
+
+class UserIndexes():
+    Views = 'views'

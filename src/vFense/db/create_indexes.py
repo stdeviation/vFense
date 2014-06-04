@@ -20,7 +20,6 @@ from vFense.core.queue import *
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
-        ('acls', Id),
         (AgentsCollection, AgentKey.AgentId),
         (AppCollections.UniqueApplications, AppsKey.AppId),
         (AppCollections.AppsPerAgent, Id),
@@ -53,9 +52,7 @@ def initialize_indexes_and_create_tables():
         (QueueCollections.Agent, Id),
         (UserCollections.Users, UserKeys.UserName),
         (GroupCollections.Groups, GroupKeys.GroupId),
-        (GroupCollections.GroupsPerUser, GroupsPerUserKeys.Id),
         (ViewCollections.Views, ViewKeys.ViewName),
-        (ViewCollections.ViewsPerUser, ViewPerUserKeys.Id),
     ]
     conn = db_connect()
 #################################### If Collections do not exist, create them #########################
@@ -91,9 +88,8 @@ def initialize_indexes_and_create_tables():
     tag_per_agent_list = r.table(TagsPerAgentCollection).index_list().run(conn)
     notif_plugin_list = r.table(NotificationCollections.NotificationPlugins,).index_list().run(conn)
     agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
+    user_list = r.table(UserCollections.Users).index_list().run(conn)
     groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
-    groups_per_user_list = r.table(GroupCollections.GroupsPerUser).index_list().run(conn)
-    view_per_user_list = r.table(ViewCollections.ViewsPerUser).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.ViewName in agents_list:
@@ -589,7 +585,7 @@ def initialize_indexes_and_create_tables():
 
     if not UbuntuSecurityBulletinIndexes.NameAndVersion in ubuntu_bulletin_list:
         r.table(UbuntuSecurityCollection.Bulletin).index_create(
-            UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x: 
+            UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x:
                 x[UbuntuSecurityBulletinKey.Apps].map(lambda y:
                     [y['name'], y['version']]), multi=True).run(conn)
 
@@ -597,32 +593,19 @@ def initialize_indexes_and_create_tables():
     if not AgentQueueIndexes.AgentId in agent_queue_list:
         r.table(QueueCollections.Agent).index_create(AgentQueueIndexes.AgentId).run(conn)
 
+#################################### User Indexes ###################################################
+    if not UserIndexes.Views in user_list:
+        r.table(UserCollections.Users).index_create(UserIndexes.Views, multi=True).run(conn)
+
 #################################### Group Indexes ###################################################
-    if not GroupIndexes.ViewName in groups_list:
-        r.table(GroupCollections.Groups).index_create(GroupIndexes.ViewName).run(conn)
+    if not GroupIndexes.Views in groups_list:
+        r.table(GroupCollections.Groups).index_create(GroupIndexes.Views, multi=True).run(conn)
+
+    if not GroupIndexes.Users in groups_list:
+        r.table(GroupCollections.Groups).index_create(GroupIndexes.Users, multi=True).run(conn)
 
     if not GroupIndexes.GroupName in groups_list:
         r.table(GroupCollections.Groups).index_create(GroupIndexes.GroupName).run(conn)
-
-#################################### Groups Per User Indexes ###################################################
-    if not GroupsPerUserIndexes.UserName in groups_per_user_list:
-        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.UserName).run(conn)
-
-    if not GroupsPerUserIndexes.ViewName in groups_per_user_list:
-        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.ViewName).run(conn)
-
-    if not GroupsPerUserIndexes.GroupName in groups_per_user_list:
-        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupName).run(conn)
-
-    if not GroupsPerUserIndexes.GroupId in groups_per_user_list:
-        r.table(GroupCollections.GroupsPerUser).index_create(GroupsPerUserIndexes.GroupId).run(conn)
-
-#################################### View Per User Indexes ###################################################
-    if not ViewPerUserIndexes.UserName in view_per_user_list:
-        r.table(ViewCollections.ViewsPerUser).index_create(ViewPerUserIndexes.UserName).run(conn)
-
-    if not ViewPerUserIndexes.ViewName in view_per_user_list:
-        r.table(ViewCollections.ViewsPerUser).index_create(ViewPerUserIndexes.ViewName).run(conn)
 
 #################################### File Server Indexes ###################################################
     if not FileServerIndexes.ViewName in file_server_list:
