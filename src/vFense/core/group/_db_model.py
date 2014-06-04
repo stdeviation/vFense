@@ -28,5 +28,5 @@ class GroupsPerUserKeys():
 
 class GroupsPerUserIndexes():
     Views = 'view_name'
-    Users = 'user_name'
+    UserName = 'user_name'
     GroupId = 'group_id'

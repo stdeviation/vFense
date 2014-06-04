@@ -459,9 +459,11 @@ def user_exist_in_group(username, group_id, conn=None):
     try:
         is_empty = (
             r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .filter({GroupsPerUserKeys.GroupId: group_id})
+            .table(GroupCollections.Groups)
+            .get_all(group_id)
+            .filter(
+                lambda x: x[GroupKeys.Users].contains(username)
+            )
             .is_empty()
             .run(conn)
         )

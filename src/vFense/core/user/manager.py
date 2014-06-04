@@ -393,8 +393,8 @@ class UserManager(object):
         status = self.add_to_views.func_name + ' - '
         if views_are_valid and user_exist:
             status_code, _, _, _ = update_views_for_user(self.username, views)
+            update_usernames_for_views(views, [self.username])
             if status_code == DbCodes.Replaced:
-                update_usernames_for_views(views, [self.username])
                 msg = (
                     'user %s added to %s' % (
                         self.username, ' and '.join(views)
@@ -405,8 +405,23 @@ class UserManager(object):
                     GenericCodes.ObjectCreated
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewCodes.viewsAddedToUser
+                    ViewCodes.ViewsAddedToUser
                 )
+
+            elif status_code == DbCodes.Unchanged:
+                msg = (
+                    'user %s already in views: %s' % (
+                        self.username, ' and '.join(views)
+                    )
+                )
+                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewCodes.ViewUnchanged
+                )
+
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
@@ -476,6 +491,7 @@ class UserManager(object):
         vfense_status_code = 0
         if groups_are_valid[0] and user_exist:
             data_list = []
+            print group_ids, type(group_ids)
             for group_id in group_ids:
                 group = fetch_group(group_id)
                 user_in_group = (
