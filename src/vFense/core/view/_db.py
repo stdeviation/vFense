@@ -700,9 +700,10 @@ def delete_user_in_views(username, view_names=None, conn=None):
                     .table(ViewCollections.Views)
                     .get(view_name)
                     .update(
+                        lambda x:
                         {
                             ViewKeys.Users: (
-                                r.row[ViewKeys.Users]
+                                x[ViewKeys.Users]
                                 .set_difference([username])
                             )
                         }
@@ -716,9 +717,10 @@ def delete_user_in_views(username, view_names=None, conn=None):
                 r
                 .table(ViewCollections.Views)
                 .update(
+                    lambda x:
                     {
                         ViewKeys.Users: (
-                            r.row[ViewKeys.Users].set_difference([username])
+                            x[ViewKeys.Users].set_difference([username])
                         )
                     }
                 )

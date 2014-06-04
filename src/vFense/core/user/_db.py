@@ -821,7 +821,7 @@ def delete_views_in_user(username, view_names, conn=None):
             .update(
                 {
                     UserKeys.Views: (
-                        r.row[UserKeys.Views].set_difference(views)
+                        r.row[UserKeys.Views].set_difference(view_names)
                     )
                 }
             )
