@@ -697,14 +697,16 @@ def delete_user_in_views(username, view_names=None, conn=None):
                 .for_each(
                     lambda view_name:
                     r
-                    .table(ViewCollections.ViewsPerUser)
-                    .filter(
+                    .table(ViewCollections.Views)
+                    .get(view_name)
+                    .update(
                         {
-                            ViewPerUserKeys.UserName: username,
-                            ViewPerUserKeys.ViewName: view_name
+                            ViewKeys.Users: (
+                                r.row[ViewKeys.Users]
+                                .set_difference([username])
+                            )
                         }
                     )
-                    .delete()
                 )
                 .run(conn)
             )
@@ -712,13 +714,14 @@ def delete_user_in_views(username, view_names=None, conn=None):
         else:
             data = (
                 r
-                .table(ViewCollections.ViewsPerUser)
-                .filter(
+                .table(ViewCollections.Views)
+                .update(
                     {
-                        ViewPerUserKeys.UserName: username,
+                        ViewKeys.Users: (
+                            r.row[ViewKeys.Users].set_difference([username])
+                        )
                     }
                 )
-                .delete()
                 .run(conn)
             )
 
@@ -876,9 +879,10 @@ def update_usernames_for_views(views, usernames, conn=None):
                 .table(ViewCollections.Views)
                 .get(x)
                 .update(
+                    lambda y:
                     {
                         ViewKeys.Users: (
-                            r.row[ViewKeys.Users].set_union(usernames)
+                            y[ViewKeys.Users].set_union(usernames)
                         )
                     }
                 )

@@ -791,3 +791,44 @@ def delete_users(usernames, conn=None):
         logger.exception(e)
 
     return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_views_in_user(username, view_names, conn=None):
+    """Remove a view from a user or remove all views for a user.
+    Args:
+        username (str): Name of the user.
+        view_names (list): List of view_names.
+
+    Basic Usage:
+        >>> from vFense.view._db delete_views_in_user
+        >>> username = 'agent_api'
+        >>> view_names = ['Foo Bar', 'Test 1']
+        >>> delete_views_in_user(username, view_names)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(UserCollections.Users)
+            .get(username)
+            .update(
+                {
+                    UserKeys.Views: (
+                        r.row[UserKeys.Views].set_difference(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)

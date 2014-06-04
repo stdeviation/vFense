@@ -302,6 +302,7 @@ class View(object):
             ViewKeys.CpuThrottle: self.cpu_throttle,
             ViewKeys.ServerQueueTTL: self.server_queue_ttl,
             ViewKeys.AgentQueueTTL: self.agent_queue_ttl,
+            ViewKeys.Users: self.users,
             ViewKeys.PackageUrl: self.package_download_url
         }
 
