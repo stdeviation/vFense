@@ -220,11 +220,7 @@ def fetch_group_by_name(
             data = list(
                 r
                 .table(GroupCollections.Groups)
-                .filter(
-                    {
-                        GroupKeys.GroupName: group_name
-                    }
-                )
+                .get_all(group_name, index=GroupIndexes.GroupName)
                 .filter(
                     lambda x: x[GroupKeys.Views].contains(view_name)
                 )
@@ -235,11 +231,7 @@ def fetch_group_by_name(
             data = list(
                 r
                 .table(GroupCollections.Groups)
-                .filter(
-                    {
-                        GroupKeys.GroupName: group_name
-                    }
-                )
+                .get_all(group_name, index=GroupIndexes.GroupName)
                 .filter(
                     lambda x: x[GroupKeys.Views].contains(view_name)
                 )
@@ -431,9 +423,9 @@ def fetch_groupids_for_user(username, conn=None):
     try:
         data = list(
             r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .map(lambda group_id: group_id[GroupsPerUserKeys.GroupId])
+            .table(GroupCollections.Groups)
+            .get_all(username, index=GroupIndexes.Users)
+            .map(lambda group_id: group_id[GroupKeys.GroupId])
             .run(conn)
         )
 
@@ -786,6 +778,50 @@ def update_group(group_id, group_data, conn=None):
             .table(GroupCollections.Groups)
             .get(group_id)
             .update(group_data)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_user_in_groups(username, group_ids, conn=None):
+    """Remove a group from a user or remove all groups for a user.
+    Args:
+        username (str): Name of the user.
+        group_ids (list): List of group_ids.
+
+    Basic Usage:
+        >>> from vFense.view._db import delete_groups_in_user
+        >>> username = 'agent_api'
+        >>> group_ids = [
+            u'6c724340-265a-434e-97ed-7951b2844fdb',
+            u'a5f07b40-ef18-4a23-918f-95e463e0a7c9'
+        ]
+        >>> delete_groups_in_user(username, group_ids)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get_all(username, index=GroupIndexes.Users)
+            .update(
+                {
+                    UserKeys.Users: (
+                        r.row[UserKeys.Users].set_difference([username])
+                    )
+                }
+            )
             .run(conn)
         )
 

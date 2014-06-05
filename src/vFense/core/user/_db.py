@@ -7,7 +7,7 @@ from vFense.core.user._db_model import (
 )
 from vFense.core.user._constants import *
 from vFense.core.group._db_model import (
-    GroupCollections, GroupKeys
+    GroupCollections, GroupKeys, GroupIndexes
 )
 from vFense.core.view._db_model import ViewMappedKeys
 from vFense.core.view._constants import *
@@ -164,41 +164,45 @@ def fetch_user_and_all_properties(username, conn=None):
             UserMappedKeys.Groups: (
                 r
                 .table(GroupCollections.Groups)
-                .get_all(username, index=GroupsIndexes.Users)
+                .get_all(username, index=GroupIndexes.Users)
                 .coerce_to('array')
-                .pluck(GroupKeys.GroupId, GroupKeys.GroupName)
+                .pluck(
+                    GroupKeys.GroupId,
+                    GroupKeys.GroupName,
+                    GroupKeys.Permissions,
+                    GroupKeys.Views
+                )
             ),
-            UserMappedKeys.Views: (
+            UserKeys.Views: (
                 r
                 .expr(r.row[UserKeys.Views])
                 .map(lambda x:
                     {
-                        Permissions.ADMINISTRATOR: r.branch(
+                        Permissions.ADMINISTRATOR: (
                             r
-                            .table(GroupCollections.Groups)
-                            .get_all(username, index=GroupsIndexes.Users)
-                            .filter(
-                                lambda z:
-                                z[GroupKeys.Permissions]
-                                .contains(Permissions.ADMINISTRATOR)
+                            .branch(
+                                r
+                                .table(GroupCollections.Groups)
+                                .get_all(username, index=GroupIndexes.Users)
+                                .coerce_to('array')
+                                .filter(
+                                    lambda z:
+                                    z[GroupKeys.Views]
+                                    .contains(x)
+                                )
+                                .filter(
+                                    lambda z:
+                                    z[GroupKeys.Permissions]
+                                    .contains(Permissions.ADMINISTRATOR)
+                                )
+                                .is_empty(),
+                            False,
+                            True
                             )
-                            .filter(
-                                lambda z:
-                                z[GroupKeys.Views]
-                                .contains(x)
-                            ),
-                            True,
-                            False
                         ),
-                        ViewMappedKeys.ViewName: x[ViewMappedKeys.ViewName]
+                        ViewMappedKeys.ViewName: x
                     }
                 )
-            ),
-            UserMappedKeys.Permissions: (
-                r
-                .table(GroupCollections.Groups)
-                .get_all(username, index=GroupsIndexes.Users)
-                .map(lambda x: x[GroupKeys.Permissions])[0]
             )
         }
     )
@@ -750,3 +754,4 @@ def delete_views_in_user(username, view_names, conn=None):
         logger.exception(e)
 
     return(data)
+

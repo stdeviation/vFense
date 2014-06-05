@@ -6,7 +6,7 @@ from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import (
-    delete_users_in_group, add_user_to_groups,
+    delete_user_in_groups, add_user_to_groups,
     fetch_group_by_name, user_exist_in_group,
     fetch_groupids_for_user, fetch_group,
 )
@@ -629,9 +629,9 @@ class UserManager(object):
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
         group_ids_in_db = fetch_groupids_for_user(self.username)
-        if self.username == DefaultUsers.ADMIN:
+        if self.username == DefaultUsers.GLOBAL_ADMIN:
             admin_group_id = fetch_group_by_name(
-                DefaultGroups.ADMIN, Defaultviews.DEFAULT,
+                DefaultGroups.GLOBAL_ADMIN, Defaultviews.GLOBAL,
                 GroupKeys.GroupId)[GroupKeys.GroupId]
 
         if group_ids:
@@ -653,10 +653,10 @@ class UserManager(object):
 
         if exist_in_groupids and not admin_group_id_exists_in_group_ids:
 
-            status_code, _, _, _ = (
+            status_code, _, _, _ = delete_user_in_groups(
                 (self.username, group_ids)
             )
-            if status_code == DbCodes.Deleted:
+            if status_code == DbCodes.Replaced:
                 generic_status_code = GenericCodes.ObjectDeleted
                 vfense_status_code = GroupCodes.GroupsRemovedFromUser
 
@@ -683,7 +683,6 @@ class UserManager(object):
             vfense_status_code = GroupFailureCodes.GroupDoesNotExistForUser
 
         results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
             ApiResultKeys.MESSAGE: status + msg,
@@ -727,7 +726,7 @@ class UserManager(object):
             status_code, _, _, _ = (
                 delete_user_in_views(self.username, views)
             )
-            if status_code == DbCodes.Deleted:
+            if status_code == DbCodes.Replaced:
                 delete_views_in_user(self.username, views)
                 msg = 'removed views from user %s' % (self.username)
                 results[ApiResultKeys.MESSAGE] = status + msg
@@ -735,7 +734,7 @@ class UserManager(object):
                     GenericCodes.ObjectDeleted
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewCodes.viewsRemovedFromUser
+                    ViewCodes.ViewsRemovedFromUser
                 )
                 results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
@@ -747,17 +746,6 @@ class UserManager(object):
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewFailureCodes.InvalidViewName
-                )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-
-            elif status_code == DbCodes.DoesNotExist:
-                msg = 'view name or username does not exist'
-                results[ApiResultKeys.MESSAGE] = status + msg
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.DoesNotExist
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewFailureCodes.UsersDoNotExistForView
                 )
                 results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
