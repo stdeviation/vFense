@@ -946,7 +946,7 @@ class UserManager(object):
     def change_view(self, user):
         """Change current or default view.
         Args:
-            password (str): Original password.
+            user (User): Original password.
         Basic Usage:
             >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
@@ -1018,6 +1018,106 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.FailedToUpdateUser
             )
+
+        return results
+
+
+    @time_it
+    def change_full_name(self, user):
+        """Change current or default view.
+        Args:
+            user (User): A user instance filled out with the
+                appropriate fields.
+        Basic Usage:
+            >>> from vFense.user import User
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'shaolin'
+            >>> current_view = 'default'
+            >>> user = (
+                    User(
+                        username, current_view=current_view,
+                    )
+                )
+            >>> manager = UserManager(username)
+            >>> manager.change_view(user)
+        """
+        user_exist = self.properties
+        status = self.change_full_name.func_name + ' - '
+        results = {}
+
+        if isinstance(user, User):
+            if user_exist:
+                if user.full_name:
+                    data = {UserKeys.FullName: user.full_name}
+                    status_code, _, _, _ = update_user(user.name, data)
+                    if status_code == DbCodes.Replaced:
+                        msg = (
+                            'Full name successfully changed for user %s - '
+                            % (self.username)
+                        )
+                        results[ApiResultKeys.MESSAGE] = status + msg
+                        results[ApiResultKeys.DATA] = [data]
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.ObjectUpdated
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            UserCodes.UserUpdated
+                        )
+                        results[ApiResultKeys.UPDATED_IDS] = [self.username]
+
+                    elif status_code == DbCodes.Unchanged:
+                        msg = (
+                            'Full name unchanged for user %s - '
+                            % (self.username)
+                        )
+                        results[ApiResultKeys.MESSAGE] = status + msg
+                        results[ApiResultKeys.DATA] = [data]
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.ObjectUnchanged
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            UserCodes.UserUnchanged
+                        )
+                        results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+                else:
+                    msg = (
+                        'Full name was not set in User instance for user %s - '
+                        % (self.username)
+                    )
+                    results[ApiResultKeys.MESSAGE] = status + msg
+                    results[ApiResultKeys.DATA] = []
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.UpdateFailed
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GenericCodes.InvalidValue
+                    )
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+            else:
+                msg = 'User %s does not exist - ' % (self.username)
+                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.DATA] = []
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.UpdateFailed
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.UserDoesNotExist
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+
+        else:
+            msg = 'An instance of User was not passed - ' % (type(user))
+            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.DATA] = []
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.UpdateFailed
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GenericCodes.InvalidValue
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         return results
 
