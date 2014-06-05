@@ -339,11 +339,12 @@ def fetch_usernames_in_group(group_id, conn=None):
     try:
         data = list(
             r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-            .map(lambda x: x[GroupsPerUserKeys.UserName])
+            .table(GroupCollections.Groups)
+            .get(group_id)
             .run(conn)
         )
+        if data:
+            data = data[GroupKeys.Users]
 
     except Exception as e:
         logger.exception(e)

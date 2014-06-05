@@ -28,8 +28,12 @@ logger = logging.getLogger('rvapi')
 class GroupManager(object):
     def __init__(self, group_id=None):
         self.group_id = group_id
-        self.properties = self._group_attributes()
-        self.users = self._users()
+        if group_id:
+            self.properties = self._group_attributes()
+            self.users = self._users()
+        else:
+            self.properties = {}
+            self.users = []
 
     @time_it
     def _group_attributes(self):
@@ -99,9 +103,10 @@ class GroupManager(object):
 
         status = self.create.func_name + ' - '
         generated_ids = []
-        group_data = group.to_dict()
         group_exist = self.properties
+        group.fill_in_defaults()
         invalid_fields = group.get_invalid_fields()
+        group_data = group.to_dict()
         if not invalid_fields and not group_exist:
             status_code, status_count, error, generated_ids = (
                 insert_group(group_data)

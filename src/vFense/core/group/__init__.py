@@ -19,7 +19,7 @@ class Group(object):
 
     def __init__(
             self, name, permissions=None,
-            views=None, is_global=None
+            views=None, is_global=None, users=None
         ):
         """
         Kwargs:
@@ -32,6 +32,7 @@ class Group(object):
         self.permissions = permissions
         self.views = views
         self.is_global = is_global
+        self.users = users
 
 
     def fill_in_defaults(self):
@@ -49,6 +50,9 @@ class Group(object):
 
         if not self.views:
             self.views = GroupDefaults.VIEWS
+
+        if not self.users:
+            self.users = GroupDefaults.USERS
 
         if not self.is_global:
             self.is_global = GroupDefaults.IS_GLOBAL
@@ -190,6 +194,18 @@ class Group(object):
             #            }
             #        )
 
+        if self.users:
+            if not isinstance(self.users, list):
+                invalid_fields.append(
+                    {
+                        GroupKeys.Users: self.users,
+                        CommonKeys.REASON: 'Must be a list of usernames',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
         return invalid_fields
 
     def to_dict(self):
@@ -210,6 +226,7 @@ class Group(object):
             GroupKeys.Global: self.is_global,
             GroupKeys.Permissions: self.permissions,
             GroupKeys.Views: self.views,
+            GroupKeys.Users: self.users,
         }
 
     def to_dict_non_null(self):

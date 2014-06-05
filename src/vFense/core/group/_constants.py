@@ -8,6 +8,6 @@ class DefaultGroups():
 
 class GroupDefaults():
     PERMISSIONS = []
-    IS_GLOBAL = False
+    USERS = []
     VIEWS = []
-    RESTRICTED = False
+    IS_GLOBAL = False

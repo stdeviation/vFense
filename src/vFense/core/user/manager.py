@@ -401,7 +401,7 @@ class UserManager(object):
                 )
                 results[ApiResultKeys.MESSAGE] = status + msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectCreated
+                    GenericCodes.ObjectUpdated
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewCodes.ViewsAddedToUser
@@ -493,12 +493,12 @@ class UserManager(object):
                 add_user_to_groups(group_ids, self.username)
             )
 
-            if status_code == DbCodes.Inserted:
+            if status_code == DbCodes.Replaced:
                 msg = 'user %s add to groups' % (self.username)
-                generic_status_code = GenericCodes.ObjectCreated
-                vfense_status_code = GroupCodes.GroupCreated
+                generic_status_code = GenericCodes.ObjectUpdated
+                vfense_status_code = GroupCodes.GroupsAddedToUser
 
-            else:
+            elif status_code == DbCodes.Unchanged:
                 msg = (
                     'user %s is already in groups %s' % (
                         self.username, ' and '.join(users_group_exist)
@@ -809,7 +809,7 @@ class UserManager(object):
         if user_exist:
             valid_passwd, strength = check_password(new_password)
             original_encrypted_password = (
-                password.encode('utf-8')
+                self.get_attribute(UserKeys.Password).encode('utf-8')
             )
             original_password_verified = (
                 Crypto().verify_bcrypt_hash(
@@ -1158,13 +1158,13 @@ class UserManager(object):
         generic_status_code = 0
         vfense_status_code = 0
         results = {}
-        data = []
-        results[ApiResultKeys.DATA] = data
+        data = {}
+        results[ApiResultKeys.DATA] = []
         if user_exist:
             invalid_fields = user.get_invalid_fields()
             data = user.to_dict_non_null()
-            data.pop(UserKeys.UserName)
-            data.pop(UserKeys.Password)
+            data.pop(UserKeys.UserName, None)
+            data.pop(UserKeys.Password, None)
             if not invalid_fields:
                 object_status, _, _, _ = (
                     update_user(self.username, data)
