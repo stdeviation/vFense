@@ -4,6 +4,7 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
+from vFense.core.view._constants import DefaultViews
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import (
     delete_user_in_groups, add_user_to_groups,
@@ -42,6 +43,9 @@ logger = logging.getLogger('rvapi')
 
 
 class UserManager(object):
+    """All actions that need to be performed on a user,
+        is performed with this class
+    """
     def __init__(self, username):
         self.username = username
         self.properties = self._user_attributes()
@@ -145,16 +149,14 @@ class UserManager(object):
             Dictionary of the status of the operation.
             >>>
                 {
-                    "rv_status_code": 13001,
+                    "vfense_status_code": 13001,
                     "updated_ids": [
                         "tester"
                     ],
-                    "unchanged_ids": [],
                     "message": "toggle_user_status - user tester is enabled",
-                    "data": [],
                 }
         """
-        status = self.toggle_status.func_name + ' - '
+        results = {}
         status_code, _, _, _ = (
             user_status_toggle(self.username)
         )
@@ -166,23 +168,24 @@ class UserManager(object):
             else:
                 msg = 'user %s is disabled' % (self.username)
 
-            generic_status_code = GenericCodes.ObjectUpdated
-            vfense_status_code = UserCodes.UserUpdated
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUpdated
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserCodes.UserUpdated
+            )
+            results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
         elif status_code == DbCodes.Skipped:
             msg = 'user %s is invalid' % (self.username)
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.InvalidUserName
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.InvalidUserName
+            )
 
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.UPDATED_IDS: [self.username],
-            ApiResultKeys.DATA: [],
-        }
+        results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -197,42 +200,49 @@ class UserManager(object):
         Basic Usage:
             >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
-            >>> fullname = 'testing 4 life'
+            >>> username = 'global_admin'
+            >>> fullname = 'Global Administrator'
             >>> password = 'Testing123#'
             >>> group_ids = ['8757b79c-7321-4446-8882-65457f28c78b']
-            >>> view = 'default'
-            >>> email = 'test@test.org'
-            >>> enabled = True
-            >>> is_global = False
             >>> user = (
                     User(
-                        username, password, email=email,
-                        enabled=enabled, is_global=is_global
+                        username, password=password,
+                        full_name=fullname,
+                        enabled=True, is_global=True
                     )
                 )
             >>> manager = UserManager(username)
-            >>> manager.create(user, view, group_ids)
+            >>> manager.create(user, group_ids)
 
         Return:
             Dictionary of the status of the operation.
+            >>>
             {
-                'rv_status_code': 1010,
-                'errors': [],
-                'message': 'None - create user testing123 was created',
-                'data': {
-                    'current_view': 'default',
-                    'full_name': 'tester4life',
-                    'default_view': 'default',
-                    'password': '$2a$12$HFAEabWwq8Hz0TIZ.jV59eHLoy0DdogdtR9TgvZnBCye894oljZOe',
-                    'user_name': 'testing123',
-                    'enabled': 'yes',
-                    'email': 'test@test.org'
-                }
+                "errors": [],
+                "data": [
+                    {
+                        "default_view": "global",
+                        "global": true,
+                        "full_name": "Global Administrator",
+                        "views": [
+                            "global"
+                        ],
+                        "current_view": "global",
+                        "user_name": "global_admin",
+                        "email": null,
+                        "enabled": true
+                    }
+                ],
+                "generic_status_code": 1010,
+                "generated_ids": [
+                    "global_admin"
+                ],
+                "message": "create - user name global_admin created",
+                "vfense_status_code": 13000
             }
         """
-        status = self.create.func_name + ' - '
         user_exist = self.properties
+        user.fill_in_defaults()
         user_data = user.to_dict()
         results = {}
         if isinstance(user, User) and not user_exist:
@@ -282,7 +292,7 @@ class UserManager(object):
                             UserCodes.UserCreated
                         )
                         results[ApiResultKeys.GENERATED_IDS] = [self.username]
-                        results[ApiResultKeys.MESSAGE] = status + msg
+                        results[ApiResultKeys.MESSAGE] = msg
                         results[ApiResultKeys.DATA] = [user_data]
 
                 elif (not current_view_is_valid or not default_view_is_valid
@@ -298,7 +308,7 @@ class UserManager(object):
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                         ViewFailureCodes.ViewDoesNotExist
                     )
-                    results[ApiResultKeys.MESSAGE] = status + msg
+                    results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
                     results[ApiResultKeys.DATA] = []
 
@@ -312,7 +322,7 @@ class UserManager(object):
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                         GroupFailureCodes.InvalidGroupId
                     )
-                    results[ApiResultKeys.MESSAGE] = status + msg
+                    results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
                 else:
@@ -330,7 +340,7 @@ class UserManager(object):
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                         UserFailureCodes.FailedToCreateUser
                     )
-                    results[ApiResultKeys.MESSAGE] = status + msg
+                    results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         elif user_exist and isinstance(user, User):
@@ -341,7 +351,7 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.UserNameExists
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         else:
@@ -352,7 +362,7 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.FailedToCreateUser
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         return results
@@ -367,17 +377,18 @@ class UserManager(object):
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
-            >>> views = ['TopPatch', 'vFense']
+            >>> username = 'tester1'
+            >>> views = ['Test View 2']
             >>> manager = UserManager(username)
             >>> manager.add_to_views(views)
 
         Returns:
             Dictionary of the status of the operation.
+            >>>
             {
-                'rv_status_code': 1017,
-                'message': "None - add_user_to_views - view names existed 'default', 'TopPatch', 'vFense' unchanged",
-                'data': []
+                "message": "user tester1 added to Test View 2",
+                "vfense_status_code": 14004,
+                "generic_status_code": 1008
             }
         """
         if isinstance(views, str):
@@ -389,7 +400,6 @@ class UserManager(object):
 
         results = {}
         user_exist = self.properties
-        status = self.add_to_views.func_name + ' - '
         if views_are_valid and user_exist:
             status_code, _, _, _ = update_views_for_user(self.username, views)
             update_usernames_for_views(views, [self.username])
@@ -399,7 +409,7 @@ class UserManager(object):
                         self.username, ' and '.join(views)
                     )
                 )
-                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectUpdated
                 )
@@ -413,7 +423,7 @@ class UserManager(object):
                         self.username, ' and '.join(views)
                     )
                 )
-                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectUnchanged
                 )
@@ -424,7 +434,7 @@ class UserManager(object):
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.InvalidId
             )
@@ -438,7 +448,7 @@ class UserManager(object):
                     ' and '.join(views_are_valid[2])
                 )
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.InvalidId
             )
@@ -458,50 +468,48 @@ class UserManager(object):
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
+            >>> username = 'tester1'
             >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
             >>> manager = UserManager(username)
             >>> manager.add_to_groups(group_ids)
 
         Returns:
             Returns the results in a dictionary
-        {
-            'rv_status_code': 1010,
-            'message': "None - groups per user [u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3'] was created",
-            'data': {
-                'group_name': u'FooLah',
-                'user_name': 'alien',
-                'group_id': '0834e656-27a5-4b13-ba56-635797d0d1fc',
-                'view': 'default'
+            >>>
+            {
+                "data": [],
+                "generic_status_code": 1008,
+                "message": "add_user_to_groups - user tester1 add to groups",
+                "db_status_code": 2004,
+                "vfense_status_code": 12004
             }
-        }
         """
-        status = add_user_to_groups.func_name + ' - '
         groups_are_valid = (
             validate_group_ids(
                 group_ids, is_global=self.properties[UserKeys.Global]
             )
         )
         user_exist = self.properties
-        results = None
+        results = {}
         generated_ids = []
         users_group_exist = []
-        generic_status_code = 0
-        vfense_status_code = 0
         if groups_are_valid[0] and user_exist:
             status_code, _, _, generated_ids = (
                 add_user_to_groups(group_ids, self.username)
             )
 
             if status_code == DbCodes.Replaced:
-                msg = 'user %s add to groups' % (self.username)
+                msg = (
+                    'user %s add to groups: %s' %
+                    (self.username, ', '.join(group_ids))
+                )
                 generic_status_code = GenericCodes.ObjectUpdated
                 vfense_status_code = GroupCodes.GroupsAddedToUser
 
             elif status_code == DbCodes.Unchanged:
                 msg = (
-                    'user %s is already in groups %s' % (
-                        self.username, ' and '.join(users_group_exist)
+                    'user %s is already in groups: %s' % (
+                        self.username, ', '.join(users_group_exist)
                     )
                 )
                 status_code = DbCodes.Skipped
@@ -510,8 +518,8 @@ class UserManager(object):
 
         elif not groups_are_valid[0]:
             msg = (
-                'Group Ids are invalid: %s' % (
-                    ' and '.join(groups_are_valid[2])
+                'Invalid group ids: %s' % (
+                    ', '.join(groups_are_valid[2])
                 )
             )
             status_code = DbCodes.Errors
@@ -520,7 +528,6 @@ class UserManager(object):
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
-            status_code = DbCodes.Errors
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = UserFailureCodes.InvalidUserName
 
@@ -529,7 +536,7 @@ class UserManager(object):
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
             ApiResultKeys.GENERATED_IDS: generated_ids,
-            ApiResultKeys.MESSAGE: status + msg,
+            ApiResultKeys.MESSAGE: msg,
             ApiResultKeys.DATA: [],
         }
 
@@ -547,9 +554,17 @@ class UserManager(object):
 
         Return:
             Dictionary of the status of the operation.
+            >>>
+            {
+                "generic_status_code": 1012,
+                "deleted_ids": [
+                    "tester1"
+                ],
+                "message": "remove - User removed tester1",
+                "vfense_status_code": 13002
+            }
         """
         user_exist = self.properties
-        status = self.remove.func_name + ' - '
         username_not_to_delete = []
         username_to_delete = []
         results = {}
@@ -583,6 +598,9 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.AdminUserCanNotBeDeleted
             )
+            results[ApiResultKeys.UNCHANGED_IDS] = (
+                username_not_to_delete
+            )
 
         else:
             msg = 'User does not exist %s' % (self.username)
@@ -597,11 +615,7 @@ class UserManager(object):
         results[ApiResultKeys.DELETED_IDS] = (
             username_to_delete
         )
-        results[ApiResultKeys.UNCHANGED_IDS] = (
-            username_not_to_delete
-        )
-        results[ApiResultKeys.DATA] = []
-        results[ApiResultKeys.MESSAGE] = status + msg
+        results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -619,19 +633,21 @@ class UserManager(object):
 
         Returns:
             Returns the results in a dictionary
+            >>>
             {
-                'rv_status_code': 1004,
-                'message': 'None - remove_groups_from_user - group ids: 0834e656-27a5-4b13-ba56-635797d0d1fc, 8757b79c-7321-4446-8882-65457f28c78b does not exist',
+                "message": "group ids: f8fc202f-2691-4d17-8cb8-eec6a1197bae",
+                "vfense_status_code": 12005,
+                "generic_status_code": 1012
             }
         """
-        status = self.remove_from_groups.func_name + ' - '
         exist_in_groupids = False
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
         group_ids_in_db = fetch_groupids_for_user(self.username)
+        results = {}
         if self.username == DefaultUsers.GLOBAL_ADMIN:
             admin_group_id = fetch_group_by_name(
-                DefaultGroups.GLOBAL_ADMIN, Defaultviews.GLOBAL,
+                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL,
                 GroupKeys.GroupId)[GroupKeys.GroupId]
 
         if group_ids:
@@ -650,44 +666,60 @@ class UserManager(object):
                     'Cannot remove the %s group from the %s user' %
                     (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
                 )
+                results[ApiResultKeys.MESSAGE] =  msg
 
         if exist_in_groupids and not admin_group_id_exists_in_group_ids:
 
-            status_code, _, _, _ = delete_user_in_groups(
-                (self.username, group_ids)
+            status_code, _, _, _ = (
+                delete_user_in_groups(
+                    self.username, group_ids
+                )
             )
             if status_code == DbCodes.Replaced:
-                generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = GroupCodes.GroupsRemovedFromUser
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectDeleted
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.GroupsRemovedFromUser
+                )
 
             elif status_code == DbCodes.Unchanged:
-                generic_status_code = GenericCodes.ObjectUnchanged
-                vfense_status_code = GroupCodes.GroupUnchanged
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.GroupsUnchanged
+                )
 
             elif status_code == DbCodes.Skipped:
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = GroupFailureCodes.InvalidGroupId
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupFailureCodes.InvalidGroupId
+                )
 
         elif admin_group_id_exists_in_group_ids:
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupFailureCodes.CantRemoveAdminFromGroup
+            )
 
         else:
             msg = (
                 'groups %s do not exist for user %s' %
                 (' and '.join(group_ids), self.username)
             )
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GroupFailureCodes.GroupDoesNotExistForUser
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupFailureCodes.GroupDoesNotExistForUser
+            )
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [],
-        }
+            results[ApiResultKeys.MESSAGE] =  msg
 
         return results
 
@@ -699,8 +731,8 @@ class UserManager(object):
                 you want to remove from this user
 
         Basic Usage:
-            >>> username = 'shaolin'
-            >>> views = ['test']
+            >>> username = 'tester1'
+            >>> views = ['Test View 1']
             >>> manager = UserManager(username)
             >>> manager.remove_from_views(views)
 
@@ -708,11 +740,14 @@ class UserManager(object):
             Dictionary of the status of the operation.
             >>>
             {
-                'rv_status_code': 1004,
-                'message': 'None - remove_views_from_user - removed views from user alien: TopPatch and vFense does not exist',
+                "message": "remove_from_views - removed views from user tester1",
+                "vfense_status_code": 14005,
+                "updated_ids": [
+                    "tester1"
+                ],
+                "generic_status_code": 1012
             }
         """
-        status = self.remove_from_views.func_name + ' - '
         views_in_db = self.properties[UserKeys.Views]
         exist = False
         results = {}
@@ -728,8 +763,11 @@ class UserManager(object):
             )
             if status_code == DbCodes.Replaced:
                 delete_views_in_user(self.username, views)
-                msg = 'removed views from user %s' % (self.username)
-                results[ApiResultKeys.MESSAGE] = status + msg
+                msg = (
+                    'removed views from user %s: views = %s' %
+                    (self.username, ', '.join(views))
+                )
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectDeleted
                 )
@@ -740,7 +778,7 @@ class UserManager(object):
 
             elif status_code == DbCodes.Skipped:
                 msg = 'invalid view name or invalid username'
-                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.InvalidId
                 )
@@ -780,19 +818,17 @@ class UserManager(object):
 
         Return:
             Dictionary of the status of the operation.
+            >>>
             {
-                'uri': None,
-                'rv_status_code': 1008,
-                'http_method': None,
-                'http_status': 200,
-                'message': 'None - change_password - Password changed for user admin - admin was updated',
-                'data': []
+                "vfense_status_code": 13004,
+                "generic_status_code": 1008,
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "message": "Password changed for user global_admin - ",
             }
         """
         user_exist = self.properties
-        status = self.change_password.func_name + ' - '
-        generic_status_code = 0
-        vfense_status_code = 0
         results = {}
         if user_exist:
             valid_passwd, strength = check_password(new_password)
@@ -821,45 +857,65 @@ class UserManager(object):
 
                 if object_status == DbCodes.Replaced:
                     msg = 'Password changed for user %s - ' % (self.username)
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = UserCodes.PasswordChanged
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        UserCodes.PasswordChanged
+                    )
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
             elif new_password_verified_against_orignal_password:
                 msg = (
                     'New password is the same as the original - user %s - ' %
                     (self.username)
                 )
-                generic_status_code = GenericFailureCodes.FailedToUpdateObject
-                vfense_status_code = UserFailureCodes.NewPasswordSameAsOld
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToUpdateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.NewPasswordSameAsOld
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
             elif original_password_verified and not valid_passwd:
                 msg = (
                     'New password is to weak for user %s - ' %
                     (self.username)
                 )
-                generic_status_code = GenericFailureCodes.FailedToUpdateObject
-                vfense_status_code = UserFailureCodes.WeakPassword
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToUpdateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.WeakPassword
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
             elif not original_password_verified:
                 msg = (
                     'Password not verified for user %s - ' %
                     (self.username)
                 )
-                generic_status_code = GenericFailureCodes.FailedToUpdateObject
-                vfense_status_code = UserFailureCodes.InvalidPassword
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToUpdateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.InvalidPassword
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
-            results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
         else:
             msg = 'User %s does not exist - ' % (self.username)
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.UserNameDoesNotExist
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
-        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-        results[ApiResultKeys.MESSAGE] = status + msg
-        results[ApiResultKeys.DATA] = []
-        results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+        results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -870,26 +926,24 @@ class UserManager(object):
             password (str): Original password.
 
         Basic Usage:
-            >>> username = 'shaolin'
-            >>> password = 'my new password'
+            >>> username = 'global_admin'
+            >>> password = 'My n3w p@ssword'
             >>> manager = UserManager(username)
             >>> manager.reset_password(password)
 
         Return:
             Dictionary of the status of the operation.
+            >>>
             {
-                'uri': None,
-                'rv_status_code': 1008,
-                'http_method': None,
-                'http_status': 200,
-                'message': 'None - change_password - Password changed for user admin - admin was updated',
-                'data': []
+                "message": "Password changed for user global_admin - ",
+                "vfense_status_code": 13004,
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
             }
         """
         user_exist = self.properties
-        status = self.reset_password.func_name + ' - '
-        generic_status_code = 0
-        vfense_status_code = 0
         results = {}
         if user_exist:
             valid_passwd, strength = check_password(password)
@@ -924,7 +978,7 @@ class UserManager(object):
 
         results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
         results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-        results[ApiResultKeys.MESSAGE] = status + msg
+        results[ApiResultKeys.MESSAGE] = msg
         results[ApiResultKeys.DATA] = []
 
         return results
@@ -938,8 +992,8 @@ class UserManager(object):
         Basic Usage:
             >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
-            >>> current_view = 'default'
+            >>> username = 'global_admin'
+            >>> current_view = 'global'
             >>> user = (
                     User(
                         username, current_view=current_view,
@@ -947,6 +1001,23 @@ class UserManager(object):
                 )
             >>> manager = UserManager(username)
             >>> manager.change_view(user)
+
+        Return:
+            Dictionary of the status of the operation.
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": "User global_admin was updated - ",
+                "data": [
+                    {
+                        "current_view": "global"
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
         """
         user_exist = self.properties
         status = self.change_view.func_name + ' - '
@@ -957,8 +1028,8 @@ class UserManager(object):
             fetch_views_for_user(self.username)
         )
         data = user.to_dict_non_null()
-        data.pop(UserKeys.UserName)
-        data.pop(UserKeys.Password)
+        data.pop(UserKeys.UserName, None)
+        data.pop(UserKeys.Password, None)
         if data.get(UserKeys.CurrentView):
             view = data.get(UserKeys.CurrentView)
 
@@ -1019,15 +1090,31 @@ class UserManager(object):
         Basic Usage:
             >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
-            >>> current_view = 'default'
+            >>> username = 'global_admin'
             >>> user = (
                     User(
-                        username, current_view=current_view,
+                        username, full_name="Shaolin Administrator",
                     )
                 )
             >>> manager = UserManager(username)
-            >>> manager.change_view(user)
+            >>> manager.change_full_name(user)
+
+        Return:
+            Dictionary of the status of the operation.
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": "__edit_user_properties - User global_admin was updated - ",
+                "data": [
+                    {
+                        "full_name": "Shaolin Administrator"
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
         """
         status = self.change_full_name.func_name + ' - '
         results = {}
@@ -1073,20 +1160,35 @@ class UserManager(object):
         Args:
             user (User): A user instance filled out with the
                 appropriate fields.
+
         Basic Usage:
             >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'shaolin'
-            >>> current_view = 'default'
+            >>> username = 'global_admin'
             >>> user = (
                     User(
-                        username, current_view=current_view,
+                        username, email="shaolin_admin@shaolin.com",
                     )
                 )
             >>> manager = UserManager(username)
-            >>> manager.change_view(user)
+            >>> manager.change_email(user)
+
+        Returns:
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": " User global_admin was updated - ",
+                "data": [
+                    {
+                        "email": "shaolin_admin@shaolin.com"
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
         """
-        status = self.change_full_name.func_name + ' - '
         results = {}
 
         if isinstance(user, User):
@@ -1098,7 +1200,7 @@ class UserManager(object):
                     'email was not set in User instance for user %s - '
                     % (self.username)
                 )
-                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = []
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.UpdateFailed
@@ -1111,7 +1213,7 @@ class UserManager(object):
 
         else:
             msg = 'An instance of User was not passed - ' % (type(user))
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.DATA] = []
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.UpdateFailed
@@ -1130,21 +1232,35 @@ class UserManager(object):
         Args:
             user (User): The User instance with all of its properties.
 
+        Basic Usage:
+            >>> from vFense.user import User
+            >>> from vFense.user.manager import UserManager
+            >>> username = 'global_admin'
+            >>> user = (
+                    User(username, full_name='Shaolin Administrator')
+                )
+            >>> manager = UserManager(username)
+            >>> manager.__edit_user_properties(user)
+
         Return:
             Dictionary of the status of the operation.
+            >>>
             {
-                'rv_status_code': 1008,
-                'message': 'None - edit_user_properties - admin was updated',
-                'data': {
-                    'full_name': 'vFense Admin'
-                }
+                "vfense_status_code": 13001,
+                "message": "__edit_user_properties - User global_admin was updated - ",
+                "data": [
+                    {
+                        "full_name": "Shaolin Administrator"
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
             }
         """
 
         user_exist = self.properties
-        status = self.__edit_user_properties.func_name + ' - '
-        generic_status_code = 0
-        vfense_status_code = 0
         results = {}
         data = {}
         results[ApiResultKeys.DATA] = []
@@ -1185,6 +1301,6 @@ class UserManager(object):
 
         results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
         results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-        results[ApiResultKeys.MESSAGE] = status + msg
+        results[ApiResultKeys.MESSAGE] = msg
 
         return results

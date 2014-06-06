@@ -817,8 +817,8 @@ def delete_user_in_groups(username, group_ids, conn=None):
             .get_all(username, index=GroupIndexes.Users)
             .update(
                 {
-                    UserKeys.Users: (
-                        r.row[UserKeys.Users].set_difference([username])
+                    GroupKeys.Users: (
+                        r.row[GroupKeys.Users].set_difference([username])
                     )
                 }
             )

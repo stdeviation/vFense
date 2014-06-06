@@ -88,17 +88,37 @@ class GroupManager(object):
         Basic Usage:
             >>> from vFense.group import Group
             >>> from vFense.group.manager import GroupManager
-            >>> name = 'Linux Admins'
-            >>> view = 'default'
+            >>> name = 'Global Administrator'
+            >>> view = 'global'
             >>> permissions = ['administrator']
             >>> is_global = True
-            >>> restricted = False
-            >>> group = Group(name, permissions, view, is_global, restricted)
+            >>> group = Group(name, permissions, view, is_global)
             >>> manager = GroupManager()
             >>> manager.create(group)
 
         Returns:
             Returns the results in a dictionary
+            >>>
+            {
+                "errors": [],
+                "generic_status_code": 1010,
+                "generated_ids": [
+                    "b48d3d95-37b2-45cf-8cd0-e61c853141df"
+                ],
+                "message": "create - group Global Administrator created",
+                "vfense_status_code": 12000,
+                "data": {
+                    "users": [],
+                    "permissions": [
+                        "administrator"
+                    ],
+                    "global": true,
+                    "views": [
+                        "global"
+                    ],
+                    "group_name": "Global Administrator"
+                }
+            }
         """
 
         status = self.create.func_name + ' - '

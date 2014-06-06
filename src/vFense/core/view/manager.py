@@ -58,28 +58,34 @@ class ViewManager(object):
             >>> from vFense.core.view import View
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View(
-                'New View'
-                package_download_url='https://10.0.0.16/packages/'
+                'global'
+                package_download_url='https://10.0.0.15/packages/'
             )
             >>> manager = ViewManager(view.name)
             >>> manager.create(view)
 
         Returns:
             Dictionary of the status of the operation.
+            >>>
             {
-                'uri': None,
-                'rv_status_code': 1010,
-                'http_method': None,
-                'http_status': 200,
-                'message': 'api_user - view vFense was created',
-                'data': {
-                    'cpu_throttle': 'normal',
-                    'package_download_url_base': 'https: //10.0.0.21/packages/',
-                    'server_queue_ttl': 10,
-                    'agent_queue_ttl': 10,
-                    'net_throttle': 0,
-                    'view_name': 'vFense'
-                }
+                "data": [
+                    {
+                        "server_queue_ttl": 10,
+                        "cpu_throttle": "normal",
+                        "view_name": "global",
+                        "ancestors": [],
+                        "package_download_url_base": "https://10.0.0.15/packages/",
+                        "agent_queue_ttl": 10,
+                        "parent": null,
+                        "net_throttle": 0,
+                        "children": [],
+                        "users": []
+                    }
+                ],
+                "message": "create - view global created - ",
+                "errors": [],
+                "vfense_status_code": 14000,
+                "generic_status_code": 1010
             }
         """
         view_exist = self.properties
