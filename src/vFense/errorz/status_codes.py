@@ -36,6 +36,8 @@ class GenericFailureCodes(object):
     InvalidFilterKey = 1506
     InvalidId = 1507
     InvalidPlugin = 1508
+    InvalidInstanceType = 1509
+    InvalidFields = 1510
 
 class GroupCodes(object):
     GroupCreated = 12000
@@ -43,8 +45,10 @@ class GroupCodes(object):
     GroupDeleted = 12002
     GroupUnchanged = 12003
     GroupsAddedToUser = 12004
-    GroupsRemovedFromUser = 12005
-
+    RemovedUsersFromGroup = 12005
+    RemovedViewsFromGroup = 12006
+    AddedViewsToGroup = 12007
+    AddedUsersToGroup = 12008
 
 class GroupFailureCodes(object):
     GroupIdExists = 12500
@@ -59,8 +63,13 @@ class GroupFailureCodes(object):
     GroupExistForUser = 12509
     GroupDoesNotExistForUser = 12510
     CantRemoveAdminFromGroup = 12511
-    UsersExistForGroup = 14512
-    UsersDoNotExistForGroup = 14513
+    UsersExistForGroup = 12512
+    UsersDoNotExistForGroup = 12513
+    CantRemoveGlobalUsersFromGroup = 12514
+    InvalidFields = 12515
+    CantRemoveViewsFromGlobalGroup = 12516
+    CantAddUsersToGlobalGroup = 12517
+    CantAddLocalUsersToGlobalGroup = 12518
 
 
 class UserCodes(object):
@@ -92,6 +101,8 @@ class UserFailureCodes(object):
     CantDeleteAdminUser = 13513
     FailedToAddUsersToGroup = 13514
     FailedToRemoveUsersFromGroup = 13515
+    CantAddLocalGroupToGlobalUser = 13516
+    CantAddGlobalGroupToLocalUser = 13517
 
 
 class ViewCodes(object):
@@ -101,6 +112,8 @@ class ViewCodes(object):
     ViewUnchanged = 14003
     ViewsAddedToUser = 14004
     ViewsRemovedFromUser = 14005
+    ViewsAddedToGroup = 14006
+    ViewsRemovedFromGroup = 14007
 
 
 class ViewFailureCodes(object):

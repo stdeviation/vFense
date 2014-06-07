@@ -8,8 +8,7 @@ from vFense.core.view._constants import DefaultViews
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import (
     delete_user_in_groups, add_user_to_groups,
-    fetch_group_by_name, user_exist_in_group,
-    fetch_groupids_for_user, fetch_group,
+    fetch_group_by_name, fetch_groupids_for_user
 )
 
 from vFense.core.group._constants import DefaultGroups
@@ -26,7 +25,9 @@ from vFense.core.user._db import (
     update_views_for_user, delete_views_in_user
 )
 
-from vFense.core.group.groups import validate_group_ids
+from vFense.core.group.groups import (
+    validate_group_ids, validate_groups_in_views
+)
 
 from vFense.core.view.views import validate_view_names
 
@@ -360,7 +361,7 @@ class UserManager(object):
                 GenericFailureCodes.FailedToCreateObject
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                UserFailureCodes.FailedToCreateUser
+                GenericFailureCodes.InvalidInstanceType
             )
             results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
@@ -480,51 +481,77 @@ class UserManager(object):
                 "data": [],
                 "generic_status_code": 1008,
                 "message": "add_user_to_groups - user tester1 add to groups",
-                "db_status_code": 2004,
                 "vfense_status_code": 12004
             }
         """
-        groups_are_valid = (
-            validate_group_ids(
-                group_ids, is_global=self.properties[UserKeys.Global]
-            )
-        )
         user_exist = self.properties
         results = {}
         generated_ids = []
         users_group_exist = []
-        if groups_are_valid[0] and user_exist:
-            status_code, _, _, generated_ids = (
-                add_user_to_groups(group_ids, self.username)
+        groups_added = []
+        if user_exist:
+            is_global = user_exist[UserKeys.Global]
+            invalid_groups, valid_global_groups, valid_local_groups = (
+                validate_groups_in_views(
+                    group_ids, user_exist[UserKeys.Views]
+                )
             )
+            if (
+                    is_global and
+                    len(valid_global_groups) == len(group_ids)
+                    or not is_global and
+                    len(valid_local_groups) == len(group_ids)
+                ):
 
-            if status_code == DbCodes.Replaced:
+                status_code, _, _, generated_ids = (
+                    add_user_to_groups(group_ids, self.username)
+                )
+
+                if status_code == DbCodes.Replaced:
+                    groups_added = group_ids
+                    msg = (
+                        'user %s add to groups: %s' %
+                        (self.username, ', '.join(group_ids))
+                    )
+                    generic_status_code = GenericCodes.ObjectUpdated
+                    vfense_status_code = UserCodes.UsersAddedToGroup
+
+                elif status_code == DbCodes.Unchanged:
+                    msg = (
+                        'user %s is already in groups: %s' % (
+                            self.username, ', '.join(users_group_exist)
+                        )
+                    )
+                    generic_status_code = GenericCodes.ObjectExists
+                    vfense_status_code = GroupFailureCodes.GroupExistForUser
+
+            elif is_global and len(valid_global_groups) != len(group_ids):
                 msg = (
-                    'user %s add to groups: %s' %
+                    'Can not add local groups to a global user %s: %s' %
                     (self.username, ', '.join(group_ids))
                 )
-                generic_status_code = GenericCodes.ObjectUpdated
-                vfense_status_code = GroupCodes.GroupsAddedToUser
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = (
+                    UserFailureCodes.CantAddLocalGroupToGlobalUser
+                )
 
-            elif status_code == DbCodes.Unchanged:
+            elif not is_global and len(valid_local_groups) != len(group_ids):
                 msg = (
-                    'user %s is already in groups: %s' % (
-                        self.username, ', '.join(users_group_exist)
-                    )
+                    'Can not add global groups to a local user %s: %s' %
+                    (self.username, ', '.join(group_ids))
                 )
-                status_code = DbCodes.Skipped
-                generic_status_code = GenericCodes.ObjectExists
-                vfense_status_code = GroupFailureCodes.GroupExistForUser
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = (
+                    UserFailureCodes.CantAddGlobalGroupToLocalUser
+                )
 
-        elif not groups_are_valid[0]:
-            msg = (
-                'Invalid group ids: %s' % (
-                    ', '.join(groups_are_valid[2])
+            elif invalid_groups:
+                msg = (
+                    'Invalid group ids: %s' %
+                    (', '.join(invalid_groups))
                 )
-            )
-            status_code = DbCodes.Errors
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GroupFailureCodes.InvalidGroupId
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = GroupFailureCodes.InvalidGroupId
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
@@ -532,12 +559,10 @@ class UserManager(object):
             vfense_status_code = UserFailureCodes.InvalidUserName
 
         results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
             ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.GENERATED_IDS: generated_ids,
+            ApiResultKeys.GENERATED_IDS: groups_added,
             ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.DATA: [],
         }
 
         return results
@@ -620,10 +645,13 @@ class UserManager(object):
         return results
 
     @time_it
-    def remove_from_groups(self, group_ids=None):
+    def remove_from_groups(self, group_ids=None, remove_admin=False):
         """Remove a group from a user
         Kwargs:
-            group_ids(list): List of group_ids.
+            group_ids (list): List of group_ids.
+            remove_admin (bool): Wheather to remove the global admin user
+                from this group.
+                default = False
 
         Basic Usage:
             >>> username = 'shaolin'
@@ -657,10 +685,13 @@ class UserManager(object):
             exist_in_groupids = True
 
         if exist_in_groupids:
-            if not admin_group_id in group_ids:
+            if not admin_group_id in group_ids and not remove_admin:
                 msg = 'group ids: ' + 'and '.join(group_ids)
 
-            else:
+            if admin_group_id in group_ids and remove_admin:
+                msg = 'group ids: ' + 'and '.join(group_ids)
+
+            elif admin_group_id in group_ids and not remove_admin:
                 admin_group_id_exists_in_group_ids = True
                 msg = (
                     'Cannot remove the %s group from the %s user' %
@@ -668,7 +699,11 @@ class UserManager(object):
                 )
                 results[ApiResultKeys.MESSAGE] =  msg
 
-        if exist_in_groupids and not admin_group_id_exists_in_group_ids:
+        if (
+                exist_in_groupids and not
+                admin_group_id_exists_in_group_ids or exist_in_groupids and
+                admin_group_id_exists_in_group_ids and remove_admin
+            ):
 
             status_code, _, _, _ = (
                 delete_user_in_groups(
@@ -699,7 +734,7 @@ class UserManager(object):
                     GroupFailureCodes.InvalidGroupId
                 )
 
-        elif admin_group_id_exists_in_group_ids:
+        elif admin_group_id_exists_in_group_ids and not remove_admin:
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.InvalidId
             )

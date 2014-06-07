@@ -25,220 +25,6 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def get_group(group_id):
-    """Retrieve a group from the database
-    Args:
-        group_id: 36 Character UUID.
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_group
-        >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
-        >>> get_group(group_id)
-
-    Returns:
-        Returns a Dict of the properties of a group
-        {
-            u'group_name': u'Administrator',
-            u'view_name': u'default',
-            u'id': u'8757b79c-7321-4446-8882-65457f28c78b',
-            u'Permissions': [
-                u'administrator'
-            ]
-        }
-    """
-    data = fetch_group(group_id)
-    return(data)
-
-
-@time_it
-def get_group_properties(group_id):
-    """Retrieve a group and all of its properties.
-    Args:
-        group_id: 36 Character UUID.
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_group_properties
-        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
-        >>> get_group_properties(group_id)
-
-    Returns:
-        Returns a Dict of the properties of a group
-        {
-            "users": [
-                {
-                    "user_name": "admin"
-                },
-                {
-                    "user_name": "agent_api"
-                }
-            ],
-            "permissions": [
-                "administrator"
-            ],
-            "group_name": "Administrator",
-            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
-            "view_name": "default"
-        }
-    """
-
-    data = fetch_group_properties(group_id)
-    return(data)
-
-
-@time_it
-def get_properties_for_all_groups(view_name=None):
-    """Retrieve properties for all groupcs.
-    Kwargs:
-        view_name: Name of the view, which the group is part of.
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_properties_for_all_groups
-        >>> view_name = 'test'
-        >>> get_properties_for_all_groups(view_name)
-
-    Returns:
-        Returns a List of a groups and their properties.
-        [
-            {
-                "users": [
-                    {
-                        "user_name": "admin"
-                    },
-                    {
-                        "user_name": "agent_api"
-                    }
-                ],
-                "permissions": [
-                    "install",
-                    "uninstall"
-                ],
-                "group_name": "JR ADMIN",
-                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7",
-                "view_name": "Test"
-            },
-        ]
-    """
-
-    data = fetch_properties_for_all_groups(view_name)
-    return(data)
-
-
-@time_it
-def get_groups_for_user(username, fields_to_pluck=None):
-    """Retrieve all groups for a user by username
-    Args:
-        username (str): Get all groups for which this user is part of.
-
-    Kwargs:
-        fields_to_pluck (list): List of fields you want to pluck
-        from the database
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_groups_for_user
-        >>> username = 'alien'
-        >>> get_groups_for_user(username)
-
-    Returns:
-        Returns a list of groups that the user belongs to.
-        [
-            {
-                u'group_name': u'FooLah',
-                u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
-                u'user_name': u'alien',
-                u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
-                u'view_name': u'default'
-            },
-            {
-                u'group_name': u'Administrator',
-                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
-                u'user_name': u'alien',
-                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'view_name': u'default'
-            }
-        ]
-    """
-    data = fetch_groups_for_user(username, fields_to_pluck)
-
-    return(data)
-
-@time_it
-def get_users_in_group(group_id, fields_to_pluck=None,):
-    """Fetch all users for group_id
-    Args:
-        group_id (str): 36 Character UUID
-
-    Kwargs:
-        fields_to_pluck (list): List of fields you want to
-        pluck from the database.
-
-    Basic Usage:
-        >>> from vFense.core.group.groups get_users_in_group
-        >>> group_id = ['17753c6a-2099-4389-b97a-e6e2658b6396']
-        >>> get_users_in_group(group_id)
-
-    Returns:
-        Returns a list of users
-        [
-            {
-                u'group_name': u'Administrator',
-                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
-                u'user_name': u'alllllen',
-                u'id': u'3477f6d9-731e-4313-a765-e4bd05277f2d',
-                u'view_name': u'default'
-            },
-            {
-                u'group_name': u'Administrator',
-                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
-                u'user_name': u'alien',
-                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'view_name': u'default'
-            }
-        ]
-    """
-    data = fetch_users_in_group(group_id, fields_to_pluck)
-    return(data)
-
-
-@time_it
-def get_groups(
-    view_name=None, groupname=None,
-    fields_to_pluck=None
-    ):
-    """Retrieve all groups that is in the database by view_name or
-        all of the groups or by regex.
-
-    Kwargs:
-        view_name (str):  Name of the view,
-        groupname (str):  Name of the group you are searching for.
-            This is a regular expression match.
-        fields_to_pluck (list):  List of fields you want to pluck
-        from the database
-
-    Basic Usage:
-        >>> from vFense.group.groups import get_groups
-        >>> view_name = 'default'
-        >>> groupname = 'Ad'
-        >>> get_groups(view_name, groupname)
-
-    Returns:
-        Returns a List of dictionaries of the properties of a group
-        [
-            {
-                u'permissions': [
-                    u'administrator'
-                ],
-                u'group_name': u'Administrator',
-                u'id': u'3ffc2a67-1203-4cb0-ada2-2ae870072680',
-                u'view_name': u'default'
-
-            }
-        ]
-    """
-    data = fetch_groups(view_name, groupname, fields_to_pluck)
-    return(data)
-
-
-@time_it
 def validate_group_ids(group_ids, view_name=None, is_global=False):
     """Validate a list if group ids exist in the database.
     Args:
@@ -261,7 +47,7 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
     valid_groups = []
     if isinstance(group_ids, list):
         for group_id in group_ids:
-            group = get_group(group_id)
+            group = fetch_group(group_id)
             if group:
                 if view_name:
                     if view_name in group.get(GroupKeys.Views):
@@ -290,227 +76,42 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
 
 
 @time_it
-@results_message
-def remove_groups_from_user(
-    username, group_ids=None,
-    user_name=None, uri=None, method=None
-    ):
-    """Remove a group from a user
+def validate_groups_in_views(group_ids, views):
+    """Validate a list of group ids against a list of views.
     Args:
-        username(str): Name of the user
+        group_ids (list): List of group ids.
+        views (list): List of views.
 
-    Kwargs:
-        group_ids(list): List of group_ids.
-        user_name (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
-
-    Basic Usage::
-        >>> from vFense.core.group.groups remove_groups_from_user
-        >>> username = 'alien'
-        >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc', '8757b79c-7321-4446-8882-65457f28c78b']
-        >>> remove_groups_from_user(username, group_ids)
+    Basic Usage:
+        >>> from vFense.group.groups import validate_groups_in_views
+        >>> group_ids = ['tester1', 'tester2']
+        >>> views = ['global', 'Test View 1']
+        >>> validate_groups_in_views(group_ids, views)
 
     Returns:
-        Returns the results in a dictionary
-        {
-            'rv_status_code': 1004,
-            'message': 'None - remove_groups_from_user - group ids: 0834e656-27a5-4b13-ba56-635797d0d1fc, 8757b79c-7321-4446-8882-65457f28c78b does not exist',
-            'http_method': None,
-            'uri': None,
-            'http_status': 409
-        }
-    """
-    status = remove_groups_from_user.func_name + ' - '
-    user_does_not_exist_in_group = False
-    admin_user = False
-    admin_group_id = None
-    admin_group_id_exists_in_group_ids = False
-    if username == DefaultUsers.ADMIN:
-        admin_user = True
-        admin_group_id = (
-            fetch_group_by_name(
-                DefaultGroups.ADMIN, DefaultViews.DEFAULT,
-                GroupKeys.GroupId
-            )[GroupKeys.GroupId]
+        Tuple
+        >>>(
+            [invalid_group_ids], [global_group_ids], [local_group_ids]
         )
-
-    try:
-        if not group_ids:
-            group_ids = (
-                map(lambda x:
-                    x[GroupsPerUserKeys.GroupId],
-                    get_groups_for_user(username, GroupsPerUserKeys.GroupId)
-                )
-            )
-
-        if group_ids:
-            if not admin_group_id in group_ids:
-                msg = 'group ids: ' + 'and '.join(group_ids)
-                for gid in group_ids:
-                    user_in_group = user_exist_in_group(username, gid)
-                    if not user_in_group:
-                        user_does_not_exist_in_group = True
-            else:
-                admin_group_id_exists_in_group_ids = True
-                msg = (
-                    'Cannot remove the %s group from the %s user' %
-                    (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
-                )
-        else:
-            user_does_not_exist_in_group = True
-
-        if (not user_does_not_exist_in_group and
-            not admin_group_id_exists_in_group_ids):
-
-            status_code, count, errors, generated_ids = (
-                delete_groups_from_user(username, group_ids)
-            )
-            if status_code == DbCodes.Deleted:
-                generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = GroupCodes.GroupsRemovedFromUser
-
-            elif status_code == DbCodes.Unchanged:
-                generic_status_code = GenericCodes.ObjectUnchanged
-                vfense_status_code = GroupCodes.GroupUnchanged
-
-            elif status_code == DbCodes.Skipped:
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = GroupFailureCodes.InvalidGroupId
-
-        elif admin_group_id_exists_in_group_ids:
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GroupFailureCodes.CantRemoveAdminFromGroup
-
-        else:
-            msg = (
-                'groups %s do not exist for user %s' %
-                (' and '.join(group_ids), username)
-            )
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GroupFailureCodes.GroupDoesNotExistForUser
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-    except Exception as e:
-        logger.exception(e)
-        status_code = DbCodes.Errors
-        generic_status_code = GenericFailureCodes.FailedToDeleteObject
-        vfense_status_code = GroupFailureCodes.FailedToRemoveGroupFromUser
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-    return(results)
-
-
-@time_it
-@results_message
-def remove_group(group_id, user_name=None, uri=None, method=None):
-    """Remove  a group in vFense
-    Args:
-        group_id (str): 36 Character UUID
-
-    Kwargs:
-        user_name (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
-
-    Basic Usage::
-        >>> from vFense.core.group.groups import remove_group
-        >>> group_id = 'b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686'
-        >>> remove_group(group_id)
-
-    Returns:
-        Returns the results in a dictionary
-        {
-            'rv_status_code': 1012,
-            'message': 'None - remove_group - b4c29dc2-aa44-4ff7-bfc9-f84d38cc7686 was deleted',
-            'http_method': None,
-            'uri': None,
-            'http_status': 200
-        }
     """
-    status = remove_group.func_name + ' - '
-    ids_deleted = []
-    try:
-        users_exist = get_users_in_group(group_id)
-        group_exist = get_group(group_id)
-        if not users_exist and group_exist:
-            status_code, status_count, error, generated_id = (
-                delete_group(group_id)
-            )
-            if status_code == DbCodes.Deleted:
-                msg = 'group_id %s deleted' % (group_id)
-                generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = GroupCodes.GroupDeleted
-                ids_deleted = [group_id]
+    invalid_groups = []
+    valid_global_groups = []
+    valid_local_groups = []
+    if isinstance(group_ids, list) and isinstance(views, list):
+        for group_id in group_ids:
+            group_data = fetch_group(group_id)
+            if group_data:
+                if group_data[GroupKeys.Global]:
+                    valid_global_groups.append(group_id)
+                else:
+                    if group_data[GroupKey.Views] in views:
+                        valid_local_groups.append(group_id)
+                    else:
+                        invalid_groups.append(group_id)
+            else:
+                invalid_groups.append(group_id)
 
-        elif users_exist:
-            msg = (
-                'users exist for group %s' % (group_id)
-            )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        elif not group_exist:
-            msg = 'group_id %s does not exist' % (group_id)
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: ids_deleted,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-    except Exception as e:
-        logger.exception(e)
-        status_code = DbCodes.Errors
-        generic_status_code = GenericFailureCodes.FailedToDeleteObject
-        vfense_status_code = GroupFailureCodes.FailedToRemoveGroup
-        msg = 'failed to remove group %s: %s' % (group_id, str(e))
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: ids_deleted,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-    return(results)
+    return(invalid_groups, valid_global_groups, valid_local_groups)
 
 
 @time_it
