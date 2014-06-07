@@ -49,6 +49,8 @@ class GroupCodes(object):
     RemovedViewsFromGroup = 12006
     AddedViewsToGroup = 12007
     AddedUsersToGroup = 12008
+    PermissionsUpdated = 12009
+    PermissionsUnchanged = 12010
 
 class GroupFailureCodes(object):
     GroupIdExists = 12500

@@ -1311,6 +1311,92 @@ def delete_views_from_groups(group_ids, views, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
+def add_permissions_to_group(group_id, permissions, conn=None):
+    """Add 1 or multiple views from multiple groups.
+    Args:
+        group_id (str): The 36 character group id.
+        permissions (list): List of permissions to add.
+
+
+    Basic Usage::
+        >>> from vFense.group._db add_permissions_in_group
+        >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
+        >>> permissions (list): List of permissions to remove.
+        >>> add_permissions_in_group(group_id, permissions)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Permissions: (
+                        x[GroupKeys.Permissions].set_union(permissions)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_permissions_in_group(group_id, permissions, conn=None):
+    """Remove 1 or multiple views from multiple groups.
+    Args:
+        group_id (str): The 36 character group id.
+        permissions (list): List of permissions to remove.
+
+    Basic Usage::
+        >>> from vFense.group._db delete_permissions_in_group
+        >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
+        >>> permissions = ['install', 'uninstall']
+        >>> delete_permissions_in_group(group_id, permissions)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Permissions: (
+                        x[GroupKeys.Permissions].set_difference(permissions)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+
+@time_it
+@db_create_close
+@return_status_tuple
 def delete_group(group_id, conn=None):
     """Delete a group from the database.
     Args:

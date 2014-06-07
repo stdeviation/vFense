@@ -10,7 +10,8 @@ from vFense.core.group import Group
 from vFense.core.group._db import (
     fetch_group, insert_group, delete_users_in_group,
     delete_group, delete_views_in_group, add_views_to_group,
-    add_users_to_group
+    add_users_to_group, delete_permissions_in_group,
+    add_permissions_to_group
 )
 from vFense.core.group._db_model import (
     GroupKeys
@@ -651,5 +652,163 @@ class GroupManager(object):
             )
             results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
             results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+    def remove_permissions(self, permissions):
+        """Remove permissions for this group.
+        Args:
+            permissions (list): List of permissions.
+
+        Basic Usage:
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
+            >>> permissions = ['install', 'uninstall']
+            >>> group = GroupManager(group_id)
+            >>> group.remove_permissions(permissions)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        group_exist = self.properties
+        results = {}
+        if group_exist:
+            group = Group(group_exist[GroupKeys.Id], permissions=permissions)
+            invalid_permissions = group.get_invalid_fields()
+            if not invalid_permissions:
+                status_code, _, _, _ = (
+                    delete_permissions_in_group(self.group_id)
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'Removed the following permissions: %s from group %s'
+                        % (permissions, self.group_id)
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.PermissionsUpdated
+                    )
+                    results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
+
+                if status_code == DbCodes.Unchanged:
+                    msg = (
+                        'These permissions do not exist: %s in group %s'
+                        % (permissions, self.group_id)
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUnchanged
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.PermissionsUnchanged
+                    )
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+
+            else:
+                msg = 'Invalid permissions: %s' % (permissions)
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidValue
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupFailureCodes.InvalidPermissions
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+                results[ApiResultKeys.INVALID_IDS] = permissions
+
+
+        else:
+            msg = 'group_id %s does not exist' % (self.group_id)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
+
+        return results
+
+
+    def add_permissions(self, permissions):
+        """Add permissions for this group.
+        Args:
+            permissions (list): List of permissions.
+
+        Basic Usage:
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
+            >>> permissions = ['install', 'uninstall']
+            >>> group = GroupManager(group_id)
+            >>> group.add_permissions(permissions)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        group_exist = self.properties
+        results = {}
+        if group_exist:
+            group = Group(group_exist[GroupKeys.Id], permissions=permissions)
+            invalid_permissions = group.get_invalid_fields()
+            if not invalid_permissions:
+                status_code, _, _, _ = (
+                    add_permissions_to_group(self.group_id, permissions)
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'Added the following permissions: %s to group %s'
+                        % (permissions, self.group_id)
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.PermissionsUpdated
+                    )
+                    results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
+
+                if status_code == DbCodes.Unchanged:
+                    msg = (
+                        'These permissions do not exist: %s in group %s'
+                        % (permissions, self.group_id)
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUnchanged
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.PermissionsUnchanged
+                    )
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+
+            else:
+                msg = 'Invalid permissions: %s' % (permissions)
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidValue
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupFailureCodes.InvalidPermissions
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+                results[ApiResultKeys.INVALID_IDS] = permissions
+
+        else:
+            msg = 'group_id %s does not exist' % (self.group_id)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
 
         return results
