@@ -598,8 +598,12 @@ class UserManager(object):
         return results
 
     @time_it
-    def remove(self):
+    def remove(self, force=False):
         """Remove a user from vFense
+
+        Kwargs:
+            force (boolean): Remove the global_admin users
+                default=False
 
         Basic Usage:
             >>> from vFense.user.manager import UserManager
@@ -607,7 +611,7 @@ class UserManager(object):
             >>> manager = UserManager(username)
             >>> manager.remove()
 
-        Return:
+        Returns:
             Dictionary of the status of the operation.
             >>>
             {
@@ -623,7 +627,10 @@ class UserManager(object):
         username_not_to_delete = []
         username_to_delete = []
         results = {}
-        if user_exist and self.username != DefaultUsers.GLOBAL_ADMIN:
+        if (user_exist and self.username != DefaultUsers.GLOBAL_ADMIN
+                and not force
+                or user_exist and force):
+
             self.remove_from_groups()
             self.remove_from_views()
             username_to_delete.append(self.username)

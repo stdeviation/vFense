@@ -280,7 +280,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
 
     def test_o_remove_user1(self):
         manager = UserManager(DefaultUsers.GLOBAL_ADMIN)
-        results = manager.remove()
+        results = manager.remove(force=True)
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == UserCodes.UserDeleted)
