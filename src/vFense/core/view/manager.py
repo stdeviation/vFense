@@ -5,7 +5,7 @@ from vFense.core.user._db import (
     update_views_for_users, fetch_usernames
 )
 from vFense.core.view._db import (
-    fetch_view, insert_view, update_children_for_view
+    fetch_view, insert_view, update_children_for_view, delete_view
 )
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
@@ -89,7 +89,6 @@ class ViewManager(object):
             }
         """
         view_exist = self.properties
-        status = self.create.func_name + ' - '
         msg = ''
         results = {}
         invalid_fields = view.get_invalid_fields()
@@ -140,7 +139,7 @@ class ViewManager(object):
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewCodes.ViewCreated
                 )
-                results[ApiResultKeys.MESSAGE] = status + msg
+                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = [view.to_dict()]
 
                 if usernames:
@@ -161,6 +160,69 @@ class ViewManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewFailureCodes.ViewExists
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    @time_it
+    def remove(self):
+        """Create a new view inside of vFense
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.remove(view)
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+
+        if view_exist:
+            users = view_exist[ViewKeys.Users]
+            if not users:
+                object_status, _, _, generated_ids = (
+                    delete_view(self.name)
+                )
+
+                if object_status == DbCodes.Deleted:
+                    msg = 'View %s deleted - ' % (self.name)
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectDeleted
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewDeleted
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DELETED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Can not remove view %s, users exist in view: %s'
+                    % (self.name, users)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
 
         return results
