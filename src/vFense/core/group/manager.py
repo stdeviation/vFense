@@ -483,29 +483,24 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        users_exist_in_group = False
-        if users in self.users:
-            users_exist_in_group = True
-        else:
-            users_exist_in_group = False
-
+        users_exist_in_group = bool(set(users).intersection(self.users))
         results = {}
 
-        is_global = self.properties[GroupKeys.GLOBAL]
+        is_global = self.properties[GroupKeys.Global]
         invalid_users, global_valid_users, local_valid_users = (
             validate_users_in_views(users, self.properties[GroupKeys.Views])
         )
 
         if self.properties and not users_exist_in_group and not invalid_users:
-            if (is_global and len(global_valid_users) == users or
-                    not is_global and len(local_valid_users) == users):
+            if (is_global and len(global_valid_users) == len(users) or
+                    not is_global and len(local_valid_users) == len(users)):
 
                 status_code, _, _, _ = (
                     add_users_to_group(self.group_id, users)
                 )
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'Users %s removed from group %s' %
+                        'Users %s added to group %s' %
                         (', '.join(users), self.group_id)
                     )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -515,11 +510,12 @@ class GroupManager(object):
                         GroupCodes.AddedUsersToGroup
                     )
                     results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
 
             elif is_global and len(global_valid_users) != len(users):
                 msg = (
-                    'Can not add non global users to a global group %s: %s' %
-                    (self.group_id, ', '.join(users))
+                    'Can not add non global users: %s, to a global group: %s'
+                    % (', '.join(users), self.group_id)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.InvalidId
@@ -528,11 +524,12 @@ class GroupManager(object):
                     GroupFailureCodes.CantAddUsersToGlobalGroup
                 )
                 results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
             elif not is_global and len(global_valid_users) > 0:
                 msg = (
-                    'Can not add global users to a local group %s: %s' %
-                    (self.group_id, ', '.join(users))
+                    'Can not add global users: %s, to a local group: %s' %
+                    (', '.join(users), self.group_id)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.InvalidId
@@ -541,10 +538,12 @@ class GroupManager(object):
                     GroupFailureCodes.CantAddLocalUsersToGlobalGroup
                 )
                 results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         elif users_exist_in_group:
             msg = (
-                'users already exist in group %s' % (self.group_id)
+                'users: %s, already exist in group %s' %
+                (', '.join(users), self.group_id)
             )
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.ObjectUnchanged
@@ -553,10 +552,12 @@ class GroupManager(object):
                 GroupCodes.GroupUnchanged
             )
             results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         elif invalid_users:
             msg = (
-                'users are invalid for group %s' % (self.group_id)
+                'users: %s, invalid for group %s' %
+                (', '.join(invalid_users), self.group_id)
             )
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.ObjectUnchanged
@@ -565,6 +566,8 @@ class GroupManager(object):
                 GroupCodes.GroupUnchanged
             )
             results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_IDS] = invalid_users
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
@@ -575,6 +578,8 @@ class GroupManager(object):
                 GroupCodes.GroupUnchanged
             )
             results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
 
         return results
 
@@ -646,6 +651,5 @@ class GroupManager(object):
             )
             results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
             results[ApiResultKeys.MESSAGE] = msg
-
 
         return results

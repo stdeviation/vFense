@@ -89,7 +89,6 @@ def validate_groups_in_views(group_ids, views):
                 if group_data[GroupKeys.Global]:
                     valid_global_groups.append(group_id)
                 else:
-                    print views, group_data[GroupKeys.Views]
                     if set(group_data[GroupKeys.Views]).issubset(views):
                         valid_local_groups.append(group_id)
                     else:

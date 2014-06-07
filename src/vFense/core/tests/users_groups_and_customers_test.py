@@ -93,6 +93,17 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == GroupCodes.GroupCreated)
 
+    def test_b_create_group4(self):
+        group = Group(
+            'Tester 3', [Permissions.INSTALL],
+            ['Test View 2']
+        )
+        manager = GroupManager()
+        results = manager.create(group)
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.GroupCreated)
+
 
     def test_c_create_user1(self):
         global_group_id = (
@@ -193,6 +204,32 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == UserCodes.UsersAddedToGroup)
 
+    def test_i_add_user_to_group(self):
+        group_id = (
+            fetch_group_by_name(
+                'Tester 3', 'Test View 2'
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(group_id)
+        results = manager.add_users(['tester1'])
+        print dumps(results, indent=4)
+        print "WELL WHAT IS MY CODE"
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.AddedUsersToGroup)
+
+    def test_i_add_view_to_group(self):
+        group_id = (
+            fetch_group_by_name(
+                'Tester 3', 'Test View 2'
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(group_id)
+        results = manager.add_views(['Test View 1'])
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.AddedViewsToGroup)
+
+
     def test_j_change_full_name(self):
         user = User(
             DefaultUsers.GLOBAL_ADMIN,
@@ -290,6 +327,20 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == GroupCodes.GroupDeleted)
+
+    def test_p_remove_group4(self):
+        group_id = (
+            fetch_group_by_name(
+               'Tester 3', 'Test View 2'
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(group_id)
+        results = manager.remove()
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.GroupDeleted)
+
+
 
 
 def main():

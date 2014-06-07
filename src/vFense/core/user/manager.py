@@ -406,8 +406,8 @@ class UserManager(object):
             update_usernames_for_views(views, [self.username])
             if status_code == DbCodes.Replaced:
                 msg = (
-                    'user %s added to %s' % (
-                        self.username, ' and '.join(views)
+                    'user %s was added to %s successfully' % (
+                        self.username, ', '.join(views)
                     )
                 )
                 results[ApiResultKeys.MESSAGE] = msg
@@ -417,11 +417,12 @@ class UserManager(object):
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewCodes.ViewsAddedToUser
                 )
+                results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
             elif status_code == DbCodes.Unchanged:
                 msg = (
-                    'user %s already in views: %s' % (
-                        self.username, ' and '.join(views)
+                    'user %s is already in views: %s' % (
+                        self.username, ', '.join(views)
                     )
                 )
                 results[ApiResultKeys.MESSAGE] = msg
@@ -431,6 +432,7 @@ class UserManager(object):
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewCodes.ViewUnchanged
                 )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
 
         elif not user_exist:
@@ -442,6 +444,7 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.UserNameDoesNotExist
             )
+            results[ApiResultKeys.INVALID_IDS] = [self.username]
 
         elif not views_are_valid[0]:
             msg = (
@@ -456,6 +459,7 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewFailureCodes.InvalidViewName
             )
+            results[ApiResultKeys.INVALID_IDS] = [views]
 
         return results
 
@@ -488,7 +492,6 @@ class UserManager(object):
         results = {}
         generated_ids = []
         users_group_exist = []
-        groups_added = []
         if user_exist:
             is_global = user_exist[UserKeys.Global]
             invalid_groups, valid_global_groups, valid_local_groups = (
@@ -496,7 +499,6 @@ class UserManager(object):
                     group_ids, user_exist[UserKeys.Views]
                 )
             )
-            print invalid_groups, valid_global_groups, valid_local_groups, group_ids
             if (
                     is_global and
                     len(valid_global_groups) == len(group_ids)
@@ -509,13 +511,18 @@ class UserManager(object):
                 )
 
                 if status_code == DbCodes.Replaced:
-                    groups_added = group_ids
                     msg = (
                         'user %s add to groups: %s' %
                         (self.username, ', '.join(group_ids))
                     )
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = UserCodes.UsersAddedToGroup
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        UserCodes.UsersAddedToGroup
+                    )
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results[ApiResultKeys.MESSAGE] = msg
 
                 elif status_code == DbCodes.Unchanged:
                     msg = (
@@ -523,48 +530,70 @@ class UserManager(object):
                             self.username, ', '.join(users_group_exist)
                         )
                     )
-                    generic_status_code = GenericCodes.ObjectExists
-                    vfense_status_code = GroupFailureCodes.GroupExistForUser
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectExists
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupFailureCodes.GroupExistForUser
+                    )
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results[ApiResultKeys.MESSAGE] = msg
+
 
             elif is_global and len(valid_global_groups) != len(group_ids):
                 msg = (
                     'Can not add local groups to a global user %s: %s' %
                     (self.username, ', '.join(group_ids))
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     UserFailureCodes.CantAddLocalGroupToGlobalUser
                 )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results[ApiResultKeys.MESSAGE] = msg
 
             elif not is_global and len(valid_local_groups) != len(group_ids):
                 msg = (
                     'Can not add global groups to a local user %s: %s' %
                     (self.username, ', '.join(group_ids))
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     UserFailureCodes.CantAddGlobalGroupToLocalUser
                 )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results[ApiResultKeys.MESSAGE] = msg
 
             elif invalid_groups:
                 msg = (
                     'Invalid group ids: %s' %
                     (', '.join(invalid_groups))
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = GroupFailureCodes.InvalidGroupId
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupFailureCodes.InvalidGroupId
+                )
+                results[ApiResultKeys.INVALID_IDS] = [group_ids]
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results[ApiResultKeys.MESSAGE] = msg
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.InvalidUserName
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.GENERATED_IDS: groups_added,
-            ApiResultKeys.MESSAGE: msg,
-        }
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                UserFailureCodes.InvalidUserName
+            )
+            results[ApiResultKeys.INVALID_IDS] = [self.username]
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -594,7 +623,7 @@ class UserManager(object):
         username_not_to_delete = []
         username_to_delete = []
         results = {}
-        if user_exist and self.username != DefaultUsers.ADMIN:
+        if user_exist and self.username != DefaultUsers.GLOBAL_ADMIN:
             self.remove_from_groups()
             self.remove_from_views()
             username_to_delete.append(self.username)
@@ -604,6 +633,7 @@ class UserManager(object):
             )
 
             if object_status == DbCodes.Deleted:
+                msg = 'User removed %s' % (self.username)
                 results[ApiResultKeys.DELETED_IDS] = (
                     username_to_delete
                 )
@@ -613,9 +643,9 @@ class UserManager(object):
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     UserCodes.UserDeleted
                 )
-                msg = 'User removed %s' % (self.username)
+                results[ApiResultKeys.MESSAGE] = msg
 
-        elif self.username == DefaultUsers.ADMIN:
+        elif self.username == DefaultUsers.GLOBAL_ADMIN:
             msg = 'Can not delete the %s user' % (self.username)
             username_not_to_delete.append(self.username)
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -627,6 +657,7 @@ class UserManager(object):
             results[ApiResultKeys.UNCHANGED_IDS] = (
                 username_not_to_delete
             )
+            results[ApiResultKeys.MESSAGE] = msg
 
         else:
             msg = 'User does not exist %s' % (self.username)
@@ -637,11 +668,9 @@ class UserManager(object):
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.UserNameDoesNotExist
             )
-
-        results[ApiResultKeys.DELETED_IDS] = (
-            username_to_delete
-        )
-        results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.INVALID_IDS] =  [self.username]
+            results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
 
         return results
 
@@ -669,93 +698,109 @@ class UserManager(object):
                 "generic_status_code": 1012
             }
         """
+        user_exist = self.properties
         exist_in_groupids = False
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
-        group_ids_in_db = fetch_groupids_for_user(self.username)
         results = {}
-        if self.username == DefaultUsers.GLOBAL_ADMIN:
-            admin_group_id = fetch_group_by_name(
-                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL,
-                GroupKeys.GroupId)[GroupKeys.GroupId]
-
-        if group_ids:
-            exist_in_groupids = set(group_ids).issubset(group_ids_in_db)
-        if not group_ids:
-            group_ids = group_ids_in_db
-            exist_in_groupids = True
-
-        if exist_in_groupids:
-            if not admin_group_id in group_ids and not remove_admin:
-                msg = 'group ids: ' + 'and '.join(group_ids)
-
-            if admin_group_id in group_ids and remove_admin:
-                msg = 'group ids: ' + 'and '.join(group_ids)
-
-            elif admin_group_id in group_ids and not remove_admin:
-                admin_group_id_exists_in_group_ids = True
-                msg = (
-                    'Cannot remove the %s group from the %s user' %
-                    (DefaultGroups.ADMIN, DefaultUsers.ADMIN)
+        if user_exist:
+            group_ids_in_db = fetch_groupids_for_user(self.username)
+            if self.username == DefaultUsers.GLOBAL_ADMIN:
+                admin_group_id = (
+                    fetch_group_by_name(
+                        DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL,
+                        GroupKeys.GroupId
+                    )[GroupKeys.GroupId]
                 )
-                results[ApiResultKeys.MESSAGE] =  msg
 
-        if (
-                exist_in_groupids and not
-                admin_group_id_exists_in_group_ids or exist_in_groupids and
-                admin_group_id_exists_in_group_ids and remove_admin
+            if group_ids:
+                exist_in_groupids = set(group_ids).issubset(group_ids_in_db)
+            if not group_ids:
+                group_ids = group_ids_in_db
+                exist_in_groupids = True
+
+            if exist_in_groupids:
+                if admin_group_id in group_ids and not remove_admin:
+                    admin_group_id_exists_in_group_ids = True
+
+            if (
+                    exist_in_groupids and
+                    not admin_group_id_exists_in_group_ids
+                    or exist_in_groupids
+                    and admin_group_id_exists_in_group_ids and remove_admin
             ):
 
-            status_code, _, _, _ = (
-                delete_user_in_groups(
-                    self.username, group_ids
+                status_code, _, _, _ = (
+                    delete_user_in_groups(self.username, group_ids)
                 )
-            )
-            if status_code == DbCodes.Replaced:
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectDeleted
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupCodes.RemovedUsersFromGroup
-                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'Removed group ids: %s from user %s' %
+                        (', '.join(group_ids), self.username)
+                    )
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectDeleted
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.RemovedUsersFromGroup
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
 
-            elif status_code == DbCodes.Unchanged:
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectUnchanged
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupCodes.GroupsUnchanged
-                )
+                elif status_code == DbCodes.Unchanged:
+                    msg = (
+                        'Group ids: %s do not exist for user %s' %
+                        (', '.join(group_ids), self.username)
+                    )
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUnchanged
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.GroupsUnchanged
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
-            elif status_code == DbCodes.Skipped:
+            elif admin_group_id_exists_in_group_ids and not remove_admin:
+                msg = (
+                    'Can not remove the special group %s from user %s' %
+                        (', '.join(group_ids), self.username)
+                )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.InvalidId
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupFailureCodes.InvalidGroupId
+                    GroupFailureCodes.CantRemoveAdminFromGroup
                 )
+                results[ApiResultKeys.MESSAGE] =  msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
-        elif admin_group_id_exists_in_group_ids and not remove_admin:
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.InvalidId
-            )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GroupFailureCodes.CantRemoveAdminFromGroup
-            )
+            else:
+                msg = (
+                    'groups %s do not exist for user %s' %
+                    (' and '.join(group_ids), self.username)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupFailureCodes.GroupDoesNotExistForUser
+                )
+                results[ApiResultKeys.MESSAGE] =  msg
+                results[ApiResultKeys.INVALID_IDS] = group_ids
+                results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
 
         else:
-            msg = (
-                'groups %s do not exist for user %s' %
-                (' and '.join(group_ids), self.username)
-            )
+            msg = 'User does not exist %s' % (self.username)
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericCodes.InvalidId
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GroupFailureCodes.GroupDoesNotExistForUser
+                GroupFailureCodes.InvalidGroupId
             )
-
-        results[ApiResultKeys.MESSAGE] =  msg
+            results[ApiResultKeys.MESSAGE] =  msg
+            results[ApiResultKeys.INVALID_IDS] =  [self.username]
+            results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
 
         return results
 
@@ -784,56 +829,61 @@ class UserManager(object):
                 "generic_status_code": 1012
             }
         """
-        views_in_db = self.properties[UserKeys.Views]
-        exist = False
+        user_exist = self.properties
         results = {}
-        if not views:
-            views = views_in_db
-            exist = True
-        else:
-            exist = set(views).issubset(views_in_db)
 
-        if exist:
-            status_code, _, _, _ = (
-                delete_user_in_views(self.username, views)
-            )
-            if status_code == DbCodes.Replaced:
-                delete_views_in_user(self.username, views)
+        if user_exist:
+            views_in_db = user_exist[UserKeys.Views]
+            views_exist = False
+            if not views:
+                views = views_in_db
+                views_exist = True
+            else:
+                views_exist = set(views).issubset(views_in_db)
+
+            if views_exist:
+                status_code, _, _, _ = (
+                    delete_user_in_views(self.username, views)
+                )
+                if status_code == DbCodes.Replaced:
+                    delete_views_in_user(self.username, views)
+                    msg = (
+                        'removed views from user %s: views = %s' %
+                        (self.username, ', '.join(views))
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectDeleted
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsRemovedFromUser
+                    )
+                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+
+            else:
                 msg = (
-                    'removed views from user %s: views = %s' %
-                    (self.username, ', '.join(views))
+                    'view names do not exist: %s for user %s' %
+                    (', '.join(views), self.username)
                 )
-                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectDeleted
+                    GenericCodes.DoesNotExist
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewCodes.ViewsRemovedFromUser
+                    ViewFailureCodes.UsersDoNotExistForView
                 )
-                results[ApiResultKeys.UPDATED_IDS] = [self.username]
-
-            elif status_code == DbCodes.Skipped:
-                msg = 'invalid view name or invalid username'
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.InvalidId
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewFailureCodes.InvalidViewName
-                )
+                results[ApiResultKeys.INVALID_IDS] = [views]
                 results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         else:
-            msg = (
-                'view names do not exist: %s' %
-                (', '.join(views))
-            )
+            msg = 'Invalid username %s' % (self.username)
+            results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.DoesNotExist
+                GenericCodes.InvalidId
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                ViewFailureCodes.UsersDoNotExistForView
+                ViewFailureCodes.InvalidViewName
             )
+            results[ApiResultKeys.INVALID_IDS] = [self.username]
             results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
 
         return results

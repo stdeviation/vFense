@@ -95,7 +95,7 @@ def validate_users_in_views(usernames, views):
                 if user_data[UserKeys.Global]:
                     valid_global_users.append(user)
                 else:
-                    if user_data[UserKeys.Views] in views:
+                    if set(views).issubset(user_data[UserKeys.Views]):
                         valid_local_users.append(user)
                     else:
                         invalid_users.append(user)
