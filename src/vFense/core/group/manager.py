@@ -234,7 +234,7 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        ids_deleted = []
+        results = {}
         if (
                 self.properties and self.users and force_remove or
                 self.properties and not self.users
@@ -244,31 +244,38 @@ class GroupManager(object):
             )
             if status_code == DbCodes.Deleted:
                 msg = 'group_id %s deleted' % (self.group_id)
-                generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = GroupCodes.GroupDeleted
-                ids_deleted = [self.group_id]
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectDeleted
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.GroupDeleted
+                )
+                results[ApiResultKeys.DELETED_IDS] = [self.group_id]
+                results[ApiResultKeys.MESSAGE] = msg
 
         elif self.users and not force_remove:
             msg = (
                 'users exist for group %s' % (self.group_id)
             )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.MESSAGE] = msg
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: ids_deleted,
-            ApiResultKeys.MESSAGE: msg,
-        }
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -291,6 +298,7 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
+        results = {}
         users_exist_in_group = False
         if not users:
             users = self.users
@@ -300,7 +308,6 @@ class GroupManager(object):
                 users_exist_in_group = True
 
         is_global = self.properties[GroupKeys.GLOBAL]
-        users_removed = []
 
         if self.properties and users and users_exist_in_group:
             if (
@@ -316,41 +323,53 @@ class GroupManager(object):
                         'Users %s removed from group %s' %
                         (', '.join(users), self.group_id)
                     )
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = GroupCodes.RemovedUsersFromGroup
-                    users_removed = [users]
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.RemovedUsersFromGroup
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.group]
 
             elif is_global and not force_remove:
                 msg = (
                     'Can not remove users %s from a global group %s' %
                     (', '.join(users), self.group_id)
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     GroupFailureCodes.CantRemoveGlobalUsersFromGroup
                 )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group]
 
         elif not users and self.properties:
             msg = (
                 'users do not exist in group %s' % (self.group_id)
             )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group]
+            results[ApiResultKeys.MESSAGE] = msg
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
             status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: status_code,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: users_removed,
-            ApiResultKeys.MESSAGE: msg,
-        }
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group]
+            results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -373,6 +392,7 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
+        results = {}
         views_exist_in_group = False
         if not views:
             views = self.views
@@ -382,7 +402,6 @@ class GroupManager(object):
                 views_exist_in_group = True
 
         is_global = self.properties[GroupKeys.GLOBAL]
-        views_removed = []
 
         if self.properties and views and views_exist_in_group:
             if (
@@ -398,40 +417,53 @@ class GroupManager(object):
                         'Views %s removed from group %s' %
                         (', '.join(views), self.group_id)
                     )
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = GroupCodes.RemovedViewsFromGroup
-                    views_removed = [views]
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.RemovedViewsFromGroup
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
 
             elif is_global and not force_remove:
                 msg = (
                     'Can not remove views %s from a global group %s' %
                     (', '.join(views), self.group_id)
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     GroupFailureCodes.CantRemoveViewsFromGlobalGroup
                 )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         elif not views and self.properties:
             msg = (
                 'Views do not exist in group %s' % (self.group_id)
             )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
             status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: views_removed,
-            ApiResultKeys.MESSAGE: msg,
-        }
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         return results
 
@@ -457,13 +489,12 @@ class GroupManager(object):
         else:
             users_exist_in_group = False
 
-        users_added = []
+        results = {}
 
         is_global = self.properties[GroupKeys.GLOBAL]
         invalid_users, global_valid_users, local_valid_users = (
             validate_users_in_views(users, self.properties[GroupKeys.Views])
         )
-
 
         if self.properties and not users_exist_in_group and not invalid_users:
             if (is_global and len(global_valid_users) == users or
@@ -477,58 +508,73 @@ class GroupManager(object):
                         'Users %s removed from group %s' %
                         (', '.join(users), self.group_id)
                     )
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = GroupCodes.AddedUsersToGroup
-                    users_added = [users]
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        GroupCodes.AddedUsersToGroup
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
 
             elif is_global and len(global_valid_users) != len(users):
                 msg = (
                     'Can not add non global users to a global group %s: %s' %
                     (self.group_id, ', '.join(users))
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     GroupFailureCodes.CantAddUsersToGlobalGroup
                 )
+                results[ApiResultKeys.MESSAGE] = msg
 
             elif not is_global and len(global_valid_users) > 0:
                 msg = (
                     'Can not add global users to a local group %s: %s' %
                     (self.group_id, ', '.join(users))
                 )
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = (
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     GroupFailureCodes.CantAddLocalUsersToGlobalGroup
                 )
+                results[ApiResultKeys.MESSAGE] = msg
 
         elif users_exist_in_group:
             msg = (
                 'users already exist in group %s' % (self.group_id)
             )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
 
         elif invalid_users:
             msg = (
                 'users are invalid for group %s' % (self.group_id)
             )
-            status_code = DbCodes.Unchanged
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: users_added,
-            ApiResultKeys.MESSAGE: msg,
-        }
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
@@ -548,13 +594,13 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
+        results = {}
         views_exist_in_group = False
         if views in self.views:
             views_exist_in_group = True
         else:
             views_exist_in_group = False
 
-        views_added = []
 
         if self.properties and not views_exist_in_group:
             status_code, _, _, _ = (
@@ -565,30 +611,41 @@ class GroupManager(object):
                     'Views %s added to group %s' %
                     (', '.join(views), self.group_id)
                 )
-                generic_status_code = GenericCodes.ObjectUpdated
-                vfense_status_code = GroupCodes.AddedViewsToGroup
-                views_added = [views]
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUpdated
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.AddedViewsToGroup
+                )
+                results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
+                results[ApiResultKeys.MESSAGE] = msg
+
 
         elif self.properties and views_exist_in_group:
             msg = (
                 'Views %s already exist in group %s' %
                 (', '.join(views), self.group_id)
             )
-            generic_status_code = GenericCodes.ObjectExists
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.MESSAGE] = msg
 
 
         elif not self.properties:
             msg = 'group_id %s does not exist' % (self.group_id)
-            status_code = DbCodes.Skipped
-            generic_status_code = GenericCodes.ObjectUnchanged
-            vfense_status_code = GroupCodes.GroupUnchanged
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.MESSAGE] = msg
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.DELETED_IDS: views_added,
-            ApiResultKeys.MESSAGE: msg,
-        }
 
         return results
