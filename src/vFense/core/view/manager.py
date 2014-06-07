@@ -2,10 +2,14 @@ from vFense.core.view import View
 from vFense.core.view._constants import DefaultViews
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.user._db import (
-    update_views_for_users, fetch_usernames
+    update_views_for_users, fetch_usernames, delete_users_from_view
+)
+from vFense.core.group._db import (
+    fetch_group_ids_for_view, delete_groups_from_view
 )
 from vFense.core.view._db import (
-    fetch_view, insert_view, update_children_for_view, delete_view
+    fetch_view, insert_view, update_children_for_view, delete_view,
+    delete_users_in_view
 )
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
@@ -18,7 +22,12 @@ from vFense.errorz.status_codes import (
 class ViewManager(object):
     def __init__(self, name):
         self.name = name
+        self.users = []
+        self.groups = []
         self.properties = self._view_properties()
+        if self.properties:
+            self.users = self.properties[ViewKeys.Users]
+            self.groups = fetch_group_ids_for_view(self.name)
 
     def _view_properties(self):
         """Retrieve view information.
@@ -166,8 +175,13 @@ class ViewManager(object):
 
 
     @time_it
-    def remove(self):
+    def remove(self, force=False):
         """Create a new view inside of vFense
+
+        Kwargs:
+            force (boolean): Forcefully remove a view, even if users
+                and groups exist.
+                default=False
 
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
@@ -184,14 +198,30 @@ class ViewManager(object):
         results = {}
 
         if view_exist:
-            users = view_exist[ViewKeys.Users]
-            if not users:
+            if not self.users and not self.groups and not force or force:
                 object_status, _, _, generated_ids = (
                     delete_view(self.name)
                 )
 
                 if object_status == DbCodes.Deleted:
-                    msg = 'View %s deleted - ' % (self.name)
+                    if force:
+                        delete_users_from_view(self.name)
+                        delete_groups_from_view(self.name)
+                        text = (
+                            'View {view_name} deleted' +
+                            'and all users: {users} and groups: {groups}' +
+                            'were deleted'
+                        )
+                        msg = text.format(
+                            **{
+                                'view_name': self.name,
+                                'users': self.users,
+                                'groups': self.groups
+                            }
+                        )
+                    else:
+                        msg = 'View %s deleted - ' % (self.name)
+
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericCodes.ObjectDeleted
                     )
@@ -203,7 +233,7 @@ class ViewManager(object):
 
             else:
                 msg = (
-                    'Can not remove view %s, users exist in view: %s'
+                    'Can not remove view %s, while users: %s'+'exist in view: %s'
                     % (self.name, users)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (

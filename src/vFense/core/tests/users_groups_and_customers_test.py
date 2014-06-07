@@ -340,7 +340,26 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == GroupCodes.GroupDeleted)
 
+    def test_q_remove_view1(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.remove()
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewDeleted)
 
+    def test_q_remove_view2(self):
+        manager = ViewManager('Test View 1')
+        results = manager.remove()
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewDeleted)
+
+    def test_q_remove_view3(self):
+        manager = ViewManager('Test View 2')
+        results = manager.remove()
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewDeleted)
 
 
 def main():

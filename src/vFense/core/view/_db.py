@@ -370,68 +370,6 @@ def fetch_properties_for_all_views(username=None, conn=None):
     return(data)
 
 
-
-@time_it
-@db_create_close
-def fetch_users_for_view(view_name, keys_to_pluck=None, conn=None):
-    """Retrieve all the users for a view
-    Args:
-        view_name (str):  Name of the view.
-
-    Kwargs:
-        keys_to_pluck (list):  list of keys you want to retreive from the db.
-
-    Basic Usage:
-        >>> from vFense.view._db import fetch_users_for_view
-        >>> view_name = 'default'
-        >>> fetch_users_for_view(view_name)
-
-    Returns:
-        Returns a List of users for a view
-
-        [
-            {
-                u'user_name': u'alien',
-                u'id': u'ba9682ef-7adf-4916-8002-9637485b30d8',
-                u'view_name': u'default'
-            },
-            {
-                u'user_name': u'admin',
-                u'id': u'6bd86dcd-43fc-424e-88f1-684ce2189d88',
-                u'view_name': u'default'
-            }
-        ]
-    """
-    data = []
-    try:
-        if view_name and keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name,
-                    index=viewPerUserIndexes.ViewName
-                )
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-        elif view_name and not keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.ViewsPerUser)
-                .get_all(
-                    view_name,
-                    index=viewPerUserIndexes.ViewName
-                )
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
-
 @time_it
 @db_create_close
 def fetch_views_for_user(username, keys_to_pluck=None, conn=None):

@@ -250,6 +250,42 @@ def fetch_group_by_name(
 
 @time_it
 @db_create_close
+def fetch_group_ids_for_view(view_name, conn=None):
+    """Retrieve all the users for a view
+    Args:
+        view_name (str):  Name of the view.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_group_ids_for_view
+        >>> view_name = 'default'
+        >>> fetch_group_ids_for_view(view_name)
+
+    Returns:
+        Returns a List of users for a view
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(
+                view_name,
+                index=GroupIndexes.Views
+            )
+            .pluck(GroupKeys.Views)
+            .run(conn)
+        )
+        if data:
+            data = data.get(GroupKey.Views)
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
 def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
     """Fetch all users for group_id
     Args:
