@@ -218,10 +218,10 @@ class GroupManager(object):
         return results
 
     @time_it
-    def remove(self, force_remove=True):
+    def remove(self, force=True):
         """Remove  a group in vFense
         Kwargs:
-            force_remove (bool): Remove this group even if users are
+            force (boolean): Remove this group even if users are
                 in this group. (If a user is not part of any group, than
                 that user has readonly access to vFense)
                 default = False
@@ -236,7 +236,7 @@ class GroupManager(object):
         """
         results = {}
         if (
-                self.properties and self.users and force_remove or
+                self.properties and self.users and force or
                 self.properties and not self.users
             ):
             status_code, status_count, error, generated_id = (
@@ -253,7 +253,7 @@ class GroupManager(object):
                 results[ApiResultKeys.DELETED_IDS] = [self.group_id]
                 results[ApiResultKeys.MESSAGE] = msg
 
-        elif self.users and not force_remove:
+        elif self.users and not force:
             msg = (
                 'users exist for group %s' % (self.group_id)
             )
@@ -280,20 +280,20 @@ class GroupManager(object):
         return results
 
     @time_it
-    def remove_users(self, users=None, force_remove=False):
+    def remove_users(self, users=None, force=False):
         """Remove uers from group.
         Kwargs:
             users (list): Remove a list of users from this group.
-                default = None (Remove all users from this group)
-            force_remove (bool): Remove global users from this group.
-                default = False (Do not remove global users from this group)
+                default=None (Remove all users from this group)
+            force (boolean): Remove global users from this group.
+                default=False (Do not remove global users from this group)
 
         Basic Usage:
             >>> from vFense.group.manager import GroupManager
             >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
             >>> users = ['global_admin']
             >>> group = GroupManager(group_id)
-            >>> group.remove_users(users, force_remove=True)
+            >>> group.remove_users(users, force=True)
 
         Returns:
             Returns the results in a dictionary
@@ -311,8 +311,8 @@ class GroupManager(object):
 
         if self.properties and users and users_exist_in_group:
             if (
-                    is_global and force_remove or
-                    not is_global and not force_remove
+                    is_global and force or
+                    not is_global and not force
                 ):
 
                 status_code, _, _, _ = (
@@ -332,7 +332,7 @@ class GroupManager(object):
                     results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.UPDATED_IDS] = [self.group]
 
-            elif is_global and not force_remove:
+            elif is_global and not force:
                 msg = (
                     'Can not remove users %s from a global group %s' %
                     (', '.join(users), self.group_id)
@@ -374,12 +374,12 @@ class GroupManager(object):
         return results
 
     @time_it
-    def remove_views(self, views=None, force_remove=False):
+    def remove_views(self, views=None, force=False):
         """Remove views from group.
         Kwargs:
             views (list): Remove a list of views from this group.
                 default = None
-            force_remove (bool): Remove a view from this group, even if
+            force (bool): Remove a view from this group, even if
                 this is a global group.
                 default = False
         Basic Usage:
@@ -387,7 +387,7 @@ class GroupManager(object):
             >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
             >>> views = ['global']
             >>> group = GroupManager(group_id)
-            >>> group.remove_views(views, force_remove=True)
+            >>> group.remove_views(views, force=True)
 
         Returns:
             Returns the results in a dictionary
@@ -405,8 +405,8 @@ class GroupManager(object):
 
         if self.properties and views and views_exist_in_group:
             if (
-                    is_global and force_remove or
-                    not is_global and not force_remove
+                    is_global and force or
+                    not is_global and not force
                 ):
 
                 status_code, _, _, _ = (
@@ -426,7 +426,7 @@ class GroupManager(object):
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = msg
                     results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
 
-            elif is_global and not force_remove:
+            elif is_global and not force:
                 msg = (
                     'Can not remove views %s from a global group %s' %
                     (', '.join(views), self.group_id)
