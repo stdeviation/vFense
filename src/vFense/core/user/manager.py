@@ -496,6 +496,7 @@ class UserManager(object):
                     group_ids, user_exist[UserKeys.Views]
                 )
             )
+            print invalid_groups, valid_global_groups, valid_local_groups, group_ids
             if (
                     is_global and
                     len(valid_global_groups) == len(group_ids)
@@ -715,7 +716,7 @@ class UserManager(object):
                     GenericCodes.ObjectDeleted
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupCodes.GroupsRemovedFromUser
+                    GroupCodes.RemovedUsersFromGroup
                 )
 
             elif status_code == DbCodes.Unchanged:
@@ -754,7 +755,7 @@ class UserManager(object):
                 GroupFailureCodes.GroupDoesNotExistForUser
             )
 
-            results[ApiResultKeys.MESSAGE] =  msg
+        results[ApiResultKeys.MESSAGE] =  msg
 
         return results
 

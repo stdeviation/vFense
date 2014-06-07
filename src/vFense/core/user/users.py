@@ -1,22 +1,10 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core._constants import *
-from vFense.errorz._constants import *
 from vFense.core.user._db_model import UserKeys
-from vFense.core.user._constants import DefaultUsers
-from vFense.core.group._db_model import *
-from vFense.core.group._constants import *
-from vFense.core.view._db_model import *
 
-from vFense.core.user._db import fetch_user, delete_users
+from vFense.core.user._db import fetch_user
 
-
-from vFense.core.group.groups import remove_groups_from_user
-
-from vFense.core.view.views import remove_views_from_user
-
-from vFense.core.decorators import results_message, time_it
-from vFense.errorz.status_codes import *
+from vFense.core.decorators import time_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -107,7 +95,7 @@ def validate_users_in_views(usernames, views):
                 if user_data[UserKeys.Global]:
                     valid_global_users.append(user)
                 else:
-                    if user_data[UserKey.Views] in views:
+                    if user_data[UserKeys.Views] in views:
                         valid_local_users.append(user)
                     else:
                         invalid_users.append(user)
@@ -115,107 +103,3 @@ def validate_users_in_views(usernames, views):
                 invalid_users.append(user)
 
     return(invalid_users, valid_global_users, valid_local_users)
-
-@time_it
-@results_message
-def remove_users(usernames, user_name=None, uri=None, method=None):
-    """Remove a user from vFense
-    Args:
-        usernames (list): List of usernames that will be deleted.
-
-    Kwargs:
-        user_name (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
-
-    Return:
-        Dictionary of the status of the operation.
-    """
-
-    status = change_password.func_name + ' - '
-    usernames_not_to_delete = []
-    usernames_to_delete = []
-    generic_status_code = 0
-    vfense_status_code = 0
-    msg = ''
-    try:
-        if not isinstance(usernames, list):
-            usernames = usernames.split(',')
-        for username in usernames:
-            user_exist = get_user(username)
-            status = remove_users.func_name + ' - '
-            if user_exist and username != DefaultUsers.ADMIN:
-                remove_groups_from_user(username)
-                remove_views_from_user(username)
-                usernames_to_delete.append(username)
-
-            elif username == DefaultUsers.ADMIN:
-                msg = 'Can not delete the %s user' % (username)
-                usernames_not_to_delete.append(username)
-                generic_status_code = GenericCodes.CouldNotBeDeleted
-                vfense_status_code = UserFailureCodes.AdminUserCanNotBeDeleted
-                object_status = DbCodes.Skipped
-
-            else:
-                msg = 'User does not exist %s' % (username)
-                usernames_not_to_delete.append(username)
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = UserFailureCodes.UserNameDoesNotExist
-                object_status = DbCodes.Skipped
-
-        if len(usernames_to_delete) > 0:
-            object_status, _, _, _ = (
-                delete_users(usernames_to_delete)
-            )
-
-            if object_status == DbCodes.Deleted:
-                generic_status_code = GenericCodes.ObjectDeleted
-                vfense_status_code = UserCodes.UserDeleted
-                msg = 'Users removed %s' % (' and '.join(usernames_to_delete))
-
-            if object_status == DbCodes.DoesNotExist:
-                generic_status_code = GenericCodes.DoesNotExist
-                vfense_status_code = UserFailureCodes.UserNameDoesNotExist
-                msg = 'Users  %s do not exist' % (' and '.join(usernames_to_delete))
-
-        else:
-            object_status = DbCodes.Unchanged
-            generic_status_code = GenericFailureCodes.FailedToDeleteObject
-            vfense_status_code = UserFailureCodes.FailedToRemoveUser
-            msg = 'Users can not be removed %s' % (
-                ' and '.join(usernames_not_to_delete))
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: object_status,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.UNCHANGED_IDS: usernames_not_to_delete,
-            ApiResultKeys.DELETED_IDS: usernames_to_delete,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-
-    except Exception as e:
-        logger.exception(e)
-        msg = 'Failed to remove user %s: %s' % (username, str(e))
-        generic_status_code = GenericFailureCodes.FailedToDeleteObject
-        vfense_status_code = UserFailureCodes.FailedToRemoveUser
-
-        results = {
-            ApiResultKeys.DB_STATUS_CODE: DbCodes.Errors,
-            ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: status + msg,
-            ApiResultKeys.UNCHANGED_IDS: usernames_not_to_delete,
-            ApiResultKeys.DELETED_IDS: usernames_to_delete,
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: user_name,
-            ApiResultKeys.URI: uri,
-            ApiResultKeys.HTTP_METHOD: method
-        }
-
-    return results
