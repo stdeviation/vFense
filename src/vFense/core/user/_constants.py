@@ -1,5 +1,6 @@
 class DefaultUsers():
     GLOBAL_ADMIN = 'global_admin'
+    GLOBAL_AGENT = 'global_agent'
     ADMIN = 'admin'
     AGENT = 'agent_api'
 

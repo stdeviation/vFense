@@ -31,7 +31,7 @@ from vFense.supported_platforms import *
 from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
-from vFense.db.client import db_connect, r
+from vFense.db.client import db_connect, r, db_create_close
 
 
 from vFense.core.user._constants import *
@@ -41,7 +41,8 @@ from vFense.core.customer._constants import *
 from vFense.core.permissions._constants import *
 import vFense.core.group.groups as group
 import vFense.core.customer.customers as customers
-import vFense.core.user.users as user
+from vFense.core.user User
+from vFense.core.user.manager UserManager
 
 from vFense.plugins import monit
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
@@ -204,6 +205,75 @@ subprocess.Popen(
     ],
 )
 
+@db_create_close
+def create_views():
+    view = View(
+        DefaultViews.GLOBAL,
+        server_queue_ttl=args.queue_ttl,
+        package_download_url=url
+    )
+    view_manager = View(view.name)
+    view_manager.create(view)
+
+@db_create_close
+def create_groups():
+    group = Group(
+        DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
+        [DefaultViews.GLOBAL], True
+    )
+    group_manager = GroupManager()
+    group_results = group_manager.create(group)
+    admin_group_id = group_results['generated_ids'][0]
+
+    agent_group = Group(
+        DefaultGroups.GLOBAL_AGENT,
+        [DefaultViews.GLOBAL], True
+    )
+    agent_group_manager = GroupManager()
+    agent_group_results = agent_group_manager.create(group)
+    agent_group_id = group_results['generated_ids'][0]
+
+    return(admin_group_id, agent_group_id)
+
+
+@db_create_close
+def create_users(admin_group_id, agent_group_id):
+    user = User(
+        DefaultUsers.GLOBAL_ADMIN,
+        args.admin_password, DefaultGroups.GLOBAL_ADMIN,
+        current_view=DefaultViews.GLOBAL,
+        default_view=DefaultViews.GLOBAL,
+        enabled=True, is_global=True
+     )
+     user_manager = UserManager(user.name)
+     manager.create(user, [admin_group_id])
+     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
+     print 'Admin password = %s' % (args.admin_password)
+     agent_pass = generate_pass()
+     while not check_password(agent_pass)[0]:
+         agent_pass = generate_pass()
+
+    agent_user = User(
+        DefaultUsers.GLOBAL_AGENT,
+        agent_pass, DefaultGroups.GLOBAL_READ_ONLY,
+        current_view=DefaultViews.GLOBAL,
+        default_view=DefaultViews.GLOBAL,
+        enabled=True, is_global=True
+     )
+     user_agent_manager = UserManager(agent_user.name)
+     user_agent_manager.create(user, [agent_group_id])
+
+     print 'Agent api user = %s' % (DefaultUsers.GLOBAL_AGENT)
+     print 'Agent password = %s' % (agent_pass)
+
+
+@db_create_close
+def generate_initial_db_data():
+    create_views()
+    admin_group_id, agent_group_id = create_groups()
+    create_users(admin_group_id, agent_group_id)
+
+
 def initialize_db():
     os.umask(0)
     if not os.path.exists(VFENSE_TMP_PATH):
@@ -278,45 +348,7 @@ def initialize_db():
         conn.close()
         ci.initialize_indexes_and_create_tables()
         conn = db_connect()
-
-        default_customer = Customer(
-            DefaultCustomers.DEFAULT,
-            server_queue_ttl=args.queue_ttl,
-            package_download_url=url
-        )
-
-        customers.create_customer(default_customer, init=True)
-
-        group_data = group.create_group(
-            DefaultGroups.ADMIN,
-            DefaultCustomers.DEFAULT,
-            [Permissions.ADMINISTRATOR]
-        )
-        admin_group_id = group_data['generated_ids']
-        user.create_user(
-            DefaultUsers.ADMIN,
-            'vFense Admin Account',
-            args.admin_password,
-            admin_group_id,
-            DefaultCustomers.DEFAULT,
-            '',
-        )
-        print 'Admin username = admin'
-        print 'Admin password = %s' % (args.admin_password)
-        agent_pass = generate_pass()
-        while not check_password(agent_pass)[0]:
-            agent_pass = generate_pass()
-
-        user.create_user(
-            DefaultUsers.AGENT,
-            'vFense Agent Communication Account',
-            agent_pass,
-            admin_group_id,
-            DefaultCustomers.DEFAULT,
-            '',
-        )
-        print 'Agent api user = agent_api'
-        print 'Agent password = %s' % (agent_pass)
+        generate_initial_db_data()
 
         monit.monit_initialization()
 
