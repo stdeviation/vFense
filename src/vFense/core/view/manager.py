@@ -258,25 +258,111 @@ class ViewManager(object):
         return results
 
 
-    def change_net_throttle(self, throttle):
-        """Add permissions for this group.
+    def edit_net_throttle(self, throttle):
+        """Edit how much traffic the agent will use while downloading
+            applications from vFense.
+
         Args:
             throttle (int): The number in kilobytes you want to throttle
                 the download from the agent.
-                default=0 (Do not throttle)
 
         Basic Usage:
-            >>> from vFense.view import View
             >>> from vFense.view.manager import ViewManager
-            >>> view_name = 'global'
-            >>> view = View(self.name, net_throttle=100)
-            >>> manager = ViewManager(view.name)
-            >>> manager.change_net_throttle(100)
+            >>> manager = ViewManager("global")
+            >>> manager.edit_net_throttle(100)
 
         Returns:
             Returns the results in a dictionary
         """
         view = View(self.name, net_throttle=throttle)
+        results = self.__edit_properties(view)
+
+        return results
+
+
+    def edit_cpu_throttle(self, throttle):
+        """Change how much CPU will be used while installing an application.
+
+        Args:
+            throttle (str): How much cpu the agent should use while
+                installing an application. Valid throttle values..
+                ("idle", "below_normal", "normal", "above_normal", "high")
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.edit_cpu_throttle("normal")
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, cpu_throttle=throttle)
+        results = self.__edit_properties(view)
+
+        return results
+
+
+    def edit_server_queue_ttl(self, ttl):
+        """Change how long until an operation is considered expired
+            on the vFense server.
+
+        Args:
+            ttl (int): Number of minutes until an operation is
+                considered expired on the server.
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.edit_server_queue_ttl(10)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, server_queue_ttl=ttl)
+        results = self.__edit_properties(view)
+
+        return results
+
+
+    def edit_agent_queue_ttl(self, ttl):
+        """Change how long until an operation is considered expired
+            on the vFense agent.
+
+        Args:
+            ttl (int): Number of minutes until an operation is
+                considered expired on the agent.
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.edit_agent_queue_ttl(10)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, agent_queue_ttl=ttl)
+        results = self.__edit_properties(view)
+
+        return results
+
+
+    def edit_download_url(self, url):
+        """Change the url that the agent will use when downloadling
+            applications from the vFense server.
+
+        Args:
+            url (str): The url that the agent will use while downloading
+                from the vFense server. (https://ip_address/packages/"
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.edit_download_url("https://10.0.0.100/packages/")
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, package_download_url=ttl)
         results = self.__edit_properties(view)
 
         return results
