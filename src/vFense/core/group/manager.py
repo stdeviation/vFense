@@ -813,8 +813,8 @@ class GroupManager(object):
 
         return results
 
-    def change_name(self, group_name):
-        """Add permissions for this group.
+    def edit_name(self, group_name):
+        """Edit the name of this group.
         Args:
             group_name (str): The new name of this group.
 
@@ -833,8 +833,9 @@ class GroupManager(object):
 
         return results
 
-    def change_email(self, email):
-        """Add permissions for this group.
+
+    def edit_email(self, email):
+        """Edit the email address of this group.
         Args:
             email (str): The new email address of this group.
 
