@@ -24,6 +24,7 @@ class GenericCodes(object):
     MissingUsername = 1023
     MissingPassword = 1024
     InvalidValue = 1025
+    InvalidFields = 1026
 
 
 class GenericFailureCodes(object):

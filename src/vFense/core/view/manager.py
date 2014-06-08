@@ -362,7 +362,7 @@ class ViewManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        view = View(self.name, package_download_url=ttl)
+        view = View(self.name, package_download_url=url)
         results = self.__edit_properties(view)
 
         return results
@@ -389,14 +389,16 @@ class ViewManager(object):
         if view_exist:
             if isinstance(view, View):
                 invalid_fields = view.get_invalid_fields()
+                view_data = view.to_dict_non_null()
+                view_data.pop(ViewKeys.ViewName, None)
                 if not invalid_fields:
                     status_code, _, _, _ = (
-                        update_view(self.name, view.to_dict_non_null())
+                        update_view(self.name, view_data)
                     )
                     if status_code == DbCodes.Replaced:
                         msg = (
                             'view %s updated with data: %s'
-                            % (self.name, view.to_dict_non_null())
+                            % (self.name, view_data)
                         )
                         results[ApiResultKeys.MESSAGE] = msg
                         results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -410,7 +412,7 @@ class ViewManager(object):
                     if status_code == DbCodes.Unchanged:
                         msg = (
                             'View data: %s is the same as the previous values'
-                            % (view.to_dict_non_null())
+                            % (view_data)
                         )
                         results[ApiResultKeys.MESSAGE] = msg
                         results[ApiResultKeys.GENERIC_STATUS_CODE] = (

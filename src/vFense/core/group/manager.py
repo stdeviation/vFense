@@ -673,11 +673,13 @@ class GroupManager(object):
         group_exist = self.properties
         results = {}
         if group_exist:
-            group = Group(group_exist[GroupKeys.Id], permissions=permissions)
+            group = Group(
+                group_exist[GroupKeys.GroupName], permissions=permissions
+            )
             invalid_permissions = group.get_invalid_fields()
             if not invalid_permissions:
                 status_code, _, _, _ = (
-                    delete_permissions_in_group(self.group_id)
+                    delete_permissions_in_group(self.group_id, permissions)
                 )
                 if status_code == DbCodes.Replaced:
                     msg = (
@@ -753,7 +755,12 @@ class GroupManager(object):
         group_exist = self.properties
         results = {}
         if group_exist:
-            group = Group(group_exist[GroupKeys.Id], permissions=permissions)
+            group = (
+                Group(
+                    group_exist[GroupKeys.GroupName],
+                    permissions=permissions
+                )
+            )
             invalid_permissions = group.get_invalid_fields()
             if not invalid_permissions:
                 status_code, _, _, _ = (
@@ -828,7 +835,7 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        group = Group(group_name)
+        group = Group(name=group_name)
         results = self.__edit_properties(group)
 
         return results
@@ -849,7 +856,7 @@ class GroupManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        group = Group(self.name, email=email)
+        group = Group(email=email)
         results = self.__edit_properties(group)
 
         return results
@@ -912,7 +919,7 @@ class GroupManager(object):
                 GenericCodes.InvalidFields
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GroupCodes.InvalidFields
+                GroupFailureCodes.InvalidFields
             )
             results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
@@ -924,7 +931,7 @@ class GroupManager(object):
                 GenericCodes.InvalidValue
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GroupCodes.InvalidValue
+                GroupFailureCodes.InvalidValue
             )
             results[ApiResultKeys.MESSAGE] = msg
             results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]

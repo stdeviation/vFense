@@ -18,7 +18,7 @@ class Group(object):
     """Used to represent an instance of a group."""
 
     def __init__(
-            self, name, permissions=None,
+            self, name=None, permissions=None,
             views=None, is_global=None, users=None, email=None
         ):
         """
@@ -76,64 +76,60 @@ class Group(object):
                     ]
         """
         invalid_fields = []
-
-        if isinstance(self.name, basestring):
-            valid_symbols = re.search(
-                RegexPattern.GROUP_NAME, self.name
-            )
-            valid_length = len(self.name) <= DefaultStringLength.GROUP_NAME
-
-            if not valid_symbols and valid_length:
-                invalid_fields.append(
-                    {
-                        GroupKeys.UserName: self.name,
-                        CommonKeys.REASON: 'Invalid characters in username',
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GroupFailureCodes.InvalidGroupName
-                        )
-                    }
+        if self.name:
+            if isinstance(self.name, basestring):
+                valid_symbols = re.search(
+                    RegexPattern.GROUP_NAME, self.name
+                )
+                valid_length = (
+                    len(self.name) <= DefaultStringLength.GROUP_NAME
                 )
 
-            elif not valid_length and valid_symbols:
-                invalid_fields.append(
-                    {
-                        GroupKeys.UserName: self.name,
-                        CommonKeys.REASON: (
-                            'Groupname is too long. The groupname must be ' +
-                            'less than %d characters long' %
-                            (DefaultStringLength.GROUP_NAME)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GroupFailureCodes.InvalidGroupName
-                        )
-                    }
-                )
-
-            elif not valid_length and not valid_symbols:
-                invalid_fields.append(
-                    {
-                        GroupKeys.UserName: self.name,
-                        CommonKeys.REASON: (
-                            'Groupname is too long. The groupname must be ' +
-                            'less than %d characters long' %
-                            (DefaultStringLength.GROUP_NAME) +
-                            '\nInvalid characters in groupname'
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GroupFailureCodes.InvalidGroupName
-                        )
-                    }
-                )
-        else:
-            invalid_fields.append(
-                {
-                    GroupKeys.GroupName: self.name,
-                    CommonKeys.REASON: 'groupname is not a valid string',
-                    ApiResultKeys.VFENSE_STATUS_CODE: (
-                        GroupFailureCodes.InvalidGroupName
+                if not valid_symbols and valid_length:
+                    invalid_fields.append(
+                        {
+                            GroupKeys.UserName: self.name,
+                            CommonKeys.REASON: (
+                                'Invalid characters in username'
+                            ),
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GroupFailureCodes.InvalidGroupName
+                            )
+                        }
                     )
-                }
-            )
+
+                elif not valid_length and valid_symbols:
+                    invalid_fields.append(
+                        {
+                            GroupKeys.UserName: self.name,
+                            CommonKeys.REASON: (
+                                'Groupname is too long. ' +
+                                'The groupname must be ' +
+                                'less than %d characters long' %
+                                (DefaultStringLength.GROUP_NAME)
+                            ),
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GroupFailureCodes.InvalidGroupName
+                            )
+                        }
+                    )
+
+                elif not valid_length and not valid_symbols:
+                    invalid_fields.append(
+                        {
+                            GroupKeys.UserName: self.name,
+                            CommonKeys.REASON: (
+                                'Groupname is too long. ' +
+                                'The groupname must be ' +
+                                'less than %d characters long' %
+                                (DefaultStringLength.GROUP_NAME) +
+                                '\nInvalid characters in groupname'
+                            ),
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GroupFailureCodes.InvalidGroupName
+                            )
+                        }
+                    )
 
         if self.is_global:
             if not isinstance(self.is_global, bool):

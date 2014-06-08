@@ -35,6 +35,40 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == ViewCodes.ViewCreated)
 
+    def test_a_edit_view1_server_ttl(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.edit_server_queue_ttl(5)
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewUpdated)
+
+    def test_a_edit_view1_agent_ttl(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.edit_agent_queue_ttl(5)
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewUpdated)
+
+    def test_a_edit_view1_net_throttle(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.edit_net_throttle(100)
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewUpdated)
+
+    def test_a_edit_view1_cpu_throttle(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.edit_cpu_throttle('above_normal')
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewUpdated)
+
+    def test_a_edit_view1_download_url(self):
+        manager = ViewManager(DefaultViews.GLOBAL)
+        results = manager.edit_download_url('https://192.168.0.100/packages/')
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewUpdated)
 
     def test_a_create_view2(self):
         view = View(
@@ -59,7 +93,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         self.failUnless(status_code == ViewCodes.ViewCreated)
 
 
-    def test_b_create_group1(self):
+    def test_b_1_create_group1(self):
         group = Group(
             DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
             [DefaultViews.GLOBAL], True
@@ -71,7 +105,47 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         self.failUnless(status_code == GroupCodes.GroupCreated)
 
 
-    def test_b_create_group2(self):
+    def test_b_2_add_permissions_install_group1(self):
+        global_group_id = (
+            fetch_group_by_name(
+                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(global_group_id)
+        results = manager.add_permissions(
+            [Permissions.INSTALL, Permissions.UNINSTALL]
+        )
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.PermissionsUpdated)
+
+    def test_b_3_remove_permissions_install_group1(self):
+        global_group_id = (
+            fetch_group_by_name(
+                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(global_group_id)
+        results = manager.remove_permissions(
+            [Permissions.INSTALL, Permissions.UNINSTALL]
+        )
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.PermissionsUpdated)
+
+    def test_b_4_edit_email_group1(self):
+        global_group_id = (
+            fetch_group_by_name(
+                DefaultGroups.GLOBAL_ADMIN, DefaultViews.GLOBAL
+            ).get(GroupKeys.GroupId)
+        )
+        manager = GroupManager(global_group_id)
+        results = manager.edit_email('foo@foo.com')
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == GroupCodes.GroupUpdated)
+
+    def test_b_5_create_group2(self):
         group = Group(
             'Tester 1', [Permissions.INSTALL, Permissions.UNINSTALL],
             ['Test View 1', 'Test View 2']
@@ -82,7 +156,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == GroupCodes.GroupCreated)
 
-    def test_b_create_group3(self):
+    def test_b_6_create_group3(self):
         group = Group(
             'Tester 2', [Permissions.ADMINISTRATOR],
             ['Test View 2']
@@ -93,7 +167,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == GroupCodes.GroupCreated)
 
-    def test_b_create_group4(self):
+    def test_b_7_create_group4(self):
         group = Group(
             'Tester 3', [Permissions.INSTALL],
             ['Test View 2']
