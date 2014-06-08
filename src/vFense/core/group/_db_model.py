@@ -9,6 +9,7 @@ class GroupKeys():
     GroupId = 'id'
     Global = 'global'
     Users = 'users'
+    Email = 'email'
 
 
 class GroupIndexes():

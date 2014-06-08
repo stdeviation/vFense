@@ -19,7 +19,7 @@ class Group(object):
 
     def __init__(
             self, name, permissions=None,
-            views=None, is_global=None, users=None
+            views=None, is_global=None, users=None, email=None
         ):
         """
         Kwargs:
@@ -27,12 +27,14 @@ class Group(object):
             permissions (list): List of valid permissions.
             views (list): List of views.
             is_global (boolean): Is this group a global group.
+            email (str): The group email address/
         """
         self.name = name
         self.permissions = permissions
         self.views = views
         self.is_global = is_global
         self.users = users
+        self.email = email
 
 
     def fill_in_defaults(self):
@@ -56,6 +58,9 @@ class Group(object):
 
         if not self.is_global:
             self.is_global = GroupDefaults.IS_GLOBAL
+
+        if not self.email:
+            self.email = GroupDefaults.EMAIL
 
     def get_invalid_fields(self):
         """Check the group for any invalid fields.
@@ -209,11 +214,11 @@ class Group(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the group fields into a dictionary.
 
         Returns:
             (dict): A dictionary with the fields corresponding to the
-                view.
+                group.
 
                 Ex:
                 {
@@ -227,14 +232,15 @@ class Group(object):
             GroupKeys.Permissions: self.permissions,
             GroupKeys.Views: self.views,
             GroupKeys.Users: self.users,
+            GroupKeys.Email: self.email,
         }
 
     def to_dict_non_null(self):
-        """ Use to get non None fields of view. Useful when
-        filling out just a few fields to update the view in the db.
+        """ Use to get non None fields of group. Useful when
+        filling out just a few fields to update the group in the db.
 
         Returns:
-            (dict): a dictionary with the non None fields of this view.
+            (dict): a dictionary with the non None fields of this group.
         """
         group_dict = self.to_dict()
 

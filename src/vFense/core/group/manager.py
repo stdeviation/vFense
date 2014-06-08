@@ -11,7 +11,7 @@ from vFense.core.group._db import (
     fetch_group, insert_group, delete_users_in_group,
     delete_group, delete_views_in_group, add_views_to_group,
     add_users_to_group, delete_permissions_in_group,
-    add_permissions_to_group
+    add_permissions_to_group, update_group
 )
 from vFense.core.group._db_model import (
     GroupKeys
@@ -798,6 +798,135 @@ class GroupManager(object):
                 )
                 results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
                 results[ApiResultKeys.INVALID_IDS] = permissions
+
+        else:
+            msg = 'group_id %s does not exist' % (self.group_id)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
+
+        return results
+
+    def change_name(self, group_name):
+        """Add permissions for this group.
+        Args:
+            group_name (str): The new name of this group.
+
+        Basic Usage:
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
+            >>> group_name = 'Foo'
+            >>> group = GroupManager(group_id)
+            >>> group.change_name(group_name)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        group = Group(group_name)
+        results = self.__edit_properties(group)
+
+        return results
+
+    def change_email(self, email):
+        """Add permissions for this group.
+        Args:
+            email (str): The new email address of this group.
+
+        Basic Usage:
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
+            >>> email = 'foo@foo.com'
+            >>> group = GroupManager(group_id)
+            >>> group.change_email(email)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        group = Group(self.name, email=email)
+        results = self.__edit_properties(group)
+
+        return results
+
+
+    def __edit_properties(self, group):
+        """Edit the properties of this group.
+        Args:
+            group (Group): Group instance.
+
+        Basic Usage:
+            >>> from vFense.group import Group
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '8757b79c-7321-4446-8882-65457f28c78b'
+            >>> group = Group(group_name, email="foo@foo.com")
+            >>> manager = GroupManager(group_id)
+            >>> manager.__edit_properties(group)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        group_exist = self.properties
+        results = {}
+        invalid_fields = group.get_invalid_fields()
+        if group_exist and not invalid_fields and isinstance(group, Group):
+            status_code, _, _, _ = (
+                update_group(self.group_id, group.to_dict_non_null())
+            )
+            if status_code == DbCodes.Replaced:
+                msg = (
+                    'group id %s updated with data: %s'
+                    % (self.group_id, group.to_dict_non_null())
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUpdated
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.GroupUpdated
+                )
+                results[ApiResultKeys.UPDATED_IDS] = [self.group_id]
+
+            if status_code == DbCodes.Unchanged:
+                msg = (
+                    'Group data: %s is the same as the previous values'
+                    % (group.to_dict_non_null())
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GroupCodes.GroupUnchanged
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+
+        elif invalid_fields:
+            msg = 'Invalid fields: %s' % (invalid_fields)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidFields
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.InvalidFields
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
+            results[ApiResultKeys.INVALID_DATA] = [invalid_fields]
+
+        elif not isinstance(group, Group):
+            msg = 'Group not of instance type Group: %s' % (type(group))
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidValue
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.InvalidValue
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.group_id]
 
         else:
             msg = 'group_id %s does not exist' % (self.group_id)

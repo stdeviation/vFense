@@ -72,6 +72,7 @@ class GroupFailureCodes(object):
     CantRemoveViewsFromGlobalGroup = 12516
     CantAddUsersToGlobalGroup = 12517
     CantAddLocalUsersToGlobalGroup = 12518
+    InvalidValue = 12519
 
 
 class UserCodes(object):
@@ -134,6 +135,8 @@ class ViewFailureCodes(object):
     InvalidOperationTTL = 124511
     InvalidServerQueueThrottle = 124512
     InvalidAgentQueueThrottle = 124513
+    InvalidFields = 124514
+    InvalidValue = 124515
 
 
 class DbCodes(object):

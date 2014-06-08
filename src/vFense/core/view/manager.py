@@ -9,7 +9,7 @@ from vFense.core.group._db import (
 )
 from vFense.core.view._db import (
     fetch_view, insert_view, update_children_for_view, delete_view,
-    delete_users_in_view
+    delete_users_in_view, update_view
 )
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
@@ -254,5 +254,126 @@ class ViewManager(object):
                 ViewFailureCodes.ViewExists
             )
             results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    def change_net_throttle(self, throttle):
+        """Add permissions for this group.
+        Args:
+            throttle (int): The number in kilobytes you want to throttle
+                the download from the agent.
+                default=0 (Do not throttle)
+
+        Basic Usage:
+            >>> from vFense.view import View
+            >>> from vFense.view.manager import ViewManager
+            >>> view_name = 'global'
+            >>> view = View(self.name, net_throttle=100)
+            >>> manager = ViewManager(view.name)
+            >>> manager.change_net_throttle(100)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, net_throttle=throttle)
+        results = self.__edit_properties(view)
+
+        return results
+
+
+    def __edit_properties(self, view):
+        """Edit the properties of a view.
+        Args:
+            view_data (dict): The fields you want to update.
+
+        Basic Usage:
+            >>> from vFense.view import View
+            >>> from vFense.view.manager import ViewManager
+            >>> view_name = 'global'
+            >>> view = View(view_name, net_throttle=100)
+            >>> manager = ViewManager(view.name)
+            >>> manager.__edit_properties(view)
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view_exist = self.properties
+        results = {}
+        if view_exist:
+            if isinstance(view, View):
+                invalid_fields = view.get_invalid_fields()
+                if not invalid_fields:
+                    status_code, _, _, _ = (
+                        update_view(self.name, view.to_dict_non_null())
+                    )
+                    if status_code == DbCodes.Replaced:
+                        msg = (
+                            'view %s updated with data: %s'
+                            % (self.name, view.to_dict_non_null())
+                        )
+                        results[ApiResultKeys.MESSAGE] = msg
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.ObjectUpdated
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            ViewCodes.ViewUpdated
+                        )
+                        results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+                    if status_code == DbCodes.Unchanged:
+                        msg = (
+                            'View data: %s is the same as the previous values'
+                            % (view.to_dict_non_null())
+                        )
+                        results[ApiResultKeys.MESSAGE] = msg
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.ObjectUnchanged
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            ViewCodes.ViewUnchanged
+                        )
+                        results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+                else:
+                    msg = (
+                        'View data: %s contains invalid_data'
+                        % (self.name)
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUnchanged
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewFailureCodes.InvalidFields
+                    )
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+                    results[ApiResultKeys.ERRORS] = invalid_fields
+
+            else:
+                msg = (
+                    'Argument must be an instance of View and not %s'
+                    % (type(view))
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidValue
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.InvalidValue
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'view %s does not exist' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectUnchanged
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewCodes.ViewUnchanged
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+            results[ApiResultKeys.INVALID_IDS] = [self.name]
 
         return results

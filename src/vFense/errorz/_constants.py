@@ -19,4 +19,5 @@ class ApiResultKeys:
     DELETED_IDS = 'deleted_ids'
     INVALID_IDS = 'invalid_ids'
     INVALID_ID = 'invalid_id'
+    INVALID_DATA = 'invalid_data'
     USERNAME_IDS = 'user_name'

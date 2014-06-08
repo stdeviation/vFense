@@ -11,3 +11,4 @@ class GroupDefaults():
     USERS = []
     VIEWS = []
     IS_GLOBAL = False
+    EMAIL = None
