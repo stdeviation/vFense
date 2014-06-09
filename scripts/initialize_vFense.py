@@ -283,7 +283,6 @@ def create_groups(conn=None):
     )
     agent_group_manager = GroupManager()
     agent_group_results = agent_group_manager.create(agent_group)
-    print agent_group_results
     agent_group_id = agent_group_results['generated_ids'][0]
 
     return(admin_group_id, agent_group_id)
@@ -291,15 +290,15 @@ def create_groups(conn=None):
 
 @db_create_close
 def create_users(admin_group_id, agent_group_id, conn=None):
-    user = User(
+    admin_user = User(
         DefaultUsers.GLOBAL_ADMIN,
         args.admin_password, DefaultGroups.GLOBAL_ADMIN,
         current_view=DefaultViews.GLOBAL,
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True
      )
-    user_manager = UserManager(user.name)
-    user_manager.create(user, [admin_group_id])
+    user_manager = UserManager(admin_user.name)
+    user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)
     agent_pass = generate_pass()
@@ -314,9 +313,9 @@ def create_users(admin_group_id, agent_group_id, conn=None):
         enabled=True, is_global=True
      )
     user_agent_manager = UserManager(agent_user.name)
-    user_agent_manager.create(user, [agent_group_id])
+    user_agent_manager.create(agent_user, [agent_group_id])
 
-    print 'Agent api user = %s' % (DefaultUsers.GLOBAL_AGENT)
+    print 'Agent username = %s' % (DefaultUsers.GLOBAL_AGENT)
     print 'Agent password = %s' % (agent_pass)
 
 

@@ -155,7 +155,6 @@ class ViewManager(object):
                     update_views_for_users(
                         usernames, [view.name]
                     )
-                print parent_view, 'foo bar'
                 if parent_view:
                     update_children_for_view(
                         parent_view[ViewKeys.ViewName], view.name
