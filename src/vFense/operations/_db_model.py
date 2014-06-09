@@ -18,6 +18,15 @@ class AdminOperationKey():
     IdsUpdated = 'ids_updated'
     IdsRemoved = 'ids_removed'
     Errors = 'errors'
+    CurrentView = 'current_view'
+
+
+class AdminOperationIndexes():
+    CreatedBy = 'created_by'
+    GenericStatusCode = 'generic_status_code'
+    VfenseStatusCode = 'vfense_status_code'
+    Action = 'action'
+    ActionPerformedOn = 'action_performed_on'
 
 
 class AgentOperationKey():
