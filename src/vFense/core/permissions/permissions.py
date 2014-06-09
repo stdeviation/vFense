@@ -8,7 +8,7 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.core._constants import *
 from vFense.core.user._db_model import UserKeys, UserCollections
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.user.users import get_user
+from vFense.core.user._db import fetch_user
 
 from vFense.core.permissions import *
 from vFense.core.permissions._constants import *
@@ -101,7 +101,7 @@ def verify_permission_for_user(
         return(granted, status_code)
 
     try:
-        user_exist = get_user(username)
+        user_exist = fetch_user(username)
         if permission in Permissions().VALID_PERMISSIONS and user_exist:
             if not view_name:
                 view_name = user_exist.get(UserKeys.CurrentView)

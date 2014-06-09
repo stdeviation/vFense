@@ -107,7 +107,7 @@ class vFenseLogger():
                 'vFense_stats_file'
             ]
         )
-        self.formatters = ['default'] 
+        self.formatters = ['default']
         self.section_logger_name = 'loggers'
         self.section_handler_name = 'handlers'
         self.section_formatter_name = 'formatters'
@@ -130,7 +130,7 @@ class vFenseLogger():
         )
         if initialize:
             self._initialize_logger_config()
-            
+
 
     def _initialize_logger_config(self):
         self.count = 0
@@ -150,7 +150,7 @@ class vFenseLogger():
         passed, message = self._send_config(config)
         self._shutdown_listener()
         self.results = {
-                'pass': passed, 
+                'pass': passed,
                 'message': message
                 }
 
@@ -241,20 +241,20 @@ class vFenseLogger():
 
     def _start_listener(self):
         try:
-            print "starting listener"
+            #print "starting listener"
             self.listener = logging.config.listen(self.LISTENER_PORT)
             self.listener.start()
-            print "listener started"
+            #print "listener started"
         except Exception as e:
             print e
 
 
     def _shutdown_listener(self):
         try:
-            print "shutting down listener"
+            #print "shutting down listener"
             logging.config.stopListening()
             #self.listener.join()
-            print "listener is down"
+            #print "listener is down"
         except Exception as e:
             print dir(e), e
 
@@ -264,14 +264,14 @@ class vFenseLogger():
         sender = socket(AF_INET, SOCK_STREAM)
         passed = True
         message = None
-        print "Im about to connect to the listener"
+        #print "Im about to connect to the listener"
         try:
-            print self.LISTENER_HOST, self.LISTENER_PORT
+            #print self.LISTENER_HOST, self.LISTENER_PORT
             sender.connect((self.LISTENER_HOST, self.LISTENER_PORT))
-            print "I'm connected to the listener"
+            #print "I'm connected to the listener"
             passed = True
         except Exception as e:
-            print e, "BOOM I CANT CONNECT"
+            #print e, "BOOM I CANT CONNECT"
             if self.count == 0:
                 self.count = self.count + 1
                 self._send_config(msg)
@@ -279,11 +279,11 @@ class vFenseLogger():
             message = e.message+' '+self.LISTENER_HOST+\
                     ' '+ str(self.LISTENER_PORT)
         if passed:
-            print "I'm sending the new config file over"
+            #print "I'm sending the new config file over"
             try:
                 sender.send(struct.pack('>L', len(msg)))
                 sender.send(msg)
-                print "new config sent"
+                #print "new config sent"
             except Exception as e:
                 print e
             sender.shutdown(SHUT_RDWR)

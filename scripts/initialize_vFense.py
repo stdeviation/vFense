@@ -8,7 +8,6 @@ import signal
 import subprocess
 from time import sleep
 from _magic import *
-print sys.path
 from vFense import (
     VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
     VFENSE_LOG_PATH, VFENSE_CONF_PATH,
@@ -16,7 +15,8 @@ from vFense import (
     VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
     VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED,
     VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK,
-    VFENSE_SSL_PATH
+    VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_DATA_PATH,
+    RETHINK_PATH
 )
 from vFense.core.logger.logger import vFenseLogger
 vfense_logger = vFenseLogger()
@@ -34,15 +34,16 @@ from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r, db_create_close
 
 
-from vFense.core.user._constants import *
-from vFense.core.group._constants import *
-from vFense.core.customer import Customer
-from vFense.core.customer._constants import *
-from vFense.core.permissions._constants import *
-import vFense.core.group.groups as group
-import vFense.core.customer.customers as customers
-from vFense.core.user User
-from vFense.core.user.manager UserManager
+from vFense.core.user import User
+from vFense.core.user.manager import UserManager
+from vFense.core.user._constants import DefaultUsers
+from vFense.core.group import Group
+from vFense.core.group.manager import GroupManager
+from vFense.core.group._constants import DefaultGroups
+from vFense.core.view import View
+from vFense.core.view.manager import ViewManager
+from vFense.core.view._constants import DefaultViews
+from vFense.core.permissions._constants import Permissions
 
 from vFense.plugins import monit
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
@@ -125,22 +126,6 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
-if not os.path.exists(VFENSE_SSL_PATH):
-    os.mkdir(VFENSE_SSL_PATH, 0755)
-if not os.path.exists(VFENSE_LOG_PATH):
-    os.mkdir(VFENSE_LOG_PATH, 0755)
-if not os.path.exists(VFENSE_SCHEDULER_PATH):
-    os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
-if not os.path.exists(VFENSE_APP_PATH):
-    os.mkdir(VFENSE_APP_PATH, 0755)
-if not os.path.exists(VFENSE_APP_TMP_PATH):
-    os.mkdir(VFENSE_APP_TMP_PATH, 0775)
-if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
-    os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
-if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
-    os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
-if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
-    os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
 
 generate_generic_certs()
 ncc.nginx_config_builder(
@@ -151,148 +136,80 @@ ncc.nginx_config_builder(
     rvweb_count=int(args.web_count)
 )
 
-try:
-    if os.path.exists(os.path.join(SITE_PACKAGES[-1], 'vFense')):
-        os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
 
-    elif (
-            not os.path.exists(
-                os.readlink(os.path.join(SITE_PACKAGES[-1], 'vFense'))
-            )
-        ):
-        os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
+def create_directories():
+    if not os.path.exists(VFENSE_SSL_PATH):
+        os.mkdir(VFENSE_SSL_PATH, 0755)
+    if not os.path.exists(VFENSE_LOG_PATH):
+        os.mkdir(VFENSE_LOG_PATH, 0755)
+    if not os.path.exists(VFENSE_SCHEDULER_PATH):
+        os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
+    if not os.path.exists(VFENSE_APP_PATH):
+        os.mkdir(VFENSE_APP_PATH, 0755)
+    if not os.path.exists(VFENSE_APP_TMP_PATH):
+        os.mkdir(VFENSE_APP_TMP_PATH, 0775)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
+    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
+        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
 
-except Exception as e:
-    pass
+def create_symlinks():
+    try:
+        if os.path.exists(os.path.join(SITE_PACKAGES[-1], 'vFense')):
+            os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
 
-subprocess.Popen(
-    [
-        'ln', '-s', VFENSE_BASE_SRC_PATH, SITE_PACKAGES[-1]
-    ],
-)
+        elif (
+                not os.path.exists(
+                    os.readlink(os.path.join(SITE_PACKAGES[-1], 'vFense'))
+                )
+            ):
+            os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
 
-try:
-    if os.path.exists(VFENSED_SYMLINK):
-        os.remove(VFENSED_SYMLINK)
+    except Exception as e:
+        pass
 
-    elif not os.path.exists(os.readlink(VFENSED_SYMLINK)):
-        os.remove(VFENSED_SYMLINK)
-
-except Exception as e:
-    pass
-
-subprocess.Popen(
-    [
-        'ln', '-s', VFENSED, VFENSED_SYMLINK
-    ],
-)
-
-try:
-    if os.path.exists(VFENSE_INIT_D_SYMLINK):
-        os.remove(VFENSE_INIT_D_SYMLINK)
-
-    elif not os.path.exists(os.readlink(VFENSE_INIT_D_SYMLINK)):
-        os.remove(VFENSE_INIT_D_SYMLINK)
-
-except Exception as e:
-    pass
-
-subprocess.Popen(
-    [
-        'ln', '-s',
-        VFENSE_INIT_D_SCRIPT,
-        VFENSE_INIT_D_SYMLINK
-    ],
-)
-
-@db_create_close
-def create_views():
-    view = View(
-        DefaultViews.GLOBAL,
-        server_queue_ttl=args.queue_ttl,
-        package_download_url=url
+    subprocess.Popen(
+        [
+            'ln', '-s', VFENSE_BASE_SRC_PATH, SITE_PACKAGES[-1]
+        ],
     )
-    view_manager = View(view.name)
-    view_manager.create(view)
 
-@db_create_close
-def create_groups():
-    group = Group(
-        DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
-        [DefaultViews.GLOBAL], True
+    try:
+        if os.path.exists(VFENSED_SYMLINK):
+            os.remove(VFENSED_SYMLINK)
+
+        elif not os.path.exists(os.readlink(VFENSED_SYMLINK)):
+            os.remove(VFENSED_SYMLINK)
+
+    except Exception as e:
+        pass
+
+    subprocess.Popen(
+        [
+            'ln', '-s', VFENSED, VFENSED_SYMLINK
+        ],
     )
-    group_manager = GroupManager()
-    group_results = group_manager.create(group)
-    admin_group_id = group_results['generated_ids'][0]
 
-    agent_group = Group(
-        DefaultGroups.GLOBAL_AGENT,
-        [DefaultViews.GLOBAL], True
+    try:
+        if os.path.exists(VFENSE_INIT_D_SYMLINK):
+            os.remove(VFENSE_INIT_D_SYMLINK)
+
+        elif not os.path.exists(os.readlink(VFENSE_INIT_D_SYMLINK)):
+            os.remove(VFENSE_INIT_D_SYMLINK)
+
+    except Exception as e:
+        pass
+
+    subprocess.Popen(
+        [
+            'ln', '-s',
+            VFENSE_INIT_D_SCRIPT,
+            VFENSE_INIT_D_SYMLINK
+        ],
     )
-    agent_group_manager = GroupManager()
-    agent_group_results = agent_group_manager.create(group)
-    agent_group_id = group_results['generated_ids'][0]
 
-    return(admin_group_id, agent_group_id)
-
-
-@db_create_close
-def create_users(admin_group_id, agent_group_id):
-    user = User(
-        DefaultUsers.GLOBAL_ADMIN,
-        args.admin_password, DefaultGroups.GLOBAL_ADMIN,
-        current_view=DefaultViews.GLOBAL,
-        default_view=DefaultViews.GLOBAL,
-        enabled=True, is_global=True
-     )
-     user_manager = UserManager(user.name)
-     manager.create(user, [admin_group_id])
-     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
-     print 'Admin password = %s' % (args.admin_password)
-     agent_pass = generate_pass()
-     while not check_password(agent_pass)[0]:
-         agent_pass = generate_pass()
-
-    agent_user = User(
-        DefaultUsers.GLOBAL_AGENT,
-        agent_pass, DefaultGroups.GLOBAL_READ_ONLY,
-        current_view=DefaultViews.GLOBAL,
-        default_view=DefaultViews.GLOBAL,
-        enabled=True, is_global=True
-     )
-     user_agent_manager = UserManager(agent_user.name)
-     user_agent_manager.create(user, [agent_group_id])
-
-     print 'Agent api user = %s' % (DefaultUsers.GLOBAL_AGENT)
-     print 'Agent password = %s' % (agent_pass)
-
-
-@db_create_close
-def generate_initial_db_data():
-    create_views()
-    admin_group_id, agent_group_id = create_groups()
-    create_users(admin_group_id, agent_group_id)
-
-
-def initialize_db():
-    os.umask(0)
-    if not os.path.exists(VFENSE_TMP_PATH):
-        os.mkdir(VFENSE_TMP_PATH, 0755)
-    if not os.path.exists(RETHINK_CONF):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                RETHINK_SOURCE_CONF,
-                RETHINK_CONF
-            ],
-        )
-    if not os.path.exists('/var/lib/rethinkdb/vFense'):
-        os.makedirs('/var/lib/rethinkdb/vFense')
-        subprocess.Popen(
-            [
-                'chown', '-R', 'rethinkdb.rethinkdb', '/var/lib/rethinkdb/vFense'
-            ],
-        )
     if get_distro() in DEBIAN_DISTROS:
         subprocess.Popen(
             [
@@ -319,8 +236,11 @@ def initialize_db():
                 os.path.join(VFENSE_CONF_PATH, 'patches/scheduler.patch')
             ],
         )
+
+
+def add_local_user():
     try:
-        tp_exists = pwd.getpwnam('vfense')
+        pwd.getpwnam('vfense')
 
     except Exception as e:
         if get_distro() in DEBIAN_DISTROS:
@@ -336,83 +256,176 @@ def initialize_db():
                 ],
             )
 
-    rethink_start = subprocess.Popen(['service', 'rethinkdb','start'])
+
+@db_create_close
+def create_views(conn=None):
+    view = View(
+        DefaultViews.GLOBAL,
+        server_queue_ttl=args.queue_ttl,
+        package_download_url=url
+    )
+    view_manager = ViewManager(view.name)
+    view_manager.create(view)
+
+@db_create_close
+def create_groups(conn=None):
+    group = Group(
+        DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
+        views=[DefaultViews.GLOBAL], is_global=True
+    )
+    group_manager = GroupManager()
+    group_results = group_manager.create(group)
+    admin_group_id = group_results['generated_ids'][0]
+
+    agent_group = Group(
+        DefaultGroups.GLOBAL_READ_ONLY,
+        views=[DefaultViews.GLOBAL], is_global=True
+    )
+    agent_group_manager = GroupManager()
+    agent_group_results = agent_group_manager.create(agent_group)
+    print agent_group_results
+    agent_group_id = agent_group_results['generated_ids'][0]
+
+    return(admin_group_id, agent_group_id)
+
+
+@db_create_close
+def create_users(admin_group_id, agent_group_id, conn=None):
+    user = User(
+        DefaultUsers.GLOBAL_ADMIN,
+        args.admin_password, DefaultGroups.GLOBAL_ADMIN,
+        current_view=DefaultViews.GLOBAL,
+        default_view=DefaultViews.GLOBAL,
+        enabled=True, is_global=True
+     )
+    user_manager = UserManager(user.name)
+    user_manager.create(user, [admin_group_id])
+    print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
+    print 'Admin password = %s' % (args.admin_password)
+    agent_pass = generate_pass()
+    while not check_password(agent_pass)[0]:
+        agent_pass = generate_pass()
+
+    agent_user = User(
+        DefaultUsers.GLOBAL_AGENT,
+        agent_pass, DefaultGroups.GLOBAL_READ_ONLY,
+        current_view=DefaultViews.GLOBAL,
+        default_view=DefaultViews.GLOBAL,
+        enabled=True, is_global=True
+     )
+    user_agent_manager = UserManager(agent_user.name)
+    user_agent_manager.create(user, [agent_group_id])
+
+    print 'Agent api user = %s' % (DefaultUsers.GLOBAL_AGENT)
+    print 'Agent password = %s' % (agent_pass)
+
+
+@db_create_close
+def generate_initial_db_data(conn=None):
+    completed = False
+    if conn:
+        r.db_create('vFense').run(conn)
+        conn.close()
+        print 'creating indexes and secondary indexes'
+        ci.initialize_indexes_and_create_tables()
+        print 'creating views, groups, and users'
+        create_views()
+        admin_group_id, agent_group_id = create_groups()
+        create_users(admin_group_id, agent_group_id)
+        completed = True
+
+    return completed
+
+def start_local_db():
+    os.umask(0)
+    if not os.path.exists(VFENSE_TMP_PATH):
+        os.mkdir(VFENSE_TMP_PATH, 0755)
+    if not os.path.exists(RETHINK_CONF):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                RETHINK_SOURCE_CONF,
+                RETHINK_CONF
+            ],
+        )
+    if not os.path.exists(RETHINK_VFENSE_PATH):
+        os.makedirs(RETHINK_VFENSE_PATH)
+        subprocess.Popen(
+            [
+                'chown', '-R', 'rethinkdb.rethinkdb',
+                RETHINK_VFENSE_PATH
+            ],
+        )
+
+    if not db_connect():
+        subprocess.Popen(['service', 'rethinkdb','start'])
+
     while not db_connect():
         print 'Sleeping until rethink starts'
         sleep(2)
-    completed = True
-    if completed:
-        conn = db_connect()
-        r.db_create('vFense').run(conn)
-        db = r.db('vFense')
-        conn.close()
-        ci.initialize_indexes_and_create_tables()
-        conn = db_connect()
-        generate_initial_db_data()
 
-        monit.monit_initialization()
-
-
-        if args.cve_data:
-            print "Updating CVE's..."
-            load_up_all_xml_into_db()
-            print "Done Updating CVE's..."
-            print "Updating Microsoft Security Bulletin Ids..."
-            parse_bulletin_and_updatedb()
-            print "Done Updating Microsoft Security Bulletin Ids..."
-            print "Updating Ubuntu Security Bulletin Ids...( This can take a couple of minutes )"
-            begin_usn_home_page_processing(full_parse=True)
-            print "Done Updating Ubuntu Security Bulletin Ids..."
-
-
-        conn.close()
+    if db_connect():
         completed = True
-
-        msg = 'Rethink Initialization and Table creation is now complete'
-        #rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
-        rql_msg = 'Rethink stopped successfully\n'
-
-        return completed, msg
+        print 'Rethink Initialization and Table creation is now complete'
     else:
         completed = False
-        msg = 'Failed during Rethink startup process'
-        return completed, msg
+        print 'Failed during Rethink startup process'
+
+    return completed
+
+def generate_vuln_data():
+    print "Updating CVE's..."
+    load_up_all_xml_into_db()
+    print "Done Updating CVE's..."
+    print "Updating Microsoft Security Bulletin Ids..."
+    parse_bulletin_and_updatedb()
+    print "Done Updating Microsoft Security Bulletin Ids..."
+    print "Updating Ubuntu Security Bulletin Ids...( This can take a couple of minutes )"
+    begin_usn_home_page_processing(full_parse=True)
+    print "Done Updating Ubuntu Security Bulletin Ids..."
 
 
-def clean_database(connected):
+def clean_database():
     os.chdir(RETHINK_PATH)
-    completed = True
-    rql_msg = None
-    msg = None
-    if connected:
-        rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
-        rql_msg = 'Rethink stopped successfully\n'
+    completed = False
+    conn = db_connect()
+    if conn:
+        subprocess.Popen(['service', 'rethinkdb','stop'])
+        sleep(3)
+        print 'Rethink stopped successfully\n'
     try:
-        shutil.rmtree(RETHINK_DATA_PATH)
-        msg = 'Rethink instances.d directory removed and cleaned'
+        shutil.rmtree(RETHINK_VFENSE_PATH)
+        completed = True
+        print 'Rethink instances.d directory removed and cleaned'
+
     except Exception as e:
-        msg = 'Rethink instances.d directory could not be removed'
+        print 'Rethink instances.d directory could not be removed'
+        print e
         completed = False
-    if rql_msg and msg:
-        msg = rql_msg + msg
-    elif rql_msg and not msg:
-        msg = rql_msg
-    return completed, msg
+
+    return completed
 
 
 if __name__ == '__main__':
-    conn = db_connect()
-    if conn:
-        connected = True
-        rql_msg = 'Rethink is Running'
-    else:
-        connected = False
-        rql_msg = 'Rethink is not Running'
-    print rql_msg
-    db_clean, db_msg = clean_database(connected)
-    print db_msg
-    db_initialized, msg = initialize_db()
-    initialized = False
+    db_initialized = False
+    db_started = False
+    init_data_completed = False
+    create_symlinks()
+    create_directories()
+    db_clean = clean_database()
+    if db_clean:
+        db_started = start_local_db()
+
+    if db_started:
+        init_data_completed = generate_initial_db_data()
+
+    if init_data_completed:
+        add_local_user()
+        db_initialized = True
+
+    if args.cve_data and db_initialized:
+        generate_vuln_data()
+
     if db_initialized:
         print 'vFense environment has been succesfully initialized\n'
         subprocess.Popen(
@@ -422,5 +435,5 @@ if __name__ == '__main__':
         )
 
     else:
-        print 'vFense Failed to initialize, please contact TopPatch support'
+        print 'vFense Failed to initialize'
 

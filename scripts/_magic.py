@@ -11,4 +11,3 @@ SRC_PATH = (
     )
 )
 sys.path.insert(0, SRC_PATH)
-print sys.path

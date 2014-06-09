@@ -273,7 +273,7 @@ class NvdParser(object):
 
             # TODO(urgent): what happened to the BASE_VECTOR and
             # ENVIRONMENTAL_VECTOR dictionaries?
-            
+
             if metric == CVEVectors.ENVIRONMENTAL_METRIC_CDP:
                 translated_value = CVSS_BASE_VECTOR_CDP_VALUES[value]
 
@@ -344,7 +344,18 @@ def parse_cve_and_udpatedb(
             #    del entry.getparent()[0]
             #del entry
 
-        insert_cve_data(cve_data_list)
+        status, count, _, _ = insert_cve_data(cve_data_list)
+        xml_file = nvd_file.split('/')[-1]
+        if isinstance(count, tuple):
+            msg = (
+                'cves inserted %d and replaced %d for file %s' %
+                (count[0], count[1], xml_file)
+            )
+        else:
+            msg = 'cves inserted %d for file %s' % (count, xml_file)
+
+        print msg
+        logger.info(msg)
         del cve_data_list
         del cve_data
         gc.collect()
@@ -363,6 +374,8 @@ def load_up_all_xml_into_db():
         for xml_file in files:
             nvd_file = os.path.join(directory, xml_file)
             nvd_files.append(nvd_file)
+
+    nvd_files.sort()
     parse_cve_and_udpatedb(False, nvd_files)
     update_cve_categories()
     logger.info('finished cve/nvd update process')
