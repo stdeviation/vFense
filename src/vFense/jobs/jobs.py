@@ -6,7 +6,7 @@ from time import mktime
 from datetime import datetime
 
 from vFense.plugins.patching._db_model import *
-from vFense.operations import *
+from vFense.operations._db_model import *
 from vFense.operations._constants import AgentOperations
 from vFense.operations.agent_operations import AgentOperation
 from vFense.plugins.patching.patching import (

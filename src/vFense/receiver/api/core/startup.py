@@ -13,7 +13,7 @@ from vFense.core.agent.agents import update_agent
 from vFense.core.queue.uris import get_result_uris
 
 from vFense.operations._constants import AgentOperations
-from vFense.operations import AgentOperationKey
+from vFense.operations._db_model import AgentOperationKey
 
 from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff

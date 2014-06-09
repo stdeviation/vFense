@@ -2,7 +2,7 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.operations.agent_operations import AgentOperation
-from vFense.operations import AgentOperationKey
+from vFense.operations._db_model import AgentOperationKey
 from vFense.operations._constants import AgentOperations
 from vFense.core.queue.queue import AgentQueue
 

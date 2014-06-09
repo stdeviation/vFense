@@ -10,7 +10,7 @@ from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
-from vFense.operations import *
+from vFense.operations._db_model import *
 from vFense.core.decorators import authenticated_request, convert_json_to_arguments
 
 from vFense.core.user import UserKeys

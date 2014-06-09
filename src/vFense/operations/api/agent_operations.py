@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import ApiArguments
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.operations import *
+from vFense.operations._db_model import *
 from vFense.operations.agent_operations import get_agent_operation
 from vFense.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import authenticated_request

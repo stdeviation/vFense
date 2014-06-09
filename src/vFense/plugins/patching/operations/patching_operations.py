@@ -1,4 +1,4 @@
-from vFense.operations import OperationPerAgentKey, \
+from vFense.operations._db_model import OperationPerAgentKey, \
     OperationPerAppKey
 from vFense.operations.agent_operations import AgentOperation
 from vFense.core._db_constants import DbTime

@@ -6,9 +6,11 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 
 from vFense.core._constants import CommonKeys
-from vFense.operations import OperationCollections, \
-    OperationPerAgentIndexes, OperationPerAppIndexes, \
+from vFense.operations._db_model import (
+    OperationCollections,
+    OperationPerAgentIndexes, OperationPerAppIndexes,
     AgentOperationKey, OperationPerAppKey
+)
 
 from vFense.operations._db_sub_queries import OperationPerAgentMerge
 

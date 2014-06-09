@@ -3,7 +3,9 @@
 from vFense import logging
 from datetime import datetime
 from time import mktime
-from vFense.operations import AgentOperationKey, OperationPerAgentKey
+from vFense.operations._db_model import (
+    AgentOperationKey, OperationPerAgentKey
+)
 from vFense.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 from vFense.operations._db_agent import fetch_agent_operation, \
@@ -133,7 +135,7 @@ class AgentOperation(object):
             restart=None, performed_on=vFenseObjects.AGENT,
         ):
         """Create the base operation. Here is where the
-            operation_id is generated. 
+            operation_id is generated.
         Args:
             operation (str): The operation (install_os_apps, reboot, etc..).
             plugin (str): The plugin this operation is from (rv, core, ra, erc..).

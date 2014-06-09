@@ -8,9 +8,11 @@ from vFense.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent import AgentKey, AgentCollections
 
-from vFense.operations import AgentOperationKey, AgentOperationIndexes, \
-    OperationCollections, OperationPerAgentKey, OperationPerAgentIndexes, \
+from vFense.operations._db_model import (
+    AgentOperationKey, AgentOperationIndexes,
+    OperationCollections, OperationPerAgentKey, OperationPerAgentIndexes,
     OperationPerAppKey, OperationPerAppIndexes
+)
 
 from vFense.errorz.status_codes import AgentOperationCodes
 
@@ -424,7 +426,7 @@ class FetchAgentOperations(object):
 
         return(count, data)
 
- 
+
     @db_create_close
     def fetch_operation_by_id(self, operation_id, conn=None):
         """Fetch operation by operation id
@@ -841,7 +843,7 @@ class FetchAgentOperations(object):
             )
 
         return(base_filter)
-    
+
     def _set_agent_collection_pluck(self):
         pluck = (
             [

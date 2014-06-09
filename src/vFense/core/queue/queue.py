@@ -13,7 +13,7 @@ from vFense.core.view._db_model import *
 from vFense.core.view.views import get_view_property
 
 from vFense.core.queue.uris import get_agent_results_uri
-from vFense.operations import AgentOperationKey
+from vFense.operations._db_model import AgentOperationKey
 
 from vFense.errorz.status_codes import DbCodes
 

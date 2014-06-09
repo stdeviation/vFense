@@ -6,7 +6,7 @@ from vFense.plugins.patching.operations.patching_operations import \
 from vFense.operations._constants import AgentOperations, vFensePlugins, \
     vFenseObjects
 from vFense.operations.store_agent_operation import StoreAgentOperation
-from vFense.operations import AgentOperationKey, OperationPerAgentKey
+from vFense.operations._db_model import AgentOperationKey, OperationPerAgentKey
 from vFense.core.decorators import results_message
 from vFense.core._constants import CPUThrottleValues, RebootValues
 from vFense.plugins.patching._db_model import AppCollections, DbCommonAppKeys, \

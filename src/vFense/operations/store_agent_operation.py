@@ -4,7 +4,9 @@ from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
 from vFense.operations._constants import vFenseObjects
 from vFense.operations.agent_operations import AgentOperation
-from vFense.operations import OperationPerAgentKey, AgentOperationKey
+from vFense.operations._db_model import (
+    OperationPerAgentKey, AgentOperationKey
+)
 from vFense.core.decorators import results_message
 from vFense.core.queue.queue import AgentQueue
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
