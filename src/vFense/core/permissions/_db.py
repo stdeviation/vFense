@@ -1,9 +1,10 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.group._db_model import *
-from vFense.core.group._constants import *
-from vFense.core.permissions._constants import *
+from vFense.core.group._db_model import (
+    GroupCollections, GroupKeys, GroupIndexes
+)
+from vFense.core.permissions._constants import Permissions
 from vFense.db.client import r, db_create_close
 from vFense.core.decorators import time_it
 
@@ -17,16 +18,14 @@ def validate_permission_for_user(username, view_name, permission, conn=None):
     try:
         is_empty = (
             r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .filter({GroupsPerUserKeys.ViewName: view_name})
-            .eq_join(
-                lambda group: group[GroupsPerUserKeys.GroupName],
-                r.table(GroupCollections.Groups),
-                index=GroupIndexes.GroupName
+            .table(GroupCollections.Groups)
+            .get_all(username, index=GroupIndexes.Users)
+            .filter(
+                lambda x: x[GroupKeys.Views].contains(view_name)
             )
-            .zip()
-            .filter(r.row[GroupKeys.Permissions].contains(permission))
+            .filter(
+                lambda x: x[GroupKeys.Permissions].contains(permission)
+            )
             .is_empty()
             .run(conn)
         )
@@ -36,17 +35,13 @@ def validate_permission_for_user(username, view_name, permission, conn=None):
         else:
             is_admin_empty = (
                 r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
-                .filter({GroupsPerUserKeys.ViewName: view_name})
-                .eq_join(
-                    lambda group: group[GroupsPerUserKeys.GroupName],
-                    r.table(GroupCollections.Groups),
-                    index=GroupIndexes.GroupName
-                )
-                .zip()
+                .table(GroupCollections.Groups)
+                .get_all(username, index=GroupIndexes.Users)
                 .filter(
-                    r.row[GroupKeys.Permissions].contains(
+                    lambda x: x[GroupKeys.Views].contains(view_name)
+                )
+                .filter(
+                    lambda x: x[GroupKeys.Permissions].contains(
                         Permissions.ADMINISTRATOR
                     )
                 )
