@@ -9,16 +9,18 @@ class AdminOperationKey():
     OperationId = 'operation_id'
     CreatedBy = 'created_by'
     CreatedTime = 'created_time'
+    CompletedTime = 'completed_time'
     StatusMessage = 'status_message'
     GenericStatusCode = 'generic_status_code'
     VfenseStatusCode = 'vfense_status_code'
     Action = 'action'
-    ActionPerformedOn = 'action_performed_on'
+    PerformedOn = 'performed_on'
     IdsCreated = 'ids_created'
     IdsUpdated = 'ids_updated'
     IdsRemoved = 'ids_removed'
     Errors = 'errors'
     CurrentView = 'current_view'
+    Object = 'object'
 
 
 class AdminOperationIndexes():
