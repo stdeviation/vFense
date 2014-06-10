@@ -20,7 +20,7 @@ class AdminOperationKey():
     IdsRemoved = 'ids_removed'
     Errors = 'errors'
     CurrentView = 'current_view'
-    Object = 'object'
+    ObjectData = 'object_data'
 
 
 class AdminOperationIndexes():

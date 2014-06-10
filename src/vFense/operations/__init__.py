@@ -8,31 +8,47 @@ class AdminOperation(object):
     """Used to represent an instance of a user."""
 
     def __init__(
-            self, name, password=None, full_name=None, email=None,
-            current_view=None, default_view=None,
-            enabled=None, is_global=None
+        self, operation_id=None, created_by=None, action=None,
+        performed_on=None, status_message=None, generic_status_code=None,
+        vfense_status_code=None, errors=None, current_view=None,
+        completed_time=None, created_time=None, object_data=None,
+        ids_created=None, ids_updated=None, ids_removed=None
     ):
         """
-        Args:
-            name (str): The name of the user.
-
         Kwargs:
-            password (str): The users password.
-            full_name (str): The full name of the user.
-            email (str): The email of the user.
-            current_view (str): The view you are currently logged into.
-            default_view (str): The default view of the user.
-            enabled (boolean): Disable or enable this user.
-            is_global (boolean):Is this user a global user.
+            operation_id (str): The 36 character UUID of the operation.
+            created_by (str): The name of the user who created the operation.
+            action (str): The action that was performed.
+            performed_on (str): The object the action was performed on.
+            status_message (str): The status message.
+            generic_status_code (int): The generic status code.
+            vfense_status_code (int): The vfense status code.
+            errors (list): List of dictionaires with errors.
+            current_view (str): The current view, in which the
+                operation was created.
+            completed_time (int): The time this operation was created.
+            created_time (int): The time the operation completed.
+            object_data (dict): Dictionary of data related to the object.
+                example: {'name': 'Global Group', 'id': ''}
+            ids_created (list): List of the ids that were generated.
+            ids_updated (list): List of ids that were updated.
+            ids_removed (list): List of ids that were removed.
         """
-        self.name = name
-        self.full_name = full_name
-        self.email = email
-        self.password = password
+        self.operation_id = operation_id
+        self.created_by = created_by
+        self.action = action
+        self.performed_on = performed_on
+        self.status_message = status_message
+        self.generic_status_code = generic_status_code
+        self.vfense_status_code = vfense_status_code
+        self.errors = errors
         self.current_view = current_view
-        self.default_view = default_view
-        self.enabled = enabled
-        self.is_global = is_global
+        self.completed_time = completed_time
+        self.created_time = created_time
+        self.object_data = object_data
+        self.ids_created = ids_created
+        self.ids_updated = ids_updated
+        self.ids_removed = ids_removed
 
 
     def fill_in_defaults(self):
