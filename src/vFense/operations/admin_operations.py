@@ -9,7 +9,8 @@ from vFense.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 
 from vFense.operations._db_admin import (
-    fetch_admin_operation, insert_admin_operation
+    fetch_admin_operation, insert_admin_operation,
+    update_admin_operation
 )
 
 from vFense.errorz.status_codes import (
@@ -39,7 +40,7 @@ class AdminOperationManager(object):
         self.INIT_COUNT = 0
 
 
-    def create(self, action, performed_on, object_info=None):
+    def create(self, action, performed_on):
         """Create the operation and return the operation_id.
         Args:
             action (str): The action that was performed.
@@ -67,7 +68,6 @@ class AdminOperationManager(object):
                 AdminOperationKey.PerformedOn: performed_on,
                 AdminOperationKey.CurrentView: self.view_name,
                 AdminOperationKey.CreatedBy: self.username,
-                AdminOperationKey.Object: object_info,
                 AdminOperationKey.CreatedTime: self.db_time,
                 AdminOperationKey.CompletedTime: DbTime.begining_of_time(),
             }
@@ -84,13 +84,22 @@ class AdminOperationManager(object):
         return operation_id
 
 
-    def update(self, operation_id):
-        """Create the operation and return the operation_id.
+    def update(self, operation_id, **kwargs):
+        """Update the operation with the results.
         Args:
-            action (str): The action that was performed.
-                (create view, create user, remove user, etc..).
-            performed_on (str): The entity this action was performed on.
-                (tag, agent, user, view, group)
+            operation_id (str): The UUID of the operation.
+
+        Kwargs:
+            status_message (str): The status message.
+            generic_status_code (int): The generic status code.
+            vfense_status_code (int): The vfense status code.
+            errors (list): List of dictionaires with errors.
+            completed_time (int): The time this operation was created.
+            object_data (dict): Dictionary of data related to the object.
+                example: {'name': 'Global Group', 'id': ''}
+            ids_created (list): List of the ids that were generated.
+            ids_updated (list): List of ids that were updated.
+            ids_removed (list): List of ids that were removed.
 
         Basic Usage:
             >>> from vFense.operations.admin_operations import AdminOperation
@@ -108,17 +117,35 @@ class AdminOperationManager(object):
 
         data = (
             {
-                AdminOperationKey.Action: action,
-                AdminOperationKey.PerformedOn: performed_on,
-                AdminOperationKey.CurrentView: self.view_name,
-                AdminOperationKey.CreatedBy: self.username,
-                AdminOperationKey.Object: object_info,
-                AdminOperationKey.CreatedTime: self.db_time,
+                AdminOperationKey.ObjectData: (
+                    kwargs.get(AdminOperationKey.ObjectData, {})
+                ),
                 AdminOperationKey.CompletedTime: DbTime.begining_of_time(),
+                AdminOperationKey.StatusMessage: (
+                    kwargs.get(AdminOperationKey.StatusMessage)
+                ),
+                AdminOperationKey.GenericStatusCode: (
+                    kwargs.get(AdminOperationKey.GenericStatusCode)
+                ),
+                AdminOperationKey.VfenseStatusCode: (
+                    kwargs.get(AdminOperationKey.VfenseStatusCode)
+                ),
+                AdminOperationKey.Errors: (
+                    kwargs.get(AdminOperationKey.Errors, {})
+                ),
+                AdminOperationKey.IdsCreated: (
+                    kwargs.get(AdminOperationKey.IdsCreated, [])
+                ),
+                AdminOperationKey.IdsUpdated: (
+                    kwargs.get(AdminOperationKey.IdsUpdated, [])
+                ),
+                AdminOperationKey.IdsRemoved: (
+                    kwargs.get(AdminOperationKey.IdsRemoved, [])
+                ),
             }
         )
         status_code, _, _, generated_ids = (
-            insert_admin_operation(data)
+            update_admin_operation(data)
         )
         if status_code == DbCodes.Inserted:
             operation_id = generated_ids[0]

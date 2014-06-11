@@ -2,10 +2,18 @@ import re
 from vFense.operations._db_model import (
     AdminOperationKey
 )
+from vFense.operations._admin_constants import (
+    AdminOperationDefaults, AdminActions
+)
+from vFense.core._constants import CommonKeys
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import UserFailureCodes, GenericCodes
+from vFense.errorz.status_codes import (
+    GenericFailureCodes
+)
+
 class AdminOperation(object):
-    """Used to represent an instance of a user."""
+    """Used to represent an instance of an admin operation."""
 
     def __init__(
         self, operation_id=None, created_by=None, action=None,
@@ -61,17 +69,20 @@ class AdminOperation(object):
             method to fill in the rest.
         """
 
-        if not self.full_name:
-            self.full_name = UserDefaults.FULL_NAME
+        if not self.ids_updated:
+            self.ids_updated = AdminOperationDefaults.IDS_UPDATED
 
-        if not self.email:
-            self.email = UserDefaults.EMAIL
+        if not self.ids_created:
+            self.ids_created = AdminOperationDefaults.IDS_CREATED
 
-        if not self.enabled:
-            self.enabled = UserDefaults.ENABLED
+        if not self.ids_removed:
+            self.ids_removed = AdminOperationDefaults.IDS_REMOVED
 
-        if not self.is_global:
-            self.is_global = UserDefaults.IS_GLOBAL
+        if not self.errors:
+            self.errors = AdminOperationDefaults.ERRORS
+
+        if not self.object_data:
+            self.object_data = AdminOperationDefaults.OBJECT_DATA
 
     def get_invalid_fields(self):
         """Check the user for any invalid fields.
@@ -88,100 +99,81 @@ class AdminOperation(object):
         """
         invalid_fields = []
 
-        if isinstance(self.name, basestring):
-            valid_symbols = re.search(
-                RegexPattern.USERNAME, self.name
-            )
-            valid_length = len(self.name) <= DefaultStringLength.USER_NAME
-
-            if not valid_symbols and valid_length:
+        if self.ids_created:
+            if not isinstance(self.ids_created, list):
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.name,
-                        CommonKeys.REASON: 'Invalid characters in username',
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
-                        )
-                    }
-                )
-            elif not valid_length and valid_symbols:
-                invalid_fields.append(
-                    {
-                        UserKeys.UserName: self.name,
+                        AdminOperationKey.IdsCreated: self.ids_created,
                         CommonKeys.REASON: (
-                            'Username is too long. The username must be ' +
-                            'less than %d characters long' %
-                            (DefaultStringLength.USER_NAME)
+                            'Expecting a list and not a %s' %
+                            (type(self.ids_created))
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
+                            GenericFailureCodes.InvalidInstanceType
                         )
                     }
                 )
-            elif not valid_length and not valid_symbols:
+
+        if self.ids_updated:
+            if not isinstance(self.ids_updated, list):
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.name,
+                        AdminOperationKey.IdsUpdated: self.ids_updated,
                         CommonKeys.REASON: (
-                            'Username is too long. The username must be ' +
-                            'less than %d characters long' %
-                            (DefaultStringLength.USER_NAME) +
-                            '\nInvalid characters in username'
+                            'Expecting a list and not a %s' %
+                            (type(self.ids_updated))
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
-                        )
-                    }
-                )
-        else:
-            invalid_fields.append(
-                {
-                    UserKeys.UserName: self.name,
-                    CommonKeys.REASON: 'username is not a valid string',
-                    ApiResultKeys.VFENSE_STATUS_CODE: (
-                        UserFailureCodes.InvalidUserName
-                    )
-                }
-            )
-
-        if self.enabled:
-            if not isinstance(self.enabled, bool):
-                invalid_fields.append(
-                    {
-                        UserKeys.Enabled: self.enabled,
-                        CommonKeys.REASON: 'Must be a boolean value',
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            GenericFailureCodes.InvalidInstanceType
                         )
                     }
                 )
 
-        if self.is_global:
-            if not isinstance(self.is_global, bool):
+        if self.ids_removed:
+            if not isinstance(self.ids_removed, list):
                 invalid_fields.append(
                     {
-                        UserKeys.Global: self.is_global,
-                        CommonKeys.REASON: 'Must be a boolean value',
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
-                        )
-                    }
-                )
-
-        if self.password and isinstance(self.password, basestring):
-            valid_passwd, _ = check_password(self.password)
-            if not valid_passwd:
-                invalid_fields.append(
-                    {
-                        UserKeys.Password: self.password,
+                        AdminOperationKey.IdsRemoved: self.ids_removed,
                         CommonKeys.REASON: (
-                            'Password does not meet the minimum requirements'
+                            'Expecting a list and not a %s' %
+                            (type(self.ids_removed))
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidPassword
+                            GenericFailureCodes.InvalidInstanceType
                         )
                     }
                 )
+
+        if self.errors:
+            if not isinstance(self.errors, list):
+                invalid_fields.append(
+                    {
+                        AdminOperationKey.Errors: self.errors,
+                        CommonKeys.REASON: (
+                            'Expecting a list and not a %s' %
+                            (type(self.errors))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericFailureCodes.InvalidInstanceType
+                        )
+                    }
+                )
+
+        if self.object_data:
+            if not isinstance(self.object_data, list):
+                invalid_fields.append(
+                    {
+                        AdminOperationKey.ObjectData: self.object_data,
+                        CommonKeys.REASON: (
+                            'Expecting a list and not a %s' %
+                            (type(self.object_data))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericFailureCodes.InvalidInstanceType
+                        )
+                    }
+                )
+
 
         return invalid_fields
 
@@ -205,14 +197,21 @@ class AdminOperation(object):
         """
 
         return {
-            UserKeys.UserName: self.name,
-            UserKeys.CurrentView: self.current_view,
-            UserKeys.DefaultView: self.default_view,
-            UserKeys.Password: self.password,
-            UserKeys.FullName: self.full_name,
-            UserKeys.Email: self.email,
-            UserKeys.Global: self.is_global,
-            UserKeys.Enabled: self.enabled
+            AdminOperationKey.OperationId: self.operation_id,
+            AdminOperationKey.CreatedBy: self.created_by,
+            AdminOperationKey.Action: self.action,
+            AdminOperationKey.PerformedOn: self.performed_on,
+            AdminOperationKey.StatusMessage: self.status_message,
+            AdminOperationKey.GenericStatusCode: self.generic_status_code,
+            AdminOperationKey.VfenseStatusCode: self.vfense_status_code,
+            AdminOperationKey.Errors: self.errors,
+            AdminOperationKey.CurrentView: self.current_view,
+            AdminOperationKey.CompletedTime: self.completed_time,
+            AdminOperationKey.CreatedTime: self.created_time,
+            AdminOperationKey.ObjectData: self.object_data,
+            AdminOperationKey.IdsCreated: self.ids_created,
+            AdminOperationKey.IdsUpdated: self.ids_updated,
+            AdminOperationKey.IdsRemoved: self.ids_removed,
         }
 
     def to_dict_non_null(self):

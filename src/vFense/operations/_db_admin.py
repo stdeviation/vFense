@@ -2,7 +2,9 @@ import logging, logging.config
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._db import insert_data_in_table
+from vFense.core._db import (
+    insert_data_in_table, update_data_in_table
+)
 
 from vFense.operations._db_model import (
     OperationCollections, AdminOperationKey, AdminOperationIndexes
@@ -40,9 +42,17 @@ def fetch_admin_operation(operation_id, conn=None):
     return data
 
 
-def insert_admin_operation(operation_data):
+def insert_admin_operation(data):
     results = (
-        insert_data_in_table(operation_data, OperationCollections.Admin)
+        insert_data_in_table(data, OperationCollections.Admin)
+    )
+
+    return results
+
+
+def update_admin_operation(operation_id, data):
+    results = (
+        update_data_in_table(operation_id, data, OperationCollections.Admin)
     )
 
     return results
