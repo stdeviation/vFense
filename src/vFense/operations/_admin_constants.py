@@ -4,6 +4,9 @@ class AdminOperationDefaults():
     IDS_UPDATED = []
     IDS_CREATED = []
     OBJECT_DATA = {}
+    STATUS_MESSAGE = ''
+    GENERIC_STATUS_CODE = None
+    VFENSE_STATUS_CODE = None
 
 class AdminActions():
     CREATE_VIEW = 'create view'

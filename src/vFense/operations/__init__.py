@@ -16,7 +16,7 @@ class AdminOperation(object):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
-        self, operation_id=None, created_by=None, action=None,
+        self, created_by=None, action=None,
         performed_on=None, status_message=None, generic_status_code=None,
         vfense_status_code=None, errors=None, current_view=None,
         completed_time=None, created_time=None, object_data=None,
@@ -24,7 +24,6 @@ class AdminOperation(object):
     ):
         """
         Kwargs:
-            operation_id (str): The 36 character UUID of the operation.
             created_by (str): The name of the user who created the operation.
             action (str): The action that was performed.
             performed_on (str): The object the action was performed on.
@@ -42,7 +41,6 @@ class AdminOperation(object):
             ids_updated (list): List of ids that were updated.
             ids_removed (list): List of ids that were removed.
         """
-        self.operation_id = operation_id
         self.created_by = created_by
         self.action = action
         self.performed_on = performed_on
@@ -82,6 +80,9 @@ class AdminOperation(object):
             self.errors = AdminOperationDefaults.ERRORS
 
         if not self.object_data:
+            self.object_data = AdminOperationDefaults.OBJECT_DATA
+
+        if not self.bject_data:
             self.object_data = AdminOperationDefaults.OBJECT_DATA
 
     def get_invalid_fields(self):
@@ -174,6 +175,20 @@ class AdminOperation(object):
                     }
                 )
 
+        if self.action:
+            if not self.action in AdminActions.VALID_ACTIONS:
+                invalid_fields.append(
+                    {
+                        AdminOperationKey.Action: self.action,
+                        CommonKeys.REASON: (
+                            'Invalid action %s' % (self.action)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericFailureCodes.InvalidId
+                        )
+                    }
+                )
+
 
         return invalid_fields
 
@@ -197,7 +212,6 @@ class AdminOperation(object):
         """
 
         return {
-            AdminOperationKey.OperationId: self.operation_id,
             AdminOperationKey.CreatedBy: self.created_by,
             AdminOperationKey.Action: self.action,
             AdminOperationKey.PerformedOn: self.performed_on,
