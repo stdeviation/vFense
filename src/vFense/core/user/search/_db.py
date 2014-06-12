@@ -33,7 +33,8 @@ class FetchUsers(object):
             count=DefaultQueryValues.COUNT,
             offset=DefaultQueryValues.OFFSET,
             sort=SortValues.ASC,
-            sort_key=UserKeys.UserName
+            sort_key=UserKeys.UserName,
+            is_global=False
         ):
         """
         Kwargs:
@@ -60,6 +61,7 @@ class FetchUsers(object):
         self.count = count
         self.offset = offset
         self.sort_key = sort_key
+        self.is_global = is_global
 
         if sort == SortValues.ASC:
             self.sort = r.asc
@@ -132,16 +134,31 @@ class FetchUsers(object):
 
     def _set_base_query(self):
         if self.view_name:
-            base = (
-                r
-                .table(UserCollections.Users)
-                .get_all(self.view_name, index=UserIndexes.Views)
-            )
+            if self.is_global:
+                base = (
+                    r
+                    .table(UserCollections.Users)
+                    .get_all(self.view_name, index=UserIndexes.Views)
+                )
+            else:
+                base = (
+                    r
+                    .table(UserCollections.Users)
+                    .get_all(self.view_name, index=UserIndexes.Views)
+                    .filter({UserKeys.Global: False})
+                )
         else:
-            base = (
-                r
-                .table(UserCollections.Users)
-            )
+            if self.is_global:
+                base = (
+                    r
+                    .table(UserCollections.Users)
+                )
+            else:
+                base = (
+                    r
+                    .table(UserCollections.Users)
+                    .filter({UserKeys.Global: False})
+                )
 
         return base
 
