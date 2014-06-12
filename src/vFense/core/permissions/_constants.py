@@ -7,7 +7,8 @@ class Permissions():
     CREATE_TAG = 'create tag'
     REMOVE_TAG = 'remove tag'
     REMOTE_ASSISTANCE = 'remote assistance'
+    READ = 'read'
     VALID_PERMISSIONS = (
-        ADMINISTRATOR, INSTALL, UNINSTALL, REBOOT,
+        ADMINISTRATOR, INSTALL, UNINSTALL, REBOOT, READ,
         SHUTDOWN, CREATE_TAG, REMOVE_TAG, REMOTE_ASSISTANCE
     )

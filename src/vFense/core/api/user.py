@@ -23,6 +23,8 @@ from vFense.core.user.users import get_user_property, \
     create_user, remove_user, remove_users, change_password, \
     edit_user_properties, toggle_user_status
 
+from vFense.core.user import User
+from vFense.core.user.manager import UserManager
 from vFense.core.view.views import add_user_to_views, \
     remove_views_from_user
 
@@ -71,7 +73,7 @@ class UserHandler(BaseHandler):
                     GenericResults(
                         active_user, uri, method
                     ).information_retrieved(user_data, count)
-                ) 
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -101,7 +103,7 @@ class UserHandler(BaseHandler):
         results = None
         try:
             view_context = (
-                self.arguments.get(ApiArguments.CUSTOMER_CONTEXT, active_view)
+                self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
             )
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
 
@@ -297,8 +299,8 @@ class UsersHandler(BaseHandler):
         active_view = (
             get_user_property(active_user, UserKeys.CurrentView)
         )
-        view_context = self.get_argument(ApiArguments.CUSTOMER_CONTEXT, None)
-        all_views = self.get_argument(ApiArguments.ALL_CUSTOMERS, None)
+        view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
+        all_views = self.get_argument(ApiArguments.ALL_VIEWS, None)
         user_name = self.get_argument(ApiArguments.USER_NAME, None)
         count = 0
         user_data = []
@@ -338,7 +340,7 @@ class UsersHandler(BaseHandler):
                 GenericResults(
                     active_user, uri, method
                 ).information_retrieved(user_data, count)
-            ) 
+            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -360,37 +362,29 @@ class UsersHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         active_user = self.get_current_user()
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+        )
         uri = self.request.uri
         method = self.request.method
         username = self.arguments.get(ApiArguments.USERNAME)
         password = self.arguments.get(ApiArguments.PASSWORD)
-        group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
-        view_names = self.arguments.get(ApiArguments.CUSTOMER_NAMES, None)
-        view_context = self.arguments.get(ApiArguments.CUSTOMER_CONTEXT)
         fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
         email = self.arguments.get(ApiArguments.EMAIL, None)
-        enabled = self.arguments.get(ApiArguments.ENABLED, CommonKeys.YES)
+        enabled = self.arguments.get(ApiArguments.ENABLED, True)
+        is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
+        group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
+        view_context = (
+            self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
+        )
         try:
-            if group_ids:
-                if not isinstance(group_ids, list):
-                    group_ids = group_ids.split()
-
-            if view_names:
-                if view_names:
-                    if not isinstance(view_names, list):
-                        view_names = view_names.split(',')
-
-            results = create_user(
-                username, fullname, password,
-                group_ids, view_context, email,
-                enabled, active_user, uri, method
+            user = User(
+                username, password, fullname, email,
+                current_view=view_context, default_view=view_context,
+                enabled=enabled, is_global=is_global
             )
-            if results['rv_status_code'] == GenericCodes.ObjectCreated:
-                if view_names:
-                    add_user_to_views(
-                        username, view_names,
-                        active_user, uri, method
-                    )
+            manager = UserManager(user.name)
+            results = manager.create(user, group_ids)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
