@@ -12,7 +12,7 @@ from vFense.plugins.patching.operations.patching_results import \
     PatchingOperationResults
 
 from vFense.receiver.rvhandler import RvHandOff
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
 
 from vFense.core.operations._constants import AgentOperations

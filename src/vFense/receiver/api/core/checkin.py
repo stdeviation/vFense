@@ -10,7 +10,7 @@ from vFense.core.decorators import agent_authenticated_request
 from vFense.receiver.corehandler import process_queue_data
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')

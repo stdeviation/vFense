@@ -15,8 +15,6 @@ from vFense.core.agent._db import fetch_production_levels_from_agent, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
 
-from vFense.core.view._db_model import View
-from vFense.core.view.views import get_view, create_view
 from vFense.core.decorators import time_it, results_message
 
 from vFense.db.hardware import Hardware
@@ -449,7 +447,7 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
 @results_message
 def add_agent(
         system_info, hardware, username=None,
-        view_name=None, uri=None, method=None
+        uri=None, method=None
     ):
     """Add a new agent to the database
     Args:
@@ -482,20 +480,10 @@ def add_agent(
         agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
         agent_data[AgentKey.DisplayName] = None
         agent_data[AgentKey.HostName] = None
-        agent_data[AgentKey.ViewName] = view_name
         agent_data[AgentKey.Hardware] = hardware
 
         if not AgentKey.ProductionLevel in system_info:
             agent_data[AgentKey.ProductionLevel] = ProductionLevels.PRODUCTION
-
-        if view_name != 'default':
-            cexists = get_view(view_name)
-            if not cexists and len(view_name) >= 1:
-                view = View(view_name)
-
-                create_view(
-                    view, username=username, uri=uri, method=method
-                )
 
         for key, value in system_info.items():
             agent_data[key] = value
@@ -551,8 +539,7 @@ def add_agent(
 @results_message
 def update_agent(
         agent_id, system_info, hardware, rebooted,
-        username=None, view_name=None,
-        uri=None, method=None
+        username=None, uri=None, method=None
     ):
     """Update various aspects of agent
     Args:
@@ -563,7 +550,6 @@ def update_agent(
 
     Kwargs:
         user_name (str): The name of the user who called this function.
-        view_name (str): The name of the view.
         uri (str): The uri that was used to call this function.
         method (str): The HTTP methos that was used to call this function.
     """
@@ -725,7 +711,7 @@ def change_view_for_all_agents_in_view(
         current_view, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move all agents from one view to another 
+    """Move all agents from one view to another
     Args:
         current_view (str): The name of the current view.
         new_view (str): The name of the new view.
@@ -782,7 +768,7 @@ def change_view_for_agents(
         agent_ids, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move a list of agents from one view to another 
+    """Move a list of agents from one view to another
     Args:
         agent_ids (list): List of agent ids
         new_view (str): The name of the new view.
@@ -839,7 +825,7 @@ def change_view_for_agent(
         agent_id, new_view,
         user_name=None, uri=None, method=None
     ):
-    """Move an agent from one view to another 
+    """Move an agent from one view to another
     Args:
         agent_id (str): 36 character UUID of the agent.
         new_view (str): The name of the new view.

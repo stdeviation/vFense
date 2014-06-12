@@ -115,6 +115,29 @@ class GroupManager(object):
 
         return data
 
+    @time_it
+    def get_attribute(self, group_attribute):
+        """Retrieve group property.
+        Args:
+            group_attribute (str): The attribute you want to retrieve.
+                example attributes.. users, views, email, permissions
+
+        Basic Usage:
+            >>> from vFense.group.manager import GroupManager
+            >>> group_id = '96f02bcf-2ada-465c-b175-0e5163b36e1c'
+            >>> group = GroupManager(group_id)
+            >>> property = 'permissions'
+            >>> group.get_property(property)
+
+        Return:
+            String
+        """
+        group_data = fetch_group(self.username)
+        group_key = None
+        if group_data:
+            group_key = group_data.get(group_attribute, None)
+
+        return group_key
 
     @time_it
     def create(self, group):

@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, \
     convert_json_to_arguments
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
 
 from vFense.errorz.error_messages import GenericResults, \

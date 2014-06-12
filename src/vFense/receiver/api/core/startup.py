@@ -19,7 +19,7 @@ from vFense.receiver.rvhandler import RvHandOff
 import plugins.ra.handoff as RaHandoff
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 #from server.handlers import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

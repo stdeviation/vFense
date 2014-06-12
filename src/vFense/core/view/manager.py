@@ -52,6 +52,29 @@ class ViewManager(object):
         return view_data
 
     @time_it
+    def get_attribute(self, view_attribute):
+        """Retrieve view property.
+        Args:
+            view_attribute (str): The attribute you want to retrieve.
+                example attributes.. users, download_package_url
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> view = ViewManager('global')
+            >>> view.get_property('users')
+
+        Return:
+            String
+        """
+        view_data = fetch_view(self.username)
+        view_key = None
+        if view_data:
+            view_key = view_data.get(view_attribute, None)
+
+        return view_key
+
+
+    @time_it
     def create(self, view):
         """Create a new view inside of vFense
 

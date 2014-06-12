@@ -4,21 +4,24 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import convert_json_to_arguments
-from vFense.core.decorators import authenticated_request
+from vFense.core.decorators import (
+    convert_json_to_arguments, authenticated_request, results_message
+)
 
 from vFense.core._constants import CommonKeys
 from vFense.core.api._constants import ApiArguments, ApiValues
-from vFense.core.permissions._constants import *
+from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
 
 from vFense.core.permissions.decorators import check_permissions
+from vFense.core.operations.decorators import log_operation
+from vFense.core.operations._admin_constants import AdminActions
+from vFense.core.operations._constants import vFenseObjects
 
-from vFense.core.agent import *
 from vFense.core.user._db_model import UserKeys
 
-from vFense.core.user.users import get_user_property, \
+from vFense.core.user.manager import UserManager, \
     get_user_properties, get_properties_for_all_users, \
     create_user, remove_user, remove_users, change_password, \
     edit_user_properties, toggle_user_status
@@ -361,30 +364,27 @@ class UsersHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
-        active_user = self.get_current_user()
-        active_view = (
+        self.active_user = self.get_current_user()
+        self.active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        method = self.request.method
-        username = self.arguments.get(ApiArguments.USERNAME)
-        password = self.arguments.get(ApiArguments.PASSWORD)
-        fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
-        email = self.arguments.get(ApiArguments.EMAIL, None)
-        enabled = self.arguments.get(ApiArguments.ENABLED, True)
-        is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
-        group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
-        view_context = (
-            self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
-        )
         try:
-            user = User(
-                username, password, fullname, email,
-                current_view=view_context, default_view=view_context,
-                enabled=enabled, is_global=is_global
+            self.uri = self.request.uri
+            self.http_method = self.request.method
+            self.username = self.arguments.get(ApiArguments.USERNAME)
+            self.password = self.arguments.get(ApiArguments.PASSWORD)
+            self.fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
+            self.email = self.arguments.get(ApiArguments.EMAIL, None)
+            self.enabled = self.arguments.get(ApiArguments.ENABLED, True)
+            self.is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
+            self.group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
+            self.view_context = (
+                self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
             )
-            manager = UserManager(user.name)
-            results = manager.create(user, group_ids)
+            results = self.create_user()
+            results[ApiResultKeys.URI] = self.uri
+            results[ApiResultKeys.HTTP_METHOD] = self.http_method
+            results[ApiResultKeys.USERNAME] = self.active_user
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -396,9 +396,22 @@ class UsersHandler(BaseHandler):
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
+
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @log_operation(AdminActions.CREATE_USER, vFenseObjects.USER)
+    @results_message
+    def create_user(self):
+        user = User(
+            self.username, self.password, self.fullname, self.email,
+            current_view=self.view_context, default_view=self.view_context,
+            enabled=self.enabled, is_global=self.is_global
+        )
+        manager = UserManager(user.name)
+        results = manager.create(user, self.group_ids)
+        return results
 
 
     @authenticated_request

@@ -17,7 +17,7 @@ from vFense.core.decorators import convert_json_to_arguments, \
 
 from vFense.core.agent import *
 from vFense.core.user._db_model import UserKeys
-from vFense.core.user.users import get_user_property, \
+from vFense.core.user.manager import UserManager, \
     add_users_to_group, remove_users_from_group
 
 from vFense.core.group.groups import get_group_properties, \

@@ -84,7 +84,7 @@ class UserManager(object):
     def get_attribute(self, user_attribute):
         """Retrieve user property.
         Args:
-            user_atrribute (str): The attribute you want to retrieve.
+            user_attribute (str): The attribute you want to retrieve.
                 example attributes.. password, current_view, email
 
         Basic Usage:
@@ -100,7 +100,7 @@ class UserManager(object):
         user_data = fetch_user(self.username)
         user_key = None
         if user_data:
-            user_key = user_data.get(user_attribute)
+            user_key = user_data.get(user_attribute, None)
 
         return user_key
 

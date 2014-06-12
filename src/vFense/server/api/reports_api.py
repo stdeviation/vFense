@@ -9,18 +9,18 @@ from vFense.errorz.error_messages import GenericResults
 from reports.stats import *
 from vFense.core.decorators import authenticated_request
 from vFense.utils.common import *
-from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user._db_model import UserKeys
+from vFense.core.user.manager import UserManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentsOsDetailsHandler(BaseHandler):
-    @authenticated_request 
+    @authenticated_request
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -49,7 +49,7 @@ class AgentsHardwareDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -57,8 +57,8 @@ class AgentsHardwareDetailsHandler(BaseHandler):
             results= None
             os_code=self.get_argument('os_code', None)
             tag_id=self.get_argument('tag_id', None)
-            results = systems_hardware_details(username=username, view_name=view_name, 
-                    os_code=os_code, tag_id=tag_id, 
+            results = systems_hardware_details(username=username, view_name=view_name,
+                    os_code=os_code, tag_id=tag_id,
                     uri=uri, method=method)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -80,7 +80,7 @@ class AgentsCPUDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -112,7 +112,7 @@ class AgentsMemoryDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -146,7 +146,7 @@ class AgentsDiskDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -178,7 +178,7 @@ class AgentsNetworkDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -203,4 +203,4 @@ class AgentsNetworkDetailsHandler(BaseHandler):
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))                    
+            self.write(json.dumps(results, indent=4))

@@ -11,7 +11,7 @@ from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import authenticated_request
 from vFense.errorz.error_messages import GenericResults
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

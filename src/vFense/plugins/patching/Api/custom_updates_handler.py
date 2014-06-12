@@ -29,7 +29,7 @@ from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import gen_uuid,
     move_packages, store_package_info_in_db
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

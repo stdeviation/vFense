@@ -14,7 +14,7 @@ from vFense.utils.common import *
 from datetime import datetime
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -26,7 +26,7 @@ class ScheduleListerHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -60,7 +60,7 @@ class ScheduleAppDetailHandler(BaseHandler):
     def get(self, jobname):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -92,7 +92,7 @@ class ScheduleAppDetailHandler(BaseHandler):
     def delete(self, jobname):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -130,7 +130,7 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -194,7 +194,7 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -261,7 +261,7 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -325,7 +325,7 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -343,7 +343,7 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
             epoch_time=self.arguments.get('epoch_time')
             every = self.arguments.get('every', None)
             custom=self.arguments.get('custom', None)
-        
+
             results = (
                 add_weekly_recurrent(
                     sched,
@@ -389,7 +389,7 @@ class SchedulerDateBasedJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -425,7 +425,7 @@ class SchedulerDateBasedJobHandler(BaseHandler):
                     method=method
                 )
             )
-            
+
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -450,7 +450,7 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -466,10 +466,10 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
             all_agents = self.arguments.get('all_agents', False)
             all_tags = self.arguments.get('all_tags', False)
             every = self.arguments.get('every')
-            custom = self.arguments.get('custom') 
+            custom = self.arguments.get('custom')
             epoch_time = self.arguments.get('epoch_time')
             datetime = datetime.fromtimestamp(epoch_time)
-        
+
             results = (
                 add_custom_recurrent(
                     sched,

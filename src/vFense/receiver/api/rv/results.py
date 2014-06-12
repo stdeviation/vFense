@@ -14,7 +14,7 @@ from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

@@ -12,7 +12,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user._db_model import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.agent_handler import AgentManager
 from vFense.core.queue.uris import get_result_uris

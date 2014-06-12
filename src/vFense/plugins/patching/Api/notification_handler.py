@@ -13,7 +13,7 @@ from vFense.notifications.search_alerts import AlertSearcher
 from vFense.notifications.alerts import Notifier, get_valid_fields, get_all_notifications
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

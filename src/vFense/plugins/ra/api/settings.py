@@ -3,7 +3,7 @@ import json
 from vFense.core.api.base import BaseHandler
 
 from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
+from vFense.core.user.manager import UserManager
 
 from vFense.plugins.ra import ra_settings
 

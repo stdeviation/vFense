@@ -11,9 +11,9 @@ from vFense.receiver.api.core.result_uris import ResultURIs
 from vFense.receiver.api.core.results import RebootResultsV1, ShutdownResultsV1
 
 from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
-from vFense.core.api.user import UserHandler, UsersHandler
-from vFense.core.api.group import GroupHandler, GroupsHandler
-from vFense.core.api.view import ViewHandler, ViewsHandler
+from vFense.core.api.user._db_model import UserHandler, UsersHandler
+from vFense.core.api.group._db_model import GroupHandler, GroupsHandler
+from vFense.core.api.view._db_model import ViewHandler, ViewsHandler
 from vFense.core.api.agent import AgentHandler, AgentResultURIs, \
     AgentsHandler, FetchSupportedOperatingSystems, FetchValidProductionLevels
 from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
@@ -169,7 +169,7 @@ class PluginsLoader():
 
     def __init__(self):
         """Append the plugins directory to sys path."""
-        self.curr_dir = os.path.dirname(os.path.realpath(__file__)) 
+        self.curr_dir = os.path.dirname(os.path.realpath(__file__))
         self.plugins_dir = 'plugins'
         self.plugins_path = os.path.join(self.curr_dir, self.plugins_dir)
 
@@ -179,7 +179,7 @@ class PluginsLoader():
         """Search through the plugins directory and find all directories
         with an __init__.py file. These directories will be considered
         plugins.
-        
+
         Basic usage:
             >>> from vFense_module_loader import PluginsLoader
             >>> loader = PluginsLoader()
@@ -246,7 +246,7 @@ class PluginsLoader():
     def get_plugins_listener_api_handlers(self):
         """Retrieves the listener handlers from every plugin by calling the
         get_listener_api_handlers function of every plugin found.
-        
+
         Basic usage:
             >>> from vFense_module_loader import PluginsLoader
             >>> loader = PluginsLoader()
@@ -281,7 +281,7 @@ class PluginsLoader():
     def get_plugins_web_api_handlers(self):
         """Retrieves the listener handlers from every plugin by calling the
         get_plugins_web_api_handlers function of every plugin found.
-        
+
         Basic usage:
             >>> from vFense_module_loader import PluginsLoader
             >>> loader = PluginsLoader()

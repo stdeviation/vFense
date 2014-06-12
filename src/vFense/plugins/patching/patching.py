@@ -31,7 +31,7 @@ from vFense.plugins.patching._db import (fetch_file_servers_addresses,
 
 from vFense.core.decorators import time_it, results_message
 from vFense.core.view._db_model import ViewKeys
-from vFense.core.view.views import get_view_property
+from vFense.core.view.manager import ViewManager
 from vFense.plugins.vuln import SecurityBulletinKey
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
@@ -83,11 +83,9 @@ def get_base_url(view_name):
     Returns:
         String
     """
-    return(
-        get_view_property(
-            view_name, ViewKeys.PackageUrl
-        )
-    )
+    view = ViewManager(view_name)
+    url = view.properties.get(ViewKeys.PackageUrl, None)
+    return url
 
 def get_download_urls(view_name, app_id, file_data):
     """Replace the vendor supplied url with the vFense Server urls

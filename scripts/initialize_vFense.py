@@ -278,7 +278,7 @@ def create_groups(conn=None):
     admin_group_id = group_results['generated_ids'][0]
 
     agent_group = Group(
-        DefaultGroups.GLOBAL_READ_ONLY,
+        DefaultGroups.GLOBAL_READ_ONLY, [Permissions.READ],
         views=[DefaultViews.GLOBAL], is_global=True
     )
     agent_group_manager = GroupManager()

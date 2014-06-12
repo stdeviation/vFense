@@ -15,8 +15,6 @@ from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import AgentResultCodes
 from vFense.receiver.rvhandler import RvHandOff
 
-from vFense.core.user import UserKeys
-from vFense.core.user.users import get_user_property
 
 import plugins.ra.handoff as RaHandoff
 #from server.handlers import *
@@ -43,7 +41,7 @@ class NewAgentV1(BaseHandler):
         try:
             new_agent_results = (
                 add_agent(
-                    system_info, hardware, username, view_name, uri, method
+                    system_info, hardware, username, uri, method
                 )
             )
             self.set_status(
