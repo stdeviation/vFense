@@ -82,28 +82,6 @@ class FetchUsers(object):
 
         Returns:
             List of users and their properties.
-            [
-                {
-                    "current_view": "default",
-                    "views": [
-                        {
-                            "admin": true,
-                            "name": "default"
-                        }
-                    ],
-                    "groups": [
-                        {
-                            "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
-                            "group_name": "Administrator"
-                        }
-                    ],
-                        "default_view": "default",
-                        "user_name": "admin",
-                        "permissions": [
-                            "administrator"
-                        ]
-                }
-            ]
         """
         count = 0
         data = []
@@ -131,6 +109,54 @@ class FetchUsers(object):
 
         return(count, data)
 
+
+    @db_create_close
+    def fetch_by_name(self, username, conn=None):
+        """Retrieve a user and all of its properties
+            This query is beautiful :)
+
+        Basic Usage:
+            >>> from vFense.user.search._db import FetchUsers
+            >>> view_name = 'global'
+            >>> users = FetchUsers(view_name)
+            >>> users.fetch_by_name("glob")
+
+        Returns:
+            List of users and their properties.
+        """
+        count = 0
+        data = []
+        base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[UserKeys.UserName].match("(?i)^"+name)
+                )
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .filter(
+                    lambda x:
+                    x[UserKeys.UserName].match("(?i)^"+name)
+                )
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
 
     def _set_base_query(self):
         if self.view_name:

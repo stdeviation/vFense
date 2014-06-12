@@ -101,9 +101,9 @@ class FetchAgents(object):
             count = (
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)"+name))
+                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)"+name))
+                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
                 )
                 .count()
                 .run(conn)
@@ -112,9 +112,9 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)"+name))
+                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)"+name))
+                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
                 )
                 .merge(merge_query)
                 .pluck(self.keys_to_pluck)
@@ -311,9 +311,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)"+query))
+                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)"+query))
+                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
                 )
                 .count()
                 .run(conn)
@@ -323,9 +323,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)"+query))
+                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)"+query))
+                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
                 )
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
