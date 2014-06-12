@@ -106,6 +106,46 @@ class FetchUsers(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+
+    def _set_base_query(self):
+        if self.view_name:
+            base = (
+                r
+                .table(UserCollections.Users)
+                .get_all(self.view_name, index=UserIndexes.Views)
+            )
+        else:
+            base = (
+                r
+                .table(UserCollections.Users)
+            )
+
+        return base
+
+    def _set_map_hash(self):
         map_hash = (
             lambda x:
             {
@@ -166,34 +206,4 @@ class FetchUsers(object):
             }
         )
 
-        try:
-            data = list(
-                base_filter
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .map(map_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
-
-        return(count, data)
-
-
-    def _set_base_query(self):
-        if self.view_name:
-            base = (
-                r
-                .table(UserCollections.Users)
-                .get_all(self.view_name, index=UserIndexes.Views)
-            )
-        else:
-            base = (
-                r
-                .table(UserCollections.Users)
-            )
-
-        return base
-
+        return map_hash
