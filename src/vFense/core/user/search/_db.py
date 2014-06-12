@@ -134,7 +134,7 @@ class FetchUsers(object):
                 base_filter
                 .filter(
                     lambda x:
-                    x[UserKeys.UserName].match("(?i)^"+name)
+                    x[UserKeys.UserName].match("(?i)^"+username)
                 )
                 .count()
                 .run(conn)
@@ -144,8 +144,9 @@ class FetchUsers(object):
                 base_filter
                 .filter(
                     lambda x:
-                    x[UserKeys.UserName].match("(?i)^"+name)
+                    x[UserKeys.UserName].match("(?i)^"+username)
                 )
+                .coerce_to('array')
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
