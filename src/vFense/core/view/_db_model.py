@@ -15,6 +15,12 @@ class ViewKeys():
     AgentQueueTTL = 'agent_queue_ttl' # in minutes
     Users = 'users'
 
+
 class ViewMappedKeys():
     Groups = 'groups'
     ViewName = 'view_name'
+
+
+class ViewIndexes():
+    Users = 'users'
+

@@ -90,6 +90,7 @@ def initialize_indexes_and_create_tables():
     agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
     user_list = r.table(UserCollections.Users).index_list().run(conn)
     groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
+    view_list = r.table(ViewCollections.Views).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.ViewName in agents_list:
@@ -596,6 +597,10 @@ def initialize_indexes_and_create_tables():
 #################################### User Indexes ###################################################
     if not UserIndexes.Views in user_list:
         r.table(UserCollections.Users).index_create(UserIndexes.Views, multi=True).run(conn)
+
+#################################### View Indexes ###################################################
+    if not ViewIndexes.Users in view_list:
+        r.table(ViewCollections.Views).index_create(ViewIndexes.Users, multi=True).run(conn)
 
 #################################### Group Indexes ###################################################
     if not GroupIndexes.Views in groups_list:
