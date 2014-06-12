@@ -14,7 +14,7 @@ from vFense.errorz.error_messages import GenericResults, \
 
 from vFense.receiver.rvhandler import RvHandOff
 
-from vFense.operations._constants import AgentOperations
+from vFense.core.operations._constants import AgentOperations
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')

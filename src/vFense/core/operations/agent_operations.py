@@ -3,12 +3,12 @@
 from vFense import logging
 from datetime import datetime
 from time import mktime
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     AgentOperationKey, OperationPerAgentKey
 )
-from vFense.operations._constants import vFenseObjects, OperationErrors
+from vFense.core.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
-from vFense.operations._db_agent import fetch_agent_operation, \
+from vFense.core.operations._db_agent import fetch_agent_operation, \
     operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
     insert_into_agent_operations, update_agent_operation_expire_time, \
     update_operation_per_agent, update_agent_operation, \
@@ -29,7 +29,7 @@ def get_agent_operation(operation_id):
         operation_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations.agent_operations import get_agent_operation
+        >>> from vFense.core.operations.agent_operations import get_agent_operation
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> get_agent_operation(operation_id)
 
@@ -67,7 +67,7 @@ def operation_for_agent_exist(operation_id, agent_id):
         agent_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations.agent_operations import operation_for_agent_exist
+        >>> from vFense.core.operations.agent_operations import operation_for_agent_exist
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> operation_with_agentid_exists(operation_id, agent_id)
@@ -90,7 +90,7 @@ def operation_for_agent_and_app_exist(operation_id, agent_id, app_id):
         app_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import operation_for_agent_and_app_exist
+        >>> from vFense.core.operations._db import operation_for_agent_and_app_exist
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
@@ -118,7 +118,7 @@ class AgentOperation(object):
             view_name (str): the name of the view this user is part of.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -149,7 +149,7 @@ class AgentOperation(object):
             performed_on (str): The default is agent.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -214,7 +214,7 @@ class AgentOperation(object):
             operation_id (str): the operation id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -258,7 +258,7 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -301,7 +301,7 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -348,7 +348,7 @@ class AgentOperation(object):
             errors (str): The error message, default is None.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -389,7 +389,7 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -444,7 +444,7 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -475,7 +475,7 @@ class AgentOperation(object):
             operation_id (str): the operation id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)

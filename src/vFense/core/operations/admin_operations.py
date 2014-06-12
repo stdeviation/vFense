@@ -2,14 +2,14 @@
 
 from vFense import logging
 from time import time
-from vFense.operations import AdminOperation
-from vFense.operations._db_model import (
+from vFense.core.operations import AdminOperation
+from vFense.core.operations._db_model import (
     AdminOperationKey
 )
-from vFense.operations._constants import vFenseObjects, OperationErrors
+from vFense.core.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 
-from vFense.operations._db_admin import (
+from vFense.core.operations._db_admin import (
     fetch_admin_operation, insert_admin_operation,
     update_admin_operation
 )
@@ -29,7 +29,7 @@ class AdminOperationManager(object):
             view_name (str): the name of the view this user is part of.
 
         Basic Usage:
-            >>> from vFense.operations.admin_operations import AdminOperation
+            >>> from vFense.core.operations.admin_operations import AdminOperation
             >>> oper = AdminOperation()
         """
         self.now = time()
@@ -43,7 +43,7 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.operations.admin_operations import AdminOperation
+            >>> from vFense.core.operations.admin_operations import AdminOperation
             >>> username = 'global_admin'
             >>> view_name = 'global'
             >>> action = 'create user'
@@ -84,8 +84,8 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.operations import AdminOperation
-            >>> from vFense.operations.admin_operations import AdminOperationManager
+            >>> from vFense.core.operations import AdminOperation
+            >>> from vFense.core.operations.admin_operations import AdminOperationManager
             >>> username = 'global_admin'
             >>> view_name = 'global'
             >>> oper = AdminOperation(username, view_name)

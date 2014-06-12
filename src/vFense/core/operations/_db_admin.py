@@ -6,7 +6,7 @@ from vFense.core._db import (
     insert_data_in_table, update_data_in_table
 )
 
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     OperationCollections, AdminOperationKey, AdminOperationIndexes
 )
 
@@ -20,7 +20,7 @@ def fetch_admin_operation(operation_id, conn=None):
         operation_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db_admin import fetch_admin_operation
+        >>> from vFense.core.operations._db_admin import fetch_admin_operation
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> fetch_admin_operation(operation_id)
 

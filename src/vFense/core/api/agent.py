@@ -19,11 +19,11 @@ from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
-from vFense.core.operations.store_agent_operations import StoreAgentOperations
+from vFense.core.agent.operations.store_agent_operations import StoreAgentOperations
 from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
     get_production_levels
 
-from vFense.operations._db_model import *
+from vFense.core.operations._db_model import *
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 

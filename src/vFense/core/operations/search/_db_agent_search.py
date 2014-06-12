@@ -4,11 +4,11 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.operations.search._constants import OperationSearchValues
+from vFense.core.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent import AgentKey, AgentCollections
 
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     AgentOperationKey, AgentOperationIndexes,
     OperationCollections, OperationPerAgentKey, OperationPerAgentIndexes,
     OperationPerAppKey, OperationPerAppIndexes
@@ -44,7 +44,7 @@ class FetchAgentOperations(object):
                 default = created_time
 
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
         """
@@ -63,7 +63,7 @@ class FetchAgentOperations(object):
     def fetch_all(self, conn=None):
         """Fetch all operations
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation.fetch_all()
@@ -119,7 +119,7 @@ class FetchAgentOperations(object):
     def fetch_all_by_agentid(self, agent_id, conn=None):
         """Fetch all operations by agent id
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> agent_id = '6c0209d5-b350-48b7-808a-158ddacb6940'
             >>> operation = FetchAgentOperations(view_name)
@@ -186,7 +186,7 @@ class FetchAgentOperations(object):
     def fetch_all_by_tagid(self, tag_id, conn=None):
         """Fetch all operations by tag id
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
             >>> operation = FetchAgentOperations(view_name)
@@ -260,7 +260,7 @@ class FetchAgentOperations(object):
                 examples... reboot, shutdown, install_os_apps
 
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> action = 'install_os_apps'
@@ -339,7 +339,7 @@ class FetchAgentOperations(object):
             operation_id (str) 36 character UUID.
 
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
@@ -434,7 +434,7 @@ class FetchAgentOperations(object):
             operation_id (str) 36 character UUID.
 
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'

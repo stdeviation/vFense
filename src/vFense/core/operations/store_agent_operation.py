@@ -2,9 +2,9 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
-from vFense.operations._constants import vFenseObjects
-from vFense.operations.agent_operations import AgentOperation
-from vFense.operations._db_model import (
+from vFense.core.operations._constants import vFenseObjects
+from vFense.core.operations.agent_operations import AgentOperation
+from vFense.core.operations._db_model import (
     OperationPerAgentKey, AgentOperationKey
 )
 from vFense.core.decorators import results_message
@@ -47,7 +47,7 @@ class StoreAgentOperation(object):
             agent_queue_ttl
 
         Basic Usage:
-            >>> from vFense.operations.store_agent_operation import StoreAgentOperation
+            >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
             >>> customer_name = 'default'
             >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
@@ -94,7 +94,7 @@ class StoreAgentOperation(object):
             tag_id (str): The tag id that this operation will be performed on.
 
         Basic Usage:
-            >>> from vFense.operations.store_agent_operation import StoreAgentOperation
+            >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
             >>> customer_name = 'default'
             >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'

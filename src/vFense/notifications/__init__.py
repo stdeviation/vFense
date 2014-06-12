@@ -1,5 +1,5 @@
 import re
-from vFense.operations._constants import vFensePlugins
+from vFense.core.operations._constants import vFensePlugins
 
 VALID_NOTIFICATION_PLUGINS = (
     vFensePlugins.RV_PLUGIN, vFensePlugins.MONITORING_PLUGIN

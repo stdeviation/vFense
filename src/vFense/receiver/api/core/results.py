@@ -6,7 +6,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, \
     convert_json_to_arguments
 
-from vFense.core.operations.agent_results import AgentOperationResults
+from vFense.core.agent.operations.agent_results import AgentOperationResults
 from vFense.db.notification_sender import send_notifications
 from vFense.errorz.error_messages import GenericResults
 

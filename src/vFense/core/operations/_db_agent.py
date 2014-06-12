@@ -6,13 +6,13 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 
 from vFense.core._constants import CommonKeys
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     OperationCollections,
     OperationPerAgentIndexes, OperationPerAppIndexes,
     AgentOperationKey, OperationPerAppKey
 )
 
-from vFense.operations._db_sub_queries import OperationPerAgentMerge
+from vFense.core.operations._db_sub_queries import OperationPerAgentMerge
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.errorz.status_codes import AgentOperationCodes
@@ -28,7 +28,7 @@ def fetch_agent_operation(operation_id, conn=None):
         operation_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import fetch_agent_operation
+        >>> from vFense.core.operations._db import fetch_agent_operation
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> fetch_agent_operation(operation_id)
 
@@ -79,7 +79,7 @@ def operation_exist(operation_id, conn=None):
         operation_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import operation_exist
+        >>> from vFense.core.operations._db import operation_exist
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> operation_exist(operation_id)
 
@@ -112,7 +112,7 @@ def operation_with_agentid_exists(operation_id, agent_id, conn=None):
         agent_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import operation_with_agentid_exists
+        >>> from vFense.core.operations._db import operation_with_agentid_exists
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> operation_with_agentid_exists(operation_id, agent_id)
@@ -149,7 +149,7 @@ def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
         agent_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import fetch_operation_with_agentid
+        >>> from vFense.core.operations._db import fetch_operation_with_agentid
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> fetch_operation_with_agentid(operation_id, agent_id)
@@ -205,7 +205,7 @@ def operation_with_agentid_and_appid_exists(
         app_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import operation_with_agentid_and_appid_exists
+        >>> from vFense.core.operations._db import operation_with_agentid_and_appid_exists
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> app_id = '70d462913faad1ecaa85eda4c448a607164fe39414c8be44405e7ab4f7f8467c'
@@ -245,7 +245,7 @@ def group_operations_per_app_by_results(
         agent_id (str): 36 character UUID
 
     Basic Usage:
-        >>> from vFense.operations._db import group_operations_per_app_by_results
+        >>> from vFense.core.operations._db import group_operations_per_app_by_results
         >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
         >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
         >>> group_operations_per_app_by_results(operation_id, agent_id)
@@ -300,7 +300,7 @@ def insert_into_agent_operations(operation_data, conn=None):
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import insert_into_agent_operations
+        >>> from vFense.core.operations._db import insert_into_agent_operations
         >>> operation_data = {'opertion_id': 'id_goes_here'}
         >>> insert_into_agent_operations(operation_data)
 
@@ -332,7 +332,7 @@ def insert_agent_into_agent_operations(operation_data, conn=None):
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import insert_agent_into_agent_operations
+        >>> from vFense.core.operations._db import insert_agent_into_agent_operations
         >>> operation_data = {'opertion_id': 'id_goes_here'}
         >>> insert_agent_into_agent_operations(operation_data)
 
@@ -364,7 +364,7 @@ def insert_app_into_agent_operations(operation_data, conn=None):
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import insert_app_into_agent_operations
+        >>> from vFense.core.operations._db import insert_app_into_agent_operations
         >>> operation_data = {'opertion_id': 'id_goes_here'}
         >>> insert_app_into_agent_operations(operation_data)
 
@@ -397,7 +397,7 @@ def update_agent_operation(operation_id, operation_data, conn=None):
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import update_agent_operation
+        >>> from vFense.core.operations._db import update_agent_operation
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> operation_data = {'opertion_id': 'id_goes_here'}
         >>> update_agent_operation(operation_id, operation_data)
@@ -436,7 +436,7 @@ def update_operation_per_agent(
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import update_operation_per_agent
+        >>> from vFense.core.operations._db import update_operation_per_agent
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
         >>> operation_data = {'opertion_id': 'id_goes_here'}
@@ -480,7 +480,7 @@ def update_operation_per_app(
         operation_data (list|dict): Insert a list of operations or an operation.
 
     Basic Usage:
-        >>> from vFense.operations._db import update_operation_per_app
+        >>> from vFense.core.operations._db import update_operation_per_app
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
         >>> operation_data = {'opertion_id': 'id_goes_here'}
@@ -522,7 +522,7 @@ def update_agent_operation_expire_time(
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
-        >>> from vFense.operations._db import update_agent_operation_expire_time
+        >>> from vFense.core.operations._db import update_agent_operation_expire_time
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> db_time = r.epoch_time(time.time())
         >>> update_agent_operation_expire_time(operation_id, db_time)
@@ -577,7 +577,7 @@ def update_agent_operation_pickup_time(
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
-        >>> from vFense.operations._db import update_agent_operation_pickup_time
+        >>> from vFense.core.operations._db import update_agent_operation_pickup_time
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> db_time = r.epoch_time(time.time())
         >>> update_agent_operation_pickup_time(operation_id, db_time)
@@ -634,7 +634,7 @@ def update_completed_and_pending_count(
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
-        >>> from vFense.operations._db import update_completed_and_pending_count
+        >>> from vFense.core.operations._db import update_completed_and_pending_count
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> db_time = r.epoch_time(time.time())
         >>> update_completed_and_pending_count(operation_id, db_time)
@@ -688,7 +688,7 @@ def update_failed_and_pending_count(
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
-        >>> from vFense.operations._db import update_failed_and_pending_count
+        >>> from vFense.core.operations._db import update_failed_and_pending_count
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> db_time = r.epoch_time(time.time())
         >>> update_completed_and_failed_count(operation_id, db_time)
@@ -742,7 +742,7 @@ def update_errors_and_pending_count(
         db_time (rql date object): r.epoch_time
 
     Basic Usage:
-        >>> from vFense.operations._db import update_errors_and_pending_count
+        >>> from vFense.core.operations._db import update_errors_and_pending_count
         >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
         >>> db_time = r.epoch_time(time.time())
         >>> update_completed_and_errors_count(operation_id, db_time)

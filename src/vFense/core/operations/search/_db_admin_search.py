@@ -3,10 +3,10 @@ import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._db import insert_data_in_table
-from vFense.operations.search._constants import OperationSearchValues
+from vFense.core.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
 
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     OperationCollections, AdminOperationKey, AdminOperationIndexes
 )
 
@@ -38,7 +38,7 @@ class FetchAdminOperations(object):
                 default = created_time
 
         Basic Usage:
-            >>> from vFense.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
         """
@@ -57,7 +57,7 @@ class FetchAdminOperations(object):
     def fetch_all(self, conn=None):
         """Fetch all operations
         Basic Usage:
-            >>> from vFense.operations.search._db_admin_search import FetchAdminOperations
+            >>> from vFense.core.operations.search._db_admin_search import FetchAdminOperations
             >>> view_name = 'global'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation.fetch_all()

@@ -5,9 +5,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.decorators import results_message
-from vFense.operations._db_model import AgentOperationKey
-from vFense.operations._constants import AgentOperations
-from vFense.operations.search._db_agent_search import FetchAgentOperations
+from vFense.core.operations._db_model import AgentOperationKey
+from vFense.core.operations._constants import AgentOperations
+from vFense.core.operations.search._db_agent_search import FetchAgentOperations
 from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
 from vFense.errorz._constants import ApiResultKeys
 
@@ -47,7 +47,7 @@ class AgentOperationRetriever(object):
                 default = None
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
         """
@@ -83,7 +83,7 @@ class AgentOperationRetriever(object):
     def get_all(self, conn=None):
         """Get all operations
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> operation.get_all()
@@ -146,7 +146,7 @@ class AgentOperationRetriever(object):
             agent_id (str) 36 character uuid
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> agent_id = '33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
@@ -218,7 +218,7 @@ class AgentOperationRetriever(object):
             tag_id (str) 36 character uuid
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
@@ -282,7 +282,7 @@ class AgentOperationRetriever(object):
                 examples... reboot, shutdown, install_os_apps
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> action = 'install_os_apps'
@@ -362,7 +362,7 @@ class AgentOperationRetriever(object):
             operation_id (str) 36 character UUID.
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
@@ -467,7 +467,7 @@ class AgentOperationRetriever(object):
             operation_id (str) 36 character UUID.
 
         Basic Usage:
-            >>> from vFense.operations.search.agent_search import AgentOperationRetriever
+            >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'

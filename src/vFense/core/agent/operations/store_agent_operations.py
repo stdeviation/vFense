@@ -1,8 +1,8 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.operations._constants import AgentOperations, vFensePlugins
-from vFense.operations.store_agent_operation import StoreAgentOperation
+from vFense.core.operations._constants import AgentOperations, vFensePlugins
+from vFense.core.operations.store_agent_operation import StoreAgentOperation
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

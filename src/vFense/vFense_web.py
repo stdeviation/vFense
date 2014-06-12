@@ -44,7 +44,7 @@ from vFense.server.hierarchy import db as hierarchy_db
 from vFense.server.api.tag_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
-from vFense.operations.api.agent_operations import GetTransactionsHandler, \
+from vFense.core.operations.api.agent_operations import GetTransactionsHandler, \
     AgentOperationsHandler, TagOperationsHandler, OperationHandler
 
 

@@ -1,8 +1,8 @@
-from vFense.operations._db_model import OperationPerAgentKey, \
+from vFense.core.operations._db_model import OperationPerAgentKey, \
     OperationPerAppKey
-from vFense.operations.agent_operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperation
 from vFense.core._db_constants import DbTime
-from vFense.operations._db_agent import update_operation_per_agent, \
+from vFense.core.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
     update_errors_and_pending_count, update_failed_and_pending_count, \
     update_completed_and_pending_count, insert_agent_into_agent_operations, \
@@ -25,7 +25,7 @@ class PatchingOperation(AgentOperation):
             applications (list): List of application dictionairies.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -118,7 +118,7 @@ class PatchingOperation(AgentOperation):
                 default = None.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -166,7 +166,7 @@ class PatchingOperation(AgentOperation):
             app_id (str): The application id.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)
@@ -220,7 +220,7 @@ class PatchingOperation(AgentOperation):
             pending_count (int): the pending count.
 
         Basic Usage:
-            >>> from vFense.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperation(username, view_name)

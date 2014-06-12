@@ -1,9 +1,9 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.operations.agent_operations import AgentOperation
-from vFense.operations._db_model import AgentOperationKey
-from vFense.operations._constants import AgentOperations
+from vFense.core.operations.agent_operations import AgentOperation
+from vFense.core.operations._db_model import AgentOperationKey
+from vFense.core.operations._constants import AgentOperations
 from vFense.core.queue.queue import AgentQueue
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

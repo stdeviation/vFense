@@ -6,9 +6,9 @@ from time import mktime
 from datetime import datetime
 
 from vFense.plugins.patching._db_model import *
-from vFense.operations._db_model import *
-from vFense.operations._constants import AgentOperations
-from vFense.operations.agent_operations import AgentOperation
+from vFense.core.operations._db_model import *
+from vFense.core.operations._constants import AgentOperations
+from vFense.core.operations.agent_operations import AgentOperation
 from vFense.plugins.patching.patching import (
     update_app_status_by_agentid_and_appid
 )

@@ -15,7 +15,7 @@ from vFense.receiver.rvhandler import RvHandOff
 from vFense.core.user.users import get_user_property
 from vFense.core.user import UserKeys
 
-from vFense.operations._constants import AgentOperations
+from vFense.core.operations._constants import AgentOperations
 
 #from server.handlers import *
 

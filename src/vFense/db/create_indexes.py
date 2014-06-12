@@ -9,7 +9,7 @@ from vFense.core.group._db_model import *
 from vFense.core.view._db_model import *
 
 from vFense.notifications import *
-from vFense.operations._db_model import *
+from vFense.core.operations._db_model import *
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve import *

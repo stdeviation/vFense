@@ -4,7 +4,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import r
-from vFense.operations._db_model import (
+from vFense.core.operations._db_model import (
     AgentOperationKey, OperationPerAgentKey
 )
 

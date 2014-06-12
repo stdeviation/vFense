@@ -10,10 +10,10 @@ from vFense.core.decorators import results_message
 from vFense.core.agent import AgentKey
 from vFense.core.agent.agents import update_agent_field
 from vFense.errorz._constants import ApiResultKeys
-from vFense.operations._db_model import AgentOperationKey
-from vFense.operations._constants import AgentOperations
-from vFense.operations.results import OperationResults
-from vFense.operations.agent_operations import \
+from vFense.core.operations._db_model import AgentOperationKey
+from vFense.core.operations._constants import AgentOperations
+from vFense.core.operations.results import OperationResults
+from vFense.core.operations.agent_operations import \
     operation_for_agent_and_app_exist
 
 from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \

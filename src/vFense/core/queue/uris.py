@@ -1,6 +1,6 @@
 import os
 from vFense.core._constants import HTTPMethods, CommonKeys
-from vFense.operations._constants import AgentOperations, ListenerURIs, \
+from vFense.core.operations._constants import AgentOperations, ListenerURIs, \
     AuthenticationOperations, AuthenticationURIs, BaseURIs
 
 from vFense.core.agent import AgentKey

@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.queue.queue import AgentQueue
 from vFense.settings import Default
-from vFense.operations.agent_operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperation
 
 from vFense.errorz.error_messages import AgentOperationCodes
 

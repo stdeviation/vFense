@@ -9,7 +9,7 @@ from vFense.core.agent import AgentKey
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.core._db_constants import DbTime
-from vFense.operations.agent_operations import AgentOperation, \
+from vFense.core.operations.agent_operations import AgentOperation, \
     operation_for_agent_exist, get_agent_operation
 
 from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
@@ -41,7 +41,7 @@ class OperationResults(object):
             method (str): The method used to call this api.
 
         Basic Usage:
-            >>> from vFense.operations.results import OperationResults
+            >>> from vFense.core.operations.results import OperationResults
             >>> username = 'admin'
             >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
             >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
@@ -78,7 +78,7 @@ class OperationResults(object):
                 reboot, shutdown, install_os_apps, etc...
 
         Basic Usage:
-            >>> from vFense.operations.results import OperationResults
+            >>> from vFense.core.operations.results import OperationResults
             >>> username = 'admin'
             >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
             >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'

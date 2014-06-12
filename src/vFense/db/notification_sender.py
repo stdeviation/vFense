@@ -4,9 +4,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_BASE_SRC_PATH
 from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
-from vFense.operations._db_model import *
-from vFense.operations.agent_operations import get_agent_operation
-from vFense.operations.search.agent_search import AgentOperationRetriever
+from vFense.core.operations._db_model import *
+from vFense.core.operations.agent_operations import get_agent_operation
+from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.notifications import *
 from emailer.mailer import MailClient
 

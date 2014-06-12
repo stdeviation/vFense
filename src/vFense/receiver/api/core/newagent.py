@@ -6,8 +6,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments, agent_authenticated_request
 from vFense.core.agent import *
-from vFense.operations._db_model import *
-from vFense.operations._constants import AgentOperations
+from vFense.core.operations._db_model import *
+from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent.agents import add_agent
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz._constants import ApiResultKeys

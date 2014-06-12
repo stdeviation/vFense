@@ -9,7 +9,7 @@ from vFense.core.tag import *
 from datetime import datetime
 from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults, NotificationResults
-from vFense.operations._db_model import *
+from vFense.core.operations._db_model import *
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *
 
