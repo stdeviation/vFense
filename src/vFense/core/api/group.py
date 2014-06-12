@@ -163,7 +163,7 @@ class GroupsHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         active_view = (
-            get_user_property(active_user, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         view_context = self.get_argument('view_context', None)
         group_id = self.get_argument('group_id', None)
@@ -232,7 +232,7 @@ class GroupsHandler(BaseHandler):
         method = self.request.method
         results = None
         active_view = (
-            get_user_property(active_user, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         try:
             ###Create Group###

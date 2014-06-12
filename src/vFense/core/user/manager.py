@@ -105,12 +105,12 @@ class UserManager(object):
         return user_key
 
     @time_it
-    def _all_attributes_for_user(self):
+    def get_all_attributes(self):
         """Retrieve a user and all of its properties by username.
         Basic Usage:
             >>> from vFense.user.manager import UserManager
             >>> username = 'admin'
-            >>> user._all_attributes_for_user()
+            >>> user.get_all_attributes()
 
         Returns:
             Dictionary of user properties.
@@ -161,7 +161,7 @@ class UserManager(object):
         status_code, _, _, _ = (
             user_status_toggle(self.username)
         )
-        self.properties = self._all_attributes_for_user()
+        self.properties = self._user_attributes()
         if status_code == DbCodes.Replaced:
             if self.properties[UserKeys.Enabled]:
                 msg = 'user %s is enabled' % (self.username)

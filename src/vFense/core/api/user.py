@@ -22,8 +22,8 @@ from vFense.core.operations._constants import vFenseObjects
 from vFense.core.user._db_model import UserKeys
 
 from vFense.core.user.manager import UserManager, \
-    get_user_properties, get_properties_for_all_users, \
-    create_user, remove_user, remove_users, change_password, \
+    get_properties_for_all_users, \
+    remove_user, remove_users, change_password, \
     edit_user_properties, toggle_user_status
 
 from vFense.core.user import User
@@ -59,9 +59,9 @@ class UserHandler(BaseHandler):
                 )
             )
             if not username or username == active_user:
-                user_data = get_user_properties(active_user)
+                user_data = UserManager(active_user).get_all_attributes()
             elif username and granted:
-                user_data = get_user_properties(username)
+                user_data = UserManager(username).get_all_attributes()
             elif username and not granted:
                 results = (
                     return_results_for_permissions(
@@ -99,7 +99,7 @@ class UserHandler(BaseHandler):
     def post(self, username):
         active_user = self.get_current_user()
         active_view = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -300,7 +300,7 @@ class UsersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         active_view = (
-            get_user_property(active_user, UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
         all_views = self.get_argument(ApiArguments.ALL_VIEWS, None)
@@ -324,7 +324,7 @@ class UsersHandler(BaseHandler):
                 user_data = get_properties_for_all_users()
 
             elif granted and user_name and not view_context and not all_views:
-                user_data = get_properties_for_user(user_name)
+                user_data = UserManager(user_name).get_all_attributes()
                 if user_data:
                     user_data = [user_data]
                 else:

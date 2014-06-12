@@ -1,5 +1,5 @@
 from time import sleep
-import logging 
+import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.scheduler.jobManager import start_scheduler, job_exists, remove_job
@@ -18,8 +18,8 @@ get_supported_apps()
 #get_agents_apps()
 
 if __name__ == '__main__':
-   
-    sched = start_scheduler(redis_db=11) 
+
+    sched = start_scheduler(redis_db=11)
     jobstore_name = 'administrative'
     username='admin'
     list_of_cron_jobs = [
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         while job_exist:
             job_removed = (
                 remove_job(
-                    sched, job['name'], 
+                    sched, job['name'],
                     jobstore_name,
                     username
                 ).get('rv_status_code')
@@ -102,7 +102,7 @@ if __name__ == '__main__':
             job_exist = (
                 job_exists(
                     sched=sched, jobname=job['name'],
-                    username=username, customer_name=jobstore_name
+                    username=username, view_name=jobstore_name
                 )
             )
 

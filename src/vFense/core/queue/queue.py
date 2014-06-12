@@ -10,7 +10,7 @@ from vFense.core.queue._db import insert_into_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
 from vFense.core.view._db_model import *
-from vFense.core.view.views import get_view_property
+from vFense.core.view.manager import ViewManager
 
 from vFense.core.queue.uris import get_agent_results_uri
 from vFense.core.operations._db_model import AgentOperationKey
@@ -116,7 +116,7 @@ class AgentQueue(object):
             >>> view_name = 'default'
             >>> queue = AgentQueue(agent_id, view_name)
             >>> queue._get_next_avail_order()
-        
+
         Returns:
             Integer
         """
@@ -142,9 +142,7 @@ class AgentQueue(object):
         """
 
         ttl = (
-            get_view_property(
-                self.view_name, ViewKeys.ServerQueueTTL
-            )
+            ViewManager(self.view_name).get_attribute(ViewKeys.ServerQueueTTL)
         )
 
         return(ttl)
@@ -166,9 +164,7 @@ class AgentQueue(object):
         """
 
         ttl = (
-            get_view_property(
-                self.view_name, ViewKeys.AgentQueueTTL
-            )
+            ViewManager(self.view_name).get_attribute(ViewKeys.ServerQueueTTL)
         )
 
         return(ttl)
@@ -214,16 +210,16 @@ class AgentQueue(object):
             List of dictionairies
             [
                 {
-                    "agent_queue_ttl": 1396778416, 
-                    "plugin": "rv", 
-                    "order_id": 1, 
-                    "server_queue_ttl": 1396777816, 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "created_time": 1396777216, 
-                    "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12", 
-                    "operation": "updatesapplications", 
-                    "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
-                    "expire_minutes": 10, 
+                    "agent_queue_ttl": 1396778416,
+                    "plugin": "rv",
+                    "order_id": 1,
+                    "server_queue_ttl": 1396777816,
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "created_time": 1396777216,
+                    "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12",
+                    "operation": "updatesapplications",
+                    "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
+                    "expire_minutes": 10,
                     "view_name": "default"
                 }
             ]
@@ -247,16 +243,16 @@ class AgentQueue(object):
             List of dictionairies
             [
                 {
-                    "agent_queue_ttl": 1396778416, 
-                    "plugin": "rv", 
-                    "order_id": 1, 
-                    "server_queue_ttl": 1396777816, 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "created_time": 1396777216, 
-                    "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12", 
-                    "operation": "updatesapplications", 
-                    "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
-                    "expire_minutes": 10, 
+                    "agent_queue_ttl": 1396778416,
+                    "plugin": "rv",
+                    "order_id": 1,
+                    "server_queue_ttl": 1396777816,
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "created_time": 1396777216,
+                    "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12",
+                    "operation": "updatesapplications",
+                    "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
+                    "expire_minutes": 10,
                     "view_name": "default"
                 }
             ]

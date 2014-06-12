@@ -58,7 +58,7 @@ class FetchValidProductionLevels(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -90,7 +90,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -139,7 +139,7 @@ class AgentsHandler(BaseHandler):
             view_name = self.get_argument('view_name', None)
             if not view_name:
                 view_name = (
-                    get_user_property(active_user, UserKeys.CurrentView)
+                    UserManager(active_user).get_attribute(UserKeys.CurrentView)
                 )
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
@@ -222,7 +222,7 @@ class AgentsHandler(BaseHandler):
     def put(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -266,7 +266,7 @@ class AgentsHandler(BaseHandler):
     def delete(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -314,7 +314,7 @@ class AgentHandler(BaseHandler):
     def get(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -341,7 +341,7 @@ class AgentHandler(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -403,7 +403,7 @@ class AgentHandler(BaseHandler):
     def delete(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -432,7 +432,7 @@ class AgentHandler(BaseHandler):
     def post(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

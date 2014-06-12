@@ -14,7 +14,7 @@ class SetPassword(BaseHandler):
 
         current_user = self.get_current_user()
         view_name = (
-            get_user_property(current_user, UserKeys.CurrentView)
+            UserManager(current_user).get_attribute(UserKeys.CurrentView)
         )
         body = json.loads(self.request.body)
         password = body.get('password')

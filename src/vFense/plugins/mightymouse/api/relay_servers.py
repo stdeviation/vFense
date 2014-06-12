@@ -28,7 +28,7 @@ class RelayServersHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -56,7 +56,7 @@ class RelayServersHandler(BaseHandler):
     def delete(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -85,7 +85,7 @@ class RelayServersHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -116,7 +116,7 @@ class RelayServerHandler(BaseHandler):
     def get(self, mouse_name):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -148,7 +148,7 @@ class RelayServerHandler(BaseHandler):
     def put(self, mouse_name):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -176,7 +176,7 @@ class RelayServerHandler(BaseHandler):
     def delete(self, mouse_name):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

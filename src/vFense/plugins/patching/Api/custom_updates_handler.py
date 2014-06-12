@@ -41,7 +41,7 @@ class GetThirdPartyUuidHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -61,7 +61,7 @@ class ThirdPartyPackageUploadHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -91,7 +91,7 @@ class ThirdPartyUploadHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -130,7 +130,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -204,7 +204,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -273,7 +273,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
     def delete(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -340,7 +340,7 @@ class TagIdCustomAppsHandler(BaseHandler):
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -409,7 +409,7 @@ class TagIdCustomAppsHandler(BaseHandler):
     def put(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -478,7 +478,7 @@ class TagIdCustomAppsHandler(BaseHandler):
     def delete(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -545,7 +545,7 @@ class AppIdCustomAppsHandler(BaseHandler):
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -566,7 +566,7 @@ class AppIdCustomAppsHandler(BaseHandler):
     def post(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -643,7 +643,7 @@ class AppIdCustomAppsHandler(BaseHandler):
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -713,7 +713,7 @@ class AppIdCustomAppsHandler(BaseHandler):
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -780,7 +780,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -827,7 +827,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     def put(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -897,7 +897,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
     def delete(self, app_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -964,7 +964,7 @@ class CustomAppsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
         count = int(self.get_argument('count', 30))
@@ -1078,7 +1078,7 @@ class CustomAppsHandler(BaseHandler):
     def delete(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

@@ -27,7 +27,7 @@ class InstallOsAppsResults(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -85,7 +85,7 @@ class InstallCustomAppsResults(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -145,7 +145,7 @@ class InstallSupportedAppsResults(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -206,7 +206,7 @@ class InstallAgentAppsResults(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -270,7 +270,7 @@ class UninstallAppsResults(BaseHandler):
     def put(self, agent_id):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

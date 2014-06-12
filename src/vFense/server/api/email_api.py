@@ -21,7 +21,7 @@ class GetEmailConfigHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         mail = MailClient(view_name)
         result = {
@@ -43,7 +43,7 @@ class CreateEmailConfigHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         mail_host = self.get_argument('host', None)
         mail_user = self.get_argument('user', None)

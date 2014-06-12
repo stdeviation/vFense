@@ -24,7 +24,7 @@ class ViewStatsByOsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -56,7 +56,7 @@ class TagStatsByOsHandler(BaseHandler):
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -88,7 +88,7 @@ class WidgetHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -120,7 +120,7 @@ class BarChartByAppIdByStatusHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         appid = self.get_argument('id', None)
         result = bar_chart_for_appid_by_status(app_id=appid,
@@ -134,7 +134,7 @@ class OsAppsOverTimeHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -174,7 +174,7 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -214,7 +214,7 @@ class TagOsAppsOverTimeHandler(BaseHandler):
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -254,7 +254,7 @@ class TopAppsNeededHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         count = int(self.get_argument('count', '5'))
         uri = self.request.uri
@@ -287,7 +287,7 @@ class RecentlyReleasedHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -320,7 +320,7 @@ class ViewSeverityHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -351,7 +351,7 @@ class AgentSeverityHandler(BaseHandler):
     def get(self, agent_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -382,7 +382,7 @@ class TagSeverityHandler(BaseHandler):
     def get(self, tag_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

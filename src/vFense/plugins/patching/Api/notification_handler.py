@@ -23,7 +23,7 @@ class GetAllValidFieldsForNotifications(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         result = (
             get_valid_fields(
@@ -39,7 +39,7 @@ class NotificationsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -71,7 +71,7 @@ class NotificationsHandler(BaseHandler):
     def post(self):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -194,7 +194,7 @@ class NotificationHandler(BaseHandler):
     def get(self, notification_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -221,7 +221,7 @@ class NotificationHandler(BaseHandler):
     def delete(self, notification_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -257,7 +257,7 @@ class NotificationHandler(BaseHandler):
     def put(self, notification_id):
         username = self.get_current_user().encode('utf-8')
         view_name = (
-            get_user_property(username, UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
