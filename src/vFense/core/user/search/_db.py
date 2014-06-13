@@ -47,14 +47,13 @@ class FetchUsers(object):
             sort (str): Sort either by asc or desc.
                 default = desc
             sort_key (str): Sort by a valid field.
-                examples... operation, status, created_time, updated_time,
-                completed_time, and created_by.
-                default = created_time
+                examples... full_name, email, username.
+                default = username
 
         Basic Usage:
-            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
+            >>> from vFense.core.user.search._db import FetchUsers
             >>> view_name = 'default'
-            >>> operation = FetchAgentOperations(view_name)
+            >>> operation = FetchUsers(view_name)
         """
 
         self.view_name = view_name
@@ -71,8 +70,7 @@ class FetchUsers(object):
 
     @db_create_close
     def all(self, conn=None):
-        """Retrieve a user and all of its properties
-            This query is beautiful :)
+        """Retrieve all user and all of its properties
 
         Basic Usage:
             >>> from vFense.user.search._db import FetchUsers
@@ -112,8 +110,7 @@ class FetchUsers(object):
 
     @db_create_close
     def by_name(self, username, conn=None):
-        """Retrieve a user and all of its properties
-            This query is beautiful :)
+        """Retrieve users by regex and all of its properties
 
         Basic Usage:
             >>> from vFense.user.search._db import FetchUsers

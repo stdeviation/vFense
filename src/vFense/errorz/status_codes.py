@@ -25,6 +25,8 @@ class GenericCodes(object):
     MissingPassword = 1024
     InvalidValue = 1025
     InvalidFields = 1026
+    ObjectsDeleted = 1027
+    ObjectsUnchanged = 1028
 
 
 class GenericFailureCodes(object):
@@ -39,6 +41,7 @@ class GenericFailureCodes(object):
     InvalidPlugin = 1508
     InvalidInstanceType = 1509
     InvalidFields = 1510
+    FailedToDeleteAllObjects = 1511
 
 class GroupCodes(object):
     GroupCreated = 12000
@@ -86,6 +89,8 @@ class UserCodes(object):
     UsersRemovedFromView = 13006
     UsersAddedToGroup = 13007
     UsersRemovedFromGroup = 13008
+    UsersDeleted = 13009
+    UsersUnchanged = 13010
 
 
 class UserFailureCodes(object):
@@ -107,6 +112,7 @@ class UserFailureCodes(object):
     FailedToRemoveUsersFromGroup = 13515
     CantAddLocalGroupToGlobalUser = 13516
     CantAddGlobalGroupToLocalUser = 13517
+    FailedToDeleteAllUsers = 13518
 
 
 class ViewCodes(object):

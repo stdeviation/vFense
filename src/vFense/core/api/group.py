@@ -12,17 +12,16 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
 
 from vFense.core.permissions.decorators import check_permissions
 
-from vFense.core.decorators import convert_json_to_arguments, \
-    authenticated_request
+from vFense.core.decorators import (
+    convert_json_to_arguments, authenticated_request
+)
 
 from vFense.core.agent import *
 from vFense.core.user._db_model import UserKeys
-from vFense.core.user.manager import UserManager, \
-    add_users_to_group, remove_users_from_group
+from vFense.core.user.manager import UserManager
 
-from vFense.core.group.groups import get_group_properties, \
-    get_properties_for_all_groups, create_group, remove_group, \
-    remove_groups
+from vFense.core.group import Group
+from vFense.core.group.manager import GroupManager
 
 from vFense.errorz.error_messages import GenericResults
 
@@ -41,14 +40,14 @@ class GroupHandler(BaseHandler):
         count = 0
         group_data = {}
         try:
-            group_data = get_group_properties(group_id)
+            group_data = GroupManager(group_id).properties
             if group_data:
                 count = 1
                 results = (
                     GenericResults(
                         active_user, uri, method
                     ).information_retrieved(group_data, count)
-                ) 
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -205,7 +204,7 @@ class GroupsHandler(BaseHandler):
                 GenericResults(
                     active_user, uri, method
                 ).information_retrieved(group_data, count)
-            ) 
+            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

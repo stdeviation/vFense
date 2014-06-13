@@ -11,9 +11,9 @@ from vFense.receiver.api.core.result_uris import ResultURIs
 from vFense.receiver.api.core.results import RebootResultsV1, ShutdownResultsV1
 
 from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
-from vFense.core.api.user._db_model import UserHandler, UsersHandler
-from vFense.core.api.group._db_model import GroupHandler, GroupsHandler
-from vFense.core.api.view._db_model import ViewHandler, ViewsHandler
+from vFense.core.api.user import UserHandler, UsersHandler
+from vFense.core.api.group import GroupHandler, GroupsHandler
+from vFense.core.api.view import ViewHandler, ViewsHandler
 from vFense.core.api.agent import AgentHandler, AgentResultURIs, \
     AgentsHandler, FetchSupportedOperatingSystems, FetchValidProductionLevels
 from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \

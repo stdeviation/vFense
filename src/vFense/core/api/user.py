@@ -24,15 +24,13 @@ from vFense.core.user._db_model import UserKeys
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
 from vFense.core.user.search.search import RetrieveUsers
-from vFense.core.view.views import add_user_to_views, \
-    remove_views_from_user
 
-from vFense.core.group.groups import add_user_to_groups, \
-    remove_groups_from_user
-
-from vFense.errorz._constants import *
-from vFense.errorz.status_codes import GenericCodes
+from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.status_codes import (
+    UserCodes, UserFailureCodes, GenericCodes,
+    GenericFailureCodes
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -286,16 +284,19 @@ class UserHandler(BaseHandler):
             results = self.manager.change_view(user)
             return results
 
+        @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
         @results_message
         def change_default_view(self, username, view):
             user = User(username, default_view=view)
             results = self.manager.change_view(user)
             return results
 
+        @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
         @results_message
         def toggle_status(self):
             results = self.manager.toggle_status()
             return results
+
 
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -321,6 +322,7 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+        @log_operation(AdminActions.REMOVE_USER, vFenseObjects.USER)
         @results_message
         def remove_user(self):
             results = self.manager.remove()
@@ -334,14 +336,17 @@ class UsersHandler(BaseHandler):
     def get(self):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        http_method = self.request.method
+        user = UserManager(active_user)
+        active_view = user.get_attribute(UserKeys.CurrentView)
+        self.is_global = user.get_attribute(UserKeys.Global)
         view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
         all_views = self.get_argument(ApiArguments.ALL_VIEWS, None)
         user_name = self.get_argument(ApiArguments.USER_NAME, None)
-        count = 0
+        self.count = int(self.get_argument('count', 30))
+        self.offset = int(self.get_argument('offset', 0))
+        self.sort = self.get_argument('sort', 'asc')
+        self.sort_by = self.get_argument('sort_by', UserKeys.UserName)
         user_data = []
         try:
             granted, status_code = (
@@ -350,14 +355,13 @@ class UsersHandler(BaseHandler):
                 )
             )
             if granted and not view_context and not all_views and not user_name:
-                user_data = get_properties_for_all_users(active_view)
+                user_data = self.get_users(active_view)
 
             elif granted and view_context and not all_views and not user_name:
-
-                user_data = get_properties_for_all_users(view_context)
+                user_data = self.get_users(view_context)
 
             elif granted and all_views and not view_context and not user_name:
-                user_data = get_properties_for_all_users()
+                user_data = self.get_users()
 
             elif granted and user_name and not view_context and not all_views:
                 user_data = UserManager(user_name).get_all_attributes()
@@ -370,16 +374,10 @@ class UsersHandler(BaseHandler):
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, uri, method
+                        Permissions.ADMINISTRATOR, uri, http_method
                     )
                 )
 
-            count = len(user_data)
-            results = (
-                GenericResults(
-                    active_user, uri, method
-                ).information_retrieved(user_data, count)
-            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -394,6 +392,27 @@ class UsersHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @results_message
+        def get_users(self, view=None):
+            if view:
+                fetch_users = (
+                    RetrieveUsers(
+                        view, count=self.count, offset=self.offset,
+                        sort=self.sort, sort_key=self.sort_by,
+                        is_global=self.is_global
+                    )
+                )
+            else:
+                fetch_users = (
+                    RetrieveUsers(
+                        count=self.count, offset=self.offset, sort=self.sort,
+                        sort_key=self.sort_by, is_global=self.is_global
+                    )
+                )
+            results = fetch_users.all()
+
+            return results
 
 
     @authenticated_request
@@ -455,14 +474,13 @@ class UsersHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         usernames = self.arguments.get(ApiArguments.USERNAMES)
+        force_remove = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
         try:
             if not isinstance(usernames, list):
                 usernames = usernames.split()
 
             if not active_user in usernames:
-                results = remove_users(
-                    usernames, active_user, uri, method
-                )
+                results = self.remove_users(usernames)
             else:
                 results = (
                     GenericResults(
@@ -484,4 +502,62 @@ class UsersHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+
+        @log_operation(AdminActions.REMOVE_USER, vFenseObjects.USER)
+        @results_message
+        def remove_users(self, usernames):
+            end_results = {}
+            users_deleted = []
+            users_unchanged = []
+            for username in usernames:
+                manager = UserManager(username)
+                results = manager.remove()
+                if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                        == UserCodes.Deleted):
+                    users_deleted.append(username)
+                else:
+                    users_unchanged.append(username)
+
+            end_results[ApiResultKeys.UNCHANGED_IDS] = users_unchanged
+            end_results[ApiResultKeys.DELETED_IDS] = users_deleted
+            if users_unchanged and users_deleted:
+                msg = (
+                    'user names deleted: %s, user names unchanged: %s'
+                    % (', '.join(users_deleted), ', '.join(users_unchanged))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToDeleteAllObjects
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserFailureCodes.FailedToDeleteAllUsers
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            elif users_deleted and not users_unchanged:
+                msg = (
+                    'user names deleted: %s'
+                    % (', '.join(users_deleted))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectsDeleted
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserCodes.UsersDeleted
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            elif users_unchanged and not users_deleted:
+                msg = (
+                    'user names unchanged: %s'
+                    % (', '.join(users_unchanged))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectsUnchanged
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    UserCodes.UsersUnchanged
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            return end_results
 

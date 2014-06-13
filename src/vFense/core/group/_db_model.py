@@ -12,6 +12,11 @@ class GroupKeys():
     Email = 'email'
 
 
+class GroupMappedKeys():
+    UserName = 'user_name'
+    ViewName = 'view_name'
+
+
 class GroupIndexes():
     Views = 'views'
     Users = 'users'

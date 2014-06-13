@@ -32,6 +32,7 @@ class AdminActions():
     REMOVE_USER_FROM_GROUP = 'remove user from group'
     EDIT_USER_PASSWORD = 'edit user password'
     EDIT_USER_EMAIL = 'edit user email'
+    TOGGLE_USER_STATUS = 'toggle user status'
     EDIT_DEFAULT_VIEW = 'edit default user view'
     CREATE_TAG = 'create tag'
     REMOVE_TAG = 'remove tag'
