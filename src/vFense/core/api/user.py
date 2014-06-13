@@ -80,7 +80,7 @@ class UserHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
@@ -100,16 +100,10 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, username):
         self.active_user = self.get_current_user()
-        active_view = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         http_method = self.request.method
         self.user = UserManager(username)
         try:
-            view_context = (
-                self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
-            )
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
 
             ###Update Groups###
@@ -139,7 +133,7 @@ class UserHandler(BaseHandler):
             else:
                 results = (
                     GenericResults(
-                        active_user, uri, http_method
+                        self.active_user, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -150,7 +144,7 @@ class UserHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    self.active_user, uri, http_method
                 ).something_broke(username, 'User', e)
             )
             logger.exception(e)
@@ -158,21 +152,25 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+        @log_operation(AdminActions.ADD_USER_TO_VIEW, vFenseObjects.USER)
         @results_message
         def add_to_views(self, views):
             results = self.user.add_to_views(views)
             return results
 
+        @log_operation(AdminActions.ADD_USER_TO_GROUP, vFenseObjects.USER)
         @results_message
         def add_to_groups(self, group_ids):
             results = self.user.add_to_groups(group_ids)
             return results
 
+        @log_operation(AdminActions.REMOVE_USER_FROM_VIEW, vFenseObjects.USER)
         @results_message
         def remove_from_views(self, views):
             results = self.user.remove_from_views(views)
             return results
 
+        @log_operation(AdminActions.REMOVE_USER_FROM_GROUP, vFenseObjects.USER)
         @results_message
         def remove_from_groups(self, group_ids, force):
             results = self.user.remove_from_groups(group_ids, force)
@@ -248,7 +246,7 @@ class UserHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, self.uri, self.http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
@@ -256,35 +254,40 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+        @log_operation(AdminActions.EDIT_USER_PASSWORD, vFenseObjects.USER)
         @results_message
         def change_password(self, orig_password, new_password):
             results = self.manager.change_password(orig_password, new_password)
             return results
 
+        @log_operation(AdminActions.RESET_USER_PASSWORD, vFenseObjects.USER)
         @results_message
         def reset_password(self, password):
             results = self.manager.reset_password(password)
             return results
 
+        @log_operation(AdminActions.EDIT_USER_FULL_NAME, vFenseObjects.USER)
         @results_message
         def change_full_name(self, username, full_name):
             user = User(username, full_name=full_name)
             results = self.manager.change_full_name(user)
             return results
 
+        @log_operation(AdminActions.EDIT_USER_EMAIL, vFenseObjects.USER)
         @results_message
         def change_email(self, username, email):
             user = User(username, email=email)
             results = self.manager.change_email(user)
             return results
 
+        @log_operation(AdminActions.EDIT_CURRENT_VIEW, vFenseObjects.USER)
         @results_message
         def change_current_view(self, username, view):
             user = User(username, current_view=view)
             results = self.manager.change_view(user)
             return results
 
-        @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
+        @log_operation(AdminActions.EDIT_DEFAULT_VIEW, vFenseObjects.USER)
         @results_message
         def change_default_view(self, username, view):
             user = User(username, default_view=view)

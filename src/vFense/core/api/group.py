@@ -11,9 +11,12 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
 
 from vFense.core.permissions.decorators import check_permissions
+from vFense.core.operations.decorators import log_operation
+from vFense.core.operations._admin_constants import AdminActions
+from vFense.core.operations._constants import vFenseObjects
 
 from vFense.core.decorators import (
-    convert_json_to_arguments, authenticated_request
+    convert_json_to_arguments, authenticated_request, results_message
 )
 
 from vFense.core.agent import *
@@ -22,6 +25,7 @@ from vFense.core.user.manager import UserManager
 
 from vFense.core.group import Group
 from vFense.core.group.manager import GroupManager
+from vFense.core.group.search import RetrieveGroups
 
 from vFense.errorz.error_messages import GenericResults
 
@@ -36,18 +40,10 @@ class GroupHandler(BaseHandler):
     def get(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        count = 0
-        group_data = {}
+        http_method = self.request.method
+        is_global = UserManager(active_user).get_attribute(UserKeys.Global)
         try:
-            group_data = GroupManager(group_id).properties
-            if group_data:
-                count = 1
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).information_retrieved(group_data, count)
-                )
+            results = self.get_group(group_id, is_global)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -55,7 +51,7 @@ class GroupHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'Group', e)
             )
             logger.exception(e)
@@ -63,33 +59,41 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+        @results_message
+        def get_group(self, group_id, is_global):
+            fetch_groups = RetrieveGroups(is_global=is_global)
+            results = fetch_groups.by_id(group_id)
+
+            return results
+
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        results = None
+        http_method = self.request.method
+        self.group = GroupManager(group_id)
         try:
             action = self.arguments.get(ApiArguments.ACTION)
+            force = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
             ###Add Users###
-            usernames = self.arguments.get(ApiArguments.USERNAMES)
+            usernames = self.arguments.get(ApiArguments.USERNAMES, [])
             if usernames and isinstance(usernames, list):
                 if action == ApiValues.ADD:
-                    results = (
-                        add_users_to_group(
-                            group_id, usernames,
-                            active_user, uri, method
-                        )
-                    )
+                    results = self.add_users(usernames)
+
                 if action == ApiValues.DELETE:
-                    results = (
-                        remove_users_from_group(
-                            group_id, usernames,
-                            active_user, uri, method
-                        )
-                    )
+                    results = self.remove_users(usernames, force)
+
+            ###Add Views###
+            views = self.arguments.get(ApiArguments.VIEW_NAMES, [])
+            if views and isinstance(views, list):
+                if action == ApiValues.ADD:
+                    results = self.add_views(views)
+
+                if action == ApiValues.DELETE:
+                    results = self.remove_views(views, force)
 
             if results:
                 self.set_status(results['http_status'])
@@ -99,7 +103,7 @@ class GroupHandler(BaseHandler):
             else:
                 results = (
                     GenericResults(
-                        active_user, uri, method
+                        active_user, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -110,13 +114,35 @@ class GroupHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @results_message
+        def add_views(self, views):
+            results = self.group.add_views(views)
+            return results
+
+        @results_message
+        def add_users(self, users):
+            results = self.group.add_users(users)
+            return results
+
+        @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
+        @results_message
+        def remove_views(self, views, force):
+            results = self.group.remove_views(views, force)
+            return results
+
+        @log_operation(AdminActions.REMOVE_USERS_FROM_GROUP, vFenseObjects.GROUP)
+        @results_message
+        def remove_users(self, users, force):
+            results = self.group.remove_users(users, force)
+            return results
 
 
     @authenticated_request
@@ -125,8 +151,8 @@ class GroupHandler(BaseHandler):
     def delete(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        results = None
+        http_method = self.request.method
+        self.manager = GroupManager(group_id)
         try:
             ###Remove GroupId###
             results = (
@@ -142,7 +168,7 @@ class GroupHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
@@ -150,7 +176,11 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-
+        @log_operation(AdminActions.REMOVE_GROUP, vFenseObjects.GROUP)
+        @results_message
+        def remove_user(self):
+            results = self.manager.remove()
+            return results
 
 
 class GroupsHandler(BaseHandler):

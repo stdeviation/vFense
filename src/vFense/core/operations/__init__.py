@@ -176,7 +176,7 @@ class AdminOperation(object):
                 )
 
         if self.action:
-            if not self.action in AdminActions.VALID_ACTIONS:
+            if not self.action in AdminActions.get_admin_actions():
                 invalid_fields.append(
                     {
                         AdminOperationKey.Action: self.action,
