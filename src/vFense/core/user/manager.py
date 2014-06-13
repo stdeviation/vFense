@@ -686,8 +686,8 @@ class UserManager(object):
         """Remove a group from a user
         Kwargs:
             group_ids (list): List of group_ids.
-            remove_admin (bool): Wheather to remove the global admin user
-                from this group.
+            remove_admin (bool): Whether to remove the global admin group
+                from this user.
                 default = False
 
         Basic Usage:

@@ -75,9 +75,10 @@ def results_message(fn):
         data = fn(*args, **kwargs)
         status_code = data.get(ApiResultKeys.DB_STATUS_CODE, None)
         generic_status_code = data.get(ApiResultKeys.GENERIC_STATUS_CODE, None)
-        uri = data.get(ApiResultKeys.URI)
-        method = data.get(ApiResultKeys.HTTP_METHOD)
-        username = data.get(ApiResultKeys.USERNAME)
+        tornado_handler = args[0]
+        username = tornado_handler.get_current_user()
+        method = tornado_handler.request.method
+        uri = tornado_handler.request.uri
         status = None
 
 

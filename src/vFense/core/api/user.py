@@ -45,7 +45,7 @@ class UserHandler(BaseHandler):
     def get(self, username):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
         count = 0
         user_data = {}
         try:
@@ -55,14 +55,16 @@ class UserHandler(BaseHandler):
                 )
             )
             if not username or username == active_user:
-                user_data = UserManager(active_user).get_all_attributes()
+                user_data = self.get_user(active_user)
+
             elif username and granted:
-                user_data = UserManager(username).get_all_attributes()
+                user_data = self.get_user(username)
+
             elif username and not granted:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, uri, method
+                        Permissions.ADMINISTRATOR, uri, http_method
                     )
                 )
 
@@ -70,7 +72,7 @@ class UserHandler(BaseHandler):
                 count = 1
                 results = (
                     GenericResults(
-                        active_user, uri, method
+                        active_user, uri, http_method
                     ).information_retrieved(user_data, count)
                 )
             self.set_status(results['http_status'])
@@ -89,17 +91,23 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
+        @results_message
+        def get_user(self, user_name):
+            results = UserManager(user_name).get_all_attributes()
+            return results
+
+
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, username):
-        active_user = self.get_current_user()
+        self.active_user = self.get_current_user()
         active_view = (
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
-        method = self.request.method
-        results = None
+        http_method = self.request.method
+        self.user = UserManager(username)
         try:
             view_context = (
                 self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
@@ -108,38 +116,27 @@ class UserHandler(BaseHandler):
 
             ###Update Groups###
             group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
+            force_remove = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
             if group_ids and isinstance(group_ids, list):
                 if action == ApiValues.ADD:
                     results = (
-                        add_user_to_groups(
-                            username, view_context, group_ids,
-                            username, uri, method
-                        )
+                        add_to_groups(username, view_context, group_ids)
                     )
                 if action == ApiValues.DELETE:
                     results = (
-                        remove_groups_from_user(
-                            username, group_ids,
-                            username, uri, method
-                        )
+                        remove_from_groups(username, group_ids, force_remove)
                     )
             ###Update Views###
             view_names = self.arguments.get('view_names')
             if view_names and isinstance(view_names, list):
                 if action == 'add':
                     results = (
-                        add_user_to_views(
-                            username, view_names,
-                            username, uri, method
-                        )
+                        add_to_views(username, view_names)
                     )
 
                 elif action == 'delete':
                     results = (
-                        remove_views_from_user(
-                            username, view_names,
-                            username, uri, method
-                        )
+                        self.remove_from_views(username, view_names)
                     )
 
             if results:
@@ -150,7 +147,7 @@ class UserHandler(BaseHandler):
             else:
                 results = (
                     GenericResults(
-                        active_user, uri, method
+                        active_user, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -162,12 +159,32 @@ class UserHandler(BaseHandler):
             results = (
                 GenericResults(
                     active_user, uri, method
-                ).something_broke(active_user, 'User', e)
+                ).something_broke(username, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @results_message
+        def add_to_views(self, user_name, views):
+            results = self.user.add_to_views(views)
+            return results
+
+        @results_message
+        def add_to_groups(self, user_name, group_ids):
+            results = self.user.add_to_groups(group_ids)
+            return results
+
+        @results_message
+        def remove_from_views(self, user_name, views):
+            results = self.user.remove_from_views(views)
+            return results
+
+        @results_message
+        def remove_from_groups(self, user_name, group_ids, force):
+            results = self.user.remove_from_groups(group_ids, force)
+            return results
 
 
     @authenticated_request
@@ -175,9 +192,9 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, username):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
-        results = None
+        self.uri = self.request.uri
+        self.method = self.request.method
+        self.manager = UserManager(username)
         try:
             ###Password Changer###
             password = self.arguments.get('password', None)
@@ -260,6 +277,32 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+        @results_message
+        def change_password(self, orig_password, new_password):
+            results = self.manager.change_password(orig_password, new_password)
+            return results
+
+        @results_message
+        def reset_password(self, password):
+            results = self.manager.reset_password(password)
+            return results
+
+        @results_message
+        def change_full_name(self, username, full_name):
+            user = User(username, full_name=full_name)
+            results = self.manager.change_full_name(user)
+            return results
+
+        @results_message
+        def change_email(self, username, email):
+            user = User(username, email=email)
+            results = self.manager.change_email(user)
+            return results
+
+        @results_message
+        def toggle_status(self):
+            results = self.manager.toggle_status()
+            return results
 
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -364,9 +407,9 @@ class UsersHandler(BaseHandler):
         self.active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
+        uri = self.request.uri
+        http_method = self.request.method
         try:
-            self.uri = self.request.uri
-            self.http_method = self.request.method
             self.username = self.arguments.get(ApiArguments.USERNAME)
             self.password = self.arguments.get(ApiArguments.PASSWORD)
             self.fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
@@ -375,12 +418,9 @@ class UsersHandler(BaseHandler):
             self.is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
             self.group_ids = self.arguments.get(ApiArguments.GROUP_IDS)
             self.view_context = (
-                self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
+                self.arguments.get(ApiArguments.VIEW_CONTEXT, self.active_view)
             )
             results = self.create_user()
-            results[ApiResultKeys.URI] = self.uri
-            results[ApiResultKeys.HTTP_METHOD] = self.http_method
-            results[ApiResultKeys.USERNAME] = self.active_user
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -388,8 +428,8 @@ class UsersHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
-                ).something_broke(active_user, 'User', e)
+                    active_user, uri, http_method
+                ).something_broke(self.active_user, 'User', e)
             )
             logger.exception(e)
 
@@ -397,17 +437,17 @@ class UsersHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.CREATE_USER, vFenseObjects.USER)
-    @results_message
-    def create_user(self):
-        user = User(
-            self.username, self.password, self.fullname, self.email,
-            current_view=self.view_context, default_view=self.view_context,
-            enabled=self.enabled, is_global=self.is_global
-        )
-        manager = UserManager(user.name)
-        results = manager.create(user, self.group_ids)
-        return results
+        @log_operation(AdminActions.CREATE_USER, vFenseObjects.USER)
+        @results_message
+        def create_user(self):
+            user = User(
+                self.username, self.password, self.fullname, self.email,
+                current_view=self.view_context, default_view=self.view_context,
+                enabled=self.enabled, is_global=self.is_global
+            )
+            manager = UserManager(user.name)
+            results = manager.create(user, self.group_ids)
+            return results
 
 
     @authenticated_request

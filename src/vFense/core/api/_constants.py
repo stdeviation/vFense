@@ -36,6 +36,7 @@ class ApiArguments():
     OPERATION = 'operation'
     FULL_NAME = 'full_name'
     EMAIL = 'email'
+    FORCE_REMOVE = 'force_remove'
 
 
 class ApiValues():
