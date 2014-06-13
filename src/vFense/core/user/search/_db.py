@@ -70,7 +70,7 @@ class FetchUsers(object):
 
 
     @db_create_close
-    def fetch_all(self, conn=None):
+    def all(self, conn=None):
         """Retrieve a user and all of its properties
             This query is beautiful :)
 
@@ -111,7 +111,7 @@ class FetchUsers(object):
 
 
     @db_create_close
-    def fetch_by_name(self, username, conn=None):
+    def by_name(self, username, conn=None):
         """Retrieve a user and all of its properties
             This query is beautiful :)
 
