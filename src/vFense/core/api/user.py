@@ -119,25 +119,19 @@ class UserHandler(BaseHandler):
             force_remove = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
             if group_ids and isinstance(group_ids, list):
                 if action == ApiValues.ADD:
-                    results = (
-                        add_to_groups(username, view_context, group_ids)
-                    )
+                    results = self.add_to_groups(group_ids)
                 if action == ApiValues.DELETE:
                     results = (
-                        remove_from_groups(username, group_ids, force_remove)
+                        self.remove_from_groups(group_ids, force_remove)
                     )
             ###Update Views###
             view_names = self.arguments.get('view_names')
             if view_names and isinstance(view_names, list):
                 if action == 'add':
-                    results = (
-                        add_to_views(username, view_names)
-                    )
+                    results = self.add_to_views(view_names)
 
                 elif action == 'delete':
-                    results = (
-                        self.remove_from_views(username, view_names)
-                    )
+                    results = self.remove_from_views(view_names)
 
             if results:
                 self.set_status(results['http_status'])
@@ -167,22 +161,22 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         @results_message
-        def add_to_views(self, user_name, views):
+        def add_to_views(self, views):
             results = self.user.add_to_views(views)
             return results
 
         @results_message
-        def add_to_groups(self, user_name, group_ids):
+        def add_to_groups(self, group_ids):
             results = self.user.add_to_groups(group_ids)
             return results
 
         @results_message
-        def remove_from_views(self, user_name, views):
+        def remove_from_views(self, views):
             results = self.user.remove_from_views(views)
             return results
 
         @results_message
-        def remove_from_groups(self, user_name, group_ids, force):
+        def remove_from_groups(self, group_ids, force):
             results = self.user.remove_from_groups(group_ids, force)
             return results
 
@@ -193,7 +187,7 @@ class UserHandler(BaseHandler):
     def put(self, username):
         active_user = self.get_current_user()
         self.uri = self.request.uri
-        self.method = self.request.method
+        self.http_method = self.request.method
         self.manager = UserManager(username)
         try:
             ###Password Changer###
@@ -201,44 +195,31 @@ class UserHandler(BaseHandler):
             new_password = self.arguments.get('new_password', None)
             if password and new_password:
                 results = (
-                    change_password(
-                        username, password, new_password,
-                        username, uri, method
-                    )
+                    self.change_password(password, new_password)
                 )
             ###Update Personal Settings###
-            data_dict = {
-                ApiResultKeys.HTTP_METHOD: method,
-                ApiResultKeys.URI: uri,
-                ApiResultKeys.USERNAME: username
-            }
-
             fullname = self.arguments.get('fullname', None)
             if fullname:
-                data_dict[UserKeys.FullName] = fullname
                 results = (
-                    edit_user_properties(username, **data_dict)
+                    self.change_full_name(username, fullname)
                 )
 
             email = self.arguments.get('email', None)
             if email:
-                data_dict[UserKeys.Email] = email
                 results = (
-                    edit_user_properties(username, **data_dict)
+                    self.change_email(username, email)
                 )
 
             current_view = self.arguments.get('current_view', None)
             if current_view:
-                data_dict[UserKeys.CurrentView] = current_view
                 results = (
-                    edit_user_properties(username, **data_dict)
+                    self.change_current_view(username, current_view)
                 )
 
             default_view = self.arguments.get('default_view', None)
             if default_view:
-                data_dict[UserKeys.DefaultView] = default_view
                 results = (
-                    edit_user_properties(username, **data_dict)
+                    self.change_default_view(username, default_view)
                 )
 
             ###Disable or Enable a User###
@@ -247,7 +228,7 @@ class UserHandler(BaseHandler):
                 enabled.lower()
                 if enabled == 'toggle':
                     results = (
-                        toggle_user_status(username, username, uri, method)
+                        self.toggle_status()
                     )
 
             if results:
@@ -258,7 +239,7 @@ class UserHandler(BaseHandler):
             else:
                 results = (
                     GenericResults(
-                        active_user, uri, method
+                        active_user, self.uri, self.http_method
                     ).incorrect_arguments()
                 )
 
@@ -300,6 +281,18 @@ class UserHandler(BaseHandler):
             return results
 
         @results_message
+        def change_current_view(self, username, view):
+            user = User(username, current_view=view)
+            results = self.manager.change_view(user)
+            return results
+
+        @results_message
+        def change_default_view(self, username, view):
+            user = User(username, default_view=view)
+            results = self.manager.change_view(user)
+            return results
+
+        @results_message
         def toggle_status(self):
             results = self.manager.toggle_status()
             return results
@@ -308,12 +301,11 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, username):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
+        self.uri = self.request.uri
+        self.http_method = self.request.method
+        self.manager = UserManager(username)
         try:
-            results = remove_user(
-                username, active_user, uri, method
-            )
+            results = self.remove_user()
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -321,13 +313,18 @@ class UserHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, self.uri, self.http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @results_message
+        def remove_user(self):
+            results = self.manager.remove()
+            return results
 
 
 class UsersHandler(BaseHandler):
