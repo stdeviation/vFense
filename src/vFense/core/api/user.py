@@ -21,13 +21,9 @@ from vFense.core.operations._constants import vFenseObjects
 
 from vFense.core.user._db_model import UserKeys
 
-from vFense.core.user.manager import UserManager, \
-    get_properties_for_all_users, \
-    remove_user, remove_users, change_password, \
-    edit_user_properties, toggle_user_status
-
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
+from vFense.core.user.search.search import RetrieveUsers
 from vFense.core.view.views import add_user_to_views, \
     remove_views_from_user
 
