@@ -908,6 +908,58 @@ def delete_users_in_group(group_id, usernames, conn=None):
 
     return(data)
 
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_users_in_group_containing_view(usernames, view_name, conn=None):
+    """Remove a group from a user or remove all groups for a user.
+    Args:
+        group_id (str): 36 character group UUID
+        usernames (list): List of the usernames.
+
+    Basic Usage:
+        >>> from vFense.group._db delete_users_in_group_containing_view
+        >>> usernames = ['user names goes here']
+        >>> view_name = 'Foo Bar'
+        >>> delete_users_in_group_containing_view(usernames, view_name)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(usernames)
+            .map(
+                lambda user:
+                r
+                .table(GroupCollections.Groups)
+                .get_all(user, index=GroupIndexes.Users)
+                .filter(
+                    lambda x:
+                    x[GroupKeys.Views].contains(view_name)
+                )
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Users: (
+                            x[GroupKeys.Users].set_difference([user])
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
 @time_it
 @db_create_close
 @return_status_tuple
@@ -951,15 +1003,15 @@ def delete_views_in_group(group_id, views, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_groups_from_view(view, conn=None):
+def delete_all_groups_from_view(view, conn=None):
     """Remove a group from a user or remove all groups for a user.
     Args:
         view (str): Name of view to remove group from.
 
     Basic Usage::
-        >>> from vFense.group._db delete_groups_from_view
+        >>> from vFense.group._db delete_all_groups_from_view
         >>> view = 'Name of view goes here'
-        >>> delete_groups_from_view(view)
+        >>> delete_all_groups_from_view(view)
 
     Return:
         Tuple (status_code, count, error, generated ids)

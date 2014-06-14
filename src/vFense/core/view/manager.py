@@ -2,15 +2,20 @@ from vFense.core.view import View
 from vFense.core.view._constants import DefaultViews
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.user._db import (
-    update_views_for_users, fetch_usernames, delete_users_from_view
+    update_views_for_users, fetch_usernames,
+    delete_users_from_view, delete_view_in_users
 )
+
 from vFense.core.group._db import (
-    fetch_group_ids_for_view, delete_groups_from_view
+    fetch_group_ids_for_view, delete_all_groups_from_view,
+    delete_users_in_group_containing_view
 )
+
 from vFense.core.view._db import (
     fetch_view, insert_view, update_children_for_view, delete_view,
-    delete_users_in_view, update_view
+    delete_users_in_view, update_view, delete_all_users_from_view
 )
+
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
 
@@ -197,8 +202,104 @@ class ViewManager(object):
 
 
     @time_it
+    def remove_users(self, users=None):
+        """remove users from this view.
+
+        Kwargs:
+            users (list): Remove a list of users from this view.
+                default=None (Remove all users from this view)
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.remove_users()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        if users:
+            if not isinstance(users, list):
+                users = users.split()
+        else:
+            users = self.users
+
+        if set(users) == set(self.users):
+            valid_users = True
+
+        elif set(users).issubset(self.users):
+            valid_users = True
+
+        else:
+            valid_users = False
+
+        if view_exist:
+            if users and valid_users:
+                status_code, _, _, _ = delete_users_in_view(users, self.name)
+                delete_view_in_users(self.name, users)
+                delete_users_in_group_containing_view(users, self.name)
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following users: {0} were removed'
+                        .format(', '.join(self.users))
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsRemovedFromUser
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [users]
+
+            elif users and not valid_users:
+                msg = (
+                    'Users %s are not valid for this view %s'%
+                    (', '.join(users), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Users do not exist in this view %s'% (self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    @time_it
     def remove(self, force=False):
-        """Create a new view inside of vFense
+        """Remove this view.
 
         Kwargs:
             force (boolean): Forcefully remove a view, even if users
@@ -227,8 +328,8 @@ class ViewManager(object):
 
                 if object_status == DbCodes.Deleted:
                     if force:
-                        delete_users_from_view(self.name)
-                        delete_groups_from_view(self.name)
+                        delete_all_users_from_view(self.name)
+                        delete_all_groups_from_view(self.name)
                         text = (
                             'View {view_name} deleted' +
                             'and all users: {users} and groups: {groups}' +
@@ -256,7 +357,7 @@ class ViewManager(object):
             else:
                 msg = (
                     'Can not remove view %s, while users: %s'+'exist in view: %s'
-                    % (self.name, users)
+                    % (self.name, self.users)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectUnchanged

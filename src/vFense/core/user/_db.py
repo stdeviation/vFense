@@ -759,7 +759,54 @@ def delete_views_in_user(username, view_names, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_users_from_view(view_name, conn=None):
+def delete_view_in_users(view_name, users, conn=None):
+    """Remove a view from a user or remove all views for a user.
+    Args:
+        view_name (str): Name of the view.
+        users (list): List of users.
+
+    Basic Usage:
+        >>> from vFense.view._db delete_view_in_users
+        >>> view_name = 'Test 1'
+        >>> user_names = ['user 1', 'user 2']
+        >>> delete_view_in_users(view_name, user_names)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(users)
+            .map(
+                lambda user:
+                r
+                .table(UserCollections.Users)
+                .get(user)
+                .update(
+                    {
+                        UserKeys.Views: (
+                            r.row[UserKeys.Views].set_difference([view_name])
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_all_users_from_view(view_name, conn=None):
     """Remove a view from a user or remove all views for a user.
     Args:
         view_name (str): Name of the view.
@@ -782,7 +829,7 @@ def delete_users_from_view(view_name, conn=None):
             .update(
                 {
                     UserKeys.Views: (
-                        r.row[UserKeys.Views].set_difference(view_names)
+                        r.row[UserKeys.Views].set_difference([view_name])
                     )
                 }
             )
@@ -793,4 +840,3 @@ def delete_users_from_view(view_name, conn=None):
         logger.exception(e)
 
     return(data)
-
