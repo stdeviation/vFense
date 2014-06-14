@@ -6,35 +6,44 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CPUThrottleValues
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import authenticated_request, convert_json_to_arguments
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments
+)
 
-from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user, \
-    return_results_for_permissions
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.permissions import (
+    verify_permission_for_user, return_results_for_permissions
+)
 
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user._constants import DefaultUsers
-from vFense.core.agent.agents import change_view_for_all_agents_in_view, \
-    remove_all_agents_for_view
+from vFense.core.agent.agents import (
+    change_view_for_all_agents_in_view, remove_all_agents_for_view
+)
 
+from vFense.core.user._db_model import UserKeys
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view import View
 from vFense.core.view.manager import ViewManager
+from vFense.core.view.search.search import RetrieveViews
 
-from vFense.core.view.views import get_properties_for_view, \
-    get_properties_for_all_views, get_view, remove_view, \
-    remove_views, edit_view, create_view
-
-from vFense.core.user.users import add_users_to_view, \
-    remove_users_from_view
+from vFense.core.operations.decorators import log_operation
+from vFense.core.operations._admin_constants import AdminActions
+from vFense.core.operations._constants import vFenseObjects
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.results import Results
 from vFense.errorz.status_codes import ViewFailureCodes, ViewCodes
-from vFense.plugins.patching.patching import remove_all_apps_for_view, \
-    change_view_for_apps_in_view
+from vFense.plugins.patching.patching import (
+    remove_all_apps_for_view, change_view_for_apps_in_view
+)
+
+from vFense.errorz.status_codes import (
+    UserCodes, UserFailureCodes, GenericCodes,
+    GenericFailureCodes
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -47,24 +56,12 @@ class ViewHandler(BaseHandler):
     def get(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        count = 0
-        view_data = {}
+        http_method = self.request.method
+        user = UserManager(active_user)
+        self.is_global = user.get_attribute(UserKeys.Global)
+        self.current_view = user.get_attribute(UserKeys.CurrentView)
         try:
-            view_data = get_properties_for_view(view_name)
-            if view_data:
-                count = 1
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).information_retrieved(view_data, count)
-                )
-            else:
-                results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).invalid_id(view_name, 'view')
-                )
+            results = self.get_view(view_name)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -72,13 +69,23 @@ class ViewHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @results_message
+        def get_view(self, view):
+            if self.is_global:
+                fetch_views = RetrieveViews()
+            else:
+                fetch_views = RetrieveViews(parent_view=self.current_view)
+
+            results = fetch_views.by_name(views)
+            return results
 
 
     @authenticated_request

@@ -44,8 +44,6 @@ class UserHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        count = 0
-        user_data = {}
         try:
             granted, status_code = (
                 verify_permission_for_user(
@@ -53,10 +51,10 @@ class UserHandler(BaseHandler):
                 )
             )
             if not username or username == active_user:
-                user_data = self.get_user(active_user)
+                results = self.get_user(active_user)
 
             elif username and granted:
-                user_data = self.get_user(username)
+                results = self.get_user(username)
 
             elif username and not granted:
                 results = (
@@ -66,13 +64,6 @@ class UserHandler(BaseHandler):
                     )
                 )
 
-            if user_data:
-                count = 1
-                results = (
-                    GenericResults(
-                        active_user, uri, http_method
-                    ).information_retrieved(user_data, count)
-                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -91,7 +82,8 @@ class UserHandler(BaseHandler):
 
         @results_message
         def get_user(self, user_name):
-            results = UserManager(user_name).get_all_attributes()
+            fetch_users = RetrieveUsers()
+            results = fetch_users.by_name(user_name)
             return results
 
 
