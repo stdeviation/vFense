@@ -18,9 +18,10 @@ class ViewKeys():
 
 class ViewMappedKeys():
     Groups = 'groups'
-    ViewName = 'view_name'
+    UserName = 'user_name'
+    GroupName = 'group_name'
+    GroupId = 'group_id'
 
 
 class ViewIndexes():
     Users = 'users'
-

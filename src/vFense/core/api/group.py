@@ -27,7 +27,7 @@ from vFense.core.user.manager import UserManager
 from vFense.core.group import Group
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group.manager import GroupManager
-from vFense.core.group.search import RetrieveGroups
+from vFense.core.group.search.search import RetrieveGroups
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults

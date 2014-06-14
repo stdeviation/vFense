@@ -18,7 +18,9 @@ from vFense.core.user._constants import DefaultUsers
 from vFense.core.agent.agents import change_view_for_all_agents_in_view, \
     remove_all_agents_for_view
 
-from vFense.core.view._db_model import View, ViewKeys
+from vFense.core.view._db_model import ViewKeys
+from vFense.core.view import View
+from vFense.core.view.manager import ViewManager
 
 from vFense.core.view.views import get_properties_for_view, \
     get_properties_for_all_views, get_view, remove_view, \
@@ -56,13 +58,13 @@ class ViewHandler(BaseHandler):
                     GenericResults(
                         active_user, uri, method
                     ).information_retrieved(view_data, count)
-                ) 
+                )
             else:
                 results = (
                     GenericResults(
                         active_user, uri, method
                     ).invalid_id(view_name, 'view')
-                ) 
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -206,7 +208,7 @@ class ViewHandler(BaseHandler):
                         Results(
                             active_user, uri, method
                         ).invalid_id(**data)
-                    ) 
+                    )
                     self.set_status(results['http_status'])
                     self.set_header('Content-Type', 'application/json')
                     self.write(json.dumps(results, indent=4))
@@ -331,7 +333,7 @@ class ViewsHandler(BaseHandler):
                     GenericResults(
                         active_user, uri, method
                     ).information_retrieved(view_data, count)
-                ) 
+                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
