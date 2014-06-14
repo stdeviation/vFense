@@ -6,7 +6,7 @@ class GroupKeys():
     GroupName = 'group_name'
     Views = 'views'
     Permissions = 'permissions'
-    GroupId = 'id'
+    GroupId = 'group_id'
     Global = 'global'
     Users = 'users'
     Email = 'email'

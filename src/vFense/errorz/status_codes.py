@@ -55,6 +55,8 @@ class GroupCodes(object):
     AddedUsersToGroup = 12008
     PermissionsUpdated = 12009
     PermissionsUnchanged = 12010
+    GroupsDeleted = 12011
+    GroupsUnchanged = 12012
 
 class GroupFailureCodes(object):
     GroupIdExists = 12500
@@ -77,6 +79,7 @@ class GroupFailureCodes(object):
     CantAddUsersToGlobalGroup = 12517
     CantAddLocalUsersToGlobalGroup = 12518
     InvalidValue = 12519
+    FailedToDeleteAllGroups = 12520
 
 
 class UserCodes(object):

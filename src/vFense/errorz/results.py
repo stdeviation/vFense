@@ -1,7 +1,7 @@
-from vFense.errorz._constants import *
-from vFense.errorz.status_codes import *
-
-
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import (
+    GenericCodes, GenericFailureCodes
+)
 
 class Results(object):
     def __init__(self, username, uri, method):
@@ -270,6 +270,7 @@ class Results(object):
     def object_exists(self, **kwargs):
         msg = kwargs.get(ApiResultKeys.MESSAGE, '')
         data = kwargs.get(ApiResultKeys.DATA, [])
+        unchanged_ids = kwargs.get(ApiResultKeys.UNCHANGED_IDS, [])
         status_code = (
             kwargs.get(
                 ApiResultKeys.VFENSE_STATUS_CODE,
@@ -282,7 +283,7 @@ class Results(object):
                 ApiResultKeys.VFENSE_STATUS_CODE: status_code,
                 ApiResultKeys.URI: self.uri,
                 ApiResultKeys.HTTP_METHOD: self.method,
-                ApiResultKeys.UNCHANGED_IDS: object_id,
+                ApiResultKeys.UNCHANGED_IDS: unchanged_ids,
                 ApiResultKeys.MESSAGE: msg,
                 ApiResultKeys.DATA: data,
             }

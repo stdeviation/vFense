@@ -30,10 +30,16 @@ class AdminActions():
     ADD_AGENT_TO_TAG = 'add agent to tag'
     ###REMOVE
     REMOVE_GROUP = 'remove group'
+    REMOVE_GROUPS = 'remove groups'
     REMOVE_VIEW = 'remove view'
+    REMOVE_VIEWS = 'remove views'
     REMOVE_USER = 'remove user'
+    REMOVE_USERS = 'remove users'
     REMOVE_NOTIFICATION = 'remove notification'
     REMOVE_TAG = 'remove tag'
+    REMOVE_TAGS = 'remove tags'
+    REMOVE_AGENT = 'remove agent'
+    REMOVE_AGENTS = 'remove agents'
     ###REMOVE FROM
     REMOVE_VIEW_FROM_GROUP = 'remove view from group'
     REMOVE_VIEW_FROM_USER = 'remove view from group'

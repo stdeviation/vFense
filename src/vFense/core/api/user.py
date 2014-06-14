@@ -358,20 +358,16 @@ class UsersHandler(BaseHandler):
                 )
             )
             if granted and not view_context and not all_views and not user_name:
-                user_data = self.get_users(active_view)
+                results = self.get_users(active_view)
 
             elif granted and view_context and not all_views and not user_name:
-                user_data = self.get_users(view_context)
+                results = self.get_users(view_context)
 
             elif granted and all_views and not view_context and not user_name:
-                user_data = self.get_users()
+                results = self.get_users()
 
             elif granted and user_name and not view_context and not all_views:
-                user_data = UserManager(user_name).get_all_attributes()
-                if user_data:
-                    user_data = [user_data]
-                else:
-                    user_data = []
+                results = self.get_users(username=user_name)
 
             elif view_context and not granted or all_views and not granted:
                 results = (
@@ -388,7 +384,7 @@ class UsersHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'User', e)
             )
             logger.exception(e)
@@ -397,8 +393,8 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         @results_message
-        def get_users(self, view=None):
-            if view:
+        def get_users(self, view=None, username=None):
+            if view and not username:
                 fetch_users = (
                     RetrieveUsers(
                         view, count=self.count, offset=self.offset,
@@ -413,7 +409,10 @@ class UsersHandler(BaseHandler):
                         sort_key=self.sort_by, is_global=self.is_global
                     )
                 )
-            results = fetch_users.all()
+            if not username:
+                results = fetch_users.all()
+            else:
+                results = fetch_users.by_name(username)
 
             return results
 
@@ -424,7 +423,7 @@ class UsersHandler(BaseHandler):
     def post(self):
         self.active_user = self.get_current_user()
         self.active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(self.active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         http_method = self.request.method
@@ -447,7 +446,7 @@ class UsersHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, http_method
+                    self.active_user, uri, http_method
                 ).something_broke(self.active_user, 'User', e)
             )
             logger.exception(e)
@@ -506,9 +505,9 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-        @log_operation(AdminActions.REMOVE_USER, vFenseObjects.USER)
+        @log_operation(AdminActions.REMOVE_USERS, vFenseObjects.USER)
         @results_message
-        def remove_users(self, usernames):
+        def remove_users(self, usernames, force=False):
             end_results = {}
             users_deleted = []
             users_unchanged = []
