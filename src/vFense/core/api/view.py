@@ -94,8 +94,8 @@ class ViewHandler(BaseHandler):
     def post(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        results = None
+        http_method = self.request.method
+        self.user = UserManager(username)
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             ### Add Users to this view
@@ -133,6 +133,31 @@ class ViewHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.USER)
+        @results_message
+        def add_users(self, views):
+            results = self.user.add_users(users)
+            return results
+
+        @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.USER)
+        @results_message
+        def add_groups(self, group_ids):
+            results = self.user.add_groups(group_ids)
+            return results
+
+        @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.USER)
+        @results_message
+        def remove_users(self, users):
+            results = self.view.remove_users(users)
+            return results
+
+        @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.USER)
+        @results_message
+        def remove_groups(self, group_ids, force):
+            results = self.view.remove_groups(group_ids, force)
+            return results
+
 
 
     @authenticated_request
