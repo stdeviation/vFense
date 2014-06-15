@@ -67,8 +67,8 @@ class FetchViews(object):
         Basic Usage:
             >>> from vFense.view.search._db import FetchViews
             >>> view_name = 'global'
-            >>> views = FetchVies(view_name)
-            >>> views.fetch_all()
+            >>> views = FetchViews(view_name)
+            >>> views.all()
 
         Returns:
             Tuple
@@ -132,16 +132,90 @@ class FetchViews(object):
 
         return(count, data)
 
+    @db_create_close
+    def by_name(self, view_name, conn=None):
+        """Retrieve view by view name and all of its properties
+
+        Basic Usage:
+            >>> from vFense.view.search._db import FetchViews
+            >>> view_name = 'global'
+            >>> views = FetchViews()
+            >>> views.by_name(view_name)
+
+        Returns:
+            Tuple
+            (count, group_data)
+        >>>
+        [
+            1,
+            [
+                {
+                    "cpu_throttle": "normal",
+                    "agent_queue_ttl": 10,
+                    "view_name": "global",
+                    "server_queue_ttl": 10,
+                    "package_download_url_base": "https://10.0.0.15/packages/",
+                    "groups": [
+                        {
+                            "group_id": "5695a03a-6abe-4700-a125-276081b6bcd4"
+                            "group_name": "Global Administrator"
+                        },
+                        {
+                            "group_id": "c2d65279-1ae7-4d0c-9ed1-3f469e02d995",
+                            "group_name": "Global Read Only"
+                        }
+                    ],
+                    "net_throttle": 0,
+                    "users": [
+                        {
+                            "user_name": "global_admin"
+                        },
+                        {
+                            "user_name": "global_agent"
+                        }
+                    ]
+                }
+            ]
+        ]
+        """
+        count = 0
+        data = []
+        base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .get_all(name)
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .get_all(name)
+                .coerce_to('array')
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
 
     @db_create_close
-    def by_name(self, name, conn=None):
+    def by_regex(self, name, conn=None):
         """Retrieve views by regex and all of its properties
 
         Basic Usage:
             >>> from vFense.view.search._db import FetchViews
             >>> view_name = 'global'
             >>> views = FetchViews(view_name)
-            >>> views.fetch_by_name("glob")
+            >>> views.by_regex("glob")
 
         Returns:
             Tuple
@@ -213,6 +287,89 @@ class FetchViews(object):
             logger.exception(e)
 
         return(count, data)
+
+
+    @db_create_close
+    def for_user(self, name, conn=None):
+        """Retrieve views for user and all of its properties
+
+        Basic Usage:
+            >>> from vFense.view.search._db import FetchViews
+            >>> user = 'global_admin'
+            >>> views = FetchViews()
+            >>> views.for_user("glob")
+
+        Returns:
+            Tuple
+            (count, group_data)
+        >>>
+        [
+            1,
+            [
+                {
+                    "cpu_throttle": "normal",
+                    "agent_queue_ttl": 10,
+                    "view_name": "global",
+                    "server_queue_ttl": 10,
+                    "package_download_url_base": "https://10.0.0.15/packages/",
+                    "groups": [
+                        {
+                            "group_id": "5695a03a-6abe-4700-a125-276081b6bcd4"
+                            "group_name": "Global Administrator"
+                        },
+                        {
+                            "group_id": "c2d65279-1ae7-4d0c-9ed1-3f469e02d995",
+                            "group_name": "Global Read Only"
+                        }
+                    ],
+                    "net_throttle": 0,
+                    "users": [
+                        {
+                            "user_name": "global_admin"
+                        },
+                        {
+                            "user_name": "global_agent"
+                        }
+                    ]
+                }
+            ]
+        ]
+        """
+        count = 0
+        data = []
+        base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[ViewKeys.Users].contains(name)
+                )
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .filter(
+                    lambda x:
+                    x[ViewKeys.Users].contains(name)
+                )
+                .coerce_to('array')
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
 
     def _set_base_query(self):
         if self.parent_view:

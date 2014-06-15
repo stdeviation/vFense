@@ -56,8 +56,43 @@ class RetrieveViews(object):
 
 
     @time_it
+    def by_regex(self, name):
+        """Query views by regex.
+        Args:
+            name (str): The regex you are searching by
+
+        Basic Usage:
+            >>> from vFense.core.views.search.search import RetrieveViews
+            >>> search_views = RetrieveViews()
+            >>> search_views.by_regex('global')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_views.by_regex(name)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return results
+
+
+    @time_it
     def by_name(self, name):
-        """Query views by view name.
+        """Get view by name.
         Args:
             name (str): The regex you are searching by
 
@@ -101,6 +136,42 @@ class RetrieveViews(object):
         Returns:
         """
         count, data = self.fetch_views.all()
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return results
+
+
+    @time_it
+    def for_user(self, name):
+        """Get all views for a user.
+        Args:
+            name (str): The name of the user of the
+                views you are searching for.
+
+        Basic Usage:
+            >>> from vFense.core.views.search.search import RetrieveViews
+            >>> search_views = RetrieveViews(is_global=True)
+            >>> search_views.for_user('global_admin')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_views.for_user(name)
         generic_status_code = GenericCodes.InformationRetrieved
 
         if count == 0:
