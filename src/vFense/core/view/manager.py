@@ -852,6 +852,7 @@ class ViewManager(object):
                             ViewCodes.ViewUpdated
                         )
                         results[ApiResultKeys.UPDATED_IDS] = [self.name]
+                        results[ApiResultKeys.DATA] = [view_data]
 
                     if status_code == DbCodes.Unchanged:
                         msg = (

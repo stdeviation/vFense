@@ -95,30 +95,33 @@ class ViewHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.user = UserManager(username)
+        self.view = ViewManager(view_name)
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            ### Add Users to this view
-            usernames = self.arguments.get(ApiArguments.USERNAMES)
+            ### Add Users to this view or Remove users from this view
+            usernames = self.arguments.get(ApiArguments.USERNAMES, None)
             if not isinstance(usernames, list) and isinstance(usernames, str):
                 usernames = usernames.split(',')
 
             if usernames:
                 if action == ApiValues.ADD:
-                    results = (
-                        add_users_to_view(
-                            usernames, view_name,
-                            active_user, uri, method
-                        )
-                    )
+                    results = self.add_users(usernames)
 
                 elif action == ApiValues.DELETE:
-                    results = (
-                        remove_users_from_view(
-                            usernames, view_name,
-                            active_user, uri, method
-                        )
-                    )
+                    results = self.remove_users(usernames)
+
+            ### Add groups to this view or Remove groups from this view
+            group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
+            if not isinstance(group_ids, list) and isinstance(group_ids, str):
+                group_ids = group_ids.split(',')
+
+            if group_ids:
+                if action == ApiValues.ADD:
+                    results = self.add_groups(group_ids)
+
+                elif action == ApiValues.DELETE:
+                    results = self.remove_groups(group_ids)
+
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -126,7 +129,7 @@ class ViewHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'Views', e)
             )
             logger.exception(e)
@@ -134,30 +137,29 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.USER)
+        @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
         @results_message
-        def add_users(self, views):
-            results = self.user.add_users(users)
+        def add_users(self, users):
+            results = self.view.add_users(users)
             return results
 
-        @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.USER)
+        @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.VIEW)
         @results_message
         def add_groups(self, group_ids):
-            results = self.user.add_groups(group_ids)
+            results = self.view.add_groups(group_ids)
             return results
 
-        @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.USER)
+        @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.VIEW)
         @results_message
         def remove_users(self, users):
             results = self.view.remove_users(users)
             return results
 
-        @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.USER)
+        @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.VIEW)
         @results_message
-        def remove_groups(self, group_ids, force):
-            results = self.view.remove_groups(group_ids, force)
+        def remove_groups(self, group_ids):
+            results = self.view.remove_groups(group_ids)
             return results
-
 
 
     @authenticated_request
@@ -166,8 +168,10 @@ class ViewHandler(BaseHandler):
     def put(self, view_name):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
-        results = None
+        http_method = self.request.method
+        self.view_name = view_name
+        results = {}
+        data = []
         try:
             net_throttle = self.arguments.get(ApiArguments.NET_THROTTLE, None)
             cpu_throttle = self.arguments.get(ApiArguments.CPU_THROTTLE, None)
@@ -175,22 +179,32 @@ class ViewHandler(BaseHandler):
             agent_queue_ttl = self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, None)
             download_url = self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
 
-            view = View(
-                view_name,
-                net_throttle,
-                cpu_throttle,
-                server_queue_ttl,
-                agent_queue_ttl,
-                download_url
-            )
+            if net_throttle:
+                results = self.edit_net_throttle(net_throttle)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
 
-            call_info = {
-                ApiResultKeys.HTTP_METHOD: method,
-                ApiResultKeys.URI: uri,
-                ApiResultKeys.USERNAME: active_user,
-            }
+            if cpu_throttle:
+                results = self.edit_cpu_throttle(cpu_throttle)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
 
-            results = edit_view(view, **call_info)
+            if server_queue_ttl:
+                results = self.edit_server_queue_ttl(server_queue_ttl)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
+
+            if agent_queue_ttl:
+                results = self.edit_agent_queue_ttl(agent_queue_ttl)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
+
+            if download_url:
+                results = self.edit_download_url(download_url)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
+
+            results[ApiResultKeys.DATA] = data
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -199,13 +213,60 @@ class ViewHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
+                    active_user, uri, http_method
                 ).something_broke(active_user, 'Views', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
+        @results_message
+        def edit_net_throttle(self, net_throttle):
+            view = ViewManager(self.view_name, net_throttle=net_throttle)
+            results = self.view.edit_net_throttle(view)
+            return results
+
+        @log_operation(AdminActions.EDIT_CPU_THROTTLE, vFenseObjects.VIEW)
+        @results_message
+        def edit_cpu_throttle(self, cpu_throttle):
+            view = ViewManager(self.view_name, cpu_throttle=cpu_throttle)
+            results = self.view.edit_cpu_throttle(view)
+            return results
+
+        @log_operation(AdminActions.EDIT_SERVER_QUEUE_TTL, vFenseObjects.VIEW)
+        @results_message
+        def edit_server_queue_ttl(self, server_queue_ttl):
+            view = (
+                ViewManager(
+                    self.view_name, server_queue_ttl=server_queue_ttl
+                )
+            )
+            results = self.view.edit_server_queue_ttl(view)
+            return results
+
+        @log_operation(AdminActions.EDIT_AGENT_QUEUE_TTL, vFenseObjects.VIEW)
+        @results_message
+        def edit_agent_queue_ttl(self, agent_queue_ttl):
+            view = (
+                ViewManager(
+                    self.view_name, agent_queue_ttl=agent_queue_ttl
+                )
+            )
+            results = self.view.edit_agent_queue_ttl(view)
+            return results
+
+        @log_operation(AdminActions.EDIT_DOWNLOAD_URL, vFenseObjects.VIEW)
+        @results_message
+        def edit_download_url(self, package_download_url):
+            view = (
+                ViewManager(
+                    self.view_name, package_download_url=package_download_url
+                )
+            )
+            results = self.view.edit_download_url(view)
+            return results
 
 
     @authenticated_request
