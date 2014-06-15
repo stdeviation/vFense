@@ -417,42 +417,32 @@ class ViewsHandler(BaseHandler):
     def post(self):
         active_user = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
+        active_view = user.get_attribute(UserKeys.CurrentView)
         try:
-            view_name = (
+            self.parent_view = self.get_argument('view_context', active_view)
+            self.view_name = (
                 self.arguments.get(ApiArguments.VIEW_NAME)
             )
-            pkg_url = (
+            self.pkg_url = (
                 self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
             )
-            net_throttle = (
+            self.net_throttle = (
                 self.arguments.get(ApiArguments.NET_THROTTLE, 0)
             )
-            cpu_throttle = (
+            self.cpu_throttle = (
                 self.arguments.get(
                     ApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
                 )
             )
-            server_queue_ttl = (
+            self.server_queue_ttl = (
                 self.arguments.get(ApiArguments.SERVER_QUEUE_TTL, 10)
             )
-            agent_queue_ttl = (
+            self.agent_queue_ttl = (
                 self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
             )
 
-            view = View(
-                view_name,
-                net_throttle,
-                cpu_throttle,
-                server_queue_ttl,
-                agent_queue_ttl,
-                pkg_url
-            )
-
-            results = create_view(
-                view, active_user,
-                user_name=active_user, uri=uri, method=method
-            )
+            results = self.create_view()
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -461,13 +451,29 @@ class ViewsHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    active_user, uri, method
-                ).something_broke(active_user, 'User', e)
+                    active_user, uri, http_method
+                ).something_broke(self.active_user, 'User', e)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
+        @results_message
+        def create_view(self):
+            view = View(
+                self.view_name, self.parent_view,
+                users=[self.active_users],
+                net_throttle=self.net_throttle,
+                cpu_throttle=self.cpu_throttle,
+                server_queue_ttl=self.server_queue_ttl,
+                agent_queue_ttl=self.agent_queue_ttl,
+                package_download_url=self.pkg_url
+            )
+            manager = ViewManager(view.name)
+            results = manager.create(view)
+            return results
 
 
     @authenticated_request
@@ -511,4 +517,62 @@ class ViewsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+        @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEWS)
+        @results_message
+        def remove_views(self, view_names):
+            end_results = {}
+            views_deleted = []
+            views_unchanged = []
+            for view_name in view_names:
+                manager = ViewManager(username)
+                results = manager.remove()
+                if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                        == ViewCodes.Deleted):
+                    views_deleted.append(view_name)
+                else:
+                    views_unchanged.append(view_name)
+
+            end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
+            end_results[ApiResultKeys.DELETED_IDS] = views_deleted
+            if views_unchanged and views_deleted:
+                msg = (
+                    'view names deleted: %s, view names unchanged: %s'
+                    % (', '.join(views_deleted), ', '.join(views_unchanged))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToDeleteAllObjects
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.FailedToDeleteAllViews
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            elif views_deleted and not views_unchanged:
+                msg = (
+                    'view names deleted: %s'
+                    % (', '.join(views_deleted))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectsDeleted
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewCodes.ViewsDeleted
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            elif views_unchanged and not views_deleted:
+                msg = (
+                    'view names unchanged: %s'
+                    % (', '.join(views_unchanged))
+                )
+                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectsUnchanged
+                )
+                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewCodes.ViewsUnchanged
+                )
+                end_results[ApiResultKeys.MESSAGE] = msg
+
+            return end_results
 

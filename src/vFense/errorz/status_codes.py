@@ -127,6 +127,8 @@ class ViewCodes(object):
     ViewsRemovedFromUser = 14005
     ViewsAddedToGroup = 14006
     ViewsRemovedFromGroup = 14007
+    ViewsUnchanged = 14008
+    ViewsDeleted = 14009
 
 
 class ViewFailureCodes(object):
@@ -148,6 +150,7 @@ class ViewFailureCodes(object):
     InvalidFields = 124514
     InvalidValue = 124515
     GroupsDoNotExistInThisView = 124516
+    FailedToDeleteAllViews = 124517
 
 
 class DbCodes(object):
