@@ -14,7 +14,7 @@ from vFense.core.group._db import (
 from vFense.core.group._constants import DefaultGroups
 
 from vFense.core.view._db import (
-    delete_user_in_views, fetch_views_for_user, fetch_view,
+    delete_user_in_views, fetch_view,
     fetch_all_view_names, update_usernames_for_views
 )
 
@@ -1117,9 +1117,7 @@ class UserManager(object):
         results = {}
         results[ApiResultKeys.DATA] = []
         view = None
-        views_in_db = (
-            fetch_views_for_user(self.username)
-        )
+        views_in_db = user_exist[UserKeys.Views]
         data = user.to_dict_non_null()
         data.pop(UserKeys.UserName, None)
         data.pop(UserKeys.Password, None)

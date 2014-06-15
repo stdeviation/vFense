@@ -626,11 +626,12 @@ def update_views_for_users(usernames, views, conn=None):
                 lambda x:
                 r
                 .table(UserCollections.Users)
-                .get(x)
+                .get_all(x)
                 .update(
+                    lambda y:
                     {
                         UserKeys.Views: (
-                            r.row[UserKeys.Views].set_union(views)
+                            y[UserKeys.Views].set_union(views)
                         )
                     }
                 )
@@ -780,15 +781,16 @@ def delete_view_in_users(view_name, users, conn=None):
         data = (
             r
             .expr(users)
-            .map(
+            .for_each(
                 lambda user:
                 r
                 .table(UserCollections.Users)
-                .get(user)
+                .get_all(user)
                 .update(
+                    lambda y:
                     {
                         UserKeys.Views: (
-                            r.row[UserKeys.Views].set_difference([view_name])
+                            y[UserKeys.Views].set_difference([view_name])
                         )
                     }
                 )

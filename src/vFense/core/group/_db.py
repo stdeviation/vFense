@@ -261,7 +261,7 @@ def fetch_group_ids_for_view(view_name, conn=None):
         >>> fetch_group_ids_for_view(view_name)
 
     Returns:
-        Returns a List of users for a view
+        Returns a List of group_ids for a view
     """
     data = []
     try:
@@ -272,11 +272,9 @@ def fetch_group_ids_for_view(view_name, conn=None):
                 view_name,
                 index=GroupIndexes.Views
             )
-            .pluck(GroupKeys.Views)
+            .map(lambda x: x[GroupKeys.GroupId])
             .run(conn)
         )
-        if data:
-            data = data.get(GroupKey.Views)
 
     except Exception as e:
         logger.exception(e)
@@ -933,7 +931,7 @@ def delete_users_in_group_containing_view(usernames, view_name, conn=None):
         data = (
             r
             .expr(usernames)
-            .map(
+            .for_each(
                 lambda user:
                 r
                 .table(GroupCollections.Groups)
@@ -1027,7 +1025,7 @@ def delete_all_groups_from_view(view, conn=None):
                 lambda x:
                 {
                     GroupKeys.Views: (
-                        x[GroupKeys.Views].set_difference(views)
+                        x[GroupKeys.Views].set_difference([view])
                     )
                 }
             )
@@ -1040,8 +1038,51 @@ def delete_all_groups_from_view(view, conn=None):
     return(data)
 
 
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_groups_from_view(group_ids, view, conn=None):
+    """Remove a view from a list of group ids.
+    Args:
+        group_ids (list): List of group_ids to remove from view.
+        view (str): Name of view to remove group from.
 
+    Basic Usage::
+        >>> from vFense.group._db delete_groups_from_view
+        >>> view = 'Name of view goes here'
+        >>> group_ids ['id1', 'id2']
+        >>> delete_groups_from_view(group_ids, view)
 
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .expr(group_ids)
+            .for_each(
+                lambda group_id:
+                r
+                .table(GroupCollections.Groups)
+                .get_all(group_id)
+                .update(
+                    lambda x:
+                    {
+                        GroupKeys.Views: (
+                            x[GroupKeys.Views].set_difference([view])
+                        )
+                    }
+                )
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
 
 @time_it
 @db_create_close

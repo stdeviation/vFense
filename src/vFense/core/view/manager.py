@@ -3,17 +3,20 @@ from vFense.core.view._constants import DefaultViews
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.user._db import (
     update_views_for_users, fetch_usernames,
-    delete_users_from_view, delete_view_in_users
+    delete_all_users_from_view, delete_view_in_users
 )
+from vFense.core.user.users import validate_users
+from vFense.core.group.groups import validate_groups
 
 from vFense.core.group._db import (
     fetch_group_ids_for_view, delete_all_groups_from_view,
-    delete_users_in_group_containing_view
+    delete_users_in_group_containing_view, delete_groups_from_view,
+    add_views_to_groups
 )
 
 from vFense.core.view._db import (
     fetch_view, insert_view, update_children_for_view, delete_view,
-    delete_users_in_view, update_view, delete_all_users_from_view
+    delete_users_in_view, update_view, update_usernames_for_view
 )
 
 from vFense.core.decorators import time_it
@@ -200,6 +203,228 @@ class ViewManager(object):
 
         return results
 
+    @time_it
+    def add_users(self, users):
+        """Add users to this view.
+
+        Args:
+            users (list): Add a list of users too this view.
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> users = ['foo', 'man', bar']
+            >>> manager = ViewManager(view.name)
+            >>> manager.add_users()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        users_exist = []
+        if not isinstance(users, list):
+            users = users.split()
+
+        if set(users) == set(self.users):
+            users_exist_in_view = True
+            users_exist = list(set(users).intersection(self.users))
+
+        elif set(users).issubset(self.users):
+            users_exist_in_view = True
+            users_exist = list(set(users).intersection(self.users))
+
+        else:
+            users_exist_in_view = False
+
+        valid_users, _, invalid_users = validate_users(users)
+
+        if view_exist:
+            if users and valid_users and not users_exist_in_view:
+                status_code, _, _, _ = (
+                    update_usernames_for_view(users, self.name)
+                )
+                update_views_for_users(users, [self.name])
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following users: {0} were added to view {1}'
+                        .format(', '.join(users), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsAddedToUser
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif users and invalid_users:
+                msg = (
+                    'Users {0} are not valid for this view {1}'
+                    .format(', '.join(invalid_users), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            elif users and users_exist_in_view:
+                msg = (
+                    'Users {0} already exist in this view {1}'
+                    .format(', '.join(users_exist), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Users do not exist in this view {0}'.format(self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View {0} does not exists'.format(self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+    @time_it
+    def add_groups(self, groups):
+        """Add groups to this view.
+
+        Args:
+            groups (list): List of group ids you want to add to this view.
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> groups = ['foo', 'man', bar']
+            >>> manager = ViewManager(view.name)
+            >>> manager.add_groups()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        groups_exist = []
+        if not isinstance(groups, list):
+            groups = groups.split()
+
+        if set(groups) == set(self.groups):
+            groups_exist_in_view = True
+            groups_exist = list(set(groups).intersection(self.groups))
+
+        elif set(groups).issubset(self.groups):
+            groups_exist_in_view = True
+            groups_exist = list(set(groups).intersection(self.groups))
+
+        else:
+            groups_exist_in_view = False
+
+        valid_groups, _, invalid_groups = validate_groups(groups)
+
+        if view_exist:
+            if groups and valid_groups and not groups_exist_in_view:
+                status_code, _, _, _ = (
+                    add_views_to_groups(groups, [self.name])
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following groups: {0} were added to view {1}'
+                        .format(', '.join(groups), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsAddedToGroup
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif groups and invalid_groups:
+                msg = (
+                    'Groups {0} are not valid for this view {1}'
+                    .format(', '.join(invalid_groups), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            elif groups and groups_exist_in_view:
+                msg = (
+                    'Groups {0} already exist in this view {1}'
+                    .format(', '.join(groups_exist), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Groups do not exist in this view {0}'.format(self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View {0} does not exists'.format(self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
 
     @time_it
     def remove_users(self, users=None):
@@ -244,8 +469,8 @@ class ViewManager(object):
                 delete_users_in_group_containing_view(users, self.name)
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following users: {0} were removed'
-                        .format(', '.join(self.users))
+                        'The following users: {0} were removed from view {1}'
+                        .format(', '.join(users), self.name)
                     )
 
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -255,7 +480,7 @@ class ViewManager(object):
                         ViewCodes.ViewsRemovedFromUser
                     )
                     results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UPDATED_IDS] = [users]
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
 
             elif users and not valid_users:
                 msg = (
@@ -280,6 +505,102 @@ class ViewManager(object):
                 )
                 results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                     ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    @time_it
+    def remove_groups(self, groups=None):
+        """remove groups from this view.
+
+        Kwargs:
+            groups (list): Remove a list of groups from this view.
+                default=None (Remove all groups from this view)
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.remove_users()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        if groups:
+            if not isinstance(groups, list):
+                groups = groups.split()
+        else:
+            groups = self.groups
+
+        if set(groups) == set(self.groups):
+            valid_groups = True
+
+        elif set(groups).issubset(self.groups):
+            valid_groups = True
+
+        else:
+            valid_groups = False
+
+        if view_exist:
+            if groups and valid_groups:
+                status_code, _, _, _ = (
+                    delete_groups_from_view(groups, self.name)
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following groups: {0} were removed from view {1}'
+                        .format(', '.join(groups), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsRemovedFromGroup
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif groups and not valid_groups:
+                msg = (
+                    'Groups %s are not valid for this view %s'%
+                    (', '.join(groups), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.UsersDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Groups do not exist in this view %s'% (self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.GroupsDoNotExistInThisView
                 )
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.UNCHANGED_IDS] = [self.name]

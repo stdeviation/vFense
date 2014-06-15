@@ -147,6 +147,7 @@ class ViewFailureCodes(object):
     InvalidAgentQueueThrottle = 124513
     InvalidFields = 124514
     InvalidValue = 124515
+    GroupsDoNotExistInThisView = 124516
 
 
 class DbCodes(object):

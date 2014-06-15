@@ -477,6 +477,46 @@ def delete_views(view_names, conn=None):
 
     return(data)
 
+@time_it
+@db_create_close
+@return_status_tuple
+def update_usernames_for_view(usernames, view, conn=None):
+    """Update the usernames for views
+    Args:
+        usernames (list): List of usernames that you are updating
+        view (str): The name of the view, you are adding the users too.
+
+    Basic Usage::
+        >>> from vFense.user._db import update_usernames_for_views
+        >>> usernames = ['admin', 'shaolin']
+        >>> views = 'foo'
+        >>> update_usernames_for_views(views, usernames)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .get(view)
+            .update(
+                lambda y:
+                {
+                    ViewKeys.Users: (
+                        y[ViewKeys.Users].set_union(usernames)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
 
 @time_it
 @db_create_close

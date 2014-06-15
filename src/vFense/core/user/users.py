@@ -48,7 +48,6 @@ def validate_user_names(user_names, is_global=False):
         Tuple (Boolean, [valid_user_names], [invalid_user_names])
         (True, ['tester1', 'tester2'], [])
     """
-    validated = False
     invalid_user_names = []
     valid_user_names = []
     if isinstance(user_names, list):
@@ -57,12 +56,15 @@ def validate_user_names(user_names, is_global=False):
             if user:
                 if user[UserKeys.Global] == is_global:
                     valid_user_names.append(user_name)
-                    validated = True
                 else:
                     invalid_user_names.append(user_name)
             else:
                 invalid_user_names.append(user_name)
-                validated = False
+
+    if invalid_user_names:
+        validated = False
+    elif valid_user_names and not invalid_user_names:
+        validated = True
 
     return(validated, valid_user_names, invalid_user_names)
 
@@ -103,3 +105,37 @@ def validate_users_in_views(usernames, views):
                 invalid_users.append(user)
 
     return(invalid_users, valid_global_users, valid_local_users)
+
+
+@time_it
+def validate_users(user_names):
+    """Validate a list of user names exist in the database.
+    Args:
+        user_names (list): List of user names
+
+    Basic Usage:
+        >>> from vFense.group.groups import validate_users
+        >>> user_names = ['tester1', 'tester2']
+        >>> validate_users(user_names)
+
+    Return:
+        Tuple (Boolean, [valid_user_names], [invalid_user_names])
+        (True, ['tester1', 'tester2'], [])
+    """
+    invalid_user_names = []
+    valid_user_names = []
+    if isinstance(user_names, list):
+        for user_name in user_names:
+            user = fetch_user(user_name)
+            if user:
+                valid_user_names.append(user_name)
+            else:
+                invalid_user_names.append(user_name)
+
+    if invalid_user_names:
+        validated = False
+    elif valid_user_names and not invalid_user_names:
+        validated = True
+
+    return(validated, valid_user_names, invalid_user_names)
+

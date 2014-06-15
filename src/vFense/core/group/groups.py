@@ -97,3 +97,36 @@ def validate_groups_in_views(group_ids, views):
                 invalid_groups.append(group_id)
 
     return(invalid_groups, valid_global_groups, valid_local_groups)
+
+@time_it
+def validate_groups(group_ids):
+    """Validate a list of group ids.
+    Args:
+        group_ids (list): List of group ids.
+
+    Basic Usage:
+        >>> from vFense.group.groups import validate_groups_in_views
+        >>> group_ids = ['tester1', 'tester2']
+        >>> validate_groups(group_ids)
+
+    Returns:
+        Tuple
+        >>>(True, [valid_group_ids], [invalid_group_ids])
+    """
+    invalid_groups = []
+    valid_groups = []
+    if isinstance(group_ids, list):
+        for group_id in group_ids:
+            group_data = fetch_group(group_id)
+            if group_data:
+                valid_groups.append(group_id)
+            else:
+                invalid_groups.append(group_id)
+
+    if valid_groups and not invalid_groups:
+        validated = True
+
+    elif invalid_groups:
+        validated = False
+
+    return(validated, valid_groups, invalid_groups)

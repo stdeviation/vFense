@@ -218,13 +218,50 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
         self.failUnless(status_code == UserCodes.UserCreated)
 
 
-    def test_d_add_to_view1(self):
+    def test_d_1__add_to_view1(self):
         manager = UserManager('tester1')
         results = manager.add_to_views(['Test View 2'])
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == ViewCodes.ViewsAddedToUser)
 
+    def test_d_2_remove_from_view1(self):
+        manager = ViewManager('Test View 2')
+        results = manager.remove_users(['tester1'])
+        print dumps(results, indent=4), 'SHAOLIN ALLEN'
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewsRemovedFromUser)
+
+    def test_d_3_add_to_view1(self):
+        manager = ViewManager('Test View 2')
+        results = manager.add_users(['tester1'])
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewsAddedToUser)
+
+    def test_d_4_add_to_group1(self):
+        group_id = (
+            fetch_group_by_name(
+                'Tester 3', 'Test View 2'
+            ).get(GroupKeys.GroupId)
+        )
+        manager = ViewManager('Test View 1')
+        results = manager.add_groups([group_id])
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewsAddedToGroup)
+
+    def test_d_5_remove_from_group1(self):
+        group_id = (
+            fetch_group_by_name(
+                'Tester 3', 'Test View 1',
+            ).get(GroupKeys.GroupId)
+        )
+        manager = ViewManager('Test View 1')
+        results = manager.remove_groups([group_id])
+        print dumps(results, indent=4), ' Foo Bar'
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == ViewCodes.ViewsRemovedFromGroup)
 
     def test_e_add_to_group1(self):
         group_id = (
