@@ -74,7 +74,42 @@ class RetrieveUsers(object):
 
     @time_it
     def by_name(self, name):
-        """Query users by username.
+        """Retrieve user by username.
+        Args:
+            name (str): The name of the user you are retrieving.
+
+        Basic Usage:
+            >>> from vFense.core.user.search.search import RetrieveUsers
+            >>> search_users = RetrieveUsers(view_name='global')
+            >>> search_users.by_name('global')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_users.by_name(name)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return results
+
+
+    @time_it
+    def by_regex(self, name):
+        """Query users by regex on a username.
         Args:
             name (str): The regex you are searching by
 
@@ -86,7 +121,7 @@ class RetrieveUsers(object):
         Returns:
             List of dictionairies.
         """
-        count, data = self.fetch_users.by_name(name)
+        count, data = self.fetch_users.by_regex(name)
         generic_status_code = GenericCodes.InformationRetrieved
 
         if count == 0:

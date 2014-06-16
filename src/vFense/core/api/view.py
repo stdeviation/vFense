@@ -34,15 +34,13 @@ from vFense.core.operations._constants import vFenseObjects
 
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.results import Results
 from vFense.errorz.status_codes import ViewFailureCodes, ViewCodes
 from vFense.plugins.patching.patching import (
     remove_all_apps_for_view, change_view_for_apps_in_view
 )
 
 from vFense.errorz.status_codes import (
-    UserCodes, GenericCodes,
-    GenericFailureCodes
+    GenericCodes, GenericFailureCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -525,7 +523,7 @@ class ViewsHandler(BaseHandler):
             views_deleted = []
             views_unchanged = []
             for view_name in view_names:
-                manager = ViewManager(username)
+                manager = ViewManager(view_name)
                 results = manager.remove()
                 if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                         == ViewCodes.Deleted):

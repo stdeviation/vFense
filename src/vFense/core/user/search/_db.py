@@ -15,7 +15,7 @@ from vFense.core.group._db_model import (
 )
 
 from vFense.core.view._db_model import (
-    ViewCollections, ViewKeys, ViewIndexes, ViewMappedKeys
+    ViewKeys
 )
 
 from vFense.core.permissions._constants import (
@@ -109,14 +109,14 @@ class FetchUsers(object):
 
 
     @db_create_close
-    def by_name(self, username, conn=None):
+    def by_regex(self, username, conn=None):
         """Retrieve users by regex and all of its properties
 
         Basic Usage:
             >>> from vFense.user.search._db import FetchUsers
             >>> view_name = 'global'
             >>> users = FetchUsers(view_name)
-            >>> users.fetch_by_name("glob")
+            >>> users.fetch_by_regex("glob")
 
         Returns:
             List of users and their properties.
@@ -142,6 +142,52 @@ class FetchUsers(object):
                 .filter(
                     lambda x:
                     x[UserKeys.UserName].match("(?i)^"+username)
+                )
+                .coerce_to('array')
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_name(self, username, conn=None):
+        """Retrieve user by name and all of its properties
+
+        Basic Usage:
+            >>> from vFense.user.search._db import FetchUsers
+            >>> view_name = 'global'
+            >>> users = FetchUsers(view_name)
+            >>> users.fetch_by_name("global_admin")
+
+        Returns:
+            List of users and their properties.
+        """
+        count = 0
+        data = []
+        base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .filter(
+                    {UserKeys.UserName: username}
+                )
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .filter(
+                    {UserKeys.UserName: username}
                 )
                 .coerce_to('array')
                 .order_by(self.sort(self.sort_key))
@@ -240,7 +286,7 @@ class FetchUsers(object):
                                 True
                                 )
                             ),
-                            ViewMappedKeys.ViewName: y
+                            ViewKeys.ViewName: y
                         }
                     )
                 )

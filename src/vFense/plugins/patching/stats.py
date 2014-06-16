@@ -6,16 +6,16 @@ from datetime import datetime, timedelta
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import CommonKeys
-from vFense.core.decorators import results_message, time_it
+from vFense.core.decorators import time_it
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.plugins.patching._db_stats import (
-    group_avail_app_stats_by_os_for_customer,
+    group_avail_app_stats_by_os_for_view,
     group_avail_app_stats_by_os_for_tag, fetch_bar_chart_for_appid_by_status,
     fetch_severity_bar_chart_stats_for_agent,
     fetch_severity_bar_chart_stats_for_tag,
-    fetch_top_apps_needed_for_customer, fetch_os_apps_history,
-    fetch_recently_released_apps, fetch_severity_bar_chart_stats_for_customer,
+    fetch_top_apps_needed_for_view, fetch_os_apps_history,
+    fetch_recently_released_apps, fetch_severity_bar_chart_stats_for_view,
     fetch_os_apps_history_for_agent, fetch_os_apps_history_for_tag
 )
 from vFense.errorz.error_messages import GenericResults
@@ -26,15 +26,14 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-@results_message
-def customer_stats_by_os(
-        customer_name, count=3,
+def view_stats_by_os(
+        view_name, count=3,
         username=None, uri=None, method=None
     ):
     """Retrieve an array of the total count of update available, grouped by
-        operating system for a customer.
+        operating system for a view.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         count (int, optional): The number of results to return.
@@ -44,8 +43,8 @@ def customer_stats_by_os(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_customer
-        >>> group_avail_app_stats_by_os_for_customer('default')
+        >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_view
+        >>> group_avail_app_stats_by_os_for_view('default')
 
     Returns:
         >>>
@@ -64,7 +63,7 @@ def customer_stats_by_os(
             ]
         }
     """
-    data = group_avail_app_stats_by_os_for_customer(customer_name, count)
+    data = group_avail_app_stats_by_os_for_view(view_name, count)
     results = {
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
@@ -78,7 +77,6 @@ def customer_stats_by_os(
 
 
 @time_it
-@results_message
 def tag_stats_by_os(
         tag_id, count=3,
         username=None, uri=None, method=None
@@ -132,15 +130,14 @@ def tag_stats_by_os(
 
 
 @time_it
-@results_message
 def bar_chart_for_appid_by_status(
-        app_id, customer_name,
+        app_id, view_name,
         username=None, uri=None, method=None
     ):
     """Retrieve application stats for a tag and group it by the os string.
     Args:
         app_id (str): The 64 character hex digest of the app.
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         username (str): The name of the user who called this function.
@@ -150,7 +147,7 @@ def bar_chart_for_appid_by_status(
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import bar_chart_for_appid_by_status
         >>> app_id = 'aa565bb450cc7c15d6a7dbf177c31a1c6f5245e70b8014ffe5d098f85342d4fb'
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> bar_chart_for_appid_by_status(tag_id, count)
 
     Returns:
@@ -169,7 +166,7 @@ def bar_chart_for_appid_by_status(
         }
     """
     statuses = ['installed', 'available']
-    data = fetch_bar_chart_for_appid_by_status(app_id, customer_name)
+    data = fetch_bar_chart_for_appid_by_status(app_id, view_name)
     for status in statuses:
         if status not in data.keys():
             data[status] = 0
@@ -188,14 +185,13 @@ def bar_chart_for_appid_by_status(
 
 
 @time_it
-@results_message
-def get_severity_bar_chart_stats_for_customer(
-        customer_name, username=None,
+def get_severity_bar_chart_stats_for_view(
+        view_name, username=None,
         uri=None, method=None
     ):
     """Retrieve the number of available updates by severity.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         username (str): The name of the user who called this function.
@@ -203,9 +199,9 @@ def get_severity_bar_chart_stats_for_customer(
         method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
-        >>> from vFense.plugins.patching._db_stats import get_severity_bar_chart_stats_for_customer
-        >>> customer_name = 'default'
-        >>> get_severity_bar_chart_stats_for_customer(customer_name)
+        >>> from vFense.plugins.patching._db_stats import get_severity_bar_chart_stats_for_view
+        >>> view_name = 'default'
+        >>> get_severity_bar_chart_stats_for_view(view_name)
 
     Returns:
         List of dictionaries.
@@ -234,7 +230,7 @@ def get_severity_bar_chart_stats_for_customer(
         }
     """
 
-    data = fetch_severity_bar_chart_stats_for_customer(customer_name)
+    data = fetch_severity_bar_chart_stats_for_view(view_name)
 
     results = {
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
@@ -250,7 +246,6 @@ def get_severity_bar_chart_stats_for_customer(
 
 
 @time_it
-@results_message
 def get_severity_bar_chart_stats_for_agent(
         agent_id, username=None,
         uri=None, method=None
@@ -311,7 +306,6 @@ def get_severity_bar_chart_stats_for_agent(
 
 
 @time_it
-@results_message
 def get_severity_bar_chart_stats_for_tag(
         tag_id, username=None,
         uri=None, method=None
@@ -373,15 +367,14 @@ def get_severity_bar_chart_stats_for_tag(
 
 
 @time_it
-@results_message
 def top_packages_needed(
-        customer_name, count=5,
+        view_name, count=5,
         username=None, uri=None, method=None
     ):
     """Retrieve the top number of updates needed across
         all agents.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         count (int, optional): Limit how many results show.
@@ -392,9 +385,9 @@ def top_packages_needed(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import top_packages_needed
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> count = 3
-        >>> top_packages_needed(customer_name, count)
+        >>> top_packages_needed(view_name, count)
 
     Returns:
         List of dictionaries.
@@ -432,7 +425,7 @@ def top_packages_needed(
         }
     """
 
-    data = fetch_top_apps_needed_for_customer(customer_name, count)
+    data = fetch_top_apps_needed_for_view(view_name, count)
 
     results = {
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
@@ -448,14 +441,13 @@ def top_packages_needed(
 
 
 @time_it
-@results_message
 def recently_released_packages(
-        customer_name, count=5,
+        view_name, count=5,
         username=None, uri=None, method=None
     ):
     """Retrieve the most recently released updates
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
 
     Kwargs:
         count (int, optional): Limit how many results show.
@@ -466,9 +458,9 @@ def recently_released_packages(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import recently_released_packages
-        >>> customer_name = 'default'
+        >>> view_name = 'default'
         >>> count = 3
-        >>> recently_released_packages(customer_name, count)
+        >>> recently_released_packages(view_name, count)
 
     Returns:
         List of dictionaries.
@@ -505,7 +497,7 @@ def recently_released_packages(
             ]
         }
     """
-    data = fetch_recently_released_apps(customer_name, count)
+    data = fetch_recently_released_apps(view_name, count)
 
     results = {
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
@@ -521,15 +513,14 @@ def recently_released_packages(
 
 
 @time_it
-@results_message
 def get_os_apps_history(
-        customer_name, status, start_date=None, end_date=None,
+        view_name, status, start_date=None, end_date=None,
         username=None, uri=None, method=None
     ):
     """Retrieve all applications from within a time frame
-        for a customer.
+        for a view.
     Args:
-        customer_name (str): The name of the customer.
+        view_name (str): The name of the view.
         status (str): The status of the applictions you want to see.
             example... installed or available or pending
 
@@ -546,8 +537,8 @@ def get_os_apps_history(
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_os_apps_history
-        >>> customer_name = 'default'
-        >>> get_os_apps_history(customer_name)
+        >>> view_name = 'default'
+        >>> get_os_apps_history(view_name)
 
     Returns:
         >>>
@@ -593,7 +584,7 @@ def get_os_apps_history(
     elif not start_date and end_date:
         start_date = 0.0
 
-    data = fetch_os_apps_history(customer_name, status, start_date, end_date)
+    data = fetch_os_apps_history(view_name, status, start_date, end_date)
 
     results = {
         ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
@@ -608,7 +599,6 @@ def get_os_apps_history(
     return results
 
 @time_it
-@results_message
 def get_os_apps_history_for_agent(
         agent_id, status, start_date=None, end_date=None,
         username=None, uri=None, method=None
@@ -700,14 +690,13 @@ def get_os_apps_history_for_agent(
     return results
 
 @time_it
-@results_message
 def get_os_apps_history_for_tag(
         tag_id, status, start_date=None,
         end_date=None, username=None, uri=None,
         method=None
     ):
     """Retrieve all applications from within a time frame
-        for a customer.
+        for a view.
     Args:
         tag_id (str): The 36 character UUID of the tag.
         status (str): The status of the applictions you want to see.

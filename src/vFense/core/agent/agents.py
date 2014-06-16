@@ -15,7 +15,7 @@ from vFense.core.agent._db import fetch_production_levels_from_agent, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
 
-from vFense.core.decorators import time_it, results_message
+from vFense.core.decorators import time_it
 
 from vFense.db.hardware import Hardware
 #from vFense.errorz.results import Results
@@ -238,7 +238,6 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     return fetch_agent_info(agent_id, keys_to_pluck)
 
 @time_it
-@results_message
 def update_agent_field(
         agent_id, field, value,
         username=None, uri=None, method=None
@@ -310,7 +309,6 @@ def update_agent_field(
     return results
 
 @time_it
-@results_message
 def update_agent_fields(
         agent_id, agent_data,
         username=None, uri=None,
@@ -380,7 +378,6 @@ def update_agent_fields(
     return results
 
 @time_it
-@results_message
 def update_agent_status(agent_id, username=None, uri=None, method=None):
     """Update the status of an agent.
     Args:
@@ -444,7 +441,6 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
     return results
 
 @time_it
-@results_message
 def add_agent(
         system_info, hardware, username=None,
         uri=None, method=None
@@ -536,7 +532,6 @@ def add_agent(
     return results
 
 @time_it
-@results_message
 def update_agent(
         agent_id, system_info, hardware, rebooted,
         username=None, uri=None, method=None
@@ -651,7 +646,6 @@ def update_agent(
     return results
 
 @time_it
-@results_message
 def remove_all_agents_for_view(
         view_name,
         user_name=None, uri=None, method=None
@@ -706,7 +700,6 @@ def remove_all_agents_for_view(
     return results
 
 @time_it
-@results_message
 def change_view_for_all_agents_in_view(
         current_view, new_view,
         user_name=None, uri=None, method=None
@@ -763,7 +756,6 @@ def change_view_for_all_agents_in_view(
     return results
 
 @time_it
-@results_message
 def change_view_for_agents(
         agent_ids, new_view,
         user_name=None, uri=None, method=None
@@ -820,7 +812,6 @@ def change_view_for_agents(
     return results
 
 @time_it
-@results_message
 def change_view_for_agent(
         agent_id, new_view,
         user_name=None, uri=None, method=None
