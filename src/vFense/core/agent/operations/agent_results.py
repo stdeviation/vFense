@@ -25,7 +25,7 @@ class AgentOperationResults(OperationResults):
         if self.success == CommonKeys.TRUE:
             update_agent_field(
                 self.agent_id,
-                AgentKey.NeedsReboot,
+                AgentKeys.NeedsReboot,
                 CommonKeys.NO, self.username,
                 self.uri, self.method
             )

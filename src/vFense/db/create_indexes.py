@@ -20,7 +20,7 @@ from vFense.core.queue import *
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
-        (AgentsCollection, AgentKey.AgentId),
+        (AgentsCollection, AgentKeys.AgentId),
         (AppCollections.UniqueApplications, AppsKey.AppId),
         (AppCollections.AppsPerAgent, Id),
         (AppCollections.CustomApps, CustomAppsKey.AppId),

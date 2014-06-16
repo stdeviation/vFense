@@ -386,9 +386,9 @@ def get_schedule_details(sched, job_name, username, view_name,
 
     jobs = sched.get_jobs(name=view_name)
     agent_keys_to_pluck = [
-        AgentKey.ComputerName,
-        AgentKey.DisplayName,
-        AgentKey.AgentId
+        AgentKeys.ComputerName,
+        AgentKeys.DisplayName,
+        AgentKeys.AgentId
     ]
 
     try:

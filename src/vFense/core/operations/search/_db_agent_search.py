@@ -867,8 +867,8 @@ class FetchAgentOperations(object):
                 OperationPerAgentKey.Errors,
                 OperationPerAgentKey.Status,
                 OperationPerAgentKey.AgentId,
-                AgentKey.ComputerName,
-                AgentKey.DisplayName,
+                AgentKeys.ComputerName,
+                AgentKeys.DisplayName,
             ]
         )
         return(pluck)

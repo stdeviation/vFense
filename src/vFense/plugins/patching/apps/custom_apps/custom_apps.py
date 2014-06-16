@@ -28,7 +28,7 @@ def add_custom_app_to_agents(username, view_name, uri, method,
             )
         )
 
-        agent_ids = get_all_agent_ids(view_name, agent_os=app_info[AgentKey.OsCode])
+        agent_ids = get_all_agent_ids(view_name, agent_os=app_info[AgentKeys.OsCode])
         if len(agent_ids) > 0:
             for agentid in agent_ids:
                 add_file_data(app_id, file_data, agent_id)
@@ -49,7 +49,7 @@ def add_custom_app_to_agents(username, view_name, uri, method,
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
         apps_info = fetch_apps_data_by_os_code(
-            agent_info[AgentKey.OsCode], view_name,
+            agent_info[AgentKeys.OsCode], view_name,
             collection=AppCollections.CustomApps
         )
 

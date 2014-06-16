@@ -74,8 +74,8 @@ class TagSearcher():
                         .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
                         .zip()
                         .pluck(
-                            TagsPerAgentKey.AgentId, AgentKey.ComputerName,
-                            AgentKey.DisplayName
+                            TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                            AgentKeys.DisplayName
                         )
                         .run(conn)
                     )
@@ -149,8 +149,8 @@ class TagSearcher():
                             .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
                             .zip()
                             .pluck(
-                                TagsPerAgentKey.AgentId, AgentKey.ComputerName,
-                                AgentKey.DisplayName)
+                                TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                                AgentKeys.DisplayName)
                             .run(conn)
                         )
                         data[tag]['agents'] = agents_in_tag
@@ -219,8 +219,8 @@ class TagSearcher():
                         .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
                         .zip()
                         .pluck(
-                            TagsPerAgentKey.AgentId, AgentKey.ComputerName,
-                            AgentKey.DisplayName)
+                            TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                            AgentKeys.DisplayName)
                         .run(conn)
                     )
                     data[tag]['agents'] = agents_in_tag
@@ -262,8 +262,8 @@ class TagSearcher():
                     .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
                     .zip()
                     .pluck(
-                        TagsPerAgentKey.AgentId, AgentKey.ComputerName,
-                        AgentKey.DisplayName)
+                        TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                        AgentKeys.DisplayName)
                     .run(conn)
                 )
 

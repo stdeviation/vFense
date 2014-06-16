@@ -25,7 +25,7 @@ class FetchAgents(object):
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKey.ComputerName
+        sort_key=AgentKeys.ComputerName
         ):
         """
         Kwargs:
@@ -42,12 +42,12 @@ class FetchAgents(object):
         self.sort_key = sort_key
 
         self.keys_to_pluck = [
-            AgentKey.ComputerName, AgentKey.HostName,
-            AgentKey.DisplayName, AgentKey.OsCode, AgentKey.Tags,
-            AgentKey.OsString, AgentKey.AgentId, AgentKey.AgentStatus,
-            AgentKey.NeedsReboot, AgentKey.ProductionLevel,
+            AgentKeys.ComputerName, AgentKeys.HostName,
+            AgentKeys.DisplayName, AgentKeys.OsCode, AgentKeys.Tags,
+            AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
+            AgentKeys.NeedsReboot, AgentKeys.ProductionLevel,
             AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN,
-            AgentKey.LastAgentUpdate
+            AgentKeys.LastAgentUpdate
         ]
 
         if sort == SortValues.ASC:
@@ -101,9 +101,9 @@ class FetchAgents(object):
             count = (
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
                 .count()
                 .run(conn)
@@ -112,9 +112,9 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
                 .merge(merge_query)
                 .pluck(self.keys_to_pluck)
@@ -178,7 +178,7 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .merge(query_merge)
-                .order_by(AgentKey.ComputerName)
+                .order_by(AgentKeys.ComputerName)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -311,9 +311,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
                 )
                 .count()
                 .run(conn)
@@ -323,9 +323,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
                 )
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
@@ -664,7 +664,7 @@ class FetchAgents(object):
                     .get_all(
                         [
                             CommonAppKeys.AVAILABLE,
-                            x[AgentKey.AgentId]
+                            x[AgentKeys.AgentId]
                         ],
                         index=AppsPerAgentIndexes.StatusAndAgentId
                     )
@@ -676,7 +676,7 @@ class FetchAgents(object):
                     .get_all(
                         [
                             CommonAppKeys.AVAILABLE,
-                            x[AgentKey.AgentId]
+                            x[AgentKeys.AgentId]
                         ],
                         index=AppsPerAgentIndexes.StatusAndAgentId
                     )
@@ -692,8 +692,8 @@ class FetchAgents(object):
                     )
                     .count()
                 ),
-                AgentKey.LastAgentUpdate: (
-                    x[AgentKey.LastAgentUpdate].to_epoch_time()
+                AgentKeys.LastAgentUpdate: (
+                    x[AgentKeys.LastAgentUpdate].to_epoch_time()
                 )
             }
         )
@@ -711,7 +711,7 @@ class FetchAgents(object):
                 .table(AgentCollections.Agents)
                 .get_all(
                     self.view_name,
-                    index=AgentKey.ViewName
+                    index=AgentKeys.ViewName
                 )
             )
 

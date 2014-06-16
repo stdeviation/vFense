@@ -97,8 +97,8 @@ def get_valid_fields(username, view_name,
         agents = list(
             r
             .table(AgentsCollection)
-            .get_all(view_name, index=AgentKey.ViewName)
-            .pluck(AgentKey.AgentId, AgentKey.ComputerName)
+            .get_all(view_name, index=AgentKeys.ViewName)
+            .pluck(AgentKeys.AgentId, AgentKeys.ComputerName)
             .run(conn)
         )
         tags = list(
@@ -448,7 +448,7 @@ class Notifier():
                     r
                     .table(AgentsCollection)
                     .get(x)
-                    .pluck(AgentKey.AgentId)
+                    .pluck(AgentKeys.AgentId)
                     .run(conn)
                 )
                 if not valid:

@@ -147,8 +147,8 @@ class PatchingOperationResults(OperationResults):
             self.username,
             self.customer_name,
             self.agent_id,
-            self.agent_data[AgentKey.OsCode],
-            self.agent_data[AgentKey.OsString],
+            self.agent_data[AgentKeys.OsCode],
+            self.agent_data[AgentKeys.OsString],
             self.apps_to_add,
             delete_afterwards=False
         )
@@ -181,7 +181,7 @@ class PatchingOperationResults(OperationResults):
 
         if self.reboot_required:
             update_agent_field(
-                self.agent_id, AgentKey.NeedsReboot,
+                self.agent_id, AgentKeys.NeedsReboot,
                 CommonKeys.YES, self.username
             )
 

@@ -232,8 +232,8 @@ def tag_lister(view_name='default', query=None, conn=None):
                 .eq_join(TagsPerAgentKey.AgentId, r.table(TagsCollection))
                 .zip()
                 .pluck(
-                    TagsPerAgentKey.AgentId, AgentKey.ComputerName,
-                    AgentKey.DisplayName
+                    TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                    AgentKeys.DisplayName
                 )
                 .run(conn)
             )

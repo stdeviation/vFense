@@ -99,14 +99,14 @@ class IncomingSupportedApps(object):
             for app in apps:
                 if not agents:
                     agents = self._get_list_of_agents_by_os_code(
-                        app[AgentKey.OsCode]
+                        app[AgentKeys.OsCode]
                     )
 
                 app_id = app.get(SupportedAppsKey.AppId)
                 file_data = app.get(SupportedAppsKey.FileData)
 
                 for agent in agents:
-                    if agent[AgentKey.OsCode] == app[SupportedAppsKey.OsCode]:
+                    if agent[AgentKeys.OsCode] == app[SupportedAppsKey.OsCode]:
                         agent_id = agent[SupportedAppsPerAgentKey.AgentId]
 
                         add_file_data(app_id, file_data, agent_id)
@@ -169,9 +169,9 @@ class IncomingSupportedApps(object):
     def _set_app_per_agent_properties(self, agent, app_id):
         return {
             SupportedAppsPerAgentKey.AgentId:
-                agent[AgentKey.AgentId],
+                agent[AgentKeys.AgentId],
             SupportedAppsPerAgentKey.ViewName:
-                agent[AgentKey.ViewName],
+                agent[AgentKeys.ViewName],
             SupportedAppsPerAgentKey.Status:
                 CommonAppKeys.AVAILABLE,
             SupportedAppsPerAgentKey.LastModifiedTime:
@@ -231,7 +231,7 @@ class IncomingSupportedApps(object):
                 .eq_join(
                     lambda y:
                     [
-                        app[AgentKey.AgentId],
+                        app[AgentKeys.AgentId],
                         app[AppsPerAgentKey.AppId],
                     ],
                     r.table(AppCollections.AppsPerAgent),
@@ -379,7 +379,7 @@ def get_supported_apps():
 def get_all_supported_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = fetch_apps_data_by_os_code(
-        agent[AgentKey.OsCode],
+        agent[AgentKeys.OsCode],
         collection=DownloadCollections.LatestDownloadedSupported
     )
 

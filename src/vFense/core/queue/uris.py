@@ -194,7 +194,7 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
     status = get_result_uris.func_name + ' - '
     result_uris = _get_result_uris_dict(agent_id)
 
-    agent_exist = get_agent_info(agent_id, AgentKey.AgentId)
+    agent_exist = get_agent_info(agent_id, AgentKeys.AgentId)
     if agent_exist:
         generic_status_code = GenericCodes.InformationRetrieved
         vfense_status_code = GenericCodes.InformationRetrieved

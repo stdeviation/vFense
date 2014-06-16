@@ -5,7 +5,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.errorz._constants import ApiResultKeys
 
 from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.agent import AgentKey 
+from vFense.core.agent import AgentKeys
 
 from vFense.core.agent.search._db import FetchAgents
 from vFense.core.decorators import time_it, results_message
@@ -21,7 +21,7 @@ class RetrieveAgents(object):
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKey.ComputerName,
+        sort_key=AgentKeys.ComputerName,
         user_name=None, uri=None, method=None
         ):
 
@@ -34,41 +34,41 @@ class RetrieveAgents(object):
         self.sort = sort
 
         self.list_of_valid_keys = [
-            AgentKey.ComputerName, AgentKey.HostName,
-            AgentKey.DisplayName, AgentKey.OsCode,
-            AgentKey.OsString, AgentKey.AgentId, AgentKey.AgentStatus,
-            AgentKey.NeedsReboot, AgentKey.BasicStats,
-            AgentKey.ProductionLevel, AgentKey.LastAgentUpdate
+            AgentKeys.ComputerName, AgentKeys.HostName,
+            AgentKeys.DisplayName, AgentKeys.OsCode,
+            AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
+            AgentKeys.NeedsReboot, AgentKeys.BasicStats,
+            AgentKeys.ProductionLevel, AgentKeys.LastAgentUpdate
         ]
 
         self.valid_keys_to_filter_by = (
             [
-                AgentKey.OsCode,
-                AgentKey.OsString,
-                AgentKey.AgentStatus,
-                AgentKey.ProductionLevel
+                AgentKeys.OsCode,
+                AgentKeys.OsString,
+                AgentKeys.AgentStatus,
+                AgentKeys.ProductionLevel
             ]
         )
 
         valid_keys_to_sort_by = (
             [
-                AgentKey.ComputerName,
-                AgentKey.HostName,
-                AgentKey.DisplayName,
-                AgentKey.OsCode,
-                AgentKey.OsString,
-                AgentKey.AgentStatus,
-                AgentKey.ProductionLevel,
+                AgentKeys.ComputerName,
+                AgentKeys.HostName,
+                AgentKeys.DisplayName,
+                AgentKeys.OsCode,
+                AgentKeys.OsString,
+                AgentKeys.AgentStatus,
+                AgentKeys.ProductionLevel,
                 AgentCommonKeys.AVAIL_VULN,
                 AgentCommonKeys.AVAIL_UPDATES,
-                AgentKey.LastAgentUpdate,
+                AgentKeys.LastAgentUpdate,
             ]
         )
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = AgentKey.ComputerName
-        
+            self.sort_key = AgentKeys.ComputerName
+
         self.fetch_agents = (
             FetchAgents(
                 customer_name, self.count, self.offset,
@@ -92,30 +92,30 @@ class RetrieveAgents(object):
         Returns:
             List of dictionairies.
             {
-                "count": 1, 
-                "uri": null, 
-                "rv_status_code": 1001, 
-                "http_method": null, 
-                "http_status": 200, 
-                "message": null, 
+                "count": 1,
+                "uri": null,
+                "rv_status_code": 1001,
+                "http_method": null,
+                "http_status": 200,
+                "message": null,
                 "data": [
                     {
-                        "display_name": null, 
-                        "production_level": "Production", 
+                        "display_name": null,
+                        "production_level": "Production",
                         "tags": [
                             {
-                                "tag_name": "Foo Bar", 
+                                "tag_name": "Foo Bar",
                                 "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                             }
-                        ], 
-                        "available_vulnerabilities": 8, 
-                        "os_code": "linux", 
-                        "available_updates": 17, 
-                        "agent_status": "up", 
-                        "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                        "computer_name": "ubuntu", 
-                        "os_string": "Ubuntu 12.04", 
-                        "needs_reboot": "no", 
+                        ],
+                        "available_vulnerabilities": 8,
+                        "os_code": "linux",
+                        "available_updates": 17,
+                        "agent_status": "up",
+                        "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                        "computer_name": "ubuntu",
+                        "os_string": "Ubuntu 12.04",
+                        "needs_reboot": "no",
                         "host_name": ""
                     }
                 ]
@@ -156,22 +156,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -217,22 +217,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -289,22 +289,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -361,22 +361,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -425,22 +425,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -492,22 +492,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]
@@ -557,22 +557,22 @@ class RetrieveAgents(object):
             List of dictionairies.
             [
                 {
-                    "display_name": null, 
-                    "production_level": "Production", 
+                    "display_name": null,
+                    "production_level": "Production",
                     "tags": [
                         {
-                            "tag_name": "Foo Bar", 
+                            "tag_name": "Foo Bar",
                             "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
                         }
-                    ], 
-                    "available_vulnerabilities": 8, 
-                    "os_code": "linux", 
-                    "available_updates": 17, 
-                    "agent_status": "up", 
-                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                    "computer_name": "ubuntu", 
-                    "os_string": "Ubuntu 12.04", 
-                    "needs_reboot": "no", 
+                    ],
+                    "available_vulnerabilities": 8,
+                    "os_code": "linux",
+                    "available_updates": 17,
+                    "agent_status": "up",
+                    "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                    "computer_name": "ubuntu",
+                    "os_string": "Ubuntu 12.04",
+                    "needs_reboot": "no",
                     "host_name": ""
                 }
             ]

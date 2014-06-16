@@ -91,8 +91,8 @@ def get_all_agents_per_appid(username, view_name,
                     AGENTS:
                     [
                         {
-                            AgentKey.ComputerName: x[AgentKey.ComputerName],
-                            AgentKey.DisplayName: x[AgentKey.DisplayName],
+                            AgentKeys.ComputerName: x[AgentKeys.ComputerName],
+                            AgentKeys.DisplayName: x[AgentKeys.DisplayName],
                             CustomAppsPerAgentKey.AgentId: x[CustomAppsPerAgentKey.AgentId]
                         }
                     ],

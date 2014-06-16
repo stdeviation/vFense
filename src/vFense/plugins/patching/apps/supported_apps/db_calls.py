@@ -23,7 +23,7 @@ def add_supported_app_to_agents(username, view_name, uri, method, agent_id=None)
         agent_info = get_agent_info(agent_id)
         apps_info = (
             fetch_apps_data_by_os_code(
-                agent_info[AgentKey.OsCode],
+                agent_info[AgentKeys.OsCode],
                 view_name,
                 collection=AppCollections.SupportedApps,
             )
@@ -130,8 +130,8 @@ def get_all_agents_per_appid(username, view_name,
                     AGENTS:
                     [
                         {
-                            AgentKey.ComputerName: x[AgentKey.ComputerName],
-                            AgentKey.DisplayName: x[AgentKey.DisplayName],
+                            AgentKeys.ComputerName: x[AgentKeys.ComputerName],
+                            AgentKeys.DisplayName: x[AgentKeys.DisplayName],
                             SupportedAppsPerAgentKey.AgentId: x[SupportedAppsPerAgentKey.AgentId]
                         }
                     ],

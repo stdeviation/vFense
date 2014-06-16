@@ -730,7 +730,7 @@ def group_avail_app_stats_by_os_for_view(
                 }
             )
             .eq_join(
-                AgentKey.AgentId,
+                AgentKeys.AgentId,
                 r.table(AgentCollections.Agents)
             )
             .map(
@@ -738,14 +738,14 @@ def group_avail_app_stats_by_os_for_view(
                     DbCommonAppKeys.AppId: (
                         r.row['left'][DbCommonAppKeys.AppId]
                     ),
-                    AgentKey.OsString: (
-                        r.row['right'][AgentKey.OsString]
+                    AgentKeys.OsString: (
+                        r.row['right'][AgentKeys.OsString]
                     )
                 }
             )
-            .pluck(DbCommonAppKeys.AppId, AgentKey.OsString)
+            .pluck(DbCommonAppKeys.AppId, AgentKeys.OsString)
             .distinct()
-            .group(AgentKey.OsString)
+            .group(AgentKeys.OsString)
             .count()
             .ungroup()
             .map(
@@ -800,14 +800,14 @@ def group_avail_app_stats_by_os_for_tag(
             .pluck(TagsPerAgentKey.AgentId)
             .eq_join(
                 lambda x:
-                x[AgentKey.AgentId],
+                x[AgentKeys.AgentId],
                 r.table(AgentCollections.Agents)
             )
             .map(
                 lambda x:
                 {
-                    AgentKey.AgentId: x['left'][AgentKey.AgentId],
-                    AgentKey.OsString: x['right'][AgentKey.OsString]
+                    AgentKeys.AgentId: x['left'][AgentKeys.AgentId],
+                    AgentKeys.OsString: x['right'][AgentKeys.OsString]
                 }
             )
             .eq_join(
@@ -830,11 +830,11 @@ def group_avail_app_stats_by_os_for_tag(
                 lambda x:
                 {
                     CommonAppKeys.APP_ID: x['right'][CommonAppKeys.APP_ID],
-                    AgentKey.OsString: x['left']['left'][AgentKey.OsString]
+                    AgentKeys.OsString: x['left']['left'][AgentKeys.OsString]
                 }
             )
             .distinct()
-            .group(AgentKey.OsString)
+            .group(AgentKeys.OsString)
             .count()
             .ungroup()
             .map(

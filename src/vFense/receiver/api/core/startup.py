@@ -37,10 +37,10 @@ class StartUpV1(BaseHandler):
             )
             uri = self.request.uri
             method = self.request.method
-            rebooted = self.arguments.get(AgentKey.Rebooted)
-            plugins = self.arguments.get(AgentKey.Plugins)
-            system_info = self.arguments.get(AgentKey.SystemInfo)
-            hardware = self.arguments.get(AgentKey.Hardware)
+            rebooted = self.arguments.get(AgentKeys.Rebooted)
+            plugins = self.arguments.get(AgentKeys.Plugins)
+            system_info = self.arguments.get(AgentKeys.SystemInfo)
+            hardware = self.arguments.get(AgentKeys.Hardware)
             logger.info(
                 'data received on startup: %s' % self.request.body
             )

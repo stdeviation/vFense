@@ -129,8 +129,8 @@ class RetrieveAgentsByAppId(object):
 
         self.map_hash = (
             {
-                AgentKey.ComputerName: r.row[AgentKey.ComputerName],
-                AgentKey.DisplayName: r.row[AgentKey.DisplayName],
+                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
+                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
                 self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
             }
         )
@@ -158,7 +158,7 @@ class RetrieveAgentsByAppId(object):
                             r.table(AgentsCollection)
                         )
                         .zip()
-                        .order_by(r.asc(AgentKey.ComputerName))
+                        .order_by(r.asc(AgentKeys.ComputerName))
                         .skip(self.offset)
                         .limit(self.count)
                         .map(self.map_hash)
@@ -227,9 +227,9 @@ class RetrieveAgentsByAppId(object):
                     )
                     .zip()
                     .filter(
-                        r.row[AgentKey.ComputerName].match("(?i)"+name)
+                        r.row[AgentKeys.ComputerName].match("(?i)"+name)
                         |
-                        r.row[AgentKey.DisplayName].match("(?i)"+name)
+                        r.row[AgentKeys.DisplayName].match("(?i)"+name)
                     )
                     .order_by(r.asc('computer_name'))
                     .skip(self.offset)
@@ -248,9 +248,9 @@ class RetrieveAgentsByAppId(object):
                     )
                     .zip()
                     .filter(
-                        r.row[AgentKey.ComputerName].match("(?i)"+name)
+                        r.row[AgentKeys.ComputerName].match("(?i)"+name)
                         |
-                        r.row[AgentKey.DisplayName].match("(?i)"+name)
+                        r.row[AgentKeys.DisplayName].match("(?i)"+name)
                     )
                     .count()
                     .run(conn)
@@ -304,11 +304,11 @@ class RetrieveAgentsByAppId(object):
                         )
                         .zip()
                         .filter(
-                            r.row[AgentKey.ComputerName].match("(?i)"+name)
+                            r.row[AgentKeys.ComputerName].match("(?i)"+name)
                             |
-                            r.row[AgentKey.DisplayName].match("(?i)"+name)
+                            r.row[AgentKeys.DisplayName].match("(?i)"+name)
                         )
-                        .order_by(r.asc(AgentKey.ComputerName))
+                        .order_by(r.asc(AgentKeys.ComputerName))
                         .skip(self.offset)
                         .limit(self.count)
                         .map(self.map_hash)
@@ -326,9 +326,9 @@ class RetrieveAgentsByAppId(object):
                         )
                         .zip()
                         .filter(
-                            r.row[AgentKey.ComputerName].match("(?i)"+name)
+                            r.row[AgentKeys.ComputerName].match("(?i)"+name)
                             |
-                            r.row[AgentKey.DisplayName].match("(?i)"+name)
+                            r.row[AgentKeys.DisplayName].match("(?i)"+name)
                         )
                         .count()
                         .run(conn)
@@ -885,8 +885,8 @@ class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
 
         self.map_hash = (
             {
-                AgentKey.ComputerName: r.row[AgentKey.ComputerName],
-                AgentKey.DisplayName: r.row[AgentKey.DisplayName],
+                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
+                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
                 self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
             }
         )
@@ -916,8 +916,8 @@ class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
 
         self.map_hash = (
             {
-                AgentKey.ComputerName: r.row[AgentKey.ComputerName],
-                AgentKey.DisplayName: r.row[AgentKey.DisplayName],
+                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
+                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
                 self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
             }
         )
@@ -947,8 +947,8 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
 
         self.map_hash = (
             {
-                AgentKey.ComputerName: r.row[AgentKey.ComputerName],
-                AgentKey.DisplayName: r.row[AgentKey.DisplayName],
+                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
+                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
                 self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
             }
         )
