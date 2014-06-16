@@ -6,7 +6,7 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_model import *
 from vFense.core._constants import CommonKeys
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

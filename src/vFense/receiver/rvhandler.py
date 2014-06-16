@@ -4,7 +4,7 @@ import redis
 from rq import Connection, Queue
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent import AgentKeys
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.plugins.patching._db_model import AppCollections
 from vFense.plugins.patching.apps.incoming_apps import \

@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.utils.common import *
 from vFense.core.agent.agents import *
 from vFense.plugins.patching._db_model import * 

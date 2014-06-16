@@ -12,7 +12,7 @@ from apscheduler.jobstores.redis_store import RedisJobStore
 
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
 from vFense.core.tag import *
 from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \

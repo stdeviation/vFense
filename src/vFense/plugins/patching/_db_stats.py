@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import time_it
 from vFense.core._constants import CommonKeys
-from vFense.core.agent import AgentKeys, AgentCollections
+from vFense.core.agent._db_model import AgentKeys, AgentCollections
 from vFense.core.tag import (
     TagCollections, TagsPerAgentKey, TagsPerAgentIndexes,
 )

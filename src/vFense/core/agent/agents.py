@@ -4,7 +4,7 @@ from time import time
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
-from vFense.core.agent import AgentKeys
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._constants import AgentVirtualKeys, \
     AgentStatusKeys, ProductionLevels
 

@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.agent import AgentKeys, AgentCollections
+from vFense.core.agent._db_model import AgentKeys, AgentCollections
 
 from vFense.core.operations._db_model import (
     AgentOperationKey, AgentOperationIndexes,

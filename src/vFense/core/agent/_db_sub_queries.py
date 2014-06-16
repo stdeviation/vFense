@@ -4,7 +4,7 @@ from vFense.core.tag import (
     TagsPerAgentIndexes, TagsKey
 )
 
-from vFense.core.agent import (
+from vFense.core.agent._db_model import (
     AgentKeys
 )
 

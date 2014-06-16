@@ -4,7 +4,7 @@ from datetime import datetime
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.tag import *
 from datetime import datetime
 from vFense.db.client import db_create_close, r

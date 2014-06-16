@@ -2,7 +2,7 @@
 
 from vFense.db.client import db_connect, r
 
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.tag import *
 from vFense.core.user._db_model import *
 from vFense.core.group._db_model import *
@@ -20,7 +20,7 @@ from vFense.core.queue import *
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
-        (AgentsCollection, AgentKeys.AgentId),
+        (AgentCollections.Agents, AgentKeys.AgentId),
         (AppCollections.UniqueApplications, AppsKey.AppId),
         (AppCollections.AppsPerAgent, Id),
         (AppCollections.CustomApps, CustomAppsKey.AppId),
@@ -35,7 +35,7 @@ def initialize_indexes_and_create_tables():
         (WindowsSecurityCollection.Bulletin, WindowsSecurityBulletinKey.Id),
         (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.Id),
         ('downloaded_status', Id),
-        (HardwarePerAgentCollection, Id),
+        (AgentCollections.Hardware, Id),
         (NotificationCollections.NotificationPlugins, Id),
         (NotificationCollections.Notifications, NotificationKeys.NotificationId),
         (NotificationCollections.NotificationsHistory, Id),
@@ -77,14 +77,14 @@ def initialize_indexes_and_create_tables():
     files_list = r.table(FileCollections.Files).index_list().run(conn)
     file_server_list = r.table(FileCollections.FileServers).index_list().run(conn)
     tags_list = r.table(TagsCollection).index_list().run(conn)
-    agents_list = r.table(AgentsCollection).index_list().run(conn)
+    agents_list = r.table(AgentCollections.Agents).index_list().run(conn)
     agent_operations_list = r.table(OperationCollections.Agent).index_list().run(conn)
     admin_operations_list = r.table(OperationCollections.Admin).index_list().run(conn)
     operations_per_agent_list = r.table(OperationCollections.OperationPerAgent).index_list().run(conn)
     operations_per_app_list = r.table(OperationCollections.OperationPerApp).index_list().run(conn)
     notif_list = r.table(NotificationCollections.Notifications).index_list().run(conn)
     notif_history_list = r.table(NotificationCollections.NotificationsHistory).index_list().run(conn)
-    hw_per_agent_list = r.table(HardwarePerAgentCollection).index_list().run(conn)
+    hw_per_agent_list = r.table(AgentCollections.Hardware).index_list().run(conn)
     tag_per_agent_list = r.table(TagsPerAgentCollection).index_list().run(conn)
     notif_plugin_list = r.table(NotificationCollections.NotificationPlugins,).index_list().run(conn)
     agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
@@ -94,10 +94,10 @@ def initialize_indexes_and_create_tables():
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.ViewName in agents_list:
-        r.table(AgentsCollection).index_create(AgentIndexes.ViewName).run(conn)
+        r.table(AgentCollections.Agents).index_create(AgentIndexes.ViewName).run(conn)
 
     if not AgentIndexes.OsCode in agents_list:
-        r.table(AgentsCollection).index_create(AgentIndexes.OsCode).run(conn)
+        r.table(AgentCollections.Agents).index_create(AgentIndexes.OsCode).run(conn)
 
 #################################### AppsCollection Indexes ###################################################
     if not AppsIndexes.RvSeverity in unique_app_list:

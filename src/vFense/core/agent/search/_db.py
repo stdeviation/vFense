@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.agent import (
+from vFense.core.agent._db_model import (
     AgentKeys, AgentCollections,
     HardwarePerAgentIndexes, HardwarePerAgentKeys
 )

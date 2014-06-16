@@ -1,4 +1,4 @@
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG

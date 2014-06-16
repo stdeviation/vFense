@@ -5,7 +5,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.errorz._constants import ApiResultKeys
 
 from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.agent import AgentKeys
+from vFense.core.agent._db_model import AgentKeys
 
 from vFense.core.agent.search._db import FetchAgents
 from vFense.core.decorators import time_it, results_message

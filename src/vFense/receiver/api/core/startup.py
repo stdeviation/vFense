@@ -7,7 +7,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments, \
     agent_authenticated_request
 
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.core.agent.agents import update_agent
 from vFense.core.queue.uris import get_result_uris
