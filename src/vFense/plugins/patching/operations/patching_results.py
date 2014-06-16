@@ -7,7 +7,7 @@ from json import loads
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
-from vFense.core.agent import AgentKey
+from vFense.core.agent import AgentKeys
 from vFense.core.agent.agents import update_agent_field
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.operations._db_model import AgentOperationKey

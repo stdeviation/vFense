@@ -3,7 +3,7 @@ from vFense.core._constants import HTTPMethods, CommonKeys
 from vFense.core.operations._constants import AgentOperations, ListenerURIs, \
     AuthenticationOperations, AuthenticationURIs, BaseURIs
 
-from vFense.core.agent import AgentKey
+from vFense.core.agent import AgentKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz._constants import ApiResultKeys

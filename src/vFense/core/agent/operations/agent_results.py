@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.operations._constants import AgentOperations
-from vFense.core.agent import AgentKey
+from vFense.core.agent import AgentKeys
 from vFense.core.agent.agents import update_agent_field
 from vFense.core.operations.results import OperationResults
 

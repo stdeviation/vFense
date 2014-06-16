@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
-from vFense.core.agent import AgentKey
+from vFense.core.agent import AgentKeys
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.core._db_constants import DbTime

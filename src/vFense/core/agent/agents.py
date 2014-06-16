@@ -4,13 +4,13 @@ from time import time
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
-from vFense.core.agent import AgentKey
+from vFense.core.agent import AgentKeys
 from vFense.core.agent._constants import AgentVirtualKeys, \
     AgentStatusKeys, ProductionLevels
 
 from vFense.core.agent._db import fetch_production_levels_from_agent, \
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
-    fetch_all_agents_for_view, fetch_agent_info, \
+    fetch_all_agents_for_view, fetch_agent, \
     update_agent_data, insert_agent_data, delete_all_agents_for_view, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
@@ -235,7 +235,7 @@ def get_agent_info(agent_id, keys_to_pluck=None):
         }
     """
 
-    return fetch_agent_info(agent_id, keys_to_pluck)
+    return fetch_agent(agent_id, keys_to_pluck)
 
 @time_it
 def update_agent_field(
@@ -556,7 +556,7 @@ def update_agent(
     agent_data = {}
     try:
         now = time()
-        agent_orig_info = fetch_agent_info(agent_id)
+        agent_orig_info = fetch_agent(agent_id)
         if agent_orig_info:
             agent_data[AgentKeys.Hardware] = hardware
 
