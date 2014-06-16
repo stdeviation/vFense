@@ -448,7 +448,7 @@ def add_agent(
     """Add a new agent to the database
     Args:
         system_info (dict): Dictionary with system related info
-        hardware (list):  List of dictionaries that rpresent the hardware
+        hardware (list):  List of dictionaries that represent the hardware
 
     Kwargs:
         user_name (str): The name of the user who called this function.

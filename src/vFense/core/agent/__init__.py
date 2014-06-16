@@ -1,7 +1,9 @@
+from time import time
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._constants import (
     AgentDefaults
 )
+from vFense.core._db_constants import DbTime
 from vFense.core._constants import (
     CommonKeys
 )
@@ -16,7 +18,7 @@ class Agent(object):
                  os_code=None, os_string=None, views=None,
                  needs_reboot=None, agent_status=None,
                  production_level=None, machine_type=None,
-                 rebooted=None, hardware=None
+                 rebooted=None, hardware=None, last_agent_update=None
                  ):
         """
         Kwargs:
@@ -34,6 +36,7 @@ class Agent(object):
                 valid_values: ( physical, virtual )
             rebooted (bool): Was this agent rebooted?
             hardware (dict): Dictionary of installed devices in the agent.
+            last_agent_update
         """
         self.computer_name = computer_name
         self.display_name = display_name
@@ -46,6 +49,7 @@ class Agent(object):
         self.machine_type = machine_type
         self.rebooted = rebooted
         self.hardware = hardware
+        self.last_agent_update = last_agent_update
 
 
     def fill_in_defaults(self):
@@ -76,7 +80,9 @@ class Agent(object):
         if not self.display_name:
             self.display_name = AgentDefaults.DISPLAY_NAME
 
-    def get_invalid_fields(self):
+        if not self.last_agent_update:
+            self.last_agent_update = time()
+
         """Check the agent for any invalid fields.
 
         Returns:
@@ -109,6 +115,22 @@ class Agent(object):
                     {
                         AgentKeys.Rebooted: self.rebooted,
                         CommonKeys.REASON: 'Must be a boolean value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.last_agent_update:
+            if (not isinstance(self.last_agent_update, int) or
+                    not isinstance(self.last_agent_update, float)):
+
+                invalid_fields.append(
+                    {
+                        AgentKeys.LastAgentUpdate: self.last_agent_update,
+                        CommonKeys.REASON: (
+                            'Must be a integer or a float value'
+                        ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
                         )
@@ -148,6 +170,7 @@ class Agent(object):
             AgentKeys.ProductionLevel: self.production_level,
             AgentKeys.Rebooted: self.rebooted,
             AgentKeys.Hardware: self.hardware,
+            AgentKeys.LastAgentUpdate: self.last_agent_update
         }
 
     def to_dict_non_null(self):

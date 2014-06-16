@@ -4,8 +4,12 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.utils.common import *
+from vFense.core._db_constants import DbTime
+from vFense.core.agent import Agent
 from vFense.core.agent.agents import update_agent_field, get_agent_info
 from vFense.core.agent._db import fetch_agent
+from vFense.core.agent import Agent
+from vFense.core.view.views import validate_view_names
 from vFense.core.tag.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
 from vFense.core.tag.tagManager import delete_agent_from_all_tags
 from vFense.core.tag import *
@@ -62,4 +66,48 @@ class AgentManager(object):
         return agent_key
 
 
-    #def new(agent):
+    def new(self, agent, tags=None):
+        """Add an agent into vFense.
+        Args:
+            agent (Agent): An instance of Agent.
+        Kwargs:
+            tags (list): List of tag ids.
+
+        Basic Usage:
+            >>> from vFense.core.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+
+        Returns:
+            >>>
+        """
+        results = {}
+        if isinstance(agent, Agent):
+            agent.fill_in_defaults()
+            agent_data = agent.to_dict()
+            agent_data[AgentKeys.LastAgentUpdate] = (
+                DbTime().epoch_time_to_db_time(
+                    agent_data[AgentKeys.LastAgentUpdate]
+                )
+            )
+            valid_views, valid_view_names, invalid_view_names = (
+                validate_view_names(agent[AgentKeys.Views])
+            )
+
+            status_code, _, _, generated_ids = (
+                insert_agent_data(agent_data)
+            )
+            if status_code == DbCodes.Inserted:
+                agent_id = generated_ids.pop()
+                Hardware().add(agent_id, agent_data[AgentKeys.Hardware])
+                agent_data[AgentKeys.AgentId] = agent_id
+                msg = 'new agent_operation succeeded'
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectCreated
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentResultCodes.NewAgentSucceeded
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = [agent_data]
+                results[ApiResultKeys.GENERATED_IDS] = [agent_id]
+
