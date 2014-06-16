@@ -12,7 +12,7 @@ from vFense.notifications import *
 from vFense.core.operations._db_model import *
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
-from vFense.plugins.vuln.cve import *
+from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.ubuntu import *
 from vFense.plugins.vuln.windows import *
 from vFense.core.queue import *
@@ -31,7 +31,7 @@ def initialize_indexes_and_create_tables():
         (AppCollections.vFenseAppsPerAgent, Id),
         (FileCollections.Files, FilesKey.FileName),
         (FileCollections.FileServers, FileServerKeys.FileServerName),
-        (CVECollections.CVE, CveKey.CveId),
+        (CVECollections.CVE, CveKeys.CveId),
         (WindowsSecurityCollection.Bulletin, WindowsSecurityBulletinKey.Id),
         (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.Id),
         ('downloaded_status', Id),
