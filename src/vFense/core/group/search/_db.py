@@ -201,7 +201,76 @@ class FetchGroups(object):
             >>> from vFense.group.search._db import FetchGroups
             >>> view_name = 'global'
             >>> groups = FetchGroups(view_name)
-            >>> groups.fetch_by_name("glob")
+            >>> groups.by_name("glob")
+
+        Returns:
+            Tuple
+            (count, group_data)
+        >>>
+        [
+            2,
+            [
+                {
+                    "users": [
+                        {
+                            "user_name": "global_admin"
+                        }
+                    ],
+                    "views": [
+                        {
+                            "view_name": "global"
+                        }
+                    ],
+                    "global": true,
+                    "email": null,
+                    "group_name": "Global Administrator",
+                    "id": "d3120f76-a7f4-4708-ab84-da219c4503aa",
+                    "permissions": [
+                        "administrator"
+                    ]
+                }
+            ]
+        ]
+        """
+        count = 0
+        data = []
+        base_filter = self._set_base_query()
+        map_hash = self._set_map_hash()
+
+        try:
+            count = (
+                base_filter
+                .filter({GroupKeys.GroupName: name})
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .filter({GroupKeys.GroupName: name})
+                .coerce_to('array')
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .map(map_hash)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+
+    @db_create_close
+    def by_regex(self, name, conn=None):
+        """Retrieve groups by regex and all of its properties
+
+        Basic Usage:
+            >>> from vFense.group.search._db import FetchGroups
+            >>> view_name = 'global'
+            >>> groups = FetchGroups(view_name)
+            >>> groups.by_regex("glob")
 
         Returns:
             Tuple
@@ -266,6 +335,7 @@ class FetchGroups(object):
             logger.exception(e)
 
         return(count, data)
+
 
     def _set_base_query(self):
         if self.view_name:

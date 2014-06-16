@@ -26,10 +26,7 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def view_stats_by_os(
-        view_name, count=3,
-        username=None, uri=None, method=None
-    ):
+def view_stats_by_os(view_name, count=3):
     """Retrieve an array of the total count of update available, grouped by
         operating system for a view.
     Args:
@@ -38,9 +35,6 @@ def view_stats_by_os(
     Kwargs:
         count (int, optional): The number of results to return.
             default = 3
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import group_avail_app_stats_by_os_for_view
@@ -69,18 +63,12 @@ def view_stats_by_os(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
     return results
 
 
 @time_it
-def tag_stats_by_os(
-        tag_id, count=3,
-        username=None, uri=None, method=None
-    ):
+def tag_stats_by_os(tag_id, count=3):
     """Retrieve application stats for a tag and group it by the os string.
     Args:
         tag_id (str): The 36 character UUID of the tag
@@ -88,9 +76,6 @@ def tag_stats_by_os(
     Kwargs:
         count (int, optional): Limit how many results show.
             default = 3
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import tag_stats_by_os
@@ -121,28 +106,17 @@ def tag_stats_by_os(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def bar_chart_for_appid_by_status(
-        app_id, view_name,
-        username=None, uri=None, method=None
-    ):
+def bar_chart_for_appid_by_status(app_id, view_name):
     """Retrieve application stats for a tag and group it by the os string.
     Args:
         app_id (str): The 64 character hex digest of the app.
         view_name (str): The name of the view.
-
-    Kwargs:
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import bar_chart_for_appid_by_status
@@ -176,27 +150,16 @@ def bar_chart_for_appid_by_status(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def get_severity_bar_chart_stats_for_view(
-        view_name, username=None,
-        uri=None, method=None
-    ):
+def get_severity_bar_chart_stats_for_view(view_name, username=None):
     """Retrieve the number of available updates by severity.
     Args:
         view_name (str): The name of the view.
-
-    Kwargs:
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_severity_bar_chart_stats_for_view
@@ -237,27 +200,16 @@ def get_severity_bar_chart_stats_for_view(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def get_severity_bar_chart_stats_for_agent(
-        agent_id, username=None,
-        uri=None, method=None
-    ):
+def get_severity_bar_chart_stats_for_agent(agent_id):
     """Retrieve the number of available updates by severity.
     Args:
         agent_id (str): The 36 character UUID of the agent.
-
-    Kwargs:
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_severity_bar_chart_stats_for_agent
@@ -297,27 +249,16 @@ def get_severity_bar_chart_stats_for_agent(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def get_severity_bar_chart_stats_for_tag(
-        tag_id, username=None,
-        uri=None, method=None
-    ):
+def get_severity_bar_chart_stats_for_tag(tag_id):
     """Retrieve the number of available updates by severity.
     Args:
         tag_id (str): The 36 character UUID of the agent.
-
-    Kwargs:
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_severity_bar_chart_stats_for_tag
@@ -358,19 +299,13 @@ def get_severity_bar_chart_stats_for_tag(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def top_packages_needed(
-        view_name, count=5,
-        username=None, uri=None, method=None
-    ):
+def top_packages_needed(view_name, count=5):
     """Retrieve the top number of updates needed across
         all agents.
     Args:
@@ -379,9 +314,6 @@ def top_packages_needed(
     Kwargs:
         count (int, optional): Limit how many results show.
             default = 3
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import top_packages_needed
@@ -432,19 +364,13 @@ def top_packages_needed(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def recently_released_packages(
-        view_name, count=5,
-        username=None, uri=None, method=None
-    ):
+def recently_released_packages(view_name, count=5):
     """Retrieve the most recently released updates
     Args:
         view_name (str): The name of the view.
@@ -452,9 +378,6 @@ def recently_released_packages(
     Kwargs:
         count (int, optional): Limit how many results show.
             default = 3
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import recently_released_packages
@@ -504,19 +427,13 @@ def recently_released_packages(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 
 @time_it
-def get_os_apps_history(
-        view_name, status, start_date=None, end_date=None,
-        username=None, uri=None, method=None
-    ):
+def get_os_apps_history(view_name, status, start_date=None, end_date=None):
     """Retrieve all applications from within a time frame
         for a view.
     Args:
@@ -531,9 +448,6 @@ def get_os_apps_history(
         end_date (epoch_time): The date you want the search to end.
             default is today, example
             end_date = 1400852008.0
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_os_apps_history
@@ -591,18 +505,13 @@ def get_os_apps_history(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 @time_it
-def get_os_apps_history_for_agent(
-        agent_id, status, start_date=None, end_date=None,
-        username=None, uri=None, method=None
-    ):
+def get_os_apps_history_for_agent(agent_id, status, start_date=None,
+                                  end_date=None):
     """Retrieve all applications from within a time frame
         for an agent.
     Args:
@@ -617,9 +526,6 @@ def get_os_apps_history_for_agent(
         end_date (epoch_time): The date you want the search to end.
             default is today, example
             end_date = 1400852008.0
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_os_apps_history_for_agent
@@ -682,19 +588,13 @@ def get_os_apps_history_for_agent(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results
 
 @time_it
-def get_os_apps_history_for_tag(
-        tag_id, status, start_date=None,
-        end_date=None, username=None, uri=None,
-        method=None
-    ):
+def get_os_apps_history_for_tag(tag_id, status, start_date=None,
+                                end_date=None):
     """Retrieve all applications from within a time frame
         for a view.
     Args:
@@ -709,9 +609,6 @@ def get_os_apps_history_for_tag(
         end_date (epoch_time): The date you want the search to end.
             default is today, example
             end_date = 1400852008.0
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_stats import get_os_apps_history_for_tag
@@ -774,9 +671,6 @@ def get_os_apps_history_for_tag(
         ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
         ApiResultKeys.DATA: data,
         ApiResultKeys.COUNT: len(data),
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
     return results

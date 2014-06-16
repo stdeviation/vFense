@@ -7,7 +7,7 @@ from vFense.core._constants import CPUThrottleValues
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments
+    authenticated_request, convert_json_to_arguments, results_message
 )
 
 from vFense.core.permissions._constants import Permissions
@@ -18,6 +18,7 @@ from vFense.core.permissions.permissions import (
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.agent import *
 from vFense.core.user._constants import DefaultUsers
+from vFense.core.user.manager import UserManager
 from vFense.core.agent.agents import (
     change_view_for_all_agents_in_view, remove_all_agents_for_view
 )
@@ -56,10 +57,10 @@ class ViewHandler(BaseHandler):
         uri = self.request.uri
         http_method = self.request.method
         user = UserManager(active_user)
-        self.is_global = user.get_attribute(UserKeys.Global)
-        self.current_view = user.get_attribute(UserKeys.CurrentView)
+        is_global = user.get_attribute(UserKeys.Global)
+        current_view = user.get_attribute(UserKeys.CurrentView)
         try:
-            results = self.get_view(view_name)
+            results = self.get_view(view_name, is_global, current_view)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -75,15 +76,16 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @results_message
-        def get_view(self, view):
-            if self.is_global:
-                fetch_views = RetrieveViews()
-            else:
-                fetch_views = RetrieveViews(parent_view=self.current_view)
+    @results_message
+    def get_view(self, view, is_global, current_view):
+        if is_global:
+            fetch_views = RetrieveViews()
+        else:
+            fetch_views = RetrieveViews(parent_view=current_view)
 
-            results = fetch_views.by_name(views)
-            return results
+        results = fetch_views.by_name(view)
+        results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        return results
 
 
     @authenticated_request
@@ -93,7 +95,7 @@ class ViewHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.view = ViewManager(view_name)
+        view = ViewManager(view_name)
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             ### Add Users to this view or Remove users from this view
@@ -103,10 +105,10 @@ class ViewHandler(BaseHandler):
 
             if usernames:
                 if action == ApiValues.ADD:
-                    results = self.add_users(usernames)
+                    results = self.add_users(view, usernames)
 
                 elif action == ApiValues.DELETE:
-                    results = self.remove_users(usernames)
+                    results = self.remove_users(view, usernames)
 
             ### Add groups to this view or Remove groups from this view
             group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
@@ -115,10 +117,10 @@ class ViewHandler(BaseHandler):
 
             if group_ids:
                 if action == ApiValues.ADD:
-                    results = self.add_groups(group_ids)
+                    results = self.add_groups(view, group_ids)
 
                 elif action == ApiValues.DELETE:
-                    results = self.remove_groups(group_ids)
+                    results = self.remove_groups(view, group_ids)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -135,29 +137,29 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def add_users(self, users):
-            results = self.view.add_users(users)
-            return results
+    @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def add_users(self, view, users):
+        results = view.add_users(users)
+        return results
 
-        @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def add_groups(self, group_ids):
-            results = self.view.add_groups(group_ids)
-            return results
+    @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def add_groups(self, view, group_ids):
+        results = view.add_groups(group_ids)
+        return results
 
-        @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def remove_users(self, users):
-            results = self.view.remove_users(users)
-            return results
+    @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def remove_users(self, view, users):
+        results = view.remove_users(users)
+        return results
 
-        @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def remove_groups(self, group_ids):
-            results = self.view.remove_groups(group_ids)
-            return results
+    @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def remove_groups(self, view, group_ids):
+        results = view.remove_groups(group_ids)
+        return results
 
 
     @authenticated_request
@@ -167,7 +169,7 @@ class ViewHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.view = ViewManager(view_name)
+        view = ViewManager(view_name)
         results = {}
         data = []
         try:
@@ -178,27 +180,27 @@ class ViewHandler(BaseHandler):
             download_url = self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
 
             if net_throttle:
-                results = self.edit_net_throttle(net_throttle)
+                results = self.edit_net_throttle(view, net_throttle)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
             if cpu_throttle:
-                results = self.edit_cpu_throttle(cpu_throttle)
+                results = self.edit_cpu_throttle(view, cpu_throttle)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
             if server_queue_ttl:
-                results = self.edit_server_queue_ttl(server_queue_ttl)
+                results = self.edit_server_queue_ttl(view, server_queue_ttl)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
             if agent_queue_ttl:
-                results = self.edit_agent_queue_ttl(agent_queue_ttl)
+                results = self.edit_agent_queue_ttl(view, agent_queue_ttl)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
             if download_url:
-                results = self.edit_download_url(download_url)
+                results = self.edit_download_url(view, download_url)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
@@ -219,35 +221,35 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
-        @results_message
-        def edit_net_throttle(self, net_throttle):
-            results = self.view.edit_net_throttle(net_throttle)
-            return results
+    @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
+    @results_message
+    def edit_net_throttle(self, view, net_throttle):
+        results = view.edit_net_throttle(net_throttle)
+        return results
 
-        @log_operation(AdminActions.EDIT_CPU_THROTTLE, vFenseObjects.VIEW)
-        @results_message
-        def edit_cpu_throttle(self, cpu_throttle):
-            results = self.view.edit_cpu_throttle(cpu_throttle)
-            return results
+    @log_operation(AdminActions.EDIT_CPU_THROTTLE, vFenseObjects.VIEW)
+    @results_message
+    def edit_cpu_throttle(self, view, cpu_throttle):
+        results = view.edit_cpu_throttle(cpu_throttle)
+        return results
 
-        @log_operation(AdminActions.EDIT_SERVER_QUEUE_TTL, vFenseObjects.VIEW)
-        @results_message
-        def edit_server_queue_ttl(self, server_queue_ttl):
-            results = self.view.edit_server_queue_ttl(server_queue_ttl)
-            return results
+    @log_operation(AdminActions.EDIT_SERVER_QUEUE_TTL, vFenseObjects.VIEW)
+    @results_message
+    def edit_server_queue_ttl(self, view, server_queue_ttl):
+        results = view.edit_server_queue_ttl(server_queue_ttl)
+        return results
 
-        @log_operation(AdminActions.EDIT_AGENT_QUEUE_TTL, vFenseObjects.VIEW)
-        @results_message
-        def edit_agent_queue_ttl(self, agent_queue_ttl):
-            results = self.view.edit_agent_queue_ttl(agent_queue_ttl)
-            return results
+    @log_operation(AdminActions.EDIT_AGENT_QUEUE_TTL, vFenseObjects.VIEW)
+    @results_message
+    def edit_agent_queue_ttl(self, view, agent_queue_ttl):
+        results = view.edit_agent_queue_ttl(agent_queue_ttl)
+        return results
 
-        @log_operation(AdminActions.EDIT_DOWNLOAD_URL, vFenseObjects.VIEW)
-        @results_message
-        def edit_download_url(self, package_download_url):
-            results = self.view.edit_download_url(package_download_url)
-            return results
+    @log_operation(AdminActions.EDIT_DOWNLOAD_URL, vFenseObjects.VIEW)
+    @results_message
+    def edit_download_url(self, view, package_download_url):
+        results = view.edit_download_url(package_download_url)
+        return results
 
 
     @authenticated_request
@@ -257,7 +259,7 @@ class ViewHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.view = ViewManager(view_name)
+        view = ViewManager(view_name)
         try:
             deleted_agents = (
                 self.arguments.get(ApiArguments.DELETE_ALL_AGENTS)
@@ -265,7 +267,7 @@ class ViewHandler(BaseHandler):
             move_agents_to_view = (
                 self.arguments.get(ApiArguments.MOVE_AGENTS_TO_VIEW, None)
             )
-            results = self.remove_view()
+            results = self.remove_view(view)
 
             if move_agents_to_view:
                 if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
@@ -306,11 +308,11 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def remove_view(self):
-            results = self.view.edit_download_url(view)
-            return results
+    @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def remove_view(self, view):
+        results = view.remove()
+        return results
 
 
 class ViewsHandler(BaseHandler):
@@ -332,7 +334,7 @@ class ViewsHandler(BaseHandler):
         offset = int(self.get_argument('offset', 0))
         sort = self.get_argument('sort', 'asc')
         sort_by = self.get_argument('sort_by', ViewKeys.ViewName)
-        self.fetch_views = (
+        fetch_views = (
             RetrieveViews(
                 parent_view, count, offset, sort, sort_by, is_global
             )
@@ -354,16 +356,16 @@ class ViewsHandler(BaseHandler):
                     )
                 )
             if granted and not all_views and not view_context:
-                results = self.get_all_views_for_user(active_user)
+                results = self.get_all_views_for_user(fetch_views, active_user)
 
             elif granted and all_views and not view_context:
-                results = self.get_all_views()
+                results = self.get_all_views(fetch_views)
 
             elif granted and view_context and not all_views:
-                results = self.get_view(view_context)
+                results = self.get_view(fetch_views, view_context)
 
             elif granted and regex:
-                results = self.get_all_views_by_regex(query)
+                results = self.get_all_views_by_regex(fetch_views, query)
 
             elif not granted:
                 results = (
@@ -388,25 +390,25 @@ class ViewsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @results_message
-        def get_all_views(self):
-            results = self.fetch_views.all()
-            return results
+    @results_message
+    def get_all_views(self, fetch_views):
+        results = fetch_views.all()
+        return results
 
-        @results_message
-        def get_all_views_for_user(self, username):
-            results = self.fetch_views.for_user(username)
-            return results
+    @results_message
+    def get_all_views_for_user(self, fetch_views, username):
+        results = fetch_views.for_user(username)
+        return results
 
-        @results_message
-        def get_all_views_by_regex(self, regex):
-            results = self.fetch_views.by_regex(regex)
-            return results
+    @results_message
+    def get_all_views_by_regex(self, fetch_views, regex):
+        results = fetch_views.by_regex(regex)
+        return results
 
-        @results_message
-        def get_view(self, view_name):
-            results = self.fetch_views.by_name(view_name)
-            return results
+    @results_message
+    def get_view(self, fetch_views, view_name):
+        results = fetch_views.by_name(view_name)
+        return results
 
 
     @authenticated_request
@@ -418,29 +420,38 @@ class ViewsHandler(BaseHandler):
         http_method = self.request.method
         active_view = user.get_attribute(UserKeys.CurrentView)
         try:
-            self.parent_view = self.get_argument('view_context', active_view)
-            self.view_name = (
+            parent_view = self.get_argument('view_context', active_view)
+            view_name = (
                 self.arguments.get(ApiArguments.VIEW_NAME)
             )
-            self.pkg_url = (
+            pkg_url = (
                 self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
             )
-            self.net_throttle = (
+            net_throttle = (
                 self.arguments.get(ApiArguments.NET_THROTTLE, 0)
             )
-            self.cpu_throttle = (
+            cpu_throttle = (
                 self.arguments.get(
                     ApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
                 )
             )
-            self.server_queue_ttl = (
+            server_queue_ttl = (
                 self.arguments.get(ApiArguments.SERVER_QUEUE_TTL, 10)
             )
-            self.agent_queue_ttl = (
+            agent_queue_ttl = (
                 self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
             )
+            view = View(
+                view_name, parent_view,
+                users=[active_users],
+                net_throttle=net_throttle,
+                cpu_throttle=cpu_throttle,
+                server_queue_ttl=server_queue_ttl,
+                agent_queue_ttl=agent_queue_ttl,
+                package_download_url=pkg_url
+            )
 
-            results = self.create_view()
+            results = self.create_view(view)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -457,21 +468,12 @@ class ViewsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
-        @results_message
-        def create_view(self):
-            view = View(
-                self.view_name, self.parent_view,
-                users=[self.active_users],
-                net_throttle=self.net_throttle,
-                cpu_throttle=self.cpu_throttle,
-                server_queue_ttl=self.server_queue_ttl,
-                agent_queue_ttl=self.agent_queue_ttl,
-                package_download_url=self.pkg_url
-            )
-            manager = ViewManager(view.name)
-            results = manager.create(view)
-            return results
+    @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
+    @results_message
+    def create_view(self, view):
+        manager = ViewManager(view.name)
+        results = manager.create(view)
+        return results
 
 
     @authenticated_request
@@ -516,61 +518,57 @@ class ViewsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEWS)
-        @results_message
-        def remove_views(self, view_names):
-            end_results = {}
-            views_deleted = []
-            views_unchanged = []
-            for view_name in view_names:
-                manager = ViewManager(view_name)
-                results = manager.remove()
-                if (results[ApiResultKeys.VFENSE_STATUS_CODE]
-                        == ViewCodes.Deleted):
-                    views_deleted.append(view_name)
-                else:
-                    views_unchanged.append(view_name)
+    @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEW)
+    @results_message
+    def remove_views(self, view_names):
+        end_results = {}
+        views_deleted = []
+        views_unchanged = []
+        for view_name in view_names:
+            manager = ViewManager(view_name)
+            results = manager.remove()
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                    == ViewCodes.Deleted):
+                views_deleted.append(view_name)
+            else:
+                views_unchanged.append(view_name)
 
-            end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
-            end_results[ApiResultKeys.DELETED_IDS] = views_deleted
-            if views_unchanged and views_deleted:
-                msg = (
-                    'view names deleted: %s, view names unchanged: %s'
-                    % (', '.join(views_deleted), ', '.join(views_unchanged))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericFailureCodes.FailedToDeleteAllObjects
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewFailureCodes.FailedToDeleteAllViews
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
+        end_results[ApiResultKeys.DELETED_IDS] = views_deleted
+        if views_unchanged and views_deleted:
+            msg = (
+                'view names deleted: %s, view names unchanged: %s'
+                % (', '.join(views_deleted), ', '.join(views_unchanged))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToDeleteAllObjects
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.FailedToDeleteAllViews
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            elif views_deleted and not views_unchanged:
-                msg = (
-                    'view names deleted: %s'
-                    % (', '.join(views_deleted))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectsDeleted
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewCodes.ViewsDeleted
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        elif views_deleted and not views_unchanged:
+            msg = (
+                'view names deleted: %s' % (', '.join(views_deleted))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsDeleted
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewCodes.ViewsDeleted
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            elif views_unchanged and not views_deleted:
-                msg = (
-                    'view names unchanged: %s'
-                    % (', '.join(views_unchanged))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectsUnchanged
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    ViewCodes.ViewsUnchanged
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        elif views_unchanged and not views_deleted:
+            msg = 'view names unchanged: %s' % (', '.join(views_unchanged))
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUnchanged
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewCodes.ViewsUnchanged
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            return end_results
+        return end_results
 

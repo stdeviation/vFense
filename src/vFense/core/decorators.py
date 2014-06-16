@@ -75,8 +75,6 @@ def results_message(fn):
         data = fn(*args, **kwargs)
         status_code = data.get(ApiResultKeys.DB_STATUS_CODE, None)
         generic_status_code = data.get(ApiResultKeys.GENERIC_STATUS_CODE, None)
-        print args
-        print kwargs
         tornado_handler = args[0]
         username = tornado_handler.get_current_user()
         method = tornado_handler.request.method

@@ -44,6 +44,7 @@ class UserHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
+        is_global = UserManager(active_user).get_attribute(UserKeys.Global)
         try:
             granted, status_code = (
                 verify_permission_for_user(
@@ -51,10 +52,10 @@ class UserHandler(BaseHandler):
                 )
             )
             if not username or username == active_user:
-                results = self.get_user(active_user)
+                results = self.get_user(active_user, is_global)
 
             elif username and granted:
-                results = self.get_user(username)
+                results = self.get_user(username, is_global)
 
             elif username and not granted:
                 results = (
@@ -81,9 +82,10 @@ class UserHandler(BaseHandler):
 
 
     @results_message
-    def get_user(self, user_name):
-        fetch_users = RetrieveUsers()
+    def get_user(self, user_name, is_global):
+        fetch_users = RetrieveUsers(is_global=is_global)
         results = fetch_users.by_name(user_name)
+        results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
         return results
 
 

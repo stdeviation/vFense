@@ -42,6 +42,7 @@ class AdminActions():
     REMOVE_AGENTS = 'remove agents'
     ###REMOVE FROM
     REMOVE_VIEW_FROM_GROUP = 'remove view from group'
+    REMOVE_VIEWS_FROM_GROUP = 'remove views from group'
     REMOVE_VIEW_FROM_USER = 'remove view from group'
     REMOVE_USER_FROM_VIEW = 'remove user from view'
     REMOVE_USER_FROM_GROUP = 'remove user from group'

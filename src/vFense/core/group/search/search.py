@@ -96,7 +96,7 @@ class RetrieveGroups(object):
     def by_name(self, name):
         """Query groups by group name.
         Args:
-            name (str): The regex you are searching by
+            name (str): The name of the group you are searching for.
 
         Basic Usage:
             >>> from vFense.core.groups.search.search import RetrieveGroups
@@ -126,6 +126,39 @@ class RetrieveGroups(object):
 
         return results
 
+    @time_it
+    def by_regex(self, name):
+        """Query groups by regex on group name.
+        Args:
+            name (str): The regex you are searching by
+
+        Basic Usage:
+            >>> from vFense.core.groups.search.search import RetrieveGroups
+            >>> search_groups = RetrieveGroups(view_name='global')
+            >>> search_groups.by_name('global')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_groups.by_regex(name)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return results
 
     @time_it
     def all(self):

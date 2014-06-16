@@ -15,6 +15,10 @@ from vFense.core.decorators import authenticated_request
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
 
+from vFense.core.decorators import (
+    convert_json_to_arguments, authenticated_request, results_message
+)
+
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -30,11 +34,8 @@ class ViewStatsByOsHandler(BaseHandler):
         method = self.request.method
         try:
             count = self.get_argument('limit', 3)
-            results = (
-                view_stats_by_os(
-                    view_name, count,
-                    username, uri, method
-                )
+            results =  (
+                self.get_view_stats_by_os(view_name, count)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -49,6 +50,11 @@ class ViewStatsByOsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_view_stats_by_os(self, view_name, count):
+        results = view_stats_by_os(view_name, count)
+        return results
 
 
 class TagStatsByOsHandler(BaseHandler):
@@ -62,12 +68,7 @@ class TagStatsByOsHandler(BaseHandler):
         method = self.request.method
         try:
             count = self.get_argument('limit', 3)
-            results = (
-                tag_stats_by_os(
-                    tag_id, count,
-                    username, uri, method
-                )
-            )
+            results = self.get_tag_stats_by_os(tag_id, count)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -82,6 +83,11 @@ class TagStatsByOsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_tag_stats_by_os(self, tag_id, count):
+        results = tag_stats_by_os(tag_id, count)
+        return results
+
 
 class WidgetHandler(BaseHandler):
     @authenticated_request
@@ -94,7 +100,7 @@ class WidgetHandler(BaseHandler):
         method = self.request.method
         try:
             app_stats = (
-                get_all_app_stats_by_view(view_name)
+                self.get_all_app_stats_for_view(view_name)
             )
             results = (
                 GenericResults(
@@ -115,6 +121,12 @@ class WidgetHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_all_app_stats_for_view(self, view_name):
+        results = get_all_app_stats_by_view(view_name)
+        return results
+
+
 
 class BarChartByAppIdByStatusHandler(BaseHandler):
     def get(self):
@@ -123,10 +135,21 @@ class BarChartByAppIdByStatusHandler(BaseHandler):
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         appid = self.get_argument('id', None)
-        result = bar_chart_for_appid_by_status(app_id=appid,
-                                              view_name=view_name)
+        results = (
+            self.get_bar_chart_for_appid_by_status(appid, view_name)
+        )
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(result, indent=4))
+        self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_bar_chart_for_appid_by_status(self, app_id, view_name):
+        results = (
+            bar_chart_for_appid_by_status(
+                app_id=app_id, view_name=view_name
+            )
+        )
+        return results
+
 
 
 class OsAppsOverTimeHandler(BaseHandler):
@@ -148,9 +171,8 @@ class OsAppsOverTimeHandler(BaseHandler):
                 end_date = int(end_date)
 
             results = (
-                get_os_apps_history(
-                    view_name, status, start_date, end_date,
-                    username, uri, method
+                self.get_system_apps_history(
+                    view_name, status, start_date, end_date
                 )
             )
             self.set_status(results['http_status'])
@@ -167,6 +189,16 @@ class OsAppsOverTimeHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_system_apps_history(self, view_name, status,
+                                start_date, end_date):
+        results = (
+            get_os_apps_history(
+                view_name, status, start_date, end_date
+            )
+        )
+        return results
 
 
 class AgentOsAppsOverTimeHandler(BaseHandler):
@@ -188,9 +220,8 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
                 end_date = int(end_date)
 
             results = (
-                get_os_apps_history_for_agent(
-                    agent_id, status, start_date, end_date,
-                    username, uri, method
+                self.get_system_apps_history_for_agent(
+                    agent_id, status, start_date, end_date
                 )
             )
             self.set_status(results['http_status'])
@@ -207,6 +238,16 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_system_apps_history_for_agent(self, agent_id, status,
+                                          start_date, end_date):
+        results = (
+            get_os_apps_history_for_agent(
+                agent_id, status, start_date, end_date
+            )
+        )
+        return results
 
 
 class TagOsAppsOverTimeHandler(BaseHandler):
@@ -228,9 +269,8 @@ class TagOsAppsOverTimeHandler(BaseHandler):
                 end_date = int(end_date)
 
             results = (
-                get_os_apps_history_for_tag(
-                    tag_id, status, start_date, end_date,
-                    username, uri, method
+                self.get_system_apps_history_for_tag(
+                    tag_id, status, start_date, end_date
                 )
             )
             self.set_status(results['http_status'])
@@ -247,6 +287,16 @@ class TagOsAppsOverTimeHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_system_apps_history_for_tag(self, tag_id, status,
+                                          start_date, end_date):
+        results = (
+            get_os_apps_history_for_tag(
+                agent_id, status, start_date, end_date
+            )
+        )
+        return results
 
 
 class TopAppsNeededHandler(BaseHandler):
@@ -260,12 +310,7 @@ class TopAppsNeededHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            results = (
-                top_packages_needed(
-                    view_name, count,
-                    username, uri, method
-                )
-            )
+            results = self.get_top_packages_needed(view_name, count)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -280,6 +325,11 @@ class TopAppsNeededHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_top_packages_needed(self, view_name, count):
+        results = top_packages_needed(view_name, count)
+        return results
 
 
 class RecentlyReleasedHandler(BaseHandler):
@@ -294,10 +344,7 @@ class RecentlyReleasedHandler(BaseHandler):
         try:
             count = int(self.get_argument('count', 5))
             results = (
-                recently_released_packages(
-                    view_name, count,
-                    username, uri, method
-                )
+                self.get_recently_released_packages(view_name, count)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -314,6 +361,11 @@ class RecentlyReleasedHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_recently_released_packages(self, view_name, count):
+        results = recently_released_packages(view_name, count)
+        return results
+
 
 class ViewSeverityHandler(BaseHandler):
     @authenticated_request
@@ -326,9 +378,7 @@ class ViewSeverityHandler(BaseHandler):
         method = self.request.method
         try:
             results = (
-                get_severity_bar_chart_stats_for_view(
-                    view_name, username, uri, method
-                )
+                self.get_sev_bar_chart_stats_for_view(view_name)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -345,6 +395,11 @@ class ViewSeverityHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_sev_bar_chart_stats_for_view(self, view_name):
+        results = get_severity_bar_chart_stats_for_view(view_name)
+        return results
+
 
 class AgentSeverityHandler(BaseHandler):
     @authenticated_request
@@ -357,9 +412,7 @@ class AgentSeverityHandler(BaseHandler):
         method = self.request.method
         try:
             results = (
-                get_severity_bar_chart_stats_for_agent(
-                    agent_id, username, uri, method
-                )
+                self.get_sev_bar_chart_stats_for_agent(agent_id)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -376,6 +429,11 @@ class AgentSeverityHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_sev_bar_chart_stats_for_agent(self, agent_id):
+        results = get_severity_bar_chart_stats_for_agent(agent_id)
+        return results
+
 
 class TagSeverityHandler(BaseHandler):
     @authenticated_request
@@ -388,10 +446,7 @@ class TagSeverityHandler(BaseHandler):
         method = self.request.method
         try:
             results = (
-                get_severity_bar_chart_stats_for_tag(
-                    tag_id, username,
-                    uri, method
-                )
+                self.get_sev_bar_chart_stats_for_tag(tag_id)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -407,4 +462,9 @@ class TagSeverityHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_sev_bar_chart_stats_for_tag(self, tag_id):
+        results = get_severity_bar_chart_stats_for_tag(tag_id)
+        return results
 

@@ -66,12 +66,12 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @results_message
-        def get_group(self, group_id, is_global):
-            fetch_groups = RetrieveGroups(is_global=is_global)
-            results = fetch_groups.by_id(group_id)
-
-            return results
+    @results_message
+    def get_group(self, group_id, is_global):
+        fetch_groups = RetrieveGroups(is_global=is_global)
+        results = fetch_groups.by_id(group_id)
+        results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        return results
 
     @authenticated_request
     @convert_json_to_arguments
@@ -80,7 +80,7 @@ class GroupHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.group = GroupManager(group_id)
+        group = GroupManager(group_id)
         try:
             action = self.arguments.get(ApiArguments.ACTION)
             force = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
@@ -88,19 +88,19 @@ class GroupHandler(BaseHandler):
             usernames = self.arguments.get(ApiArguments.USERNAMES, [])
             if usernames and isinstance(usernames, list):
                 if action == ApiValues.ADD:
-                    results = self.add_users(usernames)
+                    results = self.add_users(group, usernames)
 
                 if action == ApiValues.DELETE:
-                    results = self.remove_users(usernames, force)
+                    results = self.remove_users(group, usernames, force)
 
             ###Add Views###
             views = self.arguments.get(ApiArguments.VIEW_NAMES, [])
             if views and isinstance(views, list):
                 if action == ApiValues.ADD:
-                    results = self.add_views(views)
+                    results = self.add_views(group, views)
 
                 if action == ApiValues.DELETE:
-                    results = self.remove_views(views, force)
+                    results = self.remove_views(group, views, force)
 
             if results:
                 self.set_status(results['http_status'])
@@ -129,27 +129,27 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @results_message
-        def add_views(self, views):
-            results = self.group.add_views(views)
-            return results
+    @results_message
+    def add_views(self, group, views):
+        results = group.add_views(views)
+        return results
 
-        @results_message
-        def add_users(self, users):
-            results = self.group.add_users(users)
-            return results
+    @results_message
+    def add_users(self, group, users):
+        results = group.add_users(users)
+        return results
 
-        @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
-        @results_message
-        def remove_views(self, views, force):
-            results = self.group.remove_views(views, force)
-            return results
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
+    @results_message
+    def remove_views(self, group, views, force):
+        results = group.remove_views(views, force)
+        return results
 
-        @log_operation(AdminActions.REMOVE_USERS_FROM_GROUP, vFenseObjects.GROUP)
-        @results_message
-        def remove_users(self, users, force):
-            results = self.group.remove_users(users, force)
-            return results
+    @log_operation(AdminActions.REMOVE_USERS_FROM_GROUP, vFenseObjects.GROUP)
+    @results_message
+    def remove_users(self, group, users, force):
+        results = group.remove_users(users, force)
+        return results
 
 
     @authenticated_request
@@ -159,10 +159,10 @@ class GroupHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-        self.manager = GroupManager(group_id)
+        manager = GroupManager(group_id)
         try:
             ###Remove GroupId###
-            results = self.remove_group()
+            results = self.remove_group(manager)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -179,11 +179,11 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.REMOVE_GROUP, vFenseObjects.GROUP)
-        @results_message
-        def remove_group(self):
-            results = self.manager.remove()
-            return results
+    @log_operation(AdminActions.REMOVE_GROUP, vFenseObjects.GROUP)
+    @results_message
+    def remove_group(self, manager):
+        results = manager.remove()
+        return results
 
 
 class GroupsHandler(BaseHandler):
@@ -196,39 +196,64 @@ class GroupsHandler(BaseHandler):
         http_method = self.request.method
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        self.is_global = user.get_attribute(UserKeys.Global)
+        is_global = user.get_attribute(UserKeys.Global)
         view_context = self.get_argument('view_context', None)
         group_id = self.get_argument('group_id', None)
         all_views = self.get_argument('all_views', None)
-        count = 0
-        self.count = int(self.get_argument('count', 30))
-        self.offset = int(self.get_argument('offset', 0))
-        self.sort = self.get_argument('sort', 'asc')
-        self.sort_by = self.get_argument('sort_by', GroupKeys.GroupName)
-        group_data = []
+        count = int(self.get_argument('count', 30))
+        offset = int(self.get_argument('offset', 0))
+        sort = self.get_argument('sort', 'asc')
+        sort_by = self.get_argument('sort_by', GroupKeys.GroupName)
+        regex = self.get_argument('regex', None)
         try:
             granted, status_code = (
                 verify_permission_for_user(
                     active_user, Permissions.ADMINISTRATOR, view_context
                 )
             )
-            if granted and not view_context and not all_views and not group_id:
-                group_data = self.get_groups(active_view)
+            if granted:
+                if not view_context and not all_views and not group_id:
+                    fetch_groups = (
+                        RetrieveGroups(
+                            active_view, count=count, offset=offset,
+                            sort=sort, sort_key=sort_by,
+                            is_global=is_global
+                        )
+                    )
 
-            elif granted and view_context and not all_views and not group_id:
-                group_data = self.get_groups(view_context)
+                elif view_context and not all_views and not group_id:
+                    fetch_groups = (
+                        RetrieveGroups(
+                            view_context, count=count, offset=offset,
+                            sort=sort, sort_key=sort_by,
+                            is_global=is_global
+                        )
+                    )
 
-            elif granted and all_views and not view_context and not group_id:
-                group_data = self.get_groups()
-
-            elif granted and group_id and not view_context and not all_views:
-                group_data = self.get_groups(group_id=group_id)
-                if group_data:
-                    group_data = [group_data]
                 else:
-                    group_data = []
+                    fetch_groups = (
+                        RetrieveGroups(
+                            view_context, count=count, offset=offset,
+                            sort=sort, sort_key=sort_by,
+                            is_global=is_global
+                        )
+                    )
 
-            elif view_context and not granted or all_views and not granted:
+                if group_id:
+                    results = self.get_group_by_id(fetch_groups, group_id)
+
+                elif regex:
+                    results = (
+                        self.get_all_groups_by_regex(fetch_groups, regex)
+                    )
+
+                else:
+                    results = (
+                        self.get_all_groups(fetch_groups)
+                    )
+
+
+            else:
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
@@ -236,12 +261,6 @@ class GroupsHandler(BaseHandler):
                     )
                 )
 
-            count = len(group_data)
-            results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).information_retrieved(group_data, count)
-            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -258,32 +277,20 @@ class GroupsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @results_message
-        def get_groups(self, view=None, group_id=None):
-            if view:
-                fetch_groups = (
-                    RetrieveGroups(
-                        view, count=self.count, offset=self.offset,
-                        sort=self.sort, sort_key=self.sort_by,
-                        is_global=self.is_global
-                    )
-                )
+    @results_message
+    def get_all_groups(self, fetch_groups):
+        results = fetch_groups.all()
+        return results
 
-            else:
-                fetch_groups = (
-                    RetrieveGroups(
-                        count=self.count, offset=self.offset, sort=self.sort,
-                        sort_key=self.sort_by, is_global=self.is_global
-                    )
-                )
+    @results_message
+    def get_all_groups_by_regex(self, fetch_groups, regex):
+        results = fetch_groups.by_regex(regex)
+        return results
 
-            if not group_id:
-                results = fetch_groups.all()
-
-            else:
-                results = fetch_groups.by_id(group_id)
-
-            return results
+    @results_message
+    def get_group_by_id(self, fetch_groups, group_id):
+        results = fetch_groups.by_id(group_id)
+        return results
 
 
     @authenticated_request
@@ -301,26 +308,29 @@ class GroupsHandler(BaseHandler):
         invalid_value = False
         try:
             ###Create Group###
-            self.group_name = self.arguments.get(ApiArguments.GROUP_NAME)
-            self.permissions = self.arguments.get(ApiArguments.PERMISSIONS)
-            self.is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
-            if self.is_global and not isinstance(self.is_global, bool):
+            group_name = self.arguments.get(ApiArguments.GROUP_NAME)
+            permissions = self.arguments.get(ApiArguments.PERMISSIONS)
+            is_global = self.arguments.get(ApiArguments.IS_GLOBAL, False)
+            if is_global and not isinstance(self.is_global, bool):
                 if re.search('true', self._is_global, re.IGNORECASE):
-                    self.is_global = True
-                elif re.search('false', self._is_global, re.IGNORECASE):
-                    self.is_global = False
+                    is_global = True
+                elif re.search('false', is_global, re.IGNORECASE):
+                    is_global = False
                 else:
                     invalid_value = True
-            self.views = self.arguments.get(ApiArguments.VIEW_NAMES, [])
-            self.views.append(active_view)
-            self.views = list(set(self.views))
+            views = self.arguments.get(ApiArguments.VIEW_NAMES, [])
+            views.append(active_view)
+            views = list(set(self.views))
+            group = Group(
+                group_name, permissions, views, is_global
+            )
             if not invalid_value:
-                results = self.create_group()
+                results = self.create_group(group)
             else:
                 msg = {
                     ApiResultKeys.MESSAGE: (
                         'Invalid value for argument is_global: %s' %
-                        (self.is_global)
+                        (is_global)
                     )
                 }
 
@@ -346,15 +356,12 @@ class GroupsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-        @log_operation(AdminActions.CREATE_GROUP, vFenseObjects.GROUP)
-        @results_message
-        def create_group(self):
-            group = Group(
-                self.group_name, self.permissions, self.views, self.is_global
-            )
-            manager = GroupManager()
-            results = manager.create(group)
-            return results
+    @log_operation(AdminActions.CREATE_GROUP, vFenseObjects.GROUP)
+    @results_message
+    def create_group(self, group):
+        manager = GroupManager()
+        results = manager.create(group)
+        return results
 
     @authenticated_request
     @convert_json_to_arguments
@@ -385,60 +392,54 @@ class GroupsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-        @log_operation(AdminActions.REMOVE_GROUPS, vFenseObjects.GROUP)
-        @results_message
-        def remove_groups(self, group_ids, force=False):
-            end_results = {}
-            groups_deleted = []
-            groups_unchanged = []
-            for group_id in group_ids:
-                manager = GroupManager(group_id)
-                results = manager.remove()
-                if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+    @log_operation(AdminActions.REMOVE_GROUPS, vFenseObjects.GROUP)
+    @results_message
+    def remove_groups(self, group_ids, force=False):
+        end_results = {}
+        groups_deleted = []
+        groups_unchanged = []
+        for group_id in group_ids:
+            manager = GroupManager(group_id)
+            results = manager.remove()
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                         == GroupCodes.Deleted):
-                    groups_deleted.append(group_id)
-                else:
-                    groups_unchanged.append(group_id)
+                groups_deleted.append(group_id)
+            else:
+                groups_unchanged.append(group_id)
 
-            end_results[ApiResultKeys.UNCHANGED_IDS] = groups_unchanged
-            end_results[ApiResultKeys.DELETED_IDS] = groups_deleted
-            if groups_unchanged and groups_deleted:
-                msg = (
-                    'group ids deleted: %s, group ids unchanged: %s'
-                    % (', '.join(groups_deleted), ', '.join(groups_unchanged))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericFailureCodes.FailedToDeleteAllObjects
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupFailureCodes.FailedToDeleteAllGroups
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        end_results[ApiResultKeys.UNCHANGED_IDS] = groups_unchanged
+        end_results[ApiResultKeys.DELETED_IDS] = groups_deleted
+        if groups_unchanged and groups_deleted:
+            msg = (
+                'group ids deleted: %s, group ids unchanged: %s'
+                % (', '.join(groups_deleted), ', '.join(groups_unchanged))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToDeleteAllObjects
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupFailureCodes.FailedToDeleteAllGroups
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            elif groups_deleted and not groups_unchanged:
-                msg = (
-                    'group ids deleted: %s'
-                    % (', '.join(groups_deleted))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectsDeleted
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupCodes.GroupsDeleted
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        elif groups_deleted and not groups_unchanged:
+            msg = 'group ids deleted: %s' % (', '.join(groups_deleted))
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsDeleted
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupsDeleted
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            elif groups_unchanged and not groups_deleted:
-                msg = (
-                    'group ids unchanged: %s'
-                    % (', '.join(groups_unchanged))
-                )
-                end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectsUnchanged
-                )
-                end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GroupCodes.GroupsUnchanged
-                )
-                end_results[ApiResultKeys.MESSAGE] = msg
+        elif groups_unchanged and not groups_deleted:
+            msg = 'group ids unchanged: %s' % (', '.join(groups_unchanged))
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUnchanged
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GroupCodes.GroupsUnchanged
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
 
-            return end_results
+        return end_results

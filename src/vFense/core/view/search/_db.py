@@ -186,14 +186,14 @@ class FetchViews(object):
         try:
             count = (
                 base_filter
-                .get_all(name)
+                .filter({ViewKeys.ViewName: view_name})
                 .count()
                 .run(conn)
             )
 
             data = list(
                 base_filter
-                .get_all(name)
+                .filter({ViewKeys.ViewName: view_name})
                 .coerce_to('array')
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)

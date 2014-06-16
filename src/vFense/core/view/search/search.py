@@ -47,7 +47,7 @@ class RetrieveViews(object):
         else:
             self.sort_key = ViewKeys.ViewName
 
-        self.fetch_ciews = (
+        self.fetch_views = (
             FetchViews(
                 parent_view, self.count, self.offset,
                 self.sort, self.sort_key, is_global=is_global
