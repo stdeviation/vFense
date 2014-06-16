@@ -15,3 +15,12 @@ class AgentStatusKeys(object):
 
 class ProductionLevels(object):
     PRODUCTION = 'production'
+
+
+class AgentDefaults(object):
+    NEEDS_REBOOT = False
+    PRODUCTION_LEVEL = ProductionLevels.PRODUCTION
+    AGENT_STATUS = 'up'
+    REBOOTED = True
+    VIEWS = ['global']
+    DISPLAY_NAME = None
