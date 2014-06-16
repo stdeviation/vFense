@@ -1,6 +1,12 @@
 from vFense.db.client import r
-from vFense.core.tag import TagCollections, TagsPerAgentKey, \
+from vFense.core.tag import (
+    TagCollections, TagsPerAgentKey,
     TagsPerAgentIndexes, TagsKey
+)
+
+from vFense.core.agent import (
+    AgentKeys
+)
 
 class Merge():
     TAGS = (
@@ -25,4 +31,11 @@ class Merge():
             )
         }
     )
-
+    AGENTS = (
+        lambda x:
+        {
+            AgentKeys.LastAgentUpdate: (
+                x[AgentKeys.LastAgentUpdate].to_epoch_time()
+            )
+        }
+    )

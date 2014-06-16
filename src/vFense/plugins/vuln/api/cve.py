@@ -5,12 +5,10 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.plugins.vuln.search.by_cve_id import RetrieveByCveId
+from vFense.plugins.vuln.cve.search.search import RetrieveCVEs
 
-from vFense.core.decorators import authenticated_request
-
-from vFense.core.user import UserKeys
-from vFense.core.user.manager import UserManager
+from vFense.core.decorators import authenticated_request, results_message
+from vFense.errorz._constants import ApiResultKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -19,22 +17,15 @@ logger = logging.getLogger('rvapi')
 class CveIdHandler(BaseHandler):
     @authenticated_request
     def get(self, cve_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri = self.request.uri
-        method = self.request.method
-        vuln = (
-            RetrieveByCveId(
-                username, view_name, cve_id,
-                uri, method
-            )
-        )
-        results = vuln.get_cve()
-
+        results = self.get_cve_id(cve_id)
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
 
- 
+    @results_message
+    def get_cve_id(self, cve_id):
+        vuln = RetrieveCVEs()
+        results = vuln.by_id(cve_id)
+        if len(results[ApiResultKeys.DATA]) > 0:
+            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        return results

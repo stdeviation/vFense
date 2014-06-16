@@ -78,16 +78,16 @@ class NvdParser(object):
             )
         )
         data[CveKeys.CvssScore] = (
-            attrib.get(CVEStrings.CVSS_SCORE)
+            float(attrib.get(CVEStrings.CVSS_SCORE, 0.0))
         )
         data[CveKeys.CvssBaseScore] = (
-            attrib.get(CVEStrings.CVSS_BASE_SCORE)
+            float(attrib.get(CVEStrings.CVSS_BASE_SCORE, 0.0))
         )
         data[CveKeys.CvssImpactSubScore] = (
-            attrib.get(CVEStrings.CVSS_IMPACT_SUBSCORE)
+            float(attrib.get(CVEStrings.CVSS_IMPACT_SUBSCORE, 0.0))
         )
         data[CveKeys.CvssExploitSubScore] = (
-            attrib.get(CVEStrings.CVSS_EXPLOIT_SUBSCORE)
+            float(attrib.get(CVEStrings.CVSS_EXPLOIT_SUBSCORE, 0.0))
         )
         data[CveKeys.CvssVector] = (
             self._parse_vectors(attrib.get(CVEStrings.CVSS_VECTOR))
@@ -334,6 +334,10 @@ def parse_cve_and_udpatedb(
                             key != CveKeys.CvePublishedDate and
                             key != CveKeys.CveCategories and
                             key != CveKeys.CvssVector and
+                            key != CveKeys.CvssBaseScore and
+                            key != CveKeys.CvssScore and
+                            key != CveKeys.CvssExploitSubScore and
+                            key != CveKeys.CvssImpactSubScore and
                             key != CveKeys.CveModifiedDate):
                         cve_data[key] = unicode(cve_data[key])
 
