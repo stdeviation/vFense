@@ -8,7 +8,8 @@ from vFense.core.agent._db import (
     fetch_agent, insert_agent
 )
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag._db_model import TagKeys, TagsPerAgentKeys
+from vFense.core.tag.tags import validate_tag_ids_in_views
 from vFense.core.tag._db import (
     add_tags_to_agent, delete_agent_ids_from_tag
 )
@@ -143,5 +144,50 @@ class AgentManager(object):
         """
         results = {}
         agent_exist = self.properties
+        tag_data = []
         if agent_exist:
+            views = agent_exist[AgentKeys.Views]
+            tags_valid, _, invalid_tags = (
+                validate_tag_ids_in_views(tag_ids, views)
+            )
+            if tags_valid:
+                for tag_id in tag_ids:
+                    tag_data.append(
+                        {
+                            TagsPerAgentKeys.AgentId: self.agent_id,
+                            TagsPerAgentKeys.TagId: tag_id,
+                        }
+                    )
+                status_code, _, _, _ = add_tags_to_agent()
+
+
+    def remove_tags(self, tag_ids):
+        """Remove tags from an agent.
+        Args:
+            tag_ids (list): List of tag ids.
+
+        Basic Usage:
+            >>> from vFense.core.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> tag_ids = ['tag_id']
+
+        Returns:
+            Dictionary
+            >>>
+        """
+
+    def add_hardware(self, hardware):
+        """Add hardware to an agent.
+        Args:
+            hardware (list): List of devices to add.
+
+        Basic Usage:
+            >>> from vFense.core.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> tag_ids = ['tag_id']
+
+        Returns:
+            Dictionary
+            >>>
+        """
 
