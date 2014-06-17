@@ -8,7 +8,7 @@ from vFense.core.agent._db_model import (
     AgentKeys, AgentCollections,
     HardwarePerAgentIndexes, HardwarePerAgentKeys
 )
-from vFense.core.tag import TagCollections, TagsKey, TagsPerAgentKey, \
+from vFense.core.tag._db_model import TagCollections, TagKeys, TagsPerAgentKey, \
     TagsPerAgentIndexes
 from vFense.plugins.patching._db_model import AppCollections, AppsKey, \
      AppsPerAgentIndexes
@@ -650,7 +650,7 @@ class FetchAgents(object):
                         index=TagsPerAgentIndexes.AgentId
                     )
                     .eq_join(
-                        TagsKey.TagId,
+                        TagKeys.TagId,
                         r.table(TagCollections.Tags)
                     )
                     .zip()

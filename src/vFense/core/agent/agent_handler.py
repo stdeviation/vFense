@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.utils.common import *
 from vFense.core.agent.agents import update_agent_field, get_agent_info
 from vFense.core.tag.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.patching import remove_all_app_data_for_agent, \

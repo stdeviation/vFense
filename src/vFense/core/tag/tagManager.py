@@ -3,7 +3,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.core.agent._db_model import *
 from vFense.plugins.patching._db_model import *
 
@@ -31,7 +31,7 @@ def tag_exists(tag_id, conn=None):
             r
             .table(TagsCollection)
             .get(tag_id)
-            .pluck(TagsKey.TagId, TagsKey.TagName)
+            .pluck(TagKeys.TagId, TagKeys.TagName)
             .run(conn)
         )
 
@@ -53,7 +53,7 @@ def get_tags_by_agent_id(agent_id=None, conn=None):
             .map(
                 {
                     TagsPerAgentKey.TagId: r.row[TagsPerAgentKey.TagId],
-                    TagsPerAgentKey.TagName: r.row[TagsKey.TagName]
+                    TagsPerAgentKey.TagName: r.row[TagKeys.TagName]
                 }
             )
             .distinct()
@@ -185,7 +185,7 @@ def get_all_tag_ids(view_name=None, conn=None):
             r
             .table(TagsCollection)
             .get_all(view_name, index=TagsIndexes.ViewName)
-            .map(lambda x: x[TagsKey.TagId])
+            .map(lambda x: x[TagKeys.TagId])
             .run(conn)
         )
 
@@ -210,7 +210,7 @@ def tag_lister(view_name='default', query=None, conn=None):
             r
             .table(TagsCollection)
             .get_all(view_name, index=TagsIndexes.ViewName)
-            .filter(lambda x: x[TagsKey.TagName].match(query))
+            .filter(lambda x: x[TagKeys.TagName].match(query))
             .run(conn)
         )
 
@@ -219,7 +219,7 @@ def tag_lister(view_name='default', query=None, conn=None):
             r
             .table(TagsCollection)
             .get_all(view_name, index=TagsIndexes.ViewName)
-            .order_by(TagsKey.TagName)
+            .order_by(TagKeys.TagName)
             .run(conn)
         )
 
@@ -259,9 +259,9 @@ class TagsManager(object):
     def create_tag(self, tag_name, prod_level='Production', conn=None):
         tag_id = None
         ninsert = {
-            TagsKey.TagName: tag_name,
-            TagsKey.ViewName: self.view_name,
-            TagsKey.ProductionLevel: prod_level,
+            TagKeys.TagName: tag_name,
+            TagKeys.ViewName: self.view_name,
+            TagKeys.ProductionLevel: prod_level,
         }
         try:
             tag_exists = list(
@@ -269,7 +269,7 @@ class TagsManager(object):
                 .table(TagsCollection)
                 .get_all([self.view_name, tag_name],
                          index=TagsIndexes.TagNameAndView)
-                .pluck(TagsKey.TagId)
+                .pluck(TagKeys.TagId)
                 .run(conn)
             )
             if len(tag_exists) == 0:
@@ -282,8 +282,8 @@ class TagsManager(object):
                 if 'inserted' in inserted:
                     tag_id = inserted['generated_keys'][0]
                     data = {
-                        TagsKey.TagId: tag_id,
-                        TagsKey.TagName: tag_name,
+                        TagKeys.TagId: tag_id,
+                        TagKeys.TagName: tag_name,
                     }
 
                     status = (
@@ -332,7 +332,7 @@ class TagsManager(object):
             )
 
             tag_info = r.table(TagsCollection).get(tag_id).run(conn)
-            tag_name = tag_info[TagsKey.TagName]
+            tag_name = tag_info[TagKeys.TagName]
 
             if not tag_for_agent_exists:
                 agent_info = (

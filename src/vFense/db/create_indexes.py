@@ -3,7 +3,7 @@
 from vFense.db.client import db_connect, r
 
 from vFense.core.agent._db_model import *
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.core.user._db_model import *
 from vFense.core.group._db_model import *
 from vFense.core.view._db_model import *
@@ -47,8 +47,8 @@ def initialize_indexes_and_create_tables():
         ('plugin_configurations', 'name'),
         (DownloadCollections.LatestDownloadedSupported, SupportedAppsKey.AppId),
         (DownloadCollections.LatestDownloadedAgent, SupportedAppsKey.AppId),
-        (TagsCollection, TagsKey.TagId),
-        (TagsPerAgentCollection, Id),
+        (TagCollections.Tags, TagKeys.TagId),
+        (TagCollections.TagsPerAgent, Id),
         (QueueCollections.Agent, Id),
         (UserCollections.Users, UserKeys.UserName),
         (GroupCollections.Groups, GroupKeys.GroupId),
@@ -76,7 +76,7 @@ def initialize_indexes_and_create_tables():
     ubuntu_bulletin_list = r.table(UbuntuSecurityCollection.Bulletin).index_list().run(conn)
     files_list = r.table(FileCollections.Files).index_list().run(conn)
     file_server_list = r.table(FileCollections.FileServers).index_list().run(conn)
-    tags_list = r.table(TagsCollection).index_list().run(conn)
+    tags_list = r.table(TagCollections.Tags).index_list().run(conn)
     agents_list = r.table(AgentCollections.Agents).index_list().run(conn)
     agent_operations_list = r.table(OperationCollections.Agent).index_list().run(conn)
     admin_operations_list = r.table(OperationCollections.Admin).index_list().run(conn)
@@ -85,7 +85,7 @@ def initialize_indexes_and_create_tables():
     notif_list = r.table(NotificationCollections.Notifications).index_list().run(conn)
     notif_history_list = r.table(NotificationCollections.NotificationsHistory).index_list().run(conn)
     hw_per_agent_list = r.table(AgentCollections.Hardware).index_list().run(conn)
-    tag_per_agent_list = r.table(TagsPerAgentCollection).index_list().run(conn)
+    tag_per_agent_list = r.table(TagCollections.TagsPerAgent).index_list().run(conn)
     notif_plugin_list = r.table(NotificationCollections.NotificationPlugins,).index_list().run(conn)
     agent_queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
     user_list = r.table(UserCollections.Users).index_list().run(conn)
@@ -179,22 +179,22 @@ def initialize_indexes_and_create_tables():
 
 #################################### TagsCollection Indexes ###################################################
     if not TagsIndexes.ViewName in tags_list:
-        r.table(TagsCollection).index_create(TagsIndexes.ViewName).run(conn)
+        r.table(TagCollections.Tags).index_create(TagsIndexes.ViewName).run(conn)
 
     if not TagsIndexes.TagNameAndView in tags_list:
-        r.table(TagsCollection).index_create(
+        r.table(TagCollections.Tags).index_create(
             TagsIndexes.TagNameAndView, lambda x: [
-                x[TagsKey.ViewName], x[TagsKey.TagName]]).run(conn)
+                x[TagKeys.ViewName], x[TagKeys.TagName]]).run(conn)
 
 #################################### TagsPerAgentCollection Indexes ###################################################
     if not TagsPerAgentIndexes.TagId in tag_per_agent_list:
-        r.table(TagsPerAgentCollection).index_create(TagsPerAgentIndexes.TagId).run(conn)
+        r.table(TagCollections.TagsPerAgent).index_create(TagsPerAgentIndexes.TagId).run(conn)
 
     if not TagsPerAgentIndexes.AgentId in tag_per_agent_list:
-        r.table(TagsPerAgentCollection).index_create(TagsPerAgentIndexes.AgentId).run(conn)
+        r.table(TagCollections.TagsPerAgent).index_create(TagsPerAgentIndexes.AgentId).run(conn)
 
     if not TagsPerAgentIndexes.AgentIdAndTagId in tag_per_agent_list:
-        r.table(TagsPerAgentCollection).index_create(
+        r.table(TagCollections.TagsPerAgent).index_create(
             TagsPerAgentIndexes.AgentIdAndTagId, lambda x: [
                 x[TagsPerAgentKey.AgentId],
                 x[TagsPerAgentKey.TagId]]).run(conn)
@@ -492,10 +492,10 @@ def initialize_indexes_and_create_tables():
 
 #################################### HardwarePerAgentCollection Indexes ###################################################
     if not HardwarePerAgentIndexes.Type in hw_per_agent_list:
-        r.table(HardwarePerAgentCollection).index_create(HardwarePerAgentIndexes.Type).run(conn)
+        r.table(AgentCollections.Hardware).index_create(HardwarePerAgentIndexes.Type).run(conn)
 
     if not HardwarePerAgentIndexes.AgentId in hw_per_agent_list:
-        r.table(HardwarePerAgentCollection).index_create(HardwarePerAgentIndexes.AgentId).run(conn)
+        r.table(AgentCollections.Hardware).index_create(HardwarePerAgentIndexes.AgentId).run(conn)
 
 #################################### DownloadStatusCollection Indexes ###################################################
     if not 'app_id' in downloaded_list:

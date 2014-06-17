@@ -12,7 +12,7 @@ from vFense.core.agent import Agent
 from vFense.core.view.views import validate_view_names
 from vFense.core.tag.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
 from vFense.core.tag.tagManager import delete_agent_from_all_tags
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db_model import *
@@ -43,7 +43,7 @@ class AgentManager(object):
             if self.properties.get(AgentKeys.Tags):
                 self.tags = (
                     map(
-                        lambda x: x[TagsKey.TagId],
+                        lambda x: x[TagKeys.TagId],
                         self.properties.get(AgentKeys.Tags, [])
                     )
                 )

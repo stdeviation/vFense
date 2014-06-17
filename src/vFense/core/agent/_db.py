@@ -5,7 +5,7 @@ from vFense.db.client import db_create_close, r
 from vFense.core.agent._db_model import AgentCollections, \
     AgentIndexes, AgentKeys
 from vFense.core.agent._db_sub_queries import Merge
-#from vFense.core.tag import *
+#from vFense.core.tag._db_model import *
 #from vFense.plugins.patching._db_model import *
 from vFense.core.decorators import return_status_tuple, time_it
 

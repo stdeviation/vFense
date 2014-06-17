@@ -6,7 +6,7 @@ from vFense.db.client import r
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.file_data import add_file_data
 

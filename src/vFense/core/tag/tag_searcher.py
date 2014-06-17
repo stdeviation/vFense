@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.core.agent._db_model import *
 
 from vFense.utils.common import *
@@ -22,7 +22,7 @@ class TagSearcher():
     def __init__(self, username, view_name,
                  uri=None, method=None, count=30,
                  offset=0, sort='asc',
-                 sort_key=TagsKey.TagName):
+                 sort_key=TagKeys.TagName):
 
         self.qcount = count
         self.qoffset = offset
@@ -31,13 +31,13 @@ class TagSearcher():
         self.uri = uri
         self.method = method
         self.list_of_valid_keys = [
-            TagsKey.TagName, TagsKey.ProductionLevel,
+            TagKeys.TagName, TagKeys.ProductionLevel,
         ]
 
         if sort_key in self.list_of_valid_keys:
             self.sort_key = sort_key
         else:
-            self.sort_key = TagsKey.TagName
+            self.sort_key = TagKeys.TagName
 
         if sort == 'asc':
             self.sort = r.asc
@@ -60,7 +60,7 @@ class TagSearcher():
                 for tag in xrange(len(data)):
                     data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                         get_all_avail_stats_by_tagid(
-                            data[tag][TagsKey.TagId]
+                            data[tag][TagKeys.TagId]
                         )
                     )
 
@@ -113,7 +113,7 @@ class TagSearcher():
                     .filter(
                         {
                             fkey: fval,
-                            TagsKey.ViewName: self.view_name
+                            TagKeys.ViewName: self.view_name
                         }
                     )
                     .count()
@@ -125,7 +125,7 @@ class TagSearcher():
                     .filter(
                         {
                             fkey: fval,
-                            TagsKey.ViewName: self.view_name
+                            TagKeys.ViewName: self.view_name
                         }
                     )
                     .order_by(self.sort(self.sort_key))
@@ -137,7 +137,7 @@ class TagSearcher():
                     for tag in xrange(len(data)):
                         data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                             get_all_avail_stats_by_tagid(
-                                tag[TagsKey.TagId]
+                                tag[TagKeys.TagId]
                             )
                         )
 
@@ -207,7 +207,7 @@ class TagSearcher():
                 for tag in xrange(len(data)):
                     data[tag][CommonAppKeys.BASIC_RV_STATS] = (
                         get_all_avail_stats_by_tagid(
-                            data[tag][TagsKey.TagId]
+                            data[tag][TagKeys.TagId]
                         )
                     )
 

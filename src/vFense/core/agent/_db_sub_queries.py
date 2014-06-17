@@ -1,7 +1,7 @@
 from vFense.db.client import r
-from vFense.core.tag import (
+from vFense.core.tag._db_model import (
     TagCollections, TagsPerAgentKey,
-    TagsPerAgentIndexes, TagsKey
+    TagsPerAgentIndexes, TagKeys
 )
 
 from vFense.core.agent._db_model import (
@@ -19,7 +19,7 @@ class Merge():
                     index=TagsPerAgentIndexes.AgentId
                 )
                 .eq_join(
-                    TagsKey.TagId,
+                    TagKeys.TagId,
                     r.table(TagCollections.Tags)
                 )
                 .zip()

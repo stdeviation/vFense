@@ -5,7 +5,7 @@ from vFense.db.client import db_create_close, r
 from vFense.core.decorators import time_it
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db_model import AgentKeys, AgentCollections
-from vFense.core.tag import (
+from vFense.core.tag._db_model import (
     TagCollections, TagsPerAgentKey, TagsPerAgentIndexes,
 )
 from vFense.plugins.patching._db_model import (
