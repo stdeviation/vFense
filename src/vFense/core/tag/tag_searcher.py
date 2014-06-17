@@ -49,7 +49,7 @@ class TagSearcher():
         try:
             data = list(
                 r
-                .table(TagsCollection)
+                .table(TagCollections.Tags)
                 .get_all(self.view_name,
                     index=TagsIndexes.ViewName)
                 .filter(lambda x: x[self.sort_key].match("(?i)"+query))
@@ -66,15 +66,15 @@ class TagSearcher():
 
                     agents_in_tag = list(
                         r
-                        .table(TagsPerAgentCollection)
+                        .table(TagCollections.TagsPerAgent)
                         .get_all(
-                            data[tag][TagsPerAgentKey.TagId],
+                            data[tag][TagsPerAgentKeys.TagId],
                             index=TagsPerAgentIndexes.TagId
                         )
-                        .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
+                        .eq_join(TagsPerAgentKeys.AgentId, r.table(AgentsCollection))
                         .zip()
                         .pluck(
-                            TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                            TagsPerAgentKeys.AgentId, AgentKeys.ComputerName,
                             AgentKeys.DisplayName
                         )
                         .run(conn)
@@ -109,7 +109,7 @@ class TagSearcher():
             if fkey in self.list_of_valid_keys:
                 count = (
                     r
-                    .table(TagsCollection)
+                    .table(TagCollections.Tags)
                     .filter(
                         {
                             fkey: fval,
@@ -121,7 +121,7 @@ class TagSearcher():
                 )
                 data = list(
                     r
-                    .table(TagsCollection)
+                    .table(TagCollections.Tags)
                     .filter(
                         {
                             fkey: fval,
@@ -143,13 +143,13 @@ class TagSearcher():
 
                         agents_in_tag = list(
                             r
-                            .table(TagsPerAgentCollection)
-                            .get_all(data[tag][TagsPerAgentKey.Id],
+                            .table(TagCollections.TagsPerAgent)
+                            .get_all(data[tag][TagsPerAgentKeys.Id],
                                      index=TagsPerAgentIndexes.TagId)
-                            .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
+                            .eq_join(TagsPerAgentKeys.AgentId, r.table(AgentsCollection))
                             .zip()
                             .pluck(
-                                TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                                TagsPerAgentKeys.AgentId, AgentKeys.ComputerName,
                                 AgentKeys.DisplayName)
                             .run(conn)
                         )
@@ -188,14 +188,14 @@ class TagSearcher():
         try:
             count = (
                 r
-                .table(TagsCollection)
+                .table(TagCollections.Tags)
                 .get_all(self.view_name, index=TagsIndexes.ViewName)
                 .count()
                 .run(conn)
             )
             data = list(
                 r
-                .table(TagsCollection)
+                .table(TagCollections.Tags)
                 .get_all(self.view_name, index=TagsIndexes.ViewName)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.qoffset)
@@ -213,13 +213,13 @@ class TagSearcher():
 
                     agents_in_tag = list(
                         r
-                        .table(TagsPerAgentCollection)
-                        .get_all(data[tag][TagsPerAgentKey.TagId],
+                        .table(TagCollections.TagsPerAgent)
+                        .get_all(data[tag][TagsPerAgentKeys.TagId],
                                  index=TagsPerAgentIndexes.TagId)
-                        .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
+                        .eq_join(TagsPerAgentKeys.AgentId, r.table(AgentsCollection))
                         .zip()
                         .pluck(
-                            TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                            TagsPerAgentKeys.AgentId, AgentKeys.ComputerName,
                             AgentKeys.DisplayName)
                         .run(conn)
                     )
@@ -249,7 +249,7 @@ class TagSearcher():
         try:
             tag_info = (
                 r
-                .table(TagsCollection)
+                .table(TagCollections.Tags)
                 .get(tag_id)
                 .run(conn)
             )
@@ -257,12 +257,12 @@ class TagSearcher():
             if tag_info:
                 agents_in_tag = list(
                     r
-                    .table(TagsPerAgentCollection)
+                    .table(TagCollections.TagsPerAgent)
                     .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-                    .eq_join(TagsPerAgentKey.AgentId, r.table(AgentsCollection))
+                    .eq_join(TagsPerAgentKeys.AgentId, r.table(AgentsCollection))
                     .zip()
                     .pluck(
-                        TagsPerAgentKey.AgentId, AgentKeys.ComputerName,
+                        TagsPerAgentKeys.AgentId, AgentKeys.ComputerName,
                         AgentKeys.DisplayName)
                     .run(conn)
                 )

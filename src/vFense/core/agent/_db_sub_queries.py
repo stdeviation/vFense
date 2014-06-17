@@ -1,6 +1,6 @@
 from vFense.db.client import r
 from vFense.core.tag._db_model import (
-    TagCollections, TagsPerAgentKey,
+    TagCollections, TagsPerAgentKeys,
     TagsPerAgentIndexes, TagKeys
 )
 
@@ -15,7 +15,7 @@ class Merge():
                 r
                 .table(TagCollections.TagsPerAgent)
                 .get_all(
-                    r.row[TagsPerAgentKey.AgentId],
+                    r.row[TagsPerAgentKeys.AgentId],
                     index=TagsPerAgentIndexes.AgentId
                 )
                 .eq_join(
@@ -24,8 +24,8 @@ class Merge():
                 )
                 .zip()
                 .pluck(
-                    TagsPerAgentKey.TagId,
-                    TagsPerAgentKey.TagName
+                    TagsPerAgentKeys.TagId,
+                    TagsPerAgentKeys.TagName
                 )
                 .coerce_to('array')
             )

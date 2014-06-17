@@ -2,6 +2,10 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
+from vFense.core._db import (
+    insert_data_in_table, delete_data_in_table,
+    update_data_in_table
+)
 from vFense.core.agent._db_model import AgentCollections, \
     AgentIndexes, AgentKeys
 from vFense.core.agent._db_sub_queries import Merge
@@ -327,11 +331,11 @@ def fetch_agents(
 def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
     """Retrieve information of an agent
     Args:
-        agent_id(str): 36 character uuid of the agent you are updating
+        agent_id (str): 36 character uuid of the agent you are retrieving.
 
     Kwargs:
-        keys_to_pluck(list): (Optional) Specific keys that you are retrieving
-        from the database
+        keys_to_pluck (list): (Optional) Specific keys that you are retrieving
+            from the database.
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_agent
@@ -404,9 +408,7 @@ def fetch_all_agents_for_view(view_name, conn=None):
     return data
 
 @time_it
-@db_create_close
-@return_status_tuple
-def update_agent_data(agent_id, agent_data, conn=None):
+def update_agent(agent_id, agent_data):
     """Update Agent data
     Args:
         agent_id (str): 36 character uuid of the agent you are updating
@@ -422,31 +424,20 @@ def update_agent_data(agent_id, agent_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get(agent_id)
-            .update(agent_data)
-            .run(conn)
+    data = (
+        update_data_in_table(
+            agent_id, agent_data, AgentCollections.Agents
         )
-
-    except Exception as e:
-        logger.exception(e)
+    )
 
     return data
 
 @time_it
-@db_create_close
-@return_status_tuple
-def insert_agent_data(agent_data, conn=None):
+def insert_agent(agent_data):
     """ Insert a new agent and its properties into the database
         This function should not be called directly.
     Args:
-        agent_data (list|dict): Can either be a list of
-            dictionaries or a dictionary of the data
-            you are inserting.
+        agent_data (dict): Dictionary of the data you are inserting.
 
     Basic Usage:
         >>> from vFense.core.agent._db import insert_agent_data
@@ -457,19 +448,38 @@ def insert_agent_data(agent_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .insert(agent_data)
-            .run(conn)
+    data = (
+        insert_data_in_table(
+            agent_data, AgentCollections.Agents
         )
-
-    except Exception as e:
-        logger.exception(e)
+    )
 
     return data
+
+
+@time_it
+def delete_agent(agent_id):
+    """ Delete an agent and its properties from the database
+        This function should not be called directly.
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+
+    Basic Usage:
+        >>> from vFense.agent._db import delete_agent
+        >>> agent_id = ""
+        >>> delete_agent(agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        delete_data_in_table(
+            agent_id, AgentCollections.Agents
+        )
+    )
+    return data
+
 
 @time_it
 @db_create_close

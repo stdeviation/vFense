@@ -1,35 +1,23 @@
-from vFense.core.agent._db_model import *
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.utils.common import *
 from vFense.core._db_constants import DbTime
 from vFense.core.agent import Agent
-from vFense.core.agent.agents import update_agent_field, get_agent_info
-from vFense.core.agent._db import fetch_agent
-from vFense.core.agent import Agent
-from vFense.core.view.views import validate_view_names
-from vFense.core.tag.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
-from vFense.core.tag.tagManager import delete_agent_from_all_tags
-from vFense.core.tag._db_model import *
-from vFense.db.client import db_create_close, r
-from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching._db_model import *
-from vFense.plugins.patching.patching import (
-    remove_all_app_data_for_agent,
-    update_all_app_data_for_agent
+from vFense.core.agent._db import (
+    fetch_agent, insert_agent
 )
-from vFense.plugins.patching._db_stats import  get_all_app_stats_by_agentid
-from vFense.errorz.error_messages import GenericResults
-from vFense.server.hierarchy import Collection
-import redis
-from rq import Queue
-
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-rq_pool = redis.StrictRedis(host=rq_host, port=rq_port, db=rq_db)
+from vFense.core.agent._db_model import AgentKeys
+from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag._db import (
+    add_tags_to_agent, delete_agent_ids_from_tag
+)
+from vFense.core.view.views import validate_view_names
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import (
+    DbCodes, GenericCodes, AgentResultCodes, GenericFailureCodes,
+    AgentFailureResultCodes
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -53,7 +41,7 @@ class AgentManager(object):
             self.tags = []
 
     def _agent_attributes(self):
-        agent_data = fetch_agent(agent_id)
+        agent_data = fetch_agent(self.agent_id)
 
         return agent_data
 
@@ -78,6 +66,7 @@ class AgentManager(object):
             >>> from vFense.core.agent import Agent
 
         Returns:
+            Dictionary
             >>>
         """
         results = {}
@@ -94,13 +83,14 @@ class AgentManager(object):
             )
 
             status_code, _, _, generated_ids = (
-                insert_agent_data(agent_data)
+                insert_agent(agent_data)
             )
             if status_code == DbCodes.Inserted:
-                agent_id = generated_ids.pop()
-                Hardware().add(agent_id, agent_data[AgentKeys.Hardware])
-                agent_data[AgentKeys.AgentId] = agent_id
-                msg = 'new agent_operation succeeded'
+                self.agent_id = generated_ids.pop()
+                self.properties = self._agent_attributes()
+                Hardware().add(self.agent_id, agent_data[AgentKeys.Hardware])
+                agent_data[AgentKeys.AgentId] = self.agent_id
+                msg = 'Agent {0} added successfully'.format(self.agent_id)
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectCreated
                 )
@@ -109,5 +99,49 @@ class AgentManager(object):
                 )
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = [agent_data]
-                results[ApiResultKeys.GENERATED_IDS] = [agent_id]
+                results[ApiResultKeys.GENERATED_IDS] = [self.agent_id]
+
+            else:
+                msg = 'Failed to add agent.'
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureResultCodes.NewAgentFailed
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = [agent_data]
+        else:
+            msg = (
+                'Invalid {0} Instance, must pass an instance of Agent.'
+                .format(type(agent))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureResultCodes.NewAgentFailed
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.DATA] = [agent_data]
+
+        return results
+
+    def add_tags(self, tag_ids):
+        """Add tags to an agent.
+        Args:
+            tag_ids (list): List of tag ids.
+
+        Basic Usage:
+            >>> from vFense.core.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> tag_ids = ['tag_id']
+
+        Returns:
+            Dictionary
+            >>>
+        """
+        results = {}
+        agent_exist = self.properties
+        if agent_exist:
 

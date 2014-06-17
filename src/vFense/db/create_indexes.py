@@ -196,8 +196,8 @@ def initialize_indexes_and_create_tables():
     if not TagsPerAgentIndexes.AgentIdAndTagId in tag_per_agent_list:
         r.table(TagCollections.TagsPerAgent).index_create(
             TagsPerAgentIndexes.AgentIdAndTagId, lambda x: [
-                x[TagsPerAgentKey.AgentId],
-                x[TagsPerAgentKey.TagId]]).run(conn)
+                x[TagsPerAgentKeys.AgentId],
+                x[TagsPerAgentKeys.TagId]]).run(conn)
 
 
 #################################### CustomAppsCollection Indexes ###################################################

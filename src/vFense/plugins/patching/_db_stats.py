@@ -6,7 +6,7 @@ from vFense.core.decorators import time_it
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db_model import AgentKeys, AgentCollections
 from vFense.core.tag._db_model import (
-    TagCollections, TagsPerAgentKey, TagsPerAgentIndexes,
+    TagCollections, TagsPerAgentKeys, TagsPerAgentIndexes,
 )
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppPerAgentIndexes,
@@ -207,7 +207,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.INSTALLED,
@@ -245,7 +245,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -270,7 +270,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -295,7 +295,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -320,7 +320,7 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -393,7 +393,7 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -432,7 +432,7 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -457,7 +457,7 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -482,7 +482,7 @@ def get_all_avail_stats_by_tagid(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -797,7 +797,7 @@ def group_avail_app_stats_by_os_for_tag(
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x:
                 x[AgentKeys.AgentId],
@@ -1088,7 +1088,7 @@ def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     CommonAppKeys.AVAILABLE,
@@ -1733,7 +1733,7 @@ def fetch_os_apps_history_for_tag(
             r
             .table(TagCollections.TagsPerAgent, use_outdated=True)
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKey.AgentId)
+            .pluck(TagsPerAgentKeys.AgentId)
             .eq_join(
                 lambda x: [
                     status,

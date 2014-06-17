@@ -6,12 +6,16 @@ class TagCollections():
 class TagKeys():
     TagId = 'tag_id'
     TagName = 'tag_name'
-    AgentIds = 'agent_ids'
     ViewName = 'view_name'
     Global = 'global'
     ProductionLevel = 'production_level'
 
-class TagsPerAgentKey():
+
+class TagMappedKeys():
+    Agents = 'agents'
+
+
+class TagsPerAgentKeys():
     Id = 'id'
     TagId = 'tag_id'
     TagName = 'tag_name'

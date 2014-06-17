@@ -98,7 +98,7 @@ class RetrieveAppsByTagId(object):
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
                         .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                        .pluck(TagsPerAgentKey.AgentId)
+                        .pluck(TagsPerAgentKeys.AgentId)
                         .eq_join(
                             lambda x: [
                                 pkg_status,
@@ -176,7 +176,7 @@ class RetrieveAppsByTagId(object):
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
                         .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                        .pluck(TagsPerAgentKey.AgentId)
+                        .pluck(TagsPerAgentKeys.AgentId)
                         .eq_join(
                             lambda x: [
                                 pkg_status,
@@ -251,7 +251,7 @@ class RetrieveAppsByTagId(object):
                     r
                     .table(TagsPerAgentCollection, use_outdated=True)
                     .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                    .pluck(TagsPerAgentKey.AgentId)
+                    .pluck(TagsPerAgentKeys.AgentId)
                     .eq_join(
                         self.CurrentAppsPerAgentIndexes.AgentId,
                         r.table(self.CurrentAppsPerAgentCollection),
@@ -320,7 +320,7 @@ class RetrieveAppsByTagId(object):
                             r
                             .table(TagsPerAgentCollection, use_outdated=True)
                             .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                            .pluck(TagsPerAgentKey.AgentId)
+                            .pluck(TagsPerAgentKeys.AgentId)
                             .eq_join(
                                 lambda x: [
                                     pkg_status,
@@ -411,7 +411,7 @@ class RetrieveAppsByTagId(object):
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
                         .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                        .pluck(TagsPerAgentKey.AgentId)
+                        .pluck(TagsPerAgentKeys.AgentId)
                         .eq_join(
                             self.CurrentAppsPerAgentIndexes.AgentId,
                             r.table(self.CurrentAppsPerAgentCollection),
@@ -485,7 +485,7 @@ class RetrieveAppsByTagId(object):
                         r
                         .table(TagsPerAgentCollection, use_outdated=True)
                         .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                        .pluck(TagsPerAgentKey.AgentId)
+                        .pluck(TagsPerAgentKeys.AgentId)
                         .eq_join(
                             self.CurrentAppsPerAgentIndexes.AgentId,
                             r.table(self.CurrentAppsPerAgentCollection),
@@ -569,7 +569,7 @@ class RetrieveAppsByTagId(object):
                             r
                             .table(TagsPerAgentCollection, use_outdated=True)
                             .get_all(self.tag_id, index=TagsPerAgentIndexes.TagId)
-                            .pluck(TagsPerAgentKey.AgentId)
+                            .pluck(TagsPerAgentKeys.AgentId)
                             .eq_join(
                                 lambda x: [
                                     pkg_status,
