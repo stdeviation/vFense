@@ -32,10 +32,12 @@ class Merge():
         }
     )
     AGENTS = (
-        lambda x:
         {
             AgentKeys.LastAgentUpdate: (
-                x[AgentKeys.LastAgentUpdate].to_epoch_time()
+                r.row[AgentKeys.LastAgentUpdate].to_epoch_time()
+            ),
+            AgentKeys.DateAdded: (
+                r.row[AgentKeys.DateAdded].to_epoch_time()
             )
         }
     )

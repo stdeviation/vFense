@@ -1,5 +1,5 @@
 from time import time
-from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag._db_model import TagKeys, TagMappedKeys
 from vFense.core.tag._constants import (
     TagDefaults
 )
@@ -15,7 +15,7 @@ class Tag(object):
     """Used to represent an instance of a tag."""
 
     def __init__(self, tag_name=None, production_level=None,
-                 view_name=None, is_global=None
+                 view_name=None, is_global=None, agents=None
                  ):
         """
         Kwargs:
@@ -30,6 +30,7 @@ class Tag(object):
         self.production_level = production_level
         self.view_name = view_name
         self.is_global = is_global
+        self.agents = agents
 
 
     def fill_in_defaults(self):
@@ -50,6 +51,9 @@ class Tag(object):
 
         elif self.is_global and not self.view_name:
             self.view_name = TagDefaults.VIEW_NAME
+
+        if not self.agents:
+            self.agents = TagDefaults.AGENTS
 
         """Check the agent for any invalid fields.
 
@@ -113,6 +117,18 @@ class Tag(object):
                     }
                 )
 
+        if self.agents:
+            if not isinstance(self.agents, list):
+                invalid_fields.append(
+                    {
+                        TagMappedKeys.Agents: self.agents,
+                        CommonKeys.REASON: 'Must be a list',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
 
         return invalid_fields
 
@@ -139,7 +155,8 @@ class Tag(object):
             TagKeys.ProductionLevel: self.production_level,
             TagKeys.tag_name: self.tag_name,
             TagKeys.view_name: self.view_name,
-            TagKeys.is_global: self.is_global
+            TagKeys.is_global: self.is_global,
+            TagKeys.agents: self.agents,
         }
 
     def to_dict_non_null(self):

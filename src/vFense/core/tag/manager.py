@@ -9,7 +9,7 @@ from vFense.core.tag import Tag
 from vFense.core.tag._db import fetch_tag
 from vFense.core.agent import Agent
 from vFense.core.view.views import validate_view_names
-from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag._db_model import TagKeys, TagMappedKeys
 from vFense.errorz.error_messages import GenericResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -47,7 +47,7 @@ class TagManager(object):
         return tag_key
 
 
-    def new(self, tag):
+    def create(self, tag):
         """Add a tag into vFense.
         Args:
             tag (Tag): An instance of Tag.
@@ -63,25 +63,29 @@ class TagManager(object):
         if isinstance(tag, Tag):
             tag.fill_in_defaults()
             tag_data = tag.to_dict()
-            valid_views, valid_view_names, invalid_view_names = (
-                validate_view_names([tag_data[AgentKeys.ViewName]])
+            views_are_validated, valid_view_names, invalid_view_names = (
+                validate_view_names([tag_data[TagKeys.ViewName]])
             )
-
-            status_code, _, _, generated_ids = (
-                insert_agent(agent_data)
-            )
-            if status_code == DbCodes.Inserted:
-                agent_id = generated_ids.pop()
-                Hardware().add(agent_id, agent_data[AgentKeys.Hardware])
-                agent_data[AgentKeys.AgentId] = agent_id
-                msg = 'new agent_operation succeeded'
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectCreated
+            if views_are_validated:
+                status_code, _, _, generated_ids = (
+                    insert_tag(tag_data)
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    AgentResultCodes.NewAgentSucceeded
-                )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [agent_data]
-                results[ApiResultKeys.GENERATED_IDS] = [agent_id]
+                if status_code == DbCodes.Inserted:
+                    self.tag_id = generated_ids.pop()
+                    tag_data[TagKeys.AgentId] = self.tag_id
+                    msg = (
+                        'Tag {0} created successfully, tag id: {1}'
+                        .format(
+                            tag_data[TagKeys.TagName], self.tag_id
+                        )
+                    )
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectCreated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        TagCodes.TagCreated
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DATA] = [tag_data]
+                    results[ApiResultKeys.GENERATED_IDS] = [self.tag_id]
 

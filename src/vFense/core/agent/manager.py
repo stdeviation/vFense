@@ -59,7 +59,7 @@ class AgentManager(object):
         return agent_key
 
 
-    def new(self, agent, tags=None):
+    def create(self, agent, tags=None):
         """Add an agent into vFense.
         Args:
             agent (Agent): An instance of Agent.

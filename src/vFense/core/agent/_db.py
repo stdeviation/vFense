@@ -370,6 +370,7 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
                 r
                 .table(AgentCollections.Agents)
                 .get(agent_id)
+                .merge(Merge.AGENTS)
                 .merge(Merge.TAGS)
                 .run(conn)
             )

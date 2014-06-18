@@ -9,13 +9,12 @@ from vFense.core.agent._db_model import (
 )
 class TagMerge():
     AGENTS = (
-        lambda x:
         {
             TagMappedKeys.Agents: (
                 r
                 .table(TagCollections.TagsPerAgent)
                 .get_all(
-                    x[TagsPerAgentKeys.TagId],
+                    r.row[TagsPerAgentKeys.TagId],
                     index=TagsPerAgentIndexes.TagId
                 )
                 .pluck(
