@@ -294,7 +294,7 @@ class NvdParser(object):
 
 def parse_cve_and_udpatedb(
     download_latest_nvd=True,
-    nvd_files=[CVEDataDir.NVD_MODIFIED_FILE, CVEDataDir.NVD_CURRENT_FILE]
+    nvd_files=[CVEDataDir.NVD_CURRENT_FILE, CVEDataDir.NVD_MODIFIED_FILE]
         ):
 
     """This begins the actual parsing of the xml files and loads up the data
@@ -384,6 +384,3 @@ def load_up_all_xml_into_db():
     update_cve_categories()
     logger.info('finished cve/nvd update process')
     gc.collect()
-
-#update_cve_categories()
-#load_up_all_xml_into_db()
