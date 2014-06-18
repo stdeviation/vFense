@@ -4,9 +4,11 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.agent import AgentKey, AgentCollections, \
-    HardwarePerAgentIndexes, HardwarePerAgentKey
-from vFense.core.tag import TagCollections, TagsKey, TagsPerAgentKey, \
+from vFense.core.agent._db_model import (
+    AgentKeys, AgentCollections,
+    HardwarePerAgentIndexes, HardwarePerAgentKeys
+)
+from vFense.core.tag._db_model import TagCollections, TagKeys, TagsPerAgentKeys, \
     TagsPerAgentIndexes
 from vFense.plugins.patching._db_model import AppCollections, AppsKey, \
      AppsPerAgentIndexes
@@ -25,7 +27,7 @@ class FetchAgents(object):
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKey.ComputerName
+        sort_key=AgentKeys.ComputerName
         ):
         """
         Kwargs:
@@ -42,12 +44,12 @@ class FetchAgents(object):
         self.sort_key = sort_key
 
         self.keys_to_pluck = [
-            AgentKey.ComputerName, AgentKey.HostName,
-            AgentKey.DisplayName, AgentKey.OsCode, AgentKey.Tags,
-            AgentKey.OsString, AgentKey.AgentId, AgentKey.AgentStatus,
-            AgentKey.NeedsReboot, AgentKey.ProductionLevel,
+            AgentKeys.ComputerName, AgentKeys.HostName,
+            AgentKeys.DisplayName, AgentKeys.OsCode, AgentKeys.Tags,
+            AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
+            AgentKeys.NeedsReboot, AgentKeys.ProductionLevel,
             AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN,
-            AgentKey.LastAgentUpdate
+            AgentKeys.LastAgentUpdate
         ]
 
         if sort == SortValues.ASC:
@@ -101,9 +103,9 @@ class FetchAgents(object):
             count = (
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
                 .count()
                 .run(conn)
@@ -112,9 +114,9 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+name))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+name))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
                 .merge(merge_query)
                 .pluck(self.keys_to_pluck)
@@ -178,7 +180,7 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .merge(query_merge)
-                .order_by(AgentKey.ComputerName)
+                .order_by(AgentKeys.ComputerName)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -311,9 +313,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
                 )
                 .count()
                 .run(conn)
@@ -323,9 +325,9 @@ class FetchAgents(object):
                 base_filter
                 .filter({fkey: fval})
                 .filter(
-                    (r.row[AgentKey.ComputerName].match("(?i)^"+query))
+                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
                     |
-                    (r.row[AgentKey.DisplayName].match("(?i)^"+query))
+                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
                 )
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
@@ -386,7 +388,7 @@ class FetchAgents(object):
             count = (
                 base_count
                 .filter(
-                    r.row[HardwarePerAgentKey.IpAddress].match("(?i)^"+ip)
+                    r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip)
                 )
                 .pluck(self.keys_to_pluck)
                 .distinct()
@@ -397,7 +399,7 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter(
-                    r.row[HardwarePerAgentKey.IpAddress].match("(?i)^"+ip)
+                    r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip)
                 )
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
@@ -464,7 +466,7 @@ class FetchAgents(object):
             count = (
                 base_count
                 .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKey.IpAddress].match("(?i)^"+ip))
+                .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
                 .pluck(self.keys_to_pluck)
                 .distinct()
                 .count()
@@ -474,7 +476,7 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKey.IpAddress].match("(?i)^"+ip))
+                .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
                 .distinct()
@@ -534,7 +536,7 @@ class FetchAgents(object):
             query_merge = self._set_merge_query()
             count = (
                 base_count
-                .filter(r.row[HardwarePerAgentKey.Mac].match("(?i)^"+mac))
+                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
                 .pluck(self.keys_to_pluck)
                 .distinct()
                 .count()
@@ -543,7 +545,7 @@ class FetchAgents(object):
 
             data = list(
                 base_filter
-                .filter(r.row[HardwarePerAgentKey.Mac].match("(?i)^"+mac))
+                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
                 .distinct()
@@ -611,7 +613,7 @@ class FetchAgents(object):
             count = (
                 base_count
                 .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKey.Mac].match("(?i)^"+mac))
+                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
                 .pluck(self.keys_to_pluck)
                 .distinct()
                 .count()
@@ -621,7 +623,7 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKey.Mac].match("(?i)^"+mac))
+                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
                 .merge(query_merge)
                 .pluck(self.keys_to_pluck)
                 .distinct()
@@ -644,17 +646,17 @@ class FetchAgents(object):
                     r
                     .table(TagCollections.TagsPerAgent)
                     .get_all(
-                        x[TagsPerAgentKey.AgentId],
+                        x[TagsPerAgentKeys.AgentId],
                         index=TagsPerAgentIndexes.AgentId
                     )
                     .eq_join(
-                        TagsKey.TagId,
+                        TagKeys.TagId,
                         r.table(TagCollections.Tags)
                     )
                     .zip()
                     .pluck(
-                        TagsPerAgentKey.TagId,
-                        TagsPerAgentKey.TagName
+                        TagsPerAgentKeys.TagId,
+                        TagsPerAgentKeys.TagName
                     )
                     .coerce_to('array')
                 ),
@@ -664,7 +666,7 @@ class FetchAgents(object):
                     .get_all(
                         [
                             CommonAppKeys.AVAILABLE,
-                            x[AgentKey.AgentId]
+                            x[AgentKeys.AgentId]
                         ],
                         index=AppsPerAgentIndexes.StatusAndAgentId
                     )
@@ -676,7 +678,7 @@ class FetchAgents(object):
                     .get_all(
                         [
                             CommonAppKeys.AVAILABLE,
-                            x[AgentKey.AgentId]
+                            x[AgentKeys.AgentId]
                         ],
                         index=AppsPerAgentIndexes.StatusAndAgentId
                     )
@@ -692,8 +694,8 @@ class FetchAgents(object):
                     )
                     .count()
                 ),
-                AgentKey.LastAgentUpdate: (
-                    x[AgentKey.LastAgentUpdate].to_epoch_time()
+                AgentKeys.LastAgentUpdate: (
+                    x[AgentKeys.LastAgentUpdate].to_epoch_time()
                 )
             }
         )
@@ -711,7 +713,7 @@ class FetchAgents(object):
                 .table(AgentCollections.Agents)
                 .get_all(
                     self.view_name,
-                    index=AgentKey.ViewName
+                    index=AgentKeys.ViewName
                 )
             )
 
@@ -722,7 +724,7 @@ class FetchAgents(object):
             r
             .table(AgentCollections.Hardware)
             .eq_join(
-                HardwarePerAgentKey.AgentId,
+                HardwarePerAgentKeys.AgentId,
                 r.table(AgentCollections.Agents)
             )
             .zip()
@@ -736,7 +738,7 @@ class FetchAgents(object):
                 r
                 .table(AgentCollections.Hardware)
                 .get_all(
-                    HardwarePerAgentKey.Nic,
+                    HardwarePerAgentKeys.Nic,
                     index=HardwarePerAgentIndexes.Type
                 )
             )
@@ -745,11 +747,11 @@ class FetchAgents(object):
                 r
                 .table(AgentCollections.Hardware)
                 .get_all(
-                    HardwarePerAgentKey.Nic,
+                    HardwarePerAgentKeys.Nic,
                     index=HardwarePerAgentIndexes.Type
                 )
                 .eq_join(
-                    HardwarePerAgentKey.AgentId,
+                    HardwarePerAgentKeys.AgentId,
                     r.table(AgentCollections.Agents)
                 )
                 .zip()

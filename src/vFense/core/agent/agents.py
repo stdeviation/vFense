@@ -4,13 +4,13 @@ from time import time
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
-from vFense.core.agent import AgentKey
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._constants import AgentVirtualKeys, \
     AgentStatusKeys, ProductionLevels
 
 from vFense.core.agent._db import fetch_production_levels_from_agent, \
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
-    fetch_all_agents_for_view, fetch_agent_info, \
+    fetch_all_agents_for_view, fetch_agent, \
     update_agent_data, insert_agent_data, delete_all_agents_for_view, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
@@ -154,7 +154,7 @@ def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
         agents = (
             fetch_agents(
                 view_name=view_name,
-                filter_key=AgentKey.OsCode,
+                filter_key=AgentKeys.OsCode,
                 filter_val=agent_os
             )
         )
@@ -162,7 +162,7 @@ def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
     elif agent_os and not keys_to_pluck and not view_name:
         agents = (
             fetch_agents(
-                filter_key=AgentKey.OsCode,
+                filter_key=AgentKeys.OsCode,
                 filter_val=agent_os
             )
         )
@@ -171,7 +171,7 @@ def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
         agents = (
             fetch_agents(
                 view_name=view_name,
-                filter_key=AgentKey.OsCode,
+                filter_key=AgentKeys.OsCode,
                 filter_val=agent_os,
                 keys_to_pluck=keys_to_pluck,
             )
@@ -180,7 +180,7 @@ def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
     elif agent_os and keys_to_pluck and not view_name:
         agents = (
             fetch_agents(
-                filter_key=AgentKey.OsCode,
+                filter_key=AgentKeys.OsCode,
                 filter_val=agent_os,
                 keys_to_pluck=keys_to_pluck,
             )
@@ -235,7 +235,7 @@ def get_agent_info(agent_id, keys_to_pluck=None):
         }
     """
 
-    return fetch_agent_info(agent_id, keys_to_pluck)
+    return fetch_agent(agent_id, keys_to_pluck)
 
 @time_it
 def update_agent_field(
@@ -404,8 +404,8 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
     status = update_agent_status.func_name + ' - '
     now = time()
     agent_data = {
-        AgentKey.LastAgentUpdate: DbTime.epoch_time_to_db_time(now),
-        AgentKey.AgentStatus: 'up'
+        AgentKeys.LastAgentUpdate: DbTime.epoch_time_to_db_time(now),
+        AgentKeys.AgentStatus: 'up'
     }
     status_code, count, error, generated_ids = (
         update_agent_data(agent_id, agent_data)
@@ -425,7 +425,7 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
         generic_status_code = GenericFailureCodes.FailedToUpdateObject
         vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
 
-    agent_data[AgentKey.LastAgentUpdate] = now
+    agent_data[AgentKeys.LastAgentUpdate] = now
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
@@ -448,7 +448,7 @@ def add_agent(
     """Add a new agent to the database
     Args:
         system_info (dict): Dictionary with system related info
-        hardware (list):  List of dictionaries that rpresent the hardware
+        hardware (list):  List of dictionaries that represent the hardware
 
     Kwargs:
         user_name (str): The name of the user who called this function.
@@ -470,21 +470,21 @@ def add_agent(
     try:
         now = time()
         agent_data = {}
-        agent_data[AgentKey.AgentStatus] = AgentStatusKeys.UP
-        agent_data[AgentKey.MachineType] = AgentVirtualKeys.PHYSICAL
-        agent_data[AgentKey.Tags] = []
-        agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
-        agent_data[AgentKey.DisplayName] = None
-        agent_data[AgentKey.HostName] = None
-        agent_data[AgentKey.Hardware] = hardware
+        agent_data[AgentKeys.AgentStatus] = AgentStatusKeys.UP
+        agent_data[AgentKeys.MachineType] = AgentVirtualKeys.PHYSICAL
+        agent_data[AgentKeys.Tags] = []
+        agent_data[AgentKeys.NeedsReboot] = CommonKeys.NO
+        agent_data[AgentKeys.DisplayName] = None
+        agent_data[AgentKeys.HostName] = None
+        agent_data[AgentKeys.Hardware] = hardware
 
-        if not AgentKey.ProductionLevel in system_info:
-            agent_data[AgentKey.ProductionLevel] = ProductionLevels.PRODUCTION
+        if not AgentKeys.ProductionLevel in system_info:
+            agent_data[AgentKeys.ProductionLevel] = ProductionLevels.PRODUCTION
 
         for key, value in system_info.items():
             agent_data[key] = value
 
-        agent_data[AgentKey.LastAgentUpdate] = (
+        agent_data[AgentKeys.LastAgentUpdate] = (
             DbTime.epoch_time_to_db_time(now)
         )
 
@@ -493,15 +493,15 @@ def add_agent(
         )
         if object_status == DbCodes.Inserted and object_count > 0:
             agent_id = generated_ids.pop()
-            Hardware().add(agent_id, agent_data[AgentKey.Hardware])
+            Hardware().add(agent_id, agent_data[AgentKeys.Hardware])
             data = {
-                AgentKey.AgentId: agent_id,
-                AgentKey.ViewName: agent_data[AgentKey.ViewName],
-                AgentKey.ComputerName: agent_data[AgentKey.ComputerName],
-                AgentKey.Hardware: agent_data[AgentKey.Hardware],
-                AgentKey.Tags: agent_data[AgentKey.Tags],
-                AgentKey.OsCode: agent_data[AgentKey.OsCode],
-                AgentKey.OsString: agent_data[AgentKey.OsString],
+                AgentKeys.AgentId: agent_id,
+                AgentKeys.ViewName: agent_data[AgentKeys.ViewName],
+                AgentKeys.ComputerName: agent_data[AgentKeys.ComputerName],
+                AgentKeys.Hardware: agent_data[AgentKeys.Hardware],
+                AgentKeys.Tags: agent_data[AgentKeys.Tags],
+                AgentKeys.OsCode: agent_data[AgentKeys.OsCode],
+                AgentKeys.OsString: agent_data[AgentKeys.OsString],
             }
             msg = 'new agent_operation succeeded'
             generic_status_code = GenericCodes.ObjectCreated
@@ -556,25 +556,25 @@ def update_agent(
     agent_data = {}
     try:
         now = time()
-        agent_orig_info = fetch_agent_info(agent_id)
+        agent_orig_info = fetch_agent(agent_id)
         if agent_orig_info:
-            agent_data[AgentKey.Hardware] = hardware
+            agent_data[AgentKeys.Hardware] = hardware
 
             for key, value in system_info.items():
                 agent_data[key] = value
 
-            agent_data[AgentKey.LastAgentUpdate] = (
+            agent_data[AgentKeys.LastAgentUpdate] = (
                 DbTime.epoch_time_to_db_time(now)
             )
-            agent_data[AgentKey.HostName] = (
-                agent_orig_info.get(AgentKey.HostName, None)
+            agent_data[AgentKeys.HostName] = (
+                agent_orig_info.get(AgentKeys.HostName, None)
             )
-            agent_data[AgentKey.DisplayName] = (
-                agent_orig_info.get(AgentKey.DisplayName, None)
+            agent_data[AgentKeys.DisplayName] = (
+                agent_orig_info.get(AgentKeys.DisplayName, None)
             )
 
             if rebooted == CommonKeys.YES:
-                agent_data[AgentKey.NeedsReboot] = CommonKeys.NO
+                agent_data[AgentKeys.NeedsReboot] = CommonKeys.NO
 
             status_code, count, error, generated_ids = (
                 update_agent_data(agent_id, agent_data)

@@ -1,4 +1,4 @@
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
@@ -7,7 +7,7 @@ from vFense.utils.common import *
 from vFense.core.agent.agents import update_agent_field, get_agent_info
 from vFense.core.tag.tagManager import get_tags_by_agent_id, delete_agent_from_all_tags
 from vFense.core.tag.tagManager import delete_agent_from_all_tags
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db_model import *
@@ -40,8 +40,8 @@ class AgentController():
     def get_data(self):
         try:
             agent_data = get_agent_info(agent_id)
-            agent_data[AgentKey.LastAgentUpdate] = (
-                int(agent_data[AgentKey.LastAgentUpdate].strftime('%s'))
+            agent_data[AgentKeys.LastAgentUpdate] = (
+                int(agent_data[AgentKeys.LastAgentUpdate].strftime('%s'))
             )
             if agent_data:
                 agent_data['tags'] = get_tags_by_agent_id(agent_id=self.agent_id)
@@ -142,7 +142,7 @@ class AgentController():
     def displayname_changer(self, displayname, uri=None, method=None):
         results = (
             self._changer(
-                displayname, AgentKey.DisplayName,
+                displayname, AgentKeys.DisplayName,
                 uri, method)
         )
 
@@ -151,7 +151,7 @@ class AgentController():
     def computername_changer(self, computername, uri=None, method=None):
         results = (
             self._changer(
-                computername, AgentKey.ComputerName,
+                computername, AgentKeys.ComputerName,
                 uri, method)
         )
 
@@ -160,7 +160,7 @@ class AgentController():
     def hostname_changer(self, hostname, uri=None, method=None):
         results = (
             self._changer(
-                hostname, AgentKey.HostName,
+                hostname, AgentKeys.HostName,
                 uri, method)
         )
 
@@ -169,13 +169,13 @@ class AgentController():
     def production_state_changer(self, prod_state, uri=None, method=None):
         results = (
             self._changer(
-                prod_state, AgentKey.ProductionLevel,
+                prod_state, AgentKeys.ProductionLevel,
                 uri, method)
         )
 
         return(results)
 
-    def _changer(self, newname, name_type=AgentKey.DisplayName,
+    def _changer(self, newname, name_type=AgentKeys.DisplayName,
                  uri=None, method=None):
         if newname:
             agent_updated = (
@@ -266,11 +266,11 @@ class AgentController():
                 .get(view_name)
                 .run(conn)
             )
-            view_data = {AgentKey.ViewName: view_name}
+            view_data = {AgentKeys.ViewName: view_name}
             if cexists:
                 update_agent_field(
                     self.agent_id,
-                    AgentKey.ViewName,
+                    AgentKeys.ViewName,
                     view_name,
                     self.username,
                     uri, method

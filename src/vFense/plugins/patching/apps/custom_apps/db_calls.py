@@ -1,6 +1,6 @@
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_model import *
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 import logging
@@ -91,8 +91,8 @@ def get_all_agents_per_appid(username, view_name,
                     AGENTS:
                     [
                         {
-                            AgentKey.ComputerName: x[AgentKey.ComputerName],
-                            AgentKey.DisplayName: x[AgentKey.DisplayName],
+                            AgentKeys.ComputerName: x[AgentKeys.ComputerName],
+                            AgentKeys.DisplayName: x[AgentKeys.DisplayName],
                             CustomAppsPerAgentKey.AgentId: x[CustomAppsPerAgentKey.AgentId]
                         }
                     ],

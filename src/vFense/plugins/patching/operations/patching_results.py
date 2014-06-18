@@ -7,7 +7,7 @@ from json import loads
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
-from vFense.core.agent import AgentKey
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.agents import update_agent_field
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.operations._db_model import AgentOperationKey
@@ -147,8 +147,8 @@ class PatchingOperationResults(OperationResults):
             self.username,
             self.customer_name,
             self.agent_id,
-            self.agent_data[AgentKey.OsCode],
-            self.agent_data[AgentKey.OsString],
+            self.agent_data[AgentKeys.OsCode],
+            self.agent_data[AgentKeys.OsString],
             self.apps_to_add,
             delete_afterwards=False
         )
@@ -181,7 +181,7 @@ class PatchingOperationResults(OperationResults):
 
         if self.reboot_required:
             update_agent_field(
-                self.agent_id, AgentKey.NeedsReboot,
+                self.agent_id, AgentKeys.NeedsReboot,
                 CommonKeys.YES, self.username
             )
 

@@ -5,7 +5,7 @@ from json import dumps
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments, agent_authenticated_request
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.operations._db_model import *
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent.agents import add_agent
@@ -28,11 +28,11 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
-        view_name = self.arguments.get(AgentKey.ViewName)
-        plugins = self.arguments.get(AgentKey.Plugins)
-        rebooted = self.arguments.get(AgentKey.Rebooted)
-        system_info = self.arguments.get(AgentKey.SystemInfo)
-        hardware = self.arguments.get(AgentKey.Hardware)
+        view_name = self.arguments.get(AgentKeys.ViewName)
+        plugins = self.arguments.get(AgentKeys.Plugins)
+        rebooted = self.arguments.get(AgentKeys.Rebooted)
+        system_info = self.arguments.get(AgentKeys.SystemInfo)
+        hardware = self.arguments.get(AgentKeys.Hardware)
         uri = self.request.uri
         method = self.request.method
         logger.info('data received on newagent: %s' % (self.request.body))

@@ -67,6 +67,18 @@ class SortValues():
     DESC = 'desc'
 
 
+class SortLogic():
+    EQ = '=='
+    GE = '>='
+    LE = '<='
+    GT = '>'
+    LT = '<'
+    NE = '!='
+    OR = '|'
+    AND = '&'
+    VALID_VALUES = (EQ, GE, LE, GT, LT, NE)
+
+
 class DefaultQueryValues():
     COUNT = 30
     OFFSET = 0

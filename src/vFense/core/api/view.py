@@ -16,7 +16,7 @@ from vFense.core.permissions.permissions import (
 )
 
 from vFense.core.permissions.decorators import check_permissions
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.user.manager import UserManager
 from vFense.core.agent.agents import (

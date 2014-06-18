@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.operations._constants import AgentOperations
-from vFense.core.agent import AgentKey
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.agents import update_agent_field
 from vFense.core.operations.results import OperationResults
 
@@ -25,7 +25,7 @@ class AgentOperationResults(OperationResults):
         if self.success == CommonKeys.TRUE:
             update_agent_field(
                 self.agent_id,
-                AgentKey.NeedsReboot,
+                AgentKeys.NeedsReboot,
                 CommonKeys.NO, self.username,
                 self.uri, self.method
             )

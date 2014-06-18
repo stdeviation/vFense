@@ -2,10 +2,14 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core.agent import AgentCollections, \
-    AgentIndexes, AgentKey
+from vFense.core._db import (
+    insert_data_in_table, delete_data_in_table,
+    update_data_in_table
+)
+from vFense.core.agent._db_model import AgentCollections, \
+    AgentIndexes, AgentKeys
 from vFense.core.agent._db_sub_queries import Merge
-#from vFense.core.tag import *
+#from vFense.core.tag._db_model import *
 #from vFense.plugins.patching._db_model import *
 from vFense.core.decorators import return_status_tuple, time_it
 
@@ -38,9 +42,9 @@ def fetch_production_levels_from_agent(view_name, conn=None):
             r
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.ViewName)
-            .pluck(AgentKey.ProductionLevel)
+            .pluck(AgentKeys.ProductionLevel)
             .distinct()
-            .map(lambda x: x[AgentKey.ProductionLevel])
+            .map(lambda x: x[AgentKeys.ProductionLevel])
             .run(conn)
         )
 
@@ -106,9 +110,9 @@ def fetch_supported_os_strings(view_name, conn=None):
             r
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.ViewName)
-            .pluck(AgentKey.OsString)
+            .pluck(AgentKeys.OsString)
             .distinct()
-            .map(lambda x: x[AgentKey.OsString])
+            .map(lambda x: x[AgentKeys.OsString])
             .run(conn)
         )
 
@@ -146,8 +150,8 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
                 r
                 .table(AgentCollections.Agents)
                 .get_all(view_name, index=AgentIndexes.ViewName)
-                .filter({AgentKey.OsCode: agent_os})
-                .map(lambda x: x[AgentKey.AgentId])
+                .filter({AgentKeys.OsCode: agent_os})
+                .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
             )
 
@@ -156,7 +160,7 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
                 r
                 .table(AgentCollections.Agents)
                 .get_all(view_name, index=AgentIndexes.ViewName)
-                .map(lambda x: x[AgentKey.AgentId])
+                .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
             )
 
@@ -164,8 +168,8 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .filter({AgentKey.OsCode: agent_os})
-                .map(lambda x: x[AgentKey.AgentId])
+                .filter({AgentKeys.OsCode: agent_os})
+                .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
             )
 
@@ -173,7 +177,7 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .map(lambda x: x[AgentKey.AgentId])
+                .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
             )
 
@@ -324,20 +328,20 @@ def fetch_agents(
 
 @time_it
 @db_create_close
-def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
+def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
     """Retrieve information of an agent
     Args:
-        agent_id(str): 36 character uuid of the agent you are updating
+        agent_id (str): 36 character uuid of the agent you are retrieving.
 
     Kwargs:
-        keys_to_pluck(list): (Optional) Specific keys that you are retrieving
-        from the database
+        keys_to_pluck (list): (Optional) Specific keys that you are retrieving
+            from the database.
 
     Basic Usage:
-        >>> from vFense.core.agent._db import fetch_agent_info
+        >>> from vFense.core.agent._db import fetch_agent
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
         >>> keys_to_pluck = ['production_level', 'needs_reboot']
-        >>> fetch_agent_info(agent_id, keys_to_pluck)
+        >>> fetch_agent(agent_id, keys_to_pluck)
 
     Return:
         Dictionary of the agent data
@@ -353,6 +357,7 @@ def fetch_agent_info(agent_id, keys_to_pluck=None, conn=None):
                 r
                 .table(AgentCollections.Agents)
                 .get(agent_id)
+                .merge(Merge.AGENTS)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
@@ -403,9 +408,7 @@ def fetch_all_agents_for_view(view_name, conn=None):
     return data
 
 @time_it
-@db_create_close
-@return_status_tuple
-def update_agent_data(agent_id, agent_data, conn=None):
+def update_agent(agent_id, agent_data):
     """Update Agent data
     Args:
         agent_id (str): 36 character uuid of the agent you are updating
@@ -421,31 +424,20 @@ def update_agent_data(agent_id, agent_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get(agent_id)
-            .update(agent_data)
-            .run(conn)
+    data = (
+        update_data_in_table(
+            agent_id, agent_data, AgentCollections.Agents
         )
-
-    except Exception as e:
-        logger.exception(e)
+    )
 
     return data
 
 @time_it
-@db_create_close
-@return_status_tuple
-def insert_agent_data(agent_data, conn=None):
+def insert_agent(agent_data):
     """ Insert a new agent and its properties into the database
         This function should not be called directly.
     Args:
-        agent_data (list|dict): Can either be a list of
-            dictionaries or a dictionary of the data
-            you are inserting.
+        agent_data (dict): Dictionary of the data you are inserting.
 
     Basic Usage:
         >>> from vFense.core.agent._db import insert_agent_data
@@ -456,19 +448,38 @@ def insert_agent_data(agent_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .insert(agent_data)
-            .run(conn)
+    data = (
+        insert_data_in_table(
+            agent_data, AgentCollections.Agents
         )
-
-    except Exception as e:
-        logger.exception(e)
+    )
 
     return data
+
+
+@time_it
+def delete_agent(agent_id):
+    """ Delete an agent and its properties from the database
+        This function should not be called directly.
+    Args:
+        agent_id (str): 36 character UUID of the agent.
+
+    Basic Usage:
+        >>> from vFense.agent._db import delete_agent
+        >>> agent_id = ""
+        >>> delete_agent(agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        delete_data_in_table(
+            agent_id, AgentCollections.Agents
+        )
+    )
+    return data
+
 
 @time_it
 @db_create_close
@@ -529,7 +540,7 @@ def move_all_agents_to_view(current_view, new_view, conn=None):
             .get_all(current_view, index=AgentIndexes.ViewName)
             .update(
                 {
-                    AgentKey.ViewName: new_view
+                    AgentKeys.ViewName: new_view
                 }
             )
             .run(conn)
@@ -571,7 +582,7 @@ def move_agents_to_view(agent_ids, new_view, conn=None):
                 .get(agent_id)
                 .update(
                     {
-                        AgentKey.ViewName: new_view
+                        AgentKeys.ViewName: new_view
                     }
                 )
             )
@@ -610,7 +621,7 @@ def move_agent_to_view(agent_id, new_view, conn=None):
             .get(agent_id)
             .update(
                 {
-                    AgentKey.ViewName: new_view
+                    AgentKeys.ViewName: new_view
                 }
             )
             .run(conn)

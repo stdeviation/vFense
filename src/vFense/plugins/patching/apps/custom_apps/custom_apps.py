@@ -1,12 +1,12 @@
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.db.client import r
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.file_data import add_file_data
 
@@ -28,7 +28,7 @@ def add_custom_app_to_agents(username, view_name, uri, method,
             )
         )
 
-        agent_ids = get_all_agent_ids(view_name, agent_os=app_info[AgentKey.OsCode])
+        agent_ids = get_all_agent_ids(view_name, agent_os=app_info[AgentKeys.OsCode])
         if len(agent_ids) > 0:
             for agentid in agent_ids:
                 add_file_data(app_id, file_data, agent_id)
@@ -49,7 +49,7 @@ def add_custom_app_to_agents(username, view_name, uri, method,
     if agent_id and not app_id:
         agent_info = get_agent_info(agent_id)
         apps_info = fetch_apps_data_by_os_code(
-            agent_info[AgentKey.OsCode], view_name,
+            agent_info[AgentKeys.OsCode], view_name,
             collection=AppCollections.CustomApps
         )
 

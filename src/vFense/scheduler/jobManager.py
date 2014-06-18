@@ -12,9 +12,9 @@ from apscheduler.jobstores.redis_store import RedisJobStore
 
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
     get_tags_info_from_tag_ids, get_agent_ids_from_tag
 from vFense.plugins.patching._db_model import *
@@ -243,7 +243,7 @@ def get_agentids_per_job(job_info, view_name, username,  conn=None):
 def get_tags_per_job(job_info, username, view_name, conn=None):
 
     tags = []
-    keys_to_pluck = [TagsKey.TagId, TagsKey.TagName]
+    keys_to_pluck = [TagKeys.TagId, TagKeys.TagName]
 
     if job_info['all_tags']:
         tags = get_tags_info(view_name, keys_to_pluck)
@@ -386,9 +386,9 @@ def get_schedule_details(sched, job_name, username, view_name,
 
     jobs = sched.get_jobs(name=view_name)
     agent_keys_to_pluck = [
-        AgentKey.ComputerName,
-        AgentKey.DisplayName,
-        AgentKey.AgentId
+        AgentKeys.ComputerName,
+        AgentKeys.DisplayName,
+        AgentKeys.AgentId
     ]
 
     try:

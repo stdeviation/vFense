@@ -4,8 +4,8 @@ from datetime import datetime
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent import *
-from vFense.core.tag import *
+from vFense.core.agent._db_model import *
+from vFense.core.tag._db_model import *
 from datetime import datetime
 from vFense.db.client import db_create_close, r
 from vFense.errorz.error_messages import GenericResults, NotificationResults
@@ -97,15 +97,15 @@ def get_valid_fields(username, view_name,
         agents = list(
             r
             .table(AgentsCollection)
-            .get_all(view_name, index=AgentKey.ViewName)
-            .pluck(AgentKey.AgentId, AgentKey.ComputerName)
+            .get_all(view_name, index=AgentKeys.ViewName)
+            .pluck(AgentKeys.AgentId, AgentKeys.ComputerName)
             .run(conn)
         )
         tags = list(
             r
             .table(TagsCollection)
             .get_all(view_name, index=TagsIndexes.ViewName)
-            .pluck(TagsKey.TagId, TagsKey.TagName)
+            .pluck(TagKeys.TagId, TagKeys.TagName)
             .run(conn)
         )
         users = list(
@@ -448,7 +448,7 @@ class Notifier():
                     r
                     .table(AgentsCollection)
                     .get(x)
-                    .pluck(AgentKey.AgentId)
+                    .pluck(AgentKeys.AgentId)
                     .run(conn)
                 )
                 if not valid:
@@ -468,7 +468,7 @@ class Notifier():
                     r
                     .table(TagsCollection)
                     .get(x)
-                    .pluck(TagsKey.TagId)
+                    .pluck(TagKeys.TagId)
                     .run(conn)
                 )
                 if not valid:

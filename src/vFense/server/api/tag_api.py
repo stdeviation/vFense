@@ -8,7 +8,7 @@ from vFense.db.client import *
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import GenericCodes
 from vFense.core.agent.agent_handler import AgentManager
-from vFense.core.tag import *
+from vFense.core.tag._db_model import *
 from vFense.core.tag.tagManager import *
 from vFense.core.tag.tag_searcher import TagSearcher
 from vFense.utils.common import *
@@ -33,7 +33,7 @@ class TagsHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         sort = self.get_argument('sort', 'asc')
-        sort_by = self.get_argument('sort_by', TagsKey.TagName)
+        sort_by = self.get_argument('sort_by', TagKeys.TagName)
         tag = (
             TagSearcher(
                 username, view_name, uri, method,

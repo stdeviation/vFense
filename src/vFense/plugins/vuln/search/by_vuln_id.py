@@ -4,7 +4,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.errorz.error_messages import GenericResults
-from vFense.plugins.vuln.cve import *
+from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.cve._constants import *
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.windows.ms as ms

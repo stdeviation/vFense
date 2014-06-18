@@ -10,7 +10,7 @@ from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
 
 from vFense.core.permissions.decorators import check_permissions
-from vFense.core.agent import *
+from vFense.core.agent._db_model import *
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
@@ -144,7 +144,7 @@ class AgentsHandler(BaseHandler):
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
             sort = self.get_argument('sort', 'asc')
-            sort_by = self.get_argument('sort_by', AgentKey.ComputerName)
+            sort_by = self.get_argument('sort_by', AgentKeys.ComputerName)
             search_agents = (
                 RetrieveAgents(
                     view_name,
