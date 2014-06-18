@@ -7,7 +7,7 @@ from vFense.core.agent.agents import validate_agent_ids_in_views
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
     fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
-    delete_tag
+    delete_tag, fetch_agent_ids_in_tag
 )
 from vFense.core.view.views import validate_view_names
 from vFense.core.tag._db_model import (
@@ -28,22 +28,10 @@ class TagManager(object):
     def __init__(self, tag_id=None):
         self.tag_id = tag_id
         self.properties = self._tag_attributes()
-        if self.properties:
-            if self.properties.get(TagMappedKeys.Agents):
-                self.agents = (
-                    map(
-                        lambda x: x[AgentKeys.AgentId],
-                        self.properties.get(TagMappedKeys.Agents, [])
-                    )
-                )
-            else:
-                self.agents = []
-        else:
-            self.agents = []
+        self.agents = self.get_agents()
 
     def _tag_attributes(self):
         tag_data = fetch_tag(self.tag_id)
-
         return tag_data
 
     def get_attribute(self, tag_attribute):
@@ -66,6 +54,10 @@ class TagManager(object):
             tag_key = tag_data.get(tag_attribute, None)
 
         return tag_key
+
+    def get_agents(self):
+        agents = fetch_agent_ids_in_tag(self.tag_id)
+        return agents
 
 
     def create(self, tag):
@@ -225,18 +217,18 @@ class TagManager(object):
         tag_data = []
         if tag_exist:
             tag_name = tag_exist[TagKeys.TagName]
-            agents_are_valid, invalid_agents = (False, [])
+            agents_are_valid, valid_agents, invalid_agents = (False, [], [])
             is_global = tag_exist[TagKeys.Global]
             views = [tag_exist[TagKeys.ViewName]]
             if is_global:
                 agents_are_valid = True
 
             else:
-                agents_are_valid, _, invalid_agents = (
+                agents_are_valid, valid_agents, invalid_agents = (
                     validate_agent_ids_in_views(agent_ids, views)
                 )
 
-            if agents_are_valid:
+            if agents_are_valid and set(valid_agents).issubset(self.agents):
                 for agent_id in agent_ids:
                     tag_data.append(
                         {
@@ -248,6 +240,7 @@ class TagManager(object):
                 status_code, _, _, _ = add_agents_to_tag(tag_data)
                 if status_code == DbCodes.Inserted:
                     self.properties = self._tag_attributes()
+                    self.agents = self.get_agents()
                     msg = (
                         'Agent ids {0} were added successfully to tag {1}'
                         .format(', '.join(agent_ids), self.tag_id)
@@ -276,6 +269,19 @@ class TagManager(object):
                     results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.DATA] = tag_data
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
+
+            elif set(valid_agents).issubset(self.agents):
+                msg = (
+                    'Some of the agent ids: {0} already exist for tag: {1}.'
+                    .format(', '.join(agent_ids), self.tag_id)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GenericFailureCodes.InvalidId
+                )
+                results[ApiResultKeys.MESSAGE] = msg
 
             else:
                 msg = (
@@ -411,6 +417,7 @@ class TagManager(object):
                 )
                 if status_code == DbCodes.Deleted:
                     self.properties = self._tag_attributes()
+                    self.agents = self.get_agents()
                     msg = (
                         'Agent ids {0} were removed successfully from tag {1}'
                         .format(', '.join(agent_ids), self.tag_id)
@@ -427,7 +434,7 @@ class TagManager(object):
                 else:
                     msg = (
                         'Failed to remove agents: {0} from tag: {1}.'
-                        .format(', '.join(agent_ids, self.tag_id))
+                        .format(', '.join(agent_ids), self.tag_id)
                     )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericFailureCodes.FailedToDeleteObject

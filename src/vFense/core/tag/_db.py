@@ -90,7 +90,7 @@ def fetch_tag_ids(view_name=None, conn=None):
 
     try:
         if view_name:
-            tag_info = (
+            tag_info = list(
                 r
                 .table(TagCollections.Tags)
                 .get_all(view_name, index=TagsIndexes.ViewName)
@@ -98,7 +98,7 @@ def fetch_tag_ids(view_name=None, conn=None):
                 .run(conn)
             )
         else:
-            tag_info = (
+            tag_info = list(
                 r
                 .table(TagCollections.Tags)
                 .map(lambda x: x[TagKeys.TagId])
@@ -127,10 +127,10 @@ def fetch_agent_ids_in_tag(tag_id, conn=None):
     tag_info = {}
 
     try:
-        tag_info = (
+        tag_info = list(
            r
            .table(TagCollections.TagsPerAgent)
-           .get_all(tag_id, index=TagsIndexes.TagId)
+           .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
            .map(lambda x: x[TagsPerAgentKeys.AgentId])
            .run(conn)
         )
@@ -139,6 +139,38 @@ def fetch_agent_ids_in_tag(tag_id, conn=None):
         logger.exception(e)
 
     return tag_info
+
+
+@db_create_close
+def fetch_tag_ids_for_agent(agent_id, conn=None):
+    """Retrieve all tag ids for an agent.
+    Args:
+        agent_id (str): 36 character UUID of a agent.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import fetch_tag_ids_for_agent
+        >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
+        >>> fetch_tag_ids_for_agent(agent_id)
+
+    Return:
+        List of tag ids
+    """
+    tag_info = {}
+
+    try:
+        tag_info = list(
+           r
+           .table(TagCollections.TagsPerAgent)
+           .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+           .map(lambda x: x[TagsPerAgentKeys.TagId])
+           .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return tag_info
+
 
 @time_it
 @db_create_close
