@@ -5,7 +5,7 @@ from vFense.core.tag._db_model import (
 )
 
 from vFense.core.agent._db_model import (
-    AgentKeys
+    AgentKeys, AgentCollections
 )
 class TagMerge():
     AGENTS = (
@@ -22,13 +22,13 @@ class TagMerge():
                 )
                 .eq_join(
                     TagsPerAgentKeys.AgentId,
-                    index=TagsPerAgentIndexes.AgentId
+                    r.table(AgentCollections.Agents)
                 )
                 .map(
                     lambda y:
                     {
                         AgentKeys.AgentId: (
-                            y['left'][AgentKeys.AgentId]
+                            y['right'][AgentKeys.AgentId]
                         ),
                         AgentKeys.ComputerName: (
                             y['right'][AgentKeys.ComputerName]

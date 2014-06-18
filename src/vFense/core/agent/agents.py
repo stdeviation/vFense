@@ -11,7 +11,7 @@ from vFense.core.agent._constants import AgentVirtualKeys, \
 from vFense.core.agent._db import fetch_production_levels_from_agent, \
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
     fetch_all_agents_for_view, fetch_agent, \
-    update_agent_data, insert_agent_data, delete_all_agents_for_view, \
+    update_agent, insert_agent, delete_all_agents_for_view, \
     move_agents_to_view, move_agent_to_view, \
     move_all_agents_to_view
 
@@ -271,7 +271,7 @@ def update_agent_field(
     agent_data = {field: value}
     status = update_agent_field.func_name + ' - '
     status_code, count, errors, generated_ids = (
-        update_agent_data(
+        update_agent(
             agent_id, agent_data
         )
     )
@@ -340,7 +340,7 @@ def update_agent_fields(
     """
     status = update_agent_fields.func_name + ' - '
     status_code, count, errors, generated_ids = (
-        update_agent_data(
+        update_agent(
             agent_id, agent_data
         )
     )
@@ -408,7 +408,7 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
         AgentKeys.AgentStatus: 'up'
     }
     status_code, count, error, generated_ids = (
-        update_agent_data(agent_id, agent_data)
+        update_agent(agent_id, agent_data)
     )
     if status_code == DbCodes.Replaced:
         msg = 'agent_id %s updated'
@@ -489,7 +489,7 @@ def add_agent(
         )
 
         object_status, object_count, error, generated_ids = (
-            insert_agent_data(agent_data)
+            insert_agent(agent_data)
         )
         if object_status == DbCodes.Inserted and object_count > 0:
             agent_id = generated_ids.pop()
@@ -577,7 +577,7 @@ def update_agent(
                 agent_data[AgentKeys.NeedsReboot] = CommonKeys.NO
 
             status_code, count, error, generated_ids = (
-                update_agent_data(agent_id, agent_data)
+                update_agent(agent_id, agent_data)
             )
 
             if status_code == DbCodes.Replaced and count > 0:
@@ -866,3 +866,38 @@ def change_view_for_agent(
     }
 
     return results
+
+
+@time_it
+def validate_agent_ids_in_views(agent_ids, views):
+    """Validate a list of agent ids against a view.
+    Args:
+        agent_ids (list): List of agent ids.
+        views (list): List of view names.
+
+    Basic Usage:
+        >>> from vFense.agent.agents import validate_agent_ids_in_views
+        >>> agent_ids = ['agent1', 'agent2']
+        >>> views = ['global', 'test1']
+        >>> validate_agent_ids_in_views(agent_ids, views)
+
+    Return:
+        Tuple - (Boolean, [valid list], [invalid list])
+        (False, ['tag1'], ['tag2'])
+    """
+    validated = False
+    invalid_ids = []
+    valid_ids = []
+    if isinstance(agent_ids, list) and isinstance(views, list):
+        for agent_id in agent_ids:
+            agent = fetch_agent(agent_id)
+            if agent:
+                if set(agent[AgentKeys.Views]).issuperset(views):
+                    valid_ids.append(agent_id)
+                else:
+                    invalid_ids.append(agent_id)
+
+    if valid_ids and not invalid_ids:
+        validated = True
+
+    return(validated, valid_ids, invalid_ids)

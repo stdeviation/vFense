@@ -153,17 +153,17 @@ class AgentManager(object):
                 .format(type(agent))
             )
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericFailureCodes.FailedToCreateObject
+                GenericFailureCodes.FailedToCreateObject
             )
             results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    AgentFailureResultCodes.NewAgentFailed
+                AgentFailureResultCodes.NewAgentFailed
             )
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
 
     def add_to_tags(self, tag_ids):
-        """Add tags to an agent.
+        """Add tags to this agent.
         Args:
             tag_ids (list): List of tag ids.
 
@@ -253,7 +253,7 @@ class AgentManager(object):
         return results
 
     def remove_from_tags(self, tag_ids):
-        """Remove tags from an agent.
+        """Remove tags from this agent.
         Args:
             tag_ids (list): List of tag ids.
 
