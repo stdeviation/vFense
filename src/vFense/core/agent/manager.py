@@ -78,38 +78,60 @@ class AgentManager(object):
         if isinstance(agent, Agent):
             agent.fill_in_defaults()
             agent_data = agent.to_dict()
+            last_agent_update = agent_data[AgentKeys.LastAgentUpdate]
+            date_added = agent_data[AgentKeys.DateAdded]
             agent_data[AgentKeys.LastAgentUpdate] = (
                 DbTime().epoch_time_to_db_time(
                     agent_data[AgentKeys.LastAgentUpdate]
                 )
             )
-            valid_views, valid_view_names, invalid_view_names = (
-                validate_view_names(agent[AgentKeys.Views])
+            agent_data[AgentKeys.DateAdded] = (
+                DbTime().epoch_time_to_db_time(
+                    agent_data[AgentKeys.DateAdded]
+                )
+            )
+            views_are_valid, valid_view_names, invalid_view_names = (
+                validate_view_names(agent_data[AgentKeys.Views])
             )
 
-            status_code, _, _, generated_ids = (
-                insert_agent(agent_data)
-            )
-            if status_code == DbCodes.Inserted:
-                self.agent_id = generated_ids.pop()
-                self.properties = self._agent_attributes()
-                self.add_hardware(agent_data[AgentKeys.Hardware])
-                if tags:
-                    self.add_to_tags(tags)
-                agent_data[AgentKeys.AgentId] = self.agent_id
-                msg = 'Agent {0} added successfully'.format(self.agent_id)
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.ObjectCreated
+            if views_are_valid:
+                status_code, _, _, generated_ids = (
+                    insert_agent(agent_data)
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    AgentResultCodes.NewAgentSucceeded
-                )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [agent_data]
-                results[ApiResultKeys.GENERATED_IDS] = [self.agent_id]
+                if status_code == DbCodes.Inserted:
+                    self.agent_id = generated_ids.pop()
+                    self.properties = self._agent_attributes()
+                    self.add_hardware(agent_data[AgentKeys.Hardware])
+                    if tags:
+                        self.add_to_tags(tags)
+                    agent_data[AgentKeys.AgentId] = self.agent_id
+                    msg = 'Agent {0} added successfully'.format(self.agent_id)
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectCreated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        AgentResultCodes.NewAgentSucceeded
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DATA] = agent_data
+                    results[ApiResultKeys.GENERATED_IDS] = self.agent_id
+
+                else:
+                    msg = 'Failed to add agent.'
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericFailureCodes.FailedToCreateObject
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        AgentFailureResultCodes.NewAgentFailed
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DATA] = agent_data
 
             else:
-                msg = 'Failed to add agent.'
+                msg = (
+                    'Failed to add agent, invalid views were passed: {0}.'
+                    .format(', '.join(invalid_view_names))
+                )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToCreateObject
                 )
@@ -117,7 +139,14 @@ class AgentManager(object):
                     AgentFailureResultCodes.NewAgentFailed
                 )
                 results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [agent_data]
+                results[ApiResultKeys.DATA] = agent_data
+
+            results[ApiResultKeys.DATA][AgentKeys.LastAgentUpdate] = (
+                last_agent_update
+            )
+            results[ApiResultKeys.DATA][AgentKeys.DateAdded] = (
+                date_added
+            )
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Agent.'
@@ -130,7 +159,6 @@ class AgentManager(object):
                     AgentFailureResultCodes.NewAgentFailed
             )
             results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = [agent_data]
 
         return results
 
@@ -322,7 +350,7 @@ class AgentManager(object):
         hw_data = []
         if agent_exist:
             if isinstance(hardware, dict):
-                for hw in hw_data.keys():
+                for hw in hardware.keys():
                     hw_info = (
                         {
                             HardwarePerAgentKeys.AgentId: self.agent_id,
@@ -348,7 +376,7 @@ class AgentManager(object):
                     if status_code == DbCodes.Inserted:
                         self.properties = self._agent_attributes()
                         msg = (
-                            'Hardware added successfully to agent {1}'
+                            'Hardware added successfully to agent {0}'
                             .format(self.agent_id)
                         )
                         results[ApiResultKeys.GENERIC_STATUS_CODE] = (

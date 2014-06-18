@@ -21,9 +21,12 @@ class AgentKeys():
     Tags = 'tags'
     MachineType = 'machine_type'
     LastAgentUpdate = 'last_agent_update'
+    DateAdded = 'date_added'
     Plugins = 'plugins'
     Core = 'core'
     Rebooted = 'rebooted'
+    BitType = 'bit_type'
+    Version = 'version'
 
 
 class AgentIndexes():

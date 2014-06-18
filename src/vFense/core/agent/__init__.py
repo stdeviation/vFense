@@ -18,7 +18,8 @@ class Agent(object):
                  os_code=None, os_string=None, views=None,
                  needs_reboot=None, agent_status=None,
                  production_level=None, machine_type=None,
-                 rebooted=None, hardware=None, last_agent_update=None
+                 rebooted=None, hardware=None, bit_type=None,
+                 version=None, date_added=None, last_agent_update=None
                  ):
         """
         Kwargs:
@@ -36,7 +37,10 @@ class Agent(object):
                 valid_values: ( physical, virtual )
             rebooted (bool): Was this agent rebooted?
             hardware (dict): Dictionary of installed devices in the agent.
-            last_agent_update
+            bit_type (str): 64 or 32
+            version (str): The version of the os_string.
+            date_added (epoch_time): time in epoch.
+            last_agent_update (epoch_time): time in epoch.
         """
         self.computer_name = computer_name
         self.display_name = display_name
@@ -49,6 +53,9 @@ class Agent(object):
         self.machine_type = machine_type
         self.rebooted = rebooted
         self.hardware = hardware
+        self.version = version
+        self.bit_type = bit_type
+        self.date_added = date_added
         self.last_agent_update = last_agent_update
 
 
@@ -79,6 +86,9 @@ class Agent(object):
 
         if not self.display_name:
             self.display_name = AgentDefaults.DISPLAY_NAME
+
+        if not self.date_added:
+            self.date_added = time()
 
         if not self.last_agent_update:
             self.last_agent_update = time()
@@ -170,7 +180,10 @@ class Agent(object):
             AgentKeys.ProductionLevel: self.production_level,
             AgentKeys.Rebooted: self.rebooted,
             AgentKeys.Hardware: self.hardware,
-            AgentKeys.LastAgentUpdate: self.last_agent_update
+            AgentKeys.BitType: self.bit_type,
+            AgentKeys.Version: self.version,
+            AgentKeys.DateAdded: self.date_added,
+            AgentKeys.LastAgentUpdate: self.last_agent_update,
         }
 
     def to_dict_non_null(self):
