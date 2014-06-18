@@ -31,7 +31,7 @@ def fetch_vuln_ids(name, version, os_string, conn=None):
     Returns:
         Dictionary
         {
-            "cve_ids": [], 
+            "cve_ids": [],
             "bulletin_id": "USN-1523-1"
         }
     """
@@ -71,14 +71,14 @@ def fetch_vuln_data(vuln_id, conn=None):
         "bulletin_details": "Florian Weimer discovered that libyaml-libyaml-perl incorrectly handled\ncertain large YAML documents. An attacker could use this issue to cause\
             nlibyaml-libyaml-perl to crash, resulting in a denial of service, or\npossibly execute arbitrary code. (CVE-2013-6393)\n\nIvan Fratric discovered that libyaml-libyaml-per
             l incorrectly handled\ncertain malformed YAML documents. An attacker could use this issue to cause\nlibyaml-libyaml-perl to crash, resulting in a denial of service, or\np
-            ossibly execute arbitrary code. (CVE-2014-2525)\n\n", 
-        "supercedes": [], 
-        "id": "f4a193df32583980884dbb846947ebff0f6f825e01e0416062f15b4676f4ba2b", 
+            ossibly execute arbitrary code. (CVE-2014-2525)\n\n",
+        "supercedes": [],
+        "id": "f4a193df32583980884dbb846947ebff0f6f825e01e0416062f15b4676f4ba2b",
         "cve_ids": [
-            "CVE-2013-6393", 
+            "CVE-2013-6393",
             "CVE-2014-2525"
-        ], 
-        "bulletin_id": "USN-2161-1", 
+        ],
+        "bulletin_id": "USN-2161-1",
         "date_posted": 1396508400
     }
     """
