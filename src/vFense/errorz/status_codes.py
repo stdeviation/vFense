@@ -179,6 +179,9 @@ class AgentCodes(object):
     InstallAgentAppResults = 3010
     AgentsDeleted = 3011
     AgentsUpdated = 3012
+    TagsAddedToAgent = 3013
+    TagsRemovedFromAgent = 3014
+    HardwareAddedToAgent = 3015
 
 
 class AgentResultCodes(object):
@@ -204,6 +207,9 @@ class AgentFailureCodes(object):
     AgentsDoNotExist = 3502
     AgentsDoesNotExist = 3503
     AgentsExist = 3504
+    FailedToAddTagsToAgent = 3505
+    FailedToRemoveTagsFromAgent = 3506
+    FailedToAddHardwareToAgent = 3507
 
 
 class TagCodes(object):
@@ -215,6 +221,8 @@ class TagCodes(object):
     FailedToRemoveTag = 4005
     TagExistsAndAgentAdded = 4006
 
+class TagFailureCodes(object):
+    InvalidTagIds = 4500
 
 class PackageCodes(object):
     InvalidStatus = 5000
