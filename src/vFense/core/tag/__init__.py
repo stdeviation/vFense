@@ -55,6 +55,7 @@ class Tag(object):
         if not self.agents:
             self.agents = TagDefaults.AGENTS
 
+    def get_invalid_fields(self):
         """Check the agent for any invalid fields.
 
         Returns:
@@ -153,10 +154,10 @@ class Tag(object):
 
         return {
             TagKeys.ProductionLevel: self.production_level,
-            TagKeys.tag_name: self.tag_name,
-            TagKeys.view_name: self.view_name,
-            TagKeys.is_global: self.is_global,
-            TagKeys.agents: self.agents,
+            TagKeys.TagName: self.tag_name,
+            TagKeys.ViewName: self.view_name,
+            TagKeys.Global: self.is_global,
+            TagMappedKeys.Agents: self.agents,
         }
 
     def to_dict_non_null(self):

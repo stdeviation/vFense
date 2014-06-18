@@ -5,9 +5,14 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent.agents import validate_agent_ids_in_views
 from vFense.core.tag import Tag
-from vFense.core.tag._db import fetch_tag
+from vFense.core.tag._db import (
+    fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
+    delete_tag
+)
 from vFense.core.view.views import validate_view_names
-from vFense.core.tag._db_model import TagKeys, TagMappedKeys
+from vFense.core.tag._db_model import (
+    TagKeys, TagMappedKeys, TagsPerAgentKeys
+)
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
@@ -19,15 +24,16 @@ logger = logging.getLogger('rvapi')
 
 
 class TagManager(object):
+    """Manage anything related to this tag."""
     def __init__(self, tag_id=None):
         self.tag_id = tag_id
         self.properties = self._tag_attributes()
         if self.properties:
-            if self.properties.get(TagKeys.Agents):
+            if self.properties.get(TagMappedKeys.Agents):
                 self.agents = (
                     map(
                         lambda x: x[AgentKeys.AgentId],
-                        self.properties.get(TagKeys.Agents, [])
+                        self.properties.get(TagMappedKeys.Agents, [])
                     )
                 )
             else:
@@ -41,6 +47,19 @@ class TagManager(object):
         return tag_data
 
     def get_attribute(self, tag_attribute):
+        """Retrieve an attribute for this tag.
+        Args:
+            trag_attribute (str): The name of the attribute you want.
+
+        Basic Usage:
+            >>> from vFense.core.tag.manager import TagManager
+            >>> manager = TagManager('0842c4c0-94ab-4fe4-9346-3b59fa53c316')
+            >>> manager.get_attribute('tag_name')
+
+        Returns:
+            String
+            >>> u'Test Tag 1'
+        """
         tag_data = fetch_tag(self.tag_id)
         tag_key = None
         if tag_data:
@@ -57,9 +76,35 @@ class TagManager(object):
         Basic Usage:
             >>> from vFense.core.tag.manager import TagManager
             >>> from vFense.core.tag import Tag
+            >>> manager = TagManager()
+            >>> tag = (
+                Tag(
+                    'Test Tag 1',
+                    agents=['cac3f82c-d320-4e6f-9ee7-e28b1f527d76'],
+                    is_global=True
+                )
+            )
+            >>> manager.create(tag)
 
         Returns:
             >>>
+                {
+                    "data": [
+                        {
+                            "production_level": "production",
+                            "global": true,
+                            "view_name": "global",
+                            "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316",
+                            "tag_name": "Test Tag 1"
+                        }
+                    ],
+                    "message": "Tag Test Tag 1 created successfully, tag id: 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
+                    "generated_ids": [
+                        "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
+                    ],
+                    "vfense_status_code": 4000,
+                    "generic_status_code": 1010
+                }
         """
         results = {}
         if isinstance(tag, Tag):
@@ -69,14 +114,17 @@ class TagManager(object):
                 validate_view_names([tag_data[TagKeys.ViewName]])
             )
             if views_are_validated:
+                agents = tag_data.pop(TagMappedKeys.Agents)
                 status_code, _, _, generated_ids = (
                     insert_tag(tag_data)
                 )
                 if status_code == DbCodes.Inserted:
                     self.tag_id = generated_ids.pop()
+                    self.properties = self._tag_attributes()
                     #Add agents to this tag, if Agents exist
-                    if tag_data[TagMappedKeys.Agents]:
-                        self.add_agents(tag_data[TagMappedKeys.Agents])
+                    if agents:
+                        print 'I am here'
+                        self.add_agents(agents)
 
                     tag_data[TagKeys.TagId] = self.tag_id
                     msg = (
@@ -148,12 +196,29 @@ class TagManager(object):
 
         Basic Usage:
             >>> from vFense.core.tag.manager import TagManager
-            >>> from vFense.core.tag import Tag
-            >>> agent_ids = ['agent_id']
+            >>> manager = TagManager('0842c4c0-94ab-4fe4-9346-3b59fa53c316')
+            >>> agent_ids = ['cac3f82c-d320-4e6f-9ee7-e28b1f527d76']
+            >>> manager.add_agents(agent_ids)
 
         Returns:
             Dictionary
             >>>
+            {
+                "data": [
+                    {
+                        "tag_name": "Test Tag 1",
+                        "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
+                        "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
+                    }
+                ],
+                "message": "Agent ids cac3f82c-d320-4e6f-9ee7-e28b1f527d76 were added successfully to tag 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
+                "vfense_status_code": 4009,
+                "updated_ids": [
+                    "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
+                ],
+                "generic_status_code": 1010
+            }
+
         """
         results = {}
         tag_exist = self.properties
@@ -191,30 +256,30 @@ class TagManager(object):
                         GenericCodes.ObjectCreated
                     )
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        AgentCodes.TagsAddedToAgent
+                        TagCodes.AgentsAddedToTag
                    )
                     results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [tag_data]
-                    results[ApiResultKeys.UPDATED_IDS] = [self.agent_id]
+                    results[ApiResultKeys.DATA] = tag_data
+                    results[ApiResultKeys.UPDATED_IDS] = [self.tag_id]
 
                 else:
                     msg = (
-                        'Failed to add tags: {0} to agent: {1}.'
-                        .format(', '.join(tag_ids, self.agent_id))
+                        'Failed to add agents: {0} to tag: {1}.'
+                        .format(', '.join(agent_ids, self.tag_id))
                     )
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         GenericFailureCodes.FailedToCreateObject
                     )
                     results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        AgentFailureCodes.FailedToAddTagsToAgent
+                        TagFailureCodes.FailedToAddAgentsToTag
                     )
                     results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [tag_data]
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
+                    results[ApiResultKeys.DATA] = tag_data
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
             else:
                 msg = (
-                    'Invalid tag ids: {0}.'.format(', '.join(tag_ids))
+                    'Invalid agent ids: {0}.'.format(', '.join(agent_ids))
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.InvalidId
@@ -223,11 +288,11 @@ class TagManager(object):
                     GenericFailureCodes.InvalidId
                 )
                 results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
         else:
             msg = (
-                'Agent id {0} does not exist.'.format(self.agent_id)
+                'Tag id {0} does not exist.'.format(self.tag_id)
             )
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 GenericFailureCodes.InvalidId
@@ -236,7 +301,7 @@ class TagManager(object):
                 GenericFailureCodes.InvalidId
             )
             results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
         return results
 
@@ -248,11 +313,20 @@ class TagManager(object):
         Basic Usage:
             >>> from vFense.core.tag.manager import TagManager
             >>> from vFense.core.tag import Tag
-            >>> agent_ids = ['agent_id']
+            >>> manager = TagManager('f671467d-de69-474d-b3eb-86d7c55eb1f2')
+            >>> manager.remove()
 
         Returns:
             Dictionary
             >>>
+            {
+                "message": "Tag f671467d-de69-474d-b3eb-86d7c55eb1f2 removed successfully",
+                "vfense_status_code": 4001,
+                "deleted_ids": [
+                    "f671467d-de69-474d-b3eb-86d7c55eb1f2"
+                ],
+                "generic_status_code": 1012
+            }
         """
         results = {}
         tag_exist = self.properties
@@ -273,7 +347,7 @@ class TagManager(object):
                     TagCodes.TagRemoved
                 )
                 results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.UPDATED_IDS] = [self.tag_id]
+                results[ApiResultKeys.DELETED_IDS] = [self.tag_id]
 
             else:
                 msg = (
@@ -311,19 +385,29 @@ class TagManager(object):
 
         Basic Usage:
             >>> from vFense.core.tag.manager import TagManager
-            >>> from vFense.core.tag import Tag
-            >>> agent_ids = ['agent_id']
+            >>> manager = TagManager('0842c4c0-94ab-4fe4-9346-3b59fa53c316')
+            >>> agent_ids = ['cac3f82c-d320-4e6f-9ee7-e28b1f527d76']
+            >>> manager.remove_agents(agent_ids)
 
         Returns:
             Dictionary
             >>>
+            {
+                "message": "Agent ids cac3f82c-d320-4e6f-9ee7-e28b1f527d76 were removed successfully from tag 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
+                "vfense_status_code": 4010,
+                "updated_ids": [
+                    "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
+                ],
+                "generic_status_code": 1012
+            }
+
         """
         results = {}
         tag_exist = self.properties
         if tag_exist:
             if set(agent_ids).issubset(self.agents):
                 status_code, _, _, _ = (
-                    delete_agent_ids_from_tag(agent_ids, self.tag_id)
+                    delete_agent_ids_from_tag(self.tag_id, agent_ids)
                 )
                 if status_code == DbCodes.Deleted:
                     self.properties = self._tag_attributes()

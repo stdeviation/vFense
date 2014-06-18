@@ -93,6 +93,7 @@ class Agent(object):
         if not self.last_agent_update:
             self.last_agent_update = time()
 
+    def get_invalid_fields(self):
         """Check the agent for any invalid fields.
 
         Returns:

@@ -60,8 +60,8 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
             tag_info = (
                 r
                 .table(TagCollections.Tags)
-                .merge(TagMerge.AGENTS)
                 .get(tag_id)
+                .merge(TagMerge.AGENTS)
                 .run(conn)
             )
 
