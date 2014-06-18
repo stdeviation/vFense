@@ -95,7 +95,7 @@ class AgentManager(object):
                 self.properties = self._agent_attributes()
                 self.add_hardware(agent_data[AgentKeys.Hardware])
                 if tags:
-                    self.add_tags(tags)
+                    self.add_to_tags(tags)
                 agent_data[AgentKeys.AgentId] = self.agent_id
                 msg = 'Agent {0} added successfully'.format(self.agent_id)
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
@@ -134,7 +134,7 @@ class AgentManager(object):
 
         return results
 
-    def add_tags(self, tag_ids):
+    def add_to_tags(self, tag_ids):
         """Add tags to an agent.
         Args:
             tag_ids (list): List of tag ids.
@@ -224,7 +224,7 @@ class AgentManager(object):
 
         return results
 
-    def remove_tags(self, tag_ids):
+    def remove_from_tags(self, tag_ids):
         """Remove tags from an agent.
         Args:
             tag_ids (list): List of tag ids.
