@@ -63,10 +63,82 @@ class AgentManager(object):
         Basic Usage:
             >>> from vFense.core.agent.manager import AgentManager
             >>> from vFense.core.agent import Agent
+            >>> agent = Agent(computer_name='DISCIPLINE-1', etc...)
+            >>> manager = AgentManager()
+            >>> manager.create(agent)
 
         Returns:
             Dictionary
             >>>
+            {
+                "data": {
+                    "rebooted": true,
+                    "views": [
+                        "global"
+                    ],
+                    "last_agent_update": 1403100258.599256,
+                    "agent_status": "up",
+                    "bit_type": "64",
+                    "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
+                    "computer_name": "DISCIPLINE-1",
+                    "date_added": 1403100258.599249,
+                    "needs_reboot": false,
+                    "hardware": {
+                        "nic": [
+                            {
+                                "mac": "3085A925BFD6",
+                                "ip_address": "10.0.0.2",
+                                "name": "Local Area Connection"
+                            },
+                            {
+                                "mac": "005056C00001",
+                                "ip_address": "192.168.110.1",
+                                "name": "VMware Network Adapter VMnet1"
+                            },
+                            {
+                                "mac": "005056C00008",
+                                "ip_address": "192.168.252.1",
+                                "name": "VMware Network Adapter VMnet8"
+                            }
+                        ],
+                        "display": [
+                            {
+                                "speed_mhz": "GeForce GTX 660M",
+                                "name": "NVIDIA GeForce GTX 660M  ",
+                                "ram_kb": 0
+                            }
+                        ],
+                        "storage": [
+                            {
+                                "free_size_kb": 155600024,
+                                "name": "C:",
+                                "size_kb": 499872764,
+                                "file_system": "NTFS"
+                            }
+                        ],
+                        "cpu": [
+                            {
+                                "speed_mhz": 2401,
+                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
+                                "cpu_id": 1,
+                                "bit_type": 64,
+                                "cache_kb": 1024,
+                                "cores": 4
+                            }
+                        ],
+                        "memory": 25165824
+                    },
+                    "display_name": null,
+                    "production_level": "production",
+                    "os_code": "windows",
+                    "version": "6.1.7601",
+                    "os_string": "Windows 7 Professional N"
+                },
+                "message": "Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 added successfully",
+                "generated_ids": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
+                "vfense_status_code": 3200,
+                "generic_status_code": 1010
+            }
         """
         results = {}
         if isinstance(agent, Agent):
@@ -380,7 +452,17 @@ class AgentManager(object):
         Basic Usage:
             >>> from vFense.core.agent.manager import AgentManager
             >>> from vFense.core.agent import Agent
-            >>> tag_ids = ['tag_id']
+            >>> hardware = {
+                "display": [
+                    {
+                        "speed_mhz": "GeForce GTX 660M",
+                        "name": "NVIDIA GeForce GTX 660M  ",
+                        "ram_kb": 0
+                    }
+                ]
+            }
+            >>> manager = AgentManager()
+            >>> manager.add_hardware(hardware)
 
         Returns:
             Dictionary
