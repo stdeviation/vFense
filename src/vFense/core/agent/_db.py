@@ -6,8 +6,10 @@ from vFense.core._db import (
     insert_data_in_table, delete_data_in_table,
     update_data_in_table
 )
-from vFense.core.agent._db_model import AgentCollections, \
-    AgentIndexes, AgentKeys
+from vFense.core.agent._db_model import (
+    AgentCollections, AgentIndexes, AgentKeys,
+    HardwarePerAgentIndexes
+)
 from vFense.core.agent._db_sub_queries import Merge
 #from vFense.core.tag._db_model import *
 #from vFense.plugins.patching._db_model import *
@@ -415,7 +417,7 @@ def update_agent(agent_id, agent_data):
         agent_data(list|dict): Dictionary of the data you are updating
 
     Basic Usage::
-        >>> from vFense.core.agent._db import update_agent_data
+        >>> from vFense.core.agent._db import update_agent
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
         >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
         >>> update_agent(agent_id, data)
@@ -440,9 +442,9 @@ def insert_agent(agent_data):
         agent_data (dict): Dictionary of the data you are inserting.
 
     Basic Usage:
-        >>> from vFense.core.agent._db import insert_agent_data
+        >>> from vFense.core.agent._db import insert_agent
         >>> agent_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
-        >>> insert_agent_data(agent_data)
+        >>> insert_agent(agent_data)
 
     Return:
         Tuple (status_code, count, error, generated ids)
@@ -629,5 +631,63 @@ def move_agent_to_view(agent_id, new_view, conn=None):
 
     except Exception as e:
         logger.exception(e)
+
+    return data
+
+
+@time_it
+def insert_hardware(hw_data):
+    """ Insert hardware for an agent and its properties into the database
+        This function should not be called directly.
+    Args:
+        hw_data (list|dict): Dictionary of the data you are inserting.
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import insert_hardware
+        >>> hw_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
+        >>> insert_hardware(hw_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        insert_data_in_table(
+            hw_data, AgentCollections.Hardware
+        )
+    )
+
+    return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_hardware_for_agent(agent_id, conn=None):
+    """ Delete hardware for an agent and its properties from the database
+        This function should not be called directly.
+    Args:
+        agent_id (str): 36 character UUID of an agent.
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import delete_hardware_for_agent
+        >>> agent_id = ''
+        >>> delete_hardware_for_agent(agent_id)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    try:
+        data = (
+            r
+            .table(AgentCollections.Hardware)
+            .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
+            .delete()
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
 
     return data

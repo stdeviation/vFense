@@ -55,6 +55,13 @@ def format_data_to_insert_into_db(
         )
 
         bulletin_id = build_bulletin_id(string_to_build_id)
+        try:
+            if isinstance(details, unicode):
+                details = details.decode('utf-8')
+            elif isinstance(details, basestring):
+                details = unicode(details.decode('utf-8'))
+        except Exception as e:
+            details = details.encode('utf-8').decode('utf-8')
 
         data_to_insert.append(
             {
@@ -74,7 +81,7 @@ def format_data_to_insert_into_db(
 def get_cve_info(cve_references):
     """Parse and retreive  cve ids
     Args:
-        cve_references (str): 
+        cve_references (str):
     """
     cve_ids = []
     for reference in cve_references:
@@ -85,7 +92,7 @@ def get_cve_info(cve_references):
 def parse_multiple_dd_tags(info):
     """Parse dt, dl, and dd tags, to retrieve the app data.
     Args:
-        info (str): 
+        info (str):
     """
     app_info = []
     while True:
@@ -119,7 +126,7 @@ def get_app_info(info):
     """Parse dt, dl, and dd tags, to retrieve the app data
         and os_string.
     Args:
-        info (str): 
+        info (str):
     """
     app_info = []
     app_info = []
@@ -148,10 +155,10 @@ def get_app_info(info):
     return(app_info)
 
 def get_date_posted(date_em):
-    """Parse em tags, to retrieve the date posted 
+    """Parse em tags, to retrieve the date posted
         and convert it to epoch.
     Args:
-        date_em (str): 
+        date_em (str):
     """
     date_posted = u''
     try:
@@ -278,7 +285,7 @@ def get_url_content(usn_uri):
 
 def process_usn_page(usn_uri):
     """Process the entire USN page, for the data
-        that we will parse in order to store into the 
+        that we will parse in order to store into the
         database.
     Args:
         usn_uri (str): The uri, that you want to retreive
@@ -334,7 +341,7 @@ def process_usn_page(usn_uri):
 
 def begin_usn_home_page_processing(next_page=None, full_parse=False):
     """Process the entire USN HOME page, for the data
-        that we will parse in order to store into the 
+        that we will parse in order to store into the
     Kwargs:
         next_page (str): The next page tp follow, to retrieve usn data from.
         full_parse (bool): The default is False, which means,
@@ -362,7 +369,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
             next_page = (
                 soup.find(
                     'div',
-                    { 
+                    {
                         'class': 'pagination'
                     }
                 ).find(
