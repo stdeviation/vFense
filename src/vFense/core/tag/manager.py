@@ -100,12 +100,13 @@ class TagManager(object):
         """
         results = {}
         if isinstance(tag, Tag):
+            invalid_fields = tag.get_invalid_fields()
             tag.fill_in_defaults()
             tag_data = tag.to_dict()
             views_are_validated, valid_view_names, invalid_view_names = (
                 validate_view_names([tag_data[TagKeys.ViewName]])
             )
-            if views_are_validated:
+            if views_are_validated and not invalid_fields:
                 agents = tag_data.pop(TagMappedKeys.Agents)
                 status_code, _, _, generated_ids = (
                     insert_tag(tag_data)
@@ -148,6 +149,21 @@ class TagManager(object):
                     )
                     results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.DATA] = tag_data
+
+            elif invalid_fields:
+                msg = (
+                    'Failed to create tag {0}, invalid fields were passed.'
+                    .format(tag_data[TagKeys.TagName])
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    TagFailureCodes.FailedToCreateTag
+                )
+                results[ApiResultKeys.ERRORS] = invalid_fields
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = tag_data
 
             else:
                 msg = (
