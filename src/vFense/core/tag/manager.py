@@ -251,6 +251,9 @@ class TagManager(object):
                             TagsPerAgentKeys.AgentId: agent_id,
                             TagsPerAgentKeys.TagId: self.tag_id,
                             TagsPerAgentKeys.TagName: tag_name,
+                            TagsPerAgentKeys.ViewName: (
+                                tag_exist[TagKeys.ViewName]
+                            ),
                         }
                     )
                 status_code, _, _, _ = add_agents_to_tag(tag_data)
@@ -488,4 +491,3 @@ class TagManager(object):
             results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
         return results
-

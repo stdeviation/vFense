@@ -125,6 +125,49 @@ def fetch_supported_os_strings(view_name, conn=None):
 
 @time_it
 @db_create_close
+def fetch_agent_ids_in_view(view_name=None, conn=None):
+    """Retrieve a list of agent ids
+    Kwargs:
+        view_name (str): Name of the view, where the agent is located
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import fetch_agent_ids
+        >>> view_name = 'global'
+        >>> fetch_agent_ids_in_view(view_name)
+
+    Returns:
+        List of agent ids
+        [
+            u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+            u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
+        ]
+    """
+    data = []
+    try:
+        if view_name:
+            data = list(
+                r
+                .table(AgentCollections.Agents)
+                .get_all(view_name, index=AgentIndexes.Views)
+                .map(lambda x: x[AgentKeys.AgentId])
+                .run(conn)
+            )
+        else:
+            data = list(
+                r
+                .table(AgentCollections.Agents)
+                .map(lambda x: x[AgentKeys.AgentId])
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
 def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
     """Retrieve a list of agent ids
     Kwargs:
@@ -151,7 +194,7 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
+                .get_all(view_name, index=AgentIndexes.Views)
                 .filter({AgentKeys.OsCode: agent_os})
                 .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
@@ -161,7 +204,7 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
             data = list(
                 r
                 .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
+                .get_all(view_name, index=AgentIndexes.Views)
                 .map(lambda x: x[AgentKeys.AgentId])
                 .run(conn)
             )
@@ -487,8 +530,8 @@ def delete_agent(agent_id):
 @time_it
 @db_create_close
 @return_status_tuple
-def delete_all_agents_for_view(view_name, conn=None):
-    """Retrieve a user from the database
+def delete_all_agents_from_view(view_name, agent_ids=None, conn=None):
+    """Delete all agents in a view from vFense or just a list of agents.
     Args:
         view_name (str): Name of the view.
 
@@ -503,18 +546,97 @@ def delete_all_agents_for_view(view_name, conn=None):
     """
     data = {}
     try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
-            .delete()
-            .run(conn)
-        )
+        if agent_ids:
+            data = (
+                r
+                .expr(agent_ids)
+                .for_each(
+                    lambda agent_id:
+                    r
+                    .table(AgentCollections.Agents)
+                    .get(agent_id)
+                    .delete()
+                )
+                .run(conn, no_reply=True)
+            )
+
+        else:
+            data = (
+                r
+                .table(AgentCollections.Agents)
+                .get_all(view_name, index=AgentIndexes.Views)
+                .delete()
+                .run(conn, no_reply=True)
+            )
 
     except Exception as e:
         logger.exception(e)
 
     return data
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
+    """Remove all agents from a view or just a list of agents.
+    Args:
+        view_name (str): Name of the view.
+
+    Basic Usage:
+        >>> from vFense.agent._db import remove_all_agents_from_view
+        >>> view_name = 'test'
+        >>> remove_all_agents_from_view(view_nam)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        if agent_ids:
+            data = (
+                r
+                .expr(agent_ids)
+                .for_each(
+                    lambda agent_id:
+                    r
+                    .table(AgentCollections.Agents)
+                    .get_all(agent_id)
+                    .update(
+                        lambda x:
+                        {
+                            AgentKeys.Views: (
+                                x[AgentKeys.Views].set_difference([view_name])
+                            )
+                        }
+                    )
+                )
+                .run(conn, no_reply=True)
+            )
+
+        else:
+            data = (
+                r
+                .table(AgentCollections.Agents)
+                .get_all(view_name, index=AgentIndexes.Views)
+                .update(
+                    lambda x:
+                    {
+                        AgentKeys.Views: (
+                            x[AgentKeys.Views].set_difference([view_name])
+                        )
+                    }
+                )
+                .delete()
+                .run(conn, no_reply=True)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
 
 @time_it
 @db_create_close
@@ -692,6 +814,45 @@ def delete_hardware_for_agent(agent_id, conn=None):
 
 
     return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_hardware_for_agents(agent_ids, conn=None):
+    """ Delete hardware for a list of agents and its properties from the database
+        This function should not be called directly.
+    Args:
+        agent_ids (list): List of agent ids.
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import delete_hardware_for_agents
+        >>> agent_ids = ['']
+        >>> delete_hardware_for_agents(agent_ids)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    try:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
+                r
+                .table(AgentCollections.Hardware)
+                .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
+                .delete()
+            )
+            .run(conn, no_reply=True)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+
+    return data
+
 
 @time_it
 @db_create_close

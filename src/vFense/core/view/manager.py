@@ -18,24 +18,30 @@ from vFense.core.view._db import (
     fetch_view, insert_view, update_children_for_view, delete_view,
     delete_users_in_view, update_view, update_usernames_for_view
 )
-
+from vFense.core.agent._db import (
+    remove_all_agents_from_view, delete_all_agents_from_view,
+    fetch_agent_ids_in_view, delete_hardware_for_agents
+)
+from vFense.core.tag._db import (
+    delete_agent_ids_from_all_tags, fetch_tag_ids,
+    delete_tag_ids_from_view, delete_tag_ids_per_agent,
+    delete_agent_ids_from_tags_in_view
+)
 from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
 
 from vFense.errorz.status_codes import (
-    DbCodes, ViewCodes, GenericCodes,
+    DbCodes, ViewCodes, GenericCodes, AgentCodes,
     GenericFailureCodes, ViewFailureCodes
 )
 
 class ViewManager(object):
     def __init__(self, name):
         self.name = name
-        self.users = []
-        self.groups = []
         self.properties = self._view_properties()
-        if self.properties:
-            self.users = self.properties[ViewKeys.Users]
-            self.groups = fetch_group_ids_for_view(self.name)
+        self.users = self.get_users()
+        self.groups = self.get_groups()
+        self.tags = self.get_tags()
 
     def _view_properties(self):
         """Retrieve view information.
@@ -81,6 +87,29 @@ class ViewManager(object):
 
         return view_key
 
+    def get_users(self):
+        users = self.get_attribute(ViewKeys.Users)
+        if not users:
+            users = []
+        return users
+
+    def get_groups(self):
+        groups = fetch_group_ids_for_view(self.name)
+        return groups
+
+    def get_agents(self):
+        if self.name == DefaultViews.GLOBAL:
+            agents = fetch_agent_ids_in_view()
+        else:
+            agents = fetch_agent_ids_in_view(self.name)
+        return agents
+
+    def get_tags(self):
+        if self.name == DefaultViews.GLOBAL:
+            tags = fetch_tag_ids()
+        else:
+            tags = fetch_tag_ids(self.name)
+        return tags
 
     @time_it
     def create(self, view):
@@ -521,6 +550,211 @@ class ViewManager(object):
 
         return results
 
+    @time_it
+    def remove_agents(self, agents=None):
+        """remove agents from this view. This does not remove the agents
+            from vFense, just from this view.
+
+        Kwargs:
+            agents (list): Remove a list of agente from this view.
+                default=None (Remove all agents from this view)
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.remove_agents()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        if agents:
+            if not isinstance(agents, list):
+                agents = agents.split()
+        else:
+            agents = self.agents
+
+        if set(agents) == set(self.agents):
+            valid_agents = True
+
+        elif set(agents).issubset(self.agents):
+            valid_agents = True
+
+        else:
+            valid_agents = False
+
+        if view_exist and self.name != DefaultViews.GLOBAL:
+            if agents and valid_agents:
+                status_code, _, _, _ = (
+                    remove_all_agents_from_view(self.name, agents)
+                )
+                delete_agent_ids_from_tags_in_view(agents, self.name)
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following agents: {0} were removed from view {1}'
+                        .format(', '.join(agents), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.ViewsRemovedFromAgent
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif agents and not valid_agents:
+                msg = (
+                    'Agents %s are not valid for this view %s'%
+                    (', '.join(agents), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Agents do not exist in this view %s'% (self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        elif self.name == DefaultViews.GLOBAL:
+            msg = 'Can not remove agents from the global view'
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.CantRemoveAgentsFromGlobalView
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewDoesNotExist
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+    @time_it
+    def delete_agents(self, agents=None):
+        """Delete agents from this view and from inside of vFense.
+            THIS WILL DELETE THE AGENTS FROM VFENSE
+
+        Kwargs:
+            agents (list): Remove a list of agente from this view.
+                default=None (Remove all agents from this view)
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.delete_agents()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        if agents:
+            if not isinstance(agents, list):
+                agents = agents.split()
+        else:
+            agents = self.agents
+
+        if set(agents) == set(self.agents):
+            valid_agents = True
+
+        elif set(agents).issubset(self.agents):
+            valid_agents = True
+
+        else:
+            valid_agents = False
+
+        if view_exist:
+            if agents and valid_agents:
+                status_code, _, _, _ = (
+                    delete_all_agents_from_view(self.name, agents)
+                )
+                delete_agent_ids_from_all_tags(agents)
+                delete_hardware_for_agents(agents)
+                if status_code == DbCodes.Deleted:
+                    msg = (
+                        'The following agents: {0} were deleted from view {1}'
+                        .format(', '.join(agents), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        AgentCodes.AgentsDeleted
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif agents and not valid_agents:
+                msg = (
+                    'Agents %s are not valid for this view %s'%
+                    (', '.join(agents), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Agents do not exist in this view %s'% (self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewExists
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
 
     @time_it
     def remove_groups(self, groups=None):
@@ -651,6 +885,9 @@ class ViewManager(object):
                     if force:
                         delete_all_users_from_view(self.name)
                         delete_all_groups_from_view(self.name)
+                        self.remove_agents()
+                        delete_tag_ids_per_agent(self.tags)
+                        delete_tag_ids_from_view(self.name)
                         text = (
                             'View {view_name} deleted' +
                             'and all users: {users} and groups: {groups}' +

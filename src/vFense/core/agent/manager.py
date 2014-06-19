@@ -486,6 +486,9 @@ class AgentManager(object):
                             TagsPerAgentKeys.TagName: (
                                 tag[TagKeys.TagName]
                             ),
+                            TagsPerAgentKeys.ViewName: (
+                                tag[TagKeys.ViewName]
+                            ),
                         }
                     )
                 status_code, _, _, _ = add_tags_to_agent(tag_data)

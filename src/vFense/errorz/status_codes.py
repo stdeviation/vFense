@@ -129,6 +129,7 @@ class ViewCodes(object):
     ViewsRemovedFromGroup = 14007
     ViewsUnchanged = 14008
     ViewsDeleted = 14009
+    ViewsRemovedFromAgent = 14010
 
 
 class ViewFailureCodes(object):
@@ -151,6 +152,8 @@ class ViewFailureCodes(object):
     InvalidValue = 124515
     GroupsDoNotExistInThisView = 124516
     FailedToDeleteAllViews = 124517
+    AgentsDoNotExistForView = 14518
+    CantRemoveAgentsFromGlobalView = 14519
 
 
 class DbCodes(object):

@@ -231,6 +231,183 @@ def delete_agent_ids_from_tag(tag_id, agent_ids=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
+def delete_tag_ids_from_view(view_name=None, conn=None):
+    """Delete all tags in a view.
+    Args:
+        view_name (str): Name of the view, you want to remove the
+            tags from.
+
+    Kwargs:
+        agent_ids (list): List of agent ids to remove from tag.
+            default=None (Remove all agents from tag)
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import delete_tag_ids_from_view
+        >>> view_name = 'Test View 1'
+        >>> delete_tag_ids_from_view(view_name)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+
+    try:
+        if view_name:
+            data = (
+                r
+                .table(TagCollections.Tags)
+                .get_all(
+                    view_name, index=TagsIndexes.Views
+                )
+                .delete()
+                .run(conn, no_reply=True)
+            )
+
+        else:
+            data = (
+                r
+                .table(TagCollections.Tags)
+                .delete()
+                .run(conn, no_reply=True)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_tag_ids_per_agent(tag_ids, conn=None):
+    """Delete all tags per agent for a view.
+    Args:
+        tag_ids (list): List of tag ids.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import delete_tag_ids_per_agent
+        >>> tag_ids = ['52faa1db-290a-47a7-a4cf-e4ad70e25c38']
+        >>> delete_tag_ids_per_agent(tag_ids)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+
+    try:
+        data = (
+            r
+            .expr(tag_ids)
+            .for_each(
+                lambda tag_id:
+                r
+                .table(TagCollections.TagsPerAgent)
+                .get_all(
+                    tag_id, index=TagsPerAgentIndexes.TagId
+                )
+                .delete()
+            )
+            .run(conn, no_reply=True)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_agent_ids_from_all_tags(agent_ids, conn=None):
+    """Delete 1 or multiple agents in a tag.
+    Args:
+        agent_ids (list): List of agent ids to remove from tags.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import delete_agent_ids_from_all_tags
+        >>> agent_ids = ['agent1', 'agent2']
+        >>> delete_agent_ids_from_all_tags(agent_ids)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+
+    try:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
+                r
+                .table(TagCollections.TagsPerAgent)
+                .get_all(
+                    agent_id,
+                    index=TagsPerAgentIndexes.AgentId
+                )
+                .delete()
+            )
+            .run(conn, no_reply=True)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_agent_ids_from_tags_in_view(agent_ids, view_name, conn=None):
+    """Delete 1 or multiple agents in a tag.
+    Args:
+        agent_ids (list): List of agent ids to remove from tags.
+        view_name (str): Name of the view, you are removing the agents from.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import delete_agent_ids_from_all_tags
+        >>> agent_ids = ['agent1', 'agent2']
+        >>> delete_agent_ids_from_all_tags(agent_ids)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+
+    try:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
+                r
+                .table(TagCollections.TagsPerAgent)
+                .get_all(
+                    agent_id,
+                    index=TagsPerAgentIndexes.AgentId
+                )
+                .filter({TagsPerAgentKeys.ViewName: view_name})
+                .delete()
+            )
+            .run(conn, no_reply=True)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
+
+
+@time_it
+@db_create_close
+@return_status_tuple
 def delete_tag_ids_from_agent(agent_id, tag_ids=None, conn=None):
     """Delete 1 or multiple tags from an agent.
     Args:

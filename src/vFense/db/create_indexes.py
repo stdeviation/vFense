@@ -93,8 +93,8 @@ def initialize_indexes_and_create_tables():
     view_list = r.table(ViewCollections.Views).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
-    if not AgentIndexes.ViewName in agents_list:
-        r.table(AgentCollections.Agents).index_create(AgentIndexes.ViewName).run(conn)
+    if not AgentIndexes.Views in agents_list:
+        r.table(AgentCollections.Agents).index_create(AgentIndexes.Views).run(conn)
 
     if not AgentIndexes.OsCode in agents_list:
         r.table(AgentCollections.Agents).index_create(AgentIndexes.OsCode).run(conn)

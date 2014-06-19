@@ -8,10 +8,12 @@ from vFense.core.agent._db_model import (
     AgentKeys, AgentCollections,
     HardwarePerAgentIndexes, HardwarePerAgentKeys
 )
-from vFense.core.tag._db_model import TagCollections, TagKeys, TagsPerAgentKeys, \
-    TagsPerAgentIndexes
-from vFense.plugins.patching._db_model import AppCollections, AppsKey, \
-     AppsPerAgentIndexes
+from vFense.core.tag._db_model import (
+    TagCollections, TagKeys, TagsPerAgentKeys, TagsPerAgentIndexes
+)
+from vFense.plugins.patching._db_model import (
+    AppCollections, AppsKey, AppsPerAgentIndexes
+)
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.decorators import time_it
@@ -713,7 +715,7 @@ class FetchAgents(object):
                 .table(AgentCollections.Agents)
                 .get_all(
                     self.view_name,
-                    index=AgentKeys.ViewName
+                    index=AgentKeys.Views
                 )
             )
 
@@ -732,6 +734,10 @@ class FetchAgents(object):
         base_count = (
             r
             .table(AgentCollections.Hardware)
+            .get_all(
+                HardwarePerAgentKeys.Nic,
+                index=HardwarePerAgentIndexes.Type
+            )
         )
         if self.view_name:
             base_count = (
