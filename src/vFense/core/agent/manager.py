@@ -8,7 +8,7 @@ from vFense.core.agent import Agent
 from vFense.core.agent._db import (
     fetch_agent, insert_agent, insert_hardware,
     delete_hardware_for_agent, update_agent, update_views_for_agent,
-    delete_views_from_agent
+    delete_views_from_agent, delete_agent
 )
 from vFense.core.decorators import time_it
 from vFense.core.agent._db_model import (
@@ -949,5 +949,62 @@ class AgentManager(object):
         results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
         results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
         results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+    @time_it
+    def remove(self):
+        """Remove this agent from the system.
+
+        Basic Usage:
+            >>> from vFense.agent import Agent
+            >>> from vFense.agent.manager import AgentManager
+            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = AgentManager(agent_id)
+            >>> manager.remove()
+
+        Return:
+            Dictionary of the status of the operation.
+            >>>
+        """
+
+        agent_exist = self.properties
+        results = {}
+        if agent_exist:
+            delete_tag_ids_from_agent(self.agent_id, self.tags)
+            delete_hardware_for_agent(self.agent_id)
+            status_code, _, _, _ = delete_agent(self.agent_id)
+            if status_code == DbCodes.Deleted:
+                msg = 'Agent %s was deleted - ' % (self.agent_id)
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectDeleted
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentCodes.AgentDeleted
+                )
+                results[ApiResultKeys.DELETED_IDS] = [self.agent_id]
+
+            else:
+                msg = 'Invalid agent id %s' % (self.agent_id)
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    GenericCodes.InvalidId
+                )
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
+
+        else:
+            msg = 'Invalid agent id %s' % (self.agent_id)
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GenericCodes.InvalidId
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
 
         return results
