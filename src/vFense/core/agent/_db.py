@@ -692,3 +692,86 @@ def delete_hardware_for_agent(agent_id, conn=None):
 
 
     return data
+
+@time_it
+@db_create_close
+@return_status_tuple
+def update_views_for_agent(views, agent_id, conn=None):
+    """Update the views for an agent,
+    Args:
+        views (list): List of views you are adding to this agent.
+        agent_id (str): The 36 character UUID of this agent.
+
+    Basic Usage:
+        >>> from vFense.agent._db import update_views_for_agent
+        >>> views = ['NYC', 'MIAMI']
+        >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+        >>> update_views_for_agent(views, agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get(agent_id)
+            .update(
+                lambda y:
+                {
+                    AgentKeys.Views: (
+                        y[AgentKeys.Views].set_union(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_views_from_agent(views, agent_id, conn=None):
+    """Delete views from this agent,
+    Args:
+        views (list): List of views you are removing from this agent.
+        agent_id (str): The 36 character UUID of this agent.
+
+    Basic Usage:
+        >>> from vFense.agent._db import delete_views_from_agent
+        >>> views = ['NYC', 'MIAMI']
+        >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+        >>> delete_views_from_agent(views, agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+    try:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get(agent_id)
+            .update(
+                lambda y:
+                {
+                    AgentKeys.Views: (
+                        y[AgentKeys.Views].set_difference(views)
+                    )
+                }
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
