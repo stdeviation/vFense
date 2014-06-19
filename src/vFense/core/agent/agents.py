@@ -10,10 +10,8 @@ from vFense.core.agent._constants import AgentVirtualKeys, \
 
 from vFense.core.agent._db import fetch_production_levels_from_agent, \
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
-    fetch_all_agents_for_view, fetch_agent, \
-    update_agent, insert_agent, delete_all_agents_for_view, \
-    move_agents_to_view, move_agent_to_view, \
-    move_all_agents_to_view
+    fetch_agent, \
+    update_agent
 
 from vFense.core.decorators import time_it
 
