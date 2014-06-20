@@ -8,7 +8,7 @@ from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.agent._db_model import AgentKeys
 
 from vFense.core.agent.search._db import FetchAgents
-from vFense.core.decorators import time_it, results_message
+from vFense.core.decorators import time_it
 from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -17,18 +17,14 @@ logger = logging.getLogger('rvapi')
 
 class RetrieveAgents(object):
     def __init__(
-        self, customer_name=None,
+        self, view_name=None,
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKeys.ComputerName,
-        user_name=None, uri=None, method=None
+        sort_key=AgentKeys.ComputerName
         ):
 
-        self.user_name = user_name
-        self.customer_name = customer_name
-        self.uri = uri
-        self.method = method
+        self.view_name = view_name
         self.count = count
         self.offset = offset
         self.sort = sort
@@ -71,13 +67,12 @@ class RetrieveAgents(object):
 
         self.fetch_agents = (
             FetchAgents(
-                customer_name, self.count, self.offset,
+                view_name, self.count, self.offset,
                 self.sort, self.sort_key
             )
         )
 
     @time_it
-    @results_message
     def by_name(self, query):
         """Query agents by computer and display name.
         Args:
@@ -85,8 +80,8 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> view_name = 'default'
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_name('ubu')
 
         Returns:
@@ -148,8 +143,8 @@ class RetrieveAgents(object):
         """Retrieve all agents.
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> view_name = 'default'
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.all()
 
         Returns:
@@ -207,10 +202,10 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_key_and_val(fkey, fval)
 
         Returns:
@@ -278,11 +273,11 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
             >>> query = 'ubu'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_key_and_value_and_query(fkey, fval, query)
 
         Returns:
@@ -352,9 +347,9 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> ip = '192.168.0.101'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_ip(ip)
 
         Returns:
@@ -414,11 +409,11 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> ip = '192.168'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_ip_and_filter(ip, fkey, fval)
 
         Returns:
@@ -483,9 +478,9 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> mac = '000c292672d6'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_mac(mac)
 
         Returns:
@@ -546,11 +541,11 @@ class RetrieveAgents(object):
 
         Basic Usage:
             >>> from vFense.core.agent.search.search import RetrieveAgents
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> mac = '000c292672d6'
             >>> fkey = 'os_code'
             >>> fval = 'linux'
-            >>> search_agents = RetrieveAgents(customer_name='default')
+            >>> search_agents = RetrieveAgents(view_name='default')
             >>> search_agents.by_mac_and_filter(mac, fkey, fval)
 
         Returns:
@@ -615,9 +610,6 @@ class RetrieveAgents(object):
             ApiResultKeys.MESSAGE: msg,
             ApiResultKeys.COUNT: count,
             ApiResultKeys.DATA: data,
-            ApiResultKeys.USERNAME: self.user_name,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
         }
 
         return(results)

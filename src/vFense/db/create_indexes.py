@@ -497,6 +497,15 @@ def initialize_indexes_and_create_tables():
     if not HardwarePerAgentIndexes.AgentId in hw_per_agent_list:
         r.table(AgentCollections.Hardware).index_create(HardwarePerAgentIndexes.AgentId).run(conn)
 
+    if not HardwarePerAgentIndexes.AgentIdAndType in hw_per_agent_list:
+        r.table(AgentCollections.Hardware).index_create(
+            HardwarePerAgentIndexes.AgentIdAndType,
+            lambda x: [
+                x[HardwarePerAgentKeys.AgentId],
+                x[HardwarePerAgentKeys.Type],
+            ]
+        ).run(conn)
+
 #################################### DownloadStatusCollection Indexes ###################################################
     if not 'app_id' in downloaded_list:
         r.table('downloaded_status').index_create('app_id').run(conn)

@@ -30,7 +30,7 @@ class AgentKeys():
 
 
 class AgentIndexes():
-    ViewName = 'view_name'
+    Views = 'views'
     OsCode = 'os_code'
 
 
@@ -60,3 +60,4 @@ class HardwarePerAgentKeys():
 class HardwarePerAgentIndexes():
     AgentId = 'agent_id'
     Type = 'type'
+    AgentIdAndType = 'agent_id_and_type'

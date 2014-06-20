@@ -14,14 +14,15 @@ from vFense.core.agent._db_model import *
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
-from vFense.core.agent.agent_handler import AgentManager
+from vFense.core.agent.manager import AgentManager
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.core.agent.operations.store_agent_operations import StoreAgentOperations
-from vFense.core.agent.agents import get_supported_os_codes, get_supported_os_strings, \
-    get_production_levels
+from vFense.core.agent.agents import (
+    get_supported_os_codes, get_supported_os_strings, get_production_levels
+)
 
 from vFense.core.operations._db_model import *
 from vFense.core.decorators import authenticated_request, \

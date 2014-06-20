@@ -59,11 +59,56 @@ class FetchAgents(object):
         else:
             self.sort = r.desc
 
+    @db_create_close
+    def by_id(self, agent_id, conn=None):
+        """Retrieve an agent by its id and all of its properties.
+
+        Basic Usage:
+            >>> from vFense.agent.search._db import FetchAgents
+            >>> agent = FetchAgents()
+            >>> agent.by_id('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            Tuple
+            (count, group_data)
+        >>>
+        """
+        count = 0
+        data = []
+        base_filter = (
+            r
+            .table(AgentCollections.Agents)
+        )
+        merge_query = self._set_merge_query()
+
+        try:
+            count = (
+                base_filter
+                .get_all(agent_id)
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .get_all(agent_id)
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .merge(merge_query)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
 
     @time_it
     @db_create_close
     def by_name(self, name, conn=None):
-        """Query agents by computer and display name.
+        """Query agents by computer or display name.
         Args:
             name (str): The regex you are searching by
 
@@ -698,6 +743,9 @@ class FetchAgents(object):
                 ),
                 AgentKeys.LastAgentUpdate: (
                     x[AgentKeys.LastAgentUpdate].to_epoch_time()
+                ),
+                AgentKeys.DateAdded: (
+                    x[AgentKeys.DateAdded].to_epoch_time()
                 )
             }
         )
@@ -724,41 +772,57 @@ class FetchAgents(object):
     def _set_hw_base_query_by_nic(self):
         base_filter = (
             r
-            .table(AgentCollections.Hardware)
+            .table(AgentCollections.Agents)
             .eq_join(
-                HardwarePerAgentKeys.AgentId,
-                r.table(AgentCollections.Agents)
+                lambda x: [
+                    x[AgentKeys.AgentId],
+                    HardwarePerAgentKeys.Nic
+                ],
+                r.table(AgentCollections.Hardware),
+                index=HardwarePerAgentIndexes.AgentIdAndType
             )
             .zip()
         )
         base_count = (
             r
-            .table(AgentCollections.Hardware)
-            .get_all(
-                HardwarePerAgentKeys.Nic,
-                index=HardwarePerAgentIndexes.Type
+            .table(AgentCollections.Agents)
+            .eq_join(
+                lambda x: [
+                    x[AgentKeys.AgentId],
+                    HardwarePerAgentKeys.Nic
+                ],
+                r.table(AgentCollections.Hardware),
+                index=HardwarePerAgentIndexes.AgentIdAndType
             )
+            .zip()
         )
         if self.view_name:
             base_count = (
                 r
-                .table(AgentCollections.Hardware)
-                .get_all(
-                    HardwarePerAgentKeys.Nic,
-                    index=HardwarePerAgentIndexes.Type
+                .table(AgentCollections.Agents)
+                .get_all(self.view_name, index=AgentIndexes.Views)
+                .eq_join(
+                    lambda x: [
+                        x[AgentKeys.AgentId],
+                        HardwarePerAgentKeys.Nic
+                    ],
+                    r.table(AgentCollections.Hardware),
+                    index=HardwarePerAgentIndexes.AgentIdAndType
                 )
+                .zip()
             )
 
             base_filter = (
                 r
-                .table(AgentCollections.Hardware)
-                .get_all(
-                    HardwarePerAgentKeys.Nic,
-                    index=HardwarePerAgentIndexes.Type
-                )
+                .table(AgentCollections.Agents)
+                .get_all(self.view_name, index=AgentIndexes.Views)
                 .eq_join(
-                    HardwarePerAgentKeys.AgentId,
-                    r.table(AgentCollections.Agents)
+                    lambda x: [
+                        x[AgentKeys.AgentId],
+                        HardwarePerAgentKeys.Nic
+                    ],
+                    r.table(AgentCollections.Hardware),
+                    index=HardwarePerAgentIndexes.AgentIdAndType
                 )
                 .zip()
             )
