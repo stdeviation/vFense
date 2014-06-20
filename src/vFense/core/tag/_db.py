@@ -70,6 +70,48 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
 
     return tag_info
 
+@db_create_close
+def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
+    """Retrieve tag by name and view.
+    Args:
+        tag_name (str): The name of the tag you are searching for.
+        view_name (str): The name of the view this tag is part of.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import fetch_tag_by_name_and_view
+        >>> tag_name = 'test tag 1'
+        >>> view_name = 'global'
+        >>> fetch_tag_by_name_and_view(tag_name, view_name)
+
+    Return:
+        Dictionary of the agent data
+        {
+            u'tag_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
+            u'tag_name': u'Development'
+        }
+    """
+    tag_info = {}
+
+    try:
+        tag_info = (
+            r
+            .table(TagCollections.Tags)
+            .get_all(view_name, index=TagsIndexes.ViewName)
+            .filter(
+                {
+                    TagKeys.TagName: tag_name
+                }
+            )
+            .merge(TagMerge.AGENTS)
+            .run(conn)
+        )
+        if tag_info:
+            tag_info = tag_info[0]
+
+    except Exception as e:
+        logger.exception(e)
+
+    return tag_info
 
 @db_create_close
 def fetch_tag_ids(view_name=None, conn=None):

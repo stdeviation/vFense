@@ -7,7 +7,7 @@ from vFense.core.agent.agents import validate_agent_ids_in_views
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
     fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
-    delete_tag, fetch_agent_ids_in_tag
+    delete_tag, fetch_agent_ids_in_tag, fetch_tag_by_name_and_view
 )
 from vFense.core.view.views import validate_view_names
 from vFense.core.tag._db_model import (
@@ -106,7 +106,11 @@ class TagManager(object):
             views_are_validated, valid_view_names, invalid_view_names = (
                 validate_view_names([tag_data[TagKeys.ViewName]])
             )
-            if views_are_validated and not invalid_fields:
+            tag_exist_for_view = (
+                fetch_tag_by_name_and_view(tag.tag_name, tag.view_name)
+            )
+            if (views_are_validated and not invalid_fields and
+                    not tag_exist_for_view):
                 agents = tag_data.pop(TagMappedKeys.Agents)
                 status_code, _, _, generated_ids = (
                     insert_tag(tag_data)
@@ -154,6 +158,24 @@ class TagManager(object):
                 msg = (
                     'Failed to create tag {0}, invalid fields were passed.'
                     .format(tag_data[TagKeys.TagName])
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    TagFailureCodes.FailedToCreateTag
+                )
+                results[ApiResultKeys.ERRORS] = invalid_fields
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = tag_data
+
+            elif tag_exist_for_view:
+                msg = (
+                    'Tag {0} already exist in view {1}.'
+                    .format(
+                        tag_data[TagKeys.TagName],
+                        tag_data[TagKeys.ViewName]
+                    )
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToCreateObject
