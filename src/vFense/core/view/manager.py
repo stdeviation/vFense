@@ -457,7 +457,7 @@ class ViewManager(object):
 
     @time_it
     def remove_users(self, users=None):
-        """remove users from this view.
+        """Remove users from this view.
 
         Kwargs:
             users (list): Remove a list of users from this view.
@@ -552,7 +552,7 @@ class ViewManager(object):
 
     @time_it
     def remove_agents(self, agents=None):
-        """remove agents from this view. This does not remove the agents
+        """Remove agents from this view. This does not remove the agents
             from vFense, just from this view.
 
         Kwargs:
@@ -758,7 +758,7 @@ class ViewManager(object):
 
     @time_it
     def remove_groups(self, groups=None):
-        """remove groups from this view.
+        """Remove groups from this view.
 
         Kwargs:
             groups (list): Remove a list of groups from this view.
