@@ -298,6 +298,69 @@ class AgentsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def add_agents_to_views(self, agents, views):
+        end_results = {}
+        views_added = []
+        views_unchanged = []
+        for view in views:
+            manager = ViewManager(view)
+            results = manager.add_to_agents(agents)
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                    == ViewCodes.AgentsAddedToView):
+                views_added.append(view)
+            else:
+                views_unchanged.append(view)
+
+        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
+        end_results[ApiResultKeys.UPDATED_IDS] = views_added
+
+        if views_added and views_unchanged:
+            msg = (
+                'Agents: {0} added to views: {1}, Unchanged views: {2}'
+                .format(
+                    ', '.join(agents),
+                    ', '.join(views_added),
+                    views_unchanged
+                )
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToUpdateAllObjects
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToAddViewsToAgents
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif views_added and not views_unchanged:
+            msg = (
+                'Agents: {0} added to views: {1}'
+                .format(', '.join(agents), ', '.join(views_added))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUpdated
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentCodes.UsersDeleted
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif views_unchanged and not views_added:
+            msg = 'user names unchanged: %s' % (', '.join(users_unchanged))
+            msg = (
+                'Agents: {0} failed to add to views: {1}'
+                .format(', '.join(agents), ', '.join(views_unchanged))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUnchanged
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToAddViewsToAgent
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        return end_results
+
 
     @authenticated_request
     @convert_json_to_arguments

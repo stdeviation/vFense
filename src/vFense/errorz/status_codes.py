@@ -27,6 +27,7 @@ class GenericCodes(object):
     InvalidFields = 1026
     ObjectsDeleted = 1027
     ObjectsUnchanged = 1028
+    ObjectsUpdated = 1029
 
 
 class GenericFailureCodes(object):
@@ -42,6 +43,7 @@ class GenericFailureCodes(object):
     InvalidInstanceType = 1509
     InvalidFields = 1510
     FailedToDeleteAllObjects = 1511
+    FailedToUpdateAllObjects = 1511
 
 class GroupCodes(object):
     GroupCreated = 12000
@@ -130,6 +132,8 @@ class ViewCodes(object):
     ViewsUnchanged = 14008
     ViewsDeleted = 14009
     ViewsRemovedFromAgent = 14010
+    AgentsAddedToView = 14011
+    AgentsRemovedFromView = 14012
 
 
 class ViewFailureCodes(object):
@@ -223,6 +227,8 @@ class AgentFailureCodes(object):
     AgentIdDoesNotExist = 3510
     FailedToAddViewsToAgent = 3511
     FailedToRemoveViewsFromAgent = 3512
+    FailedToAddViewsToAgents = 3513
+    FailedToRemoveViewsFromAgents = 3514
 
 
 class TagCodes(object):

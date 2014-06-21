@@ -103,7 +103,8 @@ def results_message(fn):
                 ).objects_failed_to_create(**data)
             )
 
-        elif generic_status_code == GenericCodes.ObjectUpdated:
+        elif (generic_status_code == GenericCodes.ObjectUpdated or
+              generic_status_code == GenericCodes.ObjectsUpdated):
             status = (
                 Results(
                     username, uri, method
@@ -117,7 +118,8 @@ def results_message(fn):
                 ).objects_failed_to_update(**data)
             )
 
-        elif generic_status_code == GenericCodes.ObjectDeleted:
+        elif (generic_status_code == GenericCodes.ObjectDeleted or
+              generic_status_code == GenericCodes.ObjectsDeleted):
             status = (
                 Results(
                     username, uri, method
@@ -131,7 +133,8 @@ def results_message(fn):
                 ).objects_failed_to_delete(**data)
             )
 
-        elif generic_status_code == GenericCodes.ObjectUnchanged:
+        elif (generic_status_code == GenericCodes.ObjectUnchanged or
+              generic_status_code == GenericCodes.ObjectsUnchanged):
             status = (
                 Results(
                     username, uri, method

@@ -641,55 +641,17 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def move_all_agents_to_view(current_view, new_view, conn=None):
-    """Move all agents in current view to the new view.
-    Args:
-        current_view (str): Name of the current view.
-        new_view (str): Name of the new view.
-
-    Basic Usage:
-        >>> from vFense.agent._db import move_all_agents_to_view
-        >>> current_view = 'default'
-        >>> new_view = 'test'
-        >>> move_all_agents_to_view(current_view, new_view)
-
-    Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(current_view, index=AgentIndexes.ViewName)
-            .update(
-                {
-                    AgentKeys.ViewName: new_view
-                }
-            )
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
-
-@time_it
-@db_create_close
-@return_status_tuple
-def move_agents_to_view(agent_ids, new_view, conn=None):
-    """Move a list of agents into another view
+def add_agents_to_views(agent_ids, views, conn=None):
+    """Add a list of agents into a list of views
     Args:
         agent_ids (list): List of agent ids
-        new_view (str): Name of the new view.
+        views (str): List of views.
 
     Basic Usage:
-        >>> from vFense.agent._db import move_agents_to_view
-        >>> new_view = 'test'
+        >>> from vFense.agent._db import add_agents_to_views
+        >>> views = ['test']
         >>> agent_ids = ['7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc']
-        >>> move_agents_to_view(agent_ids, new_view)
+        >>> add_agents_to_views(agent_ids, views)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -704,10 +666,13 @@ def move_agents_to_view(agent_ids, new_view, conn=None):
                 lambda agent_id:
                 r
                 .table(AgentCollections.Agents)
-                .get(agent_id)
+                .get_all(agent_id)
                 .update(
+                    lambda x:
                     {
-                        AgentKeys.ViewName: new_view
+                        AgentKeys.Views: (
+                            x[AgentKeys.Views].set_union(views)
+                        )
                     }
                 )
             )
@@ -718,45 +683,6 @@ def move_agents_to_view(agent_ids, new_view, conn=None):
         logger.exception(e)
 
     return data
-
-@time_it
-@db_create_close
-@return_status_tuple
-def move_agent_to_view(agent_id, new_view, conn=None):
-    """Move an agent into another view
-    Args:
-        agent_id (str): The 36 character UUID of an agent.
-        new_view (str): Name of the new view.
-
-    Basic Usage:
-        >>> from vFense.agent._db import move_agent_to_view
-        >>> new_view = 'test'
-        >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
-        >>> move_agent_to_view(agent_id, new_view)
-
-    Returns:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get(agent_id)
-            .update(
-                {
-                    AgentKeys.ViewName: new_view
-                }
-            )
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
-
 
 @time_it
 def insert_hardware(hw_data):

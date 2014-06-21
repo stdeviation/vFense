@@ -20,8 +20,10 @@ from vFense.core.view._db import (
 )
 from vFense.core.agent._db import (
     remove_all_agents_from_view, delete_all_agents_from_view,
-    fetch_agent_ids_in_view, delete_hardware_for_agents
+    fetch_agent_ids_in_view, delete_hardware_for_agents,
+    add_agents_to_views
 )
+from vFense.core.agent.agents import validate_agent_ids
 from vFense.core.tag._db import (
     delete_agent_ids_from_all_tags, fetch_tag_ids,
     delete_tag_ids_from_view, delete_tag_ids_per_agent,
@@ -32,7 +34,7 @@ from vFense.errorz._constants import ApiResultKeys
 
 from vFense.errorz.status_codes import (
     DbCodes, ViewCodes, GenericCodes, AgentCodes,
-    ViewFailureCodes
+    ViewFailureCodes, AgentFailureCodes
 )
 
 class ViewManager(object):
@@ -550,6 +552,77 @@ class ViewManager(object):
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
+
+    @time_it
+    def add_agents(self, agents):
+        """Add agents from this view.
+
+        Args:
+            agents (list): Add a list of agente to this view.
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> manager = ViewManager(view.name)
+            >>> manager.add_agents()
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        if not isinstance(agents, list):
+            agents = agents.split()
+
+        if view_exist:
+            agents_are_valid, _, _ = validate_agent_ids(agents)
+            if agents_are_valid:
+                status_code, _, _, _ = (
+                    add_agents_to_views(agents, [self.name])
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'The following agents: {0} were added to view {1}'
+                        .format(', '.join(agents), self.name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.AgentsAddedToView
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Agents %s are not valid %s'%
+                    (', '.join(agents), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureCodes.AgentsDoNotExist
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewDoesNotExist
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
 
     @time_it
     def remove_agents(self, agents=None):
