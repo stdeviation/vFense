@@ -138,7 +138,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def all(self):
         """Retrieve all agents.
         Basic Usage:
@@ -193,7 +192,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_key_and_val(self, fkey, fval):
         """Filter agents by a key and value.
         Args:
@@ -263,7 +261,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_key_and_val_and_query(self, fkey, fval, query):
         """Filter agents based on a key and value, while
             searching by computer and display name.
@@ -339,7 +336,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_ip(self, ip):
         """Search agents based on an ip address.
         Args:
@@ -398,7 +394,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_ip_and_filter(self, ip, fkey, fval):
         """Search agents by ip address while filtering
             based on a key and value.
@@ -470,7 +465,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_mac(self, mac):
         """Search agents based on an mac address.
         Args:
@@ -530,7 +524,6 @@ class RetrieveAgents(object):
 
 
     @time_it
-    @results_message
     def by_mac_and_filter(self, mac, fkey, fval):
         """Search agents by mac address while filtering
             based on a key and value.
