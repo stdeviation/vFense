@@ -80,7 +80,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentResultCodes.NewAgentSucceeded)
 
-    def test_d_edit_agent_display_name(self):
+    def test_d_edit1_agent_display_name(self):
         agent_ids = fetch_agent_ids_in_view()
         manager = AgentManager(agent_ids[0])
         results = manager.edit_display_name('Shaolin Testing')
@@ -88,13 +88,29 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentCodes.AgentUpdated)
 
-    def test_d_edit_agent_production_level(self):
+    def test_d_edit2_agent_production_level(self):
         agent_ids = fetch_agent_ids_in_view()
         manager = AgentManager(agent_ids[0])
         results = manager.edit_production_level('Development')
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentCodes.AgentUpdated)
+
+    def test_d_edit3_agent_add_to_views1(self):
+        agent_ids = fetch_agent_ids_in_view()
+        manager = AgentManager(agent_ids[0])
+        results = manager.add_to_views(['Test View 1', 'Test View 2'])
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == AgentCodes.ViewsAddedToAgent)
+
+    def test_d_edit4_agent_remove_from_views1(self):
+        agent_ids = fetch_agent_ids_in_view()
+        manager = AgentManager(agent_ids[0])
+        results = manager.remove_from_views(['Test View 1'])
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == AgentCodes.ViewsRemovedFromAgent)
 
     def test_e_tag_add_to_agent(self):
         tag = (

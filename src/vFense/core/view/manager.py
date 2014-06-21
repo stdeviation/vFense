@@ -32,7 +32,7 @@ from vFense.errorz._constants import ApiResultKeys
 
 from vFense.errorz.status_codes import (
     DbCodes, ViewCodes, GenericCodes, AgentCodes,
-    GenericFailureCodes, ViewFailureCodes
+    ViewFailureCodes
 )
 
 class ViewManager(object):

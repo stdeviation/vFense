@@ -445,6 +445,51 @@ def delete_agent_ids_from_tags_in_view(agent_ids, view_name, conn=None):
     return data
 
 
+@time_it
+@db_create_close
+@return_status_tuple
+def delete_agent_from_tags_in_views(agent_id, views, conn=None):
+    """Delete an agent from al tags in a view.
+    Args:
+        agent_id (str): The 36 character UUID of an agent.
+        view_name (str): Name of the view, you are removing the agents from.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import delete_agent_from_tags_in_views
+        >>> agent_id = 'agent1'
+        >>> views = ['test view 1', 'test view 2']
+        >>> delete_agent_from_tags_in_views(agent_id, views)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = {}
+
+    try:
+        data = (
+            r
+            .expr(views)
+            .for_each(
+                lambda view:
+                r
+                .table(TagCollections.TagsPerAgent)
+                .get_all(
+                    agent_id,
+                    index=TagsPerAgentIndexes.AgentId
+                )
+                .filter({TagsPerAgentKeys.ViewName: view})
+                .delete()
+            )
+            .run(conn, no_reply=True)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return data
+
+
 
 
 @time_it

@@ -31,7 +31,9 @@ class TagManager(object):
         self.agents = self.get_agents()
 
     def _tag_attributes(self):
-        tag_data = fetch_tag(self.tag_id)
+        tag_data = {}
+        if self.tag_id:
+            tag_data = fetch_tag(self.tag_id)
         return tag_data
 
     def get_attribute(self, tag_attribute):
@@ -48,15 +50,19 @@ class TagManager(object):
             String
             >>> u'Test Tag 1'
         """
-        tag_data = fetch_tag(self.tag_id)
         tag_key = None
-        if tag_data:
-            tag_key = tag_data.get(tag_attribute, None)
+        if self.tag_id:
+            tag_data = fetch_tag(self.tag_id)
+            if tag_data:
+                tag_key = tag_data.get(tag_attribute, None)
 
         return tag_key
 
     def get_agents(self):
-        agents = fetch_agent_ids_in_tag(self.tag_id)
+        if self.tag_id:
+            agents = fetch_agent_ids_in_tag(self.tag_id)
+        else:
+            agents = []
         return agents
 
 
@@ -120,7 +126,6 @@ class TagManager(object):
                     self.properties = self._tag_attributes()
                     #Add agents to this tag, if Agents exist
                     if agents:
-                        print 'I am here'
                         self.add_agents(agents)
 
                     tag_data[TagKeys.TagId] = self.tag_id
@@ -383,8 +388,8 @@ class TagManager(object):
                 delete_tag(self.tag_id)
             )
             if status_code == DbCodes.Deleted:
-                self.properties = self._tag_attributes()
                 delete_agent_ids_from_tag(self.tag_id)
+                self.properties =  {}
                 msg = (
                     'Tag {0} removed successfully'.format(self.tag_id)
                 )

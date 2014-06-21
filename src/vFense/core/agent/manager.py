@@ -18,7 +18,7 @@ from vFense.core.tag._db_model import TagKeys, TagsPerAgentKeys
 from vFense.core.tag.tags import validate_tag_ids_in_views
 from vFense.core.tag._db import (
     add_tags_to_agent, delete_tag_ids_from_agent, fetch_tag,
-    fetch_tag_ids_for_agent
+    fetch_tag_ids_for_agent, delete_agent_from_tags_in_views
 )
 from vFense.core.view.views import validate_view_names
 from vFense.errorz._constants import ApiResultKeys
@@ -39,20 +39,25 @@ class AgentManager(object):
         self.views = self.get_views()
 
     def _agent_attributes(self):
-        agent_data = fetch_agent(self.agent_id)
+        agent_data = {}
+        if self.agent_id:
+            agent_data = fetch_agent(self.agent_id)
 
         return agent_data
 
     def get_attribute(self, agent_attribute):
-        agent_data = fetch_agent(self.agent_id)
         agent_key = None
-        if agent_data:
-            agent_key = agent_data.get(agent_attribute, None)
+        if self.agent_id:
+            agent_data = fetch_agent(self.agent_id)
+            if agent_data:
+                agent_key = agent_data.get(agent_attribute, None)
 
         return agent_key
 
     def get_tags(self):
-        tags = fetch_tag_ids_for_agent(self.agent_id)
+        tags = []
+        if self.agent_id:
+            tags = fetch_tag_ids_for_agent(self.agent_id)
         return tags
 
     def get_views(self):
@@ -273,13 +278,17 @@ class AgentManager(object):
         results = {}
         agent_exist = self.properties
         if agent_exist:
-            views = agent_exist[AgentKeys.Views]
             views_are_valid, valid_views, invalid_views = (
                 validate_view_names(views)
             )
+            views_exist_in_agent = (
+                bool(set(views).intersection(self.views))
+            )
 
-            if views_are_valid and not set(valid_views).issubset(self.views):
-                status_code, _, _, _ = update_views_for_agent(views)
+            if views_are_valid and not views_exist_in_agent:
+                status_code, _, _, _ = (
+                    update_views_for_agent(views, self.agent_id)
+                )
                 if status_code == DbCodes.Replaced:
                     self.properties = self._agent_attributes()
                     self.views = self.get_views()
@@ -312,7 +321,7 @@ class AgentManager(object):
                     results[ApiResultKeys.DATA] = views
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.agent_id]
 
-            elif set(valid_views).issubset(self.views):
+            elif views_exist_in_agent:
                 msg = (
                     'Some of the views: {0} already exist for agent: {1}.'
                     .format(', '.join(views), self.agent_id)
@@ -373,11 +382,15 @@ class AgentManager(object):
         results = {}
         agent_exist = self.properties
         if agent_exist:
-            if set(views).issubset(self.views):
+            views_exist_in_agent = (
+                bool(set(views).intersection(self.views))
+            )
+            if views_exist_in_agent:
                 status_code, _, _, _ = (
                     delete_views_from_agent(views, self.agent_id)
                 )
-                if status_code == DbCodes.Deleted:
+                delete_agent_from_tags_in_views(self.agent_id, views)
+                if status_code == DbCodes.Replaced:
                     self.properties = self._agent_attributes()
                     self.views = self.get_views()
                     msg = (

@@ -49,7 +49,7 @@ class Tag(object):
         if not self.is_global:
             self.is_global = TagDefaults.IS_GLOBAL
 
-        elif self.is_global and not self.view_name:
+        if self.is_global and not self.view_name:
             self.view_name = TagDefaults.VIEW_NAME
 
         if not self.agents:
