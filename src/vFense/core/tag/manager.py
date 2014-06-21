@@ -3,7 +3,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.agent.agents import validate_agent_ids_in_views
+from vFense.core.agent.agents import validate_agent_ids
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
     fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
@@ -257,16 +257,17 @@ class TagManager(object):
             tag_name = tag_exist[TagKeys.TagName]
             agents_are_valid, valid_agents, invalid_agents = (False, [], [])
             is_global = tag_exist[TagKeys.Global]
-            views = [tag_exist[TagKeys.ViewName]]
             if is_global:
                 agents_are_valid = True
 
             else:
                 agents_are_valid, valid_agents, invalid_agents = (
-                    validate_agent_ids_in_views(agent_ids, views)
+                    validate_agent_ids(agent_ids)
                 )
-
-            if agents_are_valid and set(valid_agents).issubset(self.agents):
+            agents_exist_in_tag = (
+                bool(set(agent_ids).intersection(self.agents))
+            )
+            if agents_are_valid and not agents_exist_in_tag:
                 for agent_id in agent_ids:
                     tag_data.append(
                         {
@@ -311,7 +312,7 @@ class TagManager(object):
                     results[ApiResultKeys.DATA] = tag_data
                     results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
-            elif set(valid_agents).issubset(self.agents):
+            elif agents_exist_in_tag:
                 msg = (
                     'Some of the agent ids: {0} already exist for tag: {1}.'
                     .format(', '.join(agent_ids), self.tag_id)
@@ -452,7 +453,10 @@ class TagManager(object):
         results = {}
         tag_exist = self.properties
         if tag_exist:
-            if set(agent_ids).issubset(self.agents):
+            agents_exist_in_tag = (
+                bool(set(agent_ids).intersection(self.agents))
+            )
+            if agents_exist_in_tag:
                 status_code, _, _, _ = (
                     delete_agent_ids_from_tag(self.tag_id, agent_ids)
                 )

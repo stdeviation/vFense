@@ -93,7 +93,7 @@ def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
     tag_info = {}
 
     try:
-        tag_info = (
+        tag_info = list(
             r
             .table(TagCollections.Tags)
             .get_all(view_name, index=TagsIndexes.ViewName)

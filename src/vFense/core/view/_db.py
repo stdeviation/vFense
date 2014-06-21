@@ -593,7 +593,7 @@ def update_children_for_view(view, child, conn=None):
             .update(
                 {
                     ViewKeys.Children: (
-                        r.row[ViewKeys.Children].append(child)
+                        r.row[ViewKeys.Children].set_insert(child)
                     )
                 }
             )

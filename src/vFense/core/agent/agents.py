@@ -354,33 +354,30 @@ def remove_all_agents_for_view(
 
 
 @time_it
-def validate_agent_ids_in_views(agent_ids, views):
-    """Validate a list of agent ids against a view.
+def validate_agent_ids(agent_ids):
+    """Validate a list of agent ids.
     Args:
         agent_ids (list): List of agent ids.
-        views (list): List of view names.
 
     Basic Usage:
-        >>> from vFense.agent.agents import validate_agent_ids_in_views
+        >>> from vFense.agent.agents import validate_agent_ids
         >>> agent_ids = ['agent1', 'agent2']
-        >>> views = ['global', 'test1']
-        >>> validate_agent_ids_in_views(agent_ids, views)
+        >>> validate_agent_ids(agent_ids)
 
     Return:
         Tuple - (Boolean, [valid list], [invalid list])
-        (False, ['tag1'], ['tag2'])
+        (False, ['agent1'], ['agent2'])
     """
     validated = False
     invalid_ids = []
     valid_ids = []
-    if isinstance(agent_ids, list) and isinstance(views, list):
+    if isinstance(agent_ids, list):
         for agent_id in agent_ids:
             agent = fetch_agent(agent_id)
             if agent:
-                if set(agent[AgentKeys.Views]).issuperset(views):
-                    valid_ids.append(agent_id)
-                else:
-                    invalid_ids.append(agent_id)
+                valid_ids.append(agent_id)
+            else:
+                invalid_ids.append(agent_id)
 
     if valid_ids and not invalid_ids:
         validated = True

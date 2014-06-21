@@ -80,7 +80,7 @@ class ViewManager(object):
         Return:
             String
         """
-        view_data = fetch_view(self.username)
+        view_data = fetch_view(self.name)
         view_key = None
         if view_data:
             view_key = view_data.get(view_attribute, None)
