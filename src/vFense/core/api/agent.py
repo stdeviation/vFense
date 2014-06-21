@@ -5,29 +5,45 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
-from vFense.core.permissions._constants import *
-from vFense.core.permissions.permissions import verify_permission_for_user, \
-    return_results_for_permissions
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.permissions import (
+    verify_permission_for_user, return_results_for_permissions
+)
 
+from vFense.core._constants import CommonKeys
 from vFense.core.permissions.decorators import check_permissions
-from vFense.core.agent._db_model import *
+from vFense.core.operations.decorators import log_operation
+from vFense.core.operations._admin_constants import AdminActions
+from vFense.core.operations._constants import vFenseObjects
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
+from vFense.core.user.search.search import RetrieveUsers
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.manager import AgentManager
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
-from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
-from vFense.core.agent.operations.store_agent_operations import StoreAgentOperations
+from vFense.plugins.patching.operations.store_operations import (
+    StorePatchingOperation
+)
+from vFense.core.agent.operations.store_agent_operations import (
+    StoreAgentOperations
+)
 from vFense.core.agent.agents import (
     get_supported_os_codes, get_supported_os_strings, get_production_levels
 )
 
 from vFense.core.operations._db_model import *
-from vFense.core.decorators import authenticated_request, \
-    convert_json_to_arguments
-
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments, results_message
+)
+from vFense.errorz._constants import ApiResultKeys
+from vFense.errorz.status_codes import (
+    UserCodes, UserFailureCodes, GenericCodes,
+    GenericFailureCodes
+)
+from vFense.core.user.search.search import RetrieveUsers
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -127,78 +143,60 @@ class FetchSupportedOperatingSystems(BaseHandler):
 
 class AgentsHandler(BaseHandler):
     @authenticated_request
+    @check_permissions(Permissions.READ)
     def get(self):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
+        user = UserManager(active_user)
+        active_view = user.get_attribute(UserKeys.CurrentView)
         try:
             count = int(self.get_argument('count', 30))
             offset = int(self.get_argument('offset', 0))
             query = self.get_argument('query', None)
-            filter_key = self.get_argument('filter_key', None)
-            filter_val = self.get_argument('filter_val', None)
-            view_name = self.get_argument('view_name', None)
-            if not view_name:
-                view_name = (
-                    UserManager(active_user).get_attribute(UserKeys.CurrentView)
-                )
+            fkey = self.get_argument('filter_key', None)
+            fval = self.get_argument('filter_val', None)
             ip = self.get_argument('ip', None)
             mac = self.get_argument('mac', None)
             sort = self.get_argument('sort', 'asc')
             sort_by = self.get_argument('sort_by', AgentKeys.ComputerName)
-            search_agents = (
-                RetrieveAgents(
-                    view_name,
-                    count, offset,
-                    sort, sort_by,
-                    active_user, uri, method
-                )
+
+            search = (
+                RetrieveAgents(active_view, count, offset, sort, sort_by)
             )
-            if (not ip and not mac and not query and
-                    not filter_key and not filter_val):
-                results = search_agents.all()
+            if not ip and not mac and not query and not fkey and not fval:
+                results = self.get_all_agents(search)
 
-            elif (not ip and not mac and query and not
-                    filter_key and not filter_val):
-                results = search_agents.by_name(query)
+            elif query and not ip and not mac and not fkey and not fval:
+                results = self.get_all_agents_by_name(search, query)
 
-            elif (ip and not mac and not query and not
-                    filter_key and not filter_val):
-                results = search_agents.by_ip(ip)
+            elif ip and not mac and not query and not fkey and not fval:
+                results = self.get_all_agents_by_ip(search, ip)
 
-            elif (not ip and mac and not query and not
-                    filter_key and not filter_val):
-                results = search_agents.by_mac(mac)
+            elif mac and not ip and not query and not fkey and not fval:
+                results = self.get_all_agents_by_mac(search, mac)
 
-            elif (not ip and not mac and not query and
-                    filter_key and filter_val):
+            elif fkey and fval and not ip and not mac and not query:
+                results = self.get_all_agents_by_key_val(search, fkey, fval)
+
+            elif query and fkey and fval and not mac and not ip:
                 results = (
-                    search_agents.by_key_and_val(
-                        filter_key, filter_val
+                    self.get_all_agents_by_key_val_and_query(
+                        search, fkey, fval, query
                     )
                 )
 
-            elif (not ip and not mac and query and
-                    filter_key and filter_val):
+            elif ip and fkey and fval and not mac and not query:
                 results = (
-                    search_agents.by_key_and_val_and_query(
-                        filter_key, filter_val, query
+                    self.get_all_agents_by_ip_and_filter(
+                        search, ip, fkey, fval
                     )
                 )
 
-            elif (ip and not mac and not query and
-                    filter_key and filter_val):
+            elif mac and fkey and fval and not ip and not query:
                 results = (
-                    search_agents.by_ip_and_filter(
-                        ip, filter_key, filter_val
-                    )
-                )
-
-            elif (not ip and mac and not query and
-                    filter_key and filter_val):
-                results = (
-                    search_agents.by_mac_and_filter(
-                        mac, filter_key, filter_val
+                    self.get_all_agents_by_mac_and_filter(
+                        search, mac, fkey, fval
                     )
                 )
 
@@ -216,6 +214,46 @@ class AgentsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_all_agents(self, search):
+        results = search.all()
+        return results
+
+    @results_message
+    def get_all_agents_by_name(self, search, name):
+        results = search.by_name(name)
+        return results
+
+    @results_message
+    def get_all_agents_by_ip(self, search, ip):
+        results = search.by_ip(ip)
+        return results
+
+    @results_message
+    def get_all_agents_by_mac(self, search, mac):
+        results = search.by_mac(mac)
+        return results
+
+    @results_message
+    def get_all_agents_by_key_val(self, search, key, val):
+        results = search.by_key_and_val(key, val)
+        return results
+
+    @results_message
+    def get_all_agents_by_key_val_and_query(self, search, key, val, query):
+        results = search.by_key_and_val(key, val, query)
+        return results
+
+    @results_message
+    def get_all_agents_by_ip_and_filter(self, search, ip, key, val):
+        results = search.by_ip_and_filter(ip, key, val)
+        return results
+
+    @results_message
+    def get_all_agents_by_mac_and_filter(self, search, mac, key, val):
+        results = search.by_mac_and_filter(mac, key, val)
+        return results
 
     @authenticated_request
     @convert_json_to_arguments

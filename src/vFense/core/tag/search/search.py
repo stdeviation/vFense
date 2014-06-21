@@ -5,6 +5,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.errorz._constants import ApiResultKeys
 
 from vFense.core.agent._constants import AgentCommonKeys
+from vFense.core.view._constants import DefaultViews
 from vFense.core.tag._db_model import TagKeys
 
 from vFense.core.tag.search._db import FetchTags
@@ -57,6 +58,9 @@ class RetrieveTags(object):
             self.sort_key = sort_key
         else:
             self.sort_key = TagKeys.TagName
+
+        if self.view_name == DefaultViews.GLOBAL:
+            self.view_name = None
 
         self.fetch_tags = (
             FetchTags(

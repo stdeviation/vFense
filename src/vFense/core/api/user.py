@@ -11,8 +11,9 @@ from vFense.core.decorators import (
 from vFense.core._constants import CommonKeys
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.permissions._constants import Permissions
-from vFense.core.permissions.permissions import verify_permission_for_user, \
-    return_results_for_permissions
+from vFense.core.permissions.permissions import (
+    verify_permission_for_user, return_results_for_permissions
+)
 
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation

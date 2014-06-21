@@ -4,6 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.errorz._constants import ApiResultKeys
 
+from vFense.core.view._constants import DefaultViews
 from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.agent._db_model import AgentKeys
 
@@ -60,10 +61,14 @@ class RetrieveAgents(object):
                 AgentKeys.LastAgentUpdate,
             ]
         )
+
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
             self.sort_key = AgentKeys.ComputerName
+
+        if self.view_name == DefaultViews.GLOBAL:
+            self.view_name = None
 
         self.fetch_agents = (
             FetchAgents(
