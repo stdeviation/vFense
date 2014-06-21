@@ -42,6 +42,7 @@ class ViewManager(object):
         self.users = self.get_users()
         self.groups = self.get_groups()
         self.tags = self.get_tags()
+        self.agents = self.get_agents()
 
     def _view_properties(self):
         """Retrieve view information.
