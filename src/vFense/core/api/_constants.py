@@ -48,6 +48,9 @@ class AgentApiArguments():
     VIEWS = 'views'
     IP = 'ip'
     MAC = 'mac'
+    REBOOT = 'reboot'
+    SHUTDOWN = 'shutdown'
+    APPS_REFRESH = 'apps_refresh'
 
 
 class ApiValues():

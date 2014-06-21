@@ -672,10 +672,10 @@ class AgentHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            agent = AgentManager(agent_id, view_name=view_name)
+            agent = AgentManager(agent_id)
             delete_oper = StorePatchingOperation(username, view_name, uri, method)
             delete_oper.uninstall_agent(agent_id)
-            results = agent.delete_agent(uri, method)
+            results = self.remove_agent(agent)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -691,6 +691,12 @@ class AgentHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @log_operation(AdminActions.REMOVE_AGENT, vFenseObjects.AGENT)
+    @results_message
+    def remove_agent(self, manager):
+        results = manager.remove()
+        return results
+
     @authenticated_request
     @convert_json_to_arguments
     def post(self, agent_id):
@@ -701,51 +707,29 @@ class AgentHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            reboot = self.arguments.get('reboot', None)
-            shutdown = self.arguments.get('shutdown', None)
-            apps_refresh = self.arguments.get('apps_refresh', None)
+            reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
+            shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
+            apps_refresh = (
+                self.arguments.get(AgentApiArguments.APPS_REFRESH, None)
+            )
             operation = (
                 StoreAgentOperations(
                     username, view_name, uri, method
                 )
             )
             if reboot:
-                granted, status_code = (
-                    verify_permission_for_user(
-                        username, Permissions.REBOOT
+                results = (
+                    self.reboot(
+                        operation, [agent_id], username, uri, method
                     )
                 )
-                if granted:
-                    results = (
-                        operation.reboot([agent_id])
-                    )
-
-                else:
-                    results = (
-                        return_results_for_permissions(
-                            username, granted, status_code,
-                            Permissions.REBOOT, uri, method
-                        )
-                    )
 
             elif shutdown:
-                granted, status_code = (
-                    verify_permission_for_user(
-                        username, Permissions.SHUTDOWN
+                results = (
+                    self.shutdown(
+                        operation, [agent_id], username, uri, method
                     )
                 )
-                if granted:
-                    results = (
-                        operation.shutdown([agent_id])
-                    )
-
-                else:
-                    results = (
-                        return_results_for_permissions(
-                            username, granted, status_code,
-                            Permissions.SHUTDOWN, uri, method
-                        )
-                    )
 
             elif apps_refresh:
                 operation = (
@@ -753,9 +737,7 @@ class AgentHandler(BaseHandler):
                         username, view_name, uri, method
                     )
                 )
-                results = (
-                    operation.apps_refresh([agent_id])
-                )
+                results = self.apps_refresh([agent_id])
 
             else:
                 results = (
@@ -778,3 +760,45 @@ class AgentHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    def reboot(self, operation, agent_ids, username, uri, method):
+        granted, status_code = (
+            verify_permission_for_user(
+                username, Permissions.REBOOT
+            )
+        )
+        if granted:
+            results = operation.reboot(agent_ids)
+
+        else:
+            results = (
+                return_results_for_permissions(
+                    username, granted, status_code,
+                    Permissions.REBOOT, uri, method
+                )
+            )
+
+        return results
+
+    def shutdown(self, operation, agent_ids, username, uri, method):
+        granted, status_code = (
+            verify_permission_for_user(
+                username, Permissions.SHUTDOWN
+            )
+        )
+        if granted:
+            results = operation.shutdown(agent_ids)
+
+        else:
+            results = (
+                return_results_for_permissions(
+                    username, granted, status_code,
+                    Permissions.SHUTDOWN, uri, method
+                )
+            )
+
+        return results
+
+    def apps_refresh(self, operation, agent_ids):
+        results = operation.apps_refresh(agent_ids)
+        return results
