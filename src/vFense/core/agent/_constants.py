@@ -14,7 +14,7 @@ class AgentStatusKeys(object):
 
 
 class ProductionLevels(object):
-    PRODUCTION = 'production'
+    PRODUCTION = 'Production'
 
 
 class AgentDefaults(object):

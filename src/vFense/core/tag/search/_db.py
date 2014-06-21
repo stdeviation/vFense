@@ -123,7 +123,7 @@ class FetchTags(object):
         data = []
         merge_query = self._set_merge_query()
         try:
-            base_filter = self._set_agent_base_query()
+            base_filter = self._set_base_query()
             count = (
                 base_filter
                 .filter(
@@ -166,7 +166,7 @@ class FetchTags(object):
         count = 0
         data = []
         try:
-            base_filter = self._set_agent_base_query()
+            base_filter = self._set_base_query()
             query_merge = self._set_merge_query()
             count = (
                 base_filter
@@ -204,7 +204,7 @@ class FetchTags(object):
         count = 0
         data = []
         try:
-            base_filter = self._set_agent_base_query()
+            base_filter = self._set_base_query()
             query_merge = self._set_merge_query()
             count = (
                 base_filter
@@ -255,7 +255,7 @@ class FetchTags(object):
         count = 0
         data = []
         try:
-            base_filter = self._set_agent_base_query()
+            base_filter = self._set_base_query()
             query_merge = self._set_merge_query()
             count = (
                 base_filter
@@ -293,10 +293,6 @@ class FetchTags(object):
             logger.exception(e)
 
         return(count, data)
-
-
-
-
 
     def _set_agent_merge_query(self, tag_id):
         merge_query = (
