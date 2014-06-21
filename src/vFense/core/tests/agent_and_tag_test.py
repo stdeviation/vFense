@@ -80,7 +80,23 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentResultCodes.NewAgentSucceeded)
 
-    def test_d_tag_add_to_agent(self):
+    def test_d_edit_agent_display_name(self):
+        agent_ids = fetch_agent_ids_in_view()
+        manager = AgentManager(agent_ids[0])
+        results = manager.edit_display_name('Shaolin Testing')
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == AgentCodes.AgentUpdated)
+
+    def test_d_edit_agent_production_level(self):
+        agent_ids = fetch_agent_ids_in_view()
+        manager = AgentManager(agent_ids[0])
+        results = manager.edit_production_level('Development')
+        print dumps(results, indent=4)
+        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        self.failUnless(status_code == AgentCodes.AgentUpdated)
+
+    def test_e_tag_add_to_agent(self):
         tag = (
             fetch_tag_by_name_and_view(
                 'Local Test Tag 1', 'Test View 2'
@@ -93,7 +109,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == TagCodes.AgentsAddedToTag)
 
-    def test_e_tag_remove_from_agent(self):
+    def test_f_tag_remove_from_agent(self):
         tag = (
             fetch_tag_by_name_and_view(
                 'Local Test Tag 1', 'Test View 2'
@@ -106,7 +122,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == TagCodes.AgentsRemovedFromTag)
 
-    def test_f_tag_remove1(self):
+    def test_g_tag_remove1(self):
         tag = (
             fetch_tag_by_name_and_view(
                 'Local Test Tag 1', 'Test View 2'
@@ -118,7 +134,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == TagCodes.TagRemoved)
 
-    def test_f_tag_remove2(self):
+    def test_g_tag_remove2(self):
         tag = (
             fetch_tag_by_name_and_view(
                 'Global Test Tag 1', 'global'
@@ -130,21 +146,21 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == TagCodes.TagRemoved)
 
-    def test_g_view_remove1(self):
+    def test_h_view_remove1(self):
         manager = ViewManager('Test View 2')
         results = manager.remove()
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == ViewCodes.ViewDeleted)
 
-    def test_g_view_remove2(self):
+    def test_h_view_remove2(self):
         manager = ViewManager('Test View 1')
         results = manager.remove()
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == ViewCodes.ViewDeleted)
 
-    def test_h_view_delete_agents1(self):
+    def test_i_view_delete_agents1(self):
         manager = ViewManager('global')
         results = manager.delete_agents()
         print dumps(results, indent=4)

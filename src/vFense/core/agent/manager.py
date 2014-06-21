@@ -797,40 +797,7 @@ class AgentManager(object):
                 "generic_status_code": 1008
             }
         """
-        agent = Agent(host_name=host_name)
-        results = self.__edit_properties(agent)
-        return results
-
-
-    @time_it
-    def edit_host_name(self, host_name):
-        """Change current or default view.
-        Args:
-            host_name (str): The new hostname of this agent.
-
-        Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
-            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
-            >>> manager = AgentManager(agent_id)
-            >>> manager.edit_host_name('Test agent 1')
-
-        Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "email": "shaolin_admin@shaolin.com"
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
-        """
-        agent = Agent(host_name=host_name)
+        agent = Agent(host_name=production_level)
         results = self.__edit_properties(agent)
         return results
 
