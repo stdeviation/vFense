@@ -5,6 +5,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
+from vFense.core.api._constants import (
+    ApiArguments, AgentApiArguments
+)
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.permissions import (
     verify_permission_for_user, return_results_for_permissions
@@ -260,29 +263,31 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
-            agent_ids = self.arguments.get('agent_ids')
-            new_view = self.arguments.get('view_name')
+            agent_ids = self.arguments.get(ApiArguments.AGENT_IDS)
+            views = self.arguments.get(ApiArguments.VIEWS)
+            action = self.arguments.get(ApiArguments.ACTION, CommonKeys.ADD)
             if not isinstance(agent_ids, list):
                 agent_ids = agent_ids.split()
-            agentids_moved =[]
-            agentids_not_moved =[]
-            for agent_id in agent_ids:
-                agent = AgentManager(agent_id, view_name=view_name)
-                results = agent.change_view(new_view, uri, method)
-                if results['http_status'] == 200:
-                    agentids_moved.append(agent_id)
-                else:
-                    agentids_not_moved.append(agent_id)
-            results['data'] = {
-                'agentids_moved': agentids_moved,
-                'agentids_not_moved': agentids_not_moved
-            }
+
+            if not isinstance(views, list):
+                views = views.split()
+
+            if action == CommonKeys.ADD:
+                results == self.add_agents_to_views(agent_ids, views)
+
+            elif action == CommonKeys.DELETE:
+                results == self.remove_agents_from_views(agent_ids, views)
+
+            else:
+                results = (
+                    GenericResults(
+                        username, uri, method
+                    ).incorrect_arguments()
+                )
+
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -298,6 +303,7 @@ class AgentsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @log_operation(AdminActions.ADD_VIEWS_TO_AGENTS, vFenseObjects.AGENT)
     @results_message
     def add_agents_to_views(self, agents, views):
         end_results = {}
@@ -346,7 +352,6 @@ class AgentsHandler(BaseHandler):
             end_results[ApiResultKeys.MESSAGE] = msg
 
         elif views_unchanged and not views_added:
-            msg = 'user names unchanged: %s' % (', '.join(users_unchanged))
             msg = (
                 'Agents: {0} failed to add to views: {1}'
                 .format(', '.join(agents), ', '.join(views_unchanged))
@@ -361,6 +366,68 @@ class AgentsHandler(BaseHandler):
 
         return end_results
 
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENTS, vFenseObjects.AGENT)
+    @results_message
+    def remove_agents_from_views(self, agents, views):
+        end_results = {}
+        views_removed = []
+        views_unchanged = []
+        for view in views:
+            manager = ViewManager(view)
+            results = manager.remove_agents(agents)
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                    == ViewCodes.AgentsRemovedFromView):
+                views_removed.append(view)
+            else:
+                views_unchanged.append(view)
+
+        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
+        end_results[ApiResultKeys.UPDATED_IDS] = views_removed
+
+        if views_removed and views_unchanged:
+            msg = (
+                'Agents: {0} removed from views: {1}, Unchanged views: {2}'
+                .format(
+                    ', '.join(agents),
+                    ', '.join(views_removed),
+                    views_unchanged
+                )
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToUpdateAllObjects
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToRemoveViewsFromAgents
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif views_removed and not views_unchanged:
+            msg = (
+                'Agents: {0} removed from views: {1}'
+                .format(', '.join(agents), ', '.join(views_removed))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUpdated
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentCodes.ViewsRemovedFromAgents
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif views_unchanged and not views_removed:
+            msg = (
+                'Agents: {0} failed to add to views: {1}'
+                .format(', '.join(agents), ', '.join(views_unchanged))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUnchanged
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToAddViewsToAgent
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        return end_results
 
     @authenticated_request
     @convert_json_to_arguments
@@ -410,19 +477,83 @@ class AgentsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @log_operation(AdminActions.REMOVE_AGENTS, vFenseObjects.AGENT)
+    @results_message
+    def delete_agents(self, agents):
+        end_results = {}
+        agents_deleted = []
+        agents_unchanged = []
+        for agent_id in agents:
+            manager = AgentManager(agent_id)
+            results = manager.remove(agent_id)
+            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+                    == AgentCodes.AgentDeleted):
+                agents_deleted.append(view)
+            else:
+                agents_unchanged.append(view)
+
+        end_results[ApiResultKeys.UNCHANGED_IDS] = agents_unchanged
+        end_results[ApiResultKeys.DELETED_IDS] = agents_deleted
+
+        if agents_removed and agents_unchanged:
+            msg = (
+                'Agents: {0} deleted and these agents didnt: {1}'
+                .format(
+                    ', '.join(agents_deleted),
+                    ', '.join(agents_unchanged),
+                )
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToDeleteAllObjects
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToDeleteAgents
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif agents_removed and not agents_unchanged:
+            msg = (
+                'Agents: {0} deleted.'.format(', '.join(agents))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsDeleted
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentCodes.AgentsDeleted
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        elif agents_unchanged and not agents_deleted:
+            msg = (
+                'Agents: {0} failed to delete: {1}'
+                .format(', '.join(agents), ', '.join(agents_unchanged))
+            )
+            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectsUnchanged
+            )
+            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureCodes.FailedToDeleteAgents
+            )
+            end_results[ApiResultKeys.MESSAGE] = msg
+
+        return end_results
+
 
 class AgentHandler(BaseHandler):
     @authenticated_request
+    @check_permissions(Permissions.READ)
     def get(self, agent_id):
         username = self.get_current_user()
-        view_name = (
+        active_view = (
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
-            agent = AgentManager(agent_id, view_name=view_name)
-            results = agent.get_data(uri=uri, method=method)
+            search = (
+                RetrieveAgents(active_view)
+            )
+            results = self.get_agent_by_id(search, agent_id)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
@@ -437,46 +568,52 @@ class AgentHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    def get_agent_by_id(self, search, agent_id):
+        results = search.by_id(agent_id)
+        return results
+
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
-            displayname = self.arguments.get('display_name', None)
-            hostname = self.arguments.get('hostname', None)
-            prod_level = self.arguments.get('production_level', None)
-            new_view = self.arguments.get('view_name', None)
-            agent = AgentManager(agent_id, view_name=view_name)
+            action = (
+                self.arguments.get(ApiArguments.ACTION, None)
+            )
+            displayname = (
+                self.arguments.get(AgentApiArguments.DISPLAY_NAME, None)
+            )
+            prod_level = (
+                self.arguments.get(AgentApiArguments.PRODUCTION_LEVEL, None)
+            )
+            views = (
+                self.arguments.get(AgentApiArguments.VIEWS, None)
+            )
+            manager = AgentManager(agent_id)
 
-            if (displayname and not hostname and not
-                    prod_level and not new_view):
-                results = agent.displayname_changer(displayname, uri, method)
+            if displayname and not prod_level and not views and not action:
+                results = self.edit_display_name(manager, displayname)
 
-            elif (hostname and not prod_level and not displayname
-                    and not new_view):
-                results = agent.hostname_changer(hostname, uri, method)
+            elif prod_level and not displayname and not views and not action:
+                results = self.edit_production_level(manager, prod_level)
 
-            elif (prod_level and not hostname and not displayname
-                    and not new_view):
-                results = agent.production_state_changer(prod_level, uri, method)
+            elif action and views and not prod_level and not displayname:
+                if action == ApiArguments.ADD:
+                    results = self.add_agent_to_views(manager, views)
 
-            elif prod_level and hostname and displayname and not new_view:
-                agent_data = {
-                    'host_name': hostname,
-                    'production_level': prod_level,
-                    'display_name': displayname
-                }
-                results = agent.update_fields(agent_data, uri, method)
+                elif action == ApiArguments.DELETE:
+                    results = self.remove_agent_from_views(manager, views)
 
-            elif (new_view and not prod_level and not hostname
-                and not displayname):
-                results = agent.change_view(new_view, uri, method)
+                else:
+                    results = (
+                        GenericResults(
+                            username, uri, method
+                        ).incorrect_arguments()
+                    )
 
             else:
                 results = (
@@ -499,6 +636,31 @@ class AgentHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @log_operation(AdminActions.EDIT_AGENT_DISPLAY_NAME, vFenseObjects.AGENT)
+    @results_message
+    def edit_display_name(self, manager, display_name):
+        results = manager.edit_display_name(display_name)
+        return results
+
+    @log_operation(AdminActions.EDIT_AGENT_PRODUCTION_LEVEL,
+                   vFenseObjects.AGENT)
+    @results_message
+    def edit_production_level(self, manager, production_level):
+        results = manager.edit_production_level(production_level)
+        return results
+
+    @log_operation(AdminActions.ADD_VIEWS_TO_AGENT, vFenseObjects.AGENT)
+    @results_message
+    def add_agent_to_views(self, manager, views):
+        results = manager.add_to_views(views)
+        return results
+
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENT, vFenseObjects.AGENT)
+    @results_message
+    def remove_agent_from_views(self, manager, views):
+        results = manager.remove_from_views(views)
+        return results
 
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -616,26 +778,3 @@ class AgentHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
-
-'''
-class NodeWolHandler(BaseHandler):
-    @authenticated_request
-    def post(self):
-        username = self.get_current_user()
-        session = self.application.session
-        session = validate_session(session)
-        list_of_nodes = self.get_arguments('nodes')
-        if (list_of_nodes) >0:
-            result = wake_up_nodes(session,
-                    node_list=list_of_nodes
-                    )
-        else:
-            result = {
-                'pass': False,
-                'message': 'Incorrect argument passed. %s' %
-                    ('Arguments needed are: nodeid')
-                }
-        self.session.close()
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(result, indent=4))
-'''

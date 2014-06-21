@@ -8,11 +8,14 @@ class ApiArguments():
     VIEWNAME = 'viewname'
     VIEW_NAME = 'view_name'
     VIEW_NAMES = 'view_names'
+    VIEWS = 'views'
     ENABLED = 'enabled'
     IS_GLOBAL = 'is_global'
     GROUP_NAME = 'group_name'
     GROUP_ID = 'group_id'
     GROUP_IDS = 'group_ids'
+    AGENT_IDS = 'agent_ids'
+    TAG_IDS = 'tag_ids'
     PASSWORD = 'password'
     PERMISSIONS = 'permissions'
     NAME = 'name'
@@ -29,14 +32,22 @@ class ApiArguments():
     QUERY = 'query'
     FILTER_KEY = 'filter_key'
     FILTER_VAL = 'filter_val'
-    IP = 'ip'
-    MAC = 'mac'
     SORT = 'sort'
     SORT_BY = 'sort_by'
     OPERATION = 'operation'
     FULL_NAME = 'full_name'
     EMAIL = 'email'
     FORCE_REMOVE = 'force_remove'
+
+
+class AgentApiArguments():
+    AGENT_IDS = 'agent_ids'
+    AGENT_ID = 'agent_id'
+    DISPLAY_NAME = 'display_name'
+    PRODUCTION_LEVEL = 'production_level'
+    VIEWS = 'views'
+    IP = 'ip'
+    MAC = 'mac'
 
 
 class ApiValues():

@@ -194,6 +194,7 @@ class AgentCodes(object):
     AgentUnchanged = 3018
     ViewsAddedToAgent = 3019
     ViewsRemovedFromAgent = 3020
+    ViewsRemovedFromAgents = 3021
 
 
 class AgentResultCodes(object):
@@ -229,6 +230,7 @@ class AgentFailureCodes(object):
     FailedToRemoveViewsFromAgent = 3512
     FailedToAddViewsToAgents = 3513
     FailedToRemoveViewsFromAgents = 3514
+    FailedToDeleteAgents = 3515
 
 
 class TagCodes(object):

@@ -12,6 +12,8 @@ class AdminActions():
     ADD_USERS_TO_VIEW = 'add users to view'
     ADD_USER_TO_VIEW = 'add user to views'
     ADD_VIEW_TO_GROUP = 'add view to group'
+    ADD_AGENT_TO_VIEWS = 'add agent to views'
+    ADD_AGENTS_TO_VIEWS = 'add agents to views'
     ###CREATE
     CREATE_USER = 'create user'
     CREATE_GROUP = 'create group'
@@ -27,6 +29,8 @@ class AdminActions():
     ADD_GROUPS_TO_VIEW = 'add groups to view'
     ADD_VIEW_TO_GROUP = 'add view to group'
     ADD_VIEWS_TO_GROUP = 'add views to group'
+    ADD_VIEWS_TO_AGENT = 'add views to agent'
+    ADD_VIEWS_TO_AGENTS = 'add views to agents'
     ADD_AGENT_TO_TAG = 'add agent to tag'
     ###REMOVE
     REMOVE_GROUP = 'remove group'
@@ -43,6 +47,8 @@ class AdminActions():
     ###REMOVE FROM
     REMOVE_VIEW_FROM_GROUP = 'remove view from group'
     REMOVE_VIEWS_FROM_GROUP = 'remove views from group'
+    REMOVE_VIEWS_FROM_AGENT = 'remove views from agent'
+    REMOVE_VIEWS_FROM_AGENTS = 'remove views from agents'
     REMOVE_VIEW_FROM_USER = 'remove view from group'
     REMOVE_USER_FROM_VIEW = 'remove user from view'
     REMOVE_USER_FROM_GROUP = 'remove user from group'
@@ -68,6 +74,7 @@ class AdminActions():
     EDIT_LOG_SETTINGS = 'edit log settings'
     EDIT_NOTIFICATION = 'edit notification'
     EDIT_AGENT_DISPLAY_NAME = 'edit agent display name'
+    EDIT_AGENT_PRODUCTION_LEVEL = 'edit agent production level'
 
     @staticmethod
     def get_admin_actions():
