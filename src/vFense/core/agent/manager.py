@@ -797,7 +797,7 @@ class AgentManager(object):
                 "generic_status_code": 1008
             }
         """
-        agent = Agent(host_name=production_level)
+        agent = Agent(production_level=production_level)
         results = self.__edit_properties(agent)
         return results
 
