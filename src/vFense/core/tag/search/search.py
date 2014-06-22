@@ -139,11 +139,11 @@ class RetrieveTags(object):
 
 
     @time_it
-    def by_key_and_val(self, fkey, fval):
+    def by_key_val(self, key, val):
         """Filter agents by a key and value.
         Args:
-        fkey (str): The key you are filtering on.
-            fval (str): The value for the key you are filtering on.
+            key (str): The key you are filtering on.
+            val (str): The value for the key you are filtering on.
 
         Basic Usage:
             >>> from vFense.core.tag.search.search import RetrieveTags
@@ -159,7 +159,7 @@ class RetrieveTags(object):
         count = 0
         data = []
 
-        if fkey in self.valid_keys_to_filter_by:
+        if key in self.valid_keys_to_filter_by:
             count, data = self.fetch_tags.by_key_val(key, val)
 
             if count == 0:
@@ -187,7 +187,7 @@ class RetrieveTags(object):
 
 
     @time_it
-    def by_key_and_val_and_query(self, key, val, query):
+    def by_key_val_and_query(self, key, val, query):
         """Filter tags based on a key and value, while searching for a tag.
         Args:
             fkey (str): The key you are filtering on.
@@ -196,8 +196,8 @@ class RetrieveTags(object):
         Basic Usage:
             >>> from vFense.core.tag.search.search import RetrieveTags
             >>> view_name = 'default'
-            >>> fkey = 'production_level'
-            >>> fval = 'Development'
+            >>> key = 'production_level'
+            >>> val = 'Development'
             >>> query = 'ubu'
             >>> search_tags = RetrieveTags(view_name='default')
             >>> search_tags.by_key_val_and_query(key, val, query)

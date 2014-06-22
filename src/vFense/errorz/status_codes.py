@@ -245,6 +245,8 @@ class TagCodes(object):
     TagExistsAndAgentAdded = 4008
     AgentsAddedToTag = 4009
     AgentsRemovedFromTag = 4010
+    TagsDeleted = 4011
+    TagsUpdated = 4012
 
 class TagFailureCodes(object):
     FailedToCreateTag = 4501
@@ -252,6 +254,8 @@ class TagFailureCodes(object):
     FailedToAddAgentsToTag = 4503
     FailedToRemoveAgentsFromTag = 4504
     InvalidTagIds = 4505
+    FailedToDeleteTags = 4506
+    FailedToUpdateTags = 4507
 
 class PackageCodes(object):
     InvalidStatus = 5000

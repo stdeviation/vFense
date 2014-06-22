@@ -53,6 +53,14 @@ class AgentApiArguments():
     APPS_REFRESH = 'apps_refresh'
 
 
+class TagApiArguments():
+    TAG_ID = 'tag_id'
+    TAG_IDS = 'tag_ids'
+    TAG_NAME = 'name'
+    PRODUCTION_LEVEL = 'production_level'
+    VIEW_NAME = 'view_name'
+
+
 class ApiValues():
     ADD = 'add'
     DELETE = 'delete'

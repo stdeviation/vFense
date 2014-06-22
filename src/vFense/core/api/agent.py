@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
-    ApiArguments, AgentApiArguments
+    ApiArguments, AgentApiArguments, ApiValues
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.permissions import (
@@ -268,17 +268,17 @@ class AgentsHandler(BaseHandler):
         try:
             agent_ids = self.arguments.get(ApiArguments.AGENT_IDS)
             views = self.arguments.get(ApiArguments.VIEWS)
-            action = self.arguments.get(ApiArguments.ACTION, CommonKeys.ADD)
+            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
             if not isinstance(agent_ids, list):
                 agent_ids = agent_ids.split()
 
             if not isinstance(views, list):
                 views = views.split()
 
-            if action == CommonKeys.ADD:
+            if action == ApiValues.ADD:
                 results == self.add_agents_to_views(agent_ids, views)
 
-            elif action == CommonKeys.DELETE:
+            elif action == ApiValues.DELETE:
                 results == self.remove_agents_from_views(agent_ids, views)
 
             else:
@@ -485,7 +485,7 @@ class AgentsHandler(BaseHandler):
         agents_unchanged = []
         for agent_id in agents:
             manager = AgentManager(agent_id)
-            results = manager.remove(agent_id)
+            results = manager.remove()
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                     == AgentCodes.AgentDeleted):
                 agents_deleted.append(view)
@@ -602,10 +602,10 @@ class AgentHandler(BaseHandler):
                 results = self.edit_production_level(manager, prod_level)
 
             elif action and views and not prod_level and not displayname:
-                if action == ApiArguments.ADD:
+                if action == ApiValues.ADD:
                     results = self.add_agent_to_views(manager, views)
 
-                elif action == ApiArguments.DELETE:
+                elif action == ApiValues.DELETE:
                     results = self.remove_agent_from_views(manager, views)
 
                 else:
