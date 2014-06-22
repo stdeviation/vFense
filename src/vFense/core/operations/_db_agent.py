@@ -54,7 +54,7 @@ def fetch_agent_operation(operation_id, conn=None):
             "net_throttle": 0,
             "agents_failed_count": 0,
             "restart": "none",
-            "customer_name": "default"
+            "view_name": "default"
         }
     """
     data = {}
@@ -169,7 +169,7 @@ def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
             "apps_total_count": 1,
             "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22",
             "id": "2f678e9e-a537-4cfb-8613-6aa37696a8a9",
-            "customer_name": "default"
+            "view_name": "default"
         }
     """
     data = {}

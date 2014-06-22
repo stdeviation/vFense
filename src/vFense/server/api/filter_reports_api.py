@@ -10,7 +10,7 @@ from db.client import *
 from errorz.error_messages import GenericResults
 from errorz.status_codes import GenericCodes
 from reports.filter_reports import *
-from server.hierarchy.manager import get_current_customer_name
+from server.hierarchy.manager import get_current_view_name
 from server.hierarchy.decorators import authenticated_request, permission_check
 from server.hierarchy.permissions import Permission
 from utils.common import *
@@ -26,13 +26,13 @@ class AgentsOsQueryDetailsHandler(BaseHandler):
     @authenticated_request 
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_os_details(username=username, customer_name=customer_name,
+            results = systems_os_details(username=username, view_name=view_name,
                     key=key,query=query, uri=uri, method=method)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -53,14 +53,14 @@ class AgentsHardwareQueryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_hardware_details(username=username, customer_name=customer_name, 
+            results = systems_hardware_details(username=username, view_name=view_name, 
                     key=key, query=query, 
                     uri=uri, method=method)
             self.set_status(results['http_status'])
@@ -82,14 +82,14 @@ class AgentsCPUQueryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_cpu_details(username=username, customer_name=customer_name,
+            results = systems_cpu_details(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )
@@ -112,14 +112,14 @@ class AgentsMemoryQueryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_memory_stats(username=username, customer_name=customer_name,
+            results = systems_memory_stats(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method,
                     )
@@ -142,14 +142,14 @@ class AgentsDiskQueryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_disk_stats(username=username, customer_name=customer_name,
+            results = systems_disk_stats(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )
@@ -172,14 +172,14 @@ class AgentsNetworkQueryDetailsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_network_details(username=username, customer_name=customer_name,
+            results = systems_network_details(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )
@@ -202,14 +202,14 @@ class AgentsLastUpdatedHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = agents_last_updated(username=username, customer_name=customer_name,
+            results = agents_last_updated(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )
@@ -233,14 +233,14 @@ class AgentsRequireRebootHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = agents_reboot_pending(username=username, customer_name=customer_name,
+            results = agents_reboot_pending(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )
@@ -264,14 +264,14 @@ class AgentsConnectionStatusHandler(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        customer_name = get_current_customer_name(username)
+        view_name = get_current_view_name(username)
         uri=self.request.uri
         method=self.request.method
         try:
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = agents_status(username=username, customer_name=customer_name,
+            results = agents_status(username=username, view_name=view_name,
                     query=query, key=key,
                     uri=uri, method=method
                     )

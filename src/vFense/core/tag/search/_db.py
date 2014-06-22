@@ -103,6 +103,54 @@ class FetchTags(object):
 
         return(count, data)
 
+    @db_create_close
+    def by_agent_id(self, agent_id, conn=None):
+        """Retrieve a tags by agent id and all of its properties.
+
+        Basic Usage:
+            >>> from vFense.tag.search._db import FetchTags
+            >>> tag = FetchTags()
+            >>> tag.by_agent_id('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            Tuple
+            (count, tag_data)
+        >>>
+        """
+        count = 0
+        data = []
+        base_filter = (
+            r
+            .table(TagCollections.TagsPerAgent)
+            .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+        )
+        try:
+            count = (
+                base_filter
+                .count()
+                .run(conn)
+            )
+
+            data = list(
+                base_filter
+                .eq_join(
+                    lambda x:
+                    x[TagsPerAgentKeys.TagId],
+                    r.table(TagCollections.Tags)
+                )
+                .zip()
+                .pluck(
+                    TagKeys.TagName, TagKeys.TagId,
+                    TagKeys.ViewName, TagKeys.ProductionLevel
+                )
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
 
     @time_it
     @db_create_close

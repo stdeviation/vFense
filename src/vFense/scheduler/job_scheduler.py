@@ -9,9 +9,9 @@ logger = logging.getLogger('rvapi')
 
 
 class JobScheduler(object):
-    def __init__(self, username, customer_name, uri, method, sched):
+    def __init__(self, username, view_name, uri, method, sched):
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         self.sched
@@ -113,8 +113,8 @@ class JobScheduler(object):
                             day=kwargs['day'], hour=kwargs['hour'],
                             minute=kwargs['minute'],
                             day_of_week=kwargs['day_of_week'],
-                            args=[kwargs, self.customer_name, self.username],
-                            name=kwargs['name'], jobstore=self.customer_name
+                            args=[kwargs, self.view_name, self.username],
+                            name=kwargs['name'], jobstore=self.view_name
                         )
                         results = (
                             SchedulerResults(
@@ -126,8 +126,8 @@ class JobScheduler(object):
                         self.sched.add_cron_job(
                             scheduled_reboot_operation, month=kwargs['month'],
                             hour=kwargs['hour'], minute=kwargs['minute'],
-                            args=[kwargs, self.customer_name, self.username],
-                            name=kwargs['name'], jobstore=self.customer_name
+                            args=[kwargs, self.view_name, self.username],
+                            name=kwargs['name'], jobstore=self.view_name
                         )
                         results = (
                             SchedulerResults(

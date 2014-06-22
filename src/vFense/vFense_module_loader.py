@@ -14,12 +14,15 @@ from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.view import ViewHandler, ViewsHandler
-from vFense.core.api.agent import AgentHandler, AgentResultURIs, \
-    AgentsHandler, FetchSupportedOperatingSystems, FetchValidProductionLevels
-from vFense.core.api.base import RootHandler, LoginHandler, LogoutHandler, \
-    WebSocketHandler, AdminHandler
+from vFense.core.api.tag import TagHandler, TagsHandler
+from vFense.core.api.agent import (
+    AgentHandler, AgentResultURIs, AgentsHandler, AgentTagHandler,
+    FetchSupportedOperatingSystems, FetchValidProductionLevels
+)
+from vFense.core.api.base import (
+    RootHandler, LoginHandler, LogoutHandler, WebSocketHandler, AdminHandler
+)
 
-from vFense.server.api.tag_api import TagsAgentHandler, TagHandler, TagsHandler
 from vFense.server.api.email_api import CreateEmailConfigHandler, \
     GetEmailConfigHandler
 from vFense.server.api.log_api import LoggingModifyerHandler, \
@@ -34,21 +37,26 @@ from vFense.server.api.scheduler_api import (ScheduleListerHandler,
     SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
     SchedulerCustomRecurrentJobHandler)
 
-from vFense.plugins.patching.Api.os_updates_handler import \
+from vFense.plugins.patching.Api.os_updates_handler import (
     AgentIdOsAppsHandler, TagIdOsAppsHandler
-from vFense.plugins.patching.Api.agent_updates_handler import \
+)
+from vFense.plugins.patching.Api.agent_updates_handler import (
     AgentIdAgentAppsHandler, TagIdAgentAppsHandler
-from vFense.plugins.patching.Api.supported_updates_handler import \
+)
+from vFense.plugins.patching.Api.supported_updates_handler import (
     AgentIdSupportedAppsHandler, TagIdSupportedAppsHandler
-from vFense.plugins.patching.Api.custom_updates_handler import \
+)
+from vFense.plugins.patching.Api.custom_updates_handler import (
     AgentIdCustomAppsHandler, TagIdCustomAppsHandler
+)
 from vFense.plugins.patching.Api.stats_api import (AgentSeverityHandler,
     AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
     TagStatsByOsHandler)
 
-from vFense.core.operations.api.agent_operations import (GetTransactionsHandler,
-    AgentOperationsHandler, TagOperationsHandler, OperationHandler,
-    TagOperationsHandler)
+from vFense.core.operations.api.agent_operations import (
+    GetTransactionsHandler, AgentOperationsHandler, TagOperationsHandler,
+    OperationHandler, TagOperationsHandler
+)
 
 
 class CoreLoader():
@@ -128,7 +136,7 @@ class CoreLoader():
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",AgentSeverityHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", AgentOsAppsOverTimeHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", TagsAgentHandler),
+            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", AgentTagHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/os?", AgentIdOsAppsHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/agentupdates?", AgentIdAgentAppsHandler),
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/custom?", AgentIdCustomAppsHandler),

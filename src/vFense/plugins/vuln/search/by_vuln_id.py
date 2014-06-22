@@ -14,13 +14,13 @@ logger = logging.getLogger('cve')
 
 class RetrieveByVulnerabilityId(object):
     def __init__(
-        self, username, customer_name, vuln_id,
+        self, username, view_name, vuln_id,
         uri=None, method=None, count=30, offset=0
         ):
 
         self.vuln_id = vuln_id
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         self.count = count

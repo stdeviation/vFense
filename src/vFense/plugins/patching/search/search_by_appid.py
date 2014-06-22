@@ -18,13 +18,13 @@ class RetrieveAppsByAppId(object):
     """
         Main Class for retrieving package information.
     """
-    def __init__(self, username, customer_name, app_id,
+    def __init__(self, username, view_name, app_id,
                  uri=None, method=None, count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -74,7 +74,7 @@ class RetrieveAppsByAppId(object):
                 if stats:
                     pkg[0]['agent_stats'] = (
                         get_all_stats_by_appid(
-                            self.username, self.customer_name,
+                            self.username, self.view_name,
                             self.uri, self.method, self.app_id,
                             collection=self.CurrentAppsPerAgentCollection
                         )['data']
@@ -108,14 +108,14 @@ class RetrieveAgentsByAppId(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  app_id, uri=None, method=None,
                  count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -741,13 +741,13 @@ class RetrieveCustomAppsByAppId(RetrieveAppsByAppId):
     """
         Main Class for retrieving package information.
     """
-    def __init__(self, username, customer_name, app_id,
+    def __init__(self, username, view_name, app_id,
                  uri=None, method=None, count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -783,13 +783,13 @@ class RetrieveSupportedAppsByAppId(RetrieveAppsByAppId):
     """
         Main Class for retrieving package information.
     """
-    def __init__(self, username, customer_name, app_id,
+    def __init__(self, username, view_name, app_id,
                  uri=None, method=None, count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -823,13 +823,13 @@ class RetrieveAgentAppsByAppId(RetrieveAppsByAppId):
     """
         Main Class for retrieving package information.
     """
-    def __init__(self, username, customer_name, app_id,
+    def __init__(self, username, view_name, app_id,
                  uri=None, method=None, count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -864,14 +864,14 @@ class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  app_id, uri=None, method=None,
                  count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -895,14 +895,14 @@ class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  app_id, uri=None, method=None,
                  count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -926,14 +926,14 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  app_id, uri=None, method=None,
                  count=30, offset=0):
         """
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method

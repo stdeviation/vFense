@@ -158,7 +158,7 @@ class Group(object):
             else:
                 if not (
                         set(self.permissions).issubset(
-                            set(Permissions.VALID_PERMISSIONS)
+                            set(Permissions.get_valid_permissions())
                         )):
                     invalid_fields.append(
                         {

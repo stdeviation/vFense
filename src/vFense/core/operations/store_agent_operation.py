@@ -9,7 +9,7 @@ from vFense.core.operations._db_model import (
 )
 from vFense.core.decorators import results_message
 from vFense.core.queue.queue import AgentQueue
-from vFense.core.tag.tagManager import get_agent_ids_from_tag
+from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
@@ -21,16 +21,13 @@ logger = logging.getLogger('rvapi')
 class StoreAgentOperation(object):
     """This is the base class for storing operations in an agent"""
     def __init__(
-            self, username, customer_name,
-            uri, method, server_queue_ttl=None,
+            self, username, view_name, server_queue_ttl=None,
             agent_queue_ttl=None
         ):
         """
         Args:
             username (str): The name of the user who called this class
-            customer_name (str): The current logged in customer
-            uri (str): The api uri that was used to get here.
-            method (str): The http method that was used to get here.
+            view_name (str): The current logged in customer
 
         Kwargs:
             server_queue_ttl (int): The number of minutes,
@@ -39,25 +36,19 @@ class StoreAgentOperation(object):
                 until the operation expires in the agent queue.
 
         Attributes:
-            customer_name
+            view_name
             username
-            uri
-            method
             server_queue_ttl
             agent_queue_ttl
 
         Basic Usage:
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
-            >>> method = 'POST'
-            >>> store = StoreAgentOperation(username, customer_name, uri, method)
+            >>> view_name = 'default'
+            >>> store = StoreAgentOperation(username, view_name)
         """
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
-        self.uri = uri
-        self.method = method
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
 
@@ -69,12 +60,11 @@ class StoreAgentOperation(object):
         agent_queue = (
             AgentQueue(
                 operation[OperationPerAgentKey.AgentId],
-                self.customer_name
+                self.view_name
             )
         )
         agent_queue.add(operation, self.server_queue_ttl, self.agent_queue_ttl)
 
-    @results_message
     def generic_operation(
             self, action, plugin,
             agentids=None, tag_id=None
@@ -96,10 +86,8 @@ class StoreAgentOperation(object):
         Basic Usage:
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
-            >>> uri = '/api/v1/agent/33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
-            >>> method = 'POST'
-            >>> store = StoreAgentOperation(username, customer_name, uri, method)
+            >>> view_name = 'default'
+            >>> store = StoreAgentOperation(username, view_name)
             >>> store.generic_operation(
                     'reboot', 'core',
                     agentids=['33ba8521-b2e5-47dc-9bdc-0f1e3384049d']
@@ -109,8 +97,6 @@ class StoreAgentOperation(object):
             Dictionary
             {
                 "rv_status_code": 6000,
-                "http_method": "POST",
-                "http_status": 200,
                 "unchanged_ids": [],
                 "generated_ids": [
                     "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
@@ -124,7 +110,6 @@ class StoreAgentOperation(object):
                         "plugin": "core"
                     }
                 ],
-                "uri": "/api/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/"
 
             }
         """
@@ -133,21 +118,18 @@ class StoreAgentOperation(object):
         if tag_id:
             performed_on = vFenseObjects.TAG
             if not agentids:
-                agentids = get_agent_ids_from_tag(tag_id)
+                agentids = fetch_agent_ids_in_tag(tag_id)
 
             elif agentids:
-                agentids += get_agent_ids_from_tag(tag_id)
+                agentids += fetch_agent_ids_in_tag(tag_id)
 
         results = {
             ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: self.username,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
         }
 
         operation = (
             AgentOperation(
-                self.username, self.customer_name,
+                self.username, self.view_name,
             )
         )
 

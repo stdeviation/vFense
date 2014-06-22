@@ -43,10 +43,10 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/os'
             >>> method = 'PUT'
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.apps_refresh(agentids=agentids)
 
         Returns:
@@ -99,7 +99,7 @@ class StorePatchingOperation(StoreAgentOperation):
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/os'
             >>> method = 'PUT'
             >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
@@ -107,7 +107,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> cpu = 'high'
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.install_os_apps(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
@@ -160,7 +160,7 @@ class StorePatchingOperation(StoreAgentOperation):
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/custom'
             >>> method = 'PUT'
             >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
@@ -168,7 +168,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> cpu = 'high'
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.install_custom_apps(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
@@ -220,7 +220,7 @@ class StorePatchingOperation(StoreAgentOperation):
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/supported'
             >>> method = 'PUT'
             >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
@@ -228,7 +228,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> cpu = 'high'
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.install_supported_apps(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
@@ -280,7 +280,7 @@ class StorePatchingOperation(StoreAgentOperation):
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
             >>> method = 'PUT'
             >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
@@ -288,7 +288,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> cpu = 'high'
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.install_agent_update(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
@@ -342,7 +342,7 @@ class StorePatchingOperation(StoreAgentOperation):
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
             >>> username = 'admin'
-            >>> customer_name = 'default'
+            >>> view_name = 'default'
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
             >>> method = 'PUT'
             >>> appids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
@@ -350,7 +350,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> cpu = 'high'
             >>> net = 100
             >>> agentids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, customer_name, uri, method)
+            >>> operation = StorePatchingOperation(username, view_name, uri, method)
             >>> operation.uninstall_apps(
                     appids, cpu_throttle=cpu, net_throttle=net,
                     restart=reboot, agentids=agentids
@@ -421,7 +421,7 @@ class StorePatchingOperation(StoreAgentOperation):
 
         operation = (
             PatchingOperation(
-                self.username, self.customer_name,
+                self.username, self.view_name,
             )
         )
 
@@ -501,7 +501,7 @@ class StorePatchingOperation(StoreAgentOperation):
         )
         uris = (
             get_download_urls(
-                self.customer_name, app_id, pkg[CommonFileKeys.PKG_FILEDATA]
+                self.view_name, app_id, pkg[CommonFileKeys.PKG_FILEDATA]
             )
         )
 

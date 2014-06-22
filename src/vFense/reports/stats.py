@@ -90,21 +90,21 @@ def system_disk_stats(agent_info):
     return data
 
 
-def get_agentids(os_code=None, customer_name=None, tag_id=None):
+def get_agentids(os_code=None, view_name=None, tag_id=None):
     agentids=[]
 
     agent_ids_for_tag_id= get_agent_ids_from_tag(tag_id=tag_id)
-    agent_ids_for_os_customer=get_all_agent_ids(agent_os=os_code,customer_name=customer_name)
+    agent_ids_for_os_customer=get_all_agent_ids(agent_os=os_code,view_name=view_name)
     agentids=list(set(agent_ids_for_tag_id + agent_ids_for_os_customer))
 
     return agentids
 
 
-def systems_os_details(username, customer_name, os_code=None, 
+def systems_os_details(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
     systems_os_details=[]
     agentids=get_agentids(
-        os_code=os_code, customer_name=customer_name, tag_id=tag_id
+        os_code=os_code, view_name=view_name, tag_id=tag_id
     )
 
     for agentid in agentids:
@@ -127,12 +127,12 @@ def systems_os_details(username, customer_name, os_code=None,
     return results
 
 
-def systems_hardware_details (username, customer_name, os_code=None, 
+def systems_hardware_details (username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
 
     systems_hardware_details=[]
     agentids=get_agentids(
-        os_code=os_code, customer_name=customer_name, tag_id=tag_id
+        os_code=os_code, view_name=view_name, tag_id=tag_id
     )
 
     for agentid in agentids:
@@ -157,10 +157,10 @@ def systems_hardware_details (username, customer_name, os_code=None,
     return results
 
 
-def systems_cpu_details (username, customer_name, os_code=None, 
+def systems_cpu_details (username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
     systems_cpu_details=[]
-    agentids=get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
+    agentids=get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
     for agentid in agentids:
         agent_info=get_agent_info(agentid)
         cpu_stats=system_cpu_stats(agent_info)
@@ -183,12 +183,12 @@ def systems_cpu_details (username, customer_name, os_code=None,
                 )
     return(results)
 
-def systems_memory_stats(username, customer_name, os_code=None, 
+def systems_memory_stats(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
 
     systems_memory_details=[]
     agentids = get_agentids(
-        os_code=os_code, customer_name=customer_name, tag_id=tag_id
+        os_code=os_code, view_name=view_name, tag_id=tag_id
     )
 
     for agentid in agentids:
@@ -211,12 +211,12 @@ def systems_memory_stats(username, customer_name, os_code=None,
     return results
 
 
-def systems_disk_stats(username, customer_name, os_code=None, 
+def systems_disk_stats(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
 
     systems_disk_details = []
     agentids = get_agentids(
-        os_code=os_code, customer_name=customer_name, tag_id=tag_id
+        os_code=os_code, view_name=view_name, tag_id=tag_id
     )
 
     for agentid in agentids:
@@ -238,11 +238,11 @@ def systems_disk_stats(username, customer_name, os_code=None,
 
     return results
 
-def systems_network_details(username, customer_name, os_code=None, 
+def systems_network_details(username, view_name, os_code=None, 
         tag_id=None, uri=None, method=None):
 
     systems_network_infos = []
-    agentids = get_agentids(os_code=os_code, customer_name=customer_name, tag_id=tag_id)
+    agentids = get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
 
     for agentid in agentids:
         agent_info = get_agent_info(agentid)

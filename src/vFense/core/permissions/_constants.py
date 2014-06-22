@@ -1,4 +1,5 @@
 class Permissions():
+    READ = 'read'
     ADMINISTRATOR = 'administrator'
     INSTALL = 'install'
     UNINSTALL = 'uninstall'
@@ -6,9 +7,19 @@ class Permissions():
     SHUTDOWN = 'shutdown'
     CREATE_TAG = 'create tag'
     REMOVE_TAG = 'remove tag'
+    ADD_AGENTS_TO_TAG = 'add agents to tag'
+    REMOVE_AGENTS_FROM_TAG = 'remove agents from tag'
+    CREATE_VIEW = 'create view'
+    REMOVE_VIEW = 'remove view'
+    NEW_AGENT = 'new agent'
+    DELETE_AGENT = 'delete agent'
+    ADD_AGENTS_TO_VIEW = 'add agents to view'
+    REMOVE_AGENTS_FROM_VIEW = 'remove agents from view'
     REMOTE_ASSISTANCE = 'remote assistance'
-    READ = 'read'
-    VALID_PERMISSIONS = (
-        ADMINISTRATOR, INSTALL, UNINSTALL, REBOOT, READ,
-        SHUTDOWN, CREATE_TAG, REMOVE_TAG, REMOTE_ASSISTANCE
-    )
+
+    @staticmethod
+    def get_valid_permissions():
+        valid_permissions = (
+            map(lambda x: getattr(Permissions, x), dir(Permissions)[:-3])
+        )
+        return valid_permissions

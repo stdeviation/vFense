@@ -108,7 +108,7 @@ def get_agent_queue(agent_id, conn=None):
                 "operation": "updatesapplications", 
                 "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
                 "expire_minutes": 10, 
-                "customer_name": "default"
+                "view_name": "default"
             }
         ]
     """
@@ -202,7 +202,7 @@ def get_all_expired_jobs(now=None, conn=None):
                 "operation": "updatesapplications", 
                 "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
                 "expire_minutes": 10, 
-                "customer_name": "default"
+                "view_name": "default"
             }
         ]
     """

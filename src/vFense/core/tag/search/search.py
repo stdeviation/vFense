@@ -104,6 +104,40 @@ class RetrieveTags(object):
 
         return(results)
 
+    @time_it
+    def by_agent_id(self, agent_id):
+        """Retrieve Tags for agent id.
+        Args:
+            agent_id (str): The 36 character UUID of the agent.
+
+        Basic Usage:
+            >>> from vFense.core.tag.search.search import RetrieveTags
+            >>> view_name = 'default'
+            >>> search_tags = RetrieveTags(view_name='default')
+            >>> search_tags.by_agent_id('2155acc3-f7e7-4b51-90eb-415eee698a65')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_tags.by_agent_id(agent_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return(results)
 
     @time_it
     def all(self):

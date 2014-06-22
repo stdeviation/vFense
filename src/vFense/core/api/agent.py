@@ -718,18 +718,10 @@ class AgentHandler(BaseHandler):
                 )
             )
             if reboot:
-                results = (
-                    self.reboot(
-                        operation, [agent_id], username, uri, method
-                    )
-                )
+                results = self.reboot(operation, [agent_id])
 
             elif shutdown:
-                results = (
-                    self.shutdown(
-                        operation, [agent_id], username, uri, method
-                    )
-                )
+                results = self.shutdown(operation, [agent_id])
 
             elif apps_refresh:
                 operation = (
@@ -761,44 +753,63 @@ class AgentHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    def reboot(self, operation, agent_ids, username, uri, method):
-        granted, status_code = (
-            verify_permission_for_user(
-                username, Permissions.REBOOT
-            )
-        )
-        if granted:
-            results = operation.reboot(agent_ids)
-
-        else:
-            results = (
-                return_results_for_permissions(
-                    username, granted, status_code,
-                    Permissions.REBOOT, uri, method
-                )
-            )
+    @check_permissions(Permissions.REBOOT)
+    @results_message
+    def reboot(self, operation, agent_ids):
+        results = operation.reboot(agent_ids)
 
         return results
 
-    def shutdown(self, operation, agent_ids, username, uri, method):
-        granted, status_code = (
-            verify_permission_for_user(
-                username, Permissions.SHUTDOWN
-            )
-        )
-        if granted:
-            results = operation.shutdown(agent_ids)
-
-        else:
-            results = (
-                return_results_for_permissions(
-                    username, granted, status_code,
-                    Permissions.SHUTDOWN, uri, method
-                )
-            )
-
+    @check_permissions(Permissions.SHUTDOWN)
+    @results_message
+    def shutdown(self, operation, agent_ids):
+        results = operation.shutdown(agent_ids)
         return results
 
     def apps_refresh(self, operation, agent_ids):
         results = operation.apps_refresh(agent_ids)
+        return results
+
+
+class AgentTagHandler(BaseHandler):
+    @authenticated_request
+    @check_permissions(Permissions.READ)
+    def get(self, agent_id):
+        username = self.get_current_user()
+        active_view = (
+            UserManager(username).get_attribute(UserKeys.CurrentView)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            name = self.get_argument(ApiArguments.QUERY, None)
+            search = (
+                RetrieveAgents(active_view)
+            )
+            if name:
+                results = self.search_tags_by_name(search, name)
+            else:
+                results = self.get_tags_by_agent_id(search, agent_id)
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke(agent_id, 'get agent_info', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_tags_by_agent_id(self, search, agent_id):
+        results = search.by_agent_id(agent_id)
+        return results
+
+    @results_message
+    def search_tags_by_name(self, search, name):
+        results = search.by_name(name)
         return results

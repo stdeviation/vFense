@@ -16,7 +16,7 @@ class RetrieveAppsByAgentId(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  agent_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AppsKey.Name,
@@ -31,7 +31,7 @@ class RetrieveAppsByAgentId(object):
         self.sort = sort
         self.agent_id = agent_id
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.CurrentAppsCollection = AppCollections.UniqueApplications
         self.CurrentAppsIndexes = AppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
@@ -616,7 +616,7 @@ class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  agent_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=CustomAppsKey.Name,
@@ -631,7 +631,7 @@ class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
         self.sort = sort
         self.agent_id = agent_id
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.CurrentAppsCollection = AppCollections.CustomApps
         self.CurrentAppsIndexes = CustomAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
@@ -695,7 +695,7 @@ class RetrieveSupportedAppsByAgentId(RetrieveAppsByAgentId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  agent_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=SupportedAppsKey.Name,
@@ -710,7 +710,7 @@ class RetrieveSupportedAppsByAgentId(RetrieveAppsByAgentId):
         self.sort = sort
         self.agent_id = agent_id
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.CurrentAppsCollection = AppCollections.SupportedApps
         self.CurrentAppsIndexes = SupportedAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
@@ -774,7 +774,7 @@ class RetrieveAgentAppsByAgentId(RetrieveAppsByAgentId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  agent_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AgentAppsKey.Name,
@@ -788,7 +788,7 @@ class RetrieveAgentAppsByAgentId(RetrieveAppsByAgentId):
         self.sort = sort
         self.agent_id = agent_id
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.CurrentAppsCollection = AppCollections.vFenseApps
         self.CurrentAppsIndexes = AgentAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent

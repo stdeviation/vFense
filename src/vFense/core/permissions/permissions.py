@@ -102,7 +102,7 @@ def verify_permission_for_user(
 
     try:
         user_exist = fetch_user(username)
-        if permission in Permissions().VALID_PERMISSIONS and user_exist:
+        if permission in Permissions().get_valid_permissions() and user_exist:
             if not view_name:
                 view_name = user_exist.get(UserKeys.CurrentView)
 
@@ -115,7 +115,7 @@ def verify_permission_for_user(
             if granted:
                 status_code = GenericCodes.PermissionGranted
 
-        elif not permission in Permissions.VALID_PERMISSIONS:
+        elif not permission in Permissions.get_valid_permissions():
             status_code = GenericCodes.InvalidPermission
 
         elif not user_exist:

@@ -53,7 +53,7 @@ class PatchingOperationResults(OperationResults):
 
         self.operation = (
             PatchingOperation(
-                self.username, self.customer_name,
+                self.username, self.view_name,
             )
         )
 
@@ -145,7 +145,7 @@ class PatchingOperationResults(OperationResults):
 
         incoming_applications_from_agent(
             self.username,
-            self.customer_name,
+            self.view_name,
             self.agent_id,
             self.agent_data[AgentKeys.OsCode],
             self.agent_data[AgentKeys.OsString],

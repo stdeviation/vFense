@@ -18,7 +18,7 @@ class RetrieveAppsByTagId(object):
     """
         This class is used to get tag data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AppsKey.Name,
@@ -27,7 +27,7 @@ class RetrieveAppsByTagId(object):
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -647,7 +647,7 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
     """
         This class is used to get tag data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=CustomAppsKey.Name,
@@ -656,7 +656,7 @@ class RetrieveCustomAppsByTagId(RetrieveAppsByTagId):
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -721,7 +721,7 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
     """
         This class is used to get tag data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=SupportedAppsKey.Name,
@@ -730,7 +730,7 @@ class RetrieveSupportedAppsByTagId(RetrieveAppsByTagId):
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method
@@ -795,7 +795,7 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
     """
         This class is used to get tag data from within the Packages Page
     """
-    def __init__(self, username, customer_name,
+    def __init__(self, username, view_name,
                  tag_id, uri=None, method=None,
                  count=30, offset=0, sort='asc',
                  sort_key=AgentAppsKey.Name,
@@ -804,7 +804,7 @@ class RetrieveAgentAppsByTagId(RetrieveAppsByTagId):
         """
         self.count = count
         self.offset = offset
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.username = username
         self.uri = uri
         self.method = method

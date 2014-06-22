@@ -24,13 +24,13 @@ class RetrieveValidPermissionsHandler(BaseHandler):
         count = 0
         permissions = []
         try:
-            permissions = Permissions.VALID_PERMISSIONS
+            permissions = Permissions.get_valid_permissions()
             count = len(permissions)
             results = (
                 GenericResults(
                     active_user, uri, method
                 ).information_retrieved(permissions, count)
-            ) 
+            )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))

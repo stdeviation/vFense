@@ -10,15 +10,15 @@ logger = logging.getLogger('rvapi')
 
 
 class MightyMouse(object):
-    def __init__(self, username, customer_name=None,
+    def __init__(self, username, view_name=None,
                  uri=None, method=None):
 
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
 
-    def add(self, mouse_name, address, customer_names=[]):
+    def add(self, mouse_name, address, view_names=[]):
 
         exists = mouse_exists(mouse_name)
         if exists:
@@ -30,26 +30,26 @@ class MightyMouse(object):
         else:
             status = (
                 add_mouse(
-                    customer_names, mouse_name, address,
+                    view_names, mouse_name, address,
                     self.username, self.uri, self.method
                 )
             )
             return(status)
 
-    def update(self, mouse_name, customer_names=[], address=None):
+    def update(self, mouse_name, view_names=[], address=None):
 
         exists = mouse_exists(mouse_name)
         if exists:
             status = (
                 update_mouse(
-                    exists, mouse_name, customer_names,
+                    exists, mouse_name, view_names,
                     address, self.username, self.uri, self.method
                 )
             )
         else:
             status = (
                 add_mouse(
-                    customer_names, mouse_name, address,
+                    view_names, mouse_name, address,
                     self.username, self.uri, self.method
                 )
             )

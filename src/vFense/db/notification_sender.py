@@ -16,13 +16,13 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvnotifications')
 TEMPLATE_DIR = (os.path.join(VFENSE_BASE_SRC_PATH, 'emailer/templates'))
 
-def send_data(customer_name, subject, msg_body, sender_addresses, html=True):
+def send_data(view_name, subject, msg_body, sender_addresses, html=True):
     try:
         if html:
             mail_content_type = 'html'
         else:
             mail_content_type = 'txt'
-        mailer = MailClient(customer_name)
+        mailer = MailClient(view_name)
         mailer.connect()
         if mailer.connected:
             mailer.send(
@@ -79,9 +79,9 @@ def parse_install_operation_data(oper_data, oper_type, oper_plugin, threshold):
     except Exception as e:
         logger.exception(e)
 
-def send_notifications(username, customer_name, operation_id, agent_id):
+def send_notifications(username, view_name, operation_id, agent_id):
     try:
-        notif_handler = RvNotificationHandler(customer_name, operation_id, agent_id)
+        notif_handler = RvNotificationHandler(view_name, operation_id, agent_id)
         oper_info = get_agent_operation(operation_id)
         oper_plugin = oper_info[OperationKey.Plugin]
         oper_status = oper_info[OperationKey.OperationStatus]
@@ -98,7 +98,7 @@ def send_notifications(username, customer_name, operation_id, agent_id):
                 sender_addresses = (
                     notif_handler.get_sending_emails(notif_rules)
                 )
-                oper = AgentOperationRetriever(username, customer_name, None, None)
+                oper = AgentOperationRetriever(username, view_name, None, None)
                 oper_data = oper.get_install_operation_for_email_alert(operation_id)
 
                 if sender_addresses:
@@ -110,7 +110,7 @@ def send_notifications(username, customer_name, operation_id, agent_id):
                     )
 
                     send_data(
-                        customer_name, subject,
+                        view_name, subject,
                         msg_body, sender_addresses
                     )
 

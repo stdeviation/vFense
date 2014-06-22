@@ -26,11 +26,11 @@ logger = logging.getLogger('rvapi')
 
 class RvHandOff():
 
-    def __init__(self, username, customer_name, uri, method,
+    def __init__(self, username, view_name, uri, method,
             delete_afterwards=True):
 
         self.username = username
-        self.customer_name = customer_name
+        self.view_name = view_name
         self.uri = uri
         self.method = method
         self.delete_afterwards = delete_afterwards
@@ -47,13 +47,13 @@ class RvHandOff():
 
         return get_agent_info(agent_id)
 
-    def _add_custom_apps(self, username, customer_name, uri, method, agent_id):
+    def _add_custom_apps(self, username, view_name, uri, method, agent_id):
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
             func=add_custom_app_to_agents,
             args=(
                 username,
-                customer_name,
+                view_name,
                 uri,
                 method,
                 None,
@@ -72,7 +72,7 @@ class RvHandOff():
             timeout=3600
         )
 
-    def _add_applications_from_agent(self, username, customer_name, agent_data,
+    def _add_applications_from_agent(self, username, view_name, agent_data,
             apps, delete_afterwards, app_collection, apps_per_agent_collection):
 
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
@@ -80,7 +80,7 @@ class RvHandOff():
             func=incoming_applications_from_agent,
             args=(
                 username,
-                customer_name,
+                view_name,
                 agent_data[AgentKeys.AgentId],
                 agent_data[AgentKeys.OsCode],
                 agent_data[AgentKeys.OsString],
@@ -99,7 +99,7 @@ class RvHandOff():
 
         self._add_applications_from_agent(
             self.username,
-            self.customer_name,
+            self.view_name,
             agent_data,
             apps_data,
             self.delete_afterwards,
@@ -108,7 +108,7 @@ class RvHandOff():
         )
         self._add_custom_apps(
             self.username,
-            self.customer_name,
+            self.view_name,
             self.uri,
             self.method,
             agent_id
@@ -130,7 +130,7 @@ class RvHandOff():
 
         self._add_applications_from_agent(
             self.username,
-            self.customer_name,
+            self.view_name,
             agent_data,
             apps_data,
             self.delete_afterwards,
@@ -145,7 +145,7 @@ class RvHandOff():
         apps_data = [app_data]
         self._add_applications_from_agent(
             self.username,
-            self.customer_name,
+            self.view_name,
             agent_data,
             apps_data,
             self.delete_afterwards,
