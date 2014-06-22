@@ -5,7 +5,10 @@ from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 from vFense.plugins.vuln import *
 from vFense.plugins.vuln._constants import *
-from vFense.plugins.vuln.ubuntu import *
+from vFense.plugins.vuln.ubuntu._db_model import (
+    UbuntuSecurityCollection, UbuntuSecurityBulletinKey,
+    UbuntuSecurityBulletinIndexes
+)
 from vFense.plugins.vuln.ubuntu._constants import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -98,7 +101,7 @@ def fetch_vuln_data(vuln_id, conn=None):
         data = list(
             r
             .table(UbuntuSecurityCollection.Bulletin)
-            .get_all(vuln_id, index=UbuntuSecurityBulletinIndexes.BulletinId)
+            .get_all(vuln_id)
             .map(map_hash)
             .run(conn)
         )

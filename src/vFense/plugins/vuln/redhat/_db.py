@@ -2,10 +2,10 @@ import logging
 import logging.config
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
-from vFense.plugins.vuln import *
-from vFense.plugins.vuln._constants import *
-from vFense.plugins.vuln.redhat import *
-from vFense.plugins.vuln.redhat._constants import *
+from vFense.plugins.vuln.redhat._db_model import (
+    RedhatSecurityBulletinKey, RedHatSecurityCollection,
+    RedhatSecurityBulletinIndexes
+)
 
 logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
 logger = logging.getLogger('cve')
@@ -23,7 +23,6 @@ def get_redhat_vulnerability_data_by_vuln_id(vuln_id, conn=None):
             RedhatSecurityBulletinKey.Apps: r.row[RedhatSecurityBulletinKey.Apps],
             RedhatSecurityBulletinKey.Product : r.row[RedhatSecurityBulletinKey.Product],
             RedhatSecurityBulletinKey.AppsLink : r.row[RedhatSecurityBulletinKey.AppsLink],
-            #WindowsSecurityBulletinKey.Supersedes: [],
         }
     )
     try:
@@ -42,11 +41,9 @@ def get_redhat_vulnerability_data_by_vuln_id(vuln_id, conn=None):
 
     return(info)
 
-
-
 @time_it
 @db_create_close
-#@return_status_tuple
+@return_status_tuple
 def insert_bulletin_data(bulletin_data, conn=None):
     """Insert Redhat Bulletin data into the Redhat Security Bulletin Collection
         DO NOT CALL DIRECTLY
@@ -71,6 +68,3 @@ def insert_bulletin_data(bulletin_data, conn=None):
         logger.exception(e)
 
     return(data)
-
-
-

@@ -13,7 +13,8 @@ from vFense.core.operations._db_model import *
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve._db_model import *
-from vFense.plugins.vuln.ubuntu import *
+from vFense.plugins.vuln.ubuntu._db_model import *
+from vFense.plugins.vuln.redhat._db_model import *
 from vFense.plugins.vuln.windows import *
 from vFense.core.queue import *
 
@@ -33,7 +34,8 @@ def initialize_indexes_and_create_tables():
         (FileCollections.FileServers, FileServerKeys.FileServerName),
         (CVECollections.CVE, CveKeys.CveId),
         (WindowsSecurityCollection.Bulletin, WindowsSecurityBulletinKey.Id),
-        (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.Id),
+        (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.BulletinId),
+        (RedHatSecurityCollection.Bulletin, RedhatSecurityBulletinKey.BulletinId),
         ('downloaded_status', Id),
         (AgentCollections.Hardware, Id),
         (NotificationCollections.NotificationPlugins, Id),
@@ -590,9 +592,6 @@ def initialize_indexes_and_create_tables():
     if not WindowsSecurityBulletinIndexes.CveIds in windows_bulletin_list:
         r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.CveIds, multi=True).run(conn)
 #################################### Ubuntu Bulletin Indexes ###################################################
-    if not UbuntuSecurityBulletinIndexes.BulletinId in ubuntu_bulletin_list:
-        r.table(UbuntuSecurityCollection.Bulletin).index_create(UbuntuSecurityBulletinIndexes.BulletinId).run(conn)
-
     if not UbuntuSecurityBulletinIndexes.NameAndVersion in ubuntu_bulletin_list:
         r.table(UbuntuSecurityCollection.Bulletin).index_create(
             UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x:

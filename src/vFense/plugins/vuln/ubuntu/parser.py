@@ -12,7 +12,9 @@ from vFense.db.client import r
 
 from vFense.utils.common import month_to_num_month
 from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.ubuntu import *
+from vFense.plugins.vuln.ubuntu._db_model import (
+    UbuntuSecurityBulletinKey
+)
 from vFense.plugins.vuln.ubuntu._constants import *
 from vFense.plugins.vuln.ubuntu._db import insert_bulletin_data
 
@@ -40,40 +42,28 @@ def format_data_to_insert_into_db(
     """
 
     data_to_insert = []
-    for data in apps_data:
-        string_to_build_id = ''
-        for app in data[UbuntuSecurityBulletinKey.Apps]:
-            string_to_build_id = (
-                string_to_build_id +
-                app['name'] +
-                app['version']
-            )
+    try:
+        if isinstance(details, unicode):
+            details = details.decode('utf-8')
+        elif isinstance(details, basestring):
+            details = unicode(details.decode('utf-8'))
+    except Exception as e:
+        details = details.encode('utf-8').decode('utf-8')
 
-        string_to_build_id = (
-            string_to_build_id +
-            data[UbuntuSecurityBulletinKey.OsString]
-        )
-
-        bulletin_id = build_bulletin_id(string_to_build_id)
-        try:
-            if isinstance(details, unicode):
-                details = details.decode('utf-8')
-            elif isinstance(details, basestring):
-                details = unicode(details.decode('utf-8'))
-        except Exception as e:
-            details = details.encode('utf-8').decode('utf-8')
-
-        data_to_insert.append(
-            {
-                UbuntuSecurityBulletinKey.Id: bulletin_id,
-                UbuntuSecurityBulletinKey.BulletinId: usn_id,
-                UbuntuSecurityBulletinKey.Details: details,
-                UbuntuSecurityBulletinKey.DatePosted: date_posted,
-                UbuntuSecurityBulletinKey.Apps: data[UbuntuSecurityBulletinKey.Apps],
-                UbuntuSecurityBulletinKey.OsString: data[UbuntuSecurityBulletinKey.OsString],
-                UbuntuSecurityBulletinKey.CveIds: cve_ids
-            }
-        )
+    data_to_insert.append(
+        {
+            UbuntuSecurityBulletinKey.BulletinId: usn_id,
+            UbuntuSecurityBulletinKey.Details: details,
+            UbuntuSecurityBulletinKey.DatePosted: date_posted,
+            UbuntuSecurityBulletinKey.Apps: (
+                apps_data[UbuntuSecurityBulletinKey.Apps]
+            ),
+            UbuntuSecurityBulletinKey.OsStrings: (
+                apps_data[UbuntuSecurityBulletinKey.OsStrings]
+            ),
+            UbuntuSecurityBulletinKey.CveIds: cve_ids
+        }
+    )
 
     return(data_to_insert)
 
@@ -89,7 +79,7 @@ def get_cve_info(cve_references):
     return(cve_ids)
 
 
-def parse_multiple_dd_tags(info):
+def parse_multiple_dd_tags(info, os_string):
     """Parse dt, dl, and dd tags, to retrieve the app data.
     Args:
         info (str):
@@ -102,14 +92,16 @@ def parse_multiple_dd_tags(info):
                     app_info.append(
                         {
                             'name': info.a.text,
-                            'version': info.span.a.text
+                            'version': info.span.a.text,
+                            'os_string': os_string,
                         }
                     )
                 else:
                     app_info.append(
                         {
                             'name': info.contents[0],
-                            'version': info.span.text
+                            'version': info.span.text,
+                            'os_string': os_string,
                         }
                     )
 
@@ -128,31 +120,33 @@ def get_app_info(info):
     Args:
         info (str):
     """
-    app_info = []
-    app_info = []
+    app_data = {}
+    app_data['os_strings'] = []
+    app_data['apps'] = []
     while True:
-        app_data = {}
         if info.name == 'dt' or info.name == 'dl':
             if info.name == 'dt':
-                app_data['os_string'] = info.text.replace(':', '')
-                info, app_data['apps'] = (
+                os_string = info.text.replace(':', '')
+                app_data['os_strings'].append(os_string)
+                info, apps = (
                     parse_multiple_dd_tags(
-                        info.findNextSibling()
+                        info.findNextSibling(), os_string
                     )
                 )
+                app_data['apps'] += apps
 
             elif info.name == 'dl':
-                app_data['os_string'] = info.dt.text.replace(':', '')
-                info, app_data['apps'] = (
-                    parse_multiple_dd_tags(info.dd)
+                os_string = info.dt.text.replace(':', '')
+                app_data['os_strings'].append(os_string)
+                info, apps = (
+                    parse_multiple_dd_tags(info.dd, os_string)
                 )
-
-            app_info.append(app_data)
+                app_data['apps'] += apps
 
             if not info:
                 break
 
-    return(app_info)
+    return(app_data)
 
 def get_date_posted(date_em):
     """Parse em tags, to retrieve the date posted
