@@ -237,13 +237,11 @@ define(
                         osIcon              = this.printOsIcon(item.get('os_string')),
                         displayName         = this.displayName(item),
                         status              = this.getStatus(item),
+                        tags                = item.get('tags'),
                         updates             = item.get('available_updates'),
                         lastAgentUpdate     = item.get('last_agent_update'),
                         vulnerabilities     = item.get('available_vulnerabilities');
 //                        stats               = helpers.sortStats(item.get('basic_rv_stats'));
-
-                    this.tags = item.get('tags');
-                    this.agentName = displayName;
 
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
@@ -259,7 +257,7 @@ define(
                                 crel('span', {class: 'span2'}, item.get('os_string')),
                                 crel('span', {class: 'span1'}, item.get('os_code')),
                                 crel('span', {class: 'span1'},
-                                    this.tags.length === 0 ? 0 : crel('button', {name: 'agentTags', title: 'Click to see the Tags of this Agent', class: 'btn btn-mini btn-info', 'data-toggle': 'modal'}, this.tags.length)
+                                    tags.length === 0 ? 0 : crel('button', {name: 'agentTags', 'data-agent-name': displayName, 'data-tags': JSON.stringify(tags), title: 'Click to see the Tags of this Agent', class: 'btn btn-mini btn-info', 'data-toggle': 'modal'}, tags.length)
                                 ),
                                 crel('span', {class: 'span1'}, item.get('available_updates')),
                                 crel('span', {class: 'span2'}, item.get('available_vulnerabilities')),
@@ -332,13 +330,14 @@ define(
                 },
                 showAgentTagsModal: function (event) {
                     event.preventDefault();
-                    if (!this.agentTagsModal) {
-                        var that = this;
+                        var agentName = $(event.currentTarget).data('agentName'),
+                            tags = $(event.currentTarget).data('tags');
+
                         this.agentTagsModal = new AgentTagsPanel.View({
-                            agentName: that.agentName,
-                            tags: that.tags
+                            agentName: agentName,
+                            tags: tags
                         });
-                    }
+
                     this.agentTagsModal.open();
                     return this;
                 },

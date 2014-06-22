@@ -75,7 +75,7 @@ def check_password(password):
         score = score + 1
         mandatory += 1
 
-    if re.search('.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]', password):
+    if re.search('[ ,!,",#,\$,%,&,\',\(,\),\*\+,\,,\-,\.,/,:,;,\<,=,\>,\?,@,\[,\\,\],^,_,`,\{,|,\,},~]', password):
         score = score + 1
         mandatory += 1
 
