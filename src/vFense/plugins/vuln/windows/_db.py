@@ -5,8 +5,10 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
-from vFense.plugins.vuln.windows import WindowsSecurityCollection, \
-    WindowsSecurityBulletinKey, WindowsSecurityBulletinIndexes
+from vFense.plugins.vuln.windows._db_model import (
+    WindowsSecurityCollection, WindowsSecurityBulletinKey,
+    WindowsSecurityBulletinIndexes
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
@@ -28,9 +30,9 @@ def fetch_vuln_ids(kb, conn=None):
         Dictionary
         {
             "cve_ids": [
-                "CVE-2009-3555", 
+                "CVE-2009-3555",
                 "CVE-2010-2566"
-            ], 
+            ],
             "bulletin_id": "MS10-049"
         }
     """
@@ -66,19 +68,19 @@ def fetch_vuln_data(vuln_id, conn=None):
 
     Returns:
     {
-        "bulletin_details": "Vulnerabilities in SChannel could allow Remote Code Execution", 
+        "bulletin_details": "Vulnerabilities in SChannel could allow Remote Code Execution",
         "supercedes": [
             {
-                "supercedes_bulletin_kb": "KB960225", 
+                "supercedes_bulletin_kb": "KB960225",
                 "supercedes_bulletin_id": "MS09-007"
             }
-        ], 
-        "id": "03639df1f16464ef9defe6d1735fd032432befdbd325ab4bb24993fc58f287ea", 
+        ],
+        "id": "03639df1f16464ef9defe6d1735fd032432befdbd325ab4bb24993fc58f287ea",
         "cve_ids": [
-            "CVE-2009-3555", 
+            "CVE-2009-3555",
             "CVE-2010-2566"
-        ], 
-        "bulletin_id": "MS10-049", 
+        ],
+        "bulletin_id": "MS10-049",
         "date_posted": 1281423600
     }
     """

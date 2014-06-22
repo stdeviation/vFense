@@ -12,7 +12,7 @@ from datetime import datetime
 from xlrd import open_workbook, xldate_as_tuple
 
 from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.windows import WindowsSecurityBulletinKey
+from vFense.plugins.vuln.windows.db_model import WindowsSecurityBulletinKey
 from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
     WindowsBulletinStrings
 from vFense.plugins.vuln.windows._db import insert_bulletin_data
@@ -23,7 +23,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 def parse_spread_sheet(bulletin_file):
-    """Parse the entire microsoft excel bulleting data and 
+    """Parse the entire microsoft excel bulleting data and
         return the data, ready to be inserted into the database.
     Args:
         bulletin_file (str): The file location on disk

@@ -5,7 +5,6 @@ class UbuntuSecurityCollection():
 class UbuntuSecurityBulletinKey():
     DatePosted = 'date_posted'
     BulletinId = 'bulletin_id'
-    Summary = 'bulletin_summary'
     Details = 'bulletin_details'
     Apps = 'apps'
     OsStrings = 'os_strings'

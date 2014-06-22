@@ -54,7 +54,7 @@ class RetrieveCVEs(object):
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = UserKeys.UserName
+            self.sort_key = CveKeys.CvePublishedDate
 
         self.fetch_cves = (
             FetchCves(self.count, self.offset, self.sort, self.sort_key)
@@ -210,8 +210,6 @@ class RetrieveCVEs(object):
         )
 
         return results
-
-
 
     def _set_results(self, gen_status_code, vfense_status_code,
                      msg, count, data):
