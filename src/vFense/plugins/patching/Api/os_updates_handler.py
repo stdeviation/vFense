@@ -131,7 +131,7 @@ class AgentIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -201,7 +201,7 @@ class AgentIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -344,7 +344,7 @@ class TagIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -413,7 +413,7 @@ class TagIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -553,7 +553,7 @@ class AppIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and agent_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -622,7 +622,7 @@ class AppIdOsAppsHandler(BaseHandler):
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -736,7 +736,7 @@ class GetAgentsByAppIdHandler(BaseHandler):
             if not epoch_time and not label and agent_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (
@@ -805,7 +805,7 @@ class GetAgentsByAppIdHandler(BaseHandler):
             if not epoch_time and not label and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
                 results = (

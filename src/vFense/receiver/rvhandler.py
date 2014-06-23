@@ -5,10 +5,10 @@ from rq import Connection, Queue
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent.agents import get_agent_info
+from vFense.core.agent._db import fetch_agent
 from vFense.plugins.patching._db_model import AppCollections
 from vFense.plugins.patching.apps.incoming_apps import \
-   incoming_applications_from_agent 
+   incoming_applications_from_agent
 from vFense.plugins.patching.apps.custom_apps.custom_apps import \
     add_custom_app_to_agents
 from vFense.plugins.patching.apps.supported_apps.syncer import \
@@ -45,7 +45,7 @@ class RvHandOff():
         #            .format(agent_id, self.agent_data)
         #        )
 
-        return get_agent_info(agent_id)
+        return fetch_agent(agent_id)
 
     def _add_custom_apps(self, username, view_name, uri, method, agent_id):
         rv_q = Queue('incoming_updates', connection=RQ_POOL)

@@ -728,10 +728,10 @@ class AgentHandler(BaseHandler):
             elif apps_refresh:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name, uri, method
+                        username, view_name
                     )
                 )
-                results = self.apps_refresh([agent_id])
+                results = self.apps_refresh(operation, [agent_id])
 
             else:
                 results = (
@@ -768,6 +768,7 @@ class AgentHandler(BaseHandler):
         results = operation.shutdown(agent_ids)
         return results
 
+    @results_message
     def apps_refresh(self, operation, agent_ids):
         results = operation.apps_refresh(agent_ids)
         return results

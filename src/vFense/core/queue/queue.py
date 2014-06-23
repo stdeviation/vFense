@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from vFense.core.queue._db_model import *
 from vFense.core.queue._db import insert_into_agent_queue, \
-    get_next_avail_order_id_in_agent_queue, get_agent_queue, \
+    get_next_avail_order_id_in_agent_queue, fetch_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
 from vFense.core.view._db_model import *
@@ -164,7 +164,7 @@ class AgentQueue(object):
         """
 
         ttl = (
-            ViewManager(self.view_name).get_attribute(ViewKeys.ServerQueueTTL)
+            ViewManager(self.view_name).get_attribute(ViewKeys.AgentQueueTTL)
         )
 
         return(ttl)
@@ -204,7 +204,7 @@ class AgentQueue(object):
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
             >>> view_name = 'default'
             >>> queue = AgentQueue(agent_id, view_name)
-            >>> queue.get_agent_queue()
+            >>> queue.fetch_agent_queue()
 
         Returns:
             List of dictionairies
@@ -225,7 +225,7 @@ class AgentQueue(object):
             ]
         """
 
-        return(get_agent_queue(self.agent_id))
+        return(fetch_agent_queue(self.agent_id))
 
     def pop_agent_queue(self):
         """Return a list of jobs for an agent and then
@@ -259,7 +259,7 @@ class AgentQueue(object):
         """
 
         job_ids = []
-        agent_queue = get_agent_queue(self.agent_id)
+        agent_queue = fetch_agent_queue(self.agent_id)
 
         if agent_queue:
             for job_id in agent_queue:

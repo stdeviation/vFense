@@ -84,15 +84,15 @@ def get_next_avail_order_id_in_agent_queue(agent_id, conn=None):
 
 
 @db_create_close
-def get_agent_queue(agent_id, conn=None):
+def fetch_agent_queue(agent_id, conn=None):
     """Retrieve the queue for an agent
     Args:
         agent_id (str): The 36 character agent UUID.
 
     Basic Usage:
-        >>> from vFense.queue._db import get_agent_queue
+        >>> from vFense.queue._db import fetch_agent_queue
         >>> agent_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e0'
-        >>> get_agent_queue(agent_id)
+        >>> fetch_agent_queue(agent_id)
 
     Returns:
         List of dictionairies

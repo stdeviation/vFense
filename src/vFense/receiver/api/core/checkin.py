@@ -2,10 +2,10 @@ import logging
 from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent.agents import update_agent_status
+from vFense.core.agent.manager import AgentManager
 from vFense.errorz.error_messages import GenericResults, AgentResults
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import agent_authenticated_request
+from vFense.core.decorators import agent_authenticated_request, results_message
 
 from vFense.receiver.corehandler import process_queue_data
 
@@ -36,11 +36,7 @@ class CheckInV1(BaseHandler):
                     username, uri, method
                 ).check_in(agent_id, agent_queue)
             )
-            logger.info(status)
-            update_agent_status(
-                agent_id, username, self.request.uri,
-                self.request.method
-            )
+            self.update_agent_status(agent_id)
             self.set_status(status['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(status))
@@ -56,3 +52,9 @@ class CheckInV1(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(status))
 
+
+    @results_message
+    def update_agent_status(self, agent_id):
+        manager = AgentManager(agent_id)
+        results = manager.update_last_checkin_time()
+        return results

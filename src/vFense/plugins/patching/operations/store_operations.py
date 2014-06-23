@@ -407,8 +407,6 @@ class StorePatchingOperation(StoreAgentOperation):
         results = {
             ApiResultKeys.DATA: [],
             ApiResultKeys.USERNAME: self.username,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
         }
 
         performed_on = vFenseObjects.AGENT

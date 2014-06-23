@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from time import time
 from copy import deepcopy
 from vFense import VFENSE_LOGGING_CONFIG
 
@@ -1086,6 +1087,37 @@ class AgentManager(object):
         results = self.__edit_properties(agent)
         return results
 
+    @time_it
+    def update_last_checkin_time(self):
+        """Update the timestamp for the last time the agent communicated.
+
+        Basic Usage:
+            >>> from vFense.agent.manager import AgentManager
+            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = AgentManager(agent_id)
+            >>> manager.update_checkin_time()
+
+        Returns:
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": " User global_admin was updated - ",
+                "data": [
+                    {
+                        "last_agent_update": 22090992312
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
+        """
+        now = time()
+        agent = Agent(last_agent_update=now)
+        results = self.__edit_properties(agent)
+        return results
+
 
     @time_it
     def __edit_properties(self, agent):
@@ -1129,9 +1161,19 @@ class AgentManager(object):
             invalid_fields = agent.get_invalid_fields()
             data = agent.to_dict_non_null()
             if not invalid_fields:
+                if data.get(AgentKeys.LastAgentUpdate):
+                    data[AgentKeys.LastAgentUpdate] = (
+                        DbTime().epoch_time_to_db_time(
+                            data[AgentKeys.LastAgentUpdate]
+                        )
+                    )
                 object_status, _, _, _ = (
                     update_agent(self.agent_id, data)
                 )
+                if data.get(AgentKeys.LastAgentUpdate):
+                    data[AgentKeys.LastAgentUpdate] = (
+                        data[AgentKeys.LastAgentUpdate].to_epoch_time()
+                    )
 
                 if object_status == DbCodes.Replaced:
                     msg = 'Agent %s was updated - ' % (self.agent_id)
