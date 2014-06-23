@@ -106,7 +106,7 @@ class AdminOperationManager(object):
         completed = False
         data = operation.to_dict_non_null()
         status_code, _, _, generated_ids = (
-            update_admin_operation(data)
+            update_admin_operation(operation_id, data)
         )
         if status_code == DbCodes.Replaced:
             completed = True

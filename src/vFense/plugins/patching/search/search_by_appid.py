@@ -155,7 +155,7 @@ class RetrieveAgentsByAppId(object):
                                  index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentsCollection)
+                            r.table(AgentCollections.Agents)
                         )
                         .zip()
                         .order_by(r.asc(AgentKeys.ComputerName))
@@ -223,7 +223,7 @@ class RetrieveAgentsByAppId(object):
                     .get_all(self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId)
                     .eq_join(
                         self.CurrentAppsPerAgentKey.AgentId,
-                        r.table(AgentsCollection)
+                        r.table(AgentCollections.Agents)
                     )
                     .zip()
                     .filter(
@@ -244,7 +244,7 @@ class RetrieveAgentsByAppId(object):
                     .get_all(self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId)
                     .eq_join(
                         self.CurrentAppsPerAgentKey.AgentId,
-                        r.table(AgentsCollection)
+                        r.table(AgentCollections.Agents)
                     )
                     .zip()
                     .filter(
@@ -300,7 +300,7 @@ class RetrieveAgentsByAppId(object):
                                  index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentsCollection)
+                            r.table(AgentCollections.Agents)
                         )
                         .zip()
                         .filter(
@@ -322,7 +322,7 @@ class RetrieveAgentsByAppId(object):
                                  index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentsCollection)
+                            r.table(AgentCollections.Agents)
                         )
                         .zip()
                         .filter(
@@ -395,7 +395,7 @@ class RetrieveAgentsByAppId(object):
                             .zip()
                             .eq_join(
                                 self.CurrentAppsPerAgentKey.AgentId,
-                                r.table(AgentsCollection)
+                                r.table(AgentCollections.Agents)
                             )
                             .zip()
                             .filter(
@@ -493,7 +493,7 @@ class RetrieveAgentsByAppId(object):
                         .zip()
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentsCollection)
+                            r.table(AgentCollections.Agents)
                         )
                         .zip()
                         .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
@@ -573,7 +573,7 @@ class RetrieveAgentsByAppId(object):
                         .zip()
                         .eq_join(
                             self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentsCollection)
+                            r.table(AgentCollections.Agents)
                         )
                         .zip()
                         .filter(
@@ -669,7 +669,7 @@ class RetrieveAgentsByAppId(object):
                             .zip()
                             .eq_join(
                                 self.CurrentAppsPerAgentKey.AgentId,
-                                r.table(AgentsCollection)
+                                r.table(AgentCollections.Agents)
                             )
                             .zip()
                             .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)

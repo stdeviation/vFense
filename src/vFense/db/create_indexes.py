@@ -7,6 +7,7 @@ from vFense.core.tag._db_model import *
 from vFense.core.user._db_model import *
 from vFense.core.group._db_model import *
 from vFense.core.view._db_model import *
+from vFense.core.queue._db_model import *
 
 from vFense.notifications import *
 from vFense.core.operations._db_model import *
@@ -22,6 +23,7 @@ Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
         (AgentCollections.Agents, AgentKeys.AgentId),
+        (QueueCollections.Agent, AgentQueueKey.Id),
         (AppCollections.UniqueApplications, AppsKey.AppId),
         (AppCollections.AppsPerAgent, Id),
         (AppCollections.CustomApps, CustomAppsKey.AppId),
@@ -93,6 +95,7 @@ def initialize_indexes_and_create_tables():
     user_list = r.table(UserCollections.Users).index_list().run(conn)
     groups_list = r.table(GroupCollections.Groups).index_list().run(conn)
     view_list = r.table(ViewCollections.Views).index_list().run(conn)
+    queue_list = r.table(QueueCollections.Agent).index_list().run(conn)
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.Views in agents_list:
@@ -623,6 +626,10 @@ def initialize_indexes_and_create_tables():
 #################################### File Server Indexes ###################################################
     if not FileServerIndexes.ViewName in file_server_list:
         r.table(FileCollections.FileServers).index_create(FileServerIndexes.ViewName).run(conn)
+
+#################################### Queue Indexes ###################################################
+    if not AgentQueueIndexes.AgentId in queue_list:
+        r.table(QueueCollections.Agent).index_create(AgentQueueIndexes.AgentId).run(conn)
 
 #################################### Close Database Connection ###################################################
     conn.close()

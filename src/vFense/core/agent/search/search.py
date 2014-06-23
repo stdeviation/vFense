@@ -72,10 +72,75 @@ class RetrieveAgents(object):
 
         self.fetch_agents = (
             FetchAgents(
-                view_name, self.count, self.offset,
+                self.view_name, self.count, self.offset,
                 self.sort, self.sort_key
             )
         )
+
+    @time_it
+    def by_id(self, agent_id):
+        """Query agents by computer and display name.
+        Args:
+            agent_id (str): The 36 character UUID fo the agent you
+                are retrieving.
+
+        Basic Usage:
+            >>> from vFense.core.agent.search.search import RetrieveAgents
+            >>> view_name = 'default'
+            >>> search_agents = RetrieveAgents(view_name='default')
+            >>> search_agents.by_id('74b70fcd-9ed5-4cfd-9779-a45d60478aa3')
+
+        Returns:
+            List of dictionairies.
+            {
+                "count": 1,
+                "uri": null,
+                "rv_status_code": 1001,
+                "http_method": null,
+                "http_status": 200,
+                "message": null,
+                "data": [
+                    {
+                        "display_name": null,
+                        "production_level": "Production",
+                        "tags": [
+                            {
+                                "tag_name": "Foo Bar",
+                                "tag_id": "6ef12d9d-a5a0-49c8-9890-206a7b362ce4"
+                            }
+                        ],
+                        "available_vulnerabilities": 8,
+                        "os_code": "linux",
+                        "available_updates": 17,
+                        "agent_status": "up",
+                        "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                        "computer_name": "ubuntu",
+                        "os_string": "Ubuntu 12.04",
+                        "needs_reboot": "no",
+                        "host_name": ""
+                    }
+                ]
+            }
+        """
+        count, data = self.fetch_agents.by_id(agent_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
 
     @time_it
     def by_name(self, query):

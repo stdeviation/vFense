@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import r, db_create_close
-from vFense.core.queue import *
+from vFense.core.queue._db_model import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -98,16 +98,16 @@ def get_agent_queue(agent_id, conn=None):
         List of dictionairies
         [
             {
-                "agent_queue_ttl": 1396778416, 
-                "plugin": "rv", 
-                "order_id": 1, 
-                "server_queue_ttl": 1396777816, 
-                "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                "created_time": 1396777216, 
-                "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12", 
-                "operation": "updatesapplications", 
-                "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
-                "expire_minutes": 10, 
+                "agent_queue_ttl": 1396778416,
+                "plugin": "rv",
+                "order_id": 1,
+                "server_queue_ttl": 1396777816,
+                "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                "created_time": 1396777216,
+                "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12",
+                "operation": "updatesapplications",
+                "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
+                "expire_minutes": 10,
                 "view_name": "default"
             }
         ]
@@ -192,16 +192,16 @@ def get_all_expired_jobs(now=None, conn=None):
         List of dictionairies
         [
             {
-                "agent_queue_ttl": 1396778416, 
-                "plugin": "rv", 
-                "order_id": 1, 
-                "server_queue_ttl": 1396777816, 
-                "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02", 
-                "created_time": 1396777216, 
-                "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12", 
-                "operation": "updatesapplications", 
-                "id": "f9817e07-6877-4857-aef3-e80f57022ac8", 
-                "expire_minutes": 10, 
+                "agent_queue_ttl": 1396778416,
+                "plugin": "rv",
+                "order_id": 1,
+                "server_queue_ttl": 1396777816,
+                "agent_id": "d4119b36-fe3c-4973-84c7-e8e3d72a3e02",
+                "created_time": 1396777216,
+                "operation_id": "b95837d9-5df7-4ab0-9449-a7be196a2b12",
+                "operation": "updatesapplications",
+                "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
+                "expire_minutes": 10,
                 "view_name": "default"
             }
         ]

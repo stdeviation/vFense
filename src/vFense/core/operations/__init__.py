@@ -1,4 +1,3 @@
-import re
 from vFense.core.operations._db_model import (
     AdminOperationKey
 )
@@ -7,7 +6,7 @@ from vFense.core.operations._admin_constants import (
 )
 from vFense.core._constants import CommonKeys
 from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import UserFailureCodes, GenericCodes
+from vFense.errorz.status_codes import GenericCodes
 from vFense.errorz.status_codes import (
     GenericFailureCodes
 )
@@ -80,9 +79,6 @@ class AdminOperation(object):
             self.errors = AdminOperationDefaults.ERRORS
 
         if not self.object_data:
-            self.object_data = AdminOperationDefaults.OBJECT_DATA
-
-        if not self.bject_data:
             self.object_data = AdminOperationDefaults.OBJECT_DATA
 
     def get_invalid_fields(self):

@@ -25,9 +25,9 @@ def log_operation(action, performed_on):
                 vfense_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
                 generic_code = results[ApiResultKeys.GENERIC_STATUS_CODE]
                 errors = results.get(ApiResultKeys.ERRORS, [])
-                ids_created = results.get(ApiResultKeys.IDS_CREATED, [])
-                ids_updated = results.get(ApiResultKeys.IDS_UPDATED, [])
-                ids_removed = results.get(ApiResultKeys.IDS_REMOVED, [])
+                ids_created = results.get(ApiResultKeys.GENERATED_IDS, [])
+                ids_updated = results.get(ApiResultKeys.UPDATED_IDS, [])
+                ids_removed = results.get(ApiResultKeys.DELETED_IDS, [])
                 updated_operation = AdminOperation(
                     status_message=results[ApiResultKeys.MESSAGE],
                     generic_status_code=generic_code,

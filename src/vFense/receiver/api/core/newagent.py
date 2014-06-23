@@ -47,13 +47,14 @@ class NewAgentV1(BaseHandler):
             plugins = self.arguments.get(AgentKeys.Plugins)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
             hardware = self.arguments.get(AgentKeys.Hardware)
-            results, agent_info = (
+            results = (
                 self.add_agent(
                     system_info, hardware, view_name
                 )
             )
             status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
             if status_code == AgentResultCodes.NewAgentSucceeded:
+                agent_info = results[ApiResultKeys.DATA].pop(0)
                 agent_id = results[ApiResultKeys.GENERATED_IDS][-1]
                 try:
                     if 'rv' in plugins:
@@ -87,23 +88,20 @@ class NewAgentV1(BaseHandler):
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
 
-    @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     def add_agent(self, system_info, hardware, view):
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = [view]
+        system_info.pop(AgentKeys.HostName, None)
+        system_info.pop('customer_name', None)
         agent = Agent(**system_info)
         manager = AgentManager()
         results = manager.create(agent)
-        agent_info = results[ApiResultKeys.DATA][-1]
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS][-1]
-            uris = (
-                get_result_uris(
-                    agent_id, self.username, self.uri, self.http_method
-                )
-            )
+            uris = get_result_uris(agent_id)
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
@@ -112,9 +110,11 @@ class NewAgentV1(BaseHandler):
                 AgentOperationKey.OperationId: "",
                 OperationPerAgentKey.AgentId: agent_id
             }
-            results[ApiResultKeys.DATA] = [json_msg, uris]
-
-        return(results, agent_info)
+            results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
+            results[ApiResultKeys.DATA].append(json_msg)
+            results[ApiResultKeys.DATA].append(uris)
+        print results
+        return results
 
 
 class NewAgentV2(BaseHandler):
@@ -150,8 +150,8 @@ class NewAgentV2(BaseHandler):
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
 
-    @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     def add_agent(self, system_info, hardware, views, tags):
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = views

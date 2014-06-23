@@ -9,7 +9,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.operations._db_model import *
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
-from vFense.core.decorators import authenticated_request
+from vFense.core.decorators import authenticated_request, results_message
 from vFense.errorz.error_messages import GenericResults
 from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
@@ -52,19 +52,17 @@ class GetTransactionsHandler(BaseHandler):
             )
             operation = self.get_argument(ApiArguments.OPERATION, None)
 
-            operations = (
+            search = (
                 AgentOperationRetriever(
-                    view_name,
-                    count, offset, sort, sort_by,
-                    username, uri, method
+                    view_name, count, offset, sort, sort_by,
                 )
             )
 
             if operation:
-                results = operations.get_all_by_operation(operation)
+                results = self.get_operations_by_type(search, operation)
 
             else:
-                results = operations.get_all()
+                results = self.get_all_operations(search)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -80,6 +78,16 @@ class GetTransactionsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_operations_by_type(self, search, operation):
+        results = search.get_all_by_operation(operation)
+        return results
+
+    @results_message
+    def get_all_operations(self, search):
+        results = search.get_all()
+        return results
 
 class AgentOperationsHandler(BaseHandler):
     @authenticated_request
@@ -114,15 +122,13 @@ class AgentOperationsHandler(BaseHandler):
                 )
             )
 
-            operations = (
+            search = (
                 AgentOperationRetriever(
-                    view_name,
-                    count, offset, sort, sort_by,
-                    username, uri, method
+                    view_name, count, offset, sort, sort_by,
                 )
             )
 
-            results = operations.get_all_by_agentid(agent_id)
+            results = self.get_agent_operations(search, agent_id)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -138,6 +144,11 @@ class AgentOperationsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_agent_operations(self, search, agent_id):
+        results = search.get_all_by_agentid(agent_id)
+        return results
 
 
 class TagOperationsHandler(BaseHandler):
@@ -173,15 +184,13 @@ class TagOperationsHandler(BaseHandler):
                 )
             )
 
-            operations = (
+            search = (
                 AgentOperationRetriever(
-                    view_name,
-                    count, offset, sort, sort_by,
-                    username, uri, method
+                    view_name, count, offset, sort, sort_by,
                 )
             )
 
-            results = operations.get_all_by_tagid(tag_id)
+            results = self.get_tag_operations(search, tag_id)
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -197,6 +206,11 @@ class TagOperationsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_tag_operations(self, search, tag_id):
+        results = search.get_all_by_tagid(tag_id)
+        return results
 
 class OperationHandler(BaseHandler):
     @authenticated_request
@@ -231,20 +245,18 @@ class OperationHandler(BaseHandler):
                 )
             )
 
-            operations = (
+            search = (
                 AgentOperationRetriever(
-                    view_name,
-                    count, offset, sort, sort_by,
-                    username, uri, method
+                    view_name, count, offset, sort, sort_by,
                 )
             )
 
             operation_data = get_agent_operation(operation_id)
             if operation_data:
                 if re.search('install', operation_data[AgentOperationKey.Operation]):
-                    results = operations.get_install_operation_by_id(operation_id)
+                    results = self.get_install_operation_by_id(search, operation_id)
                 else:
-                    results = operations.get_operation_by_id(operation_id)
+                    results = self.get_operation_by_id(search, operation_id)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -259,3 +271,13 @@ class OperationHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_operation_by_id(self, search, operation_id):
+        results = search.get_operation_by_id(operation_id)
+        return results
+
+    @results_message
+    def get_install_operation_by_id(self, search, operation_id):
+        results = search.get_install_operation_by_id(operation_id)
+        return results

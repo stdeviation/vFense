@@ -4,7 +4,6 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.decorators import results_message
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.search._db_agent_search import FetchAgentOperations
@@ -79,7 +78,6 @@ class AgentOperationRetriever(object):
             )
         )
 
-    @results_message
     def get_all(self, conn=None):
         """Get all operations
         Basic Usage:
@@ -139,7 +137,6 @@ class AgentOperationRetriever(object):
 
         return results
 
-    @results_message
     def get_all_by_agentid(self, agent_id, conn=None):
         """ Get all operations by agent id
         Args:
@@ -211,7 +208,6 @@ class AgentOperationRetriever(object):
 
         return results
 
-    @results_message
     def get_all_by_tagid(self, tag_id, conn=None):
         """Get all operations by tag id
         Args:
@@ -274,7 +270,6 @@ class AgentOperationRetriever(object):
 
         return results
 
-    @results_message
     def get_all_by_operation(self, action):
         """Get all operations by operation
         Args:
@@ -355,7 +350,6 @@ class AgentOperationRetriever(object):
 
         return results
 
-    @results_message
     def get_install_operation_by_id(self, operation_id, conn=None):
         """Get install operation by operation id
         Args:
@@ -460,7 +454,6 @@ class AgentOperationRetriever(object):
 
         return results
 
-    @results_message
     def get_operation_by_id(self, operation_id, conn=None):
         """Get operation by operation id
         Args:
@@ -568,9 +561,6 @@ class AgentOperationRetriever(object):
             ApiResultKeys.MESSAGE: msg,
             ApiResultKeys.COUNT: count,
             ApiResultKeys.DATA: data,
-            ApiResultKeys.USERNAME: self.user_name,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
         }
 
         return results

@@ -119,7 +119,7 @@ def get_all_agents_per_appid(username, view_name,
             r
             .table(AppCollections.SupportedAppsPerAgent)
             .get_all(app_id, index=SupportedAppsPerAgentKey.AppId)
-            .eq_join(SupportedAppsPerAgentKey.AgentId, r.table(AgentsCollection))
+            .eq_join(SupportedAppsPerAgentKey.AgentId, r.table(AgentCollections.Agents))
             .zip()
             .group(
                 lambda x: x[SupportedAppsPerAgentKey.Status]

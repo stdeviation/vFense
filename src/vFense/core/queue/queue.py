@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime, timedelta
 
-from vFense.core.queue import *
+from vFense.core.queue._db_model import *
 from vFense.core.queue._db import insert_into_agent_queue, \
     get_next_avail_order_id_in_agent_queue, get_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs

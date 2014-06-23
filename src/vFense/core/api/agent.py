@@ -571,6 +571,8 @@ class AgentHandler(BaseHandler):
     @results_message
     def get_agent_by_id(self, search, agent_id):
         results = search.by_id(agent_id)
+        if results[ApiResultKeys.DATA]:
+            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA].pop()
         return results
 
     @authenticated_request

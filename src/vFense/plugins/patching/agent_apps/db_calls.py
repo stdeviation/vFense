@@ -81,7 +81,7 @@ def get_all_agents_per_appid(username, view_name,
             r
             .table(AppCollections.vFenseAppsPerAgent)
             .get_all(app_id, index=AgentAppsPerAgentKey.AppId)
-            .eq_join(AgentAppsPerAgentKey.AgentId, r.table(AgentsCollection))
+            .eq_join(AgentAppsPerAgentKey.AgentId, r.table(AgentCollections.Agents))
             .zip()
             .group(
                 lambda x: x[AgentAppsPerAgentKey.Status]

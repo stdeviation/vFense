@@ -80,7 +80,7 @@ def get_all_agents_per_appid(username, view_name,
             r
             .table(AppCollections.CustomAppsPerAgent)
             .get_all(app_id, index=CustomAppsPerAgentKey.AppId)
-            .eq_join(CustomAppsPerAgentKey.AgentId, r.table(AgentsCollection))
+            .eq_join(CustomAppsPerAgentKey.AgentId, r.table(AgentCollections.Agents))
             .zip()
             .group(
                 lambda x: x[CustomAppsPerAgentKey.Status]

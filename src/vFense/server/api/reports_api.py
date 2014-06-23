@@ -20,7 +20,7 @@ class AgentsOsDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -49,7 +49,7 @@ class AgentsHardwareDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -80,7 +80,7 @@ class AgentsCPUDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -112,7 +112,7 @@ class AgentsMemoryDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -146,7 +146,7 @@ class AgentsDiskDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -178,7 +178,7 @@ class AgentsNetworkDetailsHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method

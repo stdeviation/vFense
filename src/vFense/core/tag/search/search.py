@@ -64,7 +64,7 @@ class RetrieveTags(object):
 
         self.fetch_tags = (
             FetchTags(
-                view_name, self.count, self.offset,
+                self.view_name, self.count, self.offset,
                 self.sort, self.sort_key
             )
         )
