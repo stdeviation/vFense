@@ -7,8 +7,8 @@ from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues
 )
-from vFense.plugins.vuln.ubuntu._db_model import UbuntuSecurityBulletinKey
-from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
+from vFense.plugins.vuln.windows.search._db import FetchWindowVulns
+from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
 
 from vFense.errorz.status_codes import (
     GenericCodes, GenericFailureCodes
@@ -17,11 +17,11 @@ from vFense.errorz.status_codes import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
-class RetrieveUbuntuVulns(object):
+class RetrieveWindowVulns(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=UbuntuSecurityBulletinKey.DatePosted
+        sort_key=WindowsSecurityBulletinKey.DatePosted
         ):
 
         self.count = count
@@ -30,25 +30,25 @@ class RetrieveUbuntuVulns(object):
 
         self.valid_keys_to_filter_by = (
             [
-                UbuntuSecurityBulletinKey.BulletinId,
-                UbuntuSecurityBulletinKey.DatePosted,
+                WindowsSecurityBulletinKey.BulletinId,
+                WindowsSecurityBulletinKey.DatePosted,
             ]
         )
 
         valid_keys_to_sort_by = (
             [
-                UbuntuSecurityBulletinKey.BulletinId,
-                UbuntuSecurityBulletinKey.DatePosted,
+                WindowsSecurityBulletinKey.BulletinId,
+                WindowsSecurityBulletinKey.DatePosted,
             ]
         )
 
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = UbuntuSecurityBulletinKey.BulletinId
+            self.sort_key = WindowsSecurityBulletinKey.BulletinId
 
         self.fetch_vulns = (
-            FetchUbuntuVulns(
+            FetchWindowVulns(
                 self.count, self.offset, self.sort, self.sort_key
             )
         )
@@ -57,13 +57,13 @@ class RetrieveUbuntuVulns(object):
     def by_id(self, bulletin_id):
         """Retrieve vulnerability by id.
         Args:
-            bulletin_id (str): The Ubuntu USN bulletin id.
-                Example: 'USN-2250-1'
+            bulletin_id (str): The Windows MS bulletin id.
+                Example: 'MS14-036'
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.search.search import RetrieveUbuntuVulns
-            >>> search = RetrieveUbuntuVulns()
-            >>> search.by_id('USN-2250-1')
+            >>> from vFense.plugins.vuln.ubuntu.search.search import RetrieveWindowVulns
+            >>> search = RetrieveWindowVulns()
+            >>> search.by_id('MS14-036')
 
         Returns:
             List of dictionairies.

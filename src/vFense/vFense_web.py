@@ -126,7 +126,7 @@ class Application(tornado.web.Application):
             (r"/api/v1/operation/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", OperationHandler),
 
             ##### Vulnerability API Handlers
-            (r'/api/v1/vulnerability/os/([A-Za-z0-9_-]+)?', VulnIdHandler),
+            (r'/api/v1/vulnerability/os/([A-Za-z0-9_-]+)?', VulnerabilityHandler),
             (r'/api/v1/vulnerability/cve/(CVE-[0-9]+-[0-9]+)?', CveIdHandler),
 
             ##### File system access whitelist
