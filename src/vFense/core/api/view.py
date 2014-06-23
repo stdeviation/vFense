@@ -16,12 +16,8 @@ from vFense.core.permissions.permissions import (
 )
 
 from vFense.core.permissions.decorators import check_permissions
-from vFense.core.agent._db_model import *
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.user.manager import UserManager
-from vFense.core.agent.agents import (
-    change_view_for_all_agents_in_view, remove_all_agents_for_view
-)
 
 from vFense.core.user._db_model import UserKeys
 from vFense.core.view._db_model import ViewKeys
@@ -36,9 +32,6 @@ from vFense.core.operations._constants import vFenseObjects
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import ViewFailureCodes, ViewCodes
-from vFense.plugins.patching.patching import (
-    remove_all_apps_for_view, change_view_for_apps_in_view
-)
 
 from vFense.errorz.status_codes import (
     GenericCodes, GenericFailureCodes
@@ -261,38 +254,14 @@ class ViewHandler(BaseHandler):
         http_method = self.request.method
         view = ViewManager(view_name)
         try:
-            deleted_agents = (
+            delete_agents = (
                 self.arguments.get(ApiArguments.DELETE_ALL_AGENTS)
             )
-            move_agents_to_view = (
-                self.arguments.get(ApiArguments.MOVE_AGENTS_TO_VIEW, None)
+            view_name= (
+                self.arguments.get(ApiArguments.VIEW_NAME, None)
             )
-            results = self.remove_view(view)
+            results = self.remove_view(view, delete_agents, view_name)
 
-            if move_agents_to_view:
-                if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                        ViewCodes.ViewDeleted):
-
-                    change_view_for_all_agents_in_view(
-                        view_name, move_agents_to_view
-                    )
-                    change_view_for_apps_in_view(
-                        view_name, move_agents_to_view
-                    )
-
-            elif deleted_agents == ApiValues.YES:
-                if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                        ViewCodes.ViewDeleted):
-
-                    remove_all_agents_for_view(view_name)
-                    remove_all_apps_for_view(view_name)
-
-            else:
-                results = (
-                    GenericResults(
-                        active_user, uri, http_method
-                    ).incorrect_arguments()
-                )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -310,7 +279,14 @@ class ViewHandler(BaseHandler):
 
     @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
     @results_message
-    def remove_view(self, view):
+    def remove_view(self, view, delete_agents, view_name):
+        if delete_agents:
+            view.delete_agents()
+
+        elif view:
+            agents = view.agents
+            view.move_agents(agents, view_name)
+
         results = view.remove()
         return results
 
@@ -364,7 +340,7 @@ class ViewsHandler(BaseHandler):
             elif granted and view_context and not all_views:
                 results = self.get_view(fetch_views, view_context)
 
-            elif granted and regex:
+            elif granted and query:
                 results = self.get_all_views_by_regex(fetch_views, query)
 
             elif not granted:
@@ -418,6 +394,7 @@ class ViewsHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
+        user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
         try:
             parent_view = self.get_argument('view_context', active_view)
@@ -443,7 +420,7 @@ class ViewsHandler(BaseHandler):
             )
             view = View(
                 view_name, parent_view,
-                users=[active_users],
+                users=[active_user],
                 net_throttle=net_throttle,
                 cpu_throttle=cpu_throttle,
                 server_queue_ttl=server_queue_ttl,
@@ -491,21 +468,10 @@ class ViewsHandler(BaseHandler):
             if not isinstance(view_names, list):
                 view_names = view_names.split(',')
 
-            results = (
-                remove_views(
-                    view_names,
-                    active_user, uri, method
-                )
-            )
+            results = self.remove_views(view_names)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
-
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                    ViewCodes.ViewDeleted):
-
-                remove_all_agents_for_view(view_name)
-                remove_all_apps_for_view(view_name)
 
         except Exception as e:
             results = (
@@ -526,6 +492,7 @@ class ViewsHandler(BaseHandler):
         views_unchanged = []
         for view_name in view_names:
             manager = ViewManager(view_name)
+            manager.remove_agents()
             results = manager.remove()
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                     == ViewCodes.Deleted):

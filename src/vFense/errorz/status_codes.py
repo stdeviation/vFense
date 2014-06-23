@@ -134,6 +134,7 @@ class ViewCodes(object):
     ViewsRemovedFromAgent = 14010
     AgentsAddedToView = 14011
     AgentsRemovedFromView = 14012
+    AgentsMovedToView = 14013
 
 
 class ViewFailureCodes(object):

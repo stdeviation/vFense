@@ -259,6 +259,212 @@ class AgentManager(object):
         return results
 
     @time_it
+    def update(self, agent, tags):
+        """Add an agent into vFense.
+        Args:
+            agent (Agent): An instance of Agent.
+        Kwargs:
+            tags (list): List of tag ids.
+
+        Basic Usage:
+            >>> from vFense.core.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> agent = Agent(computer_name='DISCIPLINE-1', etc...)
+            >>> manager = AgentManager()
+            >>> manager.update(agent)
+
+        Returns:
+            Dictionary
+            >>>
+            {
+                "data": {
+                    "rebooted": true,
+                    "views": [
+                        "global"
+                    ],
+                    "last_agent_update": 1403100258.599256,
+                    "agent_status": "up",
+                    "bit_type": "64",
+                    "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
+                    "computer_name": "DISCIPLINE-1",
+                    "needs_reboot": false,
+                    "hardware": {
+                        "nic": [
+                            {
+                                "mac": "3085A925BFD6",
+                                "ip_address": "10.0.0.2",
+                                "name": "Local Area Connection"
+                            },
+                            {
+                                "mac": "005056C00001",
+                                "ip_address": "192.168.110.1",
+                                "name": "VMware Network Adapter VMnet1"
+                            },
+                            {
+                                "mac": "005056C00008",
+                                "ip_address": "192.168.252.1",
+                                "name": "VMware Network Adapter VMnet8"
+                            }
+                        ],
+                        "display": [
+                            {
+                                "speed_mhz": "GeForce GTX 660M",
+                                "name": "NVIDIA GeForce GTX 660M  ",
+                                "ram_kb": 0
+                            }
+                        ],
+                        "storage": [
+                            {
+                                "free_size_kb": 155600024,
+                                "name": "C:",
+                                "size_kb": 499872764,
+                                "file_system": "NTFS"
+                            }
+                        ],
+                        "cpu": [
+                            {
+                                "speed_mhz": 2401,
+                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
+                                "cpu_id": 1,
+                                "bit_type": 64,
+                                "cache_kb": 1024,
+                                "cores": 4
+                            }
+                        ],
+                        "memory": 25165824
+                    },
+                    "display_name": null,
+                    "production_level": "production",
+                    "os_code": "windows",
+                    "version": "6.1.7601",
+                    "os_string": "Windows 7 Professional N"
+                },
+                "message": "Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 added successfully",
+                "generated_ids": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
+                "vfense_status_code": 3200,
+                "generic_status_code": 1010
+            }
+        """
+        results = {}
+        if isinstance(agent, Agent):
+            agent_exist = self.properties
+            invalid_fields = agent.get_invalid_fields()
+            agent_data = agent.to_dict()
+            last_agent_update = agent_data[AgentKeys.LastAgentUpdate]
+            agent_data[AgentKeys.LastAgentUpdate] = (
+                DbTime().epoch_time_to_db_time(
+                    agent_data[AgentKeys.LastAgentUpdate]
+                )
+            )
+            current_views = agent_data[AgentKeys.Views]
+            views_are_valid, valid_view_names, invalid_view_names = (
+                validate_view_names(current_views)
+            )
+
+            if views_are_valid and not invalid_fields and agent_exist:
+                agent_data[AgentKeys.Views] = (
+                    set(current_views).union(agent_exist[AgentKeys.Views])
+                )
+                agent_data[AgentKeys.DisplayName] = (
+                    agent_exist[AgentKeys.DisplayName]
+                )
+                status_code, _, _, generated_ids = (
+                    update_agent(agent_data)
+                )
+                if status_code == DbCodes.Replaced:
+                    self.properties = self._agent_attributes()
+                    self.add_hardware(agent_data[AgentKeys.Hardware])
+                    if tags:
+                        self.add_to_tags(tags)
+                    agent_data[AgentKeys.AgentId] = self.agent_id
+                    msg = (
+                        'Agent {0} updated successfully'
+                        .format(self.agent_id)
+                    )
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        AgentResultCodes.StartUpSucceeded
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DATA] = agent_data
+                    results[ApiResultKeys.GENERATED_IDS] = self.agent_id
+
+                else:
+                    msg = 'Failed to update agent {0}.'.format(self.agent_id)
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericFailureCodes.FailedToUpdateObject
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        AgentFailureResultCodes.StartupFailed
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.DATA] = agent_data
+
+            elif invalid_fields:
+                msg = (
+                    'Failed to update agent {0}, invalid fields were passed'
+                    .format(self.agent_id)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToUpdateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureResultCodes.StartupFailed
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.ERRORS] = invalid_fields
+                results[ApiResultKeys.DATA] = agent_data
+
+            elif not agent_exist:
+                msg = (
+                    'Failed to update, agent {0} does not exist'
+                    .format(self.agent_id)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.InvalidId
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureResultCodes.StartupFailed
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = agent_data
+
+            else:
+                msg = (
+                    'Failed to add agent, invalid views were passed: {0}.'
+                    .format(', '.join(invalid_view_names))
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    AgentFailureResultCodes.NewAgentFailed
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.DATA] = agent_data
+
+            results[ApiResultKeys.DATA][AgentKeys.LastAgentUpdate] = (
+                last_agent_update
+            )
+        else:
+            msg = (
+                'Invalid {0} Instance, must pass an instance of Agent.'
+                .format(type(agent))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentFailureResultCodes.NewAgentFailed
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    @time_it
     def add_to_views(self, views):
         """Add views to this agent.
         Args:
@@ -844,6 +1050,39 @@ class AgentManager(object):
             }
         """
         agent = Agent(display_name=display_name)
+        results = self.__edit_properties(agent)
+        return results
+
+    @time_it
+    def edit_needs_reboot(self, needs_reboot):
+        """Change the reboot status of this agent. Does this agent
+            require a reboot?
+        Args:
+            needs_reboot (bool): This agent require a reboot or not.
+
+        Basic Usage:
+            >>> from vFense.agent.manager import AgentManager
+            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = AgentManager(agent_id)
+            >>> manager.edit_needs_reboot(True)
+
+        Returns:
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": " User global_admin was updated - ",
+                "data": [
+                    {
+                        "needs_reboot": true
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
+        """
+        agent = Agent(needs_reboot=needs_reboot)
         results = self.__edit_properties(agent)
         return results
 

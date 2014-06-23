@@ -15,7 +15,7 @@ from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.ubuntu._db_model import *
 from vFense.plugins.vuln.redhat._db_model import *
-from vFense.plugins.vuln.windows import *
+from vFense.plugins.vuln.windows._db_model import *
 from vFense.core.queue import *
 
 Id = 'id'

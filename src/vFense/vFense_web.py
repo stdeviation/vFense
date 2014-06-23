@@ -41,7 +41,6 @@ from vFense.plugins.ra.api.status import RDStatusQueue
 from vFense.plugins.ra.api.rdsession import RDSession
 from vFense.plugins.ra.api.settings import SetPassword
 from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.api.tag_api import *
 from vFense.server.api.monit_api import *
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
 from vFense.core.operations.api.agent_operations import GetTransactionsHandler, \

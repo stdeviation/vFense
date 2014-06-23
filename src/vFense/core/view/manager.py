@@ -623,6 +623,128 @@ class ViewManager(object):
 
         return results
 
+    @time_it
+    def move_agents(self, view_name, agents=None):
+        """Move agents from this view to a new view.
+        Args:
+            view_name (str): Name ofthe view you are moving these agents too.
+        Kwargs:
+            agents (list): Move a list of agente from this view.
+                default=None (Move all agents from this view)
+
+        Basic Usage:
+            >>> from vFense.core.view.manager import ViewManager
+            >>> view = View('global')
+            >>> new_view = 'Test 1'
+            >>> manager.move_agents(new_view)
+
+        Returns:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        view_exist = self.properties
+        msg = ''
+        results = {}
+        new_view_exist = fetch_view(view_name)
+        if agents:
+            if not isinstance(agents, list):
+                agents = agents.split()
+        else:
+            agents = self.agents
+
+        if set(agents) == set(self.agents):
+            valid_agents = True
+
+        elif set(agents).issubset(self.agents):
+            valid_agents = True
+
+        else:
+            valid_agents = False
+
+        if view_exist and self.name != DefaultViews.GLOBAL and new_view_exist:
+            if agents and valid_agents:
+                remove_all_agents_from_view(self.name, agents)
+                delete_agent_ids_from_tags_in_view(agents, self.name)
+                status_code, _, _, _ = (
+                    add_agents_to_views(agents, [view_name])
+                )
+                if status_code == DbCodes.Replaced:
+                    msg = (
+                        'Agents: {0} were moved from view {1} to view {2}'
+                        .format(', '.join(agents), self.name, view_name)
+                    )
+
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.ObjectUpdated
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewCodes.AgentsMovedToView
+                    )
+                    results[ApiResultKeys.MESSAGE] = msg
+                    results[ApiResultKeys.UPDATED_IDS] = [self.name]
+
+            elif agents and not valid_agents and not new_view_exist:
+                msg = (
+                    'Agents %s are not valid for this view %s'%
+                    (', '.join(agents), self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+            else:
+                msg = (
+                    'Agents do not exist in this view %s'% (self.name)
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectUnchanged
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    ViewFailureCodes.AgentsDoNotExistForView
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.name]
+
+        elif self.name == DefaultViews.GLOBAL:
+            msg = 'Can not remove agents from the global view'
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.CantRemoveAgentsFromGlobalView
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        elif not new_view_exist:
+            msg = (
+                'Agents can not move to a view that does not exist {0}'
+                .format(view_name)
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewDoesNotExist
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        else:
+            msg = 'View %s does not exists' % (self.name)
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.ObjectExists
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                ViewFailureCodes.ViewDoesNotExist
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
 
     @time_it
     def remove_agents(self, agents=None):

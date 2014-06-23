@@ -13,10 +13,12 @@ from apscheduler.jobstores.redis_store import RedisJobStore
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
 from vFense.core.agent._db_model import *
-from vFense.core.agent.agents import get_all_agent_ids, get_agent_info
+from vFense.core.agent._db import fetch_agent_ids_in_view, fetch_agent
 from vFense.core.tag._db_model import *
-from vFense.core.tag.tagManager import get_all_tag_ids, get_tags_info, \
-    get_tags_info_from_tag_ids, get_agent_ids_from_tag
+from vFense.core.tag._db import (
+    fetch_tag_ids, fetch_tags_by_view,
+    fetch_tags_by_id, fetch_agent_ids_in_tag
+)
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
@@ -210,7 +212,7 @@ def get_agentids_per_job(job_info, view_name, username,  conn=None):
 
     if (all_agents and not job_info['agent_ids']
             and not job_info['tag_ids'] and not all_tags):
-        agent_ids = get_all_agent_ids(view_name)
+        agent_ids = fetch_agent_ids_in_view(view_name)
 
     elif (job_info['agent_ids'] and not all_agents
             and not job_info['tag_ids'] and not all_tags):
@@ -219,11 +221,11 @@ def get_agentids_per_job(job_info, view_name, username,  conn=None):
     elif (all_tags and not all_agents and not
             job_info['agent_ids'] and not job_info['tag_ids']):
         agent_ids = []
-        tag_ids = get_all_tag_ids(view_name)
+        tag_ids = fetch_tag_ids(view_name)
 
         if tag_ids:
             for tag_id in tag_ids:
-                agent_ids = agent_ids + get_agent_ids_from_tag(tag_id)
+                agent_ids = agent_ids + fetch_agent_ids_in_tag(tag_id)
 
         agent_ids = list(set(agent_ids))
 
@@ -233,7 +235,7 @@ def get_agentids_per_job(job_info, view_name, username,  conn=None):
         tag_ids = tag_ids
 
         for tag_id in tag_ids:
-            agent_ids = agent_ids + get_agent_ids_from_tag(tag_id)
+            agent_ids = agent_ids + fetch_agent_ids_in_tag(tag_id)
 
         agent_ids = list(set(agent_ids))
 
@@ -246,10 +248,10 @@ def get_tags_per_job(job_info, username, view_name, conn=None):
     keys_to_pluck = [TagKeys.TagId, TagKeys.TagName]
 
     if job_info['all_tags']:
-        tags = get_tags_info(view_name, keys_to_pluck)
+        tags = fetch_tags_by_view(view_name, keys_to_pluck)
 
     elif job_info['tag_ids']:
-        tags = get_tags_info_from_tag_ids(job_info['tag_ids'], keys_to_pluck)
+        tags = fetch_tags_by_id(job_info['tag_ids'], keys_to_pluck)
 
     return tags
 
@@ -373,7 +375,7 @@ def get_agent_apps_details(job, agent_id, details=True, conn=None):
     elif app_ids_needed and not details:
         apps = app_ids_needed
 
-    return apps 
+    return apps
 
 
 def get_schedule_details(sched, job_name, username, view_name,
@@ -410,7 +412,7 @@ def get_schedule_details(sched, job_name, username, view_name,
                     if agent_ids:
                         for agent_id in agent_ids:
                             agent_id = agent_id
-                            agent = get_agent_info(
+                            agent = fetch_agent(
                                 agent_id, agent_keys_to_pluck
                             )
 
@@ -625,32 +627,32 @@ def add_yearly_recurrent(sched, view_name, username,
             results = SchedulerResults(
                 username, uri, method
             ).exists(name)
-        
+
         else:
             jobby_job = operation_info(
                 operation=operation, pkg_type=pkg_type,
-                agent_ids=agent_ids, 
-                all_agents=all_agents,tag_ids=tag_ids, 
+                agent_ids=agent_ids,
+                all_agents=all_agents,tag_ids=tag_ids,
                 all_tags=all_tags, severity=severity, name=name
             )
 
             if jobby_job['operation'] == 'install':
-                
+
                 try:
                     if not custom and not every:
                         sched.add_cron_job(
-                            scheduled_install_operation,month=month, 
-                            day=day, hour=hour, minute=minute, 
+                            scheduled_install_operation,month=month,
+                            day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
-                    
+
                     elif custom and every:
                         year = ("{0}/{1}".format(year,every))
                         month = (",".join(custom))
                         sched.add_cron_job(
                             scheduled_install_operation, year = year,
-                            month=month, day=day, hour=hour, minute=minute, 
+                            month=month, day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -665,7 +667,7 @@ def add_yearly_recurrent(sched, view_name, username,
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
-                
+
             elif jobby_job['operation'] == 'reboot':
                 try:
                     if not custom and not every:
@@ -675,13 +677,13 @@ def add_yearly_recurrent(sched, view_name, username,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
-                    
+
                     elif custom and every:
                         year = ("{0}/{1}".format(year,every))
                         month = (",".join(custom))
                         sched.add_cron_job(
                             scheduled_reboot_operation, year = year,
-                            month=month, day=day, hour=hour, minute=minute, 
+                            month=month, day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -711,7 +713,7 @@ def add_yearly_recurrent(sched, view_name, username,
                         month = (",".join(custom))
                         sched.add_cron_job(
                             scheduled_shutdown_operation, year = year,
-                            month=month, day=day, hour=hour, minute=minute, 
+                            month=month, day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -725,7 +727,7 @@ def add_yearly_recurrent(sched, view_name, username,
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-                    
+
     return results
 
 
@@ -740,8 +742,8 @@ def add_monthly_recurrent(sched, view_name, username,
         day = date.day
         hour = date.hour
         minute = date.minute
-        
-    
+
+
     job_data = (
         {
            'day': day,
@@ -759,33 +761,33 @@ def add_monthly_recurrent(sched, view_name, username,
            'created_by': username
         }
     )
-    
+
     if name:
         job_exist = job_exists(
             sched=sched, jobname=name,
             view_name=view_name, username=username
         )
-        
+
         if job_exist:
             msg = 'Job Name Already Exists. Job Can not be Added'
             results = SchedulerResults(
                 username, uri, method
             ).exists(name)
-        
+
         else:
             jobby_job = operation_info(
                 operation=operation, pkg_type=pkg_type, agent_ids=agent_ids,
                 all_agents=all_agents,tag_ids=tag_ids,
                 all_tags=all_tags, severity=severity, name=name
             )
-            
+
             if jobby_job['operation'] == 'install':
-                
+
                 try:
                     if not custom and not every:
                         sched.add_cron_job(
-                            scheduled_install_operation, 
-                            day=day, hour=hour, minute=minute, 
+                            scheduled_install_operation,
+                            day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -794,8 +796,8 @@ def add_monthly_recurrent(sched, view_name, username,
                         month = ("{0}/{1}".format(month,every))
                         day = (",".join(custom))
                         sched.add_cron_job(
-                            scheduled_install_operation,month = month, 
-                            day=day, hour=hour, minute=minute, 
+                            scheduled_install_operation,month = month,
+                            day=day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -803,13 +805,13 @@ def add_monthly_recurrent(sched, view_name, username,
                     results = SchedulerResults(
                         username, uri, method
                     ).created(name, job_data)
-                
+
                 except Exception as e:
                     logger.exception(e)
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-                
+
             elif jobby_job['operation'] == 'reboot':
                 try:
                     if not custom and not every:
@@ -833,13 +835,13 @@ def add_monthly_recurrent(sched, view_name, username,
                     results = SchedulerResults(
                         username, uri, method
                     ).created(name, job_data)
-                
+
                 except Exception as e:
                     logger.exception(e)
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-    
+
             elif jobby_job['operation'] == 'shutdown':
                 try:
                     if not custom and not every:
@@ -863,7 +865,7 @@ def add_monthly_recurrent(sched, view_name, username,
                     results = SchedulerResults(
                         username, uri, method
                     ).created(name, job_data)
-                
+
                 except Exception as e:
                     logger.exception(e)
                     results = GenericResults(
@@ -914,11 +916,11 @@ def add_daily_recurrent(sched, view_name, username,
             results = SchedulerResults(
                 username, uri, method
             ).exists(name)
-        
+
         else:
             jobby_job = operation_info(
-                operation=operation, pkg_type=pkg_type, agent_ids=agent_ids, 
-                all_agents=all_agents,tag_ids=tag_ids, 
+                operation=operation, pkg_type=pkg_type, agent_ids=agent_ids,
+                all_agents=all_agents,tag_ids=tag_ids,
                 all_tags=all_tags, severity=severity, name=name
             )
 
@@ -926,7 +928,7 @@ def add_daily_recurrent(sched, view_name, username,
                 try:
                     if not custom and not every:
                         sched.add_cron_job(
-                            scheduled_install_operation, 
+                            scheduled_install_operation,
                             hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
@@ -964,7 +966,7 @@ def add_daily_recurrent(sched, view_name, username,
                     elif every:
                         day = ("{0}/{1}".format(date.day, every))
                         sched.add_cron_job(
-                            scheduled_reboot_operation, 
+                            scheduled_reboot_operation,
                             day = day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
@@ -993,7 +995,7 @@ def add_daily_recurrent(sched, view_name, username,
                     elif every:
                         day = ("{0}/{1}".format(date.day, every))
                         sched.add_cron_job(
-                            scheduled_shutdown_operation, 
+                            scheduled_shutdown_operation,
                             day = day, hour=hour, minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
@@ -1010,7 +1012,7 @@ def add_daily_recurrent(sched, view_name, username,
                     ).something_broke(name, 'adding schedule', e)
 
     return results
-       
+
 
 def add_weekly_recurrent(sched, view_name, username,
         agent_ids=None, all_agents=None,tag_ids=None, all_tags=None,
@@ -1024,7 +1026,7 @@ def add_weekly_recurrent(sched, view_name, username,
         day_of_week = date.weekday()
         hour = date.hour
         minute = date.minute
-        
+
     job_data = (
         {
            'hour': hour,
@@ -1045,10 +1047,10 @@ def add_weekly_recurrent(sched, view_name, username,
     )
     succeeded = False
     msg = 'Recurrent Scheduled added successfully'
-    
+
     if name:
         job_exist = job_exists(sched=sched, jobname=name,
-                                username=username, 
+                                username=username,
                                 view_name=view_name
                                 )
         if job_exist:
@@ -1059,11 +1061,11 @@ def add_weekly_recurrent(sched, view_name, username,
                  ).exists(name)
             )
 
-        else: 
+        else:
             jobby_job = (
                 operation_info(
-                    operation=operation, pkg_type=pkg_type, agent_ids=agent_ids, 
-                    all_agents=all_agents,tag_ids=tag_ids, 
+                    operation=operation, pkg_type=pkg_type, agent_ids=agent_ids,
+                    all_agents=all_agents,tag_ids=tag_ids,
                     all_tags=all_tags, severity=severity, name=name
                 )
             )
@@ -1088,7 +1090,7 @@ def add_weekly_recurrent(sched, view_name, username,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                             )
-                        
+
                     results = (
                             SchedulerResults(
                                 username, uri, method
@@ -1102,7 +1104,7 @@ def add_weekly_recurrent(sched, view_name, username,
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
-                
+
             elif jobby_job['operation'] == 'reboot':
 
                 try:
@@ -1135,8 +1137,8 @@ def add_weekly_recurrent(sched, view_name, username,
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
-    
-                
+
+
             elif jobby_job['operation'] == 'shutdown':
 
                 try:
@@ -1169,7 +1171,7 @@ def add_weekly_recurrent(sched, view_name, username,
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
-    
+
     return(results)
 
 
@@ -1234,13 +1236,13 @@ def schedule_once(sched, view_name, username,
                     results = SchedulerResults(
                         username, uri, method
                     ).created(name, job_data)
-                
+
                 except Exception as e:
                     logger.exception(e)
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-                
+
             elif jobby_job['operation'] == 'reboot':
 
                 try:
@@ -1259,7 +1261,7 @@ def schedule_once(sched, view_name, username,
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-    
+
             elif jobby_job['operation'] == 'shutdown':
 
                 try:
@@ -1278,7 +1280,7 @@ def schedule_once(sched, view_name, username,
                     results = GenericResults(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
-    
+
     return(results)
 
 
@@ -1323,11 +1325,11 @@ def add_custom_recurrent(sched, view_name, username,
                     all_agents=all_agents,
                     tag_ids=tag_ids,
                     all_tags=all_tags,
-                    severity=severity, 
+                    severity=severity,
                     name=name
                 )
             )
-            
+
             if frequency == 'daily':
                 day=("{0}/{1}".format(date.day,every))
                 if jobby_job['operation'] == 'install':
@@ -1335,9 +1337,9 @@ def add_custom_recurrent(sched, view_name, username,
 
                         sched.add_cron_job(
                             scheduled_install_operation,
-                            day = day, 
+                            day = day,
                             hour=hour,
-                            minute=minute, 
+                            minute=minute,
                             args=[jobby_job, view_name, username],
                             name=name,
                             jobstore=view_name
@@ -1359,12 +1361,12 @@ def add_custom_recurrent(sched, view_name, username,
                             scheduled_reboot_operation,
                             day = day,
                             hour=date.hour,
-                            minute=date.minute, 
+                            minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name,
                             jobstore=view_name
                         )
-                        
+
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
@@ -1384,7 +1386,7 @@ def add_custom_recurrent(sched, view_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, week=week,
                             day_of_week=custom, hour=date.hour,
-                            minute=date.minute, 
+                            minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -1392,7 +1394,7 @@ def add_custom_recurrent(sched, view_name, username,
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(
@@ -1408,24 +1410,24 @@ def add_custom_recurrent(sched, view_name, username,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
-                        
+
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
-            
+
             elif frequency == 'monthly':
                 month=("{0}/{1}".format(date.month,every))
                 if jobby_job['operation'] == 'install':
                     try:
                         sched.add_cron_job(
-                            scheduled_install_operation, month = month, 
-                            day = custom, hour=date.hour, minute=date.minute, 
+                            scheduled_install_operation, month = month,
+                            day = custom, hour=date.hour, minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -1433,7 +1435,7 @@ def add_custom_recurrent(sched, view_name, username,
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(
@@ -1444,15 +1446,15 @@ def add_custom_recurrent(sched, view_name, username,
                     try:
                         sched.add_cron_job(
                             scheduled_reboot_operation, month = month,
-                            day=custom,hour=date.hour, minute=date.minute, 
+                            day=custom,hour=date.hour, minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
-                        
+
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(
@@ -1466,7 +1468,7 @@ def add_custom_recurrent(sched, view_name, username,
                         sched.add_cron_job(
                             scheduled_install_operation, year = year,
                             month = custom, day = date.day, hour=date.hour,
-                            minute=date.minute, 
+                            minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
@@ -1474,7 +1476,7 @@ def add_custom_recurrent(sched, view_name, username,
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(
@@ -1486,15 +1488,15 @@ def add_custom_recurrent(sched, view_name, username,
                         sched.add_cron_job(
                             scheduled_reboot_operation, year=year,
                             month = custom,day=custom,hour=date.hour,
-                            minute=date.minute, 
+                            minute=date.minute,
                             args=[jobby_job, view_name, username],
                             name=name, jobstore=view_name
                         )
-                        
+
                         results = SchedulerResults(
                             username, uri, method
                         ).created(name, job_data)
-                
+
                     except Exception as e:
                         logger.exception(e)
                         results = GenericResults(

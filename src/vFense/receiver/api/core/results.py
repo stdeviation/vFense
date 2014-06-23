@@ -3,8 +3,9 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import agent_authenticated_request, \
-    convert_json_to_arguments
+from vFense.core.decorators import (
+    agent_authenticated_request, convert_json_to_arguments
+)
 
 from vFense.core.agent.operations.agent_results import AgentOperationResults
 from vFense.db.notification_sender import send_notifications
@@ -55,7 +56,7 @@ class RebootResultsV1(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
-            
+
 
 class ShutdownResultsV1(BaseHandler):
     @agent_authenticated_request
@@ -93,4 +94,4 @@ class ShutdownResultsV1(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
-            
+

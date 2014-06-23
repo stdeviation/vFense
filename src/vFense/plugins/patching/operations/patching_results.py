@@ -8,7 +8,7 @@ from json import loads
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent.agents import update_agent_field
+from vFense.core.agent.manager import AgentManager
 from vFense.errorz._constants import ApiResultKeys
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
@@ -180,10 +180,8 @@ class PatchingOperationResults(OperationResults):
         }
 
         if self.reboot_required:
-            update_agent_field(
-                self.agent_id, AgentKeys.NeedsReboot,
-                CommonKeys.YES, self.username
-            )
+            manager = AgentManager(self.agent_id)
+            manager.edit_needs_reboot(True)
 
         if self.success == CommonKeys.TRUE or self.success == CommonKeys.FALSE:
             if (self.success == CommonKeys.TRUE and

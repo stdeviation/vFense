@@ -12,7 +12,7 @@ from datetime import datetime
 from xlrd import open_workbook, xldate_as_tuple
 
 from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.windows.db_model import WindowsSecurityBulletinKey
+from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
 from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
     WindowsBulletinStrings
 from vFense.plugins.vuln.windows._db import insert_bulletin_data

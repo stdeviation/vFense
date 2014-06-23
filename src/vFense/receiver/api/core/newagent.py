@@ -9,7 +9,7 @@ from vFense.core.decorators import (
     results_message
 )
 from vFense.core.agent._db_model import (
-    AgentKeys, AgentMappedKeys
+    AgentKeys
 )
 from vFense.core.operations._db_model import (
     AgentOperationKey, OperationPerAgentKey
@@ -22,7 +22,6 @@ from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.error_messages import GenericResults
 from vFense.errorz.status_codes import AgentResultCodes
 from vFense.receiver.rvhandler import RvHandOff
-from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
@@ -97,9 +96,8 @@ class NewAgentV1(BaseHandler):
         manager = AgentManager()
         results = manager.create(agent)
         agent_info = results[ApiResultKeys.DATA][-1]
-        if (results[ApiResultKeys.VFENSE_STATUS_CODE] ==
-                AgentResultCodes.NewAgentSucceeded):
-
+        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS][-1]
             uris = (
                 get_result_uris(
@@ -131,7 +129,7 @@ class NewAgentV2(BaseHandler):
             views = self.arguments.get(AgentKeys.Views)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
             hardware = self.arguments.get(AgentKeys.Hardware)
-            tags = self.arguments.get(AgentMappedKeys.Tags)
+            tags = self.arguments.get(AgentKeys.Tags)
             results, agent_info = (
                 self.add_agent(
                     system_info, hardware, views, tags

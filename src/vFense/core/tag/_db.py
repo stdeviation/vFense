@@ -117,7 +117,7 @@ def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
 def fetch_tag_ids(view_name=None, conn=None):
     """Retrieve all tag_ids for a view or all.
     Kwargs:
-        view_name (str): name of the view, you are retriveing the tag ids for.
+        view_name (str): name of the view, you are retrieving the tag ids for.
 
 
     Basic Usage:
@@ -151,6 +151,115 @@ def fetch_tag_ids(view_name=None, conn=None):
         logger.exception(e)
 
     return tag_info
+
+@db_create_close
+def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
+    """Retrieve information about tags, by a list of tag_ids.
+    Args:
+        tag_ids (list): List of tag_ids.
+    Kwargs:
+        keys_to_pluck (list): (Optional) Specific keys that you are retrieving
+        from the database
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import fetch_tags_by_id
+        >>> tag_ids = ['tag_id1', 'tag_id2']
+        >>> fetch_tags_by_id(tag_ids)
+
+    Return:
+        List of tag ids
+    """
+    tag_info = {}
+
+    try:
+        if keys_to_pluck:
+            tag_info = list(
+                r
+                .expr(tag_ids)
+                .map(
+                    lambda tag_id:
+                    r
+                    .table(TagCollections.Tags)
+                    .get_all(tag_id)
+                    .pluck(keys_to_pluck)
+                )
+                .run(conn)
+            )
+        else:
+            tag_info = list(
+                r
+                .expr(tag_ids)
+                .map(
+                    lambda tag_id:
+                    r
+                    .table(TagCollections.Tags)
+                    .get_all(tag_id)
+                )
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return tag_info
+
+@db_create_close
+def fetch_tags_by_view(view_name=None, keys_to_pluck=None, conn=None):
+    """Retrieve information about tags in a view.
+    Args:
+        view_name (str): Name of the view.
+    Kwargs:
+        keys_to_pluck (list): (Optional) Specific keys that you are retrieving
+        from the database
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import fetch_tags_by_id
+        >>> view_name = 'Test View'
+        >>> fetch_tags_by_view(view_name)
+
+    Return:
+        List of tag ids
+    """
+    tag_info = {}
+
+    try:
+        if view_name:
+            if keys_to_pluck:
+                tag_info = list(
+                    r
+                    .table(TagCollections.Tags)
+                    .get_all(view_name, index=TagsIndexes.ViewName)
+                    .pluck(keys_to_pluck)
+                    .run(conn)
+                )
+            else:
+                tag_info = list(
+                    r
+                    .table(TagCollections.Tags)
+                    .get_all(view_name, index=TagsIndexes.ViewName)
+                    .run(conn)
+                )
+        else:
+            if keys_to_pluck:
+                tag_info = list(
+                    r
+                    .table(TagCollections.Tags)
+                    .pluck(keys_to_pluck)
+                    .run(conn)
+                )
+            else:
+                tag_info = list(
+                    r
+                    .table(TagCollections.Tags)
+                    .run(conn)
+                )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return tag_info
+
+
 
 @db_create_close
 def fetch_agent_ids_in_tag(tag_id, conn=None):

@@ -8,7 +8,7 @@ from vFense.core._constants import CommonKeys
 from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.core.agent._db_model import *
 from vFense.core.tag._db_model import *
-from vFense.core.tag.tagManager import tag_exists
+from vFense.core.tag._db import fetch_tag
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -91,7 +91,7 @@ class RetrieveAppsByTagId(object):
     @db_create_close
     def filter_by_status(self, pkg_status, conn=None):
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
@@ -169,7 +169,7 @@ class RetrieveAppsByTagId(object):
     @db_create_close
     def filter_by_status_and_query_by_name(self, name, pkg_status, conn=None):
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     base = (
@@ -245,7 +245,7 @@ class RetrieveAppsByTagId(object):
     @db_create_close
     def query_by_name(self, name, conn=None):
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 base = (
                     r
@@ -312,7 +312,7 @@ class RetrieveAppsByTagId(object):
                                                    sev, conn=None):
 
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     if sev in CommonSeverityKeys.ValidRvSeverities:
@@ -404,7 +404,7 @@ class RetrieveAppsByTagId(object):
     @db_create_close
     def filter_by_severity(self, sev, conn=None):
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
@@ -478,7 +478,7 @@ class RetrieveAppsByTagId(object):
     def filter_by_sev_and_query_by_name(self, name, sev, conn=None):
 
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if sev in CommonSeverityKeys.ValidRvSeverities:
                     base = (
@@ -561,7 +561,7 @@ class RetrieveAppsByTagId(object):
     def filter_by_status_and_sev(self, pkg_status, sev, conn=None):
 
         try:
-            tag = tag_exists(self.tag_id)
+            tag = fetch_tag(self.tag_id)
             if tag:
                 if pkg_status in CommonAppKeys.ValidPackageStatuses:
                     if sev in CommonSeverityKeys.ValidRvSeverities:

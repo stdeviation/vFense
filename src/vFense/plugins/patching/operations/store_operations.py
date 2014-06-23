@@ -18,7 +18,7 @@ from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
 from vFense.plugins.patching.patching import get_download_urls, \
     update_app_status_by_agentid_and_appid
 
-from vFense.core.tag.tagManager import get_agent_ids_from_tag
+from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
@@ -400,7 +400,7 @@ class StorePatchingOperation(StoreAgentOperation):
                 default = None
             tag_id (str): 36 character UUID of the agent.
                 default = None
-        
+
         """
 
         oper_plugin = vFensePlugins.RV_PLUGIN
@@ -415,9 +415,9 @@ class StorePatchingOperation(StoreAgentOperation):
         if tag_id:
             performed_on = vFenseObjects.TAG
             if not agentids:
-                agentids = get_agent_ids_from_tag(tag_id)
+                agentids = fetch_agent_ids_in_tag(tag_id)
             else:
-                agentids += get_agent_ids_from_tag(tag_id)
+                agentids += fetch_agent_ids_in_tag(tag_id)
 
         operation = (
             PatchingOperation(

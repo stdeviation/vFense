@@ -5,8 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.operations._constants import AgentOperations
-from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent.agents import update_agent_field
+from vFense.core.agent.manager import AgentManager
 from vFense.core.operations.results import OperationResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -23,12 +22,8 @@ class AgentOperationResults(OperationResults):
         results = self.update_operation(oper_type)
 
         if self.success == CommonKeys.TRUE:
-            update_agent_field(
-                self.agent_id,
-                AgentKeys.NeedsReboot,
-                CommonKeys.NO, self.username,
-                self.uri, self.method
-            )
+            manager = AgentManager(self.agent_id)
+            manager.edit_needs_reboot(False)
 
         return(results)
 
