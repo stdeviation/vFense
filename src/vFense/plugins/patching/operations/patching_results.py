@@ -43,19 +43,14 @@ class PatchingOperationResults(OperationResults):
 
     def __init__(
             self, username, agent_id, operation_id,
-            success, error=None, status_code=None,
-            uri=None, method=None
+            success, error=None, status_code=None
         ):
         super(PatchingOperationResults, self).__init__(
             username, agent_id, operation_id, success,
-            error, status_code, uri, method
+            error, status_code
         )
 
-        self.operation = (
-            PatchingOperation(
-                self.username, self.view_name,
-            )
-        )
+        self.operation = PatchingOperation(self.username)
 
     def _set_global_properties(
             self, app_id, reboot_required,
@@ -168,16 +163,11 @@ class PatchingOperationResults(OperationResults):
                 apps[CommonAppKeys.VERSION],
             )
 
-    @results_message
     def _update_app_status(self, collection):
         """Update the application status per agent as well as update the
             operation
         """
-        results = {
-            ApiResultKeys.USERNAME: self.username,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
-        }
+        results = {}
 
         if self.reboot_required:
             manager = AgentManager(self.agent_id)

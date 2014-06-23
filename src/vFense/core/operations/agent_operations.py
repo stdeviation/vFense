@@ -111,11 +111,13 @@ class AgentOperation(object):
     """This is what creates operations for an agent or multiple agents.
 
     """
-    def __init__(self, username, view_name):
+    def __init__(self, username, view_name=None):
         """
         Args:
             username (str): the name of the user who created the operation.
+        Kwrgs:
             view_name (str): the name of the view this user is part of.
+                default=None
 
         Basic Usage:
             >>> from vFense.core.operations.agent_operations import AgentOperation

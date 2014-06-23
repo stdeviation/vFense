@@ -24,8 +24,7 @@ class OperationResults(object):
         This is the base class for adding results to an aegnt operation"""
     def __init__(
             self, username, agent_id, operation_id,
-            success, error=None, status_code=None,
-            uri=None, method=None
+            success, error=None, status_code=None
         ):
         """
         Args:
@@ -54,23 +53,15 @@ class OperationResults(object):
         self.agent_id = agent_id
         self.operation_id = operation_id
         self.username = username
-        self.uri = uri
-        self.method = method
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
-        self.view_name = self.agent_data[AgentKeys.ViewName]
         self.date_now = DbTime.time_now()
         self.begining_of_time = DbTime.begining_of_time()
         self.error = error
         self.success = success
         self.status_code = status_code
-        self.operation = (
-            AgentOperation(
-                self.username, self.view_name,
-            )
-        )
+        self.operation = AgentOperation(self.username)
 
-    @results_message
     def update_operation(self, oper_type):
         """Update an agent operation
         Args:
@@ -106,9 +97,6 @@ class OperationResults(object):
 
         results = {
             ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: self.username,
-            ApiResultKeys.URI: self.uri,
-            ApiResultKeys.HTTP_METHOD: self.method
         }
 
         oper_exists = (

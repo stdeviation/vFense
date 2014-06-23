@@ -5,8 +5,9 @@ from json import dumps
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.errorz.error_messages import GenericResults, UpdateApplicationsResults
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import agent_authenticated_request, \
-    convert_json_to_arguments
+from vFense.core.decorators import (
+    agent_authenticated_request, convert_json_to_arguments, results_message
+)
 
 from vFense.plugins.patching.operations.patching_results import \
     PatchingOperationResults
@@ -49,17 +50,15 @@ class UpdateApplicationsV1(BaseHandler):
             if operation_id:
                 logger.info("self.arguments: {0}".format(self.arguments))
 
-                results = PatchingOperationResults(
+                update_results = PatchingOperationResults(
                     username, agent_id,
                     operation_id, success, error,
-                    status_code, uri, method
+                    status_code
                 )
 
-                results_data = results.apps_refresh()
-                print results_data
-                results_apps_refresh = results.apps_refresh()
-                self.set_status(results_apps_refresh['http_status'])
-                self.write(dumps(results_apps_refresh))
+                results = self.apps_refresh_results(update_results)
+                self.set_status(results['http_status'])
+                self.write(dumps(results))
 
             else:
                 results = (
@@ -79,3 +78,8 @@ class UpdateApplicationsV1(BaseHandler):
 
             self.set_status(results['http_status'])
             self.write(dumps(results))
+
+    @results_message
+    def apps_refresh_results(update_results):
+        results = update_results.apps_refresh()
+        return results

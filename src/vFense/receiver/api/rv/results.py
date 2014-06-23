@@ -3,8 +3,9 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import agent_authenticated_request
-from vFense.core.decorators import convert_json_to_arguments
+from vFense.core.decorators import (
+    convert_json_to_arguments, agent_authenticated_request, results_message
+)
 from vFense.core._constants import CommonKeys
 
 from vFense.plugins.patching.operations.patching_results import \
@@ -49,22 +50,23 @@ class InstallOsAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = (
+            update_results = (
                 PatchingOperationResults(
                     username, agent_id,
                     operation_id, success, error,
                     status_code, uri, method
                 )
             )
-            results_data = (
-                results.install_os_apps(
+            results = (
+                self.update_app_results(
+                    update_results,
                     app_id, reboot_required,
                     apps_to_delete, apps_to_add
                 )
             )
-            self.set_status(results_data['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results_data, indent=4))
+            self.write(dumps(results, indent=4))
             send_notifications(username, view_name, operation_id, agent_id)
         except Exception as e:
             results = (
@@ -77,6 +79,16 @@ class InstallOsAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
+
+    @results_message
+    def update_app_results(self, update_results, app_id,
+                           reboot_required, apps_to_delete, apps_to_add):
+        results = (
+            update_results.install_os_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
+            )
+        )
+        return results
 
 
 class InstallCustomAppsResults(BaseHandler):
@@ -108,23 +120,22 @@ class InstallCustomAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = (
+            update_results = (
                 PatchingOperationResults(
                     username, agent_id,
                     operation_id, success, error,
                     status_code, uri, method
                 )
             )
-            results_data = (
-                results.install_custom_apps(
-                    app_id, reboot_required,
+            results = (
+                self.update_custom_app_results(
+                    update_results, app_id, reboot_required,
                     apps_to_delete, apps_to_add
                 )
             )
-            print results_data
-            self.set_status(results_data['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results_data, indent=4))
+            self.write(dumps(results, indent=4))
             send_notifications(username, view_name, operation_id, agent_id)
         except Exception as e:
             results = (
@@ -137,6 +148,17 @@ class InstallCustomAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
+
+    @results_message
+    def update_custom_app_results(self, update_results, app_id,
+                                  reboot_required, apps_to_delete,
+                                  apps_to_add):
+        results = (
+            update_results.install_custom_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
+            )
+        )
+        return results
 
 
 class InstallSupportedAppsResults(BaseHandler):
@@ -167,24 +189,20 @@ class InstallSupportedAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = PatchingOperationResults(
-                username,
-                agent_id,
-                operation_id,
-                success,
-                error,
-                status_code,
-                uri,
-                method
+            update_results = (
+                PatchingOperationResults(
+                    username, agent_id, operation_id,
+                    success, error, status_code
+                )
             )
-            results_data = results.install_supported_apps(
-                app_id, reboot_required, apps_to_delete, apps_to_add
+            results = self.update_supported_app_results(
+                update_results, app_id, reboot_required,
+                apps_to_delete, apps_to_add
             )
 
-            print results_data
-            self.set_status(results_data['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results_data, indent=4))
+            self.write(dumps(results, indent=4))
             send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
@@ -198,6 +216,17 @@ class InstallSupportedAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
+
+    @results_message
+    def update_supported_app_results(self, update_results, app_id,
+                                     reboot_required, apps_to_delete,
+                                     apps_to_add):
+        results = (
+            update_results.install_supported_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
+            )
+        )
+        return results
 
 
 class InstallAgentAppsResults(BaseHandler):
@@ -229,22 +258,19 @@ class InstallAgentAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = (
+            update_results = (
                 PatchingOperationResults(
                     username, agent_id,
                     operation_id, success, error,
-                    status_code, uri, method
+                    status_code
                 )
             )
             results_data = (
-                results.install_agent_apps(
-                    app_id, reboot_required,
+                self.update_agent_app_results(
+                    update_results, app_id, reboot_required,
                     apps_to_delete, apps_to_add
                 )
             )
-            print results_data
-            # TODO: what is this meant for?
-            #data = results.install_agent_update(data)
 
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -262,6 +288,16 @@ class InstallAgentAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
+
+    @results_message
+    def update_agent_app_results(self, update_results, app_id, reboot_required,
+                                 apps_to_delete, apps_to_add):
+        results = (
+            update_results.install_agent_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
+            )
+        )
+        return results
 
 
 class UninstallAppsResults(BaseHandler):
@@ -293,23 +329,22 @@ class UninstallAppsResults(BaseHandler):
                 else:
                     reboot_required = False
 
-            results = (
+            update_results = (
                 PatchingOperationResults(
                     username, agent_id,
                     operation_id, success, error,
-                    status_code, uri, method
+                    status_code
                 )
             )
-            results_data = (
-                results.install_os_apps(
-                    app_id, reboot_required,
+            results = (
+                self.update_app_results(
+                    update_results, app_id, reboot_required,
                     apps_to_delete, apps_to_add
                 )
             )
-            print results_data
-            self.set_status(results_data['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results_data, indent=4))
+            self.write(dumps(results, indent=4))
             send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
@@ -323,3 +358,15 @@ class UninstallAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
+
+
+
+    @results_message
+    def update_app_results(self, update_results, app_id, reboot_required,
+                           apps_to_delete, apps_to_add):
+        results = (
+            update_results.install_os_apps(
+                app_id, reboot_required, apps_to_delete, apps_to_add
+            )
+        )
+        return results
