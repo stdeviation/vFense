@@ -133,7 +133,7 @@ class Agent(object):
                 )
 
         if self.last_agent_update:
-            if (not isinstance(self.last_agent_update, int) or
+            if (not isinstance(self.last_agent_update, int) and
                     not isinstance(self.last_agent_update, float)):
 
                 invalid_fields.append(
