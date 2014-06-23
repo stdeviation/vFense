@@ -4,14 +4,17 @@ from vFense.core.operations._constants import AgentOperations, ListenerURIs, \
     AuthenticationOperations, AuthenticationURIs, BaseURIs
 
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent.agents import get_agent_info
+from vFense.core.agent._db import fetch_agent
 from vFense.core.decorators import results_message, time_it
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import *
 
 
-def _get_result_uris_dict(agent_id):
-    base = os.path.join(BaseURIs.LISTENER, agent_id)
+def _get_result_uris_dict(agent_id=None):
+    if agent_id:
+        base = os.path.join(BaseURIs.LISTENER, agent_id)
+    else:
+        base = os.path.join(BaseURIs.LISTENER, '{0}')
 
     result_uris = {
         AuthenticationOperations.LOGIN: {
@@ -149,16 +152,11 @@ def get_agent_results_uri(agent_id, operation):
 
 
 @time_it
-@results_message
-def get_result_uris(agent_id, user_name=None, uri=None, method=None):
+def get_result_uris(agent_id=None):
     """Returns back a dictionary with all of the agent api calls for an agent.
-    Args:
-        agent_id (str): 36 character UUID
-
     Kwargs:
-        user_name (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
+        agent_id (str): 36 character UUID of the agent.
+            default=None
 
     Basic Usage:
         >>> from vFense.receiver.agent_uris import get_result_uris
@@ -171,14 +169,12 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
             "count": 1,
             "uri": null,
             "rv_status_code": 1001,
-            "http_method": null,
-            "http_status": 200,
             "message": "None - data was retrieved",
             "data": {
                 "check_in": {
                     "response_uri": "rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/checkin",
                     "request_method": "GET"
-                },  
+                },
                 "startup": {
                     "response_uri": "rvl/v1/d4119b36-fe3c-4973-84c7-e8e3d72a3e02/core/results/startup",
                     "request_method": "PUT"
@@ -194,20 +190,10 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
     status = get_result_uris.func_name + ' - '
     result_uris = _get_result_uris_dict(agent_id)
 
-    agent_exist = get_agent_info(agent_id, AgentKeys.AgentId)
-    if agent_exist:
-        generic_status_code = GenericCodes.InformationRetrieved
-        vfense_status_code = GenericCodes.InformationRetrieved
-        msg = 'response uris retrieved successfully for agent_id %s' % \
-              (agent_id)
-        count = 1
-
-    else:
-        generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
-        result_uris = {}
-        msg = 'invalid agent_id %s' % (agent_id)
-        count = 0
+    generic_status_code = GenericCodes.InformationRetrieved
+    vfense_status_code = GenericCodes.InformationRetrieved
+    msg = 'response uris retrieved successfully.'
+    count = 1
 
     results = {
         ApiResultKeys.DB_STATUS_CODE: status_code,
@@ -216,9 +202,6 @@ def get_result_uris(agent_id, user_name=None, uri=None, method=None):
         ApiResultKeys.MESSAGE: status + msg,
         ApiResultKeys.COUNT: count,
         ApiResultKeys.DATA: result_uris,
-        ApiResultKeys.USERNAME: user_name,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
     }
 
-    return(results)
+    return results

@@ -18,9 +18,11 @@ import tornado.options
 import vFense_module_loader
 
 from vFense.core.api.base import WebSocketHandler, AdminHandler
-from vFense.receiver.api.rv.results import InstallOsAppsResults, \
-    InstallCustomAppsResults, InstallSupportedAppsResults, \
-    InstallAgentAppsResults, UninstallAppsResults
+from vFense.receiver.api.rv.results import (
+    InstallOsAppsResults, InstallCustomAppsResults,
+    InstallSupportedAppsResults, InstallAgentAppsResults,
+    UninstallAppsResults
+)
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
 from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
 from vFense.receiver.api.ra.results import RemoteDesktopResults
@@ -113,7 +115,7 @@ if __name__ == '__main__':
                 VFENSE_SSL_PATH,
                 "server.crt"),
             "keyfile": os.path.join(
-                VFENSE_SSL_PATH, 
+                VFENSE_SSL_PATH,
                 "server.key"),
         }
     )

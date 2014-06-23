@@ -15,6 +15,7 @@ class AdminActions():
     ADD_AGENT_TO_VIEWS = 'add agent to views'
     ADD_AGENTS_TO_VIEWS = 'add agents to views'
     ###CREATE
+    NEW_AGENT = 'new agent'
     CREATE_USER = 'create user'
     CREATE_GROUP = 'create group'
     CREATE_VIEW = 'create view'
