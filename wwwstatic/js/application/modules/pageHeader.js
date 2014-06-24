@@ -24,7 +24,7 @@ define(
                 return this;
             },
             checkAdminPermission: function () {
-                if(app.user.hasPermission('administrator')) {
+                if(app.user.hasPermission('admin')) {
                     if (!this.$('a[href="#admin/users"]').length) {
                         this.$('#userMenu')
                             .find('.divider')

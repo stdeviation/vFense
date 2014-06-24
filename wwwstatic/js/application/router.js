@@ -224,28 +224,20 @@ define(
             showAccount: function () {
                 this.show({hash: '#admin', title: 'Admin Settings', view: 'modules/accountSettings'});
             },
-            verifyCustomer: function (customerName) {
-                var loggedInUser = app.user.toJSON().user_name,
-                    url = 'api/v1/user/' + loggedInUser,
+            verifyCustomer: function (id) {
+                var url = 'api/users/edit',
                     that = this,
                     params = {
-                        current_customer: customerName
+                        current_customer_id: id
                     };
-                $.ajax({
-                    type: 'PUT',
-                    url: url,
-                    data: JSON.stringify(params),
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    success: function(response) {
-                        if (response.rv_status_code === 13001) {
-                            app.notifyOSD.createNotification('!', 'Customer Changed', 'Access to customer granted');
-                            app.vent.trigger('customer:change', customerName);
-                            that.toDashboard();
-                        } else {
-                            app.notifyOSD.createNotification('', 'Insufficient Permissions', 'Access to customer is not allowed');
-                            that.navigate(that.getLastFragment(), {trigger: true});
-                        }
+                $.post(url, params, function (json) {
+                    if (json.pass) {
+                        app.notifyOSD.createNotification('!', 'Customer Changed', 'Access to customer granted');
+                        app.vent.trigger('customer:change', id);
+                        that.toDashboard();
+                    } else {
+                        app.notifyOSD.createNotification('', 'Insufficient Permissions', 'Access to customer is not allowed');
+                        that.navigate(that.getLastFragment(), {trigger: true});
                     }
                 });
             },
@@ -342,7 +334,7 @@ define(
                 var modal;
 
                 // Check for proper admin permissions
-                if (app.user.hasPermission('administrator')) {
+                if (app.user.hasPermission('admin')) {
                     modal = app.views.modals.admin;
 
                     if (modal) {

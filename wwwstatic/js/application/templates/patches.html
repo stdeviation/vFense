@@ -15,7 +15,6 @@
                 <option value="release_date">Release Date</option>
                 <option value="severity">Severity</option>
                 <option value="version">Version</option>
-                <option value="vulnerability_id">Vulnerability ID</option>
             </select>
             <select name="order">
                 <option value="asc">Ascending</option>
@@ -35,57 +34,32 @@
         </div>
     <% } %>
 <% } else if (legend) { %>
-    <% if (tab === 'custom') { %>
-        <span class="span3">
-            <input type="checkbox" data-toggle="all"/>
-            <strong>Application Name</strong>
-        </span>
-        <span class="span2">Release Date</span>
-        <span class="span1">Version</span>
-        <div class="span2">
-            <div id="displaySeverity">
-                Severity&nbsp;
-                <button class="btn btn-link noPadding" id="toggleSeverityFilter">
-                    <i class="icon-filter" style="position: relative; top: -1px;"></i>
-                </button>
-            </div>
-            <div id="controls" class="hide">
-                <select id="severity" style="width: auto;">
-                    <option value="none">None</option>
-                    <option <% if (query.severity === 'Critical') { print('SELECTED'); } %>>Critical</option>
-                    <option <% if (query.severity === 'Recommended') { print('SELECTED'); } %>>Recommended</option>
-                    <option <% if (query.severity === 'Optional') { print('SELECTED'); } %>>Optional</option>
-                </select>
-            </div>
+    <span class="span5">
+        <input type="checkbox" data-toggle="all"/>
+        <strong>Application Name</strong>
+    </span>
+    <span class="span2">Release Date</span>
+    <span class="span1">Version</span>
+    <div class="span2">
+        <div id="displaySeverity">
+            Severity&nbsp;
+            <button class="btn btn-link noPadding" id="toggleSeverityFilter">
+                <i class="icon-filter" style="position: relative; top: -1px;"></i>
+            </button>
         </div>
-        <span class="span2">Vulnerability ID</span>
+        <div id="controls" class="hide">
+            <select id="severity" style="width: auto;">
+                <option value="none">None</option>
+                <option <% if (query.severity === 'Critical') { print('SELECTED'); } %>>Critical</option>
+                <option <% if (query.severity === 'Recommended') { print('SELECTED'); } %>>Recommended</option>
+                <option <% if (query.severity === 'Optional') { print('SELECTED'); } %>>Optional</option>
+            </select>
+        </div>
+    </div>
+    <% if (tab === 'custom') { %>
         <div class="span2 alignRight">
             Options
         </div>
-    <% } else { %>
-        <span class="span5">
-                <input type="checkbox" data-toggle="all"/>
-                <strong>Application Name</strong>
-        </span>
-        <span class="span2">Release Date</span>
-        <span class="span1">Version</span>
-        <div class="span2">
-            <div id="displaySeverity">
-                Severity&nbsp;
-                <button class="btn btn-link noPadding" id="toggleSeverityFilter">
-                    <i class="icon-filter" style="position: relative; top: -1px;"></i>
-                </button>
-            </div>
-            <div id="controls" class="hide">
-                <select id="severity" style="width: auto;">
-                    <option value="none">None</option>
-                    <option <% if (query.severity === 'Critical') { print('SELECTED'); } %>>Critical</option>
-                    <option <% if (query.severity === 'Recommended') { print('SELECTED'); } %>>Recommended</option>
-                    <option <% if (query.severity === 'Optional') { print('SELECTED'); } %>>Optional</option>
-                </select>
-            </div>
-        </div>
-        <span class="span2">Vulnerability ID</span>
     <% } %>
 <% } else { %>
     <div class="tabbable">
@@ -93,7 +67,7 @@
             <li <% if (tab === 'os') { print('class="active"'); } %>><a href="api/v1/apps/os" data-type="os">OS</a></li>
             <li <% if (tab === 'custom') { print('class="active"'); } %>><a href="api/v1/apps/custom" data-type="custom">Custom</a></li>
             <li <% if (tab === 'supported') { print('class="active"'); } %>><a href="api/v1/apps/supported" data-type="supported">Supported</a></li>
-            <li <% if (tab === 'remediationvault') { print('class="active"'); } %>><a href="api/v1/apps/remediationvault" data-type="remediationvault">Agent</a></li>
+            <li <% if (tab === 'remediationvault') { print('class="active"'); } %>><a href="api/v1/apps/remediationvault" data-type="remediationvault">agent</a></li>
         </ul>
         <div class="tab-content" style="border: 1px solid #dddddd; border-top: none;"></div>
     </div>
