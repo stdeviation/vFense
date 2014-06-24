@@ -80,6 +80,7 @@ class FetchAgents(object):
             .table(AgentCollections.Agents)
         )
         merge_query = self._set_merge_query()
+        agent_merge_query = self._set_agent_merge_query()
 
         try:
             count = (
@@ -96,6 +97,7 @@ class FetchAgents(object):
                 .skip(self.offset)
                 .limit(self.count)
                 .merge(merge_query)
+                .merge(agent_merge_query)
                 .run(conn)
             )
 
@@ -165,11 +167,11 @@ class FetchAgents(object):
                     |
                     (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
-                .merge(merge_query)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
+                .merge(merge_query)
                 .run(conn)
             )
 
@@ -684,6 +686,100 @@ class FetchAgents(object):
             logger.exception(e)
 
         return(count, data)
+
+    def _set_agent_merge_query(self):
+        merge_query = (
+            lambda x:
+            {
+                CommonAppKeys.APP_STATS: (
+                    [
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(AppCollections.AppsPerAgent)
+                                .get_all(
+                                    [
+                                        CommonAppKeys.INSTALLED,
+                                        x[AgentKeys.AgentId]
+                                    ],
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                            CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(AppCollections.AppsPerAgent)
+                                .get_all(
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        x[AgentKeys.AgentId]
+                                    ],
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.OS
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(AppCollections.CustomAppsPerAgent)
+                                .get_all(
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        x[AgentKeys.AgentId]
+                                    ],
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.CUSTOM
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(AppCollections.SupportedAppsPerAgent)
+                                .get_all(
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        x[AgentKeys.AgentId]
+                                    ],
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(AppCollections.vFenseAppsPerAgent)
+                                .get_all(
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        x[AgentKeys.AgentId]
+                                    ],
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
+                        },
+                    ]
+                ),
+            }
+        )
+
+        return(merge_query)
+
 
     def _set_merge_query(self):
         merge_query = (

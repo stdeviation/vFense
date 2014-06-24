@@ -26,6 +26,7 @@ class CommonAppKeys():
     ValidHiddenVals = (YES, NO)
     UPDATES = 'Updates'
     BASIC_RV_STATS = 'basic_rv_stats'
+    APP_STATS = 'app_stats'
 
 class CommonFileKeys():
     PKG_NAME = 'file_name'

@@ -72,7 +72,7 @@ define(
                     mainID: 'agent_id',
                     secondaryID: 'app_ids'
                 },
-                stats: {url: '/api/v1/agent/', key: 'basic_rv_stats'},
+                stats: {url: '/api/v1/agent/', key: 'app_stats'},
                 defaultTab: '#os'
             },
             patch: {
@@ -100,7 +100,7 @@ define(
                     mainID: 'tag_id',
                     secondaryID: 'app_ids'
                 },
-                stats: {url: '/api/v1/tag/', key: 'basic_rv_stats'},
+                stats: {url: '/api/v1/tag/', key: 'app_stats'},
                 defaultTab: '#os'
             }
         };
