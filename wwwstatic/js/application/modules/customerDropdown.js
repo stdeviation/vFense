@@ -36,10 +36,10 @@ define(
                             renderCustomers: function (customers, currentCustomer) {
                                 var fragment = crel('div');
                                 _.each(customers, function (customer) {
-                                    if (customer.customer_name !== currentCustomer) {
+                                    if (customer.name !== currentCustomer) {
                                         fragment.appendChild(
                                             crel('li',
-                                                crel('a', {href: '#customer/' + customer.customer_name}, customer.customer_name)
+                                                crel('a', {href: '#customer/' + customer.name}, customer.name)
                                             )
                                         );
                                     }

@@ -42,7 +42,7 @@ require(
                     $('body').prepend(pageHeader.render().$el)
                         .append(pageFooter.render().$el);
 
-                    if(app.user.hasPermission("administrator")) {
+                    if(app.user.hasPermission("admin")) {
                         pageHeader.$('#userMenu')
                             .find('.divider')
                             .before(crel('li', crel('a', {'href': '#admin/users'}, 'Admin Settings')));

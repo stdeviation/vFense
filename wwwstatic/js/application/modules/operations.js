@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'underscore', 'backbone', 'crel', 'moment', 'livestamp', 'modules/lists/list', 'modules/lists/pageable', 'modals/panel', 'modals/removedApps'],
-    function ($, _, Backbone, crel, moment, livestamp, list, pageable, Panel, RemovedAppsPanel) {
+    ['jquery', 'underscore', 'backbone', 'modules/lists/list', 'modules/lists/pageable', 'modals/panel', 'crel', 'moment', 'livestamp'],
+    function ($, _, Backbone, list, pageable, Panel, crel, moment) {
         'use strict';
         var exports = {},
             templates = {},
@@ -125,30 +125,12 @@ define(
                 return this.render();
             },
             events: {
-                'click [data-action="toggleModal"]'    :   'toggleModal',
-                'click [data-action="expand"]'         :   'expand',
-                'click.clipBoardText'                  :   'copyToClipBoard',
-                'click button[name=removedApps]'       :   'showRemovedAppsModal'
+                'click [data-action="toggleModal"]' : 'toggleModal',
+                'click [data-action="expand"]'      : 'expand',
+                'click.clipBoardText'      : 'copyToClipBoard'
             },
             render: function () {
                 return this.clearArea();
-            },
-            showRemovedAppsModal: function (event) {
-                event.preventDefault();
-//                if (!this.removedAppsModal) {
-                    var agents = this.model.get('agents'),
-                        apps = agents[0].applications,
-                        targetAppID = $(event.currentTarget)[0].id,
-                        targetApp = _.findWhere(apps, {app_id: targetAppID}),
-                        removedApps = targetApp.apps_removed,
-                        that = this;
-
-                    this.removedAppsModal = new RemovedAppsPanel.View({
-                        removedApps: removedApps
-                    });
-//                }
-                this.removedAppsModal.open();
-                return this;
             },
             getModel: function (model) {
                 if (model instanceof Backbone.Model) {
@@ -187,7 +169,7 @@ define(
                 event.preventDefault();
                 var $button = $(event.currentTarget),
                     $icon = $button.children(),
-                    $parent = $button.parents('div'),
+                    $parent = $button.parents('tr'),
                     $packagesContainer = $parent.find('div[data-id="packagesContainer"]');
                 $icon.toggleClass('icon-collapse icon-collapse-top');
                 $packagesContainer.toggle();
@@ -203,7 +185,7 @@ define(
                         crel('a', {href: helpers.getPatchLink(app.app_id, operation)},
                             crel('span', {class: 'span4', title: app.app_name}, app.app_name)
                         ),
-                        crel('button', {title: 'Copy to Clip Board', class: 'span1 btn btn-link noPadding fail clipBoardText'}, crel('i', {class: 'icon-copy'})),
+                        crel('button', {class: 'span1 btn btn-link noPadding fail clipBoardText'}, crel('i', {class: 'icon-copy'})),
                         crel('span', {class: 'span7 alignRight fail', title: app.errors}, app.errors)
                     ));
                 });
@@ -332,8 +314,8 @@ define(
                         );
                     }
                     items.appendChild(
-                        crel('div', {'class':className},
-                            crel('div',
+                        crel('tr', {'class':className},
+                            crel('td',
                                 progressBar,
                                 crel('div', {class: 'clearfix'},
                                     crel('span', {class: 'pull-left'},
@@ -355,7 +337,7 @@ define(
                     crel('h5', 'Target Agents'),
                     crel('div', {class: 'well'},
                         crel('table', {'class':'list'},
-                            crel('div', {'class':'items'}, items)
+                            crel('tbody', {'class':'items'}, items)
                         )
                     )
                 );
@@ -368,20 +350,16 @@ define(
                         className = key + 1 === count ? 'item last' : 'item',
                         packageStatus = helpers.getPackageStatus(item);
                     items.appendChild(
-                        crel('div', {class: className},
-                            crel('div', {class: 'row-fluid'},
+                        crel('tr', {'class':className},
+                            crel('td',
                                 crel('a', {href: link, class:'block' },
                                     packageStatus, ' ',
-                                    crel('span', {class: 'span4'},
-                                        crel('strong',{name: 'appName', id: item.app_id, title: item.app_name || item}, item.app_name ? item.app_name : item)
-                                    ),
-                                    crel('span', {class: 'span3'}, item.app_version),
-                                    crel('span', {class: 'span2'},
-                                        item.apps_removed.length === 0 ? 0 : crel('button', {id: item.app_id, name: 'removedApps', title: 'Click to see the removed Apps', class: 'btn btn-mini btn-info', 'data-toggle': 'modal'}, item.apps_removed.length)
-                                    ),
-                                    crel('span', {class: 'span1 icon alignRight'},
-                                        crel('i', {'class': 'icon-caret-right'})
-                                    )
+                                    crel('strong',{title: item.app_name || item}, item.app_name ? item.app_name : item)
+                                )
+                            ),
+                            crel('td', {class: 'icon alignRight'},
+                                crel('a', {href: link, class:'block'},
+                                    crel('i', {'class': 'icon-caret-right'})
                                 )
                             )
                         )
@@ -390,25 +368,8 @@ define(
                 return crel('section',
                     crel('h5', 'Selected Packages'),
                     crel('div', {class: 'well'},
-                        crel('section', {'class':'list'},
-                            crel('div', {class: 'legend row-fluid'},
-                                crel('span', {class: 'span2'},
-                                    crel('strong', 'Status')
-                                ),
-                                crel('span', {class: 'span4'},
-                                    crel('strong', 'Name')
-                                ),
-                                crel('span', {class: 'span3'},
-                                    crel('strong', 'Version')
-                                ),
-                                crel('span', {class: 'span2'},
-                                    crel('strong', 'Removed')
-                                ),
-                                crel('span', {class: 'span1'},
-                                    crel('strong', 'Info')
-                                )
-                            ),
-                            crel('div', {'class':'items'}, items)
+                        crel('table', {'class':'list'},
+                            crel('tbody', {'class':'items'}, items)
                         )
                     )
                 );
@@ -552,7 +513,7 @@ define(
                 } else {
                     iconClass = 'icon-ok succ';
                 }
-                return crel('span', {class: 'span2'}, crel('i', {class: iconClass}));
+                return crel('i', {class: iconClass});
             },
             getPatchLink: function (id, operation) {
                 var url = '/#patches/';

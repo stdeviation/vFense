@@ -6,7 +6,7 @@
                     <strong>Username:</strong>
                 </span>
                 <div class="span10" data-type="content">
-                    <span><%= user.user_name || 'N/A' %></span>
+                    <span><%= user.username || 'N/A' %></span>
                 </div>
             </div>
             <div class="item row-fluid">
@@ -14,13 +14,13 @@
                     <strong>Full Name:</strong>
                 </span>
                  <div class="span10" data-type="content">
-                    <span><%= user.full_name%></span>
+                    <span><%= user.full_name || 'N/A' %></span>
                      <button class="btn btn-link noPadding pull-right" data-id="options">
                         <i class="icon-pencil" style="color: #daa520"></i>
                     </button>
                 </div>
                 <div class="span10 hide" data-type="editor">
-                    <form data-reset="true" data-id="name">
+                    <form  data-reset="true" data-id="name">
                         <div class="control-group">
                             <div class="controls">
                                 <input type="text" name="fullname" value="<%= user.full_name %>" data-id="input"/>
@@ -58,7 +58,7 @@
                     <strong>Default Customer:</strong>
                 </span>
                 <div class="span10" data-type="content">
-                    <span><%= user.default_customer || 'N/A' %></span>
+                    <span><%= user.default_customer.name || 'N/A' %></span>
                     <button class="btn btn-link noPadding pull-right" data-id="options">
                         <i class="icon-pencil" style="color: #daa520"></i>
                     </button>
@@ -68,7 +68,7 @@
                         <div class="control-group">
                             <div class="controls">
                                 <select name="default_customer_id" data-id="input">
-                                    <%= viewHelpers.getOptions(user.customers, user.default_customer) %>
+                                    <%= viewHelpers.getOptions(user.customers, user.default_customer.name) %>
                                 </select>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                     <strong>Current Customer:</strong>
                 </span>
                 <div class="span10" data-type="content">
-                    <span><%= user.current_customer || 'N/A' %></span>
+                    <span><%= user.current_customer.name || 'N/A' %></span>
                 </div>
             </div>
             <div class="item row-fluid">
