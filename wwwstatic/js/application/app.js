@@ -53,12 +53,21 @@ define(
         });
         User = Backbone.Model.extend({
             defaults: {
-                username: 'John Doe'
+                user_name: 'John Doe'
             },
-            url: '/api/user',
+            url: '/api/v1/user/',
+           /* initialize: function() {
+                var userModel = new Backbone.Model();
+                userModel.url = 'api/v1/user/';
+                userModel.fetch({
+                    success: function(model) {
+                        app.username = model.get('data').user_name;
+                    }
+                });
+            },*/
             parse: function (response) {
                 this.apiMessage = response.message;
-                this.apiPass = response.pass;
+                this.apiPass = response.rv_status_code === 1001;
                 return response.data;
             },
             hasPermission: function (need) {

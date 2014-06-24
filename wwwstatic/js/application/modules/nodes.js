@@ -1,6 +1,6 @@
 define(
-    ['jquery', 'underscore', 'backbone', 'app', 'modals/panel', 'modals/delete', 'crel', 'modules/lists/pageable'],
-    function ($, _, Backbone, app, Panel, DeletePanel, crel, Pager) {
+    ['jquery', 'underscore', 'backbone', 'app', 'moment', 'modals/panel', 'modals/agentTags', 'modals/delete', 'crel', 'modules/lists/pageable'],
+    function ($, _, Backbone, app, moment, Panel, AgentTagsPanel, DeletePanel, crel, Pager) {
         'use strict';
         var helpers = {},
             exports = {};
@@ -56,19 +56,20 @@ define(
                         parentView: that
                     });
                     this.customerModal.setHeaderHTML(crel('h4', 'Change Customer for Agents'));
-                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer.name));
+                    this.customerModal.setContentHTML(this.customerPanelLayout(user.customers, user.current_customer));
                 },
                 events: function () {
                     return _.extend({}, _.result(Pager.View.prototype, 'events'), {
-                        'change select[name=advancedSearch]'    : 'filterBySearch',
-                        'change select[name=sort]'              : 'sortBy',
-                        'change select[name=order]'             : 'orderBy',
-                        'change select[name=filterKey]'         : 'filterKeyChange',
-                        'change select[name=filterValue]'       : 'filterValueChange',
-                        'keyup input[name=search]'              : 'debouncedSearch',
-                        'click input[data-toggle=all]'          : 'selectAll',
-                        'click #deleteAgents'                   : 'deleteAgents',
-                        'click #switchCustomer'                 : 'switchCustomer'
+                        'change select[name=advancedSearch]'    :   'filterBySearch',
+                        'change select[name=sort]'              :   'sortBy',
+                        'change select[name=order]'             :   'orderBy',
+                        'change select[name=filterKey]'         :   'filterKeyChange',
+                        'change select[name=filterValue]'       :   'filterValueChange',
+                        'keyup input[name=search]'              :   'debouncedSearch',
+                        'click input[data-toggle=all]'          :   'selectAll',
+                        'click #deleteAgents'                   :   'deleteAgents',
+                        'click #switchCustomer'                 :   'switchCustomer',
+                        'click button[name=agentTags]'          :   'showAgentTagsModal'
                     });
                 },
                 debouncedSearch: _.debounce(function (event) {
@@ -160,7 +161,7 @@ define(
                     var sortFilterFragment = document.createDocumentFragment();
                     sortFilterFragment.appendChild(crel('small', 'Sort By'));
                     sortFilterFragment.appendChild(crel('span', ' '));
-                    sortFilterFragment.appendChild(crel('select', {name: 'sort', style: 'width: auto'}, crel('option',{value: 'computer_name'},'Computer Name'), crel('option',{value: 'display_name'}, 'Display Name'), crel('option',{value: 'os_code'}, 'OS Code'), crel('option',{value: 'os_string'}, 'OS String'), crel('option',{value: 'agent_status'}, 'Agent Status')));
+                    sortFilterFragment.appendChild(crel('select', {name: 'sort', style: 'width: auto'}, crel('option',{value: 'computer_name'},'Computer Name'), crel('option',{value: 'display_name'}, 'Display Name'), crel('option',{value: 'os_code'}, 'OS Code'), crel('option',{value: 'os_string'}, 'OS String'), crel('option',{value: 'agent_status'}, 'Agent Status'), crel('option',{value: 'last_agent_update'}, 'Last Updated')));
                     sortFilterFragment.appendChild(crel('span', ' '));
                     sortFilterFragment.appendChild(crel('select', {name: 'order'}, crel('option',{value: 'asc'},'Ascending'), crel('option',{value: 'desc'},'Descending')));
                     sortFilterFragment.appendChild(crel('span', ' '));
@@ -197,7 +198,7 @@ define(
                     $filterValueSelect.append(
                         crel('option', {value: ''}, 'Loading..')
                     ).attr('disabled','disabled');
-                    return this;
+                    return this;33
                 },
                 fetchFilterError: function(){
                     var $header = this.$el.find('header');
@@ -210,16 +211,20 @@ define(
                 layoutLegend: function ($legend) {
                     $legend.append(
                         crel('span', {class: 'span1'}, 'Status'),
-                        crel('strong', {class: 'span4'},
+                        crel('strong', {class: 'span2'},
                             crel('input', {type: 'checkbox', 'data-toggle': 'all'}), ' Agent Name ',
                             crel('a', {href: '#', id: 'deleteAgents', title: 'Delete Agents'}, crel('i', {class: 'icon-trash'})), ' ',
                             crel('a', {href: '#', id: 'switchCustomer', title: 'Move agents to a different customer'}, crel('i', {class: 'icon-exchange'}))
                         ),
                         crel('span', {class: 'span2'}, 'Operating System'),
-                        crel('span', {class: 'span2'}, 'OS Code'),
-                        crel('span', {class: 'span1 need alignLeft'}, 'OS'),
+                        crel('span', {class: 'span1'}, 'OS Code'),
+                        crel('span', {class: 'span1'}, 'Tags'),
+                        crel('span', {class: 'span1'}, 'Updates'),
+                        crel('span', {class: 'span2'}, 'Vulnerabilities'),
+                        crel('span', {class: 'span2'}, 'Last Updated on')
+                        /*crel('span', {class: 'span1 need alignLeft'}, 'OS'),
                         crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
-                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')
+                        crel('span', {class: 'span1 pend alignRight'}, 'Supported')*/
                     );
                     return this;
                 },
@@ -227,32 +232,46 @@ define(
                     if (_.has(item.attributes, 'http_status') && item.get('http_status') === 500) {
                         return crel('div',  {class: 'item linked clearfix'}, 'No Data.');
                     }
-                    var fragment    = document.createDocumentFragment(),
-                        id          = item.get('agent_id'),
-                        osIcon      = this.printOsIcon(item.get('os_string')),
-                        displayName = this.displayName(item),
-                        status      = this.getStatus(item),
-                        stats       = helpers.sortStats(item.get('basic_rv_stats'));
+                    var fragment            = document.createDocumentFragment(),
+                        id                  = item.get('agent_id'),
+                        osIcon              = this.printOsIcon(item.get('os_string')),
+                        displayName         = this.displayName(item),
+                        status              = this.getStatus(item),
+                        tags                = item.get('tags'),
+                        updates             = item.get('available_updates'),
+                        lastAgentUpdate     = item.get('last_agent_update'),
+                        vulnerabilities     = item.get('available_vulnerabilities');
+//                        stats               = helpers.sortStats(item.get('basic_rv_stats'));
+
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
                             crel('a', {href: '#nodes/' + id},
                                 crel('span', {class: 'span1'},
                                     crel('i', {class: status.className, style:'color: ' + status.color})
                                 ),
-                                crel('span', {class: 'span4'},
+                                crel('span', {class: 'span2'},
                                     crel('input', {type: 'checkbox', name: 'agents', value: id}), ' ',
                                     crel('i', {class: osIcon}), ' ',
                                     crel('strong', displayName)
                                 ),
                                 crel('span', {class: 'span2'}, item.get('os_string')),
-                                crel('span', {class: 'span2'}, item.get('os_code')),
-                                crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
+                                crel('span', {class: 'span1'}, item.get('os_code')),
+                                crel('span', {class: 'span1'},
+                                    tags.length === 0 ? 0 : crel('button', {name: 'agentTags', 'data-agent-name': displayName, 'data-tags': JSON.stringify(tags), title: 'Click to see the Tags of this Agent', class: 'btn btn-mini btn-info', 'data-toggle': 'modal'}, tags.length)
+                                ),
+                                crel('span', {class: 'span1'}, item.get('available_updates')),
+                                crel('span', {class: 'span2'}, item.get('available_vulnerabilities')),
+                                crel('span', {class: 'span2'}, this.formatDate(lastAgentUpdate))
+                                /*crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
                                 crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
-                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)
+                                crel('span', {class: 'span1 pend alignRight'}, _.findWhere(stats, {name: 'Supported'}).count)*/
                             )
                         )
                     );
                     return fragment;
+                },
+                formatDate: function (date) {
+                    return date ? moment(date * 1000).format('L') + ' ' + moment(date * 1000).format('LT') : 'N/A';
                 },
                 displayName: function (model) {
                     return model.get('display_name') ||
@@ -308,6 +327,19 @@ define(
                         agents = [];
                     $checkboxes.each(function () { agents.push(this.value); });
                     return agents;
+                },
+                showAgentTagsModal: function (event) {
+                    event.preventDefault();
+                        var agentName = $(event.currentTarget).data('agentName'),
+                            tags = $(event.currentTarget).data('tags');
+
+                        this.agentTagsModal = new AgentTagsPanel.View({
+                            agentName: agentName,
+                            tags: tags
+                        });
+
+                    this.agentTagsModal.open();
+                    return this;
                 },
                 deleteAgents: function (event) {
                     event.preventDefault();
@@ -365,7 +397,7 @@ define(
                 customerPanelLayout: function (customers, current) {
                     var select =  crel('select', {'required': 'required'});
                     _.each(customers, function (customer) {
-                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.name, current), customer.name));
+                        select.appendChild(crel('option', helpers.getSelectedCustomer(customer.customer_name, current), customer.customer_name));
                     });
                     return crel('form', {id: 'changeCustomer', class: 'form-horizontal'},
                             crel('div', {class: 'control-group noMargin'},
