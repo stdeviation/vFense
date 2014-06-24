@@ -44,7 +44,7 @@ from vFense.core.decorators import (
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
     UserCodes, UserFailureCodes, GenericCodes,
-    GenericFailureCodes, AgentCodes, AgentFailureCodes
+    GenericFailureCodes
 )
 from vFense.core.user.search.search import RetrieveUsers
 
@@ -434,13 +434,34 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
+        view_name = (
+            UserManager(username).get_attribute(UserKeys.CurrentView)
+        )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
             if not isinstance(agent_ids, list):
                 agent_ids = agent_ids.split()
-            results = self.delete_agents(agent_ids)
+            agentids_deleted =[]
+            agentids_not_deleted =[]
+            for agent_id in agent_ids:
+                agent = AgentManager(agent_id, view_name=view_name)
+                results = agent.delete_agent(uri, method)
+                if results['http_status'] == 200:
+                    delete_oper = (
+                        StorePatchingOperation(
+                            username, view_name, uri, method
+                        )
+                    )
+                    delete_oper.uninstall_agent(agent_id)
+                    agentids_deleted.append(agent_id)
+                else:
+                    agentids_not_deleted.append(agent_id)
+            results['data'] = {
+                'agentids_deleted': agentids_deleted,
+                'agentids_not_deleted': agentids_not_deleted
+            }
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -467,14 +488,14 @@ class AgentsHandler(BaseHandler):
             results = manager.remove()
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                     == AgentCodes.AgentDeleted):
-                agents_deleted.append(agent_id)
+                agents_deleted.append(view)
             else:
-                agents_unchanged.append(agent_id)
+                agents_unchanged.append(view)
 
         end_results[ApiResultKeys.UNCHANGED_IDS] = agents_unchanged
         end_results[ApiResultKeys.DELETED_IDS] = agents_deleted
 
-        if agents_deleted and agents_unchanged:
+        if agents_removed and agents_unchanged:
             msg = (
                 'Agents: {0} deleted and these agents didnt: {1}'
                 .format(
@@ -490,7 +511,7 @@ class AgentsHandler(BaseHandler):
             )
             end_results[ApiResultKeys.MESSAGE] = msg
 
-        elif agents_deleted and not agents_unchanged:
+        elif agents_removed and not agents_unchanged:
             msg = (
                 'Agents: {0} deleted.'.format(', '.join(agents))
             )
