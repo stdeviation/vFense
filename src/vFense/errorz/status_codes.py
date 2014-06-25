@@ -135,6 +135,7 @@ class ViewCodes(object):
     AgentsAddedToView = 14011
     AgentsRemovedFromView = 14012
     AgentsMovedToView = 14013
+    ValidPreviousToken = 14014
 
 
 class ViewFailureCodes(object):
@@ -159,6 +160,7 @@ class ViewFailureCodes(object):
     FailedToDeleteAllViews = 124517
     AgentsDoNotExistForView = 14518
     CantRemoveAgentsFromGlobalView = 14519
+    InvalidToken = 14520
 
 
 class DbCodes(object):
@@ -196,6 +198,7 @@ class AgentCodes(object):
     ViewsAddedToAgent = 3019
     ViewsRemovedFromAgent = 3020
     ViewsRemovedFromAgents = 3021
+    Disabled = 3022
 
 
 class AgentResultCodes(object):
