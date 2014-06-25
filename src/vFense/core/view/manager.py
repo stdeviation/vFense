@@ -16,7 +16,8 @@ from vFense.core.group._db import (
 
 from vFense.core.view._db import (
     fetch_view, insert_view, update_children_for_view, delete_view,
-    delete_users_in_view, update_view, update_usernames_for_view
+    delete_users_in_view, update_view, update_usernames_for_view,
+    fetch_all_current_tokens, fetch_all_previous_tokens
 )
 from vFense.core.agent._db import (
     remove_all_agents_from_view, delete_all_agents_from_view,
@@ -36,6 +37,7 @@ from vFense.errorz.status_codes import (
     DbCodes, ViewCodes, GenericCodes, AgentCodes,
     ViewFailureCodes, AgentFailureCodes
 )
+from vFense.utils.security import generate_token
 
 class ViewManager(object):
     def __init__(self, name):
@@ -113,6 +115,16 @@ class ViewManager(object):
         else:
             tags = fetch_tag_ids(self.name)
         return tags
+
+    def get_token(self):
+        token = self.get_attribute(ViewKeys.Token)
+        return token
+
+    def get_previous_tokens(self):
+        tokens = self.get_attribute(ViewKeys.PreviousTokens)
+        if not tokens:
+            tokens = []
+        return tokens
 
     @time_it
     def create(self, view):
@@ -198,8 +210,10 @@ class ViewManager(object):
 
             usernames = list(set(fetch_usernames(True) + view.users))
             view.users = usernames
+            view_data = view.to_dict()
+            view_data[ViewKeys.Token] = self.generate_auth_token()
             object_status, _, _, generated_ids = (
-                insert_view(view.to_dict())
+                insert_view(view_data)
             )
 
             if object_status == DbCodes.Inserted:
@@ -212,7 +226,7 @@ class ViewManager(object):
                     ViewCodes.ViewCreated
                 )
                 results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [view.to_dict()]
+                results[ApiResultKeys.DATA] = [view_data]
 
                 if usernames:
                     update_views_for_users(
@@ -1224,7 +1238,7 @@ class ViewManager(object):
 
 
     def edit_download_url(self, url):
-        """Change the url that the agent will use when downloadling
+        """Change the url that the agent will use when downloading
             applications from the vFense server.
 
         Args:
@@ -1244,6 +1258,23 @@ class ViewManager(object):
 
         return results
 
+    def update_token(self):
+        """Update the auth token for this view.
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.update_token()
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        token = self.generate_token()
+        previous_tokens = set(self.get_previous_tokens()).union([token])
+        view = View(self.name, token=token, previous_tokens=previous_tokens)
+        results = self.__edit_properties(view)
+
+        return results
 
     def __edit_properties(self, view):
         """Edit the properties of a view.
@@ -1343,3 +1374,23 @@ class ViewManager(object):
             results[ApiResultKeys.INVALID_IDS] = [self.name]
 
         return results
+
+    def generate_auth_token(self):
+        """Generate a new token for this view.
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.generate_auth_token()
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        new_token = generate_token()
+        current_tokens = fetch_all_current_tokens()
+        previous_tokens = fetch_all_previous_tokens()
+        while (new_token in current_tokens or new_token in previous_tokens):
+            new_token = generate_token()
+
+        return new_token
+

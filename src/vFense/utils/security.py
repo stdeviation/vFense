@@ -1,5 +1,7 @@
 import re
 import bcrypt
+import base64
+import hashlib
 
 import random
 
@@ -98,7 +100,7 @@ char_set = {
 }
 
 def check_prev_char(password, current_char_set):
-    """Function to ensure that there are no consecutive 
+    """Function to ensure that there are no consecutive
     UPPERCASE/lowercase/numbers/special-characters."""
 
     index = len(password)
@@ -124,3 +126,26 @@ def generate_pass(length=8):
             else:
                 password.append(a_char)
     return ''.join(password)
+
+
+def generate_token():
+    """Token generator taken from
+        http://jetfar.com/simple-api-key-generation-in-python/
+    """
+    token = (
+        base64
+        .b64encode(
+            hashlib
+            .sha256(
+                str(
+                    random.getrandbits(256)
+                )
+            )
+            .digest()
+            ,random
+            .choice(
+                ['rA','aZ','gQ','hH','hG','aR','DD']
+            )
+        ).rstrip('==')
+    )
+    return token

@@ -26,7 +26,7 @@ class View(object):
         self, name, parent=None, ancestors=None, children=None,
         users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
-        package_download_url=None
+        package_download_url=None, token=None, previous_tokens=None
     ):
         """
         Args:
@@ -52,6 +52,8 @@ class View(object):
                 urls where the packages will be downloaded from.
                     Ex:
                         'https://192.168.1.1/packages/'
+            token (str): Base64 encoded string.
+            previous_tokens (list): List of previous base64 encoded strings.
         """
         self.name = name
         self.parent = parent
@@ -63,6 +65,8 @@ class View(object):
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
         self.package_download_url = package_download_url
+        self.token = token
+        self.previous_tokens = previous_tokens
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -97,6 +101,12 @@ class View(object):
 
         if not self.agent_queue_ttl:
             self.agent_queue_ttl = ViewDefaults.AGENT_QUEUE_TTL
+
+        if not self.token:
+            self.token = ViewDefaults.TOKEN
+
+        if not self.previous_tokens:
+            self.previous_tokens = ViewDefaults.PREVIOUS_TOKENS
 
     def get_invalid_fields(self):
         """Check the view for any invalid fields.
@@ -303,7 +313,9 @@ class View(object):
             ViewKeys.ServerQueueTTL: self.server_queue_ttl,
             ViewKeys.AgentQueueTTL: self.agent_queue_ttl,
             ViewKeys.Users: self.users,
-            ViewKeys.PackageUrl: self.package_download_url
+            ViewKeys.PackageUrl: self.package_download_url,
+            ViewKeys.Token: self.token,
+            ViewKeys.PreviousTokens: self.previous_tokens,
         }
 
     def to_dict_non_null(self):

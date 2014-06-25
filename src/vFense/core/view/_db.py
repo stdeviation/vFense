@@ -62,6 +62,64 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
 
     return(data)
 
+@time_it
+@db_create_close
+def fetch_all_current_tokens(conn=None):
+    """Retrieve a list of all current tokens
+
+    Basic Usage::
+        >>> from vFense.view._db import fetch_all_current_tokens
+        >>> fetch_all_current_tokens()
+
+    Returns:
+        Returns a list of tokens.
+    """
+    data = []
+    try:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .map(
+                lambda token:
+                token[ViewKeys.Token]
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+def fetch_all_previous_tokens(conn=None):
+    """Retrieve a list of all current tokens
+
+    Basic Usage::
+        >>> from vFense.view._db import fetch_all_previous_tokens
+        >>> fetch_all_previous_tokens()
+
+    Returns:
+        Returns a list of tokens.
+    """
+    data = []
+    try:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .map(
+                lambda token:
+                token[ViewKeys.PreviousTokens]
+            )
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
 
 @time_it
 @db_create_close

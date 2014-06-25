@@ -14,6 +14,8 @@ class ViewKeys():
     ServerQueueTTL = 'server_queue_ttl' # in minutes
     AgentQueueTTL = 'agent_queue_ttl' # in minutes
     Users = 'users'
+    Token = 'token'
+    PreviousTokens = 'previous_tokens'
 
 
 class ViewMappedKeys():
@@ -25,3 +27,5 @@ class ViewMappedKeys():
 
 class ViewIndexes():
     Users = 'users'
+    Token = 'token'
+    PreviousTokens = 'previous_tokens'

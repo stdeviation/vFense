@@ -611,6 +611,12 @@ def initialize_indexes_and_create_tables():
     if not ViewIndexes.Users in view_list:
         r.table(ViewCollections.Views).index_create(ViewIndexes.Users, multi=True).run(conn)
 
+    if not ViewIndexes.Token in view_list:
+        r.table(ViewCollections.Views).index_create(ViewIndexes.Token).run(conn)
+
+    if not ViewIndexes.PreviousTokens in view_list:
+        r.table(ViewCollections.Views).index_create(ViewIndexes.PreviousTokens, multi=True).run(conn)
+
 #################################### Group Indexes ###################################################
     if not GroupIndexes.Views in groups_list:
         r.table(GroupCollections.Groups).index_create(GroupIndexes.Views, multi=True).run(conn)
