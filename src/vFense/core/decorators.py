@@ -1,5 +1,4 @@
 import logging, logging.config
-from ast import literal_eval
 import json
 from datetime import datetime
 from functools import wraps
@@ -9,15 +8,9 @@ from tornado.web import HTTPError
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    DbCodes, GenericCodes, GenericFailureCodes,
-    ViewCodes, ViewFailureCodes, AgentCodes
+    DbCodes, GenericCodes, GenericFailureCodes
 )
 from vFense.errorz.results import Results
-from vFense.core.agent.manager import AgentManager
-from vFense.core.agent._db_model import AgentKeys
-from vFense.core.view._db import (
-    token_exist_in_current, token_exist_in_previous
-)
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -267,183 +260,6 @@ def agent_authenticated_request(method):
 
     return wrapper
 
-def authenticate_agent(fn):
-    """ Decorator that handles authenticating the request. Uses secure cookies.
-    In the spirit of the tornado.web.authenticated decorator.
-    """
-    @wraps(fn)
-    def wrapper(self, *args, **kwargs):
-        results = (
-            {
-                ApiResultKeys.URI: self.request.uri,
-                ApiResultKeys.HTTP_STATUS_CODE: 403,
-                ApiResultKeys.GENERIC_STATUS_CODE: (
-                    GenericCodes.AuthorizationDenied
-                ),
-                ApiResultKeys.HTTP_METHOD: self.request.method,
-            }
-        )
-        try:
-            auth_headers = (
-                literal_eval(self.requests.headers.get('Authentication'))
-            )
-            token = auth_headers.get('token')
-            agent_id = auth_headers.get('agent_id')
-            if token and agent_id:
-                authenticated = token_exist_in_current(token)
-                valid_old_token = token_exist_in_previous(token)
-                agent = AgentManager(agent_id)
-                if agent.properties:
-                    if (agent.get_attribute(AgentKeys.Enabled)
-                            and authenticated):
-                        agent.update_token(token)
-                        return fn(self, *args, **kwargs)
-
-                    elif (agent.get_attribute(AgentKeys.Enabled)
-                            and valid_old_token):
-                        agent.update_token(token)
-                        msg = '{0} is a previous token'.format(token)
-                        results[ApiResultKeys.INVALID_ID] = token
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                            ViewCodes.ValidPreviousToken
-                        )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        self.set_status(
-                            results[ApiResultKeys.HTTP_STATUS_CODE]
-                        )
-                        self.write(json.dumps(results, indent=4))
-
-                    elif not authenticated and not valid_old_token:
-                        msg = '{0} is not a valid token'.format(token)
-                        results[ApiResultKeys.INVALID_ID] = token
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                            ViewFailureCodes.InvalidToken
-                        )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        self.set_status(
-                            results[ApiResultKeys.HTTP_STATUS_CODE]
-                        )
-                        self.write(json.dumps(results, indent=4))
-
-                    elif not agent.get_attribute(AgentKeys.Enabled):
-                        msg = '{0} is disabled'.format(agent_id)
-                        results[ApiResultKeys.AGENT_ID] = agent_id
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                            AgentCodes.Disabled
-                        )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        self.set_status(
-                            results[ApiResultKeys.HTTP_STATUS_CODE]
-                        )
-                        self.write(json.dumps(results, indent=4))
-
-                else:
-                    msg = '{0} not a valid agent id'.format(agent_id)
-                    results[ApiResultKeys.AGENT_ID] = agent_id
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        AgentCodes.AgentIdDoesNotExist
-                    )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    self.set_status(
-                        results[ApiResultKeys.HTTP_STATUS_CODE]
-                    )
-                    self.write(json.dumps(results, indent=4))
-
-            else:
-                msg = 'Headers do not contain Authentication information'
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GenericFailureCodes.InvalidHeaders
-                )
-                results[ApiResultKeys.MESSAGE] = msg
-                self.set_status(
-                    results[ApiResultKeys.HTTP_STATUS_CODE]
-                )
-                self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            msg = e
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GenericCodes.SomethingBroke
-            )
-            self.set_status(
-                results[ApiResultKeys.HTTP_STATUS_CODE]
-            )
-            self.write(json.dumps(results, indent=4))
-
-    return wrapper
-
-def authenticate_token(fn):
-    """ Decorator that handles authenticating the request. Uses secure cookies.
-    In the spirit of the tornado.web.authenticated decorator.
-    """
-    @wraps(fn)
-    def wrapper(self, *args, **kwargs):
-        results = (
-            {
-                ApiResultKeys.URI: self.request.uri,
-                ApiResultKeys.HTTP_STATUS_CODE: 403,
-                ApiResultKeys.GENERIC_STATUS_CODE: (
-                    GenericCodes.AuthorizationDenied
-                ),
-                ApiResultKeys.HTTP_METHOD: self.request.method,
-            }
-        )
-        try:
-            auth_headers = (
-                literal_eval(self.requests.headers.get('Authentication'))
-            )
-            token = auth_headers.get('token')
-            if token:
-                authenticated = token_exist_in_current(token)
-                valid_previous_token = token_exist_in_previous(token)
-                if authenticated:
-                    return fn(self, *args, **kwargs)
-
-                elif valid_previous_token:
-                    msg = '{0} is a previous token'.format(token)
-                    results[ApiResultKeys.INVALID_ID] = token
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        ViewCodes.ValidPreviousToken
-                    )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    self.set_status(
-                        results[ApiResultKeys.HTTP_STATUS_CODE]
-                    )
-                    self.write(json.dumps(results, indent=4))
-
-                else:
-                    msg = '{0} is not a valid token'.format(token)
-                    results[ApiResultKeys.INVALID_ID] = token
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        ViewFailureCodes.InvalidToken
-                    )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    self.set_status(
-                        results[ApiResultKeys.HTTP_STATUS_CODE]
-                    )
-                    self.write(json.dumps(results, indent=4))
-            else:
-                msg = 'Headers do not contain Authentication information'
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GenericFailureCodes.InvalidHeaders
-                )
-                results[ApiResultKeys.MESSAGE] = msg
-                self.set_status(
-                    results[ApiResultKeys.HTTP_STATUS_CODE]
-                )
-                self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            msg = e
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GenericCodes.SomethingBroke
-            )
-            self.set_status(
-                results[ApiResultKeys.HTTP_STATUS_CODE]
-            )
-            self.write(json.dumps(results, indent=4))
-
-    return wrapper
 
 
 def convert_json_to_arguments(fn):

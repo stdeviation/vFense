@@ -1269,8 +1269,13 @@ class ViewManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        token = self.generate_token()
-        previous_tokens = set(self.get_previous_tokens()).union([token])
+        token = self.generate_auth_token()
+        current_token = self.get_token()
+        previous_tokens = self.get_previous_tokens()
+        if current_token:
+            previous_tokens = (
+                list(set(previous_tokens).union([current_token]))
+            )
         view = View(self.name, token=token, previous_tokens=previous_tokens)
         results = self.__edit_properties(view)
 
