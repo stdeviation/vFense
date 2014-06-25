@@ -25,6 +25,7 @@ from vFense.receiver.rvhandler import RvHandOff
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
+from vFense.core.api.decorators import authenticate_token
 
 
 import plugins.ra.handoff as RaHandoff
@@ -113,12 +114,11 @@ class NewAgentV1(BaseHandler):
             results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
             results[ApiResultKeys.DATA].append(json_msg)
             results[ApiResultKeys.DATA].append(uris)
-        print results
         return results
 
 
 class NewAgentV2(BaseHandler):
-    @agent_authenticated_request
+    @authenticate_token
     @convert_json_to_arguments
     def post(self):
         username = self.get_current_user()
@@ -130,11 +130,29 @@ class NewAgentV2(BaseHandler):
             system_info = self.arguments.get(AgentKeys.SystemInfo)
             hardware = self.arguments.get(AgentKeys.Hardware)
             tags = self.arguments.get(AgentKeys.Tags)
-            results, agent_info = (
-                self.add_agent(
-                    system_info, hardware, views, tags
-                )
+            plugins = self.arguments.get(AgentKeys.Plugins)
+            results = (
+                self.add_agent(system_info, hardware, views, tags)
             )
+            status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if status_code == AgentResultCodes.NewAgentSucceeded:
+                agent_info = results[ApiResultKeys.DATA].pop(0)
+                agent_id = results[ApiResultKeys.GENERATED_IDS]
+                try:
+                    if 'rv' in plugins:
+                        RvHandOff(
+                            self.username, views, self.uri,
+                            self.http_method
+                        ).new_agent_operation(
+                            agent_id, plugins['rv']['data'], agent_info
+                        )
+
+                    if 'ra' in plugins:
+                        RaHandoff.startup(agent_id, plugins['ra'])
+
+                except Exception as e:
+                    logger.exception(e)
+
             self.set_header('Content-Type', 'application/json')
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
@@ -158,4 +176,13 @@ class NewAgentV2(BaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager()
         results = manager.create(agent, tags)
+        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        if status_code == AgentResultCodes.NewAgentSucceeded:
+            agent_id = results[ApiResultKeys.GENERATED_IDS]
+            uris = get_result_uris(agent_id)
+            uris[AgentOperationKey.Operation] = (
+                AgentOperations.REFRESH_RESPONSE_URIS
+            )
+            results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
+            results[ApiResultKeys.DATA].append(uris)
         return results

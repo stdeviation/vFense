@@ -9,11 +9,6 @@ from vFense.core.api._constants import (
     ApiArguments, AgentApiArguments, ApiValues
 )
 from vFense.core.permissions._constants import Permissions
-from vFense.core.permissions.permissions import (
-    verify_permission_for_user, return_results_for_permissions
-)
-
-from vFense.core._constants import CommonKeys
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
@@ -21,7 +16,6 @@ from vFense.core.operations._constants import vFenseObjects
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
-from vFense.core.user.search.search import RetrieveUsers
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.manager import AgentManager
 from vFense.core.queue.uris import get_result_uris
@@ -37,16 +31,13 @@ from vFense.core.agent.agents import (
     get_supported_os_codes, get_supported_os_strings, get_production_levels
 )
 
-from vFense.core.operations._db_model import *
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    UserCodes, UserFailureCodes, GenericCodes,
-    GenericFailureCodes
+    GenericCodes, GenericFailureCodes
 )
-from vFense.core.user.search.search import RetrieveUsers
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -816,8 +807,3 @@ class AgentTagHandler(BaseHandler):
     def search_tags_by_name(self, search, name):
         results = search.by_name(name)
         return results
-
-
-class TestHandler(BaseHandler):
-    def get(self):
-        print self.request.headers
