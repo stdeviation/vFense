@@ -816,3 +816,8 @@ class AgentTagHandler(BaseHandler):
     def search_tags_by_name(self, search, name):
         results = search.by_name(name)
         return results
+
+
+class TestHandler(BaseHandler):
+    def get(self):
+        print self.request.headers

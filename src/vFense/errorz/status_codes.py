@@ -43,7 +43,8 @@ class GenericFailureCodes(object):
     InvalidInstanceType = 1509
     InvalidFields = 1510
     FailedToDeleteAllObjects = 1511
-    FailedToUpdateAllObjects = 1511
+    FailedToUpdateAllObjects = 1512
+    InvalidHeaders = 1513
 
 class GroupCodes(object):
     GroupCreated = 12000

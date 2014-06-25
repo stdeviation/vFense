@@ -1,7 +1,6 @@
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    GenericCodes, GenericFailureCodes, AgentCodes,
-    ViewFailureCodes
+    GenericCodes, GenericFailureCodes
 )
 
 class Results(object):
@@ -289,48 +288,3 @@ class Results(object):
                 ApiResultKeys.DATA: data,
             }
         )
-
-    def agent_disabled(self, **kwargs):
-        disabled_id = kwargs.get(ApiResultKeys.DISABLED_ID, '')
-        msg = kwargs.get(ApiResultKeys.MESSAGE, 'Agent is disabled')
-        status_code = (
-            kwargs.get(
-                ApiResultKeys.VFENSE_STATUS_CODE,
-                AgentCodes.Disabled
-            )
-        )
-        data = kwargs.get(ApiResultKeys.DATA, [])
-        return(
-            {
-                ApiResultKeys.HTTP_STATUS_CODE: 403,
-                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
-                ApiResultKeys.INVALID_ID: disabled_id,
-                ApiResultKeys.URI: self.uri,
-                ApiResultKeys.HTTP_METHOD: self.method,
-                ApiResultKeys.MESSAGE: msg,
-                ApiResultKeys.DATA: data,
-            }
-       )
-
-    def invalid_token(self, **kwargs):
-        invalid_token = kwargs.get(ApiResultKeys.INVALID_TOKEN, '')
-        msg = kwargs.get(ApiResultKeys.MESSAGE, 'Token is invalid')
-        status_code = (
-            kwargs.get(
-                ApiResultKeys.VFENSE_STATUS_CODE,
-                ViewFailureCodes.InvalidToken
-            )
-        )
-        data = kwargs.get(ApiResultKeys.DATA, [])
-        return(
-            {
-                ApiResultKeys.HTTP_STATUS_CODE: 403,
-                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
-                ApiResultKeys.INVALID_ID: invalid_token,
-                ApiResultKeys.URI: self.uri,
-                ApiResultKeys.HTTP_METHOD: self.method,
-                ApiResultKeys.MESSAGE: msg,
-                ApiResultKeys.DATA: data,
-            }
-       )
-
