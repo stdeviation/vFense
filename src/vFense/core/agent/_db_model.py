@@ -27,6 +27,8 @@ class AgentKeys():
     Rebooted = 'rebooted'
     BitType = 'bit_type'
     Version = 'version'
+    Token = 'token'
+    Enabled = 'enabled'
 
 
 class AgentIndexes():

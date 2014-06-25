@@ -2,7 +2,7 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.view._db_model import (
-    ViewCollections, ViewKeys
+    ViewCollections, ViewKeys, ViewIndexes
 )
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
@@ -60,7 +60,7 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -76,7 +76,7 @@ def fetch_all_current_tokens(conn=None):
     """
     data = []
     try:
-        data = (
+        data = list(
             r
             .table(ViewCollections.Views)
             .map(
@@ -89,7 +89,69 @@ def fetch_all_current_tokens(conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
+
+@time_it
+@db_create_close
+def token_exist_in_current(token, conn=None):
+    """Retrieve a list of all current tokens
+    Args:
+        token (str): Base64 token, that the agent uses to authenticate.
+
+    Basic Usage::
+        >>> from vFense.view._db import token_exist_in_current
+        >>> token_exist_in_current(token)
+
+    Returns:
+        Returns True or False
+    """
+    exist = False
+    try:
+        is_empty = (
+            r
+            .table(ViewCollections.Views)
+            .get_all(token, index=ViewIndexes.Token)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return exist
+
+@time_it
+@db_create_close
+def token_exist_in_previous(token, conn=None):
+    """Verify if the token existed previously.
+    Args:
+        token (str): Base64 token, that the agent uses to authenticate.
+
+    Basic Usage::
+        >>> from vFense.view._db import token_exist_in_previous
+        >>> token_exist_in_previous(token)
+
+    Returns:
+        Returns True or False
+    """
+    exist = False
+    try:
+        is_empty = (
+            r
+            .table(ViewCollections.Views)
+            .get_all(token, index=ViewIndexes.PreviousTokens)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return exist
 
 @time_it
 @db_create_close
@@ -105,7 +167,7 @@ def fetch_all_previous_tokens(conn=None):
     """
     data = []
     try:
-        data = (
+        data = list(
             r
             .table(ViewCollections.Views)
             .map(
@@ -118,7 +180,7 @@ def fetch_all_previous_tokens(conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -230,7 +292,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -286,7 +348,7 @@ def fetch_properties_for_view(view_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -318,7 +380,7 @@ def insert_view(view_data, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -418,7 +480,7 @@ def delete_user_in_views(username, view_names=None, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -462,7 +524,7 @@ def delete_users_in_view(usernames, view_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -495,7 +557,7 @@ def delete_view(view_name, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -533,7 +595,7 @@ def delete_views(view_names, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -574,7 +636,7 @@ def update_usernames_for_view(usernames, view, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -620,7 +682,7 @@ def update_usernames_for_views(views, usernames, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 
 @time_it
@@ -661,4 +723,4 @@ def update_children_for_view(view, child, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data

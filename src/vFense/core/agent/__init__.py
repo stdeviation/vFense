@@ -19,7 +19,8 @@ class Agent(object):
                  needs_reboot=None, agent_status=None,
                  production_level=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
-                 version=None, date_added=None, last_agent_update=None
+                 version=None, date_added=None, last_agent_update=None,
+                 token=None
                  ):
         """
         Kwargs:
@@ -41,6 +42,7 @@ class Agent(object):
             version (str): The version of the os_string.
             date_added (epoch_time): time in epoch.
             last_agent_update (epoch_time): time in epoch.
+            token (str): Base64 encoded string.
         """
         self.computer_name = computer_name
         self.display_name = display_name
@@ -57,6 +59,7 @@ class Agent(object):
         self.bit_type = bit_type
         self.date_added = date_added
         self.last_agent_update = last_agent_update
+        self.token = token
 
 
     def fill_in_defaults(self):
@@ -185,6 +188,7 @@ class Agent(object):
             AgentKeys.Version: self.version,
             AgentKeys.DateAdded: self.date_added,
             AgentKeys.LastAgentUpdate: self.last_agent_update,
+            AgentKeys.Token: self.token,
         }
 
     def to_dict_non_null(self):

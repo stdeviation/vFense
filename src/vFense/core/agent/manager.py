@@ -1118,6 +1118,36 @@ class AgentManager(object):
         results = self.__edit_properties(agent)
         return results
 
+    @time_it
+    def update_token(self, token):
+        """Update the token that the agent is using.
+
+        Basic Usage:
+            >>> from vFense.agent.manager import AgentManager
+            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = AgentManager(agent_id)
+            >>> manager.update_checkin_time()
+
+        Returns:
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": " Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 was updated - ",
+                "data": [
+                    {
+                        "token": "90sad8fg98j123"
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
+        """
+        agent = Agent(token=token)
+        results = self.__edit_properties(agent)
+        return results
+
 
     @time_it
     def __edit_properties(self, agent):

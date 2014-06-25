@@ -126,15 +126,15 @@ else:
     url = 'https://%s/packages/' % (args.ip_address)
     nginx_server_name = args.ip_address
 
-
-generate_generic_certs()
-ncc.nginx_config_builder(
-    nginx_server_name,
-    args.server_cert,
-    args.server_key,
-    rvlistener_count=int(args.listener_count),
-    rvweb_count=int(args.web_count)
-)
+def build_nginx_config():
+    generate_generic_certs()
+    ncc.nginx_config_builder(
+        nginx_server_name,
+        args.server_cert,
+        args.server_key,
+        rvlistener_count=int(args.listener_count),
+        rvweb_count=int(args.web_count)
+    )
 
 
 def create_directories():
@@ -411,6 +411,7 @@ if __name__ == '__main__':
     init_data_completed = False
     create_symlinks()
     create_directories()
+    build_nginx_config()
     db_clean = clean_database()
     if db_clean:
         db_started = start_local_db()
