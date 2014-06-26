@@ -19,8 +19,10 @@ from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.manager import AgentManager
 from vFense.core.view.manager import ViewManager
+from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
+from vFense.errorz.results import Results
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -700,7 +702,7 @@ class AgentHandler(BaseHandler):
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
         try:
             reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
             shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
@@ -710,7 +712,7 @@ class AgentHandler(BaseHandler):
             )
             operation = (
                 StoreAgentOperations(
-                    username, view_name, uri, method
+                    username, view_name, uri, http_method
                 )
             )
             if reboot:
@@ -720,7 +722,18 @@ class AgentHandler(BaseHandler):
                 results = self.shutdown(operation, [agent_id])
 
             elif token:
-                results = self.new_token(operation, [agent_id], token)
+                if token_exist_in_current(token):
+                    results = self.new_token(operation, [agent_id], token)
+                else:
+                    result = Results(username, uri, http_method)
+                    results = result(
+                        **{
+                            ApiResultKeys.GENERIC_STATUS_CODE: (
+                                GenericCodes.InvalidId
+                            ),
+                        }
+                    )
+
 
             elif apps_refresh:
                 operation = (
@@ -733,7 +746,7 @@ class AgentHandler(BaseHandler):
             else:
                 results = (
                     GenericResults(
-                        username, uri, method
+                        username, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -744,7 +757,7 @@ class AgentHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    username, uri, http_method
                 ).something_broke(agent_id, '', e)
             )
             logger.exception(e)
