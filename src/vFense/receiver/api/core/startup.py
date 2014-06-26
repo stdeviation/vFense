@@ -148,11 +148,14 @@ class StartUpV2(BaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager(agent_id)
         results = manager.update(agent, tags)
+        results[ApiResultKeys.OPERATIONS] = (
+            [results[ApiResultKeys.DATA]]
+        )
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.StartUpSucceeded:
             uris = get_result_uris(agent_id)
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
-            results[ApiResultKeys.DATA].append(uris)
+            results[ApiResultKeys.OPERATIONS].append(uris)
         return results

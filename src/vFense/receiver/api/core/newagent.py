@@ -175,6 +175,7 @@ class NewAgentV2(BaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager()
         results = manager.create(agent, tags)
+        results[ApiResultKeys.OPERATIONS] = [results[ApiResultKeys.DATA]]
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS]
@@ -182,6 +183,5 @@ class NewAgentV2(BaseHandler):
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
-            results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
             results[ApiResultKeys.DATA].append(uris)
         return results

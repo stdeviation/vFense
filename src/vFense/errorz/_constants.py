@@ -19,6 +19,7 @@ class ApiResultKeys:
     DELETED_IDS = 'deleted_ids'
     INVALID_IDS = 'invalid_ids'
     INVALID_ID = 'invalid_id'
+    OPERATIONS = 'operations'
     INVALID_DATA = 'invalid_data'
     USERNAME_IDS = 'user_name'
     NEW_TOKEN_ID = 'new_token_id'

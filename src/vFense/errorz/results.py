@@ -1,6 +1,6 @@
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    GenericCodes, GenericFailureCodes, ViewFailureCodes
+    GenericCodes, GenericFailureCodes, ViewFailureCodes, AgentCodes
 )
 
 class Results(object):
@@ -308,5 +308,20 @@ class Results(object):
                 ApiResultKeys.INVALID_ID: token,
                 ApiResultKeys.MESSAGE: msg,
                 ApiResultKeys.DATA: data,
+            }
+        )
+
+    def check_in(self, **kwargs):
+        msg = kwargs.get(ApiResultKeys.MESSAGE, 'Checkin succeeded')
+        data = kwargs.get(ApiResultKeys.OPERATIONS, [])
+        status_code = AgentCodes.CheckIn
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 200,
+                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.OPERATIONS: data,
             }
         )

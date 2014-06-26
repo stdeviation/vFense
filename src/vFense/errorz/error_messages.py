@@ -440,6 +440,7 @@ class AgentResults(object):
                     '%s - checkin succeeded for agent_id %s'
                     % (self.username, agent_id)
                 ),
+                operations: queue_data,
                 data: queue_data
             }
         )
