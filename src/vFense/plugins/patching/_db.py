@@ -690,7 +690,7 @@ def update_views_in_apps_by_view(current_view, new_view,
                         )
                     }
                 )
-                .run(conn, no_reply=True)
+                .run(conn, no_reply=True, durability='soft')
             )
 
         else:
@@ -708,7 +708,7 @@ def update_views_in_apps_by_view(current_view, new_view,
                         )
                     }
                 )
-                .run(conn, no_reply=True)
+                .run(conn, no_reply=True, durability='soft')
             )
 
     except Exception as e:
@@ -756,7 +756,7 @@ def update_apps_per_agent_by_view(
                 view_name, index=index_name
             )
             .update(app_data)
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -808,7 +808,7 @@ def update_apps_per_agent_by_agentids(
                 )
                 .update(app_data)
             )
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -855,7 +855,7 @@ def delete_apps_by_view(
                 view_name, index=index_name
             )
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
     except Exception as e:
         logger.exception(e)
@@ -900,7 +900,7 @@ def update_app_data_by_agentid(
             .table(collection)
             .get_all(agent_id, index=index_to_use)
             .update(app_data)
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -947,7 +947,7 @@ def update_app_data_by_agentid_and_appid(
             .table(collection)
             .get_all([agent_id, app_id], index=index_to_use)
             .update(app_data)
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -987,7 +987,7 @@ def delete_app_data_for_agentid(
             .table(collection)
             .get_all(agent_id, index=DbCommonAppPerAgentIndexes.AgentId)
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -1037,7 +1037,7 @@ def update_views_in_app_by_app_id(
                     ),
                 }
             )
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -1115,7 +1115,7 @@ def delete_apps_per_agent_older_than(
                 r.row[DbCommonAppPerAgentKeys.LastModifiedTime] < now
             )
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:

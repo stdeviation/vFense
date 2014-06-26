@@ -1,5 +1,3 @@
-import traceback
-
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
@@ -10,12 +8,15 @@ from vFense.core._db_constants import DbTime
 
 from vFense.plugins.patching._db_model import AppsKey, AppsPerAgentKey, AppCollections
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching.utils import build_app_id, build_agent_app_id, \
-    get_proper_severity
-from vFense.plugins.patching.patching import add_or_update_apps_per_agent, \
-    application_updater
-from vFense.plugins.patching.downloader.downloader import \
+from vFense.plugins.patching.utils import (
+    build_app_id, build_agent_app_id, get_proper_severity
+)
+from vFense.plugins.patching.patching import (
+    add_or_update_apps_per_agent, application_updater
+)
+from vFense.plugins.patching.downloader.downloader import (
     download_all_files_in_app
+)
 
 import redis
 from rq import Queue
@@ -31,10 +32,8 @@ logger = logging.getLogger('rvapi')
 
 class IncomingApplications():
 
-    def __init__(self, username, view_name, agent_id, os_code, os_string):
-        self.username = username
+    def __init__(self, agent_id, os_code, os_string):
         self.agent_id = agent_id
-        self.view_name = view_name
         self.os_code = os_code
         self.os_string = os_string
         self.inserted_count = 0
@@ -63,7 +62,6 @@ class IncomingApplications():
             AppsPerAgentKey.AppId: app_dict[AppsPerAgentKey.AppId],
             AppsPerAgentKey.InstallDate: app_dict[AppsPerAgentKey.InstallDate],
             AppsPerAgentKey.AgentId: self.agent_id,
-            AppsPerAgentKey.ViewName: self.view_name,
             AppsPerAgentKey.Status: app_dict[AppsPerAgentKey.Status],
             AppsPerAgentKey.Dependencies:
                 app_dict.pop(AppsPerAgentKey.Dependencies),
@@ -115,7 +113,7 @@ class IncomingApplications():
 
                 # Mutates app_dict
                 counts = application_updater(
-                    self.view_name, app_dict, self.os_string, app_collection
+                    app_dict, self.os_string, app_collection
                 )
                 self.inserted_count += counts[0]
                 self.updated_count += counts[1]
@@ -145,14 +143,12 @@ class IncomingApplications():
         logger.info(log_msg)
 
 
-def incoming_applications_from_agent(username, view_name, agent_id,
+def incoming_applications_from_agent(agent_id,
         agent_os_code, agent_os_string, apps, delete_afterwards=True,
         app_collection=AppCollections.UniqueApplications,
         apps_per_agent_collection=AppCollections.AppsPerAgent):
 
-    app = IncomingApplications(
-        username, view_name, agent_id, agent_os_code, agent_os_string
-    )
+    app = IncomingApplications(agent_id, agent_os_code, agent_os_string)
     app.add_or_update_applications(
         apps,
         delete_afterwards,

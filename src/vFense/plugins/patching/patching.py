@@ -733,13 +733,11 @@ def get_vulnerability_info_for_app(
     return vuln_data
 
 @time_it
-def application_updater(view_name, app_data, os_string,
+def application_updater(app_data, os_string,
         collection=AppCollections.UniqueApplications):
     """Insert or update an existing application in the provided collection.
 
     Args:
-        view_name (str): The name of the view, this application
-            is a part of.
         app_data (dict): Dictionary of the application data.
         os_string (str): The name of the operating system... Ubuntu 12.04
 
@@ -787,21 +785,19 @@ def application_updater(view_name, app_data, os_string,
 
     if exists:
         add_file_data(app_id, file_data, agent_id)
-        update_views_in_app_by_app_id(view_name, app_id)
-        vuln_data = get_vulnerability_info_for_app(
-            os_string, app_name, app_version, app_kb
+        vuln_data = (
+            get_vulnerability_info_for_app(
+                os_string, app_name, app_version, app_kb
+            )
         )
-        data_updated = update_app_data_by_app_id(
-            app_id,
-            vuln_data,
-            collection
+        data_updated = (
+            update_app_data_by_app_id(app_id, vuln_data, collection)
         )
         if data_updated[0] == DbCodes.Replaced:
             updated_count = data_updated[1]
 
     else:
         add_file_data(app_id, file_data, agent_id)
-        app_data[AppsKey.Views] = [view_name]
         app_data[AppsKey.Hidden] = CommonKeys.NO
 
         if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
