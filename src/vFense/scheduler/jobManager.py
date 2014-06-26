@@ -13,7 +13,7 @@ from apscheduler.jobstores.redis_store import RedisJobStore
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
 from vFense.core.agent._db_model import *
-from vFense.core.agent._db import fetch_agent_ids_in_view, fetch_agent
+from vFense.core.agent._db import fetch_agent_ids_in_views, fetch_agent
 from vFense.core.tag._db_model import *
 from vFense.core.tag._db import (
     fetch_tag_ids, fetch_tags_by_view,
@@ -212,7 +212,7 @@ def get_agentids_per_job(job_info, view_name, username,  conn=None):
 
     if (all_agents and not job_info['agent_ids']
             and not job_info['tag_ids'] and not all_tags):
-        agent_ids = fetch_agent_ids_in_view(view_name)
+        agent_ids = fetch_agent_ids_in_views([view_name])
 
     elif (job_info['agent_ids'] and not all_agents
             and not job_info['tag_ids'] and not all_tags):

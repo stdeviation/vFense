@@ -21,7 +21,7 @@ from vFense.core.view._db import (
 )
 from vFense.core.agent._db import (
     remove_all_agents_from_view, delete_all_agents_from_view,
-    fetch_agent_ids_in_view, delete_hardware_for_agents,
+    fetch_agent_ids_in_views, delete_hardware_for_agents,
     add_agents_to_views
 )
 from vFense.core.agent.agents import validate_agent_ids
@@ -104,9 +104,9 @@ class ViewManager(object):
 
     def get_agents(self):
         if self.name == DefaultViews.GLOBAL:
-            agents = fetch_agent_ids_in_view()
+            agents = fetch_agent_ids_in_views()
         else:
-            agents = fetch_agent_ids_in_view(self.name)
+            agents = fetch_agent_ids_in_views([self.name])
         return agents
 
     def get_tags(self):

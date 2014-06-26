@@ -125,15 +125,15 @@ def fetch_supported_os_strings(view_name, conn=None):
 
 @time_it
 @db_create_close
-def fetch_agent_ids_in_view(view_name=None, conn=None):
+def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
     """Retrieve a list of agent ids
     Kwargs:
         view_name (str): Name of the view, where the agent is located
 
     Basic Usage:
-        >>> from vFense.core.agent._db import fetch_agent_ids
-        >>> view_name = 'global'
-        >>> fetch_agent_ids_in_view(view_name)
+        >>> from vFense.core.agent._db import fetch_agent_ids_in_views
+        >>> views = ['global']
+        >>> fetch_agent_ids_in_views(views)
 
     Returns:
         List of agent ids
@@ -144,12 +144,43 @@ def fetch_agent_ids_in_view(view_name=None, conn=None):
     """
     data = []
     try:
-        if view_name:
+        if views and not os_string:
             data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.Views)
-                .map(lambda x: x[AgentKeys.AgentId])
+                r.expr(views)
+                .map(
+                    lambda view:
+                    r
+                    .table(AgentCollections.Agents)
+                    .get_all(view, index=AgentIndexes.Views)
+                    .map(lambda x: x[AgentKeys.AgentId])
+                )
+                .run(conn)
+            )
+
+        elif views and os_string:
+            data = list(
+                r.expr(views)
+                .map(
+                    lambda view:
+                    r
+                    .table(AgentCollections.Agents)
+                    .get_all(view, index=AgentIndexes.Views)
+                    .filter({AgentKeys.OsString: os_string})
+                    .map(lambda x: x[AgentKeys.AgentId])
+                )
+                .run(conn)
+            )
+
+        elif not views and os_string:
+            data = list(
+                r.expr(views)
+                .map(
+                    lambda view:
+                    r
+                    .table(AgentCollections.Agents)
+                    .filter({AgentKeys.OsString: os_string})
+                    .map(lambda x: x[AgentKeys.AgentId])
+                )
                 .run(conn)
             )
         else:

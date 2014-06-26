@@ -101,8 +101,8 @@ class AuthenticationOperations():
 
 
 class V1ListenerURIs():
-    LOGIN = (AuthenticationOperations.LOGIN, 'rvl/login', 'POST', False)
-    LOGOUT = (AuthenticationOperations.LOGOUT,'rvl/logout', 'GET', False)
+    LOGIN = (AuthenticationOperations.LOGIN, 'login', 'POST', False)
+    LOGOUT = (AuthenticationOperations.LOGOUT,'logout', 'GET', False)
     NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
     INSTALL_OS_APPS = (
         AgentOperations.INSTALL_OS_APPS, 'rv/results/install/apps/', 'PUT',

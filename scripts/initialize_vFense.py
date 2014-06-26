@@ -266,6 +266,8 @@ def create_views(conn=None):
     )
     view_manager = ViewManager(view.name)
     view_manager.create(view)
+    print 'Global Token: {0}'.format(view_manager.get_token())
+    print 'Place this token in the agent.config file'
 
 @db_create_close
 def create_groups(conn=None):

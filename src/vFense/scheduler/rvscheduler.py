@@ -23,14 +23,14 @@ if __name__ == '__main__':
     jobstore_name = 'administrative'
     username='admin'
     list_of_cron_jobs = [
-        {
-            'name': 'get_supported_apps',
-            'job': get_supported_apps,
-            'hour': '0,6,12,18',
-            'minute': 0,
-            'max_instances': 1,
-            'coalesce': True
-        },
+        #{
+        #    'name': 'get_supported_apps',
+        #    'job': get_supported_apps,
+        #    'hour': '0,6,12,18',
+        #    'minute': 0,
+        #    'max_instances': 1,
+        #    'coalesce': True
+        #},
         #{
         #    'name': 'get_agents_apps',
         #    'jobstore': jobstore_name,

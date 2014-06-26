@@ -59,7 +59,6 @@ class StartUpV1(BaseHandler):
             if status_code == AgentResultCodes.StartUpSucceeded:
                 if 'rv' in plugins:
                     RvHandOff(
-                        username, view_name, uri, method
                     ).startup_operation(agent_id, plugins['rv']['data'])
 
                 if 'ra' in plugins:
@@ -121,7 +120,6 @@ class StartUpV2(BaseHandler):
             if status_code == AgentResultCodes.StartUpSucceeded:
                 if 'rv' in plugins:
                     RvHandOff(
-                        username, view_name, uri, method
                     ).startup_operation(agent_id, plugins['rv']['data'])
 
                 if 'ra' in plugins:

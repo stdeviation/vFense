@@ -59,10 +59,7 @@ class NewAgentV1(BaseHandler):
                 agent_id = results[ApiResultKeys.GENERATED_IDS]
                 try:
                     if 'rv' in plugins:
-                        RvHandOff(
-                            self.username, view_name, self.uri,
-                            self.http_method
-                        ).new_agent_operation(
+                        RvHandOff().new_agent_operation(
                             agent_id,
                             plugins['rv']['data'],
                             agent_info
@@ -141,7 +138,6 @@ class NewAgentV2(BaseHandler):
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
-                            username, views, uri, http_method
                         ).new_agent_operation(
                             agent_id, plugins['rv']['data'], agent_info
                         )

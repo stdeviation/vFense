@@ -1,7 +1,8 @@
 import os
 from vFense.core._constants import CommonKeys
 from vFense.core.operations._constants import (
-    BaseURIs, URIVersions, V2ListenerURIs, V1ListenerURIs
+    BaseURIs, URIVersions, V2ListenerURIs, V1ListenerURIs,
+    AuthenticationOperations
 )
 
 from vFense.core.decorators import time_it
@@ -35,8 +36,10 @@ def _get_result_uris_dict(version, agent_id=None):
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2]
                 }
+
     elif version == URIVersions.V1:
         base_without_agentid = os.path.join(BaseURIs.LISTENER, URIVersions.V1)
+        base_without_version = BaseURIs.LISTENER
         if agent_id:
             base = (
                 os.path.join(BaseURIs.LISTENER, URIVersions.V1, agent_id)
@@ -46,9 +49,22 @@ def _get_result_uris_dict(version, agent_id=None):
                 os.path.join(BaseURIs.LISTENER, URIVersions.V1, '{0}')
             )
         for uri in V1ListenerURIs.get_valid_listener_uris():
-            if uri[3]:
+            if (not uri[3] and AuthenticationOperations.LOGIN or
+                    not uri[3] and AuthenticationOperations.LOGOUT):
+
                 results[uri[0]] = {
-                    CommonKeys.RESPONSE_URI: os.path.join(base, uri[1]),
+                    CommonKeys.RESPONSE_URI: (
+                        os.path.join(base_without_version, uri[1])
+                    ),
+                    CommonKeys.REQUEST_METHOD: uri[2]
+                }
+            elif (uri[3] and not AuthenticationOperations.LOGIN or
+                   uri[3] and not AuthenticationOperations.LOGOUT):
+
+                results[uri[0]] = {
+                    CommonKeys.RESPONSE_URI: (
+                        os.path.join(base, uri[1])
+                    ),
                     CommonKeys.REQUEST_METHOD: uri[2]
                 }
             else:
