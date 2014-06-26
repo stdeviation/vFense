@@ -12,15 +12,11 @@ logger = logging.getLogger('rvapi')
 #process that data!!
 
 
-def process_queue_data(agent_id, username, view_name, uri, method):
-    agent_queue = AgentQueue(agent_id, view_name).pop_agent_queue()
+def process_queue_data(agent_id, username):
+    agent_queue = AgentQueue(agent_id).pop_agent_queue()
     for operation in agent_queue:
         if operation.get(AgentOperationKey.OperationId):
-            oper = (
-                AgentOperation(
-                    username, view_name
-                )
-            )
+            oper = AgentOperation(username)
             oper.update_operation_pickup_time(
                 operation[AgentOperationKey.OperationId], agent_id
             )

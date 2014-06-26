@@ -10,6 +10,7 @@ from vFense.core.queue._db import insert_into_agent_queue, \
     delete_job_in_queue, delete_multiple_jobs
 
 from vFense.core.view._db_model import *
+from vFense.core.view._constants import DefaultViews
 from vFense.core.view.manager import ViewManager
 
 from vFense.core.queue.uris import get_agent_results_uri
@@ -21,23 +22,24 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentQueue(object):
-    def __init__(self, agent_id, view_name):
+    def __init__(self, agent_id, view_name=None):
         self.agent_id = agent_id
-        self.view_name = view_name
         self.datetime_now = datetime.now()
         self.epoch_time_now = mktime(self.datetime_now.timetuple())
         self.global_server_queue_expire_minutes = (
-            self.get_global_server_queue_ttl()
+            self.get_global_server_queue_ttl(view_name)
         )
         self.global_agent_queue_expire_minutes = (
-            self.get_global_agent_queue_ttl()
+            self.get_global_agent_queue_ttl(view_name)
         )
 
-    def add(self, operation, expire_mins=None, agent_process_time=None):
+    def add(self, operation, view_name, expire_mins=None,
+            agent_process_time=None):
         """Add an operation to the agent_queue. If expire_mins is not passed,
             then we will use the global view ttl value.
         Args:
-            operation (dict): the operation data.
+            operation (dict): The operation data.
+            view_name (str): Name of the current view.
 
         Kwargs:
             expire_mins (int): Minutes until operations is considered expired
@@ -48,14 +50,20 @@ class AgentQueue(object):
         Basic Usage:
             >>> from vFense.receiver.agent_queue import AgentQueue
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
+            >>> view_name = 'global'
             >>> operation = {'valid_operation': 'data'}
-            >>> queue = AgentQueue(agent_id, view_name)
-            >>> queue.add(operation)
+            >>> queue = AgentQueue(agent_id)
+            >>> queue.add(operation, view_name)
 
         Returns:
             Boolean
         """
+        self.global_server_queue_expire_minutes = (
+            self.get_global_server_queue_ttl(view_name)
+        )
+        self.global_agent_queue_expire_minutes = (
+            self.get_global_agent_queue_ttl(view_name)
+        )
         success = False
         if not expire_mins:
             expire_mins = self.global_server_queue_expire_minutes
@@ -89,7 +97,7 @@ class AgentQueue(object):
             )
         )
         operation[AgentQueueKey.AgentId] = self.agent_id
-        operation[AgentQueueKey.ViewName] = self.view_name
+        operation[AgentQueueKey.ViewName] = view_name
         operation[AgentQueueKey.RequestMethod] = request_method
         operation[AgentQueueKey.ResponseURI] = response_uri
         operation[AgentQueueKey.OrderId] = self._get_next_avail_order()
@@ -111,10 +119,8 @@ class AgentQueue(object):
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
+            >>> queue = AgentQueue(agent_id)
             >>> queue._get_next_avail_order()
 
         Returns:
@@ -125,47 +131,59 @@ class AgentQueue(object):
 
         return(last_id + 1)
 
-    def get_global_server_queue_ttl(self):
+    def get_global_server_queue_ttl(self, view_name):
         """Return the global server ttl property for a view.
             TTL is in minutes.
+        Args:
+            view_name (str): Name of the current view.
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
-            >>> queue.get_global_server_queue_ttl()
+            >>> view_name = 'global'
+            >>> queue = AgentQueue(agent_id)
+            >>> queue.get_global_server_queue_ttl(view_name)
 
         Returns:
             Integer
         """
-
-        ttl = (
-            ViewManager(self.view_name).get_attribute(ViewKeys.ServerQueueTTL)
-        )
+        if view_name:
+            ttl = (
+                ViewManager(view_name).get_attribute(ViewKeys.ServerQueueTTL)
+            )
+        else:
+            ttl = (
+                ViewManager(DefaultViews.GLOBAL)
+                .get_attribute(ViewKeys.ServerQueueTTL)
+            )
 
         return(ttl)
 
-    def get_global_agent_queue_ttl(self):
+    def get_global_agent_queue_ttl(self, view_name):
         """Return the global agent ttl property for a view.
             TTL is in minutes.
+        Args:
+            view_name (str): Name of the current view.
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
-            >>> queue.get_global_agent_queue_ttl()
+            >>> view_name = 'global'
+            >>> queue = AgentQueue(agent_id)
+            >>> queue.get_global_agent_queue_ttl(view_name)
 
         Returns:
             Integer
         """
-
-        ttl = (
-            ViewManager(self.view_name).get_attribute(ViewKeys.AgentQueueTTL)
-        )
+        if view_name:
+            ttl = (
+                ViewManager(view_name).get_attribute(ViewKeys.AgentQueueTTL)
+            )
+        else:
+            ttl = (
+                ViewManager(DefaultViews.GLOBAL)
+                .get_attribute(ViewKeys.AgentQueueTTL)
+            )
 
         return(ttl)
 
@@ -176,10 +194,8 @@ class AgentQueue(object):
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
+            >>> queue = AgentQueue(agent_id)
             >>> expire_mins = 10
             >>> queue.get_queue_expire_time(expire_mins)
 
@@ -200,10 +216,8 @@ class AgentQueue(object):
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
+            >>> queue = AgentQueue(agent_id)
             >>> queue.fetch_agent_queue()
 
         Returns:
@@ -220,7 +234,7 @@ class AgentQueue(object):
                     "operation": "updatesapplications",
                     "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
                     "expire_minutes": 10,
-                    "view_name": "default"
+                    "view_name": "global"
                 }
             ]
         """
@@ -233,10 +247,8 @@ class AgentQueue(object):
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
+            >>> queue = AgentQueue(agent_id)
             >>> queue.pop_agent_queue()
 
         Returns:
@@ -253,7 +265,7 @@ class AgentQueue(object):
                     "operation": "updatesapplications",
                     "id": "f9817e07-6877-4857-aef3-e80f57022ac8",
                     "expire_minutes": 10,
-                    "view_name": "default"
+                    "view_name": "global"
                 }
             ]
         """
@@ -276,10 +288,8 @@ class AgentQueue(object):
 
         Basic Usage:
             >>> from vFense.queue.queue import AgentQueue
-            >>> agent = AgentQueue()
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
-            >>> view_name = 'default'
-            >>> queue = AgentQueue(agent_id, view_name)
+            >>> queue = AgentQueue(agent_id)
             >>> job_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e02'
             >>> queue.remove_job(job_id)
 

@@ -4,6 +4,7 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
+from vFense.core.api.decorators import authenticate_agent
 from vFense.core.decorators import (
     convert_json_to_arguments, agent_authenticated_request, results_message
 )
@@ -97,9 +98,9 @@ class StartUpV1(BaseHandler):
 
 
 class StartUpV2(BaseHandler):
-    @agent_authenticated_request
+    @authenticate_agent
     @convert_json_to_arguments
-    def post(self):
+    def post(self, agent_id):
         username = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
@@ -109,11 +110,22 @@ class StartUpV2(BaseHandler):
             system_info = self.arguments.get(AgentKeys.SystemInfo)
             hardware = self.arguments.get(AgentKeys.Hardware)
             tags = self.arguments.get(AgentKeys.Tags)
+            plugins = self.arguments.get(AgentKeys.Plugins)
             results, agent_info = (
                 self.update_agent(
                     system_info, hardware, views, tags
                 )
             )
+            status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+
+            if status_code == AgentResultCodes.StartUpSucceeded:
+                if 'rv' in plugins:
+                    RvHandOff(
+                        username, view_name, uri, method
+                    ).startup_operation(agent_id, plugins['rv']['data'])
+
+                if 'ra' in plugins:
+                    RaHandoff.startup(agent_id, plugins['ra'])
             self.set_header('Content-Type', 'application/json')
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
@@ -136,4 +148,11 @@ class StartUpV2(BaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager(agent_id)
         results = manager.update(agent, tags)
+        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        if status_code == AgentResultCodes.StartUpSucceeded:
+            uris = get_result_uris(agent_id)
+            uris[AgentOperationKey.Operation] = (
+                AgentOperations.REFRESH_RESPONSE_URIS
+            )
+            results[ApiResultKeys.DATA].append(uris)
         return results

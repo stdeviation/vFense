@@ -127,7 +127,6 @@ class Application(tornado.web.Application):
             ##### Vulnerability API Handlers
             (r'/api/v1/vulnerability/os/([A-Za-z0-9_-]+)?', VulnerabilityHandler),
             (r'/api/v1/vulnerability/cve/(CVE-[0-9]+-[0-9]+)?', CveIdHandler),
-            (r'/api/test?', TestHandler),
 
             ##### File system access whitelist
             (r"/css/(.*?)", tornado.web.StaticFileHandler,

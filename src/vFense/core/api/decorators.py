@@ -49,13 +49,20 @@ def authenticate_agent(fn):
                 valid_old_token = token_exist_in_previous(token)
                 agent = AgentManager(agent_id)
                 if agent.properties:
-                    if (agent.get_attribute(AgentKeys.Enabled)
-                            and authenticated):
+                    enabled = agent.get_attribute(AgentKeys.Enabled)
+                    assign_new_token = (
+                        agent.get_attribute(AgentKeys.AssignNewToken)
+                    )
+                    if enabled and authenticated:
                         agent.update_token(token)
                         return fn(self, *args, **kwargs)
 
-                    elif (agent.get_attribute(AgentKeys.Enabled)
-                            and valid_old_token):
+                    elif enabled and valid_old_token and assign_new_token:
+                        agent.update_token(token)
+                        agent.assign_new_token(False)
+                        return fn(self, *args, **kwargs)
+
+                    elif enabled and valid_old_token and not assign_new_token:
                         agent.update_token(token)
                         msg = '{0} is a previous token'.format(token)
                         results[ApiResultKeys.INVALID_ID] = token

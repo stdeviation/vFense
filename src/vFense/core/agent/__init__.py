@@ -20,7 +20,7 @@ class Agent(object):
                  production_level=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
                  version=None, date_added=None, last_agent_update=None,
-                 token=None
+                 token=None, assign_new_token=False
                  ):
         """
         Kwargs:
@@ -43,6 +43,7 @@ class Agent(object):
             date_added (epoch_time): time in epoch.
             last_agent_update (epoch_time): time in epoch.
             token (str): Base64 encoded string.
+            assign_new_token (bool): Assign this agent a new token.
         """
         self.computer_name = computer_name
         self.display_name = display_name
@@ -60,6 +61,7 @@ class Agent(object):
         self.date_added = date_added
         self.last_agent_update = last_agent_update
         self.token = token
+        self.assign_new_token = assign_new_token
 
 
     def fill_in_defaults(self):
@@ -135,6 +137,18 @@ class Agent(object):
                     }
                 )
 
+        if self.assign_new_token:
+            if not isinstance(self.assign_new_token, bool):
+                invalid_fields.append(
+                    {
+                        AgentKeys.AssignNewToken: self.assign_new_token,
+                        CommonKeys.REASON: 'Must be a boolean value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
         if self.last_agent_update:
             if (not isinstance(self.last_agent_update, int) and
                     not isinstance(self.last_agent_update, float)):
@@ -189,6 +203,7 @@ class Agent(object):
             AgentKeys.DateAdded: self.date_added,
             AgentKeys.LastAgentUpdate: self.last_agent_update,
             AgentKeys.Token: self.token,
+            AgentKeys.AssignNewToken: self.assign_new_token,
         }
 
     def to_dict_non_null(self):

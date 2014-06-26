@@ -57,13 +57,11 @@ class StoreAgentOperation(object):
         Args:
             operation (dict): The dictionary of the operation.
         """
-        agent_queue = (
-            AgentQueue(
-                operation[OperationPerAgentKey.AgentId],
-                self.view_name
-            )
+        agent_queue = AgentQueue(operation[OperationPerAgentKey.AgentId])
+        agent_queue.add(
+            operation, self.view_name, self.server_queue_ttl,
+            self.agent_queue_ttl
         )
-        agent_queue.add(operation, self.server_queue_ttl, self.agent_queue_ttl)
 
     def generic_operation(
             self, action, plugin,

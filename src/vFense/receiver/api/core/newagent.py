@@ -123,7 +123,7 @@ class NewAgentV2(BaseHandler):
     def post(self):
         username = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
 
         try:
             views = self.arguments.get(AgentKeys.Views)
@@ -141,8 +141,7 @@ class NewAgentV2(BaseHandler):
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
-                            self.username, views, self.uri,
-                            self.http_method
+                            username, views, uri, http_method
                         ).new_agent_operation(
                             agent_id, plugins['rv']['data'], agent_info
                         )
@@ -160,7 +159,7 @@ class NewAgentV2(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    username, uri, http_method
                 ).something_broke('agent', 'new_agent', e)
             )
             logger.exception(e)

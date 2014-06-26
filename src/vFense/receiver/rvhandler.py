@@ -36,15 +36,6 @@ class RvHandOff():
         self.delete_afterwards = delete_afterwards
 
     def _get_agent_data(self, agent_id):
-        #if self.agent_data:
-        #    if self.agent_data.get(AgentKeys.AgentId) == agent_id:
-        #        return self.agent_data
-        #    else:
-        #        logger.info(
-        #            "Agent id: {0} did not match agent id of set agent data: {0}"
-        #            .format(agent_id, self.agent_data)
-        #        )
-
         return fetch_agent(agent_id)
 
     def _add_custom_apps(self, username, view_name, uri, method, agent_id):

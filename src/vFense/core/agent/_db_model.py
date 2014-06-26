@@ -29,6 +29,7 @@ class AgentKeys():
     Version = 'version'
     Token = 'token'
     Enabled = 'enabled'
+    AssignNewToken = 'assign_new_token'
 
 
 class AgentIndexes():

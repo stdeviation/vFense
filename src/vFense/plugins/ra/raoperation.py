@@ -104,8 +104,8 @@ def save_result(
 def store_in_agent_queue(operation):
 
     operation = operation.to_dict()
-    agent_queue = AgentQueue(operation.agent_id, operation.view_name)
-    agent_queue.add(operation)
+    agent_queue = AgentQueue(operation.agent_id)
+    agent_queue.add(operation, operation.view_name)
 
 
 class RaOperation():

@@ -1088,6 +1088,42 @@ class AgentManager(object):
         return results
 
     @time_it
+    def assign_new_token(self, new_token=False):
+        """Allow the agent with a previously valid token to
+            get a current valid token.
+        Args:
+            new_token (bool): Allow this agent to authenticate once
+                and pick up a new token.
+                default=False
+
+        Basic Usage:
+            >>> from vFense.agent.manager import AgentManager
+            >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = AgentManager(agent_id)
+            >>> manager.assign_new_token(True)
+
+        Returns:
+            >>>
+            {
+                "vfense_status_code": 13001,
+                "message": " User global_admin was updated - ",
+                "data": [
+                    {
+                        "assign_new_token": true
+                    }
+                ],
+                "updated_ids": [
+                    "global_admin"
+                ],
+                "generic_status_code": 1008
+            }
+        """
+        agent = Agent(assign_new_token=new_token)
+        results = self.__edit_properties(agent)
+        return results
+
+
+    @time_it
     def update_last_checkin_time(self):
         """Update the timestamp for the last time the agent communicated.
 

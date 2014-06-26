@@ -145,7 +145,7 @@ class IncomingApplications():
         logger.info(log_msg)
 
 
-def incoming_applications_from_agent(username, view_name, agent_id, 
+def incoming_applications_from_agent(username, view_name, agent_id,
         agent_os_code, agent_os_string, apps, delete_afterwards=True,
         app_collection=AppCollections.UniqueApplications,
         apps_per_agent_collection=AppCollections.AppsPerAgent):
