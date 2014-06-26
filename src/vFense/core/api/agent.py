@@ -255,15 +255,17 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         username = self.get_current_user()
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
+        user = UserManager(username)
+        active_view = user.get_attribute(UserKeys.CurrentView)
         try:
             agent_ids = self.arguments.get(ApiArguments.AGENT_IDS)
             views = self.arguments.get(ApiArguments.VIEWS)
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+            token = self.arguments.get(AgentApiArguments.TOKEN, None)
             if not isinstance(agent_ids, list):
                 agent_ids = agent_ids.split()
 
@@ -276,10 +278,18 @@ class AgentsHandler(BaseHandler):
             elif action == ApiValues.DELETE:
                 results = self.remove_agents_from_views(agent_ids, views)
 
+            elif token:
+                operation = (
+                    StoreAgentOperations(
+                        username, active_view, uri, http_method
+                    )
+                )
+                results = self.new_token(operation, agent_ids, token)
+
             else:
                 results = (
                     GenericResults(
-                        username, uri, method
+                        username, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -290,7 +300,7 @@ class AgentsHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    username, uri, http_method
                 ).something_broke('agent_ids', 'delete agentids', e)
             )
             logger.exception(e)
@@ -298,8 +308,20 @@ class AgentsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.ADD_VIEWS_TO_AGENTS, vFenseObjects.AGENT)
     @results_message
+    @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
+    def new_token(self, operation, agents, token):
+        for agent in agents:
+            manager = AgentManager(agent)
+            manager.update_token(True)
+
+        results = operation.new_token(agents, token=token)
+        return results
+
+
+    @results_message
+    @check_permissions(Permissions.ADD_AGENTS_TO_VIEW)
+    @log_operation(AdminActions.ADD_VIEWS_TO_AGENTS, vFenseObjects.AGENT)
     def add_agents_to_views(self, agents, views):
         end_results = {}
         views_added = []
@@ -361,8 +383,9 @@ class AgentsHandler(BaseHandler):
 
         return end_results
 
-    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENTS, vFenseObjects.AGENT)
     @results_message
+    @check_permissions(Permissions.REMOVE_AGENTS_FROM_VIEW)
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENTS, vFenseObjects.AGENT)
     def remove_agents_from_views(self, agents, views):
         end_results = {}
         views_removed = []
@@ -426,7 +449,6 @@ class AgentsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         username = self.get_current_user()
         view_name = (
@@ -472,8 +494,9 @@ class AgentsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_AGENTS, vFenseObjects.AGENT)
     @results_message
+    @check_permissions(Permissions.DELETE_AGENT)
+    @log_operation(AdminActions.REMOVE_AGENTS, vFenseObjects.AGENT)
     def delete_agents(self, agents):
         end_results = {}
         agents_deleted = []
@@ -634,33 +657,31 @@ class AgentHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.EDIT_AGENT_DISPLAY_NAME, vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.EDIT_AGENT_DISPLAY_NAME, vFenseObjects.AGENT)
     def edit_display_name(self, manager, display_name):
         results = manager.edit_display_name(display_name)
         return results
 
-    @log_operation(AdminActions.EDIT_AGENT_PRODUCTION_LEVEL,
-                   vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.EDIT_AGENT_PRODUCTION_LEVEL, vFenseObjects.AGENT)
     def edit_production_level(self, manager, production_level):
         results = manager.edit_production_level(production_level)
         return results
 
-    @log_operation(AdminActions.ADD_VIEWS_TO_AGENT, vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.ADD_VIEWS_TO_AGENT, vFenseObjects.AGENT)
     def add_agent_to_views(self, manager, views):
         results = manager.add_to_views(views)
         return results
 
-    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENT, vFenseObjects.AGENT)
     @results_message
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENT, vFenseObjects.AGENT)
     def remove_agent_from_views(self, manager, views):
         results = manager.remove_from_views(views)
         return results
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, agent_id):
         username = self.get_current_user()
         view_name = (
@@ -688,8 +709,9 @@ class AgentHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_AGENT, vFenseObjects.AGENT)
     @results_message
+    @check_permissions(Permissions.DELETE_AGENT)
+    @log_operation(AdminActions.REMOVE_AGENT, vFenseObjects.AGENT)
     def remove_agent(self, manager):
         results = manager.remove()
         return results
@@ -725,12 +747,12 @@ class AgentHandler(BaseHandler):
                 if token_exist_in_current(token):
                     results = self.new_token(operation, [agent_id], token)
                 else:
+                    msg = 'Invalid token {0}'.format(token)
                     result = Results(username, uri, http_method)
-                    results = result(
+                    results = result.invalid_token(
                         **{
-                            ApiResultKeys.GENERIC_STATUS_CODE: (
-                                GenericCodes.InvalidId
-                            ),
+                            ApiResultKeys.INVALID_ID: token,
+                            ApiResultKeys.MESSAGE: msg,
                         }
                     )
 

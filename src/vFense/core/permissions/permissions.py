@@ -11,7 +11,7 @@ from vFense.core.user._constants import DefaultUsers
 from vFense.core.user._db import fetch_user
 
 from vFense.core.permissions import *
-from vFense.core.permissions._constants import *
+from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions._db import validate_permission_for_user
 
 from vFense.core._db import retrieve_object

@@ -1,6 +1,6 @@
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    GenericCodes, GenericFailureCodes
+    GenericCodes, GenericFailureCodes, ViewFailureCodes
 )
 
 class Results(object):
@@ -284,6 +284,28 @@ class Results(object):
                 ApiResultKeys.URI: self.uri,
                 ApiResultKeys.HTTP_METHOD: self.method,
                 ApiResultKeys.UNCHANGED_IDS: unchanged_ids,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: data,
+            }
+        )
+
+    def invalid_token(self, **kwargs):
+        token = kwargs.get(ApiResultKeys.INVALID_ID, None)
+        msg = kwargs.get(ApiResultKeys.MESSAGE, 'Invalid Token')
+        data = kwargs.get(ApiResultKeys.DATA, [])
+        status_code = (
+            kwargs.get(
+                ApiResultKeys.VFENSE_STATUS_CODE,
+                ViewFailureCodes.InvalidToken
+            )
+        )
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 200,
+                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.INVALID_ID: token,
                 ApiResultKeys.MESSAGE: msg,
                 ApiResultKeys.DATA: data,
             }
