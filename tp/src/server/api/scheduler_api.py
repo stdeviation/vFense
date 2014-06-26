@@ -1,0 +1,507 @@
+import simplejson as json
+
+import logging
+import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
+
+from vFense.core.api.base import BaseHandler
+from vFense.db.client import *
+from vFense.errorz.error_messages import GenericResults
+from vFense.scheduler.jobManager import *
+from vFense.core.decorators import authenticated_request, \
+    convert_json_to_arguments
+from vFense.utils.common import *
+from datetime import datetime
+
+from vFense.core.user import UserKeys
+from vFense.core.user.users import get_user_property
+
+
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
+logger = logging.getLogger('rvapi')
+
+
+class ScheduleListerHandler(BaseHandler):
+    @authenticated_request
+    def get(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri=self.request.uri
+        method=self.request.method
+        try:
+            self.sched = self.application.scheduler
+            results = job_lister(
+                sched=self.sched, username=username,
+                customer_name=customer_name.encode('utf-8'),
+                uri=uri, method=method
+            )
+
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('getting schedules', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class ScheduleAppDetailHandler(BaseHandler):
+    @authenticated_request
+    def get(self, jobname):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            self.sched = self.application.scheduler
+            results = (
+                get_schedule_details(
+                    self.sched, job_name=jobname,
+                    username=username, customer_name=customer_name,
+                    uri=uri, method=method
+                )
+            )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('getting schedules', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+    @authenticated_request
+    def delete(self, jobname):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri=self.request.uri
+        method=self.request.method
+        try:
+            self.sched = self.application.scheduler
+            results = (
+                remove_job(
+                    self.sched, jobname,
+                    uri=uri,method=method,
+                    customer_name=customer_name,
+                    username=username
+                )
+            )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('delete schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class SchedulerYearlyRecurrentJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri=self.request.uri
+        method=self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            operation = self.arguments.get('operation')
+            pkg_type = self.arguments.get('pkg_type')
+            severity = self.arguments.get('severity')
+            jobname = self.arguments.get('jobname')
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_tags = self.arguments.get('all_tags', False)
+            all_agents = self.arguments.get('all_agents', False)
+            epoch_time = self.arguments.get('epoch_time')
+            every = self.arguments.get('every', None)
+            custom = self.arguments.get('custom', None)
+
+            if operation and jobname:
+                results = (
+                    add_yearly_recurrent(
+                        sched,
+                        customer_name=customer_name,
+                        username=username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        every = every,
+                        custom = custom,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method,
+                    )
+                )
+
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add yearly recurrent schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            uri = self.request.uri
+            method = self.request.method
+            operation = self.arguments.get('operation', None)
+            pkg_type = self.arguments.get('pkg_type', None)
+            severity = self.arguments.get('severity', None)
+            jobname = self.arguments.get('jobname', None)
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_tags=self.arguments.get('all_tags', False)
+            all_agents=self.arguments.get('all_agents', False)
+            epoch_time = self.arguments.get('epoch_time')
+            every = self.arguments.get('every', None)
+            custom = self.arguments.get('custom', None)
+
+
+            if operation and jobname:
+                results = (
+                    add_monthly_recurrent(
+                        sched,
+                        customer_name,
+                        username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        custom = custom,
+                        every = every,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method
+                    )
+                )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add monthly recurrent schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class SchedulerDailyRecurrentJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            operation = self.arguments.get('operation', None)
+            pkg_type = self.arguments.get('pkg_type', None)
+            severity = self.arguments.get('severity', None)
+            jobname = self.arguments.get('jobname', None)
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_tags = self.arguments.get('all_tags', False)
+            all_agents = self.arguments.get('all_agents', False)
+            epoch_time = self.arguments.get('epoch_time')
+            every = self.arguments.get('every', None)
+            custom = self.arguments.get('custom', None)
+
+            if operation and jobname:
+                results = (
+                    add_daily_recurrent(
+                        sched,
+                        customer_name=customer_name,
+                        username=username,
+                        agent_ids=node_ids,
+                        all_agents=all_agents,
+                        tag_ids=tag_ids,
+                        all_tags=all_tags,
+                        severity=severity,
+                        pkg_type=pkg_type,
+                        operation=operation,
+                        name=jobname,
+                        every = every,
+                        custom = custom,
+                        epoch_time= epoch_time,
+                        uri=uri,
+                        method=method,
+                    )
+                )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add daily recurrent schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            operation = self.arguments.get('operation', None)
+            pkg_type = self.arguments.get('pkg_type', None)
+            severity = self.arguments.get('severity', None)
+            jobname = self.arguments.get('jobname', None)
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_tags = self.arguments.get('all_tags', False)
+            all_agents = self.arguments.get('all_agents', False)
+            epoch_time=self.arguments.get('epoch_time')
+            every = self.arguments.get('every', None)
+            custom=self.arguments.get('custom', None)
+        
+            results = (
+                add_weekly_recurrent(
+                    sched,
+                    customer_name=customer_name,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    name=jobname,
+                    every=every,
+                    custom=custom,
+                    epoch_time=epoch_time,
+                    uri=uri,
+                    method=method,
+                )
+            )
+
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add custom recurrent schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class SchedulerDateBasedJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            operation = self.arguments.get('operation', None)
+            pkg_type = self.arguments.get('pkg_type', None)
+            severity = self.arguments.get('severity', None)
+            epoch_time = self.arguments.get('epoch_time')
+            date_to_execute = datetime.fromtimestamp(int(epoch_time))
+            jobname = self.arguments.get('jobname')
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_agents=self.arguments.get('all_agents', False)
+            all_tags = self.arguments.get('all_tags', False)
+
+            results = (
+                schedule_once(
+                    sched,
+                    customer_name=customer_name,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    name=jobname,
+                    date=date_to_execute,
+                    uri=uri,
+                    method=method
+                )
+            )
+            
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add schedule, once', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+
+class SchedulerCustomRecurrentJobHandler(BaseHandler):
+
+    @authenticated_request
+    @convert_json_to_arguments
+    def post(self):
+        username = self.get_current_user()
+        customer_name = (
+            get_user_property(username, UserKeys.CurrentCustomer)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            result = None
+            sched = self.application.scheduler
+            operation = self.arguments.get('operation', None)
+            pkg_type = self.arguments.get('pkg_type', None)
+            jobname = self.arguments.get('jobname')
+            severity = self.arguments.get('severity')
+            node_ids = self.arguments.get('nodes', None)
+            tag_ids = self.arguments.get('tags', None)
+            all_agents = self.arguments.get('all_agents', False)
+            all_tags = self.arguments.get('all_tags', False)
+            every = self.arguments.get('every')
+            custom = self.arguments.get('custom') 
+            epoch_time = self.arguments.get('epoch_time')
+            datetime = datetime.fromtimestamp(epoch_time)
+        
+            results = (
+                add_custom_recurrent(
+                    sched,
+                    customer_name=customer_name,
+                    username=username,
+                    agent_ids=node_ids,
+                    all_agents=all_agents,
+                    tag_ids=tag_ids,
+                    all_tags=all_tags,
+                    severity=severity,
+                    pkg_type=pkg_type,
+                    operation=operation,
+                    every=every,
+                    custom=custom,
+                    name=jobname,
+                    frequency=frequency,
+                    date=datetime,
+                    uri=uri, method=method,
+                )
+            )
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke('add custom recurrent schedule', '', e)
+            )
+
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
