@@ -18,13 +18,6 @@ import tornado.options
 import vFense_module_loader
 
 from vFense.core.api.base import WebSocketHandler, AdminHandler
-from vFense.receiver.api.rv.results import (
-    InstallOsAppsResults, InstallCustomAppsResults,
-    InstallSupportedAppsResults, InstallAgentAppsResults,
-    UninstallAppsResults
-)
-from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
-from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
 from vFense.receiver.api.ra.results import RemoteDesktopResults
 
 from tornado.options import define, options
@@ -39,22 +32,6 @@ class Application(tornado.web.Application):
 
             #RA plugin
             (r"/rvl/ra/rd/results/?", RemoteDesktopResults),
-
-            #Operations for the New Core Plugin
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/updatesapplications/?", UpdateApplicationsV1),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/available_agent_update/?", AgentUpdateHandler),
-
-            #New Operations for the New RV Plugin
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/os?",
-                InstallOsAppsResults),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/custom?",
-                InstallCustomAppsResults),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/supported?",
-                InstallSupportedAppsResults),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/install/apps/agent?",
-                InstallAgentAppsResults),
-            (r"/rvl/v1/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/rv/results/uninstall?",
-                UninstallAppsResults),
 
         ]
 

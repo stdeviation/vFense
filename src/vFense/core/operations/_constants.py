@@ -1,3 +1,4 @@
+
 class vFensePlugins():
     RV_PLUGIN = 'rv'
     CORE_PLUGIN = 'core'
@@ -63,50 +64,11 @@ class URIVersions():
         return valid_versions
 
 
-class AuthenticationURIs():
-    LOGIN = 'rvl/login'
-    LOGOUT = 'rvl/logout'
-
-
-class AuthenticationOperations():
-    LOGIN = 'login'
-    LOGOUT = 'logout'
-
-
-class ListenerURIs():
-    NEWAGENT = 'core/newagent'
-    RA = 'ra/rd/results'
-
-    INSTALL_OS_APPS = 'rv/results/install/apps/os'
-    INSTALL_CUSTOM_APPS = 'rv/results/install/apps/custom'
-    INSTALL_SUPPORTED_APPS = 'rv/results/install/apps/supported'
-    INSTALL_AGENT_UPDATE = 'rv/results/install/apps/agent'
-    UNINSTALL = 'rv/results/uninstall'
-    UNINSTALL_AGENT = 'rv/results/uninstall'
-    REBOOT = 'core/results/reboot'
-    SHUTDOWN = 'core/results/shutdown'
-    REFRESH_APPS = 'rv/updatesapplications'
-    AVAILABLE_AGENT_UPDATE = 'rv/available_agent_update'
-    START_UP = 'core/results/startup'
-    CHECK_IN = 'core/checkin'
-    MONITOR_DATA = 'monitoring/monitordata'
-    REFRESH_RESPONSE_URIS = 'core/uris/response'
-
-    @staticmethod
-    def get_valid_listener_uris():
-        valid_uris = (
-            map(
-                lambda x:
-                getattr(ListenerURIs, x), dir(ListenerURIs)[:-3]
-            )
-        )
-        return valid_uris
-
-
 class AgentOperations():
     NEW_AGENT = 'new_agent'
     NEW_TOKEN = 'new_token'
     REFRESH_APPS = 'updatesapplications'
+    APPS_REFRESH = 'apps_refresh'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
     START_UP = 'startup'
@@ -131,3 +93,126 @@ class AgentOperations():
             )
         )
         return valid_operations
+
+
+class AuthenticationOperations():
+    LOGIN = 'login'
+    LOGOUT = 'logout'
+
+
+class V1ListenerURIs():
+    LOGIN = (AuthenticationOperations.LOGIN, 'rvl/login', 'POST', False)
+    LOGOUT = (AuthenticationOperations.LOGOUT,'rvl/logout', 'GET', False)
+    NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
+    INSTALL_OS_APPS = (
+        AgentOperations.INSTALL_OS_APPS, 'rv/results/install/apps/', 'PUT',
+        True
+    )
+    INSTALL_CUSTOM_APPS = (
+        AgentOperations.INSTALL_CUSTOM_APPS, 'rv/results/install/apps/custom',
+        'PUT', True
+    )
+    INSTALL_SUPPORTED_APPS = (
+        AgentOperations.INSTALL_SUPPORTED_APPS,
+        'rv/results/install/apps/supported', 'PUT', True
+    )
+    INSTALL_AGENT_UPDATE = (
+        AgentOperations.INSTALL_AGENT_UPDATE, 'rv/results/install/apps/agent',
+        'PUT', True
+    )
+    UNINSTALL = (
+        AgentOperations.UNINSTALL, 'rv/results/uninstall', 'PUT', True
+    )
+    UNINSTALL_AGENT = (
+        AgentOperations.UNINSTALL_AGENT, 'rv/results/uninstall', 'PUT', True
+    )
+    REBOOT = (
+        AgentOperations.REBOOT, 'core/results/reboot', 'PUT', True
+    )
+    SHUTDOWN = (
+        AgentOperations.SHUTDOWN, 'core/results/shutdown', 'PUT', True
+    )
+    REFRESH_APPS = (
+        AgentOperations.REFRESH_APPS, 'rv/updatesapplications', 'PUT', True
+    )
+    AVAILABLE_AGENT_UPDATE = (
+        AgentOperations.AVAILABLE_AGENT_UPDATE, 'rv/available_agent_update',
+        'PUT', False
+    )
+    START_UP = (AgentOperations.START_UP, 'core/results/startup', 'PUT', True)
+    CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
+    MONITOR_DATA = (
+        AgentOperations.MONITOR_DATA, 'monitoring/monitordata', 'POST', True
+    )
+    REFRESH_RESPONSE_URIS = (
+        AgentOperations.REFRESH_RESPONSE_URIS, 'core/uris/response', 'GET',
+        False
+    )
+
+    @staticmethod
+    def get_valid_listener_uris():
+        valid_uris = (
+            map(
+                lambda x:
+                getattr(V1ListenerURIs, x), dir(V1ListenerURIs)[:-3]
+            )
+        )
+        return valid_uris
+
+class V2ListenerURIs():
+    NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
+    INSTALL_OS_APPS = (
+        AgentOperations.INSTALL_OS_APPS, 'results/apps/os/install', 'PUT',
+        True
+    )
+    INSTALL_CUSTOM_APPS = (
+        AgentOperations.INSTALL_CUSTOM_APPS, 'results/apps/install/custom',
+        'PUT', True
+    )
+    INSTALL_SUPPORTED_APPS = (
+        AgentOperations.INSTALL_SUPPORTED_APPS,
+        'results/apps/install/supported', 'PUT', True
+    )
+    INSTALL_AGENT_UPDATE = (
+        AgentOperations.INSTALL_AGENT_UPDATE, 'apps/results/apps/agent',
+        'PUT', True
+    )
+    UNINSTALL = (
+        AgentOperations.UNINSTALL, 'apps/results/uninstall', 'PUT', True
+    )
+    UNINSTALL_AGENT = (
+        AgentOperations.UNINSTALL_AGENT, 'apps/results/uninstall', 'PUT', True
+    )
+    REBOOT = (AgentOperations.REBOOT, 'core/results/reboot', 'PUT', True)
+    SHUTDOWN = (
+        AgentOperations.SHUTDOWN, 'core/results/shutdown', 'PUT', True
+    )
+    NEW_TOKEN = (
+        AgentOperations.NEW_TOKEN, 'core/results/newtoken', 'PUT', True
+    )
+    REFRESH_APPS = (
+        AgentOperations.APPS_REFRESH, 'apps/apps_refresh', 'PUT', True
+    )
+    AVAILABLE_AGENT_UPDATE = (
+        AgentOperations.AVAILABLE_AGENT_UPDATE, 'apps/available_agent_update',
+        'PUT', False
+    )
+    START_UP = (AgentOperations.START_UP, 'core/results/startup', 'PUT', True)
+    CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
+    MONITOR_DATA = (
+        AgentOperations.MONITOR_DATA, 'monitoring/monitordata', 'POST', True
+    )
+    REFRESH_RESPONSE_URIS = (
+        AgentOperations.REFRESH_RESPONSE_URIS, 'core/uris/response',
+        'GET', False
+    )
+
+    @staticmethod
+    def get_valid_listener_uris():
+        valid_uris = (
+            map(
+                lambda x:
+                getattr(V2ListenerURIs, x), dir(V2ListenerURIs)[:-3]
+            )
+        )
+        return valid_uris

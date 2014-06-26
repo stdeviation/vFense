@@ -1,123 +1,65 @@
 import os
-from vFense.core._constants import HTTPMethods, CommonKeys
-from vFense.core.operations._constants import AgentOperations, ListenerURIs, \
-    AuthenticationOperations, AuthenticationURIs, BaseURIs
+from vFense.core._constants import CommonKeys
+from vFense.core.operations._constants import (
+    BaseURIs, URIVersions, V2ListenerURIs, V1ListenerURIs
+)
 
-from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent._db import fetch_agent
-from vFense.core.decorators import results_message, time_it
+from vFense.core.decorators import time_it
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import *
 
 
-def _get_result_uris_dict(agent_id=None):
-    if agent_id:
-        base = os.path.join(BaseURIs.LISTENER, agent_id)
-    else:
-        base = os.path.join(BaseURIs.LISTENER, '{0}')
+def _get_result_uris_dict(version, agent_id=None):
 
-    result_uris = {
-        AuthenticationOperations.LOGIN: {
-            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGIN,
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        AuthenticationOperations.LOGOUT: {
-            CommonKeys.RESPONSE_URI: AuthenticationURIs.LOGOUT,
-            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
-        },
-        AgentOperations.NEW_AGENT: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                BaseURIs.LISTENER, ListenerURIs.NEWAGENT
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        AgentOperations.RA: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                BaseURIs.LISTENER, ListenerURIs.RA
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        AgentOperations.REFRESH_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.REFRESH_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.AVAILABLE_AGENT_UPDATE: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.AVAILABLE_AGENT_UPDATE
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.CHECK_IN: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.CHECK_IN
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.GET
-        },
-        AgentOperations.MONITOR_DATA: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.MONITOR_DATA
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.POST
-        },
-        AgentOperations.START_UP: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.START_UP
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.REBOOT: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.REBOOT
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.SHUTDOWN: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.SHUTDOWN
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.INSTALL_OS_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_OS_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.INSTALL_CUSTOM_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_CUSTOM_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.INSTALL_SUPPORTED_APPS: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_SUPPORTED_APPS
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.INSTALL_AGENT_UPDATE: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.INSTALL_AGENT_UPDATE
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.UNINSTALL: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.UNINSTALL
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        },
-        AgentOperations.UNINSTALL_AGENT: {
-            CommonKeys.RESPONSE_URI: os.path.join(
-                base, ListenerURIs.UNINSTALL_AGENT
-            ),
-            CommonKeys.REQUEST_METHOD: HTTPMethods.PUT
-        }
-    }
+    results = {}
+    if version == URIVersions.V2:
+        base_without_agentid = os.path.join(BaseURIs.LISTENER, URIVersions.V2)
+        if agent_id:
+            base = (
+                os.path.join(BaseURIs.LISTENER, URIVersions.V2, agent_id)
+            )
+        else:
+            base = (
+                os.path.join(BaseURIs.LISTENER, URIVersions.V2, '{0}')
+            )
+        for uri in V2ListenerURIs.get_valid_listener_uris():
+            if uri[3]:
+                results[uri[0]] = {
+                    CommonKeys.RESPONSE_URI: os.path.join(base, uri[1]),
+                    CommonKeys.REQUEST_METHOD: uri[2]
+                }
+            else:
+                results[uri[0]] = {
+                    CommonKeys.RESPONSE_URI: (
+                        os.path.join(base_without_agentid, uri[1])
+                    ),
+                    CommonKeys.REQUEST_METHOD: uri[2]
+                }
+    elif version == URIVersions.V1:
+        base_without_agentid = os.path.join(BaseURIs.LISTENER, URIVersions.V1)
+        if agent_id:
+            base = (
+                os.path.join(BaseURIs.LISTENER, URIVersions.V1, agent_id)
+            )
+        else:
+            base = (
+                os.path.join(BaseURIs.LISTENER, URIVersions.V1, '{0}')
+            )
+        for uri in V1ListenerURIs.get_valid_listener_uris():
+            if uri[3]:
+                results[uri[0]] = {
+                    CommonKeys.RESPONSE_URI: os.path.join(base, uri[1]),
+                    CommonKeys.REQUEST_METHOD: uri[2]
+                }
+            else:
+                results[uri[0]] = {
+                    CommonKeys.RESPONSE_URI: (
+                        os.path.join(base_without_agentid, uri[1])
+                    ),
+                    CommonKeys.REQUEST_METHOD: uri[2]
+                }
 
-    return result_uris
+    return results
 
 
 @time_it
@@ -152,11 +94,13 @@ def get_agent_results_uri(agent_id, operation):
 
 
 @time_it
-def get_result_uris(agent_id=None):
+def get_result_uris(agent_id=None, version='v1'):
     """Returns back a dictionary with all of the agent api calls for an agent.
     Kwargs:
         agent_id (str): 36 character UUID of the agent.
             default=None
+        version (str): v1, v2, etc...
+            default=v1
 
     Basic Usage:
         >>> from vFense.receiver.agent_uris import get_result_uris
@@ -188,7 +132,7 @@ def get_result_uris(agent_id=None):
     """
     status_code = 0
     status = get_result_uris.func_name + ' - '
-    result_uris = _get_result_uris_dict(agent_id)
+    result_uris = _get_result_uris_dict(version, agent_id)
 
     generic_status_code = GenericCodes.InformationRetrieved
     vfense_status_code = GenericCodes.InformationRetrieved
