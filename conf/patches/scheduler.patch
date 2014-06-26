@@ -1,0 +1,26 @@
+--- /usr/local/lib/python2.7/dist-packages/apscheduler/scheduler.py	2014-03-04 13:21:25.860390442 -0800
++++ mod_scheduler.py	2014-03-04 13:20:42.180389130 -0800
+@@ -406,7 +406,7 @@
+             return func
+         return inner
+ 
+-    def get_jobs(self):
++    def get_jobs(self, name=None):
+         """
+         Returns a list of all scheduled jobs.
+ 
+@@ -415,8 +415,12 @@
+         self._jobstores_lock.acquire()
+         try:
+             jobs = []
+-            for jobstore in itervalues(self._jobstores):
+-                jobs.extend(jobstore.jobs)
++            if not name:
++            	for jobstore in itervalues(self._jobstores):
++                    jobs.extend(jobstore.jobs)
++            else:
++                if name in self._jobstores:
++                    jobs.extend(self._jobstores[name].jobs)
+             return jobs
+         finally:
+             self._jobstores_lock.release()
