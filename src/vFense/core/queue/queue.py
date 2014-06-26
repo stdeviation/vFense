@@ -4,12 +4,13 @@ from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime, timedelta
 
-from vFense.core.queue._db_model import *
-from vFense.core.queue._db import insert_into_agent_queue, \
-    get_next_avail_order_id_in_agent_queue, fetch_agent_queue, \
-    delete_job_in_queue, delete_multiple_jobs
+from vFense.core.queue._db_model import AgentQueueKey
+from vFense.core.queue._db import (
+    insert_into_agent_queue, get_next_avail_order_id_in_agent_queue,
+    fetch_agent_queue, delete_job_in_queue, delete_multiple_jobs
+)
 
-from vFense.core.view._db_model import *
+from vFense.core.view._db_model import ViewKeys
 from vFense.core.view._constants import DefaultViews
 from vFense.core.view.manager import ViewManager
 

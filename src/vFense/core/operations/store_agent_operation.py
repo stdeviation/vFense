@@ -64,8 +64,8 @@ class StoreAgentOperation(object):
         )
 
     def generic_operation(
-            self, action, plugin,
-            agentids=None, tag_id=None
+            self, action, plugin, agentids=None,
+            tag_id=None, custom_key=None, custom_value=None
         ):
         """This will do all the necessary work, to add the operation
             into the agent_queue. This method is to be used for operations
@@ -77,9 +77,16 @@ class StoreAgentOperation(object):
                 Examples.... reboot, shutdown, install_os_apps, etc..
             plugin (str): The plugin that this operation is for.
                 Examples... core, rv, ra, vuln
+        Kwargs:
             agentids (list): List of agent ids, this operation will
                 be performed on.
             tag_id (str): The tag id that this operation will be performed on.
+            custom_key (str): This is a custom key that you want to add
+                to this operation.
+                default=None
+            custom_val (str|int|dict|list): The data you want to send back
+                to the agent. This must be sent with custom_key.
+                default=None
 
         Basic Usage:
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
@@ -153,6 +160,9 @@ class StoreAgentOperation(object):
                     AgentOperationKey.Plugin: plugin,
                     OperationPerAgentKey.AgentId: agent_id,
                 }
+                if custom_key and custom_value:
+                    operation_data[custom_key] = custom_value
+
                 agent_data = deepcopy(operation_data)
                 data.append(agent_data)
                 self._store_in_agent_queue(operation_data)

@@ -51,6 +51,7 @@ class AgentApiArguments():
     REBOOT = 'reboot'
     SHUTDOWN = 'shutdown'
     APPS_REFRESH = 'apps_refresh'
+    TOKEN = 'token'
 
 
 class TagApiArguments():

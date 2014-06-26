@@ -12,6 +12,7 @@ class Permissions():
     CREATE_VIEW = 'create view'
     REMOVE_VIEW = 'remove view'
     NEW_AGENT = 'new agent'
+    ASSIGN_NEW_TOKEN = 'assign new token to agents'
     DELETE_AGENT = 'delete agent'
     ADD_AGENTS_TO_VIEW = 'add agents to view'
     REMOVE_AGENTS_FROM_VIEW = 'remove agents from view'

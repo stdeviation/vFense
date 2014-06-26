@@ -5,10 +5,16 @@ class vFensePlugins():
     MONITORING_PLUGIN = 'monitoring'
     VULNERABILITY = 'vulnerability'
     PATCHING = 'patching'
-    VALID_PLUGINS = (
-        RV_PLUGIN, CORE_PLUGIN, RA_PLUGIN, MONITORING_PLUGIN,
-        VULNERABILITY, PATCHING
-    )
+
+    @staticmethod
+    def get_valid_plugins():
+        valid_plugins = (
+            map(
+                lambda x:
+                getattr(vFensePlugins, x), dir(vFensePlugins)[:-3]
+            )
+        )
+        return valid_plugins
 
 
 class OperationErrors():
@@ -19,7 +25,6 @@ class OperationErrors():
     FAILED = 'Operation completed with errors'
 
 
-
 class vFenseObjects():
     AGENT = 'agent'
     TAG = 'tag'
@@ -27,15 +32,35 @@ class vFenseObjects():
     USER = 'user'
     GROUP = 'group'
     VIEW = 'view'
-    VALID_OBJECTS = (
-        AGENT, TAG, SCHEDULE,
-        USER, GROUP, VIEW
-    )
+
+    @staticmethod
+    def get_valid_objects():
+        valid_objects = (
+            map(
+                lambda x:
+                getattr(vFenseObjects, x), dir(vFenseObjects)[:-3]
+            )
+        )
+        return valid_objects
 
 
 class BaseURIs():
-    LISTENER = 'rvl/v1'
-    API = 'api/v1'
+    LISTENER = 'rvl'
+    API = 'api'
+
+class URIVersions():
+    V1 = 'v1'
+    V2 = 'v2'
+
+    @staticmethod
+    def get_valid_versions():
+        valid_versions = (
+            map(
+                lambda x:
+                getattr(URIVersions, x), dir(URIVersions)[:-3]
+            )
+        )
+        return valid_versions
 
 
 class AuthenticationURIs():
@@ -67,9 +92,20 @@ class ListenerURIs():
     MONITOR_DATA = 'monitoring/monitordata'
     REFRESH_RESPONSE_URIS = 'core/uris/response'
 
+    @staticmethod
+    def get_valid_listener_uris():
+        valid_uris = (
+            map(
+                lambda x:
+                getattr(ListenerURIs, x), dir(ListenerURIs)[:-3]
+            )
+        )
+        return valid_uris
+
 
 class AgentOperations():
     NEW_AGENT = 'new_agent'
+    NEW_TOKEN = 'new_token'
     REFRESH_APPS = 'updatesapplications'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
@@ -86,10 +122,12 @@ class AgentOperations():
     REFRESH_RESPONSE_URIS = 'refresh_response_uris'
     AVAILABLE_AGENT_UPDATE = 'available_agent_update'
 
-    OPERATIONS = (
-        NEW_AGENT, REFRESH_APPS, CHECK_IN, MONITOR_DATA,
-        START_UP, INSTALL_OS_APPS, INSTALL_CUSTOM_APPS,
-        INSTALL_SUPPORTED_APPS, INSTALL_AGENT_UPDATE,
-        UNINSTALL, UNINSTALL_AGENT,
-        REBOOT, SHUTDOWN, RA, REFRESH_RESPONSE_URIS
-    )
+    @staticmethod
+    def get_valid_operations():
+        valid_operations = (
+            map(
+                lambda x:
+                getattr(AgentOperations, x), dir(AgentOperations)[:-3]
+            )
+        )
+        return valid_operations

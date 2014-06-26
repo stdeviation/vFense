@@ -18,6 +18,7 @@ from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.manager import AgentManager
+from vFense.core.view.manager import ViewManager
 from vFense.core.queue.uris import get_result_uris
 from vFense.errorz.error_messages import GenericResults
 
@@ -36,7 +37,8 @@ from vFense.core.decorators import (
 )
 from vFense.errorz._constants import ApiResultKeys
 from vFense.errorz.status_codes import (
-    GenericCodes, GenericFailureCodes
+    GenericCodes, GenericFailureCodes, AgentCodes, AgentFailureCodes,
+    ViewCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -267,10 +269,10 @@ class AgentsHandler(BaseHandler):
                 views = views.split()
 
             if action == ApiValues.ADD:
-                results == self.add_agents_to_views(agent_ids, views)
+                results = self.add_agents_to_views(agent_ids, views)
 
             elif action == ApiValues.DELETE:
-                results == self.remove_agents_from_views(agent_ids, views)
+                results = self.remove_agents_from_views(agent_ids, views)
 
             else:
                 results = (
@@ -479,14 +481,14 @@ class AgentsHandler(BaseHandler):
             results = manager.remove()
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
                     == AgentCodes.AgentDeleted):
-                agents_deleted.append(view)
+                agents_deleted.append(agent_id)
             else:
-                agents_unchanged.append(view)
+                agents_unchanged.append(agent_id)
 
         end_results[ApiResultKeys.UNCHANGED_IDS] = agents_unchanged
         end_results[ApiResultKeys.DELETED_IDS] = agents_deleted
 
-        if agents_removed and agents_unchanged:
+        if agents_deleted and agents_unchanged:
             msg = (
                 'Agents: {0} deleted and these agents didnt: {1}'
                 .format(
@@ -502,7 +504,7 @@ class AgentsHandler(BaseHandler):
             )
             end_results[ApiResultKeys.MESSAGE] = msg
 
-        elif agents_removed and not agents_unchanged:
+        elif agents_deleted and not agents_unchanged:
             msg = (
                 'Agents: {0} deleted.'.format(', '.join(agents))
             )
@@ -702,6 +704,7 @@ class AgentHandler(BaseHandler):
         try:
             reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
             shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
+            token = self.arguments.get(AgentApiArguments.TOKEN, None)
             apps_refresh = (
                 self.arguments.get(AgentApiArguments.APPS_REFRESH, None)
             )
@@ -715,6 +718,9 @@ class AgentHandler(BaseHandler):
 
             elif shutdown:
                 results = self.shutdown(operation, [agent_id])
+
+            elif token:
+                results = self.new_token(operation, [agent_id], token)
 
             elif apps_refresh:
                 operation = (
@@ -757,6 +763,12 @@ class AgentHandler(BaseHandler):
     @results_message
     def shutdown(self, operation, agent_ids):
         results = operation.shutdown(agent_ids)
+        return results
+
+    @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
+    @results_message
+    def new_token(self, operation, agent_ids, token):
+        results = operation.new_token(agent_ids, token=token)
         return results
 
     @results_message
