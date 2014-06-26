@@ -393,7 +393,8 @@ def clean_database():
         sleep(3)
         print 'Rethink stopped successfully\n'
     try:
-        shutil.rmtree(RETHINK_VFENSE_PATH)
+        if os.path.exists(RETHINK_VFENSE_PATH):
+            shutil.rmtree(RETHINK_VFENSE_PATH)
         completed = True
         print 'Rethink instances.d directory removed and cleaned'
 
