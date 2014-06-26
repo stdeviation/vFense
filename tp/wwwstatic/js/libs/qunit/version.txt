@@ -1,4 +1,0 @@
-QUnit.js
-Home:       http://qunitjs.com
-GitHub:     https://github.com/jquery/qunit/tags
-Version:    1.11.0
