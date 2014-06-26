@@ -1,2 +1,0 @@
-class DefaultCustomers():
-    DEFAULT = 'default'
