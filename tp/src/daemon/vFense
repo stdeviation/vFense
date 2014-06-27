@@ -1,0 +1,68 @@
+#!/bin/sh
+
+NAME="vFense"
+DESC="vFense"
+USERNAME="vfense"
+DAEMON="/usr/local/bin/vFensed"
+DEPENDENCIES_RUNNING="true"
+NGINX_RUNNING=`pidof nginx`
+REDIS_RUNNING=`pidof redis-server`
+RETHINK_RUNNING=`pidof rethinkdb`
+
+set -e
+. /lib/lsb/init-functions
+
+check_dependencies() {
+    if [ -z "$NGINX_RUNNING" ]; then
+        echo "nginx is not running, please start nginx"
+        DEPENDENCIES_RUNNING="false"
+    fi
+
+   if [ -z "$REDIS_RUNNING" ]; then
+        echo "redis is not running, please start redis"
+        DEPENDENCIES_RUNNING="false"
+    fi
+
+    if [ -z "$RETHINK_RUNNING" ]; then
+        echo "rethinkdb is not running, please start rethinkdb"
+        DEPENDENCIES_RUNNING="false"
+    fi
+}
+
+case "$1" in
+  start)
+    check_dependencies
+    if [ "$DEPENDENCIES_RUNNING" = "true" ]; then
+        if start-stop-daemon --start --quiet --chuid $USERNAME:$USERNAME --exec $DAEMON $1
+	    then
+		    echo "$NAME."
+	    else
+		    echo "failed"
+	    fi
+    else
+        echo "Failed to start vFense, dependencies are not running"
+    fi
+	;;
+  stop)
+    if start-stop-daemon --start --quiet --chuid $USERNAME:$USERNAME --exec $DAEMON $1
+	then
+		echo "$NAME."
+	else
+		echo "failed"
+	fi
+	;;	
+  restart)
+	${0} stop
+	${0} start
+	;;
+  status)
+	sh -c "$DAEMON $1"
+	;;
+  *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start|stop|restart|status}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
