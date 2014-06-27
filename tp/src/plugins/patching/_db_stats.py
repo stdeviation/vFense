@@ -85,24 +85,24 @@ def get_all_app_stats_by_agentid(agent_id, conn=None):
                 CommonAppKeys.NAME: CommonAppKeys.CUSTOM
             }
         )
-        supported_apps_avail = (
-            r
-            .table(AppCollections.SupportedAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
+        #supported_apps_avail = (
+        #    r
+        #    .table(AppCollections.SupportedAppsPerAgent)
+        #    .get_all(
+        #        [CommonAppKeys.AVAILABLE, agent_id],
+        #        index=DbCommonAppPerAgentIndexes.StatusAndAgentId
+        #    )
+        #    .count()
+        #    .run(conn)
+        #)
 
-        data.append(
-            {
-                CommonAppKeys.COUNT: supported_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
-            }
-        )
+        #data.append(
+        #    {
+        #        CommonAppKeys.COUNT: supported_apps_avail,
+        #        CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+        #        CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
+        #    }
+        #)
 
         agent_apps_avail = (
             r
