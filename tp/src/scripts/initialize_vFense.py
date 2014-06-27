@@ -313,7 +313,8 @@ def clean_database(connected):
         rethink_stop = subprocess.Popen(['service', 'rethinkdb','stop'])
         rql_msg = 'Rethink stopped successfully\n'
     try:
-        shutil.rmtree(RETHINK_DATA_PATH)
+        if os.path.exists(RETHINK_DATA_PATH):
+            shutil.rmtree(RETHINK_DATA_PATH)
         msg = 'Rethink instances.d directory removed and cleaned'
     except Exception as e:
         msg = 'Rethink instances.d directory could not be removed'
