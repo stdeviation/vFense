@@ -2,12 +2,24 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.db.client import db_create_close, r
-from vFense.plugins.patching._db_model import *
-from vFense.core._constants import CommonKeys
-from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
-from vFense.core.agent._db_model import *
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.plugins.patching._db_model import (
+    AppCollections, DbCommonAppKeys
+)
+from vFense.plugins.patching._constants import (
+    CommonAppKeys, CommonSeverityKeys
+)
+from vFense.core._constants import (
+    SortValues, DefaultQueryValues, CommonKeys
+)
+from vFense.core.view._constants import DefaultViews
+from vFense.plugins.patching.search._db_search import FetchApps
+
+from vFense.errorz.status_codes import (
+    GenericCodes, GenericFailureCodes
+)
+from vFense.errorz._constants import (
+    ApiResultKeys
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -17,46 +29,29 @@ class RetrieveApps(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 uri=None, method=None, count=30,
-                 offset=0, sort='asc', sort_key=AppsKey.Name,
-                 show_hidden=CommonKeys.NO):
+    def __init__(self, view_name=None,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
+                 show_hidden=CommonKeys.NO,
+                 apps_collection=AppCollections.UniqueApplications,
+                 apps_per_agent_collection=AppCollections.AppsPerAgent):
         """
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
 
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
-            self.show_hidden = CommonKeys.NO
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
-            self.sort_key = self.CurrentAppsKey.Name
-
-        if sort == 'asc':
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
-
-        if self.view_name == DefaultViews.GLOBAL:
-            self.view_name = None
+        if view_name == DefaultViews.GLOBAL:
+            view_name = None
 
         self.fetch_apps = (
             FetchApps(
-                self.view_name, self.count, self.offset,
-                self.sort, self.sort_key, self.show_hidden
+                view_name, count, offset,
+                sort, sort_key, show_hidden
             )
         )
 
     def by_status(self, status):
-        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+        if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status(status)
             generic_status_code = GenericCodes.InformationRetrieved
 
@@ -115,7 +110,7 @@ class RetrieveApps(object):
         generic_status_code = GenericCodes.InvalidFilterKey
         vfense_status_code = GenericCodes.InvalidFilterKey
         msg = 'Invalid severity {0}'.format(sev)
-        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+        if status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
                 count, data = self.fetch_apps.by_status_and_sev(status, sev)
                 generic_status_code = GenericCodes.InformationRetrieved
@@ -180,7 +175,7 @@ class RetrieveApps(object):
 
 
     def by_status_and_name(self, status, name):
-        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+        if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status_and_name(status, name)
             generic_status_code = GenericCodes.InformationRetrieved
 
@@ -212,7 +207,7 @@ class RetrieveApps(object):
         generic_status_code = GenericCodes.InvalidFilterKey
         vfense_status_code = GenericCodes.InvalidFilterKey
         msg = 'Invalid status {0}'.format(status)
-        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+        if status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
                 count, data = (
                     self.fetch_apps.by_status_and_name_and_sev(
@@ -255,117 +250,76 @@ class RetrieveCustomApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 uri=None, method=None, count=30,
-                 offset=0, sort='asc', sort_key=CustomAppsKey.Name,
+    def __init__(self, view_name=None,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
+        """
+        """
+        apps_collection = AppCollections.CustomApps
+        apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
+        if view_name == DefaultViews.GLOBAL:
+            view_name = None
 
-        self.set_global_properties(
-            AppCollections.CustomApps, CustomAppsIndexes,
-            AppCollections.CustomAppsPerAgent,
-            CustomAppsKey, CustomAppsPerAgentKey,
-            CustomAppsPerAgentIndexes
+        self.fetch_apps = (
+            FetchApps(
+                view_name, count, offset,
+                sort, sort_key, show_hidden,
+                apps_collection, apps_per_agent_collection
+            )
         )
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
-            self.show_hidden = CommonKeys.NO
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
-            self.sort_key = self.CurrentAppsKey.Name
-
-        if sort == 'asc':
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
 class RetrieveSupportedApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 uri=None, method=None, count=30,
-                 offset=0, sort='asc',
-                 sort_key=SupportedAppsKey.Name,
+    def __init__(self, view_name=None,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
+        """
+        """
+        apps_collection = AppCollections.SupportedApps
+        apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
 
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
+        if view_name == DefaultViews.GLOBAL:
+            view_name = None
 
-        self.set_global_properties(
-            AppCollections.SupportedApps, SupportedAppsIndexes,
-            AppCollections.SupportedAppsPerAgent,
-            SupportedAppsKey, SupportedAppsPerAgentKey,
-            SupportedAppsPerAgentIndexes
+        self.fetch_apps = (
+            FetchApps(
+                view_name, count, offset,
+                sort, sort_key, show_hidden,
+                apps_collection, apps_per_agent_collection
+            )
         )
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
-            self.show_hidden = CommonKeys.NO
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
-            self.sort_key = self.CurrentAppsKey.Name
-
-        if sort == 'asc':
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
 class RetrieveAgentApps(RetrieveApps):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 uri=None, method=None, count=30,
-                 offset=0, sort='asc',
-                 sort_key=AgentAppsKey.Name,
+    def __init__(self, view_name=None,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
+        """
+        """
+        apps_collection = AppCollections.vFenseApps
+        apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
 
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
+        if view_name == DefaultViews.GLOBAL:
+            view_name = None
 
-        self.set_global_properties(
-            AppCollections.vFenseApps, AgentAppsIndexes,
-            AppCollections.vFenseAppsPerAgent,
-            AgentAppsKey, AgentAppsPerAgentKey,
-            AgentAppsPerAgentIndexes
+        self.fetch_apps = (
+            FetchApps(
+                view_name, count, offset,
+                sort, sort_key, show_hidden,
+                apps_collection, apps_per_agent_collection
+            )
         )
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
-            self.show_hidden = CommonKeys.NO
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
-            self.sort_key = self.CurrentAppsKey.Name
-
-        if sort == 'asc':
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
-
-
-

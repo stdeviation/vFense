@@ -97,7 +97,7 @@ def initialize_indexes_and_create_tables():
 
 #################################### AgentsColleciton Indexes ###################################################
     if not AgentIndexes.Views in agents_list:
-        r.table(AgentCollections.Agents).index_create(AgentIndexes.Views).run(conn)
+        r.table(AgentCollections.Agents).index_create(AgentIndexes.Views, multi=True).run(conn)
 
     if not AgentIndexes.OsCode in agents_list:
         r.table(AgentCollections.Agents).index_create(AgentIndexes.OsCode).run(conn)

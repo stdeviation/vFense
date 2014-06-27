@@ -40,10 +40,16 @@ class FetchApps(object):
         self.view_name = view_name
         self.show_hidden = show_hidden
         self.sort_key = sort_key
+
         if sort == SortValues.ASC:
             self.sort = r.asc
         else:
             self.sort = r.desc
+
+        if show_hidden in CommonAppKeys.ValidHiddenVals:
+            self.show_hidden = show_hidden
+        else:
+            self.show_hidden = CommonKeys.NO
 
         self.apps_collection = apps_collection
         self.apps_per_agent_collection = apps_per_agent_collection
@@ -59,17 +65,20 @@ class FetchApps(object):
             ]
         )
 
+        if sort_key in self.pluck_list:
+            self.sort_key = sort_key
+        else:
+            self.sort_key = DbCommonAppKeys.Name
+
 
     @db_create_close
     def all(self, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_base_filter()
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -106,12 +115,10 @@ class FetchApps(object):
     def by_status(self, pkg_status, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_status_filter(pkg_status)
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -126,7 +133,6 @@ class FetchApps(object):
 
             count = (
                 base
-                .pluck(DbCommonAppKeys.AppId)
                 .distinct()
                 .count()
                 .run(conn)
@@ -150,12 +156,10 @@ class FetchApps(object):
     def by_severity(self, sev, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_sev_filter(sev)
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -191,12 +195,10 @@ class FetchApps(object):
     def by_status_and_sev(self, status, sev, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_status_filter(status)
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -228,7 +230,6 @@ class FetchApps(object):
                     lambda x:
                     x[DbCommonAppKeys.RvSeverity] == sev
                 )
-                .pluck(self.pluck_list)
                 .distinct()
                 .count()
                 .run(conn)
@@ -243,12 +244,10 @@ class FetchApps(object):
     def by_name(self, name, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_base_filter()
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -279,7 +278,6 @@ class FetchApps(object):
                     lambda x:
                     x[DbCommonAppKeys.Name].match("(?i)"+name)
                 )
-                .pluck(DbCommonAppKeys.AppId)
                 .count()
                 .run(conn)
             )
@@ -293,12 +291,10 @@ class FetchApps(object):
     def by_status_and_name(self, status, name, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_status_filter(status)
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -330,7 +326,6 @@ class FetchApps(object):
                     lambda x:
                     x[DbCommonAppKeys.Name].match("(?i)"+name)
                 )
-                .pluck(DbCommonAppKeys.AppId)
                 .count()
                 .run(conn)
             )
@@ -344,12 +339,10 @@ class FetchApps(object):
     def by_status_and_name_and_sev(self, status, name, sev, conn=None):
         count = 0
         data = []
-        map_hash = self._set_join_map_hash()
         base_filter = self._set_status_filter(status)
         try:
             base = (
                 base_filter
-                .map(map_hash)
             )
 
             if self.show_hidden == CommonKeys.NO:
@@ -379,16 +372,13 @@ class FetchApps(object):
 
             count = (
                 base
-                .pluck(
-                    DbCommonAppKeys.RvSeverity, DbCommonAppKeys.Name
-                )
-                .distinct()
                 .filter(
                     lambda x:
                     (x[DbCommonAppKeys.RvSeverity] == sev)
                     &
                     (x[DbCommonAppKeys.Name].match("(?i)"+name))
                 )
+                .distinct()
                 .count()
                 .run(conn)
             )
@@ -421,6 +411,7 @@ class FetchApps(object):
                     x['right'][DbCommonAppKeys.Hidden],
             }
         )
+
         return map_hash
 
     def _set_map_hash(self):
@@ -428,22 +419,29 @@ class FetchApps(object):
 
         map_hash = (
             {
-                DbCommonAppKeys.AppId: r.row[DbCommonAppKeys.AppId],
-                DbCommonAppKeys.Version: r.row[DbCommonAppKeys.Version],
-                DbCommonAppKeys.Name: r.row[DbCommonAppKeys.Name],
-                DbCommonAppKeys.ReleaseDate: (
-                    r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time()
-                ),
-                DbCommonAppKeys.RvSeverity: r.row[DbCommonAppKeys.RvSeverity],
-                DbCommonAppKeys.VulnerabilityId: (
+                DbCommonAppKeys.AppId:
+                    r.row[DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version:
+                    r.row[DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name:
+                    r.row[DbCommonAppKeys.Name],
+                DbCommonAppKeys.ReleaseDate:
+                    r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time(),
+                DbCommonAppKeys.RvSeverity:
+                    r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.VulnerabilityId:
                     r.row[DbCommonAppKeys.VulnerabilityId],
-                )
+                DbCommonAppKeys.Hidden:
+                    r.row[DbCommonAppKeys.Hidden],
             }
         )
+
         return map_hash
+
 
     def _set_base_filter(self):
         if self.view_name:
+            map_hash = self._set_join_map_hash()
             base = (
                 r
                 .table(AgentCollections.Agents)
@@ -458,35 +456,28 @@ class FetchApps(object):
                     r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.AgentId
                 )
-                .zip()
+                .pluck('right')
                 .eq_join(
-                    DbCommonAppPerAgentKeys.AppId,
+                    lambda x:
+                    x['right'][DbCommonAppPerAgentKeys.AppId],
                     r.table(self.apps_collection)
                 )
+                .map(map_hash)
             )
 
         else:
+            map_hash = self._set_map_hash()
             base = (
                 r
-                .table(AgentCollections.Agents)
-                .pluck(AgentKeys.AgentId)
-                .eq_join(
-                    lambda x:
-                    x[AgentKeys.AgentId],
-                    r.table(self.apps_per_agent_collection),
-                    index=DbCommonAppPerAgentIndexes.AgentId
-                )
-                .zip()
-                .eq_join(
-                    DbCommonAppPerAgentKeys.AppId,
-                    r.table(self.apps_collection)
-                )
+                .table(self.apps_collection)
+                .map(map_hash)
             )
 
         return base
 
     def _set_sev_filter(self, sev):
         if self.view_name:
+            map_hash = self._set_join_map_hash()
             base = (
                 r
                 .table(AgentCollections.Agents)
@@ -501,39 +492,30 @@ class FetchApps(object):
                     r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.AgentId
                 )
-                .zip()
+                .pluck('right')
                 .eq_join(
                     lambda x:
                     [
-                        x[DbCommonAppKeys.AppId],
-                        sev
+                        x['right'][DbCommonAppKeys.AppId], sev
                     ],
                     r.table(self.apps_collection),
                     index=DbCommonAppIndexes.AppIdAndRvSeverity
                 )
+                .map(map_hash)
             )
 
         else:
+            map_hash = self._set_map_hash()
             base = (
                 r
-                .table(AgentCollections.Agents)
-                .pluck(AgentKeys.AgentId)
-                .eq_join(
-                    lambda x:
-                    x[AgentKeys.AgentId],
-                    r.table(self.apps_per_agent_collection),
-                    index=DbCommonAppPerAgentIndexes.AgentId
-                )
-                .zip()
-                .eq_join(
-                    lambda x:
+                .table(self.apps_collection)
+                .get_all(
                     [
-                        x[DbCommonAppKeys.AppId],
-                        sev
+                        DbCommonAppKeys.AppId, sev
                     ],
-                    r.table(self.apps_collection),
                     index=DbCommonAppIndexes.AppIdAndRvSeverity
                 )
+                .map(map_hash)
             )
 
         return base
@@ -541,6 +523,7 @@ class FetchApps(object):
 
     def _set_status_filter(self, status):
         if self.view_name:
+            map_hash = self._set_join_map_hash()
             base = (
                 r
                 .table(AgentCollections.Agents)
@@ -555,29 +538,31 @@ class FetchApps(object):
                     r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.StatusAndAgentId
                 )
-                .zip()
+                .pluck('right')
                 .eq_join(
-                    DbCommonAppPerAgentKeys.AppId,
+                    lambda x:
+                    x['right'][DbCommonAppPerAgentKeys.AppId],
                     r.table(self.apps_collection)
                 )
+                .map(map_hash)
             )
 
         else:
+            map_hash = self._set_join_map_hash()
             base = (
                 r
-                .table(AgentCollections.Agents)
-                .pluck(AgentKeys.AgentId)
+                .table(self.apps_per_agent_collection)
+                .get_all(
+                    status,
+                    index=DbCommonAppPerAgentIndexes.Status
+                )
                 .eq_join(
                     lambda x:
-                    [status, x[AgentKeys.AgentId]],
-                    r.table(self.apps_per_agent_collection),
-                    index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-                )
-                .zip()
-                .eq_join(
-                    DbCommonAppPerAgentKeys.AppId,
+                    x[DbCommonAppPerAgentKeys.AppId],
                     r.table(self.apps_collection)
                 )
+                .pluck('right')
+                .map(map_hash)
             )
 
         return base
