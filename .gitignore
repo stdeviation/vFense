@@ -6,13 +6,3 @@ var/scheduler
 var/redis
 var/packages
 var/tmp
-tp/src/plugins/vuln
-.idea/
-*.adb
-*.last_uptime
-*.log
-*.oqd
-*.rqd
-tags
-.*
-agent/
