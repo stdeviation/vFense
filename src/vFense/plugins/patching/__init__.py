@@ -53,32 +53,6 @@ def initialize_app_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
-    if not DbCommonAppIndexes.Views in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppIndexes.Views, multi=True
-            )
-            .run(conn)
-        )
-
-    if not DbCommonAppIndexes.ViewAndRvSeverity in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppIndexes.ViewAndRvSeverity,
-                lambda x: 
-                [
-                    x[DbCommonAppKeys.Views],
-                    x[DbCommonAppKeys.RvSeverity]
-                ],
-                multi=True
-            )
-            .run(conn)
-        )
-
     if not DbCommonAppIndexes.AppIdAndRvSeverity in indexes:
         (
             r
@@ -137,16 +111,6 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
             ).run(conn)
         )
 
-    if not DbCommonAppPerAgentIndexes.ViewName in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.ViewName
-            )
-            .run(conn)
-        )
-
     if not DbCommonAppPerAgentIndexes.AgentIdAndAppId in indexes:
         (
             r
@@ -163,21 +127,6 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
         )
 
 
-    if not DbCommonAppPerAgentIndexes.AppIdAndView in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.AppIdAndView,
-                lambda x:
-                [
-                    x[DbCommonAppPerAgentKeys.AppId],
-                    x[DbCommonAppPerAgentKeys.ViewName]
-                ]
-            )
-            .run(conn)
-        )
-
     if not DbCommonAppPerAgentIndexes.AppIdAndStatus in indexes:
         (
             r
@@ -188,37 +137,6 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
                 [
                     x[DbCommonAppPerAgentKeys.AppId],
                     x[DbCommonAppPerAgentKeys.Status]
-                ]
-            )
-            .run(conn)
-        )
-
-    if not DbCommonAppPerAgentIndexes.StatusAndView in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.StatusAndView,
-                lambda x:
-                [
-                    x[DbCommonAppPerAgentKeys.Status],
-                    x[DbCommonAppPerAgentKeys.ViewName]
-                ]
-            )
-            .run(conn)
-        )
-
-    if not DbCommonAppPerAgentIndexes.AppIdAndStatusAndView in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.AppIdAndStatusAndView,
-                lambda x:
-                [
-                    x[DbCommonAppPerAgentKeys.AppId],
-                    x[DbCommonAppPerAgentKeys.Status],
-                    x[DbCommonAppPerAgentKeys.ViewName]
                 ]
             )
             .run(conn)
