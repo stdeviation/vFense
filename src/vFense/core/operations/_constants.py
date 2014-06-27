@@ -67,8 +67,8 @@ class URIVersions():
 class AgentOperations():
     NEW_AGENT = 'new_agent'
     NEW_TOKEN = 'new_token'
-    REFRESH_APPS = 'updatesapplications'
-    APPS_REFRESH = 'apps_refresh'
+    UPDATESAPPLICATIONS = 'updatesapplications'
+    REFRESH_APPS = 'refresh_apps'
     CHECK_IN = 'check_in'
     MONITOR_DATA = 'monitor_data'
     START_UP = 'startup'
@@ -132,8 +132,9 @@ class V1ListenerURIs():
     SHUTDOWN = (
         AgentOperations.SHUTDOWN, 'core/results/shutdown', 'PUT', True
     )
-    REFRESH_APPS = (
-        AgentOperations.REFRESH_APPS, 'rv/updatesapplications', 'PUT', True
+    UPDATESAPPLICATIONS = (
+        AgentOperations.UPDATESAPPLICATIONS, 'rv/updatesapplications',
+        'PUT', True
     )
     AVAILABLE_AGENT_UPDATE = (
         AgentOperations.AVAILABLE_AGENT_UPDATE, 'rv/available_agent_update',
@@ -191,7 +192,7 @@ class V2ListenerURIs():
         AgentOperations.NEW_TOKEN, 'core/results/newtoken', 'PUT', True
     )
     REFRESH_APPS = (
-        AgentOperations.APPS_REFRESH, 'apps/apps_refresh', 'PUT', True
+        AgentOperations.REFRESH_APPS, 'apps/refresh_apps', 'PUT', True
     )
     AVAILABLE_AGENT_UPDATE = (
         AgentOperations.AVAILABLE_AGENT_UPDATE, 'apps/available_agent_update',

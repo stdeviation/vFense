@@ -29,7 +29,6 @@ from vFense.core.api.decorators import authenticate_token
 
 
 import plugins.ra.handoff as RaHandoff
-#from server.handlers import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -175,9 +174,15 @@ class NewAgentV2(BaseHandler):
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS]
-            uris = get_result_uris(agent_id)
+            uris = get_result_uris(agent_id, version='v2')
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
-            results[ApiResultKeys.DATA].append(uris)
+            new_agent_id = {
+                AgentOperationKey.Operation: "new_agent_id",
+                AgentOperationKey.OperationId: "",
+                OperationPerAgentKey.AgentId: agent_id
+            }
+            results[ApiResultKeys.OPERATIONS].append(new_agent_id)
+            results[ApiResultKeys.OPERATIONS].append(uris)
         return results

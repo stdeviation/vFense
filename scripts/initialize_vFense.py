@@ -303,22 +303,6 @@ def create_users(admin_group_id, agent_group_id, conn=None):
     user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)
-    agent_pass = generate_pass()
-    while not check_password(agent_pass)[0]:
-        agent_pass = generate_pass()
-
-    agent_user = User(
-        DefaultUsers.GLOBAL_AGENT,
-        agent_pass, DefaultGroups.GLOBAL_READ_ONLY,
-        current_view=DefaultViews.GLOBAL,
-        default_view=DefaultViews.GLOBAL,
-        enabled=True, is_global=True
-     )
-    user_agent_manager = UserManager(agent_user.name)
-    user_agent_manager.create(agent_user, [agent_group_id])
-
-    print 'Agent username = %s' % (DefaultUsers.GLOBAL_AGENT)
-    print 'Agent password = %s' % (agent_pass)
 
 
 @db_create_close

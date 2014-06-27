@@ -177,14 +177,69 @@ class Agent(object):
 
                 Ex:
                 {
-                    "agent_queue_ttl": 100 ,
-                    "cpu_throttle":  "high" ,
-                    "view_name":  "default" ,
-                    "net_throttle": 100 ,
-                    "package_download_url_base": https://192.168.8.14/packages/,
-                    "server_queue_ttl": 100
+                    "rebooted": true,
+                    "hardware": {
+                        "nic": [
+                            {
+                                "mac": "3085A925BFD6",
+                                "ip_address": "10.0.0.2",
+                                "name": "Local Area Connection"
+                            },
+                            {
+                                "mac": "005056C00001",
+                                "ip_address": "192.168.110.1",
+                                "name": "VMware Network Adapter VMnet1"
+                            },
+                            {
+                                "mac": "005056C00008",
+                                "ip_address": "192.168.252.1",
+                                "name": "VMware Network Adapter VMnet8"
+                            }
+                        ],
+                        "display": [
+                            {
+                                "speed_mhz": "GeForce GTX 660M",
+                                "name": "NVIDIA GeForce GTX 660M  ",
+                                "ram_kb": 0
+                            }
+                        ],
+                        "storage": [
+                            {
+                                "free_size_kb": 155600024,
+                                "name": "C:",
+                                "size_kb": 499872764,
+                                "file_system": "NTFS"
+                            }
+                        ],
+                        "cpu": [
+                            {
+                                "speed_mhz": 2401,
+                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
+                                "cpu_id": 1,
+                                "bit_type": 64,
+                                "cache_kb": 1024,
+                                "cores": 4
+                            }
+                        ],
+                        "memory": 25165824
+                    },
+                    "display_name": null,
+                    "production_level": "Production",
+                    "views": [
+                        "global"
+                    ],
+                    "date_added": 1403881567.891592,
+                    "last_agent_update": 1403881567.891593,
+                    "os_code": "windows",
+                    "agent_status": "up",
+                    "token": null,
+                    "version": "6.1.7601",
+                    "bit_type": "64",
+                    "computer_name": "DISCIPLINE-1",
+                    "os_string": "Windows 7 Professional N",
+                    "needs_reboot": false,
+                    "assign_new_token": false
                 }
-
         """
 
         return {

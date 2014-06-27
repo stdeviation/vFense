@@ -30,13 +30,6 @@ class RetrieveApps(object):
         self.uri = uri
         self.method = method
 
-        self.set_global_properties(
-            AppCollections.UniqueApplications,
-            AppsIndexes, 
-            AppCollections.AppsPerAgent, AppsKey, AppsPerAgentKey,
-            AppsPerAgentIndexes
-        )
-
         if show_hidden in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = show_hidden
         else:
@@ -52,56 +45,14 @@ class RetrieveApps(object):
         else:
             self.sort = r.desc
 
-    def set_global_properties(self, apps_collection, apps_indexes,
-                              apps_per_agent_collection, apps_key,
-                              apps_per_agent_key, apps_per_agent_indexes):
-        """ Set the global properties. """
+        if self.view_name == DefaultViews.GLOBAL:
+            self.view_name = None
 
-        self.CurrentAppsCollection = apps_collection
-        self.CurrentAppsIndexes = apps_indexes
-        self.CurrentAppsPerAgentCollection = apps_per_agent_collection
-        self.CurrentAppsKey = apps_key
-        self.CurrentAppsPerAgentKey = apps_per_agent_key
-        self.CurrentAppsPerAgentIndexes = apps_per_agent_indexes
-
-        self.joined_map_hash = (
-            {                                                                                                                                                      
-                self.CurrentAppsKey.AppId:
-                    r.row['right'][self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version:
-                    r.row['right'][self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name:
-                    r.row['right'][self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate:
-                    r.row['right'][self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity:
-                    r.row['right'][self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VulnerabilityId:
-                    r.row['right'][self.CurrentAppsKey.VulnerabilityId],
-                self.CurrentAppsKey.Hidden:
-                    r.row['right'][self.CurrentAppsKey.Hidden],
-            }
-        )
-
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
-            }
-        )
-        self.pluck_list = (
-            [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.VulnerabilityId,
-            ]
+        self.fetch_apps = (
+            FetchApps(
+                self.view_name, self.count, self.offset,
+                self.sort, self.sort_key, self.show_hidden
+            )
         )
 
     @db_create_close
@@ -552,7 +503,7 @@ class RetrieveCustomApps(RetrieveApps):
         self.method = method
 
         self.set_global_properties(
-            AppCollections.CustomApps, CustomAppsIndexes, 
+            AppCollections.CustomApps, CustomAppsIndexes,
             AppCollections.CustomAppsPerAgent,
             CustomAppsKey, CustomAppsPerAgentKey,
             CustomAppsPerAgentIndexes
@@ -591,7 +542,7 @@ class RetrieveSupportedApps(RetrieveApps):
         self.method = method
 
         self.set_global_properties(
-            AppCollections.SupportedApps, SupportedAppsIndexes, 
+            AppCollections.SupportedApps, SupportedAppsIndexes,
             AppCollections.SupportedAppsPerAgent,
             SupportedAppsKey, SupportedAppsPerAgentKey,
             SupportedAppsPerAgentIndexes
@@ -630,8 +581,8 @@ class RetrieveAgentApps(RetrieveApps):
         self.method = method
 
         self.set_global_properties(
-            AppCollections.vFenseApps, AgentAppsIndexes, 
-            AppCollections.vFenseAppsPerAgent, 
+            AppCollections.vFenseApps, AgentAppsIndexes,
+            AppCollections.vFenseAppsPerAgent,
             AgentAppsKey, AgentAppsPerAgentKey,
             AgentAppsPerAgentIndexes
         )
