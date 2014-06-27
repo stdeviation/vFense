@@ -59,6 +59,46 @@ class FetchApps(object):
             ]
         )
 
+
+    @db_create_close
+    def all(self, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_base_filter()
+        try:
+            base = base_filter
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+            data = list(
+                base
+                .map(self.map_hash)
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .run(conn)
+            )
+
+            count = (
+                base
+                .count()
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+
     @db_create_close
     def by_status(self, pkg_status, conn=None):
         count = 0
@@ -98,13 +138,251 @@ class FetchApps(object):
 
         return(count, data)
 
+    @db_create_close
+    def by_severity(self, sev, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_sev_filter(sev)
+        try:
+            base = base_filter
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .map(self.map_hash)
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+                data = list(
+                    base
+                    .order_by(self.sort(self.sort_key))
+                    .skip(self.offset)
+                    .limit(self.count)
+                    .run(conn)
+                )
+
+                count = (
+                    base
+                    .count()
+                    .run(conn)
+                )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_status_and_sev(self, status, sev, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_status_filter(status)
+        try:
+            base = (
+                base_filter
+                .map(self.joined_map_hash)
+            )
+
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+                data = list(
+                    base
+                    .filter(
+                        lambda x:
+                        x[self.CurrentAppsKey.RvSeverity] == sev
+                    )
+                    .distinct()
+                    .order_by(self.sort(self.sort_key))
+                    .skip(self.offset)
+                    .limit(self.count)
+                    .run(conn)
+                )
+
+                count = (
+                    base
+                    .filter(
+                        lambda x:
+                        x[self.CurrentAppsKey.RvSeverity] == sev
+                    )
+                    .pluck(self.pluck_list)
+                    .distinct()
+                    .count()
+                    .run(conn)
+                )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_name(self, name, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_base_filter()
+        try:
+            base = base_filter
+
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+            data = list(
+                base
+                .map(self.map_hash)
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .run(conn)
+            )
+
+            count = (
+                base
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .pluck(self.CurrentAppsKey.AppId)
+                .count()
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_status_and_name(self, status, name, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_status_filter(status)
+        try:
+            base = (
+                base_filter
+                .map(self.joined_map_hash)
+            )
+
+            if self.show_hidden == CommonKeys.NO:
+               base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
+
+            data = list(
+                base
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .distinct()
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .run(conn)
+            )
+
+            count = (
+                base
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .pluck(self.CurrentAppsKey.AppId)
+                .count()
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_status_and_name_and_sev(self, status, name, sev, conn=None):
+        count = 0
+        data = []
+        map_hash = self._set_join_map_hash()
+        base_filter = self._set_status_filter(status)
+        try:
+            base = (
+                base_filter
+                .map(self.joined_map_hash)
+            )
+
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+                data = list(
+                    base
+                    .filter(
+                        lambda x:
+                        (x[DbCommonAppKeys.RvSeverity] == sev)
+                        &
+                        (x[DbCommonAppKeys.Name].match("(?i)"+name))
+                    )
+                    .distinct()
+                    .order_by(self.sort(self.sort_key))
+                    .skip(self.offset)
+                    .limit(self.count)
+                    .run(conn)
+                )
+
+                count = (
+                    base
+                    .pluck(self.CurrentAppsKey.RvSeverity, self.CurrentAppsKey.Name)
+                    .distinct()
+                    .filter(
+                        lambda x:
+                        (x[DbCommonAppKeys.RvSeverity] == sev)
+                        &
+                        (x[DbCommonAppKeys.Name].match("(?i)"+name))
+                    )
+                    .count()
+                    .run(conn)
+                )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
 
     def _set_join_map_hash(self):
         """ Set the global properties. """
 
         map_hash = (
             {
-                DbCommonAppKeys.Id:
+                DbCommonAppKeys.AppId:
                     r.row['right'][DbCommonAppKeys.AppId],
                 DbCommonAppKeys.Version:
                     r.row['right'][DbCommonAppKeys.Version],
@@ -154,13 +432,13 @@ class FetchApps(object):
                 .eq_join(
                     lambda x:
                     x[AgentKeys.AgentId],
-                    r.table(self.CurrentAppsPerAgentCollection),
+                    r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.AgentId
                 )
                 .zip()
                 .eq_join(
                     DbCommonAppPerAgentKeys.AppId,
-                    r.table(self.CurrentAppsCollection)
+                    r.table(self.apps_collection)
                 )
             )
 
@@ -172,17 +450,71 @@ class FetchApps(object):
                 .eq_join(
                     lambda x:
                     x[AgentKeys.AgentId],
-                    r.table(self.CurrentAppsPerAgentCollection),
+                    r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.AgentId
                 )
                 .zip()
                 .eq_join(
                     DbCommonAppPerAgentKeys.AppId,
-                    r.table(self.CurrentAppsCollection)
+                    r.table(self.apps_collection)
                 )
             )
 
         return base
+
+    def _set_sev_filter(self):
+        if self.view_name:
+            base = (
+                r
+                .table(AgentCollections.Agents)
+                .get_all(
+                    self.view_name,
+                    index=AgentIndexes.Views
+                )
+                .pluck(AgentKeys.AgentId)
+                .eq_join(
+                    lambda x:
+                    x[AgentKeys.AgentId],
+                    r.table(self.apps_per_agent_collection),
+                    index=DbCommonAppPerAgentIndexes.AgentId
+                )
+                .zip()
+                .eq_join(
+                    lambda x:
+                    [
+                        x[DbCommonAppKeys.AppId],
+                        x[DbCommonAppKeys.RvSeverity]
+                    ],
+                    r.table(self.apps_collection),
+                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                )
+            )
+
+        else:
+            base = (
+                r
+                .table(AgentCollections.Agents)
+                .pluck(AgentKeys.AgentId)
+                .eq_join(
+                    lambda x:
+                    x[AgentKeys.AgentId],
+                    r.table(self.apps_per_agent_collection),
+                    index=DbCommonAppPerAgentIndexes.AgentId
+                )
+                .zip()
+                .eq_join(
+                    lambda x:
+                    [
+                        x[DbCommonAppKeys.AppId],
+                        x[DbCommonAppKeys.RvSeverity]
+                    ],
+                    r.table(self.apps_collection).
+                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                )
+            )
+
+        return base
+
 
     def _set_status_filter(self, status):
         if self.view_name:
@@ -197,13 +529,13 @@ class FetchApps(object):
                 .eq_join(
                     lambda x:
                     [status, x[AgentKeys.AgentId]],
-                    r.table(self.CurrentAppsPerAgentCollection),
+                    r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.StatusAndAgentId
                 )
                 .zip()
                 .eq_join(
                     DbCommonAppPerAgentKeys.AppId,
-                    r.table(self.CurrentAppsCollection)
+                    r.table(self.apps_collection)
                 )
             )
 
@@ -215,13 +547,13 @@ class FetchApps(object):
                 .eq_join(
                     lambda x:
                     [status, x[AgentKeys.AgentId]],
-                    r.table(self.CurrentAppsPerAgentCollection),
+                    r.table(self.apps_per_agent_collection),
                     index=DbCommonAppPerAgentIndexes.StatusAndAgentId
                 )
                 .zip()
                 .eq_join(
                     DbCommonAppPerAgentKeys.AppId,
-                    r.table(self.CurrentAppsCollection)
+                    r.table(self.apps_collection)
                 )
             )
 

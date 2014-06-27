@@ -48,7 +48,6 @@ class FileServerIndexes():
 
 class AppsKey():
     AppId = 'app_id'
-    Views = 'views'
     Name = 'name'
     Hidden = 'hidden'
     Description = 'description'
@@ -75,11 +74,8 @@ class AppsIndexes():
     RvSeverity = 'rv_severity'
     AppIdAndRvSeverity = 'appid_and_rv_severity'
     NameAndVersion = 'name_and_version'
-    Views = 'views'
-    ViewAndRvSeverity = 'view_and_rvseverity'
     AppIdAndRvSeverityAndHidden = 'appid_and_rv_severity_and_hidden'
     AppIdAndHidden = 'appid_and_hidden'
-    ViewAndHidden = 'view_and_hidden'
 
 
 class AppsPerAgentKey():
@@ -89,7 +85,6 @@ class AppsPerAgentKey():
     Status = 'status'
     Hidden = 'hidden'
     AgentId = 'agent_id'
-    ViewName = 'view_name'
     Dependencies = 'dependencies'
     LastModifiedTime = 'last_modified_time'
     Update = 'update'
@@ -100,15 +95,11 @@ class AppsPerAgentIndexes():
     AppId = 'app_id'
     AgentId = 'agent_id'
     Status = 'status'
-    ViewName = 'view_name'
     AppIdAndStatus = 'appid_and_status'
     AgentIdAndAppId = 'agentid_and_appid'
-    AppIdAndView = 'appid_and_view'
     StatusAndAgentId = 'status_and_agentid'
     AppIdStatusAndAgentId = 'appid_and_status_and_agentid'
-    StatusAndView = 'status_and_view'
     StatusAndCveId = 'status_and_cve_id'
-    AppIdAndStatusAndView = 'appid_and_status_and_view'
 
 
 class CustomAppsKey():

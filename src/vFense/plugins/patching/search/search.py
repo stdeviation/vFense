@@ -55,435 +55,200 @@ class RetrieveApps(object):
             )
         )
 
-    @db_create_close
-    def filter_by_status(self, pkg_status, conn=None):
-        try:
-            if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                base = (
-                    r
-                    .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                    .get_all(
-                        [pkg_status, self.view_name],
-                        index=self.CurrentAppsPerAgentIndexes.StatusAndView)
-                    .eq_join(self.CurrentAppsKey.AppId, r.table(self.CurrentAppsCollection))
-                    .map(self.joined_map_hash)
-                )
+    def by_status(self, status):
+        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status(status)
+            generic_status_code = GenericCodes.InformationRetrieved
 
-                if self.show_hidden == CommonKeys.NO:
-                    base = base.filter(
-                        {self.CurrentAppsKey.Hidden: CommonKeys.NO}
-                    )
-
-                packages = list(
-                    base
-                    .distinct()
-                    .order_by(self.sort(self.sort_key))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .run(conn)
-                )
-
-                pkg_count = (
-                    base
-                    .pluck(self.CurrentAppsKey.AppId)
-                    .distinct()
-                    .count()
-                    .run(conn)
-                )
-
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(packages, pkg_count)
-                )
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
 
             else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_global_status(pkg_status)
-                )
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
 
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
             )
-            logger.exception(e)
+        )
+        return results
 
-        return(return_status)
+    def by_severity(self, sev):
+        if sev in CommonSeverityKeys.ValidRvSeverities:
+            count, data = self.fetch_apps.by_severity(sev)
+            generic_status_code = GenericCodes.InformationRetrieved
 
-    @db_create_close
-    def filter_by_severity(self, sev, conn=None):
-        try:
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid severity {0}'.format(sev)
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def filter_by_status_and_sev(self, status, sev):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid severity {0}'.format(sev)
+        if pkg_status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
-                base = (
-                    r
-                    .table(self.CurrentAppsCollection)
-                    .get_all(self.view_name, sev, index=self.CurrentAppsIndexes.ViewAndRvSeverity)
-                )
+                count, data = self.fetch_apps.by_status_and_sev(status, sev)
+                generic_status_code = GenericCodes.InformationRetrieved
 
-                if self.show_hidden == CommonKeys.NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                packages = list(
-                    base
-                    .map(self.map_hash)
-                    .order_by(self.sort(self.sort_key))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .run(conn)
-                )
-
-                pkg_count = (
-                    base
-                    .pluck(self.pluck_list)
-                    .count()
-                    .run(conn)
-                )
-
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(packages, pkg_count)
-                )
-
-            else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_severity(sev)
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_sev(self, pkg_status, sev, conn=None):
-        try:
-            if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            [pkg_status, self.view_name],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndView
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .map(self.joined_map_hash)
-                    )
-
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                    packages = list(
-                        base
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .distinct()
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
-                    )
-
-                    pkg_count = (
-                        base
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .pluck(self.pluck_list)
-                        .distinct()
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
+                if count == 0:
+                    vfense_status_code = GenericFailureCodes.DataIsEmpty
+                    msg = 'dataset is empty'
 
                 else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
+                    vfense_status_code = GenericCodes.InformationRetrieved
+                    msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+
+    def all(self):
+        count, data = self.fetch_apps.all()
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+
+    def by_name(self, name):
+        count, data = self.fetch_apps.by_name(name)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+
+    def by_status_and_name(self, status, name):
+        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status_and_name(status, name)
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
 
             else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_global_status(pkg_status)
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_status_and_name_and_sev(self, status, name, sev):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid status {0}'.format(status)
+        if pkg_status in CommonAppKeys.ValidPackageStatuses:
+            if sev in CommonSeverityKeys.ValidRvSeverities:
+                count, data = (
+                    self.fetch_apps.by_status_and_name_and_sev(
+                        status, name, sev
+                    )
                 )
+                generic_status_code = GenericCodes.InformationRetrieved
 
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def get_all_apps(self, conn=None):
-        try:
-            base = (
-                r
-                .table(self.CurrentAppsCollection)
-                .get_all(self.view_name, index=self.CurrentAppsIndexes.Views)
-            )
-
-            if self.show_hidden == CommonKeys.NO:
-                base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-            packages = list(
-                base
-                .order_by(self.sort(self.sort_key))
-                .map(self.map_hash)
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-            pkg_count = (
-                base
-                .count()
-                .run(conn)
-            )
-
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).information_retrieved(packages, pkg_count)
-            )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def query_by_name(self, name, conn=None):
-        try:
-            base = (
-                r
-                .table(self.CurrentAppsCollection)
-                .get_all(self.view_name, index=self.CurrentAppsIndexes.Views)
-            )
-
-            if self.show_hidden == CommonKeys.NO:
-                base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-            packages = list(
-                base
-                .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                .map(self.map_hash)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-            pkg_count = (
-                base
-                .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                .pluck(self.CurrentAppsKey.AppId)
-                .count()
-                .run(conn)
-            )
-
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).information_retrieved(packages, pkg_count)
-            )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_query_by_name(self, name, pkg_status, conn=None):
-        try:
-            if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                base = (
-                    r
-                    .table(self.CurrentAppsPerAgentCollection)
-                    .get_all(
-                        pkg_status, index=self.CurrentAppsPerAgentIndexes.Status
-                    )
-                    .eq_join(self.CurrentAppsPerAgentKey.AppId, r.table(self.CurrentAppsCollection))
-                    .map(self.joined_map_hash)
-                )
-
-                if self.show_hidden == CommonKeys.NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                packages = list(
-                    base
-                    .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                    .distinct()
-                    .order_by(self.sort(self.sort_key))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .run(conn)
-                )
-
-                pkg_count = (
-                    base
-                    .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                    .pluck(self.CurrentAppsKey.AppId)
-                    .count()
-                    .run(conn)
-                )
-
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(packages, pkg_count)
-                )
-
-            else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_global_status(pkg_status)
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_query_by_name_and_sev(self, name, pkg_status,
-                                                   sev, conn=None):
-        try:
-            if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            [pkg_status, self.view_name],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndView
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .map(self.joined_map_hash)
-                    )
-
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                    packages = list(
-                        base
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .distinct()
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
-                    )
-
-                    pkg_count = (
-                        base
-                        .pluck(self.CurrentAppsKey.RvSeverity, self.CurrentAppsKey.Name)
-                        .distinct()
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
+                if count == 0:
+                    vfense_status_code = GenericFailureCodes.DataIsEmpty
+                    msg = 'dataset is empty'
 
                 else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
+                    vfense_status_code = GenericCodes.InformationRetrieved
+                    msg = 'dataset retrieved'
 
-            else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_global_status(pkg_status)
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
             )
-            logger.exception(e)
+        )
+        return results
 
-        return(return_status)
+    def _set_results(self, gen_status_code, vfense_status_code,
+                     msg, count, data):
+
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: msg,
+            ApiResultKeys.COUNT: count,
+            ApiResultKeys.DATA: data,
+        }
+
+        return(results)
 
 
 class RetrieveCustomApps(RetrieveApps):
@@ -601,4 +366,6 @@ class RetrieveAgentApps(RetrieveApps):
             self.sort = r.asc
         else:
             self.sort = r.desc
+
+
 
