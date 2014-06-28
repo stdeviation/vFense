@@ -3,6 +3,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_model import *
+from vFense.plugins.patching.search._db_search_by_agentid import (
+    FetchAppsByAgentId
+)
 from vFense.core._constants import CommonKeys
 from vFense.plugins.patching._constants import CommonSeverityKeys, CommonAppKeys
 from vFense.core.agent._db_model import *
@@ -16,601 +19,250 @@ class RetrieveAppsByAgentId(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 agent_id, uri=None, method=None,
-                 count=30, offset=0, sort='asc',
-                 sort_key=AppsKey.Name,
+    def __init__(self, agent_id,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
         """
-        self.count = count
-        self.uri = uri
-        self.method = method
-        self.offset = offset
-        self.count = count
-        self.sort = sort
         self.agent_id = agent_id
-        self.username = username
-        self.view_name = view_name
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        self.CurrentAppsIndexes = AppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
-        self.CurrentAppsKey = AppsKey
-        self.CurrentAppsPerAgentKey = AppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
 
-        self.pluck_list = (
-            [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsPerAgentKey.Update,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.Hidden,
-                self.CurrentAppsKey.RebootRequired,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.FilesDownloadStatus,
-                self.CurrentAppsPerAgentKey.Dependencies,
-                self.CurrentAppsPerAgentKey.InstallDate,
-                self.CurrentAppsPerAgentKey.Status,
-                self.CurrentAppsPerAgentKey.Update,
-                self.CurrentAppsKey.VulnerabilityId,
-            ]
+        self.fetch_apps = (
+            FetchAppsByAgentId(
+                self.agent_id, count, offset,
+                sort, sort_key, show_hidden
+            )
         )
 
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.Hidden: r.row[self.CurrentAppsKey.Hidden],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.RebootRequired: r.row[self.CurrentAppsKey.RebootRequired],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsPerAgentKey.InstallDate: r.row[self.CurrentAppsPerAgentKey.InstallDate].to_epoch_time(),
-                self.CurrentAppsPerAgentKey.Status: r.row[self.CurrentAppsPerAgentKey.Status],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
-                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
-            }
+    def by_status(self, status):
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status(status)
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
         )
+        return results
 
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
+    def by_status_and_sev(self, status, sev):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid severity {0}'.format(sev)
+        if status in CommonAppKeys.ValidPackageStatuses:
+            if sev in CommonSeverityKeys.ValidRvSeverities:
+                count, data = self.fetch_apps.by_status_and_sev(status, sev)
+                generic_status_code = GenericCodes.InformationRetrieved
+
+                if count == 0:
+                    vfense_status_code = GenericFailureCodes.DataIsEmpty
+                    msg = 'dataset is empty'
+
+                else:
+                    vfense_status_code = GenericCodes.InformationRetrieved
+                    msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_severity(self, sev):
+        if sev in CommonSeverityKeys.ValidRvSeverities:
+            count, data = self.fetch_apps.by_severity(sev)
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
         else:
-            self.show_hidden = CommonKeys.NO
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid severity {0}'.format(sev)
 
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_name(self, name):
+        count, data = self.fetch_apps.by_name(name)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
         else:
-            self.sort_key = self.CurrentAppsKey.Name
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
 
-        if sort == 'asc':
-            self.sort = r.asc
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_status_and_name(self, status, name):
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status_and_name(status, name)
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
         else:
-            self.sort = r.desc
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
 
-    @db_create_close
-    def filter_by_status(self, pkg_status, conn=None):
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                        .get_all(
-                            [pkg_status, self.agent_id],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndAgentId)
-                        .eq_join(self.CurrentAppsPerAgentKey.AppId, r.table(self.CurrentAppsCollection))
-                        .zip()
-                    )
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
 
-                    packages = list(
-                        base
-                        .map(self.map_hash)
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
+    def by_status_and_name_and_sev(self, status, name, sev):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid status {0}'.format(status)
+        if status in CommonAppKeys.ValidPackageStatuses:
+            if sev in CommonSeverityKeys.ValidRvSeverities:
+                count, data = (
+                    self.fetch_apps.by_status_and_name_and_sev(
+                        status, name, sev
                     )
+                )
+                generic_status_code = GenericCodes.InformationRetrieved
 
-                    pkg_count = (
-                        base
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
+                if count == 0:
+                    vfense_status_code = GenericFailureCodes.DataIsEmpty
+                    msg = 'dataset is empty'
 
                 else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.agent_id, pkg_status)
-                    )
+                    vfense_status_code = GenericCodes.InformationRetrieved
+                    msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_sev_and_name(self, sev, name):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid status {0}'.format(status)
+        if sev in CommonSeverityKeys.ValidRvSeverities:
+            count, data = (
+                self.fetch_apps.by_sev_and_name(sev, name)
+            )
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
 
             else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
 
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
             )
-            logger.exception(e)
+        )
+        return results
 
-        return(return_status)
+    def by_status_and_vuln(self, status):
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status_and_vuln(status)
+            generic_status_code = GenericCodes.InformationRetrieved
 
-    @db_create_close
-    def filter_by_status_and_query_by_name(self, name, pkg_status, conn=None):
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            [pkg_status, self.agent_id],
-                            index=self.CurrentAppsPerAgentIndexes.StatusAndAgentId
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                    )
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                    packages = list(
-                        base
-                        .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        .map(self.map_hash)
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
-                    )
-
-                    pkg_count = (
-                        base
-                        .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.agent_id, pkg_status)
-                    )
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
 
             else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
 
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
             )
-            logger.exception(e)
+        )
+        return results
 
-        return(return_status)
+    def _set_results(self, gen_status_code, vfense_status_code,
+                     msg, count, data):
 
-    @db_create_close
-    def query_by_name(self, name, conn=None):
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                base = (
-                    r
-                    .table(self.CurrentAppsPerAgentCollection)
-                    .get_all(self.agent_id, index=self.CurrentAppsPerAgentIndexes.AgentId)
-                    .eq_join(self.CurrentAppsPerAgentKey.AppId, r.table(self.CurrentAppsCollection))
-                    .zip()
-                )
-                if self.show_hidden == CommonKeys.NO:
-                    base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: msg,
+            ApiResultKeys.COUNT: count,
+            ApiResultKeys.DATA: data,
+        }
 
-                packages = list(
-                    base
-                    .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                    .map(self.map_hash)
-                    .order_by(self.sort(self.sort_key))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .run(conn)
-                )
+        return(results)
 
-                pkg_count = (
-                    base
-                    .filter(lambda x: x[self.CurrentAppsKey.Name].match("(?i)"+name))
-                    .count()
-                    .run(conn)
-                )
-
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(packages, pkg_count)
-                )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_query_by_name_and_sev(self, name, pkg_status,
-                                                   sev, conn=None):
-
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    if sev in CommonSeverityKeys.ValidRvSeverities:
-                        base = (
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [pkg_status, self.agent_id],
-                                index=self.CurrentAppsPerAgentIndexes.StatusAndAgentId
-                            )
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AppId,
-                                r.table(self.CurrentAppsCollection)
-                            )
-                            .zip()
-                        )
-                        if self.show_hidden == CommonKeys.NO:
-                            base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                        packages = list(
-                            base
-                            .filter(
-                                (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                                &
-                                (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                            )
-                            .map(self.map_hash)
-                            .order_by(self.sort(self.sort_key))
-                            .skip(self.offset)
-                            .limit(self.count)
-                            .run(conn)
-                        )
-
-                        pkg_count = (
-                            base
-                            .filter(
-                                (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                                &
-                                (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                            )
-                            .count()
-                            .run(conn)
-                        )
-
-                        return_status = (
-                            GenericResults(
-                                self.username, self.uri, self.method
-                            ).information_retrieved(packages, pkg_count)
-                        )
-
-                    else:
-                        return_status = (
-                            PackageResults(
-                                self.username, self.uri, self.method
-                            ).invalid_severity(sev)
-                        )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.agent_id, pkg_status)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_sev_and_query_by_name(self, name, sev, conn=None):
-
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            self.agent_id, index=self.CurrentAppsPerAgentIndexes.AgentId
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                    )
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                    packages = list(
-                        base
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .map(self.map_hash)
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
-                    )
-
-                    pkg_count = (
-                        base
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-
-    @db_create_close
-    def filter_by_severity(self, sev, conn=None):
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    base = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            self.agent_id, index=self.CurrentAppsPerAgentIndexes.AgentId
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                    )
-                    if self.show_hidden == CommonKeys.NO:
-                        base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                    packages = list(
-                        base
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .map(self.map_hash)
-                        .order_by(self.sort(self.sort_key))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .run(conn)
-                    )
-
-                    pkg_count = (
-                        base
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(packages, pkg_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-
-    @db_create_close
-    def filter_by_status_and_sev(self, pkg_status, sev, conn=None):
-
-        try:
-            agent = get_agent_info(self.agent_id)
-            if agent:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    if sev in CommonSeverityKeys.ValidRvSeverities:
-                        base = (
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [pkg_status, self.agent_id],
-                                index=self.CurrentAppsPerAgentIndexes.StatusAndAgentId
-                            )
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AppId,
-                                r.table(self.CurrentAppsCollection)
-                            )
-                            .zip()
-                        )
-                        if self.show_hidden == CommonKeys.NO:
-                            base = base.filter({self.CurrentAppsKey.Hidden: CommonKeys.NO})
-
-                        packages = list(
-                            base
-                            .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            .map(self.map_hash)
-                            .order_by(self.sort(self.sort_key))
-                            .skip(self.offset)
-                            .limit(self.count)
-                            .run(conn)
-                        )
-
-                        pkg_count = (
-                            base
-                            .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            .count()
-                            .run(conn)
-                        )
-
-                        return_status = (
-                            GenericResults(
-                                self.username, self.uri, self.method
-                            ).information_retrieved(packages, pkg_count)
-                        )
-
-                    else:
-                        return_status = (
-                            PackageResults(
-                                self.username, self.uri, self.method
-                            ).invalid_severity(sev)
-                        )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.agent_id, pkg_status)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.agent_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
 
 class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
     """
@@ -635,43 +287,43 @@ class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
         self.CurrentAppsCollection = AppCollections.CustomApps
         self.CurrentAppsIndexes = CustomAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
-        self.CurrentAppsKey = CustomAppsKey
-        self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
+        DbCommonAppKeys = CustomAppsKey
+        DbCommonAppPerAgentKeys = CustomAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
 
         self.pluck_list = (
             [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsKey.Hidden,
-                self.CurrentAppsPerAgentKey.Update,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.RebootRequired,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.FilesDownloadStatus,
-                self.CurrentAppsPerAgentKey.Dependencies,
-                self.CurrentAppsPerAgentKey.InstallDate,
-                self.CurrentAppsPerAgentKey.Status,
-                self.CurrentAppsPerAgentKey.Update,
+                DbCommonAppKeys.AppId,
+                DbCommonAppKeys.Version,
+                DbCommonAppKeys.Name,
+                DbCommonAppKeys.Hidden,
+                DbCommonAppPerAgentKeys.Update,
+                DbCommonAppKeys.ReleaseDate,
+                DbCommonAppKeys.RebootRequired,
+                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.FilesDownloadStatus,
+                DbCommonAppPerAgentKeys.Dependencies,
+                DbCommonAppPerAgentKeys.InstallDate,
+                DbCommonAppPerAgentKeys.Status,
+                DbCommonAppPerAgentKeys.Update,
             ]
         )
 
         self.map_hash = (
             {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.Hidden: r.row[self.CurrentAppsKey.Hidden],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.RebootRequired: r.row[self.CurrentAppsKey.RebootRequired],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsPerAgentKey.InstallDate: r.row[self.CurrentAppsPerAgentKey.InstallDate].to_epoch_time(),
-                self.CurrentAppsPerAgentKey.Status: r.row[self.CurrentAppsPerAgentKey.Status],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
+                DbCommonAppKeys.AppId: r.row[DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version: r.row[DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name: r.row[DbCommonAppKeys.Name],
+                DbCommonAppKeys.Hidden: r.row[DbCommonAppKeys.Hidden],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
+                DbCommonAppKeys.ReleaseDate: r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time(),
+                DbCommonAppKeys.RvSeverity: r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.RebootRequired: r.row[DbCommonAppKeys.RebootRequired],
+                DbCommonAppKeys.FilesDownloadStatus: r.row[DbCommonAppKeys.FilesDownloadStatus],
+                DbCommonAppPerAgentKeys.Dependencies: r.row[DbCommonAppPerAgentKeys.Dependencies],
+                DbCommonAppPerAgentKeys.InstallDate: r.row[DbCommonAppPerAgentKeys.InstallDate].to_epoch_time(),
+                DbCommonAppPerAgentKeys.Status: r.row[DbCommonAppPerAgentKeys.Status],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
             }
         )
 
@@ -683,7 +335,7 @@ class RetrieveCustomAppsByAgentId(RetrieveAppsByAgentId):
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
         else:
-            self.sort_key = self.CurrentAppsKey.Name
+            self.sort_key = DbCommonAppKeys.Name
 
         if sort == 'asc':
             self.sort = r.asc
@@ -714,43 +366,43 @@ class RetrieveSupportedAppsByAgentId(RetrieveAppsByAgentId):
         self.CurrentAppsCollection = AppCollections.SupportedApps
         self.CurrentAppsIndexes = SupportedAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
-        self.CurrentAppsKey = SupportedAppsKey
-        self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
+        DbCommonAppKeys = SupportedAppsKey
+        DbCommonAppPerAgentKeys = SupportedAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
 
         self.pluck_list = (
             [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsKey.Hidden,
-                self.CurrentAppsPerAgentKey.Update,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.RebootRequired,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.FilesDownloadStatus,
-                self.CurrentAppsPerAgentKey.Dependencies,
-                self.CurrentAppsPerAgentKey.InstallDate,
-                self.CurrentAppsPerAgentKey.Status,
-                self.CurrentAppsPerAgentKey.Update,
+                DbCommonAppKeys.AppId,
+                DbCommonAppKeys.Version,
+                DbCommonAppKeys.Name,
+                DbCommonAppKeys.Hidden,
+                DbCommonAppPerAgentKeys.Update,
+                DbCommonAppKeys.ReleaseDate,
+                DbCommonAppKeys.RebootRequired,
+                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.FilesDownloadStatus,
+                DbCommonAppPerAgentKeys.Dependencies,
+                DbCommonAppPerAgentKeys.InstallDate,
+                DbCommonAppPerAgentKeys.Status,
+                DbCommonAppPerAgentKeys.Update,
             ]
         )
 
         self.map_hash = (
             {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.Hidden: r.row[self.CurrentAppsKey.Hidden],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.RebootRequired: r.row[self.CurrentAppsKey.RebootRequired],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsPerAgentKey.InstallDate: r.row[self.CurrentAppsPerAgentKey.InstallDate].to_epoch_time(),
-                self.CurrentAppsPerAgentKey.Status: r.row[self.CurrentAppsPerAgentKey.Status],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
+                DbCommonAppKeys.AppId: r.row[DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version: r.row[DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name: r.row[DbCommonAppKeys.Name],
+                DbCommonAppKeys.Hidden: r.row[DbCommonAppKeys.Hidden],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
+                DbCommonAppKeys.ReleaseDate: r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time(),
+                DbCommonAppKeys.RvSeverity: r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.RebootRequired: r.row[DbCommonAppKeys.RebootRequired],
+                DbCommonAppKeys.FilesDownloadStatus: r.row[DbCommonAppKeys.FilesDownloadStatus],
+                DbCommonAppPerAgentKeys.Dependencies: r.row[DbCommonAppPerAgentKeys.Dependencies],
+                DbCommonAppPerAgentKeys.InstallDate: r.row[DbCommonAppPerAgentKeys.InstallDate].to_epoch_time(),
+                DbCommonAppPerAgentKeys.Status: r.row[DbCommonAppPerAgentKeys.Status],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
             }
         )
 
@@ -762,7 +414,7 @@ class RetrieveSupportedAppsByAgentId(RetrieveAppsByAgentId):
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
         else:
-            self.sort_key = self.CurrentAppsKey.Name
+            self.sort_key = DbCommonAppKeys.Name
 
         if sort == 'asc':
             self.sort = r.asc
@@ -792,43 +444,43 @@ class RetrieveAgentAppsByAgentId(RetrieveAppsByAgentId):
         self.CurrentAppsCollection = AppCollections.vFenseApps
         self.CurrentAppsIndexes = AgentAppsIndexes
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
-        self.CurrentAppsKey = AgentAppsKey
-        self.CurrentAppsPerAgentKey = AgentAppsPerAgentKey
+        DbCommonAppKeys = AgentAppsKey
+        DbCommonAppPerAgentKeys = AgentAppsPerAgentKey
         self.CurrentAppsPerAgentIndexes = AgentAppsPerAgentIndexes
 
         self.pluck_list = (
             [
-                self.CurrentAppsKey.AppId,
-                self.CurrentAppsKey.Version,
-                self.CurrentAppsKey.Name,
-                self.CurrentAppsKey.Hidden,
-                self.CurrentAppsPerAgentKey.Update,
-                self.CurrentAppsKey.ReleaseDate,
-                self.CurrentAppsKey.RebootRequired,
-                self.CurrentAppsKey.RvSeverity,
-                self.CurrentAppsKey.FilesDownloadStatus,
-                self.CurrentAppsPerAgentKey.Dependencies,
-                self.CurrentAppsPerAgentKey.InstallDate,
-                self.CurrentAppsPerAgentKey.Status,
-                self.CurrentAppsPerAgentKey.Update,
+                DbCommonAppKeys.AppId,
+                DbCommonAppKeys.Version,
+                DbCommonAppKeys.Name,
+                DbCommonAppKeys.Hidden,
+                DbCommonAppPerAgentKeys.Update,
+                DbCommonAppKeys.ReleaseDate,
+                DbCommonAppKeys.RebootRequired,
+                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.FilesDownloadStatus,
+                DbCommonAppPerAgentKeys.Dependencies,
+                DbCommonAppPerAgentKeys.InstallDate,
+                DbCommonAppPerAgentKeys.Status,
+                DbCommonAppPerAgentKeys.Update,
             ]
         )
 
         self.map_hash = (
             {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.Hidden: r.row[self.CurrentAppsKey.Hidden],
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.RebootRequired: r.row[self.CurrentAppsKey.RebootRequired],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsPerAgentKey.InstallDate: r.row[self.CurrentAppsPerAgentKey.InstallDate].to_epoch_time(),
-                self.CurrentAppsPerAgentKey.Status: r.row[self.CurrentAppsPerAgentKey.Status],
-                self.CurrentAppsPerAgentKey.Update: r.row[self.CurrentAppsPerAgentKey.Update],
+                DbCommonAppKeys.AppId: r.row[DbCommonAppKeys.AppId],
+                DbCommonAppKeys.Version: r.row[DbCommonAppKeys.Version],
+                DbCommonAppKeys.Name: r.row[DbCommonAppKeys.Name],
+                DbCommonAppKeys.Hidden: r.row[DbCommonAppKeys.Hidden],
+                DbCommonAppKeys.RvSeverity: r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.RebootRequired: r.row[DbCommonAppKeys.RebootRequired],
+                DbCommonAppKeys.FilesDownloadStatus: r.row[DbCommonAppKeys.FilesDownloadStatus],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
+                DbCommonAppKeys.ReleaseDate: r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time(),
+                DbCommonAppPerAgentKeys.Dependencies: r.row[DbCommonAppPerAgentKeys.Dependencies],
+                DbCommonAppPerAgentKeys.InstallDate: r.row[DbCommonAppPerAgentKeys.InstallDate].to_epoch_time(),
+                DbCommonAppPerAgentKeys.Status: r.row[DbCommonAppPerAgentKeys.Status],
+                DbCommonAppPerAgentKeys.Update: r.row[DbCommonAppPerAgentKeys.Update],
             }
         )
 
@@ -840,7 +492,7 @@ class RetrieveAgentAppsByAgentId(RetrieveAppsByAgentId):
         if sort_key in self.pluck_list:
             self.sort_key = sort_key
         else:
-            self.sort_key = self.CurrentAppsKey.Name
+            self.sort_key = DbCommonAppKeys.Name
 
         if sort == 'asc':
             self.sort = r.asc

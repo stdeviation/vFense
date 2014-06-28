@@ -104,7 +104,7 @@ class RetrieveApps(object):
         )
         return results
 
-    def filter_by_status_and_sev(self, status, sev):
+    def by_status_and_sev(self, status, sev):
         count = 0
         data = []
         generic_status_code = GenericCodes.InvalidFilterKey
