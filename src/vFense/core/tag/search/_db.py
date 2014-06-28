@@ -77,7 +77,7 @@ class FetchTags(object):
             .table(TagCollections.Tags)
         )
         agent_merge_query = self._set_agent_merge_query(tag_id)
-        merge_query = self._set_merge_query()
+        tag_merge_query = self._set_tag_merge_query(tag_id)
 
         try:
             count = (
@@ -87,14 +87,11 @@ class FetchTags(object):
                 .run(conn)
             )
 
-            data = list(
+            data = (
                 base_filter
-                .get_all(tag_id)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
+                .get(tag_id)
                 .merge(agent_merge_query)
-                .merge(merge_query)
+                .merge(tag_merge_query)
                 .run(conn)
             )
 
@@ -358,17 +355,178 @@ class FetchTags(object):
                         TagsPerAgentKeys.AgentId,
                         r.table(AgentCollections.Agents)
                     )
-                    .pluck(
-                        x['right'][TagsPerAgentKeys.AgentId],
-                        x['right'][AgentKeys.ComputerName],
-                        x['right'][AgentKeys.LastAgentUpdate].to_epoch_time(),
-                        x['right'][AgentKeys.DisplayName]
+                    .map(
+                        lambda y:
+                        {
+                            TagsPerAgentKeys.AgentId: (
+                                y['right'][TagsPerAgentKeys.AgentId]
+                            ),
+                            AgentKeys.ComputerName: (
+                                y['right'][AgentKeys.ComputerName]
+                            ),
+                            AgentKeys.LastAgentUpdate: (
+                                y['right'][AgentKeys.LastAgentUpdate]
+                                .to_epoch_time()
+                            ),
+                            AgentKeys.DisplayName: (
+                                y['right'][AgentKeys.DisplayName]
+                            )
+                        }
                     )
                     .coerce_to('array')
                 )
             }
         )
         return merge_query
+
+    def _set_tag_merge_query(self, tag_id):
+        merge_query = (
+            lambda x:
+            {
+                CommonAppKeys.APP_STATS: (
+                    [
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(TagCollections.TagsPerAgent)
+                                .get_all(
+                                    tag_id,
+                                    index=TagsPerAgentIndexes.TagId
+                                )
+                                .pluck(TagsPerAgentKeys.AgentId)
+                                .eq_join(
+                                    TagsPerAgentKeys.AgentId,
+                                    r.table(AgentCollections.Agents)
+                                )
+                                .eq_join(
+                                    lambda y:
+                                    [
+                                        CommonAppKeys.INSTALLED,
+                                        y['right'][AgentKeys.AgentId]
+                                    ],
+                                    r.table(AppCollections.AppsPerAgent),
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                            CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(TagCollections.TagsPerAgent)
+                                .get_all(
+                                    tag_id,
+                                    index=TagsPerAgentIndexes.TagId
+                                )
+                                .pluck(TagsPerAgentKeys.AgentId)
+                                .eq_join(
+                                    TagsPerAgentKeys.AgentId,
+                                    r.table(AgentCollections.Agents)
+                                )
+                                .eq_join(
+                                    lambda y:
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        y['right'][AgentKeys.AgentId]
+                                    ],
+                                    r.table(AppCollections.AppsPerAgent),
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.OS
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(TagCollections.TagsPerAgent)
+                                .get_all(
+                                    tag_id,
+                                    index=TagsPerAgentIndexes.TagId
+                                )
+                                .pluck(TagsPerAgentKeys.AgentId)
+                                .eq_join(
+                                    TagsPerAgentKeys.AgentId,
+                                    r.table(AgentCollections.Agents)
+                                )
+                                .eq_join(
+                                    lambda y:
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        y['right'][AgentKeys.AgentId]
+                                    ],
+                                    r.table(AppCollections.CustomAppsPerAgent),
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.CUSTOM
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(TagCollections.TagsPerAgent)
+                                .get_all(
+                                    tag_id,
+                                    index=TagsPerAgentIndexes.TagId
+                                )
+                                .pluck(TagsPerAgentKeys.AgentId)
+                                .eq_join(
+                                    TagsPerAgentKeys.AgentId,
+                                    r.table(AgentCollections.Agents)
+                                )
+                                .eq_join(
+                                    lambda y:
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        y['right'][AgentKeys.AgentId]
+                                    ],
+                                    r.table(AppCollections.SupportedAppsPerAgent),
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
+                        },
+                        {
+                            CommonAppKeys.COUNT: (
+                                r
+                                .table(TagCollections.TagsPerAgent)
+                                .get_all(
+                                    tag_id,
+                                    index=TagsPerAgentIndexes.TagId
+                                )
+                                .pluck(TagsPerAgentKeys.AgentId)
+                                .eq_join(
+                                    TagsPerAgentKeys.AgentId,
+                                    r.table(AgentCollections.Agents)
+                                )
+                                .eq_join(
+                                    lambda y:
+                                    [
+                                        CommonAppKeys.AVAILABLE,
+                                        y['right'][AgentKeys.AgentId]
+                                    ],
+                                    r.table(AppCollections.vFenseAppsPerAgent),
+                                    index=AppsPerAgentIndexes.StatusAndAgentId
+                                )
+                                .count()
+                            ),
+                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                            CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
+                        },
+                    ]
+                ),
+            }
+        )
+
+        return(merge_query)
+
 
     def _set_merge_query(self):
         merge_query = (

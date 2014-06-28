@@ -740,7 +740,7 @@ def get_all_app_stats_by_view(view_name, conn=None):
             .eq_join(
                 lambda x:
                 x['right'][DbCommonAppKeys.AppId],
-                r.table(AppCollections.vFenseApps)
+                r.table(AppCollections.UniqueApplications)
             )
             .filter(
                 lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
@@ -801,13 +801,18 @@ def group_avail_app_stats_by_os_for_view(
     try:
         stats = (
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, view_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.OsString, AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
+                [CommonAppKeys.AVAILABLE, x[DbCommonAppPerAgentKeys.AgentId]],
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .filter(
@@ -815,29 +820,14 @@ def group_avail_app_stats_by_os_for_view(
             )
             .map(
                 {
-                    DbCommonAppPerAgentKeys.AppId: (
-                        r.row['left'][DbCommonAppPerAgentKeys.AppId]
-                    ),
-                    DbCommonAppPerAgentKeys.AgentId: (
-                        r.row['left'][DbCommonAppPerAgentKeys.AgentId]
-                    ),
-                }
-            )
-            .eq_join(
-                AgentKeys.AgentId,
-                r.table(AgentCollections.Agents)
-            )
-            .map(
-                {
                     DbCommonAppKeys.AppId: (
-                        r.row['left'][DbCommonAppKeys.AppId]
+                        r.row['right'][DbCommonAppKeys.AppId]
                     ),
                     AgentKeys.OsString: (
-                        r.row['right'][AgentKeys.OsString]
+                        r.row['left']['left'][AgentKeys.OsString]
                     )
                 }
             )
-            .pluck(DbCommonAppKeys.AppId, AgentKeys.OsString)
             .distinct()
             .group(AgentKeys.OsString)
             .count()
@@ -976,10 +966,25 @@ def fetch_bar_chart_for_appid_by_status(
     try:
         data = (
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
-                [app_id, view_name],
-                index=DbCommonAppPerAgentIndexes.AppIdAndView
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
+                [x[DbCommonAppPerAgentKeys.AgentId], app_id],
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.AgentIdAndAppId
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                    DbCommonAppPerAgentKeys.Status: (
+                        x['right'][DbCommonAppPerAgentKeys.Status]
+                    ),
+                }
             )
             .group(DbCommonAppPerAgentKeys.Status)
             .count()
@@ -1025,15 +1030,30 @@ def fetch_severity_bar_chart_stats_for_view(view_name, conn=None):
     try:
         data = (
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, view_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
+                [
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .pluck(DbCommonAppKeys.AppId)
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.AppId: (
+                        x['right'][DbCommonAppKeys.AppId]
+                    )
+                }
+            )
             .distinct()
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x[DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .filter(
@@ -1282,13 +1302,21 @@ def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
     try:
         data = (
             r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, view_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
+                [
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .filter(
@@ -1381,15 +1409,21 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
     try:
         data = list(
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.AVAILABLE, view_name
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .map(
@@ -1505,25 +1539,47 @@ def fetch_os_apps_history(
     try:
         data = (
             r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, view_name],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
+                [
+                    status,
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ],
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
-            .zip()
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.AppId: (
+                        x['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.Name: (
+                        x['right'][DbCommonAppKeys.Name]
+                    ),
+                    DbCommonAppKeys.Version: (
+                        x['right'][DbCommonAppKeys.Version]
+                    ),
+                    DbCommonAppKeys.ReleaseDate: (
+                        x['right'][DbCommonAppKeys.ReleaseDate]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        x['right'][DbCommonAppKeys.RvSeverity]
+                    ),
+                }
+            )
             .filter(
                 r.row[DbCommonAppKeys.ReleaseDate].during(
                     r.epoch_time(start_date), r.epoch_time(end_date)
                 )
-            )
-            .pluck(
-                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
-                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
-                DbCommonAppKeys.ReleaseDate
             )
             .group(
                 lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
@@ -1673,16 +1729,30 @@ def fetch_os_apps_history_for_agent(
                 DbCommonAppKeys.AppId,
                 r.table(AppCollections.UniqueApplications)
             )
-            .zip()
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.AppId: (
+                        x['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.Name: (
+                        x['right'][DbCommonAppKeys.Name]
+                    ),
+                    DbCommonAppKeys.Version: (
+                        x['right'][DbCommonAppKeys.Version]
+                    ),
+                    DbCommonAppKeys.ReleaseDate: (
+                        x['right'][DbCommonAppKeys.ReleaseDate]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        x['right'][DbCommonAppKeys.RvSeverity]
+                    ),
+                }
+            )
             .filter(
                 r.row[DbCommonAppKeys.ReleaseDate].during(
                     r.epoch_time(start_date), r.epoch_time(end_date)
                 )
-            )
-            .pluck(
-                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
-                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
-                DbCommonAppKeys.ReleaseDate
             )
              .group(
                 lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()
@@ -1836,21 +1906,35 @@ def fetch_os_apps_history_for_tag(
                 r.table(AppCollections.AppsPerAgent),
                 index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .zip()
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
-            .zip()
+            .map(
+                lambda x:
+                {
+                    DbCommonAppKeys.AppId: (
+                        x['right'][DbCommonAppKeys.AppId]
+                    ),
+                    DbCommonAppKeys.Name: (
+                        x['right'][DbCommonAppKeys.Name]
+                    ),
+                    DbCommonAppKeys.Version: (
+                        x['right'][DbCommonAppKeys.Version]
+                    ),
+                    DbCommonAppKeys.ReleaseDate: (
+                        x['right'][DbCommonAppKeys.ReleaseDate]
+                    ),
+                    DbCommonAppKeys.RvSeverity: (
+                        x['right'][DbCommonAppKeys.RvSeverity]
+                    ),
+                }
+            )
             .filter(
                 r.row[DbCommonAppKeys.ReleaseDate].during(
                     r.epoch_time(start_date), r.epoch_time(end_date)
                 )
-            )
-            .pluck(
-                DbCommonAppKeys.AppId, DbCommonAppKeys.Name,
-                DbCommonAppKeys.Version, DbCommonAppKeys.RvSeverity,
-                DbCommonAppKeys.ReleaseDate
             )
              .group(
                 lambda x: x[DbCommonAppKeys.ReleaseDate].to_epoch_time()

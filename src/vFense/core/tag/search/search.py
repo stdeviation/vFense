@@ -70,6 +70,42 @@ class RetrieveTags(object):
         )
 
     @time_it
+    def by_id(self, tag_id):
+        """Retrieve tag by id.
+        Args:
+            tag_id (str): 36 character UUID of the tag.
+
+        Basic Usage:
+            >>> from vFense.core.tag.search.search import RetrieveTags
+            >>> view_name = 'default'
+            >>> search_tags = RetrieveTags(view_name='default')
+            >>> search_tags.by_id('45bbd659-cbdd-4669-9276-b226e31c7520')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_tags.by_id(tag_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+
+        return(results)
+
+
+    @time_it
     def by_name(self, query):
         """Query tags by tag name.
         Args:

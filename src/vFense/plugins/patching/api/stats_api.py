@@ -299,7 +299,7 @@ class TagOsAppsOverTimeHandler(BaseHandler):
                                           start_date, end_date):
         results = (
             get_os_apps_history_for_tag(
-                agent_id, status, start_date, end_date
+                tag_id, status, start_date, end_date
             )
         )
         return results
