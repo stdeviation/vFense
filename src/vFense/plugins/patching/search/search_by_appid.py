@@ -3,953 +3,218 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r
-from vFense.plugins.patching._db_model import *
-from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
-from vFense.plugins.patching._db_files import fetch_file_data
-from vFense.plugins.patching.apps.db_calls import get_all_stats_by_appid
-from vFense.core.agent._db_model import *
-from vFense.errorz.error_messages import GenericResults, PackageResults
+
+from vFense.core._constants import (
+    SortValues, DefaultQueryValues, CommonKeys
+)
+from vFense.plugins.patching._db_model import (
+    AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
+    DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
+)
+from vFense.plugins.patching._constants import (
+    CommonAppKeys, CommonSeverityKeys
+)
+from vFense.core.agent._db_model import (
+    AgentCollections, AgentKeys, AgentIndexes
+)
+
+from vFense.errorz.status_codes import (
+    GenericCodes, GenericFailureCodes
+)
+from vFense.errorz._constants import (
+    ApiResultKeys
+)
+from vFense.plugins.patching.search._db_search_by_appid import (
+    FetchAgentsByAppId
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
-
-
-class RetrieveAppsByAppId(object):
-    """
-        Main Class for retrieving package information.
-    """
-    def __init__(self, username, view_name, app_id,
-                 uri=None, method=None, count=30, offset=0):
-        """
-        """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
-        self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        self.CurrentAppsIndexes = AppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
-        self.CurrentAppsKey = AppsKey
-        self.CurrentAppsPerAgentKey = AppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
-
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsKey.Description: r.row[self.CurrentAppsKey.Description],
-                self.CurrentAppsKey.Kb: r.row[self.CurrentAppsKey.Kb],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VendorSeverity: r.row[self.CurrentAppsKey.VendorSeverity],
-                self.CurrentAppsKey.VendorName: r.row[self.CurrentAppsKey.VendorName],
-                self.CurrentAppsKey.SupportUrl: r.row[self.CurrentAppsKey.SupportUrl],
-                self.CurrentAppsKey.OsCode: r.row[self.CurrentAppsKey.OsCode],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsKey.CveIds: r.row[self.CurrentAppsKey.CveIds],
-                self.CurrentAppsKey.VulnerabilityId: r.row[self.CurrentAppsKey.VulnerabilityId],
-                self.CurrentAppsKey.VulnerabilityCategories: r.row[self.CurrentAppsKey.VulnerabilityCategories],
-            }
-        )
-
-    @db_create_close
-    def get_by_app_id(self, stats=False, conn=None):
-        """
-        """
-        try:
-            pkg = list(
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get_all(self.app_id, index=self.CurrentAppsIndexes.AppId)
-                .map(self.map_hash)
-                .run(conn)
-            )
-            if pkg:
-                pkg[0][self.CurrentAppsKey.FileData] = fetch_file_data(self.app_id)
-
-                if stats:
-                    pkg[0]['agent_stats'] = (
-                        get_all_stats_by_appid(
-                            self.username, self.view_name,
-                            self.uri, self.method, self.app_id,
-                            collection=self.CurrentAppsPerAgentCollection
-                        )['data']
-                    )
-
-                status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(pkg[0], 1)
-                )
-
-            else:
-                status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.app_id, 'package')
-                )
-
-        except Exception as e:
-            status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(self.app_id, 'package', e)
-            )
-            logger.exception(e)
-
-        return(status)
 
 
 class RetrieveAgentsByAppId(object):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 app_id, uri=None, method=None,
-                 count=30, offset=0):
+    def __init__(self, app_id,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
+                 show_hidden=CommonKeys.NO,
+                 apps_collection=AppCollections.UniqueApplications,
+                 apps_per_agent_collection=AppCollections.AppsPerAgent):
         """
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
         self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.UniqueApplications
-        self.CurrentAppsIndexes = AppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
-        self.CurrentAppsKey = AppsKey
-        self.CurrentAppsPerAgentKey = AppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = AppsPerAgentIndexes
 
-        self.map_hash = (
-            {
-                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
-                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
-                self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
-            }
+        self.fetch_agents = (
+            FetchAgentsByAppId(
+                self.agent_id, count, offset,
+                sort, sort_key
+            )
         )
 
-    @db_create_close
-    def filter_by_status(self, pkg_status, conn=None):
+    def by_status(self, status):
         """
         """
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    agents = list(
-                        r
-                        .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                        .get_all([self.app_id, pkg_status],
-                                 index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentCollections.Agents)
-                        )
-                        .zip()
-                        .order_by(r.asc(AgentKeys.ComputerName))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .map(self.map_hash)
-                        .run(conn)
-                    )
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_agents.by_status(status)
+            generic_status_code = GenericCodes.InformationRetrieved
 
-                    agent_count = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                        .get_all([self.app_id, pkg_status],
-                                 index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(agents, agent_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.app_id, pkg_status)
-                    )
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
 
             else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_package_id(self.app_id)
-                )
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
 
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
             )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def query_by_name(self, name, conn=None):
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                agents = list(
-                    r
-                    .table(self.CurrentAppsPerAgentCollection)
-                    .get_all(self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId)
-                    .eq_join(
-                        self.CurrentAppsPerAgentKey.AgentId,
-                        r.table(AgentCollections.Agents)
-                    )
-                    .zip()
-                    .filter(
-                        r.row[AgentKeys.ComputerName].match("(?i)"+name)
-                        |
-                        r.row[AgentKeys.DisplayName].match("(?i)"+name)
-                    )
-                    .order_by(r.asc('computer_name'))
-                    .skip(self.offset)
-                    .limit(self.count)
-                    .map(self.map_hash)
-                    .run(conn)
-                )
-
-                agent_count = (
-                    r
-                    .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                    .get_all(self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId)
-                    .eq_join(
-                        self.CurrentAppsPerAgentKey.AgentId,
-                        r.table(AgentCollections.Agents)
-                    )
-                    .zip()
-                    .filter(
-                        r.row[AgentKeys.ComputerName].match("(?i)"+name)
-                        |
-                        r.row[AgentKeys.DisplayName].match("(?i)"+name)
-                    )
-                    .count()
-                    .run(conn)
-                )
-
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).information_retrieved(agents, agent_count)
-                )
-
-            else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_package_id(self.app_id)
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_query_by_name(self, name, pkg_status, conn=None):
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    agents = list(
-                        r
-                        .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                        .get_all([self.app_id, pkg_status],
-                                 index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentCollections.Agents)
-                        )
-                        .zip()
-                        .filter(
-                            r.row[AgentKeys.ComputerName].match("(?i)"+name)
-                            |
-                            r.row[AgentKeys.DisplayName].match("(?i)"+name)
-                        )
-                        .order_by(r.asc(AgentKeys.ComputerName))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .map(self.map_hash)
-                        .run(conn)
-                    )
-
-                    agent_count = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection, use_outdated=True)
-                        .get_all([self.app_id, pkg_status],
-                                 index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus)
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentCollections.Agents)
-                        )
-                        .zip()
-                        .filter(
-                            r.row[AgentKeys.ComputerName].match("(?i)"+name)
-                            |
-                            r.row[AgentKeys.DisplayName].match("(?i)"+name)
-                        )
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(agents, agent_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.app_id, pkg_status)
-                    )
-
-            else:
-                return_status = (
-                    PackageResults(
-                        self.username, self.uri, self.method
-                    ).invalid_package_id(self.app_id)
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_status_and_query_by_name_and_sev(self, name, pkg_status,
-                                                   sev, conn=None):
-
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if agent:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    if sev in CommonSeverityKeys.ValidRvSeverities:
-                        agents = list(
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [self.app_id, pkg_status],
-                                index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus
-                            )
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AppId,
-                                r.table(self.CurrentAppsCollection)
-                            )
-                            .zip()
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AgentId,
-                                r.table(AgentCollections.Agents)
-                            )
-                            .zip()
-                            .filter(
-                                (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                                &
-                                (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                            )
-                            .order_by(r.asc(self.CurrentAppsKey.Name))
-                            .skip(self.offset)
-                            .limit(self.count)
-                            .map(self.map_hash)
-                            .run(conn)
-                        )
-
-                        agent_count = (
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [self.app_id, pkg_status],
-                                index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus
-                            )
-                            .eq_join(self.CurrentAppsPerAgentKey.AppId,
-                                     r.table(self.CurrentAppsCollection))
-                            .zip()
-                            .filter(
-                                (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                                &
-                                (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                                )
-                            .count()
-                            .run(conn)
-                        )
-
-                        return_status = (
-                            GenericResults(
-                                self.username, self.uri, self.method
-                            ).information_retrieved(agents, agent_count)
-                        )
-
-                    else:
-                        return_status = (
-                            PackageResults(
-                                self.username, self.uri, self.method
-                            ).invalid_severity(sev)
-                        )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.app_id, pkg_status)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.app_id, 'os_apps')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_severity(self, sev, conn=None):
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    agents = list(
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId
-                            )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentCollections.Agents)
-                        )
-                        .zip()
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .order_by(r.asc(self.CurrentAppsKey.Name))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .map(self.map_hash)
-                        .run(conn)
-                    )
-
-                    agent_count = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId)
-                        .eq_join(self.CurrentAppsPerAgentKey.AppId, r.table(self.CurrentAppsCollection))
-                        .zip()
-                        .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(agents, agent_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.app_id, 'os_apps')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-    @db_create_close
-    def filter_by_sev_and_query_by_name(self, name, sev, conn=None):
-
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                if sev in CommonSeverityKeys.ValidRvSeverities:
-                    agents = list(
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AgentId,
-                            r.table(AgentCollections.Agents)
-                        )
-                        .zip()
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .order_by(r.asc(self.CurrentAppsKey.Name))
-                        .skip(self.offset)
-                        .limit(self.count)
-                        .map(self.map_hash)
-                        .run(conn)
-                    )
-
-                    agent_count = (
-                        r
-                        .table(self.CurrentAppsPerAgentCollection)
-                        .get_all(
-                            self.app_id, index=self.CurrentAppsPerAgentIndexes.AppId
-                        )
-                        .eq_join(
-                            self.CurrentAppsPerAgentKey.AppId,
-                            r.table(self.CurrentAppsCollection)
-                        )
-                        .zip()
-                        .filter(
-                            (r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            &
-                            (r.row[self.CurrentAppsKey.Name].match("(?i)"+name))
-                        )
-                        .count()
-                        .run(conn)
-                    )
-
-                    return_status = (
-                        GenericResults(
-                            self.username, self.uri, self.method
-                        ).information_retrieved(agents, agent_count)
-                    )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_severity(sev)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.app_id, 'agents')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-
-    @db_create_close
-    def filter_by_status_and_sev(self, pkg_status, sev, conn=None):
-
-        try:
-            pkg = (
-                r
-                .table(self.CurrentAppsCollection, use_outdated=True)
-                .get(self.app_id)
-                .run(conn)
-            )
-            if pkg:
-                if pkg_status in CommonAppKeys.ValidPackageStatuses:
-                    if sev in CommonSeverityKeys.ValidRvSeverities:
-                        agents = list(
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [self.app_id, pkg_status],
-                                index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus
-                            )
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AppId,
-                                r.table(self.CurrentAppsCollection)
-                            )
-                            .zip()
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AgentId,
-                                r.table(AgentCollections.Agents)
-                            )
-                            .zip()
-                            .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            .order_by(r.asc(self.CurrentAppsKey.Name))
-                            .skip(self.offset)
-                            .limit(self.count)
-                            .map(self.map_hash)
-                            .run(conn)
-                        )
-
-                        agent_count = (
-                            r
-                            .table(self.CurrentAppsPerAgentCollection)
-                            .get_all(
-                                [self.app_id, pkg_status],
-                                index=self.CurrentAppsPerAgentIndexes.AppIdAndStatus
-                            )
-                            .eq_join(
-                                self.CurrentAppsPerAgentKey.AppId,
-                                r.table(self.CurrentAppsCollection)
-                            )
-                            .zip()
-                            .filter(r.row[self.CurrentAppsKey.RvSeverity] == sev)
-                            .count()
-                            .run(conn)
-                        )
-
-                        return_status = (
-                            GenericResults(
-                                self.username, self.uri, self.method
-                            ).information_retrieved(agents, agent_count)
-                        )
-
-                    else:
-                        return_status = (
-                            PackageResults(
-                                self.username, self.uri, self.method
-                            ).invalid_severity(sev)
-                        )
-
-                else:
-                    return_status = (
-                        PackageResults(
-                            self.username, self.uri, self.method
-                        ).invalid_status(self.app_id, pkg_status)
-                    )
-
-            else:
-                return_status = (
-                    GenericResults(
-                        self.username, self.uri, self.method
-                    ).invalid_id(self.app_id, 'os_apps')
-                )
-
-        except Exception as e:
-            return_status = (
-                GenericResults(
-                    self.username, self.uri, self.method
-                ).something_broke(
-                    "Package Searching went haywire",
-                    'os_updates', e
-                    )
-            )
-            logger.exception(e)
-
-        return(return_status)
-
-class RetrieveCustomAppsByAppId(RetrieveAppsByAppId):
-    """
-        Main Class for retrieving package information.
-    """
-    def __init__(self, username, view_name, app_id,
-                 uri=None, method=None, count=30, offset=0):
-        """
-        """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
-        self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.CustomApps
-        self.CurrentAppsIndexes = CustomAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
-        self.CurrentAppsKey = CustomAppsKey
-        self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
-
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsKey.Description: r.row[self.CurrentAppsKey.Description],
-                self.CurrentAppsKey.Kb: r.row[self.CurrentAppsKey.Kb],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VendorSeverity: r.row[self.CurrentAppsKey.VendorSeverity],
-                self.CurrentAppsKey.VendorName: r.row[self.CurrentAppsKey.VendorName],
-                self.CurrentAppsKey.SupportUrl: r.row[self.CurrentAppsKey.SupportUrl],
-                self.CurrentAppsKey.OsCode: r.row[self.CurrentAppsKey.OsCode],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-                self.CurrentAppsKey.CliOptions: r.row[self.CurrentAppsKey.CliOptions],
-            }
         )
+        return results
 
+    def by_name(self, name):
+        count, data = self.fetch_agents.by_name(name)
+        generic_status_code = GenericCodes.InformationRetrieved
 
-class RetrieveSupportedAppsByAppId(RetrieveAppsByAppId):
-    """
-        Main Class for retrieving package information.
-    """
-    def __init__(self, username, view_name, app_id,
-                 uri=None, method=None, count=30, offset=0):
-        """
-        """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
-        self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.SupportedApps
-        self.CurrentAppsIndexes = SupportedAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
-        self.CurrentAppsKey = SupportedAppsKey
-        self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
 
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsKey.Description: r.row[self.CurrentAppsKey.Description],
-                self.CurrentAppsKey.Kb: r.row[self.CurrentAppsKey.Kb],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VendorSeverity: r.row[self.CurrentAppsKey.VendorSeverity],
-                self.CurrentAppsKey.VendorName: r.row[self.CurrentAppsKey.VendorName],
-                self.CurrentAppsKey.SupportUrl: r.row[self.CurrentAppsKey.SupportUrl],
-                self.CurrentAppsKey.OsCode: r.row[self.CurrentAppsKey.OsCode],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-            }
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
         )
+        return results
 
-class RetrieveAgentAppsByAppId(RetrieveAppsByAppId):
-    """
-        Main Class for retrieving package information.
-    """
-    def __init__(self, username, view_name, app_id,
-                 uri=None, method=None, count=30, offset=0):
-        """
-        """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
-        self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.vFenseApps
-        self.CurrentAppsIndexes = vFenseAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
-        self.CurrentAppsKey = vFenseAppsKey
-        self.CurrentAppsPerAgentKey = vFenseAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = vFenseAppsPerAgentIndexes
 
-        self.map_hash = (
-            {
-                self.CurrentAppsKey.AppId: r.row[self.CurrentAppsKey.AppId],
-                self.CurrentAppsKey.Version: r.row[self.CurrentAppsKey.Version],
-                self.CurrentAppsKey.Name: r.row[self.CurrentAppsKey.Name],
-                self.CurrentAppsPerAgentKey.Dependencies: r.row[self.CurrentAppsPerAgentKey.Dependencies],
-                self.CurrentAppsKey.Description: r.row[self.CurrentAppsKey.Description],
-                self.CurrentAppsKey.Kb: r.row[self.CurrentAppsKey.Kb],
-                self.CurrentAppsKey.ReleaseDate: r.row[self.CurrentAppsKey.ReleaseDate].to_epoch_time(),
-                self.CurrentAppsKey.RvSeverity: r.row[self.CurrentAppsKey.RvSeverity],
-                self.CurrentAppsKey.VendorSeverity: r.row[self.CurrentAppsKey.VendorSeverity],
-                self.CurrentAppsKey.VendorName: r.row[self.CurrentAppsKey.VendorName],
-                self.CurrentAppsKey.SupportUrl: r.row[self.CurrentAppsKey.SupportUrl],
-                self.CurrentAppsKey.OsCode: r.row[self.CurrentAppsKey.OsCode],
-                self.CurrentAppsKey.FilesDownloadStatus: r.row[self.CurrentAppsKey.FilesDownloadStatus],
-            }
+    def by_status_and_name(self, status, name):
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = self.fetch_apps.by_status_and_name(status, name)
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+        else:
+            count = 0
+            data = []
+            generic_status_code = GenericCodes.InvalidFilterKey
+            vfense_status_code = GenericCodes.InvalidFilterKey
+            msg = 'Invalid status {0}'.format(status)
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
         )
+        return results
+
+
+    def _set_results(self, gen_status_code, vfense_status_code,
+                     msg, count, data):
+
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: msg,
+            ApiResultKeys.COUNT: count,
+            ApiResultKeys.DATA: data,
+        }
+
+        return(results)
 
 
 class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 app_id, uri=None, method=None,
-                 count=30, offset=0):
+    def __init__(self, app_id,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
+                 show_hidden=CommonKeys.NO):
         """
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
         self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.CustomApps
-        self.CurrentAppsIndexes = CustomAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
-        self.CurrentAppsKey = CustomAppsKey
-        self.CurrentAppsPerAgentKey = CustomAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = CustomAppsPerAgentIndexes
+        apps_collection = AppCollections.CustomApps
+        apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
-        self.map_hash = (
-            {
-                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
-                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
-                self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
-            }
+        self.fetch_agents = (
+            FetchAgentsByAppId(
+                self.app_id, count, offset,
+                sort, sort_key, apps_collection,
+                apps_per_agent_collection
+            )
         )
 
 class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 app_id, uri=None, method=None,
-                 count=30, offset=0):
+    def __init__(self, app_id,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
+                 show_hidden=CommonKeys.NO):
         """
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
         self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.SupportedApps
-        self.CurrentAppsIndexes = SupportedAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
-        self.CurrentAppsKey = SupportedAppsKey
-        self.CurrentAppsPerAgentKey = SupportedAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = SupportedAppsPerAgentIndexes
+        apps_collection = AppCollections.SupportedApps
+        apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
 
-        self.map_hash = (
-            {
-                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
-                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
-                self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
-            }
+        self.fetch_agents = (
+            FetchAgentsByAppId(
+                self.app_id, count, offset,
+                sort, sort_key, apps_collection,
+                apps_per_agent_collection
+            )
         )
 
 class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, username, view_name,
-                 app_id, uri=None, method=None,
-                 count=30, offset=0):
+    def __init__(self, app_id,
+                 count=DefaultQueryValues.COUNT,
+                 offset=DefaultQueryValues.OFFSET,
+                 sort=SortValues.ASC,
+                 sort_key=DbCommonAppKeys.Name,
+                 show_hidden=CommonKeys.NO):
         """
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
-        self.username = username
-        self.uri = uri
-        self.method = method
         self.app_id = app_id
-        self.CurrentAppsCollection = AppCollections.vFenseApps
-        self.CurrentAppsIndexes = vFenseAppsIndexes
-        self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
-        self.CurrentAppsKey = vFenseAppsKey
-        self.CurrentAppsPerAgentKey = vFenseAppsPerAgentKey
-        self.CurrentAppsPerAgentIndexes = vFenseAppsPerAgentIndexes
+        apps_collection = AppCollections.vFenseApps
+        apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
 
-        self.map_hash = (
-            {
-                AgentKeys.ComputerName: r.row[AgentKeys.ComputerName],
-                AgentKeys.DisplayName: r.row[AgentKeys.DisplayName],
-                self.CurrentAppsPerAgentKey.AgentId: r.row[self.CurrentAppsPerAgentKey.AgentId]
-            }
+        self.fetch_agents = (
+            FetchAgentsByAppId(
+                self.app_id, count, offset,
+                sort, sort_key, apps_collection,
+                apps_per_agent_collection
+            )
         )
-

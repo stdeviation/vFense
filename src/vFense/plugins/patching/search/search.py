@@ -50,6 +50,27 @@ class RetrieveApps(object):
             )
         )
 
+    def by_id(self, app_id):
+        count, data = self.fetch_apps.by_id(app_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+
     def by_status(self, status):
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status(status)

@@ -70,6 +70,37 @@ class FetchApps(object):
         else:
             self.sort_key = DbCommonAppKeys.Name
 
+    @db_create_close
+    def by_id(self, app_id, conn=None):
+        count = 0
+        data = []
+        try:
+            base = (
+                r
+                .table(self.apps_collection)
+                .get(app_id)
+                .merge(
+                    {
+                        DbCommonAppKeys.ReleaseDate: (
+                            r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                        )
+                    }
+                )
+            )
+
+            data = (
+                base
+                .run(conn)
+            )
+
+            if data:
+                count = 1
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
 
     @db_create_close
     def all(self, conn=None):
