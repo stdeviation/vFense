@@ -99,13 +99,8 @@ class WidgetHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            app_stats = (
-                self.get_all_app_stats_for_view(view_name)
-            )
             results = (
-                GenericResults(
-                    username, uri, method
-                ).information_retrieved(app_stats)
+                self.get_all_app_stats_for_view(view_name)
             )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -123,7 +118,18 @@ class WidgetHandler(BaseHandler):
 
     @results_message
     def get_all_app_stats_for_view(self, view_name):
-        results = get_all_app_stats_by_view(view_name)
+        data = get_all_app_stats_by_view(view_name)
+
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: (
+                GenericCodes.InformationRetrieved
+            ),
+            ApiResultKeys.VFENSE_STATUS_CODE: (
+                GenericCodes.InformationRetrieved
+            ),
+            ApiResultKeys.DATA: data,
+            ApiResultKeys.COUNT: len(data),
+        }
         return results
 
 

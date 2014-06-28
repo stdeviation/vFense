@@ -4,7 +4,9 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import time_it
 from vFense.core._constants import CommonKeys
-from vFense.core.agent._db_model import AgentKeys, AgentCollections
+from vFense.core.agent._db_model import (
+    AgentKeys, AgentCollections, AgentIndexes
+)
 from vFense.core.tag._db_model import (
     TagCollections, TagsPerAgentKeys, TagsPerAgentIndexes,
 )
@@ -552,28 +554,34 @@ def get_all_app_stats_by_view(view_name, conn=None):
     try:
         os_apps_avail = (
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.AVAILABLE, view_name
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(AppCollections.AppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
             .eq_join(
-                DbCommonAppKeys.AppId,
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
                 r.table(AppCollections.UniqueApplications)
             )
             .filter(
                 lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
             )
             .map(
+                lambda x:
                 {
                     DbCommonAppPerAgentKeys.AppId: (
-                        r.row['left'][DbCommonAppPerAgentKeys.AppId]
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
                     ),
                 }
             )
-            .pluck(DbCommonAppPerAgentKeys.AppId)
             .distinct()
             .count()
             .run(conn)
@@ -587,14 +595,34 @@ def get_all_app_stats_by_view(view_name, conn=None):
         )
         custom_apps_avail = (
             r
-            .table(AppCollections.CustomAppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.AVAILABLE, view_name
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(AppCollections.CustomAppsPerAgent, use_outdated=True),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .pluck(DbCommonAppPerAgentKeys.AppId)
+            .eq_join(
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
+                r.table(AppCollections.CustomApps)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                }
+            )
             .distinct()
             .count()
             .run(conn)
@@ -608,14 +636,36 @@ def get_all_app_stats_by_view(view_name, conn=None):
         )
         supported_apps_avail = (
             r
-            .table(AppCollections.SupportedAppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.AVAILABLE, view_name
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(
+                    AppCollections.SupportedAppsPerAgent, use_outdated=True
+                ),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .pluck(DbCommonAppPerAgentKeys.AppId)
+            .eq_join(
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
+                r.table(AppCollections.SupportedApps)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                }
+            )
             .distinct()
             .count()
             .run(conn)
@@ -629,14 +679,36 @@ def get_all_app_stats_by_view(view_name, conn=None):
         )
         agent_apps_avail = (
             r
-            .table(AppCollections.vFenseAppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.AVAILABLE, view_name
+                    CommonAppKeys.AVAILABLE,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(
+                    AppCollections.vFenseAppsPerAgent, use_outdated=True
+                ),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .pluck(DbCommonAppPerAgentKeys.AppId)
+            .eq_join(
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
+                r.table(AppCollections.vFenseApps)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                }
+            )
             .distinct()
             .count()
             .run(conn)
@@ -651,14 +723,36 @@ def get_all_app_stats_by_view(view_name, conn=None):
 
         all_pending_apps = (
             r
-            .table(AppCollections.AppsPerAgent, use_outdated=True)
-            .get_all(
+            .table(AgentCollections.Agents, use_outdated=True)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .pluck(AgentKeys.AgentId)
+            .eq_join(
+                lambda x:
                 [
-                    CommonAppKeys.PENDING, view_name
+                    CommonAppKeys.PENDING,
+                    x[DbCommonAppPerAgentKeys.AgentId]
                 ],
-                index=DbCommonAppPerAgentIndexes.StatusAndView
+                r.table(
+                    AppCollections.AppsPerAgent, use_outdated=True
+                ),
+                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
             )
-            .pluck((CommonAppKeys.APP_ID))
+            .eq_join(
+                lambda x:
+                x['right'][DbCommonAppKeys.AppId],
+                r.table(AppCollections.vFenseApps)
+            )
+            .filter(
+                lambda x: x['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+            )
+            .map(
+                lambda x:
+                {
+                    DbCommonAppPerAgentKeys.AppId: (
+                        x['right'][DbCommonAppPerAgentKeys.AppId]
+                    ),
+                }
+            )
             .distinct()
             .count()
             .run(conn)
