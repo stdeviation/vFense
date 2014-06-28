@@ -1,4 +1,5 @@
 import simplejson as json
+from datetime import datetime
 
 from vFense.core.api.base import BaseHandler
 import logging
@@ -16,7 +17,9 @@ from vFense.core.decorators import (
 )
 
 from vFense.core.agent._db_model import AgentKeys
-from vFense.plugins.patching._db_model import AppsKey, AppCollections
+from vFense.plugins.patching._db_model import (
+    AppsKey, AppCollections, CustomAppsKey
+)
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status
 
@@ -32,7 +35,7 @@ from vFense.plugins.patching.search.search_by_tagid import (
     RetrieveCustomAppsByTagId
 )
 from vFense.plugins.patching.search.search_by_appid import (
-    RetrieveCustomAppsByAppId, RetrieveAgentsByCustomAppId
+    RetrieveAgentsByCustomAppId
 )
 
 from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import (
@@ -737,7 +740,11 @@ class TagIdCustomAppsHandler(BaseHandler):
 class AppIdCustomAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
-        search = RetrieveCustomAppsByAppId(app_id)
+        username = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(username).get_attribute(UserKeys.CurrentView)
+        )
+        search = RetrieveCustomApps(active_view)
         results = self.by_id(search, app_id)
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
@@ -762,7 +769,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             severity = self.arguments.get('severity', None)
             install_options = self.get_arguments.get('install_options', None)
             if severity:
-                if severity in ValidRvSeverities:
+                if severity in CommonSeverityKeys.ValidRvSeverities:
                     severity = severity.capitalize()
                     sev_data = (
                         {
@@ -1403,8 +1410,8 @@ class CustomAppsHandler(BaseHandler):
             for appid in app_ids:
                 deleted = (
                     delete_app_from_vfense(
-                        appid, CustomAppsCollection,
-                        CustomAppsPerAgentCollection
+                        appid, AppCollections.CustomApps,
+                        AppCollections.CustomAppsPerAgent
                     )
                 )
                 if deleted:
