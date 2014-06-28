@@ -8,29 +8,34 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.scheduler.jobManager import schedule_once
 
-from vFense.plugins.patching.search.search_by_tagid import \
+from vFense.plugins.patching.search.search_by_tagid import (
     RetrieveAppsByTagId
+)
 
-from vFense.plugins.patching.search.search_by_agentid import \
+from vFense.plugins.patching.search.search_by_agentid import (
     RetrieveAppsByAgentId
+)
 
-from vFense.plugins.patching.search.search_by_appid import \
-    RetrieveAgentsByAppId, RetrieveAppsByAppId
+from vFense.plugins.patching.search.search_by_appid import (
+    RetrieveAgentsByAppId
+)
 
-from vFense.plugins.patching.search.search import \
+from vFense.plugins.patching.search.search import (
     RetrieveApps
+)
 
 from vFense.plugins.patching._db_model import *
 from vFense.core._constants import CommonKeys
-from vFense.core.permissions._constants import *
+from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.patching import toggle_hidden_status
-from vFense.core.decorators import authenticated_request, \
-    convert_json_to_arguments
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments, results_message
+)
 
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
@@ -42,8 +47,10 @@ logger = logging.getLogger('rvapi')
 class AgentIdOsAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
+        uri = self.request.uri
+        http_method = self.request.method
         username = self.get_current_user().encode('utf-8')
-        view_name = (
+        active_view = (
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         query = self.get_argument('query', None)
@@ -58,12 +65,9 @@ class AgentIdOsAppsHandler(BaseHandler):
             hidden = CommonKeys.NO
         else:
             hidden = CommonKeys.YES
-        uri = self.request.uri
-        method = self.request.method
-        patches = (
+        search = (
             RetrieveAppsByAgentId(
-                username, view_name, agent_id,
-                uri, method, count, offset,
+                agent_id, count, offset,
                 sort, sort_by, show_hidden=hidden
             )
         )
@@ -110,6 +114,12 @@ class AgentIdOsAppsHandler(BaseHandler):
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_apps_by_status(search):
+        results = search.by_status(status)
+        return results
+
 
     @authenticated_request
     @convert_json_to_arguments
