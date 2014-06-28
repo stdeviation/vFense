@@ -58,6 +58,7 @@ class AgentIdOsAppsHandler(BaseHandler):
         offset = int(self.get_argument('offset', 0))
         status = self.get_argument('status', 'installed')
         severity = self.get_argument('severity', None)
+        vuln = self.get_argument('vuln', None)
         sort = self.get_argument('sort', 'asc')
         sort_by = self.get_argument('sort_by', AppsKey.Name)
         hidden = self.get_argument('hidden', 'false')
@@ -71,38 +72,39 @@ class AgentIdOsAppsHandler(BaseHandler):
                 sort, sort_by, show_hidden=hidden
             )
         )
-        if not query and not severity and status:
-            results = patches.filter_by_status(status)
+        if not query and not severity and not vuln and status:
+            results = self.by_status(search, status)
 
-        elif not query and status and severity:
-            results = patches.filter_by_status_and_sev(status, severity)
+        elif not query and not vuln and status and severity:
+            results = self.by_status_and_sev(search, status, severity)
 
-        elif severity and not query and not status:
-            results = patches.filter_by_severity(severity)
+        elif not query and not severity and status and vuln:
+            results = self.by_status_and_vuln(search, status)
 
-        elif severity and status and query:
+        elif not query and not status and not vuln and severity:
+            results = self.by_severity(search, severity)
+
+        elif not vuln and severity and status and query:
             results = (
-                patches.filter_by_status_and_query_by_name_and_sev(
-                    query, status, severity
+                self.by_status_and_name_and_sev(
+                    search, query, status, severity
                 )
             )
 
-        elif status and query:
+        elif not vuln and not severity and status and query:
             results = (
-                patches.filter_by_status_and_query_by_name(
-                    query, status
-                )
+                self.by_status_and_name(search, query, status)
             )
 
         elif severity and query:
             results = (
-                patches.filter_by_sev_and_query_by_name(
-                    query, severity
+                self.by_sev_and_name(
+                    search, query, severity
                 )
             )
 
-        elif query and not severity and not status:
-            results = patches.query_by_name(query)
+        elif not vuln and not severity and not status and query:
+            results = self.by_name(search, query)
 
         else:
             results = (
@@ -116,8 +118,38 @@ class AgentIdOsAppsHandler(BaseHandler):
         self.write(json.dumps(results, indent=4))
 
     @results_message
-    def get_apps_by_status(search):
+    def by_status(self, search, status):
         results = search.by_status(status)
+        return results
+
+    @results_message
+    def by_status_and_sev(self, search, status, sev):
+        results = search.by_status_and_sev(status, sev)
+        return results
+
+    @results_message
+    def by_status_and_vuln(self, search, status):
+        results = search.by_status_and_vuln(status)
+        return results
+
+    @results_message
+    def by_severity(self, search, sev):
+        results = search.by_severity(sev)
+        return results
+
+    @results_message
+    def by_status_and_name_and_sev(self, search, status, name, sev):
+        results = search.by_status_and_name_and_sev(status, name, sev)
+        return results
+
+    @results_message
+    def by_status_and_name(self, search, status, name):
+        results = search.by_status_and_name(status, name)
+        return results
+
+    @results_message
+    def by_status_and_name_and_vuln(self, search, status, name):
+        results = search.by_status_and_name_and_vuln(status, name)
         return results
 
 

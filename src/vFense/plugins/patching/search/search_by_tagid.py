@@ -153,6 +153,38 @@ class RetrieveAppsByTagId(object):
         )
         return results
 
+    def by_status_and_name_and_sev_and_vuln(self, status, name, sev):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid status {0}'.format(status)
+        if status in CommonAppKeys.ValidPackageStatuses:
+            if sev in CommonSeverityKeys.ValidRvSeverities:
+                count, data = (
+                    self.fetch_apps.by_status_and_name_and_sev_and_vuln(
+                        status, name, sev
+                    )
+                )
+                generic_status_code = GenericCodes.InformationRetrieved
+
+                if count == 0:
+                    vfense_status_code = GenericFailureCodes.DataIsEmpty
+                    msg = 'dataset is empty'
+
+                else:
+                    vfense_status_code = GenericCodes.InformationRetrieved
+                    msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+
     def by_severity(self, sev):
         if sev in CommonSeverityKeys.ValidRvSeverities:
             count, data = self.fetch_apps.by_severity(sev)
@@ -253,6 +285,28 @@ class RetrieveAppsByTagId(object):
             generic_status_code = GenericCodes.InvalidFilterKey
             vfense_status_code = GenericCodes.InvalidFilterKey
             msg = 'Invalid status {0}'.format(status)
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    def by_name_and_vuln(self, name):
+        count, data = (
+            self.fetch_apps.by_name_and_vuln(name)
+        )
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
 
         results = (
             self._set_results(
