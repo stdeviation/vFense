@@ -46,19 +46,20 @@ from vFense.server.api.scheduler_api import (ScheduleListerHandler,
     SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
     SchedulerCustomRecurrentJobHandler)
 
-from vFense.plugins.patching.Api.os_updates_handler import (
-    AgentIdOsAppsHandler, TagIdOsAppsHandler
+from vFense.plugins.patching.api.os_apps import (
+    AgentIdOsAppsHandler, TagIdOsAppsHandler, AppIdOsAppsHandler,
+    GetAgentsByAppIdHandler, OsAppsHandler
 )
-from vFense.plugins.patching.Api.agent_updates_handler import (
+from vFense.plugins.patching.api.agent_apps import (
     AgentIdAgentAppsHandler, TagIdAgentAppsHandler
 )
-from vFense.plugins.patching.Api.supported_updates_handler import (
+from vFense.plugins.patching.api.supported_apps import (
     AgentIdSupportedAppsHandler, TagIdSupportedAppsHandler
 )
-from vFense.plugins.patching.Api.custom_updates_handler import (
+from vFense.plugins.patching.api.custom_apps import (
     AgentIdCustomAppsHandler, TagIdCustomAppsHandler
 )
-from vFense.plugins.patching.Api.stats_api import (AgentSeverityHandler,
+from vFense.plugins.patching.api.stats_api import (AgentSeverityHandler,
     AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
     TagStatsByOsHandler)
 
@@ -207,6 +208,11 @@ class CoreLoader():
             (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
             (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
             #(r"/api/package/getDependecies?", GetDependenciesHandler),
+
+            ##### Os Apps API Handlers
+            (r"/api/v1/app/os/([0-9A-Za-z]{64})?", AppIdOsAppsHandler),
+            (r"/api/v1/app/os/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
+            (r"/api/v1/apps/os", OsAppsHandler),
 
         ]
 

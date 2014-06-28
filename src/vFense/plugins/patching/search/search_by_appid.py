@@ -2,20 +2,15 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.db.client import db_create_close, r
-
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core._constants import (
     SortValues, DefaultQueryValues, CommonKeys
 )
 from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
-    DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
+    AppCollections, DbCommonAppKeys,
 )
 from vFense.plugins.patching._constants import (
-    CommonAppKeys, CommonSeverityKeys
-)
-from vFense.core.agent._db_model import (
-    AgentCollections, AgentKeys, AgentIndexes
+    CommonAppKeys
 )
 
 from vFense.errorz.status_codes import (
@@ -40,8 +35,7 @@ class RetrieveAgentsByAppId(object):
                  count=DefaultQueryValues.COUNT,
                  offset=DefaultQueryValues.OFFSET,
                  sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO,
+                 sort_key=AgentKeys.ComputerName,
                  apps_collection=AppCollections.UniqueApplications,
                  apps_per_agent_collection=AppCollections.AppsPerAgent):
         """
@@ -155,8 +149,7 @@ class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
                  count=DefaultQueryValues.COUNT,
                  offset=DefaultQueryValues.OFFSET,
                  sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO):
+                 sort_key=AgentKeys.ComputerName):
         """
         """
         self.app_id = app_id
@@ -179,8 +172,7 @@ class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
                  count=DefaultQueryValues.COUNT,
                  offset=DefaultQueryValues.OFFSET,
                  sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO):
+                 sort_key=AgentKeys.ComputerName):
         """
         """
         self.app_id = app_id
@@ -203,8 +195,7 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
                  count=DefaultQueryValues.COUNT,
                  offset=DefaultQueryValues.OFFSET,
                  sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO):
+                 sort_key=AgentKeys.ComputerName):
         """
         """
         self.app_id = app_id

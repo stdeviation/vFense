@@ -26,12 +26,12 @@ from vFense.db.create_indexes import initialize_indexes_and_create_tables
 from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
 from vFense.core.api.agent import *
-from vFense.plugins.patching.Api.stats_api import *
-from vFense.plugins.patching.Api.notification_handler import *
-from vFense.plugins.patching.Api.os_updates_handler import *
-from vFense.plugins.patching.Api.agent_updates_handler import *
-from vFense.plugins.patching.Api.custom_updates_handler import *
-from vFense.plugins.patching.Api.supported_updates_handler import *
+from vFense.plugins.patching.api.stats_api import *
+from vFense.plugins.patching.api.notification_handler import *
+from vFense.plugins.patching.api.os_apps import *
+from vFense.plugins.patching.api.agent_apps import *
+from vFense.plugins.patching.api.custom_apps import *
+from vFense.plugins.patching.api.supported_apps import *
 from vFense.plugins.mightymouse.api.relay_servers import *
 ##Vulnerability APIs
 from vFense.plugins.vuln.api.vulnerability import *
@@ -85,11 +85,6 @@ class Application(tornado.web.Application):
             ##### MightyMouse API Handlers
             (r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),
             (r"/api/v1/relay", RelayServersHandler),
-
-            ##### Os Apps API Handlers
-            (r"/api/v1/app/os/([0-9A-Za-z]{64})?", AppIdOsAppsHandler),
-            (r"/api/v1/app/os/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
-            (r"/api/v1/apps/os", OsAppsHandler),
 
             ##### Custom Apps API Handlers
             (r"/api/v1/app/custom/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AppIdCustomAppsHandler),

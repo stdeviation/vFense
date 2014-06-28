@@ -24,6 +24,7 @@ from vFense.plugins.patching.search.search import (
     RetrieveApps
 )
 
+from vFense.core.agent._db_model import AgentKeys
 from vFense.plugins.patching._db_model import AppsKey
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
@@ -853,43 +854,76 @@ class GetAgentsByAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
         username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        query = self.get_argument('query', None)
-        count = int(self.get_argument('count', 30))
-        offset = int(self.get_argument('offset', 0))
-        status = self.get_argument('status', 'installed')
         uri = self.request.uri
-        method = self.request.method
-        agents = (
-            RetrieveAgentsByAppId(app_id, count, offset)
+        http_method = self.request.method
+        query = (
+            self.get_argument(ApiArguments.QUERY, None)
+        )
+        count = (
+            int(
+                self.get_argument(
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
+                )
+            )
+        )
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
+                )
+            )
+        )
+        sort = (
+            self.get_argument(
+                ApiArguments.SORT, SortValues.ASC
+            )
+        )
+        sort_by = (
+            self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
+        )
+        status = (
+            self.get_argument(
+                AppApiArguments.STATUS, AppStatuses.AVAILABLE
+            )
+        )
+        search = (
+            RetrieveAgentsByAppId(app_id, count, offset, sort, sort_by)
         )
 
         if status and not query:
-            results = (
-                agents.filter_by_status(
-                    status
-                )
-            )
+            results = self.by_status(search, status)
 
         elif status and query:
-            results = (
-                agents.filter_by_status_and_query_by_name(
-                    query, status
-                )
-            )
+            results = self.by_status_and_name(search, status, query)
+
+        elif query and not status:
+            results = self.by_name(search, query)
 
         else:
             results = (
                 GenericResults(
-                    username, uri, method
+                    username, uri, http_method
                 ).incorrect_arguments()
             )
 
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def by_status(self, search, status):
+        results = search.by_status(status)
+        return results
+
+    @results_message
+    def by_name(self, search, name):
+        results = search.by_name(name)
+        return results
+
+    @results_message
+    def by_status_and_name(self, search, status, name):
+        results = search.by_status_and_name(status, name)
+        return results
 
 
     @authenticated_request
