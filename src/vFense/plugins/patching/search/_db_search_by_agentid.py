@@ -549,7 +549,7 @@ class FetchAppsByAgentId(object):
 
 
     def _set_status_filter(self, status):
-        map_hash = self._set_join_map_hash()
+        map_hash = self._set_map_hash()
         base = (
             r
             .table(self.apps_per_agent_collection)
