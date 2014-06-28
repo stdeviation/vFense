@@ -481,6 +481,62 @@ class FetchApps(object):
 
         return(count, data)
 
+    @db_create_close
+    def by_status_and_name_and_vuln(self, status, name, conn=None):
+        count = 0
+        data = []
+        base_filter = self._set_status_filter(status)
+        try:
+            base = (
+                base_filter
+            )
+
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+            data = list(
+                base
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.VulnerabilityId] != ''
+                )
+                .distinct()
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .run(conn)
+            )
+
+            count = (
+                base
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.Name].match("(?i)"+name)
+                )
+                .filter(
+                    lambda x:
+                    x[DbCommonAppKeys.VulnerabilityId] != ''
+                )
+                .distinct()
+                .count()
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
 
     @db_create_close
     def by_sev_and_name(self, sev, name, conn=None):

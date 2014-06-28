@@ -28,6 +28,21 @@ class CommonAppKeys():
     BASIC_RV_STATS = 'basic_rv_stats'
     APP_STATS = 'app_stats'
 
+class AppStatuses():
+    INSTALLED = 'installed'
+    AVAILABLE = 'available'
+    PENDING = 'pending'
+
+    @staticmethod
+    def get_valid_statuses():
+        valid_statuses = (
+            map(
+                lambda x:
+                getattr(AppStatuses, x), dir(AppStatuses)[:-3]
+            )
+        )
+        return valid_statuses
+
 class CommonFileKeys():
     PKG_NAME = 'file_name'
     PKG_SIZE = 'file_size'

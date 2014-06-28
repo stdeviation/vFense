@@ -206,6 +206,34 @@ class RetrieveAppsByAgentId(object):
         )
         return results
 
+    def by_status_and_name_vuln(self, status, name):
+        count = 0
+        data = []
+        generic_status_code = GenericCodes.InvalidFilterKey
+        vfense_status_code = GenericCodes.InvalidFilterKey
+        msg = 'Invalid status {0}'.format(status)
+        if status in CommonAppKeys.ValidPackageStatuses:
+            count, data = (
+                self.fetch_apps.by_status_and_name_and_vuln(status, name)
+            )
+            generic_status_code = GenericCodes.InformationRetrieved
+
+            if count == 0:
+                vfense_status_code = GenericFailureCodes.DataIsEmpty
+                msg = 'dataset is empty'
+
+            else:
+                vfense_status_code = GenericCodes.InformationRetrieved
+                msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
     def by_status_and_name_and_sev_and_vuln(self, status, name, sev):
         count = 0
         data = []
