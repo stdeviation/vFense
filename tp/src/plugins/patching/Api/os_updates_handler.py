@@ -27,6 +27,9 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.errorz.error_messages import GenericResults, PackageResults
 
 from vFense.plugins.patching._db import update_app_data_by_app_id
+from vFense.plugins.patching._constants import (
+    CommonSeverityKeys
+)
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.plugins.patching.patching import toggle_hidden_status
 from vFense.core.decorators import authenticated_request, \
@@ -494,7 +497,7 @@ class AppIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             severity = self.arguments.get('severity').capitalize()
-            if severity in ValidRvSeverities:
+            if severity in CommonSeverityKeys.ValidRvSeverities:
                 sev_data = (
                     {
                         AppsKey.RvSeverity: severity

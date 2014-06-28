@@ -16,6 +16,7 @@ from vFense.core.decorators import convert_json_to_arguments, authenticated_requ
 from vFense.plugins.patching import *
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.patching import toggle_hidden_status
+from vFense.plugins.patching._constants import CommonSeverityKeys
 
 from vFense.plugins.patching._db import delete_app_from_vfense
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -574,7 +575,7 @@ class AppIdCustomAppsHandler(BaseHandler):
             severity = self.arguments.get('severity', None)
             install_options = self.get_arguments.get('install_options', None)
             if severity:
-                if severity in ValidRvSeverities:
+                if severity in CommonSeverityKeys.ValidRvSeverities:
                     severity = severity.capitalize()
                     sev_data = (
                         {
