@@ -8,6 +8,7 @@ define(
                     url: '/api/v1/agent/',
                     name: 'tags',
                     primaryKey: 'tag_id',
+                    ids: 'tag_ids',
                     text: 'tag_name',
                     searchURL: '/api/v1/tags',
                     placeholder: 'Select or create a tag',
@@ -23,6 +24,7 @@ define(
                     url: '/api/v1/tag/',
                     name: 'agents',
                     primaryKey: 'agent_id',
+                    ids: 'agent_ids',
                     text: 'computer_name',
                     searchURL: '/api/v1/agents',
                     placeholder: 'Select an agent',
@@ -113,7 +115,7 @@ define(
                         if (this.page === 'agent') {
                             url += '/tag';
                         }
-                        params[pageKeys[this.page].primaryKey] = event.added ? event.added.id : event.removed.id;
+                        params[pageKeys[this.page].ids] = event.added ? event.added.id : event.removed.id;
                         if (data.tags && event.added) {
                             if (event.added.id === event.added.text) {
                                 params.tag_name = event.added.text;

@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
-    ApiArguments, AgentApiArguments, ApiValues
+    ApiArguments, AgentApiArguments, ApiValues, TagApiArguments
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -18,6 +18,8 @@ from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.manager import AgentManager
+from vFense.core.tag import Tag
+from vFense.core.tag.manager import TagManager
 from vFense.core.view.manager import ViewManager
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
@@ -853,4 +855,60 @@ class AgentTagHandler(BaseHandler):
     @results_message
     def search_tags_by_name(self, search, name):
         results = search.by_name(name)
+        return results
+
+    @authenticated_request
+    def put(self, agent_id):
+        username = self.get_current_user()
+        active_view = (
+            UserManager(username).get_attribute(UserKeys.CurrentView)
+        )
+        uri = self.request.uri
+        method = self.request.method
+        try:
+            tag_ids = self.get_argument(TagApiArguments.TAG_IDS)
+            tag_name = self.get_argument(TagApiArguments.TAG_NAME, None)
+            action = self.get_argument(ApiArguments.ACTION, ApiValues.ADD)
+            manager = (
+                AgentManager(agent_id)
+            )
+            if action == ApiValues.ADD:
+                if not tag_name:
+                    results = self.add_tags(manager, tag_ids)
+                else:
+                    results = self.create_tag(tag_name, agent_id, active_view)
+            else:
+                results = self.remove_tags(manager, tag_ids)
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+        except Exception as e:
+            results = (
+                GenericResults(
+                    username, uri, method
+                ).something_broke(agent_id, 'get agent_info', e)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+    @results_message
+    @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
+    def add_tags(self, manager, tag_ids):
+        results = manager.add_to_tags(tag_ids)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.REMOVE_AGENTS_FROM_TAG)
+    def remove_tags(self, manager, tag_ids):
+        results = manager.remove_from_tags(tag_ids)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.CREATE_TAG)
+    def create_tag(self, tag_name, agent_id, active_view):
+        tag = Tag(tag_name, active_view, agents=[agent_id])
+        manager = TagManager()
+        results = manager.create(tag)
         return results

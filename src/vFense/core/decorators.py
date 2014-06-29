@@ -74,7 +74,6 @@ def results_message(fn):
     """Return the results in the vFense API standard"""
     def db_wrapper(*args, **kwargs):
         data = fn(*args, **kwargs)
-        status_code = data.get(ApiResultKeys.DB_STATUS_CODE, None)
         generic_status_code = data.get(ApiResultKeys.GENERIC_STATUS_CODE, None)
         tornado_handler = args[0]
         username = tornado_handler.get_current_user()
@@ -170,13 +169,12 @@ def results_message(fn):
                 ).does_not_exist(**data)
             )
 
-        elif status_code == DbCodes.Errors:
+        else:
             status = (
                 Results(
                     username, uri, method
                 ).something_broke(**data)
             )
-
         return status
 
     return wraps(fn)(db_wrapper)

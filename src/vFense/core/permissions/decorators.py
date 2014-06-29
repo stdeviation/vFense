@@ -18,7 +18,8 @@ def check_permissions(permission):
                 verify_permission_for_user(username, permission)
             )
             if granted and status_code == GenericCodes.PermissionGranted:
-                fn(*args, **kwargs)
+                data = fn(*args, **kwargs)
+                return data
 
             elif not granted and status_code == GenericCodes.PermissionDenied:
                 results = (

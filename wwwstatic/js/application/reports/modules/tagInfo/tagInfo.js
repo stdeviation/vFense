@@ -8,7 +8,7 @@ define(
                     name: 'MAIN',
                     keys: [
                         {name: 'tag_name', title: 'Tag Name:'},
-                        {name: 'customer_name', title: 'Customer:'},
+                        {name: 'view_name', title: 'View:'},
                         {name: 'production_level', title: 'Production State:'}
                     ]
                 },

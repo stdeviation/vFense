@@ -139,7 +139,7 @@ define(
                         tag = $button.data('tag'),
                         that = this;
                     params = {
-                        id: tag
+                        'tag_ids': tag
                     };
                     $.ajax({
                         url:'/api/v1/tags',

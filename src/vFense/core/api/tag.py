@@ -206,9 +206,11 @@ class TagsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_TAGS, vFenseObjects.TAG)
     @results_message
+    @log_operation(AdminActions.REMOVE_TAGS, vFenseObjects.TAG)
     def remove_tags(self, tags):
+        if not isinstance(tags, list):
+            tags = tags.split()
         end_results = {}
         tags_deleted = []
         tags_unchanged = []
@@ -216,7 +218,7 @@ class TagsHandler(BaseHandler):
             manager = TagManager(tag_id)
             results = manager.remove()
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
-                    == TagCodes.TagDeleted):
+                    == TagCodes.TagsDeleted):
                 tags_deleted.append(tag_id)
             else:
                 tags_unchanged.append(tag_id)
@@ -339,14 +341,14 @@ class TagHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @check_permissions(Permissions.REBOOT)
     @results_message
+    @check_permissions(Permissions.REBOOT)
     def reboot(self, operation, tag_id):
         results = operation.reboot(tag_id=tag_id)
         return results
 
-    @check_permissions(Permissions.SHUTDOWN)
     @results_message
+    @check_permissions(Permissions.SHUTDOWN)
     def shutdown(self, operation, tag_id):
         results = operation.shutdown(tag_id=tag_id)
         return results
@@ -376,7 +378,7 @@ class TagHandler(BaseHandler):
                         username, uri, method
                     ).incorrect_arguments()
                 )
-
+            print results
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -392,15 +394,20 @@ class TagHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
     @results_message
+    @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
     def add_agents_to_tag(self, manager, agent_ids):
-        results = manager.remove_agents(agent_ids)
+        if not isinstance(agent_ids, list):
+            agent_ids = agent_ids.split()
+        results = manager.add_agents(agent_ids)
+        print results
         return results
 
-    @check_permissions(Permissions.REMOVE_AGENTS_FROM_TAG)
     @results_message
+    @check_permissions(Permissions.REMOVE_AGENTS_FROM_TAG)
     def remove_agents_from_tag(self, manager, agent_ids):
+        if not isinstance(agent_ids, list):
+            agent_ids = agent_ids.split()
         results = manager.remove_agents(agent_ids)
         return results
 
@@ -413,6 +420,7 @@ class TagHandler(BaseHandler):
         try:
             manager = TagManager(tag_id)
             results = self.remove_tag(manager)
+            print results
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -428,8 +436,8 @@ class TagHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @check_permissions(Permissions.REMOVE_TAG)
     @results_message
+    @check_permissions(Permissions.REMOVE_TAG)
     def remove_tag(self, manager):
         results = manager.remove()
         return results
