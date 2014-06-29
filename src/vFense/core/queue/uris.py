@@ -58,8 +58,7 @@ def _get_result_uris_dict(version, agent_id=None):
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2]
                 }
-            elif (uri[3] and not AuthenticationOperations.LOGIN or
-                   uri[3] and not AuthenticationOperations.LOGOUT):
+            elif uri[3]:
 
                 results[uri[0]] = {
                     CommonKeys.RESPONSE_URI: (
@@ -147,7 +146,6 @@ def get_result_uris(agent_id=None, version='v1'):
         }
     """
     status_code = 0
-    status = get_result_uris.func_name + ' - '
     result_uris = _get_result_uris_dict(version, agent_id)
 
     generic_status_code = GenericCodes.InformationRetrieved
@@ -159,7 +157,7 @@ def get_result_uris(agent_id=None, version='v1'):
         ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-        ApiResultKeys.MESSAGE: status + msg,
+        ApiResultKeys.MESSAGE: msg,
         ApiResultKeys.COUNT: count,
         ApiResultKeys.DATA: result_uris,
     }

@@ -98,7 +98,7 @@ class NewAgentV1(BaseHandler):
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS]
-            uris = get_result_uris(agent_id)
+            uris = get_result_uris(agent_id, version='v1')
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )

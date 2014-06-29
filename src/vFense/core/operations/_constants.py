@@ -105,7 +105,7 @@ class V1ListenerURIs():
     LOGOUT = (AuthenticationOperations.LOGOUT,'logout', 'GET', False)
     NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
     INSTALL_OS_APPS = (
-        AgentOperations.INSTALL_OS_APPS, 'rv/results/install/apps/', 'PUT',
+        AgentOperations.INSTALL_OS_APPS, 'rv/results/install/apps', 'PUT',
         True
     )
     INSTALL_CUSTOM_APPS = (
@@ -138,7 +138,7 @@ class V1ListenerURIs():
     )
     AVAILABLE_AGENT_UPDATE = (
         AgentOperations.AVAILABLE_AGENT_UPDATE, 'rv/available_agent_update',
-        'PUT', False
+        'PUT', True
     )
     START_UP = (AgentOperations.START_UP, 'core/results/startup', 'PUT', True)
     CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
@@ -163,19 +163,19 @@ class V1ListenerURIs():
 class V2ListenerURIs():
     NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
     INSTALL_OS_APPS = (
-        AgentOperations.INSTALL_OS_APPS, 'results/apps/os/install', 'PUT',
+        AgentOperations.INSTALL_OS_APPS, 'apps/results/install/os', 'PUT',
         True
     )
     INSTALL_CUSTOM_APPS = (
-        AgentOperations.INSTALL_CUSTOM_APPS, 'results/apps/install/custom',
+        AgentOperations.INSTALL_CUSTOM_APPS, 'apps/results/install/custom',
         'PUT', True
     )
     INSTALL_SUPPORTED_APPS = (
         AgentOperations.INSTALL_SUPPORTED_APPS,
-        'results/apps/install/supported', 'PUT', True
+        'apps/results/install/supported', 'PUT', True
     )
     INSTALL_AGENT_UPDATE = (
-        AgentOperations.INSTALL_AGENT_UPDATE, 'apps/results/apps/agent',
+        AgentOperations.INSTALL_AGENT_UPDATE, 'apps/results/install/agent',
         'PUT', True
     )
     UNINSTALL = (
@@ -192,13 +192,13 @@ class V2ListenerURIs():
         AgentOperations.NEW_TOKEN, 'core/results/newtoken', 'PUT', True
     )
     REFRESH_APPS = (
-        AgentOperations.REFRESH_APPS, 'apps/refresh_apps', 'PUT', True
+        AgentOperations.REFRESH_APPS, 'apps/results/refresh_apps', 'PUT', True
     )
     AVAILABLE_AGENT_UPDATE = (
         AgentOperations.AVAILABLE_AGENT_UPDATE, 'apps/available_agent_update',
         'PUT', False
     )
-    START_UP = (AgentOperations.START_UP, 'core/results/startup', 'PUT', True)
+    START_UP = (AgentOperations.START_UP, 'core/startup', 'PUT', True)
     CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
     MONITOR_DATA = (
         AgentOperations.MONITOR_DATA, 'monitoring/monitordata', 'POST', True
