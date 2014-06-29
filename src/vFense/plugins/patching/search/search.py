@@ -27,19 +27,29 @@ logger = logging.getLogger('rvapi')
 
 class RetrieveApps(object):
     """
-        This class is used to get agent data from within the Packages Page
+        This class is used to query for applications.
     """
     def __init__(self, view_name=None,
                  count=DefaultQueryValues.COUNT,
                  offset=DefaultQueryValues.OFFSET,
                  sort=SortValues.ASC,
                  sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO,
-                 apps_collection=AppCollections.UniqueApplications,
-                 apps_per_agent_collection=AppCollections.AppsPerAgent):
+                 show_hidden=CommonKeys.NO):
         """
+        Kwargs:
+            view_name (str):The view you are performing this query on.
+                default=None
+            count (int): The amount of applications to return
+                default=30
+            offset (int): From where to begin the search from (pagination).
+                default=0
+            sort (str): Sort either ascending or descending (asc or desc).
+                default="asc"
+            sort_key (str): Key to sort the applications by.
+                default="name"
+            show_hidden (str): Return applications that have been hidden.
+                default="no"
         """
-
         if view_name == DefaultViews.GLOBAL:
             view_name = None
 
@@ -356,7 +366,6 @@ class RetrieveApps(object):
             )
         )
         return results
-
 
     def by_name(self, name):
         """Retrieve all applications by regular expression on the name
@@ -874,7 +883,7 @@ class RetrieveApps(object):
 
 class RetrieveCustomApps(RetrieveApps):
     """
-        This class is used to get agent data from within the Packages Page
+        This class is used to query for applications.
     """
     def __init__(self, view_name=None,
                  count=DefaultQueryValues.COUNT,
@@ -883,7 +892,21 @@ class RetrieveCustomApps(RetrieveApps):
                  sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
+        Kwargs:
+            view_name (str):The view you are performing this query on.
+                default=None
+            count (int): The amount of applications to return
+                default=30
+            offset (int): From where to begin the search from (pagination).
+                default=0
+            sort (str): Sort either ascending or descending (asc or desc).
+                default="asc"
+            sort_key (str): Key to sort the applications by.
+                default="name"
+            show_hidden (str): Return applications that have been hidden.
+                default="no"
         """
+        apps_collection = AppCollections.vFenseApps
         apps_collection = AppCollections.CustomApps
         apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
@@ -900,7 +923,7 @@ class RetrieveCustomApps(RetrieveApps):
 
 class RetrieveSupportedApps(RetrieveApps):
     """
-        This class is used to get agent data from within the Packages Page
+        This class is used to query for applications.
     """
     def __init__(self, view_name=None,
                  count=DefaultQueryValues.COUNT,
@@ -909,7 +932,21 @@ class RetrieveSupportedApps(RetrieveApps):
                  sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
+        Kwargs:
+            view_name (str):The view you are performing this query on.
+                default=None
+            count (int): The amount of applications to return
+                default=30
+            offset (int): From where to begin the search from (pagination).
+                default=0
+            sort (str): Sort either ascending or descending (asc or desc).
+                default="asc"
+            sort_key (str): Key to sort the applications by.
+                default="name"
+            show_hidden (str): Return applications that have been hidden.
+                default="no"
         """
+        apps_collection = AppCollections.vFenseApps
         apps_collection = AppCollections.SupportedApps
         apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
 
@@ -926,7 +963,7 @@ class RetrieveSupportedApps(RetrieveApps):
 
 class RetrieveAgentApps(RetrieveApps):
     """
-        This class is used to get agent data from within the Packages Page
+        This class is used to query for applications.
     """
     def __init__(self, view_name=None,
                  count=DefaultQueryValues.COUNT,
@@ -935,6 +972,19 @@ class RetrieveAgentApps(RetrieveApps):
                  sort_key=DbCommonAppKeys.Name,
                  show_hidden=CommonKeys.NO):
         """
+        Kwargs:
+            view_name (str):The view you are performing this query on.
+                default=None
+            count (int): The amount of applications to return
+                default=30
+            offset (int): From where to begin the search from (pagination).
+                default=0
+            sort (str): Sort either ascending or descending (asc or desc).
+                default="asc"
+            sort_key (str): Key to sort the applications by.
+                default="name"
+            show_hidden (str): Return applications that have been hidden.
+                default="no"
         """
         apps_collection = AppCollections.vFenseApps
         apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
