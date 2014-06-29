@@ -12,7 +12,7 @@ from vFense.plugins.patching._db_model import (
     DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
 )
 from vFense.plugins.patching._constants import (
-    CommonAppKeys, CommonSeverityKeys
+    CommonAppKeys
 )
 from vFense.core.agent._db_model import (
     AgentCollections, AgentKeys, AgentIndexes
@@ -969,10 +969,8 @@ class FetchApps(object):
                 r
                 .table(self.apps_collection)
                 .get_all(
-                    [
-                        DbCommonAppKeys.AppId, sev
-                    ],
-                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                    sev,
+                    index=DbCommonAppIndexes.RvSeverity
                 )
                 .map(map_hash)
             )

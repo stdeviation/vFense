@@ -51,6 +51,63 @@ class RetrieveApps(object):
         )
 
     def by_id(self, app_id):
+        """Retrieve all information about an application by its app_id.
+        Args:
+            app_id (str): 64 character hexdigest of the application
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps()
+            >>> fetch.by_id('138051177c8c97bc0d4af440ac62e1ba82991962fa01a4dd76b91963e8424435')
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": {
+                        "kb": "",
+                        "rv_severity": "Recommended",
+                        "vendor_name": "",
+                        "support_url": "http://www.abisource.com/",
+                        "description": "efficient, featureful word processor with collaboration\n AbiWord is a full-featured, efficient word processing application.\n It is suitable for a wide variety of word processing tasks, and\n is extensible with a variety of plugins.\n .\n This package includes many of the available import/export plugins allowing\n AbiWord to interact with ODT, WordPerfect, and other formats.  It also\n includes tools plugins, offering live collaboration with AbiWord users\n on Linux and Windows (using TCP or Jabber/XMPP), web translation and\n dictionary support, and more.\n .\n Additional plugins that require significant amounts of extra software to\n function are in the various abiword-plugin-* packages.",
+                        "vulnerability_categories": [],
+                        "agent_stats": [
+                            {
+                                "count": 1,
+                                "status": "installed",
+                                "name": "Installed"
+                            },
+                            {
+                                "count": 0,
+                                "status": "available",
+                                "name": "Available"
+                            },
+                            {
+                                "count": 0,
+                                "status": "pending",
+                                "name": "Pending"
+                            }
+                        ],
+                        "release_date": 0,
+                        "vendor_severity": "recommended",
+                        "app_id": "138051177c8c97bc0d4af440ac62e1ba82991962fa01a4dd76b91963e8424435",
+                        "reboot_required": "no",
+                        "os_code": "linux",
+                        "repo": "",
+                        "files_download_status": 5006,
+                        "version": "3.0.0-4ubuntu1",
+                        "cve_ids": [],
+                        "hidden": "no",
+                        "uninstallable": "yes",
+                        "vulnerability_id": "",
+                        "name": "abiword"
+                    },
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
         count, data = self.fetch_apps.by_id(app_id)
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -72,6 +129,38 @@ class RetrieveApps(object):
 
 
     def by_status(self, status):
+        """Retrieve all applications by status.
+            (installed, available, pending)
+        Args:
+            status (str): installed, available, pending
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status('available')
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 254,
+                    "data": [
+                        {
+                            "rv_severity": "Recommended",
+                            "release_date": 1400212800,
+                            "app_id": "d582e489691f78314b483ab12557933abc1194bb57041e787faf1328429c09f4",
+                            "version": "2.14.1-0ubuntu3.2",
+                            "hidden": "no",
+                            "vulnerability_id": "",
+                            "name": "apport"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status(status)
             generic_status_code = GenericCodes.InformationRetrieved
@@ -86,8 +175,8 @@ class RetrieveApps(object):
         else:
             count = 0
             data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
+            generic_status_code = GenericFailureCodes.InvalidFilterKey
+            vfense_status_code = GenericFailureCodes.InvalidFilterKey
             msg = 'Invalid status {0}'.format(status)
 
         results = (
@@ -99,6 +188,38 @@ class RetrieveApps(object):
         return results
 
     def by_severity(self, sev):
+        """Retrieve all applications by severity.
+            (critical, recommended, optional)
+        Args:
+            sev (str): critical, recommended, optional
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1, sort_key='vulnerability_id', sort='desc')
+            >>> fetch.by_severity('Critical')
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 165,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1403755200,
+                            "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
+                            "version": "1.4.16-1ubuntu2.1",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2258-1",
+                            "name": "gnupg"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        sev = sev.capitalize()
         if sev in CommonSeverityKeys.ValidRvSeverities:
             count, data = self.fetch_apps.by_severity(sev)
             generic_status_code = GenericCodes.InformationRetrieved
@@ -113,8 +234,8 @@ class RetrieveApps(object):
         else:
             count = 0
             data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
+            generic_status_code = GenericFailureCodes.InvalidFilterKey
+            vfense_status_code = GenericFailureCodes.InvalidFilterKey
             msg = 'Invalid severity {0}'.format(sev)
 
         results = (
@@ -126,10 +247,45 @@ class RetrieveApps(object):
         return results
 
     def by_status_and_sev(self, status, sev):
+        """Retrieve all applications by status and severity.
+            (installed, available, pending)
+            (critical, recommended, optional)
+        Args:
+            status (str): installed, available, pending
+            sev (str): critical, recommended, optional
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_sev('available', 'critical')
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 25,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1403755200,
+                            "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
+                            "version": "1.4.16-1ubuntu2.1",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2258-1",
+                            "name": "gnupg"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
+        sev = sev.capitalize()
         count = 0
         data = []
-        generic_status_code = GenericCodes.InvalidFilterKey
-        vfense_status_code = GenericCodes.InvalidFilterKey
+        generic_status_code = GenericFailureCodes.InvalidFilterKey
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
         msg = 'Invalid severity {0}'.format(sev)
         if status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
@@ -154,6 +310,34 @@ class RetrieveApps(object):
 
 
     def all(self):
+        """Retrieve all applications.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.all()
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 25,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1403755200,
+                            "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
+                            "version": "1.4.16-1ubuntu2.1",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2258-1",
+                            "name": "gnupg"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
         count, data = self.fetch_apps.all()
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -175,6 +359,39 @@ class RetrieveApps(object):
 
 
     def by_name(self, name):
+        """Retrieve all applications by regular expression on the name
+            of the application.
+
+        Args:
+            name (str): Regular expression of the application
+                you are looking for.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_name("^\w+-\w+ssl$")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Recommended",
+                            "release_date": 0,
+                            "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
+                            "version": "0.13-2ubuntu6",
+                            "hidden": "no",
+                            "vulnerability_id": "",
+                            "name": "python-openssl"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
         count, data = self.fetch_apps.by_name(name)
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -196,6 +413,41 @@ class RetrieveApps(object):
 
 
     def by_status_and_name(self, status, name):
+        """Retrieve all applications by regular expression on the name
+            of the application.
+
+        Args:
+            status (str): installed, available, pending
+            name (str): Regular expression of the application
+                you are looking for.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_name("installed", "^\w+-\w+ssl$")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Recommended",
+                            "release_date": 0,
+                            "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
+                            "version": "0.13-2ubuntu6",
+                            "hidden": "no",
+                            "vulnerability_id": "",
+                            "name": "python-openssl"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status_and_name(status, name)
             generic_status_code = GenericCodes.InformationRetrieved
@@ -210,8 +462,8 @@ class RetrieveApps(object):
         else:
             count = 0
             data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
+            generic_status_code = GenericFailureCodes.InvalidFilterKey
+            vfense_status_code = GenericFailureCodes.InvalidFilterKey
             msg = 'Invalid status {0}'.format(status)
 
         results = (
@@ -223,6 +475,41 @@ class RetrieveApps(object):
         return results
 
     def by_status_and_name_and_vuln(self, status, name):
+        """Retrieve all applications by the status, regular expression
+            on the name of the application, and if a vulnerability exist.
+
+        Args:
+            status (str): installed, available, pending
+            name (str): Regular expression of the application
+                you are looking for.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_name_and_vuln("available", "json")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1402545600,
+                            "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
+                            "version": "0.11-3ubuntu1.2",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2245-1",
+                            "name": "libjson0"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = (
                 self.fetch_apps.by_status_and_name_and_vuln(status, name)
@@ -239,8 +526,8 @@ class RetrieveApps(object):
         else:
             count = 0
             data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
+            generic_status_code = GenericFailureCodes.InvalidFilterKey
+            vfense_status_code = GenericFailureCodes.InvalidFilterKey
             msg = 'Invalid status {0}'.format(status)
 
         results = (
@@ -252,10 +539,49 @@ class RetrieveApps(object):
         return results
 
     def by_status_and_name_and_sev(self, status, name, sev):
+        """Retrieve all applications by the status, regular expression
+            on the name of the application, and the severity.
+
+        Args:
+            status (str): installed, available, pending
+            name (str): Regular expression of the application
+                you are looking for.
+            sev (str): critical ,recommended, optional
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_name_and_sev(
+                    "installed", "^\w+-\w+ssl$", "recommended"
+                )
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Recommended",
+                            "release_date": 0,
+                            "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
+                            "version": "0.13-2ubuntu6",
+                            "hidden": "no",
+                            "vulnerability_id": "",
+                            "name": "python-openssl"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
+        sev = sev.capitalize()
         count = 0
         data = []
-        generic_status_code = GenericCodes.InvalidFilterKey
-        vfense_status_code = GenericCodes.InvalidFilterKey
+        generic_status_code = GenericFailureCodes.InvalidFilterKey
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
         msg = 'Invalid status {0}'.format(status)
         if status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
@@ -283,10 +609,50 @@ class RetrieveApps(object):
         return results
 
     def by_status_and_name_and_sev_and_vuln(self, status, name, sev):
+        """Retrieve all applications by the status, regular expression
+            on the name of the application, and the severity and if
+            vulnerability exist.
+
+        Args:
+            status (str): installed, available, pending
+            name (str): Regular expression of the application
+                you are looking for.
+            sev (str): critical ,recommended, optional
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_name_and_sev_and_vuln(
+                    "available", "json", "critical"
+                )
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1402545600,
+                            "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
+                            "version": "0.11-3ubuntu1.2",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2245-1",
+                            "name": "libjson0"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
+        sev = sev.capitalize()
         count = 0
         data = []
-        generic_status_code = GenericCodes.InvalidFilterKey
-        vfense_status_code = GenericCodes.InvalidFilterKey
+        generic_status_code = GenericFailureCodes.InvalidFilterKey
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
         msg = 'Invalid status {0}'.format(status)
         if status in CommonAppKeys.ValidPackageStatuses:
             if sev in CommonSeverityKeys.ValidRvSeverities:
@@ -314,10 +680,45 @@ class RetrieveApps(object):
         return results
 
     def by_sev_and_name(self, sev, name):
+        """Retrieve all applications by the severity, regular expression
+            on the name of the application.
+
+        Args:
+            sev (str): critical ,recommended, optional
+            name (str): Regular expression of the application
+                you are looking for.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_sev_and_name("critical", "json")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1402545600,
+                            "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
+                            "version": "0.11-3ubuntu1.2",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2245-1",
+                            "name": "libjson0"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        sev = sev.capitalize()
         count = 0
         data = []
-        generic_status_code = GenericCodes.InvalidFilterKey
-        vfense_status_code = GenericCodes.InvalidFilterKey
+        generic_status_code = GenericFailureCodes.InvalidFilterKey
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
         msg = 'Invalid severity {0}'.format(sev)
         if sev in CommonSeverityKeys.ValidRvSeverities:
             count, data = (
@@ -342,10 +743,42 @@ class RetrieveApps(object):
         return results
 
     def by_status_and_vuln(self, status):
+        """Retrieve all applications by the status and if vulnerability exist.
+
+        Args:
+            status (str): installed, available, pending
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_status_and_vuln("available")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1402545600,
+                            "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
+                            "version": "0.11-3ubuntu1.2",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2245-1",
+                            "name": "libjson0"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
+        status = status.lower()
         count = 0
         data = []
-        generic_status_code = GenericCodes.InvalidFilterKey
-        vfense_status_code = GenericCodes.InvalidFilterKey
+        generic_status_code = GenericFailureCodes.InvalidFilterKey
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
         msg = 'Invalid status {0}'.format(status)
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = (
@@ -370,6 +803,39 @@ class RetrieveApps(object):
         return results
 
     def by_name_and_vuln(self, name):
+        """Retrieve all applications by regular expression
+            on the name of the application and if vulnerability exist.
+
+        Args:
+            name (str): Regular expression of the application
+                you are looking for.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.search.search import RetrieveApps
+            >>> fetch = RetrieveApps(count=1)
+            >>> fetch.by_name_and_vuln("json")
+
+        Results:
+            Dictionary of the application data.
+            >>>
+                {
+                    "count": 1,
+                    "data": [
+                        {
+                            "rv_severity": "Critical",
+                            "release_date": 1402545600,
+                            "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
+                            "version": "0.11-3ubuntu1.2",
+                            "hidden": "no",
+                            "vulnerability_id": "USN-2245-1",
+                            "name": "libjson0"
+                        }
+                    ],
+                    "message": "dataset retrieved",
+                    "vfense_status_code": 1001,
+                    "generic_status_code": 1001
+                }
+        """
         count, data = (
             self.fetch_apps.by_name_and_vuln(name)
         )
