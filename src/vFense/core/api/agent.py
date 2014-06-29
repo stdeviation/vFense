@@ -283,7 +283,7 @@ class AgentsHandler(BaseHandler):
             elif token:
                 operation = (
                     StoreAgentOperations(
-                        username, active_view, uri, http_method
+                        username, active_view
                     )
                 )
                 results = self.new_token(operation, agent_ids, token)
@@ -470,7 +470,7 @@ class AgentsHandler(BaseHandler):
                 if results['http_status'] == 200:
                     delete_oper = (
                         StorePatchingOperation(
-                            username, view_name, uri, method
+                            username, view_name
                         )
                     )
                     delete_oper.uninstall_agent(agent_id)
@@ -693,7 +693,7 @@ class AgentHandler(BaseHandler):
         method = self.request.method
         try:
             agent = AgentManager(agent_id)
-            delete_oper = StorePatchingOperation(username, view_name, uri, method)
+            delete_oper = StorePatchingOperation(username, view_name)
             delete_oper.uninstall_agent(agent_id)
             results = self.remove_agent(agent)
             self.set_status(results['http_status'])
@@ -736,7 +736,7 @@ class AgentHandler(BaseHandler):
             )
             operation = (
                 StoreAgentOperations(
-                    username, view_name, uri, http_method
+                    username, view_name
                 )
             )
             if reboot:
