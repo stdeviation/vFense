@@ -15,6 +15,7 @@ agent_id = 'agent_id'
 new_agent = 'new_agent_id'
 check_in = 'check_in'
 generated_ids = 'generated_ids'
+operations = 'operations'
 
 
 class GenericResults(object):

@@ -40,7 +40,6 @@ class AgentUpdateHandler(BaseHandler):
             status_code = self.arguments.get('status_code', None)
 
             RvHandOff(
-                username, view_name, uri, method
             ).available_agent_update_operation(agent_id, app_data)
 
             results = (
