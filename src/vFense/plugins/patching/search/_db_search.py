@@ -74,6 +74,7 @@ class FetchApps(object):
     def by_id(self, app_id, conn=None):
         count = 0
         data = []
+        agent_stats_merge = self._set_agent_stats_merge(app_id)
         try:
             base = (
                 r
@@ -90,6 +91,7 @@ class FetchApps(object):
 
             data = (
                 base
+                .merge(agent_stats_merge)
                 .run(conn)
             )
 
@@ -736,6 +738,164 @@ class FetchApps(object):
         )
 
         return map_hash
+
+    def _set_agent_stats_merge(self, app_id):
+        """ Set the global properties. """
+        if self.view_name:
+            merge_hash = (
+                lambda x:
+                {
+                    CommonAppKeys.AGENT_STATS: (
+                        [
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(AgentCollections.Agents)
+                                    .get_all(
+                                        self.view_name,
+                                        index=AgentIndexes.Views
+                                    )
+                                    .pluck(AgentKeys.AgentId)
+                                    .eq_join(
+                                        lambda y:
+                                        [
+                                            y[DbCommonAppPerAgentKeys.AgentId],
+                                            CommonAppKeys.INSTALLED,
+                                            app_id
+                                        ],
+                                        r.table(self.apps_per_agent_collection),
+                                        index=DbCommonAppPerAgentIndexes.AgentIdAndAppId
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.INSTALLED.capitalize()
+                                )
+                            },
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(AgentCollections.Agents)
+                                    .get_all(
+                                        self.view_name,
+                                        index=AgentIndexes.Views
+                                    )
+                                    .pluck(AgentKeys.AgentId)
+                                    .eq_join(
+                                        lambda y:
+                                        [
+                                            y[DbCommonAppPerAgentKeys.AgentId],
+                                            CommonAppKeys.AVAILABLE,
+                                            app_id
+                                        ],
+                                        r.table(self.apps_per_agent_collection),
+                                        index=DbCommonAppPerAgentIndexes.AgentIdAndAppId
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.AVAILABLE.capitalize()
+                                )
+                            },
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(AgentCollections.Agents)
+                                    .get_all(
+                                        self.view_name,
+                                        index=AgentIndexes.Views
+                                    )
+                                    .pluck(AgentKeys.AgentId)
+                                    .eq_join(
+                                        lambda y:
+                                        [
+                                            y[DbCommonAppPerAgentKeys.AgentId],
+                                            CommonAppKeys.PENDING,
+                                            app_id
+                                        ],
+                                        r.table(self.apps_per_agent_collection),
+                                        index=DbCommonAppPerAgentIndexes.AgentIdAndAppId
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.PENDING,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.PENDING.capitalize()
+                                )
+                            },
+                        ]
+                    )
+                }
+            )
+
+        else:
+            merge_hash = (
+                lambda x:
+                {
+                    CommonAppKeys.AGENT_STATS: (
+                        [
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(self.apps_per_agent_collection)
+                                    .get_all(
+                                        [
+                                            app_id,
+                                            CommonAppKeys.INSTALLED
+                                        ],
+                                        index=DbCommonAppPerAgentIndexes.AppIdAndStatus
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.INSTALLED.capitalize()
+                                )
+                            },
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(self.apps_per_agent_collection)
+                                    .get_all(
+                                        [
+                                            app_id,
+                                            CommonAppKeys.AVAILABLE
+                                        ],
+                                        index=DbCommonAppPerAgentIndexes.AppIdAndStatus
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.AVAILABLE.capitalize()
+                                )
+                            },
+                            {
+                                CommonAppKeys.COUNT: (
+                                    r
+                                    .table(self.apps_per_agent_collection)
+                                    .get_all(
+                                        [
+                                            app_id,
+                                            CommonAppKeys.PENDING
+                                        ],
+                                        index=DbCommonAppPerAgentIndexes.AppIdAndStatus
+                                    )
+                                    .count()
+                                ),
+                                CommonAppKeys.STATUS: CommonAppKeys.PENDING,
+                                CommonAppKeys.NAME: (
+                                    CommonAppKeys.PENDING.capitalize()
+                                )
+                            },
+                        ]
+                    )
+                }
+            )
+
+        return merge_hash
 
 
     def _set_base_filter(self):

@@ -27,6 +27,7 @@ class CommonAppKeys():
     UPDATES = 'Updates'
     BASIC_RV_STATS = 'basic_rv_stats'
     APP_STATS = 'app_stats'
+    AGENT_STATS = 'agent_stats'
 
 class AppStatuses():
     INSTALLED = 'installed'

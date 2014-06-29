@@ -173,6 +173,8 @@ class FetchAgentsByAppId(object):
 
         return(count, data)
 
+
+
     def _set_map_hash(self):
         """ Set the global properties. """
 

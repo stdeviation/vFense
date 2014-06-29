@@ -44,7 +44,7 @@ class RetrieveAgentsByAppId(object):
 
         self.fetch_agents = (
             FetchAgentsByAppId(
-                self.agent_id, count, offset,
+                self.app_id, count, offset,
                 sort, sort_key
             )
         )
