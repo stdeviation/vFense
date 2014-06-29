@@ -241,7 +241,7 @@ define(
                         updates             = item.get('available_updates'),
                         lastAgentUpdate     = item.get('last_agent_update'),
                         vulnerabilities     = item.get('available_vulnerabilities');
-//                        stats               = helpers.sortStats(item.get('basic_rv_stats'));
+//                        stats               = helpers.sortStats(item.get('app_stats'));
 
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},

@@ -48,7 +48,7 @@ class FetchTags(object):
         self.keys_to_pluck = [
             TagKeys.TagName, TagKeys.TagId, TagKeys.ViewName,
             TagKeys.ProductionLevel, AgentCommonKeys.AVAIL_UPDATES,
-            AgentCommonKeys.AVAIL_VULN,
+            AgentCommonKeys.AVAIL_VULN, AgentCollections.Agents
         ]
 
         if sort == SortValues.ASC:
@@ -167,6 +167,7 @@ class FetchTags(object):
         count = 0
         data = []
         merge_query = self._set_merge_query()
+        agent_merge_count = self._set_agent_merge_count()
         try:
             base_filter = self._set_base_query()
             count = (
@@ -184,6 +185,7 @@ class FetchTags(object):
                     r.row[TagKeys.TagName].match("(?i)^"+name)
                 )
                 .merge(merge_query)
+                .merge(agent_merge_count)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -210,9 +212,10 @@ class FetchTags(object):
         """
         count = 0
         data = []
+        base_filter = self._set_base_query()
+        query_merge = self._set_merge_query()
+        agent_merge_count = self._set_agent_merge_count()
         try:
-            base_filter = self._set_base_query()
-            query_merge = self._set_merge_query()
             count = (
                 base_filter
                 .count()
@@ -222,6 +225,7 @@ class FetchTags(object):
             data = list(
                 base_filter
                 .merge(query_merge)
+                .merge(agent_merge_count)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -248,9 +252,10 @@ class FetchTags(object):
         """
         count = 0
         data = []
+        base_filter = self._set_base_query()
+        query_merge = self._set_merge_query()
+        agent_merge_count = self._set_agent_merge_count()
         try:
-            base_filter = self._set_base_query()
-            query_merge = self._set_merge_query()
             count = (
                 base_filter
                 .filter(
@@ -270,6 +275,7 @@ class FetchTags(object):
                     }
                 )
                 .merge(query_merge)
+                .merge(agent_merge_count)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -299,9 +305,10 @@ class FetchTags(object):
         """
         count = 0
         data = []
+        agent_merge_count = self._set_agent_merge_count()
+        base_filter = self._set_base_query()
+        query_merge = self._set_merge_query()
         try:
-            base_filter = self._set_base_query()
-            query_merge = self._set_merge_query()
             count = (
                 base_filter
                 .filter(
@@ -327,6 +334,7 @@ class FetchTags(object):
                     r.row[TagKeys.TagName].match("(?i)^"+query)
                 )
                 .merge(query_merge)
+                .merge(agent_merge_count)
                 .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
@@ -338,6 +346,24 @@ class FetchTags(object):
             logger.exception(e)
 
         return(count, data)
+
+    def _set_agent_merge_count(self):
+        merge_query = (
+            lambda x:
+            {
+                AgentCollections.Agents: (
+                    r
+                    .table(TagCollections.TagsPerAgent)
+                    .get_all(
+                        x[TagsPerAgentKeys.TagId],
+                        index=TagsPerAgentIndexes.TagId
+                    )
+                    .count()
+                )
+            }
+        )
+        return merge_query
+
 
     def _set_agent_merge_query(self, tag_id):
         merge_query = (
@@ -539,7 +565,7 @@ class FetchTags(object):
                         x[TagsPerAgentKeys.TagId],
                         index=TagsPerAgentIndexes.TagId
                     )
-                    .pluck(TagsPerAgentKeys.TagId)
+                    .pluck(TagsPerAgentKeys.AgentId)
                     .eq_join(
                         lambda x: [
                             CommonAppKeys.AVAILABLE,
@@ -557,7 +583,7 @@ class FetchTags(object):
                         x[TagsPerAgentKeys.TagId],
                         index=TagsPerAgentIndexes.TagId
                     )
-                    .pluck(TagsPerAgentKeys.TagId)
+                    .pluck(TagsPerAgentKeys.AgentId)
                     .eq_join(
                         lambda x: [
                             CommonAppKeys.AVAILABLE,
@@ -573,7 +599,7 @@ class FetchTags(object):
                     )
                     .filter(
                         lambda z:
-                        z['left']['right'][AppsKey.VulnerabilityId] != ''
+                        z['right'][AppsKey.VulnerabilityId] != ''
                     )
                     .count()
                 ),

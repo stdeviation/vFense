@@ -179,32 +179,37 @@ define(
                         crel('span', {class: 'span1 alignLeft'}, 'Remove'),
                         crel('span', {class: 'span2'},
                             crel('strong', 'Tag Name')),
-                        crel('span', {class: 'span2'}, 'Customer'),
+                        crel('span', {class: 'span2'}, 'View'),
                         crel('span', {class: 'span2'}, 'Production Level'),
-                        crel('span', {class: 'span1 need alignLeft'}, 'OS'),
-                        crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
-                        crel('span', {class: 'span1 pend alignLeft'}, 'Supported'),
-                        crel('span', {class: 'span1 pend alignRight'}, 'Agents')
+                        crel('span', {class: 'span1'}, 'Updates'),
+                        crel('span', {class: 'span2'}, 'Vulnerabilities'),
+                        crel('span', {class: 'span1'}, 'Agents')
+                        //crel('span', {class: 'span1 need alignLeft'}, 'OS'),
+                        //crel('span', {class: 'span1 done alignLeft'}, 'Custom'),
+                        //crel('span', {class: 'span1 pend alignLeft'}, 'Supported'),
                     );
                     return this;
                 },
                 renderModel: function (item) {
                     var $status, fragment = document.createDocumentFragment(),
-                        tagID = item.get('tag_id'),
-                        tagName = item.get('tag_name'),
-                        customer = item.get('customer_name'),
-                        productionLevel = item.get('production_level'),
-                        stats = helpers.sortStats(item.get('basic_rv_stats')) || {},
-                        agents = item.get('agents'),
-                        reboot = item.get('reboots_pending'),
-                        agents_down = item.get('agents_down');
-                    if (reboot) {
-                        $status = $warning.clone();
-                    } else if (!agents_down) {
-                        $status = $ok.clone();
-                    } else {
-                        $status = $error.clone();
-                    }
+                        tagID               = item.get('tag_id'),
+                        tagName             = item.get('tag_name'),
+                        view                = item.get('view_name'),
+                        productionLevel     = item.get('production_level'),
+                        updates             = item.get('available_updates'),
+                        vulnerabilities     = item.get('available_vulnerabilities'),
+                        agents              = item.get('agents');
+                        //stats = helpers.sortStats(item.get('app_stats')) || {},
+                        //reboot = item.get('reboots_pending'),
+                        //agents_down = item.get('agents_down');
+                    //if (reboot) {
+                    //    $status = $warning.clone();
+                    //} else if (!agents_down) {
+                    //    $status = $ok.clone();
+                    //} else {
+                    //    $status = $error.clone();
+                    //}
+                    $status = $ok.clone();
                     fragment.appendChild(
                         crel('div', {class: 'item row-fluid'},
                             crel('a', {href: '#tags/' + tagID},
@@ -213,12 +218,15 @@ define(
                                     crel('button', {class: 'btn btn-link noPadding', 'data-id': 'deleteTag', 'data-tag': tagID},
                                         crel('i', {class: 'icon-remove', style: 'color: red', title: 'Delete Tag'}))),
                                 crel('span', {class: 'span2'}, tagName),
-                                crel('span', {class: 'span2'}, customer),
+                                crel('span', {class: 'span2'}, view),
                                 crel('span', {class: 'span2'}, productionLevel),
-                                crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
-                                crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
-                                crel('span', {class: 'span1 pend'}, _.findWhere(stats, {name: 'Supported'}).count),
-                                crel('span', {class: 'span1 pend alignRight'}, (agents.length || 0))
+                                crel('span', {class: 'span1'}, updates),
+                                crel('span', {class: 'span2'}, vulnerabilities),
+                                crel('span', {class: 'span1'}, agents)
+                                //crel('span', {class: 'span1 need'}, _.findWhere(stats, {name: 'OS'}).count),
+                                //crel('span', {class: 'span1 done'}, _.findWhere(stats, {name: 'Custom'}).count),
+                                //crel('span', {class: 'span1 pend'}, _.findWhere(stats, {name: 'Supported'}).count),
+                                //crel('span', {class: 'span1 pend alignRight'}, (agents.length || 0))
                             )
                         )
                     );
