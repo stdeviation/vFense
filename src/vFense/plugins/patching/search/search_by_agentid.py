@@ -39,7 +39,7 @@ class RetrieveAppsByAgentId(object):
         """
         Args:
             agent_id (str):The agent_id you are performing these application
-                search for.
+                searches for.
         Kwargs:
             count (int): The amount of applications to return
                 default=30
