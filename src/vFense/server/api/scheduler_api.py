@@ -26,7 +26,7 @@ class ScheduleListerHandler(BaseHandler):
     def get(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -60,7 +60,7 @@ class ScheduleAppDetailHandler(BaseHandler):
     def get(self, jobname):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -92,7 +92,7 @@ class ScheduleAppDetailHandler(BaseHandler):
     def delete(self, jobname):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -130,7 +130,7 @@ class SchedulerYearlyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri=self.request.uri
         method=self.request.method
@@ -194,7 +194,7 @@ class SchedulerMonthlyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -261,7 +261,7 @@ class SchedulerDailyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -325,7 +325,7 @@ class SchedulerWeeklyRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -389,7 +389,7 @@ class SchedulerDateBasedJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -450,7 +450,7 @@ class SchedulerCustomRecurrentJobHandler(BaseHandler):
     def post(self):
         username = self.get_current_user()
         view_name = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method

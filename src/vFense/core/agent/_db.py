@@ -432,22 +432,26 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
             data = (
                 r
                 .table(AgentCollections.Agents)
-                .get(agent_id)
+                .get_all(agent_id)
                 .merge(Merge.AGENTS)
                 .merge(Merge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
+            if data:
+                data = data[0]
 
         elif agent_id and not keys_to_pluck:
             data = (
                 r
                 .table(AgentCollections.Agents)
-                .get(agent_id)
+                .get_all(agent_id)
                 .merge(Merge.AGENTS)
                 .merge(Merge.TAGS)
                 .run(conn)
             )
+            if data:
+                data = data[0]
 
     except Exception as e:
         logger.exception(e)

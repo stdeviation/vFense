@@ -372,7 +372,6 @@ class StorePatchingOperation(StoreAgentOperation):
             )
         )
 
-    @results_message
     def install_apps(
             self, oper_type, appids,
             cpu_throttle=CPUThrottleValues.NORMAL,

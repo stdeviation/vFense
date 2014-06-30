@@ -944,16 +944,11 @@ class GetAgentsByAppIdHandler(BaseHandler):
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
             if not epoch_time and not label and agent_ids:
-                operation = (
-                    StorePatchingOperation(
-                        username, view_name
-                    )
-                )
+                operation = StorePatchingOperation(username, view_name)
                 results = (
-                    operation.install_os_apps(
-                        [app_id], cpu_throttle,
-                        net_throttle, restart,
-                        agentids=agent_ids
+                    self.install(
+                        operation, app_id, agent_ids,
+                        cpu_throttle, net_throttle, restart
                     )
                 )
                 self.set_status(results['http_status'])
@@ -994,6 +989,44 @@ class GetAgentsByAppIdHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def install(self, operation, app_id, agent_ids,
+                cpu_throttle, net_throttle, restart):
+        results = (
+            operation.install_os_apps(
+                [app_id], cpu_throttle, net_throttle,
+                restart,agentids=agent_ids
+            )
+        )
+        return results
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def schedule_install(self, epoch_time, label, app_id, agent_ids,
+                         cpu_throttle, net_throttle, restart):
+        date_time = datetime.fromtimestamp(int(epoch_time))
+        sched = self.application.scheduler
+        job = (
+            {
+                'cpu_throttle': cpu_throttle,
+                'net_throttle': net_throttle,
+                'restart': restart,
+                'pkg_type': 'system_apps',
+                'app_ids': [app_id]
+            }
+        )
+        results = (
+            schedule_once(
+                sched, view_name, username, agent_ids=agent_ids,
+                operation='install', name=label, date=date_time, uri=uri,
+                method=method, job_extra=job
+            )
+        )
+        return results
+
+
 
     @authenticated_request
     @convert_json_to_arguments
