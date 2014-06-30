@@ -236,6 +236,20 @@ def create_symlinks():
                 os.path.join(VFENSE_CONF_PATH, 'patches/scheduler.patch')
             ],
         )
+        rethink_job_store = (
+            os.path.join(
+                '/'.join(
+                    get_sheduler_location().split('/')[:-1]
+                ), 'jobstores', 'rethinkdb_store.py'
+            )
+        )
+        if not rethink_job_store:
+            shutil.copy(
+                os.path.join(
+                    VFENSE_CONF_PATH, 'patches/rethinkdb_jobstore.py'
+                ),
+                rethink_job_store
+            )
 
 
 def add_local_user():
