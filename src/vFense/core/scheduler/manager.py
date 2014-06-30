@@ -8,7 +8,7 @@ import apscheduler
 from datetime import datetime
 from copy import deepcopy
 from apscheduler.scheduler import Scheduler
-from apscheduler.jobstores.redis_store import RedisJobStore
+from apscheduler.jobstores.rethinkdb_store import RethinkDBJobStore
 
 from vFense.utils.common import *
 from vFense.db.client import db_create_close, r
@@ -40,7 +40,7 @@ def start_scheduler(redis_db=10):
     list_of_views = []
 
     if redis_db == 11:
-        sched.add_jobstore(RedisJobStore(db=11), 'administrative')
+        sched.add_jobstore(RethinkDBJobStore(), 'administrative')
         list_of_views.append({'name': 'administrative'})
 
     elif redis_db == 10:
