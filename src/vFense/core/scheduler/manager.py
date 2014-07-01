@@ -7,74 +7,37 @@ import apscheduler
 
 from datetime import datetime
 from copy import deepcopy
-from apscheduler.scheduler import Scheduler
+from pytc import utc
 from apscheduler.jobstores.rethinkdb_store import RethinkDBJobStore
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.tornado import TornadoScheduler
 
-from vFense.utils.common import *
-from vFense.db.client import db_create_close, r
-from vFense.core.agent._db_model import *
-from vFense.core.agent._db import fetch_agent_ids_in_views, fetch_agent
-from vFense.core.tag._db_model import *
-from vFense.core.view._db import fetch_all_view_names
-from vFense.core.tag._db import (
-    fetch_tag_ids, fetch_tags_by_view,
-    fetch_tags_by_id, fetch_agent_ids_in_tag
-)
-from vFense.plugins.patching._db_model import *
-from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
-    fetch_app_data, fetch_app_data_by_appids
-
-from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
-from vFense.core.operations.store_agent_operation import StoreAgentOperation
-from vFense.errorz.error_messages import GenericResults, SchedulerResults
-from vFense.server.hierarchy import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def start_scheduler(redis_db=10):
-    started = False
-    sched = Scheduler(daemonic=False)
-    list_of_views = []
-
-    if redis_db == 11:
-        sched.add_jobstore(RethinkDBJobStore(), 'administrative')
-        list_of_views.append({'name': 'administrative'})
-
-    elif redis_db == 10:
-        views = fetch_all_view_names()
-
-        if views:
-            for view in views:
-                sched.add_jobstore(
-                    RedisJobStore(db=10), view
-                )
-                list_of_views.append(
-                    {
-                        'name': view
-                    }
-                )
-
-    if list_of_views:
-        msg = 'Starting Job Scheduler for views %s' % \
-            (', '.join(map(lambda x: x['name'], list_of_views)))
-        logger.info(msg)
-
-        try:
-            sched.start()
-            logger.info('Scheduler Started Successfully')
-            started = True
-
-        except Exception as e:
-            logger.error('Failed ot start Scheduler due to : %s' % (e))
-            sched.shutdown()
-
-    if started:
-        return sched
+def start_scheduler(scheduler_type='tornado', collection='jobs'):
+    if scheduler_type == 'tornado':
+        Scheduler = TornadoScheduler
     else:
-        return started
+        Scheduler = BackgroundScheduler
+
+
+    jobstore = {'default': RethinkDBJobStore(table=collection)}
+    job_defaults = {'coalesce': True}
+    sched = (
+        Scheduler(
+            jobstores=jobstore, job_defaults=job_defaults, timezone=utc
+        )
+    )
+    try:
+        sched.start()
+    except Exception as e:
+        logger.exception(e)
+        sched = None
+
+    return sched
 
 
 def stop_scheduler(sched):
@@ -87,7 +50,7 @@ def stop_scheduler(sched):
         stopped = True
 
     except Exception as e:
-        log.error('Failed to shutdown the Scheduler')
+        logger.error('Failed to shutdown the Scheduler')
 
     return stopped
 
@@ -101,7 +64,7 @@ def restart_scheduler():
 
         if start:
             sched = start
-            log.info('Scheduler restarted successfully')
+            logger.info('Scheduler restarted successfully')
 
     return sched
 
