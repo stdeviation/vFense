@@ -3,7 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r, db_connect
-from vFense.errorz.error_messages import GenericResults, MightyMouseResults
+from vFense.result.error_messages import GenericResults, MightyMouseResults
 
 from vFense.plugins.mightymouse import *
 

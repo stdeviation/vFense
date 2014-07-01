@@ -13,10 +13,10 @@ from vFense.core.view import View
 from vFense.core.view.manager import ViewManager
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     ViewCodes, GroupCodes, UserCodes
 )
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 from vFense.core.permissions._constants import Permissions
 from vFense.core.group._constants import DefaultGroups
 from vFense.core.view._constants import DefaultViews

@@ -9,7 +9,7 @@ import re
 
 from urlgrabber import urlgrab
 
-from vFense.errorz.status_codes import PackageCodes
+from vFense.result.status_codes import PackageCodes
 from vFense.utils.common import hash_verify
 
 from vFense.plugins.patching._db_model import AppsKey, AppCollections

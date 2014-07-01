@@ -14,7 +14,7 @@ from vFense.core.operations._db_model import (
     OperationPerAppKey, OperationPerAppIndexes
 )
 
-from vFense.errorz.status_codes import AgentOperationCodes
+from vFense.result.status_codes import AgentOperationCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

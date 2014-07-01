@@ -10,7 +10,7 @@ from vFense.core._db import delete_all_in_table
 from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info 
 
-from vFense.errorz.status_codes import PackageCodes
+from vFense.result.status_codes import PackageCodes
 
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys

@@ -3,7 +3,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.ubuntu.search.search import RetrieveUbuntuVulns

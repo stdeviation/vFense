@@ -11,7 +11,7 @@ from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_agentid
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

@@ -3,14 +3,14 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 from vFense.core._constants import SortValues, DefaultQueryValues
 
 from vFense.core.group._db_model import GroupKeys
 
 
 from vFense.core.group.search._db import FetchGroups
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

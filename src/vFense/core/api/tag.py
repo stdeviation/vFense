@@ -10,9 +10,9 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.errorz.error_messages import GenericResults
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result.error_messages import GenericResults
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     GenericCodes, TagCodes, TagFailureCodes, GenericFailureCodes
 )
 from vFense.core.agent._constants import ProductionLevels

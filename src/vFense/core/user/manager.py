@@ -1,6 +1,6 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
@@ -33,7 +33,7 @@ from vFense.core.view.views import validate_view_names
 
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     UserFailureCodes, UserCodes, GenericFailureCodes, GenericCodes,
     DbCodes, ViewFailureCodes, GroupFailureCodes, GroupCodes,
     ViewCodes

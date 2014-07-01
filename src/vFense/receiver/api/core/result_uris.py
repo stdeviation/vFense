@@ -7,7 +7,7 @@ from vFense.core.decorators import (
     agent_authenticated_request, results_message
 )
 from vFense.core.queue.uris import get_result_uris
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

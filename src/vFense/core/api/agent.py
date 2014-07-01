@@ -23,8 +23,8 @@ from vFense.core.tag.manager import TagManager
 from vFense.core.view.manager import ViewManager
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
-from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.results import Results
+from vFense.result.error_messages import GenericResults
+from vFense.result.results import Results
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -39,8 +39,8 @@ from vFense.core.agent.agents import (
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes, AgentCodes, AgentFailureCodes,
     ViewCodes
 )

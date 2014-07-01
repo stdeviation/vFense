@@ -7,7 +7,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
 
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_view
 from vFense.plugins.patching.stats import *
 from vFense.core.decorators import authenticated_request

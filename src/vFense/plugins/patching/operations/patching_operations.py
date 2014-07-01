@@ -8,7 +8,7 @@ from vFense.core.operations._db_agent import update_operation_per_agent, \
     update_completed_and_pending_count, insert_agent_into_agent_operations, \
     insert_app_into_agent_operations
 
-from vFense.errorz.status_codes import DbCodes, AgentOperationCodes, \
+from vFense.result.status_codes import DbCodes, AgentOperationCodes, \
     OperationPerAgentCodes
 
 

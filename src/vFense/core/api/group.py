@@ -29,10 +29,10 @@ from vFense.core.group._db_model import GroupKeys
 from vFense.core.group.manager import GroupManager
 from vFense.core.group.search.search import RetrieveGroups
 
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.results import Results
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.error_messages import GenericResults
+from vFense.result.results import Results
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes, GroupCodes, GroupFailureCodes
 )
 

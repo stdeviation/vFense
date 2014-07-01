@@ -10,8 +10,8 @@ from vFense.core._db_constants import DbTime
 from vFense.core._db import object_exist, insert_data_in_table, \
     delete_data_in_table
 
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import DbCodes, GenericCodes, \
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import DbCodes, GenericCodes, \
     GenericFailureCodes, PackageCodes, PackageFailureCodes
 
 from vFense.plugins.patching.file_data import add_file_data

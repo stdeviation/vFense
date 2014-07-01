@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz.error_messages import GenericResults, NotificationResults
+from vFense.result.error_messages import GenericResults, NotificationResults
 from vFense.notifications import *
 import simplejson as json
 

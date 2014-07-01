@@ -29,7 +29,7 @@ from vFense.plugins.patching._db_model import AppsKey
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.result.error_messages import GenericResults, PackageResults
 
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation

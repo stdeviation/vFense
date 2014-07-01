@@ -7,8 +7,8 @@ from vFense.core._db_constants import DbTime
 from vFense.core._constants import (
     CommonKeys
 )
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import GenericCodes
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import GenericCodes
 
 
 class Tag(object):

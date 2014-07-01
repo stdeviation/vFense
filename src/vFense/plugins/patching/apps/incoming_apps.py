@@ -3,7 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r
-from vFense.errorz.status_codes import PackageCodes
+from vFense.result.status_codes import PackageCodes
 from vFense.core._db_constants import DbTime
 
 from vFense.plugins.patching._db_model import AppsKey, AppsPerAgentKey, AppCollections

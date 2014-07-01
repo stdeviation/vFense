@@ -22,8 +22,8 @@ from vFense.core.tag._db import (
     fetch_tag_ids_for_agent, delete_agent_from_tags_in_views
 )
 from vFense.core.view.views import validate_view_names
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     DbCodes, GenericCodes, AgentResultCodes, GenericFailureCodes,
     AgentFailureResultCodes, AgentFailureCodes, AgentCodes
 )

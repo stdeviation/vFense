@@ -1,8 +1,8 @@
 import re
 from vFense.core.group._constants import GroupDefaults
 from vFense.core.permissions._constants import Permissions
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     GenericCodes, GroupFailureCodes
 )
 from vFense.core._constants import (

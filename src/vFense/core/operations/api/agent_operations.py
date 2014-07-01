@@ -10,7 +10,7 @@ from vFense.core.operations._db_model import *
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import authenticated_request, results_message
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
 

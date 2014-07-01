@@ -11,9 +11,9 @@ from vFense.core.view._db_model import (
 )
 
 from vFense.core.view._constants import ViewDefaults
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 
-from vFense.errorz.status_codes import ViewFailureCodes, GenericCodes
+from vFense.result.status_codes import ViewFailureCodes, GenericCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

@@ -2,7 +2,7 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_model import *
 from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_agent_info
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching._db import fetch_apps_data_by_os_code, \
     insert_app_data

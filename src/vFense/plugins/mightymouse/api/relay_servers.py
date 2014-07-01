@@ -6,7 +6,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent._db_model import *
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
