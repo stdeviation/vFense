@@ -445,7 +445,7 @@ class UsersHandler(BaseHandler):
         uri = self.request.uri
         http_method = self.request.method
         try:
-            username = self.arguments.get(ApiArguments.USERNAME)
+            username = self.arguments.get(ApiArguments.USER_NAME)
             password = self.arguments.get(ApiArguments.PASSWORD)
             fullname = self.arguments.get(ApiArguments.FULL_NAME, None)
             email = self.arguments.get(ApiArguments.EMAIL, None)
@@ -455,6 +455,18 @@ class UsersHandler(BaseHandler):
             view_context = (
                 self.arguments.get(ApiArguments.VIEW_CONTEXT, active_view)
             )
+            if not isinstance(is_global, bool):
+                if is_global == 'false':
+                    is_global = False
+                else:
+                    is_global = True
+
+            if not isinstance(enabled, bool):
+                if enabled == 'false':
+                    enabled = False
+                else:
+                    enabled = True
+
             results = (
                 self.create_user(
                     self, username, password,fullname, email,
@@ -499,7 +511,7 @@ class UsersHandler(BaseHandler):
         active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
-        usernames = self.arguments.get(ApiArguments.USERNAMES)
+        usernames = self.arguments.get(ApiArguments.USER_NAMES)
         try:
             if not isinstance(usernames, list):
                 usernames = usernames.split()

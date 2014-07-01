@@ -4,6 +4,7 @@ class ApiArguments():
     USERNAME = 'username'
     USER_NAME = 'user_name'
     USERNAMES = 'usernames'
+    USER_NAMES = 'user_names'
     VIEW_CONTEXT = 'view_context'
     VIEWNAME = 'viewname'
     VIEW_NAME = 'view_name'
