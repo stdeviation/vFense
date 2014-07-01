@@ -2,25 +2,21 @@ import logging
 from time import time
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent._constants import AgentVirtualKeys, \
-    AgentStatusKeys, ProductionLevels
-
-from vFense.core.agent._db import fetch_production_levels_from_agent, \
-    fetch_supported_os_strings, fetch_agent_ids, fetch_agents, \
-    fetch_agent, \
-    update_agent
-
+from vFense.core.agent._db import (
+    fetch_production_levels_from_agent,
+    fetch_supported_os_strings, fetch_agent_ids, fetch_agents,
+    fetch_agent, update_agent, fetch_all_agents_for_view
+)
 from vFense.core.decorators import time_it
 
-from vFense.db.hardware import Hardware
 #from vFense.result.results import Results
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import DbCodes, GenericCodes,\
-    AgentCodes, AgentFailureCodes, GenericFailureCodes, \
-    AgentResultCodes, AgentFailureResultCodes
+from vFense.result.status_codes import (
+    DbCodes, GenericCodes, AgentCodes, AgentFailureCodes,
+    GenericFailureCodes
+)
 #from vFense.plugins.patching._db_model import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -298,60 +294,6 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
     }
 
     return results
-
-def remove_all_agents_for_view(
-        view_name,
-        user_name=None, uri=None, method=None
-    ):
-    """Remove all agents from the system, filtered by view_name
-    Args:
-        view_name (str): The name of the view.
-
-    Kwargs:
-        user_name (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
-
-    Basic Usage:
-        >>> from vFense.core.agent.agents import remove_all_agents_for_view
-        >>> view_name = 'tester'
-        >>> remove_all_agents_for_view(view_name)
-    """
-    status = remove_all_agents_for_view.func_name + ' - '
-
-    status_code, count, error, generated_ids = (
-        delete_all_agents_for_view(view_name)
-    )
-    msg = 'total number of agents deleted: %s' % (str(count))
-    if status_code == DbCodes.Deleted:
-        generic_status_code = GenericCodes.ObjectDeleted
-        vfense_status_code = AgentCodes.AgentsDeleted
-
-    elif status_code == DbCodes.Skipped:
-        generic_status_code = GenericCodes.DoesNotExist
-        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
-
-    elif status_code == DbCodes.DoesNotExist:
-        generic_status_code = GenericCodes.DoesNotExist
-        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
-
-    elif status_code == DbCodes.Errors:
-        generic_status_code = GenericFailureCodes.FailedToDeleteObject
-        vfense_status_code = AgentFailureCodes.AgentsFailedToDelete
-
-    results = {
-        ApiResultKeys.DB_STATUS_CODE: status_code,
-        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-        ApiResultKeys.MESSAGE: status + msg,
-        ApiResultKeys.DATA: [],
-        ApiResultKeys.USERNAME: user_name,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
-    }
-
-    return results
-
 
 @time_it
 def validate_agent_ids(agent_ids):
