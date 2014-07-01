@@ -2,8 +2,8 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz.status_codes import GenericCodes
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.status_codes import GenericCodes
+from vFense.result.error_messages import GenericResults
 
 from vFense.core._constants import *
 from vFense.core.user._db_model import UserKeys, UserCollections

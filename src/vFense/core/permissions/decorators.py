@@ -1,8 +1,8 @@
 from functools import wraps
 from json import dumps
 
-from vFense.errorz.status_codes import GenericCodes
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.status_codes import GenericCodes
+from vFense.result.error_messages import GenericResults
 from vFense.core.permissions.permissions import verify_permission_for_user
 
 

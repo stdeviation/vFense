@@ -9,7 +9,7 @@ from vFense.core.decorators import (
 
 from vFense.core.agent.operations.agent_results import AgentOperationResults
 from vFense.db.notification_sender import send_notifications
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager

@@ -29,11 +29,11 @@ from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
 
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import ViewFailureCodes, ViewCodes
+from vFense.result._constants import ApiResultKeys
+from vFense.result.error_messages import GenericResults
+from vFense.result.status_codes import ViewFailureCodes, ViewCodes
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

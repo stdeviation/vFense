@@ -5,9 +5,9 @@ from vFense.core.operations._admin_constants import (
     AdminOperationDefaults, AdminActions
 )
 from vFense.core._constants import CommonKeys
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import GenericCodes
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import GenericCodes
+from vFense.result.status_codes import (
     GenericFailureCodes
 )
 

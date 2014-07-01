@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.errorz.error_messages import SchedulerResults, GenericResults
+from vFense.result.error_messages import SchedulerResults, GenericResults
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

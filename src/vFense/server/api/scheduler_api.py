@@ -6,7 +6,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 from vFense.scheduler.jobManager import *
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments

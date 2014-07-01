@@ -14,7 +14,7 @@ from vFense.core.operations._db_admin import (
     update_admin_operation
 )
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     DbCodes
 )
 

@@ -26,9 +26,9 @@ from vFense.core.user import User
 from vFense.core.user.manager import UserManager
 from vFense.core.user.search.search import RetrieveUsers
 
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.error_messages import GenericResults
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.error_messages import GenericResults
+from vFense.result.status_codes import (
     UserCodes, UserFailureCodes, GenericCodes,
     GenericFailureCodes
 )

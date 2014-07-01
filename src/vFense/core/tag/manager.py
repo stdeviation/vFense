@@ -13,8 +13,8 @@ from vFense.core.view.views import validate_view_names
 from vFense.core.tag._db_model import (
     TagKeys, TagMappedKeys, TagsPerAgentKeys
 )
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
     TagFailureCodes, TagCodes
 )

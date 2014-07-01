@@ -9,7 +9,7 @@ from vFense.core.agent._db import (
 )
 from vFense.plugins.patching._db_model import *
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.errorz.error_messages import *
+from vFense.result.error_messages import *
 
 
 def system_os_details(agent_info):

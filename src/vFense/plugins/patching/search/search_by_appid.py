@@ -13,10 +13,10 @@ from vFense.plugins.patching._constants import (
     CommonAppKeys
 )
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
-from vFense.errorz._constants import (
+from vFense.result._constants import (
     ApiResultKeys
 )
 from vFense.plugins.patching.search._db_search_by_appid import (

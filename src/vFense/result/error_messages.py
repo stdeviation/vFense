@@ -1,5 +1,5 @@
-from vFense.errorz.status_codes import *
-from vFense.errorz._constants import *
+from vFense.result.status_codes import *
+from vFense.result._constants import *
 from vFense.core.agent._db_model import *
 
 status = 'http_status'

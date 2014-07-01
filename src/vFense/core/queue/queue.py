@@ -17,7 +17,7 @@ from vFense.core.view.manager import ViewManager
 from vFense.core.queue.uris import get_agent_results_uri
 from vFense.core.operations._db_model import AgentOperationKey
 
-from vFense.errorz.status_codes import DbCodes
+from vFense.result.status_codes import DbCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

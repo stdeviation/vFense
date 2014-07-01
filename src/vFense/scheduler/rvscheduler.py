@@ -10,7 +10,7 @@ from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
 
 from vFense.core.agent.agent_uptime_verifier import all_agent_status
 from vFense.jobs.jobs import remove_expired_jobs_and_update_operations
-from vFense.errorz.status_codes import SchedulerCodes
+from vFense.result.status_codes import SchedulerCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('admin_scheduler')

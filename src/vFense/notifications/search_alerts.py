@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import *
 from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
-from vFense.errorz.error_messages import GenericResults, NotificationResults
+from vFense.result.error_messages import GenericResults, NotificationResults
 from vFense.core.operations._db_model import *
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *

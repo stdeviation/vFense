@@ -6,7 +6,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz.error_messages import GenericResults, PackageResults
+from vFense.result.error_messages import GenericResults, PackageResults
 
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions

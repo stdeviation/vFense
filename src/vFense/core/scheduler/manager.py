@@ -12,7 +12,6 @@ from apscheduler.jobstores.rethinkdb_store import RethinkDBJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
 
-
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 

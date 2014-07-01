@@ -3,11 +3,11 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent.manager import AgentManager
-from vFense.errorz.error_messages import (
+from vFense.result.error_messages import (
     GenericResults, AgentResults
 )
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.results import Results
+from vFense.result._constants import ApiResultKeys
+from vFense.result.results import Results
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, results_message
 

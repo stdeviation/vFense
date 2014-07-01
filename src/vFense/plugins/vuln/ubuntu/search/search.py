@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues
@@ -10,7 +10,7 @@ from vFense.core._constants import (
 from vFense.plugins.vuln.ubuntu._db_model import UbuntuSecurityBulletinKey
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

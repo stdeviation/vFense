@@ -9,7 +9,7 @@ from vFense.core.decorators import agent_authenticated_request, \
 from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
 
-from vFense.errorz.error_messages import GenericResults, \
+from vFense.result.error_messages import GenericResults, \
     UpdateApplicationsResults
 
 from vFense.receiver.rvhandler import RvHandOff

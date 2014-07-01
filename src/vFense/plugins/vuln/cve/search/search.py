@@ -2,8 +2,8 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.errorz.error_messages import GenericResults, PackageResults
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.result._constants import ApiResultKeys
 from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues, SortLogic
@@ -12,7 +12,7 @@ from vFense.plugins.vuln.cve._db_model import CveKeys
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.cve.search._db import FetchCves
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

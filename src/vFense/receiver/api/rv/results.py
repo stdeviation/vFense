@@ -12,7 +12,7 @@ from vFense.plugins.patching.operations.patching_results import \
     PatchingOperationResults
 
 from vFense.db.notification_sender import send_notifications
-from vFense.errorz.error_messages import GenericResults
+from vFense.result.error_messages import GenericResults
 
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager

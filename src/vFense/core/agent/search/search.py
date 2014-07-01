@@ -2,7 +2,7 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 
 from vFense.core.view._constants import DefaultViews
 from vFense.core.agent._constants import AgentCommonKeys
@@ -10,7 +10,7 @@ from vFense.core.agent._db_model import AgentKeys
 
 from vFense.core.agent.search._db import FetchAgents
 from vFense.core.decorators import time_it
-from vFense.errorz.status_codes import GenericCodes, GenericFailureCodes
+from vFense.result.status_codes import GenericCodes, GenericFailureCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

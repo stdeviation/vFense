@@ -1,8 +1,8 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import time_it
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import (
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import (
     GroupCodes, GenericCodes, GenericFailureCodes,
     GroupFailureCodes, DbCodes
 )

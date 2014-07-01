@@ -19,8 +19,8 @@ from vFense.plugins.patching.patching import get_download_urls, \
     update_app_status_by_agentid_and_appid
 
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import GenericCodes, AgentOperationCodes, \
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import GenericCodes, AgentOperationCodes, \
     GenericFailureCodes, AgentOperationFailureCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

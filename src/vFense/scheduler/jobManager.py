@@ -26,7 +26,7 @@ from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
 
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.core.operations.store_agent_operation import StoreAgentOperation
-from vFense.errorz.error_messages import GenericResults, SchedulerResults
+from vFense.result.error_messages import GenericResults, SchedulerResults
 from vFense.server.hierarchy import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

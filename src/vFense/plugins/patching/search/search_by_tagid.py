@@ -16,10 +16,10 @@ from vFense.core._constants import (
     SortValues, DefaultQueryValues, CommonKeys
 )
 
-from vFense.errorz.status_codes import (
+from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes
 )
-from vFense.errorz._constants import (
+from vFense.result._constants import (
     ApiResultKeys
 )
 

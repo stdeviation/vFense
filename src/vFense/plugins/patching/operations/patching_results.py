@@ -9,14 +9,14 @@ from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.manager import AgentManager
-from vFense.errorz._constants import ApiResultKeys
+from vFense.result._constants import ApiResultKeys
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults
 from vFense.core.operations.agent_operations import \
     operation_for_agent_and_app_exist
 
-from vFense.errorz.status_codes import AgentOperationCodes, GenericCodes, \
+from vFense.result.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
 
 from vFense.plugins.patching._db_model import AppCollections

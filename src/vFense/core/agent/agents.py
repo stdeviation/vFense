@@ -16,9 +16,9 @@ from vFense.core.agent._db import fetch_production_levels_from_agent, \
 from vFense.core.decorators import time_it
 
 from vFense.db.hardware import Hardware
-#from vFense.errorz.results import Results
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import DbCodes, GenericCodes,\
+#from vFense.result.results import Results
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import DbCodes, GenericCodes,\
     AgentCodes, AgentFailureCodes, GenericFailureCodes, \
     AgentResultCodes, AgentFailureResultCodes
 #from vFense.plugins.patching._db_model import *

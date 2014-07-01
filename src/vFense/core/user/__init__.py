@@ -4,8 +4,8 @@ from vFense.core._constants import (
     RegexPattern, DefaultStringLength, CommonKeys
 )
 from vFense.core.user._constants import UserDefaults
-from vFense.errorz._constants import ApiResultKeys
-from vFense.errorz.status_codes import UserFailureCodes, GenericCodes
+from vFense.result._constants import ApiResultKeys
+from vFense.result.status_codes import UserFailureCodes, GenericCodes
 from vFense.utils.security import check_password
 
 
