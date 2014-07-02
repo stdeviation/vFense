@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.scheduler._db_model import (
-    JobKeys, JobCollections
+    JobKeys, JobCollections, JobKwargKeys
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -301,6 +301,108 @@ class FetchJobs(object):
             data = (
                 base_filter
                 .filter({JobKeys.Operation: operation})
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .merge(merge_query)
+                .pluck(self.keys_to_pluck)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_agentid(self, agent_id, conn=None):
+        """Retrieve all jobs for an agent.
+        Args:
+            agent_id (str): The id of the agent.
+
+        Basic Usage:
+            >>> from vFense.job.search._db import FetchJobs
+            >>> search = FetchJobs()
+            >>> search.by_agentid('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            Tuple
+            (count, job_data)
+        >>>
+        """
+        count = 0
+        data = []
+        base_filter = self._set_job_base_query()
+        merge_query = self._set_merge_query()
+
+        try:
+            count = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(agent_id)
+                )
+                .count()
+                .run(conn)
+            )
+
+            data = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(agent_id)
+                )
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .merge(merge_query)
+                .pluck(self.keys_to_pluck)
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+    @db_create_close
+    def by_tagid(self, tag_id, conn=None):
+        """Retrieve all jobs for a tag.
+        Args:
+            tag_id (str): The id of the tag.
+
+        Basic Usage:
+            >>> from vFense.job.search._db import FetchJobs
+            >>> search = FetchJobs()
+            >>> search.by_tagid('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            Tuple
+            (count, job_data)
+        >>>
+        """
+        count = 0
+        data = []
+        base_filter = self._set_job_base_query()
+        merge_query = self._set_merge_query()
+
+        try:
+            count = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(tag_id)
+                )
+                .count()
+                .run(conn)
+            )
+
+            data = (
+                base_filter
+                .filter(
+                    lambda x:
+                    x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(tag_id)
+                )
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)

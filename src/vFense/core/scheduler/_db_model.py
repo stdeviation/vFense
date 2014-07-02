@@ -18,6 +18,12 @@ class JobKeys():
     Trigger = 'trigger'
     JobState = 'job_state'
 
+class JobKwargKeys():
+    Agents = 'agents'
+    AllAgents = 'all_agents'
+    Tags = 'tags'
+    AllTags = 'all_tags'
+
 class JobIndexes():
     NextRunTime = 'next_run_time'
     ViewName = 'view_name'

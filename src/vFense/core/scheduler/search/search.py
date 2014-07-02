@@ -420,6 +420,75 @@ class RetrieveJobs(object):
         )
         return results
 
+    @time_it
+    def by_agentid(self, agent_id):
+        """Retrieve all jobs for an agent.
+        Args:
+            agent_id (str): The id of the agent you are retrieving
+                the jobs for.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler.search.search import RetrieveJobs
+            >>> view_name = 'global'
+            >>> search = RetrieveJobs(view_name='default')
+            >>> search.by_agentid('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_jobs.by_agentid(agent_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
+
+    @time_it
+    def by_tagid(self, tag_id):
+        """Retrieve all jobs for an agent.
+        Args:
+            tag_id (str): The id of the tag you are retrieving
+                the jobs for.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler.search.search import RetrieveJobs
+            >>> view_name = 'global'
+            >>> search = RetrieveJobs(view_name='default')
+            >>> search.by_tagid('96f02bcf-2ada-465c-b175-0e5163b36e1c')
+
+        Returns:
+            List of dictionairies.
+        """
+        count, data = self.fetch_jobs.by_tagid(tag_id)
+        generic_status_code = GenericCodes.InformationRetrieved
+
+        if count == 0:
+            vfense_status_code = GenericFailureCodes.DataIsEmpty
+            msg = 'dataset is empty'
+
+        else:
+            vfense_status_code = GenericCodes.InformationRetrieved
+            msg = 'dataset retrieved'
+
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code,
+                msg, count, data
+            )
+        )
+        return results
 
     def _set_results(self, gen_status_code, vfense_status_code,
                      msg, count, data):
