@@ -28,8 +28,6 @@ from vFense.core.operations._constants import vFenseObjects
 from vFense.core.api.decorators import authenticate_token
 
 
-import plugins.ra.handoff as RaHandoff
-
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
@@ -63,9 +61,6 @@ class NewAgentV1(BaseHandler):
                             plugins['rv']['data'],
                             agent_info
                         )
-
-                    if 'ra' in plugins:
-                        RaHandoff.startup(agent_id, plugins['ra'])
 
                 except Exception as e:
                     logger.exception(e)
@@ -140,9 +135,6 @@ class NewAgentV2(BaseHandler):
                         ).new_agent_operation(
                             agent_id, plugins['rv']['data'], agent_info
                         )
-
-                    if 'ra' in plugins:
-                        RaHandoff.startup(agent_id, plugins['ra'])
 
                 except Exception as e:
                     logger.exception(e)

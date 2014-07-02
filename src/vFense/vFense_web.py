@@ -23,7 +23,8 @@ from redis import StrictRedis
 from vFense.server.api.reports_api import *
 
 from vFense.db.create_indexes import initialize_indexes_and_create_tables
-from vFense.scheduler.jobManager import start_scheduler
+from vFense.core.scheduler.manager import start_scheduler
+#from vFense.scheduler.jobManager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
 from vFense.core.api.agent import *
 from vFense.plugins.patching.api.stats_api import *
@@ -52,12 +53,6 @@ from tornado.options import define, options
 define("port", default=9000, help="run on port", type=int)
 define("debug", default=True, help="enable debugging features", type=bool)
 
-rq_host = 'localhost'
-rq_port = 6379
-rq_db = 0
-
-rq_pool = StrictRedis(host=rq_host, port=rq_port, db=rq_db)
-
 
 class HeaderModule(tornado.web.UIModule):
     def render(self):
@@ -78,13 +73,13 @@ class Application(tornado.web.Application):
             (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
             ##### RA Api
-            (r"/api/ra/rd/password/?", SetPassword),
-            (r"/api/ra/rd/([^/]+)/?", RDSession),
-            (r"/ws/ra/status/?", RDStatusQueue),
+            #(r"/api/ra/rd/password/?", SetPassword),
+            #(r"/api/ra/rd/([^/]+)/?", RDSession),
+            #(r"/ws/ra/status/?", RDStatusQueue),
 
             ##### MightyMouse API Handlers
-            (r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),
-            (r"/api/v1/relay", RelayServersHandler),
+            #(r'/api/v1/relay/([A-Za-z0-9:,"_ ]+.*)?', RelayServerHandler),
+            #(r"/api/v1/relay", RelayServersHandler),
 
             ##### Custom Apps API Handlers
             (r"/api/v1/app/custom/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AppIdCustomAppsHandler),
@@ -150,7 +145,6 @@ class Application(tornado.web.Application):
         }
         self.scheduler = start_scheduler()
         initialize_indexes_and_create_tables()
-        hierarchy_db.init()
 
         tornado.web.Application.__init__(self, handlers,
                                          template_path=VFENSE_TEMPLATE_PATH,

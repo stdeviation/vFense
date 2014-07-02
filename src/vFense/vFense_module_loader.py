@@ -169,7 +169,6 @@ class CoreLoader():
             (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
 
             ##### Scheduler API Handlers
-            (r"/api/v1/timezones?", TimeZonesHandler),
             (r"/api/v1/schedules?", JobsHandler),
             (r"/api/v1/schedule/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", JobHandler),
             (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
@@ -212,6 +211,7 @@ class CoreLoader():
             ##### Generic API Handlers
             (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
             (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
+            (r"/api/v1/supported/timezones?", TimeZonesHandler),
             #(r"/api/package/getDependecies?", GetDependenciesHandler),
 
             ##### Os Apps API Handlers

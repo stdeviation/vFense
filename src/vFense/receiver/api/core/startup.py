@@ -21,7 +21,6 @@ from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations._db_model import AgentOperationKey
 
 from vFense.receiver.rvhandler import RvHandOff
-import plugins.ra.handoff as RaHandoff
 
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
@@ -60,9 +59,6 @@ class StartUpV1(BaseHandler):
                 if 'rv' in plugins:
                     RvHandOff(
                     ).startup_operation(agent_id, plugins['rv']['data'])
-
-                if 'ra' in plugins:
-                    RaHandoff.startup(agent_id, plugins['ra'])
 
             self.set_status(agent_data['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -122,8 +118,6 @@ class StartUpV2(BaseHandler):
                     RvHandOff(
                     ).startup_operation(agent_id, plugins['rv']['data'])
 
-                if 'ra' in plugins:
-                    RaHandoff.startup(agent_id, plugins['ra'])
             self.set_header('Content-Type', 'application/json')
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
