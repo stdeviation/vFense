@@ -56,20 +56,15 @@ define(
                 user_name: 'John Doe'
             },
             url: '/api/v1/user/',
-           /* initialize: function() {
-                var userModel = new Backbone.Model();
-                userModel.url = 'api/v1/user/';
-                userModel.fetch({
-                    success: function(model) {
-                        app.username = model.get('data').user_name;
-                    }
-                });
-            },*/
             parse: function (response) {
-                this.apiMessage = response.message;
-                this.apiPass = response.rv_status_code === 1001;
+                this.apiPass = response.vfense_status_code === 1001;
                 return response.data;
             },
+	    isAdmin: function () {
+		var currentView = this.get('current_view'),
+		permissions = _.findWhere(this.get('views'), {view_name: currentView});
+		return permissions.administrator;
+	    },
             hasPermission: function (need) {
                 return _.indexOf(this.get('permissions'), need) !== -1;
             }

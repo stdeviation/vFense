@@ -8,13 +8,13 @@ define(
             id: 'pageHeader',
             template: headerTemplate,
             initialize: function () {
-                this.model = app.user;
                 this.listenTo(app.user, 'sync', this.checkAdminPermission);
+                app.user.fetch();
+                return this;
             },
             render: function () {
                 var tmpl = _.template(this.template),
-                    user = this.model.toJSON();
-
+                    user = app.user.toJSON();
                 this.$el.html(tmpl(user));
                 this.customerDropdown = new customerDropdown.View();
                 this.$('#dashboardNav')
@@ -24,7 +24,7 @@ define(
                 return this;
             },
             checkAdminPermission: function () {
-                if(app.user.hasPermission('administrator')) {
+                if (app.user.isAdmin()) {
                     if (!this.$('a[href="#admin/users"]').length) {
                         this.$('#userMenu')
                             .find('.divider')

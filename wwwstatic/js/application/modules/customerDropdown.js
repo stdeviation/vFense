@@ -26,20 +26,20 @@ define(
                 },
                 beforeRender: $.noop,
                 onRender: $.noop,
-                render: function () {
+                render: function (model) {
                     if (this.beforeRender !== $.noop) { this.beforeRender(); }
 
                     var template = _.template(this.template),
                         data = app.user.toJSON();
                     _.extend(data, {
                         viewHelpers: {
-                            renderCustomers: function (customers, currentCustomer) {
+                            renderViews: function (views, currentView) {
                                 var fragment = crel('div');
-                                _.each(customers, function (customer) {
-                                    if (customer.customer_name !== currentCustomer) {
+                                _.each(views, function (view) {
+                                    if (view.view_name !== currentView) {
                                         fragment.appendChild(
                                             crel('li',
-                                                crel('a', {href: '#customer/' + customer.customer_name}, customer.customer_name)
+                                                crel('a', {href: '#customer/' + customer.view_name}, customer.view_name)
                                             )
                                         );
                                     }
