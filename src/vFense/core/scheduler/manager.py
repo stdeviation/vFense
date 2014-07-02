@@ -1,12 +1,9 @@
 #!/usr/bin/env python
-import json
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-import apscheduler
 
 from datetime import datetime
-from copy import deepcopy
 from pytc import utc
 from apscheduler.jobstores.rethinkdb_store import RethinkDBJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -16,7 +13,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def start_scheduler(scheduler_type='tornado', collection='jobs'):
+def start_scheduler(scheduler_type='tornado', db='vFense', collection='jobs'):
     if scheduler_type == 'tornado':
         Scheduler = TornadoScheduler
     else:
@@ -83,87 +80,8 @@ class ScheduleManager(object):
         return jobs
 
     def job_exist(self, name):
-        exist = False
-        for schedule in self.jobs:
-            if name in schedule.name:
-                exist = True
+        pass
 
-        return exist
-
-
-@db_create_close
-def job_lister(sched, view_name, username, uri=None, method=None,
-        conn=None):
-
-    jobs = sched.get_jobs(name=view_name)
-    job_listing = []
-    username = None
-    cname = None
-    agents = []
-    tags = []
-
-    for schedule in jobs:
-        job = None
-        cp_of_sched = deepcopy(schedule.args)
-
-        if len(schedule.args) > 1:
-            username = cp_of_sched.pop()
-            cname = cp_of_sched.pop()
-
-        if cp_of_sched:
-            job = cp_of_sched.pop(0)
-        else:
-            continue
-
-        if not isinstance(job, dict):
-            json_is_valid, json_job = verify_json_is_valid(job)
-        else:
-            json_job = job
-            json_is_valid = isinstance(json_job, dict)
-
-        if isinstance(
-            schedule.trigger, apscheduler.triggers.cron.CronTrigger
-        ):
-            schedule_type = 'cron'
-
-        elif isinstance(
-            schedule.trigger, apscheduler.triggers.interval.IntervalTrigger
-        ):
-            schedule_type = 'interval'
-
-        elif isinstance(
-            schedule.trigger, apscheduler.triggers.simple.SimpleTrigger
-        ):
-            schedule_type = 'once'
-
-        json_job['next_run_time'] = str(schedule.next_run_time)
-        json_job['job_name'] = schedule.name
-        json_job['runs'] = schedule.runs
-        json_job['username'] = username
-        json_job['view_name'] = view_name
-        json_job['schedule_type'] = schedule_type
-        json_job['uri'] = uri
-        json_job['method'] = method
-        tag_ids = json_job.pop('tag_ids')
-        agent_ids = json_job.pop('agent_ids')
-
-        job_listing.append(json_job)
-
-    try:
-        data = job_listing
-        results = GenericResults(
-            username, uri, method,
-        ).information_retrieved(data, len(data))
-
-    except Exception as e:
-        logger.exception(e)
-        results = GenericResults(
-            username, uri, method
-        ).something_broke(
-            json_job['job_name'], 'failed to retrieve data', e
-        )
-
-    return results
 
 @db_create_close
 def get_agentids_per_job(job_info, view_name, username,  conn=None):
