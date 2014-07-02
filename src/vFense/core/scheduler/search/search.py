@@ -34,19 +34,21 @@ class RetrieveJobs(object):
         self.list_of_valid_keys = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
             JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
+            JobKeys.Runs, JobKeys.Kwargs, JobKeys.Args
         ]
 
         self.valid_keys_to_filter_by = [
             JobKeys.Name, JobKeys.ViewName,
             JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
         ]
 
         valid_keys_to_sort_by = [
             JobKeys.Name, JobKeys.ViewName,
             JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
+            JobKeys.Runs
         ]
 
         self.valid_triggers = ['cron', 'interval', 'date']
