@@ -15,7 +15,9 @@ from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.view import ViewHandler, ViewsHandler
 from vFense.core.api.tag import TagHandler, TagsHandler
-from vFense.core.api.scheduler import JobHandler, JobsHandler
+from vFense.core.api.scheduler import (
+    JobHandler, JobsHandler, TimeZonesHandler
+)
 from vFense.core.api.agent import (
     AgentHandler, AgentsHandler, AgentTagHandler,
     FetchSupportedOperatingSystems, FetchValidProductionLevels
@@ -167,6 +169,7 @@ class CoreLoader():
             (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
 
             ##### Scheduler API Handlers
+            (r"/api/v1/timezones?", TimeZonesHandler),
             (r"/api/v1/schedules?", JobsHandler),
             (r"/api/v1/schedule/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", JobHandler),
             (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),

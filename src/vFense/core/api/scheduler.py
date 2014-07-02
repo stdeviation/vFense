@@ -19,6 +19,7 @@ from vFense.core.user.manager import UserManager
 from vFense.core.scheduler.search.search import RetrieveJobs
 from vFense.result.error_messages import GenericResults
 from vFense.result.results import Results
+from pytz import all_timezones
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -32,12 +33,33 @@ from vFense.core.decorators import (
 )
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
-    GenericCodes, GenericFailureCodes, AgentCodes, AgentFailureCodes,
-    ViewCodes
+    GenericCodes, GenericFailureCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
+
+
+class TimeZonesHandler(BaseHandler):
+    @authenticated_request
+    @check_permissions(Permissions.READ)
+    def get(self):
+        results = self.get_timezones()
+        self.set_header('Content-Type', 'application/json')
+        self.set_status(results['http_status'])
+        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_timezones(self):
+        data = all_timezones
+        results = (
+            {
+                ApiResultKeys.DATA: data,
+                ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved
+            }
+        )
+        return results
 
 class JobHandler(BaseHandler):
     @authenticated_request
@@ -64,7 +86,8 @@ class JobsHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self):
-        user = UserManager(active_user)
+        username = self.get_current_user()
+        user = UserManager(username)
         active_view = user.get_attribute(UserKeys.CurrentView)
         count = int(self.get_argument('count', 30))
         offset = int(self.get_argument('offset', 0))
