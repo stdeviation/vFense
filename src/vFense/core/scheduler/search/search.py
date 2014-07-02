@@ -5,10 +5,11 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.result._constants import ApiResultKeys
 
 from vFense.core.view._constants import DefaultViews
-from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.scheduler._db_model import JobKeys
 
-from vFense.core.scheduler.search._db import FetchJobs
+from vFense.core.scheduler.search._db import (
+    FetchJobs, FetchAgentJobs, FetchTagJobs
+)
 from vFense.core.decorators import time_it
 from vFense.result.status_codes import GenericCodes, GenericFailureCodes
 from pytz import all_timezones
@@ -18,6 +19,7 @@ logger = logging.getLogger('rvapi')
 
 
 class RetrieveJobs(object):
+    """Job database queries."""
     def __init__(
         self, view_name=None,
         count=DefaultQueryValues.COUNT,
@@ -25,35 +27,24 @@ class RetrieveJobs(object):
         sort=SortValues.ASC,
         sort_key=JobKeys.NextRunTime
         ):
+        """
+        Kwargs:
+            view_name (str): Fetch all agents in this view.
+            count (int): The number of results to return.
+            offset (int): The next set of results beginning at offset.
+            sort (str): asc or desc.
+            sort_key (str): The key you are going to sort the results by.
+        """
 
         self.view_name = view_name
         self.count = count
         self.offset = offset
         self.sort = sort
 
-        self.list_of_valid_keys = [
-            JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
-            JobKeys.Runs, JobKeys.Kwargs, JobKeys.Args
-        ]
+        self._set_properties()
 
-        self.valid_keys_to_filter_by = [
-            JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
-        ]
 
-        valid_keys_to_sort_by = [
-            JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
-            JobKeys.Runs
-        ]
-
-        self.valid_triggers = ['cron', 'interval', 'date']
-
-        if sort_key in valid_keys_to_sort_by:
+        if sort_key in self.valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
             self.sort_key = JobKeys.NextRunTime
@@ -67,6 +58,29 @@ class RetrieveJobs(object):
                 self.sort, self.sort_key
             )
         )
+
+    def _set_properties(self):
+        self.list_of_valid_keys = [
+            JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
+            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
+            JobKeys.Runs, JobKeys.Kwargs, JobKeys.Args
+        ]
+
+        self.valid_keys_to_filter_by = [
+            JobKeys.Name, JobKeys.ViewName,
+            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
+        ]
+
+        self.valid_keys_to_sort_by = [
+            JobKeys.Name, JobKeys.ViewName,
+            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
+            JobKeys.Runs
+        ]
+
+        self.valid_triggers = ['cron', 'interval', 'date']
 
     @time_it
     def by_id(self, job_id):
@@ -502,3 +516,78 @@ class RetrieveJobs(object):
         }
 
         return(results)
+
+
+class RetrieveAgentJobs(object):
+    """Job queries for an agent."""
+    def __init__(
+        self, agent_id,
+        count=DefaultQueryValues.COUNT,
+        offset=DefaultQueryValues.OFFSET,
+        sort=SortValues.ASC,
+        sort_key=JobKeys.NextRunTime
+        ):
+        """
+        Kwargs:
+            agent_id (str): Fetch all jobs in this agent.
+            count (int): The number of results to return.
+            offset (int): The next set of results beginning at offset.
+            sort (str): asc or desc.
+            sort_key (str): The key you are going to sort the results by.
+        """
+
+        self.agent_id = agent_id
+        self.count = count
+        self.offset = offset
+        self.sort = sort
+
+        self._set_properties()
+
+        if sort_key in self.valid_keys_to_sort_by:
+            self.sort_key = sort_key
+        else:
+            self.sort_key = JobKeys.NextRunTime
+
+        self.fetch_jobs = (
+            FetchAgentJobs(
+                self.agent_id, self.count, self.offset,
+                self.sort, self.sort_key
+            )
+        )
+
+class RetrieveTagJobs(object):
+    """Job queries for a tag."""
+    def __init__(
+        self, tag_id,
+        count=DefaultQueryValues.COUNT,
+        offset=DefaultQueryValues.OFFSET,
+        sort=SortValues.ASC,
+        sort_key=JobKeys.NextRunTime
+        ):
+        """
+        Kwargs:
+            tag_id (str): Fetch all jobs in this tag.
+            count (int): The number of results to return.
+            offset (int): The next set of results beginning at offset.
+            sort (str): asc or desc.
+            sort_key (str): The key you are going to sort the results by.
+        """
+        self.tag_id = tag_id
+        self.count = count
+        self.offset = offset
+        self.sort = sort
+
+        self._set_properties()
+
+        if sort_key in self.valid_keys_to_sort_by:
+            self.sort_key = sort_key
+        else:
+            self.sort_key = JobKeys.NextRunTime
+
+        self.fetch_jobs = (
+            FetchTagJobs(
+                self.tag_id, self.count, self.offset,
+                self.sort, self.sort_key
+            )
+        )
+

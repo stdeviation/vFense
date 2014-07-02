@@ -64,70 +64,252 @@ class JobsHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self):
-        active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        try:
-            count = int(self.get_argument('count', 30))
-            offset = int(self.get_argument('offset', 0))
-            query = self.get_argument('query', None)
-            operation = self.get_argument('operation', None)
-            trigger = self.get_argument('trigger', None)
-            timezone = self.get_argument('timezone', None)
-            sort = self.get_argument('sort', 'desc')
-            sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        count = int(self.get_argument('count', 30))
+        offset = int(self.get_argument('offset', 0))
+        query = self.get_argument('query', None)
+        operation = self.get_argument('operation', None)
+        trigger = self.get_argument('trigger', None)
+        timezone = self.get_argument('timezone', None)
+        sort = self.get_argument('sort', 'desc')
+        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
 
-            search = (
-                RetrieveJobs(active_view, count, offset, sort, sort_by)
+        search = (
+            RetrieveJobs(active_view, count, offset, sort, sort_by)
+        )
+        if not operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs(search)
+
+        elif query and not operation and not trigger and not timezone:
+            results = self.get_all_jobs_by_name(search, query)
+
+        elif operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation(search, operation)
+
+        elif trigger and not operation and not query and not timezone:
+            results = self.get_all_jobs_by_trigger(search, trigger)
+
+        elif timezone and not operation and not query and not trigger:
+            results = self.get_all_jobs_by_timezone(search, timezone)
+
+        elif query and trigger and not operation and not timezone:
+            results = self.get_all_jobs_by_name_and_trigger(
+                search, query, trigger
             )
-            if not operation and not trigger and not query and not timezone:
-                results = self.get_all_jobs(search)
 
-            elif query and not operation and not trigger and not timezone:
-                results = self.get_all_jobs_by_name(search, query)
+        elif operation and trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation_and_trigger(
+                search, operation, trigger
+            )
 
-            elif operation and not trigger and not query and not timezone:
-                results = self.get_all_jobs_by_operation(search, operation)
-
-            elif trigger and not operation and not query and not timezone:
-                results = self.get_all_jobs_by_trigger(search, trigger)
-
-            elif timezone and not operation and not query and not trigger:
-                results = self.get_all_jobs_by_timezone(search, timezone)
-
-            elif query and trigger and not operation and not timezone:
-                results = self.get_all_jobs_by_name_and_trigger(
-                    search, query, trigger
-                )
-
-            elif operation and trigger and not query and not timezone:
-                results = self.get_all_jobs_by_operation_and_trigger(
-                    search, operation, trigger
-                )
-
-            elif query and operation and trigger:
-                results = (
-                    self.get_all_jobs_by_name_and_trigger_and_operation(
-                        search, query, trigger, operation
-                    )
-                )
-
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
+        elif query and operation and trigger:
             results = (
-                GenericResults(
-                    active_user, uri, method
-                ).something_broke('Agents Api', 'agent', e)
+                self.get_all_jobs_by_name_and_trigger_and_operation(
+                    search, query, trigger, operation
+                )
             )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+
+        self.set_status(results['http_status'])
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_all_jobs(self, search):
+        results = search.all()
+        return results
+
+    @results_message
+    def get_all_jobs_by_name(self, search, name):
+        results = search.by_name(name)
+        return results
+
+    @results_message
+    def get_all_jobs_by_trigger(self, search, trigger):
+        results = search.by_trigger(trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_operation(self, search, operation):
+        results = search.by_operation(operation)
+        return results
+
+    @results_message
+    def get_all_jobs_by_timezone(self, search, timezone):
+        results = search.by_timezone(timezone)
+        return results
+
+    @results_message
+    def get_all_jobs_by_name_and_trigger(self, search, name, trigger):
+        results = search.by_name_and_trigger(name, trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_operation_and_trigger(self, search, operation,
+                                              trigger):
+        results = search.by_operation_and_trigger(operation, trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_name_and_trigger_and_operation(self, search, name,
+                                                       trigger, operation):
+        results = (
+            search.by_name_and_trigger_and_operation(
+                name, trigger, operation
+            )
+        )
+        return results
+
+
+class AgentJobsHandler(BaseHandler):
+    @authenticated_request
+    @check_permissions(Permissions.READ)
+    def get(self, agent_id):
+        count = int(self.get_argument('count', 30))
+        offset = int(self.get_argument('offset', 0))
+        query = self.get_argument('query', None)
+        operation = self.get_argument('operation', None)
+        trigger = self.get_argument('trigger', None)
+        timezone = self.get_argument('timezone', None)
+        sort = self.get_argument('sort', 'desc')
+        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+
+        search = (
+            RetrieveJobs(agent_id, count, offset, sort, sort_by)
+        )
+        if not operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs(search)
+
+        elif query and not operation and not trigger and not timezone:
+            results = self.get_all_jobs_by_name(search, query)
+
+        elif operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation(search, operation)
+
+        elif trigger and not operation and not query and not timezone:
+            results = self.get_all_jobs_by_trigger(search, trigger)
+
+        elif timezone and not operation and not query and not trigger:
+            results = self.get_all_jobs_by_timezone(search, timezone)
+
+        elif query and trigger and not operation and not timezone:
+            results = self.get_all_jobs_by_name_and_trigger(
+                search, query, trigger
+            )
+
+        elif operation and trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation_and_trigger(
+                search, operation, trigger
+            )
+
+        elif query and operation and trigger:
+            results = (
+                self.get_all_jobs_by_name_and_trigger_and_operation(
+                    search, query, trigger, operation
+                )
+            )
+
+        self.set_status(results['http_status'])
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def get_all_jobs(self, search):
+        results = search.all()
+        return results
+
+    @results_message
+    def get_all_jobs_by_name(self, search, name):
+        results = search.by_name(name)
+        return results
+
+    @results_message
+    def get_all_jobs_by_trigger(self, search, trigger):
+        results = search.by_trigger(trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_operation(self, search, operation):
+        results = search.by_operation(operation)
+        return results
+
+    @results_message
+    def get_all_jobs_by_timezone(self, search, timezone):
+        results = search.by_timezone(timezone)
+        return results
+
+    @results_message
+    def get_all_jobs_by_name_and_trigger(self, search, name, trigger):
+        results = search.by_name_and_trigger(name, trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_operation_and_trigger(self, search, operation,
+                                              trigger):
+        results = search.by_operation_and_trigger(operation, trigger)
+        return results
+
+    @results_message
+    def get_all_jobs_by_name_and_trigger_and_operation(self, search, name,
+                                                       trigger, operation):
+        results = (
+            search.by_name_and_trigger_and_operation(
+                name, trigger, operation
+            )
+        )
+        return results
+
+class TagJobsHandler(BaseHandler):
+    @authenticated_request
+    @check_permissions(Permissions.READ)
+    def get(self, tag_id):
+        count = int(self.get_argument('count', 30))
+        offset = int(self.get_argument('offset', 0))
+        query = self.get_argument('query', None)
+        operation = self.get_argument('operation', None)
+        trigger = self.get_argument('trigger', None)
+        timezone = self.get_argument('timezone', None)
+        sort = self.get_argument('sort', 'desc')
+        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+
+        search = (
+            RetrieveJobs(tag_id, count, offset, sort, sort_by)
+        )
+        if not operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs(search)
+
+        elif query and not operation and not trigger and not timezone:
+            results = self.get_all_jobs_by_name(search, query)
+
+        elif operation and not trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation(search, operation)
+
+        elif trigger and not operation and not query and not timezone:
+            results = self.get_all_jobs_by_trigger(search, trigger)
+
+        elif timezone and not operation and not query and not trigger:
+            results = self.get_all_jobs_by_timezone(search, timezone)
+
+        elif query and trigger and not operation and not timezone:
+            results = self.get_all_jobs_by_name_and_trigger(
+                search, query, trigger
+            )
+
+        elif operation and trigger and not query and not timezone:
+            results = self.get_all_jobs_by_operation_and_trigger(
+                search, operation, trigger
+            )
+
+        elif query and operation and trigger:
+            results = (
+                self.get_all_jobs_by_name_and_trigger_and_operation(
+                    search, query, trigger, operation
+                )
+            )
+
+        self.set_status(results['http_status'])
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))
 
     @results_message
     def get_all_jobs(self, search):
