@@ -1,4 +1,0 @@
-jquery-ui.js
-Home:       http://jqueryui.com
-GitHub:     https://github.com/jquery/jquery-ui/tags
-Version:    1.10.3

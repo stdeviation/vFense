@@ -1,3 +1,0 @@
-Crel.js
-GitHub:     https://github.com/KoryNunn/crel
-Version:    Commit # 8dbda04b12
