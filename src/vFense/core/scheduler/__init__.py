@@ -1,7 +1,11 @@
 from time import time
+from apscheduler.trigger.cron import CronTrigger
+from apscheduler.trigger.date import DateTrigger
+from apscheduler.trigger.interval import IntervalTrigger
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.scheduler._constants import (
-    ScheduleDefaults, ScheduleTriggers, ScheduleVariables
+    ScheduleDefaults, ScheduleTriggers, ScheduleVariables,
+    CronKeys, IntervalKeys
 )
 from vFense.core._constants import (
     CommonKeys
@@ -16,7 +20,10 @@ class Schedule(object):
 
     def __init__(self, name=None, fn=None, job_kwargs=None,
                  start_date=None, end_date=None, operation=None,
-                 time_zone=None, trigger=None,
+                 time_zone=None, trigger=None, year=None, month=None,
+                 day=None, day_of_week=None, hour=None, minute=None,
+                 second=None, years=None, months=None, days=None,
+                 hours=None, minutes=None, seconds=None
                  ):
         """
         Kwargs:
@@ -32,6 +39,19 @@ class Schedule(object):
             time_zone (str): The timezone this schedule is set for.
             trigger (boolean): The type of scheduler this is.
                 example cron, interval, data
+            year (str|int): The year or range of years.
+            month (str|int): The month or range of months.
+            day (str|int): The day or range of days.
+            day_of_week (str|int): The day of week or range of days of week.
+            hour (str|int): The hour or range of hours.
+            minute (str|int): The minute or range of minutes.
+            second (str|int): The second or range of seconds.
+            years int: The year or range of years.
+            months int: The month or range of months.
+            days int: The days.
+            hours int: The hours.
+            minutes int: The minutes.
+            seconds int: The seconds.
         """
         self.name = name
         self.fn = fn
@@ -41,6 +61,19 @@ class Schedule(object):
         self.operation = operation
         self.time_zone = time_zone
         self.trigger = trigger
+        self.year = year
+        self.month = month
+        self.day = day
+        self.day_of_week = day_of_week
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+        self.years = years
+        self.months = months
+        self.days = days
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
 
 
     def fill_in_defaults(self):
@@ -183,8 +216,81 @@ class Schedule(object):
                     }
                 )
 
+        if self.trigger:
+            if self.trigger == 'cron':
+                try:
+                    CronTrigger(self.fn, **self.to_cron_dict())
+                except ValueError as e:
+                    invalid_fields.append(
+                        {
+                            JobKeys.Trigger: self.trigger,
+                            CommonKeys.REASON: e,
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GenericCodes.InvalidValue
+                            )
+                        }
+                    )
+
+            elif self.trigger == 'date':
+                try:
+                    DateTrigger(self.fn, **self.to_date_dict())
+                except ValueError as e:
+                    invalid_fields.append(
+                        {
+                            JobKeys.Trigger: self.trigger,
+                            CommonKeys.REASON: e,
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GenericCodes.InvalidValue
+                            )
+                        }
+                    )
+
+            elif self.trigger == 'interval':
+                try:
+                    IntervalTrigger(self.fn, **self.to_interval_dict())
+                except ValueError as e:
+                    invalid_fields.append(
+                        {
+                            JobKeys.Trigger: self.trigger,
+                            CommonKeys.REASON: e,
+                            ApiResultKeys.VFENSE_STATUS_CODE: (
+                                GenericCodes.InvalidValue
+                            )
+                        }
+                    )
 
         return invalid_fields
+
+    def to_cron_dict(self):
+        return {
+            CronKeys.Year: self.year,
+            CronKeys.Month: self.month,
+            CronKeys.Day: self.day,
+            CronKeys.DayOfWeek: self.day_of_week,
+            CronKeys.Minute: self.minute,
+            CronKeys.Second: self.second,
+            JobKeys.StartDate: self.start_date,
+            JobKeys.EndDate: self.end_date,
+            JobKeys.TimeZone: self.time_zone,
+        }
+
+    def to_interval_dict(self):
+        return {
+            IntervalKeys.Years: self.years,
+            IntervalKeys.Months: self.months,
+            IntervalKeys.Days: self.days,
+            IntervalKeys.Minutes: self.minutes,
+            IntervalKeys.Seconds: self.seconds,
+            JobKeys.StartDate: self.start_date,
+            JobKeys.EndDate: self.end_date,
+            JobKeys.TimeZone: self.time_zone,
+        }
+
+    def to_date_dict(self):
+        return {
+            JobKeys.StartDate: self.start_date,
+            JobKeys.TimeZone: self.time_zone,
+        }
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.
@@ -203,7 +309,14 @@ class Schedule(object):
             JobKeys.EndDate: self.end_date,
             JobKeys.Trigger: self.trigger,
             JobKeys.TimeZone: self.time_zone,
+            CronKeys.Year: self.year,
+            CronKeys.Month: self.month,
+            CronKeys.Day: self.day,
+            CronKeys.DayOfWeek: self.day_of_week,
+            CronKeys.Minute: self.minute,
+            CronKeys.Second: self.second,
         }
+
 
     def to_dict_non_null(self):
         """ Use to get non None fields of a job. Useful when
