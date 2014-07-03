@@ -4,17 +4,18 @@ from json import dumps
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
-    agent_authenticated_request, results_message
+    results_message
 )
 from vFense.core.queue.uris import get_result_uris
 from vFense.result.error_messages import GenericResults
+from vFense.core.api.decorators import authenticate_token
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 class AgentResultURIs(BaseHandler):
-    @agent_authenticated_request
+    @authenticate_token
     def get(self, agent_id):
         username = self.get_current_user()
         uri = self.request.uri
@@ -39,7 +40,7 @@ class AgentResultURIs(BaseHandler):
         return results
 
 class ResultURIs(BaseHandler):
-    @agent_authenticated_request
+    @authenticate_token
     def get(self):
         username = self.get_current_user()
         uri = self.request.uri
