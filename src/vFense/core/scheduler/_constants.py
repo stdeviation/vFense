@@ -24,7 +24,7 @@ class CronKeys(object):
     Year = 'year'
     Month = 'month'
     Day = 'day'
-    DayOfWeek =-'day_of_week'
+    DayOfWeek = 'day_of_week'
     Minute = 'minute'
     Second = 'second'
 

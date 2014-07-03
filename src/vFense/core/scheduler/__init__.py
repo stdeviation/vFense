@@ -1,7 +1,7 @@
 from time import time
-from apscheduler.trigger.cron import CronTrigger
-from apscheduler.trigger.date import DateTrigger
-from apscheduler.trigger.interval import IntervalTrigger
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.date import DateTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.scheduler._constants import (
     ScheduleDefaults, ScheduleTriggers, ScheduleVariables,
@@ -12,7 +12,7 @@ from vFense.core._constants import (
 )
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import GenericCodes
-from pytc import all_timezones
+from pytz import all_timezones
 
 
 class Schedule(object):

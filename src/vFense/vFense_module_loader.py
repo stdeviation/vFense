@@ -43,11 +43,11 @@ from vFense.server.api.reports_api import (AgentsOsDetailsHandler,
     AgentsHardwareDetailsHandler, AgentsCPUDetailsHandler,
     AgentsMemoryDetailsHandler, AgentsDiskDetailsHandler,
     AgentsNetworkDetailsHandler)
-from vFense.server.api.scheduler_api import (ScheduleListerHandler,
-    ScheduleAppDetailHandler, SchedulerDateBasedJobHandler,
-    SchedulerDailyRecurrentJobHandler, SchedulerMonthlyRecurrentJobHandler,
-    SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
-    SchedulerCustomRecurrentJobHandler)
+#from vFense.server.api.scheduler_api import (ScheduleListerHandler,
+#    ScheduleAppDetailHandler, SchedulerDateBasedJobHandler,
+#    SchedulerDailyRecurrentJobHandler, SchedulerMonthlyRecurrentJobHandler,
+#    SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
+#    SchedulerCustomRecurrentJobHandler)
 
 from vFense.plugins.patching.api.os_apps import (
     AgentIdOsAppsHandler, TagIdOsAppsHandler, AppIdOsAppsHandler,
@@ -171,12 +171,12 @@ class CoreLoader():
             ##### Scheduler API Handlers
             (r"/api/v1/schedules?", JobsHandler),
             (r"/api/v1/schedule/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", JobHandler),
-            (r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
-            (r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
-            (r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
+            #(r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
+            #(r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
+            #(r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
+            #(r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
+            #(r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
+            #(r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
 
             ##### Agent API Handlers
             (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),

@@ -15,7 +15,7 @@ from vFense.core.decorators import (
 
 from vFense.result.error_messages import GenericResults, PackageResults
 
-from vFense.scheduler.jobManager import schedule_once
+#from vFense.scheduler.jobManager import schedule_once
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation

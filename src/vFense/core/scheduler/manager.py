@@ -4,8 +4,8 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from datetime import datetime
-from pytc import utc
-from apscheduler.jobstores.rethinkdb_store import RethinkDBJobStore
+from pytz import utc
+from apscheduler.jobstores.rethinkdb import RethinkDBJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
 

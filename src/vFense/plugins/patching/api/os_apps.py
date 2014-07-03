@@ -6,7 +6,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.scheduler.jobManager import schedule_once
+#from vFense.scheduler.jobManager import schedule_once
 
 from vFense.plugins.patching.search.search_by_tagid import (
     RetrieveAppsByTagId
