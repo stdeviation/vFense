@@ -69,3 +69,15 @@ class ApiValues():
     TOGGLE = 'toggle'
     YES = 'yes'
     NO = 'no'
+
+
+class ViewApiArguments():
+    DOWNLOAD_URL = 'download_url'
+    NET_THROTTLE = 'net_throttle'
+    CPU_THROTTLE = 'cpu_throttle'
+    SERVER_QUEUE_TTL = 'server_queue_ttl'
+    AGENT_QUEUE_TTL = 'agent_queue_ttl'
+    DELETE_ALL_AGENTS = 'delete_all_agents'
+    MOVE_AGENTS_TO_VIEW = 'move_agents_to_view'
+    TIME_ZONE = 'time_zone'
+    VIEW_NAME = 'view_name'

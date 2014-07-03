@@ -14,6 +14,7 @@ from vFense.core.view._constants import ViewDefaults
 from vFense.result._constants import ApiResultKeys
 
 from vFense.result.status_codes import ViewFailureCodes, GenericCodes
+from pytz import all_timezones
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -26,7 +27,8 @@ class View(object):
         self, name, parent=None, ancestors=None, children=None,
         users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
-        package_download_url=None, token=None, previous_tokens=None
+        package_download_url=None, token=None, previous_tokens=None,
+        time_zone=None
     ):
         """
         Args:
@@ -54,6 +56,7 @@ class View(object):
                         'https://192.168.1.1/packages/'
             token (str): Base64 encoded string.
             previous_tokens (list): List of previous base64 encoded strings.
+            time_zone (str): The timezone you want your scheduler to run as.
         """
         self.name = name
         self.parent = parent
@@ -67,6 +70,7 @@ class View(object):
         self.package_download_url = package_download_url
         self.token = token
         self.previous_tokens = previous_tokens
+        self.time_zone = time_zone
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -107,6 +111,9 @@ class View(object):
 
         if not self.previous_tokens:
             self.previous_tokens = ViewDefaults.PREVIOUS_TOKENS
+
+        if not self.time_zone:
+            self.time_zone = ViewDefaults.TIME_ZONE
 
     def get_invalid_fields(self):
         """Check the view for any invalid fields.
@@ -209,9 +216,6 @@ class View(object):
         if self.cpu_throttle:
             if self.cpu_throttle not in CPUThrottleValues.VALID_VALUES:
                 invalid_fields.append(
-                    {ViewKeys.CpuThrottle: self.cpu_throttle}
-                )
-                invalid_fields.append(
                     {
                         ViewKeys.CpuThrottle: self.cpu_throttle,
                         CommonKeys.REASON: 'Invalid value',
@@ -224,9 +228,6 @@ class View(object):
         if self.server_queue_ttl:
             if isinstance(self.server_queue_ttl, int):
                 if self.server_queue_ttl <= 0:
-                    invalid_fields.append(
-                        {ViewKeys.ServerQueueTTL: self.server_queue_ttl}
-                    )
                     invalid_fields.append(
                         {
                             ViewKeys.ServerQueueTTL: self.server_queue_ttl,
@@ -280,6 +281,19 @@ class View(object):
                         }
                     )
 
+        if self.time_zone:
+            if self.time_zone not in all_timezones:
+                invalid_fields.append(
+                    {
+                        ViewKeys.TimeZone: self.time_zone,
+                        CommonKeys.REASON: 'Invalid value',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            ViewFailureCodes.InvalidTimeZone
+                        )
+                    }
+                )
+
+
         # TODO: check for invalid package url
 
         return invalid_fields
@@ -316,6 +330,7 @@ class View(object):
             ViewKeys.PackageUrl: self.package_download_url,
             ViewKeys.Token: self.token,
             ViewKeys.PreviousTokens: self.previous_tokens,
+            ViewKeys.TimeZone: self.time_zone,
         }
 
     def to_dict_non_null(self):
@@ -329,5 +344,4 @@ class View(object):
 
         return {k:view_dict[k] for k in view_dict
                 if view_dict[k] != None}
-
 

@@ -16,3 +16,4 @@ class ViewDefaults():
     AGENT_QUEUE_TTL = 10  #minutes
     TOKEN = None
     PREVIOUS_TOKENS = []
+    TIME_ZONE = 'UTC'

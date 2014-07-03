@@ -4,7 +4,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CPUThrottleValues
-from vFense.core.api._constants import ApiArguments, ApiValues
+from vFense.core.api._constants import (
+    ViewApiArguments, ApiArguments, ApiValues
+)
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
@@ -166,11 +168,12 @@ class ViewHandler(BaseHandler):
         results = {}
         data = []
         try:
-            net_throttle = self.arguments.get(ApiArguments.NET_THROTTLE, None)
-            cpu_throttle = self.arguments.get(ApiArguments.CPU_THROTTLE, None)
-            server_queue_ttl = self.arguments.get(ApiArguments.SERVER_QUEUE_TTL, None)
-            agent_queue_ttl = self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, None)
-            download_url = self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
+            net_throttle = self.arguments.get(ViewApiArguments.NET_THROTTLE, None)
+            cpu_throttle = self.arguments.get(ViewApiArguments.CPU_THROTTLE, None)
+            server_queue_ttl = self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, None)
+            agent_queue_ttl = self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, None)
+            download_url = self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
+            time_zone = self.arguments.get(ViewApiArguments.TIME_ZONE, None)
 
             if net_throttle:
                 results = self.edit_net_throttle(view, net_throttle)
@@ -197,6 +200,11 @@ class ViewHandler(BaseHandler):
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
+            if time_zone:
+                results = self.edit_time_zone(view, time_zone)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
+
             results[ApiResultKeys.DATA] = data
 
             self.set_status(results['http_status'])
@@ -214,34 +222,40 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
     def edit_net_throttle(self, view, net_throttle):
         results = view.edit_net_throttle(net_throttle)
         return results
 
-    @log_operation(AdminActions.EDIT_CPU_THROTTLE, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.EDIT_CPU_THROTTLE, vFenseObjects.VIEW)
     def edit_cpu_throttle(self, view, cpu_throttle):
         results = view.edit_cpu_throttle(cpu_throttle)
         return results
 
-    @log_operation(AdminActions.EDIT_SERVER_QUEUE_TTL, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.EDIT_SERVER_QUEUE_TTL, vFenseObjects.VIEW)
     def edit_server_queue_ttl(self, view, server_queue_ttl):
         results = view.edit_server_queue_ttl(server_queue_ttl)
         return results
 
-    @log_operation(AdminActions.EDIT_AGENT_QUEUE_TTL, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.EDIT_AGENT_QUEUE_TTL, vFenseObjects.VIEW)
     def edit_agent_queue_ttl(self, view, agent_queue_ttl):
         results = view.edit_agent_queue_ttl(agent_queue_ttl)
         return results
 
-    @log_operation(AdminActions.EDIT_DOWNLOAD_URL, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.EDIT_DOWNLOAD_URL, vFenseObjects.VIEW)
     def edit_download_url(self, view, package_download_url):
         results = view.edit_download_url(package_download_url)
+        return results
+
+    @results_message
+    @log_operation(AdminActions.EDIT_TIME_ZONE, vFenseObjects.VIEW)
+    def edit_time_zone(self, view, time_zone):
+        results = view.edit_time_zone(time_zone)
         return results
 
 
@@ -399,24 +413,27 @@ class ViewsHandler(BaseHandler):
         try:
             parent_view = self.get_argument('view_context', active_view)
             view_name = (
-                self.arguments.get(ApiArguments.VIEW_NAME)
+                self.arguments.get(ViewApiArguments.VIEW_NAME)
             )
             pkg_url = (
-                self.arguments.get(ApiArguments.DOWNLOAD_URL, None)
+                self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
             )
             net_throttle = (
-                self.arguments.get(ApiArguments.NET_THROTTLE, 0)
+                self.arguments.get(ViewApiArguments.NET_THROTTLE, 0)
             )
             cpu_throttle = (
                 self.arguments.get(
-                    ApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
+                    ViewApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
                 )
             )
             server_queue_ttl = (
-                self.arguments.get(ApiArguments.SERVER_QUEUE_TTL, 10)
+                self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, 10)
             )
             agent_queue_ttl = (
-                self.arguments.get(ApiArguments.AGENT_QUEUE_TTL, 10)
+                self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, 10)
+            )
+            agent_queue_ttl = (
+                self.arguments.get(ViewApiArguments.TIME_ZONE, 'UTC')
             )
             view = View(
                 view_name, parent_view,
@@ -425,7 +442,8 @@ class ViewsHandler(BaseHandler):
                 cpu_throttle=cpu_throttle,
                 server_queue_ttl=server_queue_ttl,
                 agent_queue_ttl=agent_queue_ttl,
-                package_download_url=pkg_url
+                package_download_url=pkg_url,
+                time_zone=time_zone
             )
 
             results = self.create_view(view)

@@ -162,6 +162,7 @@ class ViewFailureCodes(object):
     AgentsDoNotExistForView = 14518
     CantRemoveAgentsFromGlobalView = 14519
     InvalidToken = 14520
+    InvalidTimeZone = 14521
 
 
 class DbCodes(object):

@@ -175,7 +175,7 @@ class JobManager(object):
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be cron.'
-                    .format('cron')
+                    .format(job.trigger)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToCreateObject
@@ -235,7 +235,7 @@ class JobManager(object):
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be interval.'
-                    .format('interval')
+                    .format(job.trigger)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToCreateObject
@@ -296,7 +296,7 @@ class JobManager(object):
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be a date.'
-                    .format('date')
+                    .format(job.trigger)
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericFailureCodes.FailedToCreateObject

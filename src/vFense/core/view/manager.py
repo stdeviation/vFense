@@ -1258,6 +1258,26 @@ class ViewManager(object):
 
         return results
 
+    def edit_time_zone(self, time_zone):
+        """Change the time zone that the schedule will use when running.
+
+        Args:
+            time_zone (str): The time_zone vFense will use when running
+                scheduled jobs. Example (UTC, US/Eastern, Europe/London)
+
+        Basic Usage:
+            >>> from vFense.view.manager import ViewManager
+            >>> manager = ViewManager("global")
+            >>> manager.edit_time_zone("US/Eastern")
+
+        Returns:
+            Returns the results in a dictionary
+        """
+        view = View(self.name, time_zone=time_zone)
+        results = self.__edit_properties(view)
+
+        return results
+
     def update_token(self):
         """Update the auth token for this view.
 
