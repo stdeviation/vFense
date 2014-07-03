@@ -4,7 +4,7 @@ from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.scheduler._constants import (
-    ScheduleDefaults, ScheduleTriggers, ScheduleVariables,
+    ScheduleDefaults, ScheduleTriggers, ScheduleKeys,
     CronKeys, IntervalKeys
 )
 from vFense.core._constants import (
@@ -192,7 +192,7 @@ class Schedule(object):
             if not hasattr(self.fn, '__call__'):
                 invalid_fields.append(
                     {
-                        ScheduleVariables.Function: self.fn,
+                        ScheduleKeys.Function: self.fn,
                         CommonKeys.REASON: (
                             'Must be a a valid function'
                         ),

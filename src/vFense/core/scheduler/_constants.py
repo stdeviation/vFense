@@ -17,8 +17,12 @@ class ScheduleTriggers(object):
         return valid_triggers
 
 
-class ScheduleVariables(object):
+class ScheduleKeys(object):
     Function = 'function'
+    Agents = 'agents'
+    Tags = 'tags'
+    UserName = 'user_name'
+    ViewName = 'view_name'
 
 class CronKeys(object):
     Year = 'year'
