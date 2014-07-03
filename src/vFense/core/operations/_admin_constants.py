@@ -76,6 +76,7 @@ class AdminActions():
     EDIT_NOTIFICATION = 'edit notification'
     EDIT_AGENT_DISPLAY_NAME = 'edit agent display name'
     EDIT_AGENT_PRODUCTION_LEVEL = 'edit agent production level'
+    EDIT_TIME_ZONE = 'edit time zone'
 
     @staticmethod
     def get_admin_actions():

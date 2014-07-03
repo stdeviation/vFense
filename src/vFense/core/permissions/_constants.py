@@ -17,6 +17,7 @@ class Permissions():
     ADD_AGENTS_TO_VIEW = 'add agents to view'
     REMOVE_AGENTS_FROM_VIEW = 'remove agents from view'
     REMOTE_ASSISTANCE = 'remote assistance'
+    EDIT_TIME_ZONE = 'edit time zone'
 
     @staticmethod
     def get_valid_permissions():
