@@ -10,6 +10,9 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
 
 from vFense.core.scheduler import Schedule
+from vFense.core.scheduler._db import (
+    fetch_jobs_by_view, fetch_job_by_name_and_view
+)
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
     GenericCodes, GenericFailureCodes,
@@ -69,7 +72,7 @@ def stop_scheduler(sched):
         stopped = True
 
     except Exception as e:
-        logger.error('Failed to shutdown the Scheduler')
+        logger.exception(e)
 
     return stopped
 
@@ -117,21 +120,20 @@ class JobManager(object):
             )
 
         self.view_name = view_name
-        self.jobs = self.get_jobs(view_name)
 
     def get_jobs(self, view_name=None):
         if view_name:
-            jobs = self.schedule.get_jobs(name=view_name)
+            jobs = fetch_jobs_by_view(self.view_name)
         else:
-            jobs = self.schedule.get_jobs(name=self.view_name)
+            jobs = fetch_jobs_by_view(self.view_name)
 
         return jobs
 
     def job_exist(self, name):
-        pass
+        return fetch_job_by_name_and_view(name, self.view)
 
-    def add_yearly_job(self, job):
-        """ Add a job that runs once every year.
+    def add_job(self, job):
+        """Add a scheduled job into vFense.
         Args:
             job (Schedule): The schedule instance with all the attributes,
                 of this job.
@@ -163,31 +165,38 @@ class JobManager(object):
                 invalid_fields = job.get_invalid_fields()
                 if not invalid_fields:
                     job.fill_in_defaults()
-                    date=datetime.fromtimestamp(job.start_date)
-                    year = date.year
-                    month = date.month
-                    day = date.day
-                    hour = date.hour
-                    minute = date.minute
-                    job_status = (
-                        self.schedule.add_job(
-                            job.fn, kwargs=job.job_kwargs,
-                            name=job.name, view_name=self.view_name,
-                            operation=job.operation,
-                            year=year, month=month, day=day, hour=hour,
-                            minute=minute, timezone=job.time_zone
+                    #date = datetime.fromtimestamp(job.start_date)
+                    if not self.job_exist(job.name):
+                        job_status = (
+                            self.schedule.add_job(
+                                job.fn, view_name=self.view_name,
+                                **job.to_dict_non_null()
+                            )
                         )
-                    )
 
-                    msg = 'Job {0} added successfully'.format(job.name)
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                        GenericCodes.ObjectCreated
-                    )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                        SchedulerCodes.ScheduleCreated
-                    )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.GENERATED_IDS] = job_status.id
+                        msg = 'Job {0} added successfully'.format(job.name)
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.ObjectCreated
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            SchedulerCodes.ScheduleCreated
+                        )
+                        results[ApiResultKeys.MESSAGE] = msg
+                        results[ApiResultKeys.GENERATED_IDS] = job_status.id
+
+                    else:
+                        msg = (
+                            'Job with name {0} already exist in this view.'
+                            .format(job.name)
+                        )
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            GenericCodes.InvalidId
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            SchedulerFailureCodes.ScheduleExistsWithSameName
+                        )
+                        results[ApiResultKeys.MESSAGE] = msg
+                        results[ApiResultKeys.ERRORS] = invalid_fields
 
                 else:
                     msg = (

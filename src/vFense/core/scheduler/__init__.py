@@ -219,7 +219,7 @@ class Schedule(object):
         if self.trigger:
             if self.trigger == 'cron':
                 try:
-                    CronTrigger(self.fn, **self.to_cron_dict())
+                    CronTrigger(self.fn, **self.to_dict_cron())
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -233,7 +233,7 @@ class Schedule(object):
 
             elif self.trigger == 'date':
                 try:
-                    DateTrigger(self.fn, **self.to_date_dict())
+                    DateTrigger(self.fn, **self.to_dict_date())
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -247,7 +247,7 @@ class Schedule(object):
 
             elif self.trigger == 'interval':
                 try:
-                    IntervalTrigger(self.fn, **self.to_interval_dict())
+                    IntervalTrigger(self.fn, **self.to_dict_interval())
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -261,7 +261,7 @@ class Schedule(object):
 
         return invalid_fields
 
-    def to_cron_dict(self):
+    def to_dict_cron(self):
         return {
             CronKeys.Year: self.year,
             CronKeys.Month: self.month,
@@ -274,7 +274,7 @@ class Schedule(object):
             JobKeys.TimeZone: self.time_zone,
         }
 
-    def to_interval_dict(self):
+    def to_dict_interval(self):
         return {
             IntervalKeys.Years: self.years,
             IntervalKeys.Months: self.months,
@@ -286,7 +286,7 @@ class Schedule(object):
             JobKeys.TimeZone: self.time_zone,
         }
 
-    def to_date_dict(self):
+    def to_dict_date(self):
         return {
             JobKeys.StartDate: self.start_date,
             JobKeys.TimeZone: self.time_zone,
@@ -315,6 +315,19 @@ class Schedule(object):
             CronKeys.DayOfWeek: self.day_of_week,
             CronKeys.Minute: self.minute,
             CronKeys.Second: self.second,
+            IntervalKeys.Years: self.years,
+            IntervalKeys.Months: self.months,
+            IntervalKeys.Days: self.days,
+            IntervalKeys.Minutes: self.minutes,
+            IntervalKeys.Seconds: self.seconds,
+        }
+
+    def to_dict_non_trigger(self):
+        return {
+            JobKeys.Name: self.name,
+            JobKeys.Kwargs: self.kwargs,
+            JobKeys.Operation: self.operation,
+            JobKeys.Trigger: self.trigger,
         }
 
 

@@ -351,7 +351,7 @@ class SchedulerFailureCodes(object):
     FailedToRemoveSchedule = 9101
     FailedToUpdateSchedule = 9102
     InvalidTimeStamp = 9103
-    ScheduleExistsInViewWithSameName = 9104
+    ScheduleExistsWithSameName = 9104
 
 
 class MightyMouseCodes(object):
