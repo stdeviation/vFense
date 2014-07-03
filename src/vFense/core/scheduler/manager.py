@@ -10,6 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
 
 from vFense.core.scheduler import Schedule
+from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler._db import (
     fetch_jobs_by_view, fetch_job_by_name_and_view
 )
@@ -132,6 +133,195 @@ class JobManager(object):
     def job_exist(self, name):
         return fetch_job_by_name_and_view(name, self.view)
 
+    def add_cron_job(self, job):
+        """Add a scheduled job into vFense.
+        Args:
+            job (Schedule): The schedule instance with all the attributes,
+                of this job.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler import Schedule
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> sched = start_scheduler()
+            >>> view_name = 'global'
+            >>> name = 'Install all patches on Tag Apache Every Month at 8:58am'
+            >>> operation = 'install'
+            >>> start_date = 1404305919.517522
+            >>> fn = install_patches
+            >>> job_kwargs = {'agents': ['agent_id1', 'agent_id2']'}
+            >>> timezone = 'US/Eastern'
+            >>> job = Schedule(name, fn, job_kwargs, start_date,
+                               operation=operation, time_zone=timezone,
+                               trigger=trigger)
+            >>> manager = JobManager(sched, view_name)
+            >>> job_status = manager.add_cron_job(job)
+
+        Returns:
+            Dictionary of the results.
+        """
+        results = {}
+        if isinstance(job, Schedule):
+            job.fill_in_defaults()
+            date = datetime.fromtimestamp(job.start_date)
+            if job.trigger == ScheduleTriggers.CRON:
+                if job.start_date and not job.minute:
+                    job.minute = date.minute
+                    job.year = date.year
+                    job.month = date.month
+                    job.day = date.day
+                    job.day_of_week = date.isoweekday()
+
+                results = self._add_job(self, job)
+            else:
+                msg = (
+                    'Invalid {0} Trigger, Trigger must be cron.'
+                    .format('cron')
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    SchedulerFailureCodes.FailedToCreateSchedule
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+
+        else:
+            msg = (
+                'Invalid {0} Instance, must pass an instance of Schedule.'
+                .format(type(job))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                SchedulerFailureCodes.FailedToCreateSchedule
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+    def add_interval_job(self, job):
+        """Add a interval job into vFense.
+        Args:
+            job (Schedule): The schedule instance with all the attributes,
+                of this job.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler import Schedule
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> sched = start_scheduler()
+            >>> view_name = 'global'
+            >>> name = 'Install all patches on Tag Apache Every Month at 8:58am'
+            >>> operation = 'install'
+            >>> start_date = 1404305919.517522
+            >>> fn = install_patches
+            >>> job_kwargs = {'agents': ['agent_id1', 'agent_id2']'}
+            >>> timezone = 'US/Eastern'
+            >>> job = Schedule(name, fn, job_kwargs, start_date,
+                               operation=operation, time_zone=timezone,
+                               trigger=trigger)
+            >>> manager = JobManager(sched, view_name)
+            >>> job_status = manager.add_interval_job(job)
+
+        Returns:
+            Dictionary of the results.
+        """
+        results = {}
+        if isinstance(job, Schedule):
+            job.fill_in_defaults()
+            if job.trigger == ScheduleTriggers.INTERVAL:
+                if job.start_date:
+                    results = self._add_job(self, job)
+            else:
+                msg = (
+                    'Invalid {0} Trigger, Trigger must be interval.'
+                    .format('interval')
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    SchedulerFailureCodes.FailedToCreateSchedule
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+
+        else:
+            msg = (
+                'Invalid {0} Instance, must pass an instance of Schedule.'
+                .format(type(job))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                SchedulerFailureCodes.FailedToCreateSchedule
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
+    def add_date_job(self, job):
+        """Add a one time job into vFense.
+        Args:
+            job (Schedule): The schedule instance with all the attributes,
+                of this job.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler import Schedule
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> sched = start_scheduler()
+            >>> view_name = 'global'
+            >>> name = 'Install all patches on Tag Apache Every Month at 8:58am'
+            >>> operation = 'install'
+            >>> start_date = 1404305919.517522
+            >>> fn = install_patches
+            >>> job_kwargs = {'agents': ['agent_id1', 'agent_id2']'}
+            >>> timezone = 'US/Eastern'
+            >>> job = Schedule(name, fn, job_kwargs, start_date,
+                               operation=operation, time_zone=timezone,
+                               trigger=trigger)
+            >>> manager = JobManager(sched, view_name)
+            >>> job_status = manager.add_date_job(job)
+
+        Returns:
+            Dictionary of the results.
+        """
+        results = {}
+        if isinstance(job, Schedule):
+            job.fill_in_defaults()
+            if job.start_date and job.trigger == ScheduleTriggers.DATE:
+                results = self._add_job(self, job)
+
+            else:
+                msg = (
+                    'Invalid {0} Trigger, Trigger must be a date.'
+                    .format('date')
+                )
+                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericFailureCodes.FailedToCreateObject
+                )
+                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    SchedulerFailureCodes.FailedToCreateSchedule
+                )
+                results[ApiResultKeys.MESSAGE] = msg
+
+        else:
+            msg = (
+                'Invalid {0} Instance, must pass an instance of Schedule.'
+                .format(type(job))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                SchedulerFailureCodes.FailedToCreateSchedule
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+
+
     def add_job(self, job):
         """Add a scheduled job into vFense.
         Args:
@@ -153,7 +343,7 @@ class JobManager(object):
                                operation=operation, time_zone=timezone,
                                trigger=trigger)
             >>> manager = JobManager(sched, view_name)
-            >>> job_status = manager.add_yearly_job(job)
+            >>> job_status = manager.add_job(job)
 
         Returns:
             Dictionary of the results.
