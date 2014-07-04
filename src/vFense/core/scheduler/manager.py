@@ -238,8 +238,7 @@ class JobManager(object):
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.INTERVAL:
-                if job.start_date:
-                    results = self.add_job(job)
+                results = self.add_job(job)
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be interval.'

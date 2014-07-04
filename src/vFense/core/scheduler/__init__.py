@@ -252,9 +252,10 @@ class Schedule(object):
             if self.trigger == 'cron':
                 try:
                     job = self.to_dict_cron()
-                    job['start_date'] = (
-                        datetime.fromtimestamp(job['start_date'])
-                    )
+                    if job['start_date']:
+                        job['start_date'] = (
+                            datetime.fromtimestamp(job['start_date'])
+                        )
                     CronTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
@@ -288,9 +289,10 @@ class Schedule(object):
             elif self.trigger == 'interval':
                 try:
                     job = self.to_dict_interval()
-                    job['start_date'] = (
-                        datetime.fromtimestamp(job['start_date'])
-                    )
+                    if job['start_date']:
+                        job['start_date'] = (
+                            datetime.fromtimestamp(job['start_date'])
+                        )
                     IntervalTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
