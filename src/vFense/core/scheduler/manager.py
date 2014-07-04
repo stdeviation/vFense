@@ -47,8 +47,15 @@ def start_scheduler(scheduler_type='tornado', db='vFense', collection='jobs'):
         Scheduler = BackgroundScheduler
 
 
-    jobstore = {'default': RethinkDBJobStore(table=collection)}
-    job_defaults = {'coalesce': True}
+    jobstore = {
+        'default': RethinkDBJobStore(
+            database='vFense', table=collection
+        )
+    }
+    job_defaults = {
+        'coalesce': True,
+        'max_instances': 1,
+    }
     sched = (
         Scheduler(
             jobstores=jobstore, job_defaults=job_defaults, timezone=utc
@@ -131,7 +138,7 @@ class JobManager(object):
         return jobs
 
     def job_exist(self, name):
-        return fetch_job_by_name_and_view(name, self.view)
+        return fetch_job_by_name_and_view(name, self.view_name)
 
     def add_cron_job(self, job):
         """Add a scheduled job into vFense.
@@ -162,16 +169,16 @@ class JobManager(object):
         results = {}
         if isinstance(job, Schedule):
             job.fill_in_defaults()
-            date = datetime.fromtimestamp(job.start_date)
             if job.trigger == ScheduleTriggers.CRON:
                 if job.start_date and not job.minute:
+                    date = datetime.fromtimestamp(job.start_date)
                     job.minute = date.minute
                     job.year = date.year
                     job.month = date.month
                     job.day = date.day
                     job.day_of_week = date.isoweekday()
 
-                results = self._add_job(self, job)
+                results = self.add_job(job)
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be cron.'
@@ -231,7 +238,7 @@ class JobManager(object):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.INTERVAL:
                 if job.start_date:
-                    results = self._add_job(self, job)
+                    results = self.add_job(job)
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be interval.'
@@ -291,7 +298,7 @@ class JobManager(object):
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.start_date and job.trigger == ScheduleTriggers.DATE:
-                results = self._add_job(self, job)
+                results = self.add_job(job)
 
             else:
                 msg = (

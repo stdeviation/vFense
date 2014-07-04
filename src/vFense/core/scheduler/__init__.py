@@ -5,7 +5,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.scheduler._constants import (
     ScheduleDefaults, ScheduleTriggers, ScheduleKeys,
-    CronKeys, IntervalKeys
+    CronKeys, IntervalKeys, DateKeys
 )
 from vFense.core._constants import (
     CommonKeys
@@ -146,7 +146,7 @@ class Schedule(object):
                     }
                 )
 
-            if self.time_zone not in all_timezones():
+            if self.time_zone not in all_timezones:
                 invalid_fields.append(
                     {
                         JobKeys.TimeZone: self.time_zone,
@@ -219,7 +219,8 @@ class Schedule(object):
         if self.trigger:
             if self.trigger == 'cron':
                 try:
-                    CronTrigger(self.fn, **self.to_dict_cron())
+                    job = self.to_dict_cron()
+                    CronTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -233,7 +234,8 @@ class Schedule(object):
 
             elif self.trigger == 'date':
                 try:
-                    DateTrigger(self.fn, **self.to_dict_date())
+                    job = self.to_dict_date()
+                    DateTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -247,7 +249,8 @@ class Schedule(object):
 
             elif self.trigger == 'interval':
                 try:
-                    IntervalTrigger(self.fn, **self.to_dict_interval())
+                    job = self.to_dict_interval()
+                    IntervalTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
                         {
@@ -269,9 +272,9 @@ class Schedule(object):
             CronKeys.DayOfWeek: self.day_of_week,
             CronKeys.Minute: self.minute,
             CronKeys.Second: self.second,
+            CronKeys.TimeZone: self.time_zone,
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
-            JobKeys.TimeZone: self.time_zone,
         }
 
     def to_dict_interval(self):
@@ -283,13 +286,13 @@ class Schedule(object):
             IntervalKeys.Seconds: self.seconds,
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
-            JobKeys.TimeZone: self.time_zone,
+            IntervalKeys.TimeZone: self.time_zone,
         }
 
     def to_dict_date(self):
         return {
             JobKeys.StartDate: self.start_date,
-            JobKeys.TimeZone: self.time_zone,
+            DateKeys.TimeZone: self.time_zone,
         }
 
     def to_dict(self):
@@ -303,7 +306,7 @@ class Schedule(object):
 
         return {
             JobKeys.Name: self.name,
-            JobKeys.Kwargs: self.kwargs,
+            JobKeys.Kwargs: self.job_kwargs,
             JobKeys.Operation: self.operation,
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
@@ -325,7 +328,7 @@ class Schedule(object):
     def to_dict_non_trigger(self):
         return {
             JobKeys.Name: self.name,
-            JobKeys.Kwargs: self.kwargs,
+            JobKeys.Kwargs: self.job_kwargs,
             JobKeys.Operation: self.operation,
             JobKeys.Trigger: self.trigger,
         }
