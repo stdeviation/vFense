@@ -4,8 +4,9 @@ import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.view._constants import DefaultViews
 from vFense.core.scheduler import Schedule
+from vFense.core.scheduler._db_model import JobCollections
 from vFense.core.scheduler.manager import (
-    start_scheduler, JobManager
+    start_scheduler, AdministrativeJobManager
 )
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
@@ -19,8 +20,7 @@ logger = logging.getLogger('admin_scheduler')
 
 if __name__ == '__main__':
 
-    sched = start_scheduler(collection='administrative_jobs')
-    username='global_admin'
+    sched = start_scheduler(collection=JobCollections.AdministrativeJobs)
     list_of_cron_jobs = [
         {
             'name': 'parse_cve_and_udpatedb',
@@ -63,7 +63,7 @@ if __name__ == '__main__':
             'trigger': 'cron'
         },
     ]
-    manager = JobManager(sched, DefaultViews.GLOBAL)
+    manager = AdministrativeJobManager(sched, DefaultViews.GLOBAL)
     for cron_job in list_of_cron_jobs:
         job = Schedule(**cron_job)
         manager.add_cron_job(job)

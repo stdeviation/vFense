@@ -12,7 +12,8 @@ from apscheduler.schedulers.tornado import TornadoScheduler
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler._db import (
-    fetch_jobs_by_view, fetch_job_by_name_and_view
+    fetch_jobs_by_view, fetch_job_by_name_and_view,
+    fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
@@ -362,7 +363,10 @@ class JobManager(object):
                 invalid_fields = job.get_invalid_fields()
                 if not invalid_fields:
                     job.fill_in_defaults()
-                    #date = datetime.fromtimestamp(job.start_date)
+                    if isinstance(job.start_date, float):
+                        job.start_date = datetime.fromtimestamp(job.start_date)
+                    if isinstance(job.end_date, float):
+                        job.end_date = datetime.fromtimestamp(job.end_date)
                     if not self.job_exist(job.name):
                         job_status = (
                             self.schedule.add_job(
@@ -437,3 +441,18 @@ class JobManager(object):
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
+
+
+class AdministrativeJobManager(JobManager):
+
+    def get_jobs(self, view_name=None):
+        if view_name:
+            jobs = fetch_admin_jobs_by_view(view_name)
+        else:
+            jobs = fetch_admin_jobs_by_view(self.view_name)
+
+        return jobs
+
+    def job_exist(self, name):
+        return fetch_admin_job_by_name_and_view(name, self.view_name)
+

@@ -311,7 +311,7 @@ class Schedule(object):
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
             JobKeys.Trigger: self.trigger,
-            JobKeys.TimeZone: self.time_zone,
+            CronKeys.TimeZone: self.time_zone,
             CronKeys.Year: self.year,
             CronKeys.Month: self.month,
             CronKeys.Day: self.day,
