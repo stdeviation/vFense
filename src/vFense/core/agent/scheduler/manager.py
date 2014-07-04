@@ -4,6 +4,7 @@ from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
 )
 from vFense.core.scheduler.manager import JobManager
+from vFense.core.agent._db import fetch_agent_ids
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
@@ -17,18 +18,24 @@ def reboot_agents(agents=None, view_name=None, user_name=None):
         user_name (str): The user who performed this operation.
     """
     operation = StoreAgentOperations(user_name, view_name)
-    operation.reboot(agentids=agents)
-    pass
+    if not agents:
+        agents = fetch_agent_ids(view_name)
 
+    operation.reboot(agentids=agents)
 
 
 class AgentJobManager(JobManager):
-    def reboot_once(self, start_date, agents, label,
-                    user_name, time_zone=None):
+    def reboot_once(self, start_date, label,
+                    user_name, agents=None, time_zone=None):
         """Reboot 1 or multiple agents once.
         Args:
-            job (Job): Instance of Job.
+            start_date (float): The unix time, aka epoch time
+            label (str): The name of this job.
+            user_name (str): The name of the use who initiated this job.
+
+        Kwargs:
             agents (list): List of agent ids.
+            time_zone (str):  Example... UTC, Chile/EasterIsland
         """
         job_kwargs = {
             ScheduleKeys.Agents: agents,
@@ -45,12 +52,17 @@ class AgentJobManager(JobManager):
         results = self.add_date_job(job)
         return results
 
-    def reboot_cron(self, start_date, agents, label,
-                    user_name, time_zone=None):
+    def reboot_cron(self, start_date, label,
+                    user_name, agents=None, time_zone=None):
         """Reboot 1 or multiple agents on an interval.
         Args:
-            job (Job): Instance of Job.
+            start_date (float): The unix time, aka epoch time
+            label (str): The name of this job.
+            user_name (str): The name of the use who initiated this job.
+
+        Kwargs:
             agents (list): List of agent ids.
+            time_zone (str):  Example... UTC, Chile/EasterIsland
         """
         job_kwargs = {
             ScheduleKeys.Agents: agents,
@@ -64,5 +76,5 @@ class AgentJobManager(JobManager):
                 trigger=ScheduleTriggers.DATE
             )
         )
-        results = self.add_date_job(job)
+        results = self.add_cron_job(job)
         return results
