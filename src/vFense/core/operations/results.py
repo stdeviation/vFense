@@ -36,8 +36,6 @@ class OperationResults(object):
         Kwargs:
             error (str): The error message, if the operation failed.
             status_code (int): The exact status of this operation.
-            uri (str): The uri which was called for the results.
-            method (str): The method used to call this api.
 
         Basic Usage:
             >>> from vFense.core.operations.results import OperationResults
@@ -83,15 +81,12 @@ class OperationResults(object):
             Dictionary
             {
                 "rv_status_code": 3203,
-                "http_method": PUT,
                 "updated_ids": [
                     "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
                 ],
-                "http_status": 200,
                 "unchanged_ids": [],
                 "message": "Results updated for operation id d5fb023c-82a0-4552-adc1-b3f83de7ae8a",
                 "data": [],
-                "uri": "rvl/v1/456404f1-b185-4f4f-8fb7-bfb21b3a5d53/core/results/reboot"
             }
         """
 

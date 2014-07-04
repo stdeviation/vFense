@@ -1,6 +1,7 @@
 class ScheduleDefaults(object):
     TIME_ZONE = 'UTC'
 
+
 class ScheduleTriggers(object):
     CRON = 'cron'
     INTERVAL = 'interval'
@@ -24,6 +25,7 @@ class ScheduleKeys(object):
     UserName = 'user_name'
     ViewName = 'view_name'
 
+
 class CronKeys(object):
     Year = 'year'
     Month = 'month'
@@ -31,6 +33,7 @@ class CronKeys(object):
     DayOfWeek = 'day_of_week'
     Minute = 'minute'
     Second = 'second'
+    TimeZone = 'timezone'
 
 
 class IntervalKeys(object):
@@ -39,3 +42,8 @@ class IntervalKeys(object):
     Days = 'days'
     Minutes = 'minutes'
     Seconds = 'seconds'
+    TimeZone = 'timezone'
+
+
+class DateKeys(object):
+    TimeZone = 'timezone'

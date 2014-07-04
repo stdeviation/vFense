@@ -12,7 +12,8 @@ from apscheduler.schedulers.tornado import TornadoScheduler
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler._db import (
-    fetch_jobs_by_view, fetch_job_by_name_and_view
+    fetch_jobs_by_view, fetch_job_by_name_and_view,
+    fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
@@ -47,8 +48,15 @@ def start_scheduler(scheduler_type='tornado', db='vFense', collection='jobs'):
         Scheduler = BackgroundScheduler
 
 
-    jobstore = {'default': RethinkDBJobStore(table=collection)}
-    job_defaults = {'coalesce': True}
+    jobstore = {
+        'default': RethinkDBJobStore(
+            database='vFense', table=collection
+        )
+    }
+    job_defaults = {
+        'coalesce': True,
+        'max_instances': 1,
+    }
     sched = (
         Scheduler(
             jobstores=jobstore, job_defaults=job_defaults, timezone=utc
@@ -131,7 +139,7 @@ class JobManager(object):
         return jobs
 
     def job_exist(self, name):
-        return fetch_job_by_name_and_view(name, self.view)
+        return fetch_job_by_name_and_view(name, self.view_name)
 
     def add_cron_job(self, job):
         """Add a scheduled job into vFense.
@@ -162,16 +170,16 @@ class JobManager(object):
         results = {}
         if isinstance(job, Schedule):
             job.fill_in_defaults()
-            date = datetime.fromtimestamp(job.start_date)
             if job.trigger == ScheduleTriggers.CRON:
                 if job.start_date and not job.minute:
+                    date = datetime.fromtimestamp(job.start_date)
                     job.minute = date.minute
                     job.year = date.year
                     job.month = date.month
                     job.day = date.day
                     job.day_of_week = date.isoweekday()
 
-                results = self._add_job(self, job)
+                results = self.add_job(job)
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be cron.'
@@ -231,7 +239,7 @@ class JobManager(object):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.INTERVAL:
                 if job.start_date:
-                    results = self._add_job(self, job)
+                    results = self.add_job(job)
             else:
                 msg = (
                     'Invalid {0} Trigger, Trigger must be interval.'
@@ -291,7 +299,7 @@ class JobManager(object):
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.start_date and job.trigger == ScheduleTriggers.DATE:
-                results = self._add_job(self, job)
+                results = self.add_job(job)
 
             else:
                 msg = (
@@ -355,7 +363,10 @@ class JobManager(object):
                 invalid_fields = job.get_invalid_fields()
                 if not invalid_fields:
                     job.fill_in_defaults()
-                    #date = datetime.fromtimestamp(job.start_date)
+                    if isinstance(job.start_date, float):
+                        job.start_date = datetime.fromtimestamp(job.start_date)
+                    if isinstance(job.end_date, float):
+                        job.end_date = datetime.fromtimestamp(job.end_date)
                     if not self.job_exist(job.name):
                         job_status = (
                             self.schedule.add_job(
@@ -430,3 +441,18 @@ class JobManager(object):
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
+
+
+class AdministrativeJobManager(JobManager):
+
+    def get_jobs(self, view_name=None):
+        if view_name:
+            jobs = fetch_admin_jobs_by_view(view_name)
+        else:
+            jobs = fetch_admin_jobs_by_view(self.view_name)
+
+        return jobs
+
+    def job_exist(self, name):
+        return fetch_admin_job_by_name_and_view(name, self.view_name)
+
