@@ -47,3 +47,4 @@ class IntervalKeys(object):
 
 class DateKeys(object):
     TimeZone = 'timezone'
+    RunDate = 'run_date'

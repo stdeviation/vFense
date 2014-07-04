@@ -1,4 +1,4 @@
-from vFense.core.operation._constants import AgentOperations
+from vFense.core.operations._constants import AgentOperations
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
@@ -44,7 +44,7 @@ class AgentJobManager(JobManager):
         }
         job = (
             Schedule(
-                label, reboot_agents, job_kwargs, start_date,
+                label, reboot_agents, job_kwargs, run_date=start_date,
                 operation=AgentOperations.REBOOT, time_zone=time_zone,
                 trigger=ScheduleTriggers.DATE
             )

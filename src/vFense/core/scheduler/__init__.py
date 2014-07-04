@@ -1,4 +1,4 @@
-from time import time
+from datetime import datetime
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
@@ -16,10 +16,25 @@ from pytz import all_timezones
 
 
 class Schedule(object):
-    """Used to represent an instance of an agent."""
+    """Used to represent an instance of an agent.
+    Basic Usage:
+        To schedule a one time date job.
+        >>> Schedule("test job", fn=run_me, run_date=1404571384.0,
+                     operation="install", trigger="date", time_zone="UTC")
 
-    def __init__(self, name=None, fn=None, job_kwargs=None,
-                 start_date=None, end_date=None, operation=None,
+        To schedule a cron job.
+        >>> Schedule("test job", fn=run_me, start_date=1404571384.0,
+                     operation="install", trigger="cron", time_zone="UTC",
+                     day_of_week="sat", hour=3, minute=0)
+
+        To schedule an interval job.
+        >>> Schedule("test job", fn=run_me, start_date=1404571384.0,
+                     operation="install", trigger="interval", time_zone="UTC",
+                     minutes=30)
+
+    """
+    def __init__(self, name=None, fn=None, job_kwargs=None, start_date=None,
+                 run_date=None, end_date=None, operation=None,
                  time_zone=None, trigger=None, year=None, month=None,
                  day=None, day_of_week=None, hour=None, minute=None,
                  second=None, years=None, months=None, days=None,
@@ -31,6 +46,8 @@ class Schedule(object):
             fn (func): The function, this schedule will call.
             job_kwargs (dict): The keyword arguments this function will take.
             start_date (float): The start time in seconds.
+                (unix time aka epoch time )
+            run_date (float): The start time in seconds.
                 (unix time aka epoch time )
             end_date (float): The end time in seconds.
                 (unix time aka epoch time )
@@ -57,6 +74,7 @@ class Schedule(object):
         self.fn = fn
         self.job_kwargs = job_kwargs
         self.start_date = start_date
+        self.run_date = run_date
         self.end_date = end_date
         self.operation = operation
         self.time_zone = time_zone
@@ -188,6 +206,20 @@ class Schedule(object):
                     }
                 )
 
+        if self.run_date:
+            if not isinstance(self.run_date, float):
+                invalid_fields.append(
+                    {
+                        DateKeys.RunDate: self.run_date,
+                        CommonKeys.REASON: (
+                            'Must be a float value'
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
         if self.fn:
             if not hasattr(self.fn, '__call__'):
                 invalid_fields.append(
@@ -220,6 +252,9 @@ class Schedule(object):
             if self.trigger == 'cron':
                 try:
                     job = self.to_dict_cron()
+                    job['start_date'] = (
+                        datetime.fromtimestamp(job['start_date'])
+                    )
                     CronTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
@@ -235,6 +270,9 @@ class Schedule(object):
             elif self.trigger == 'date':
                 try:
                     job = self.to_dict_date()
+                    job['run_date'] = (
+                        datetime.fromtimestamp(job['run_date'])
+                    )
                     DateTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
@@ -250,6 +288,9 @@ class Schedule(object):
             elif self.trigger == 'interval':
                 try:
                     job = self.to_dict_interval()
+                    job['start_date'] = (
+                        datetime.fromtimestamp(job['start_date'])
+                    )
                     IntervalTrigger(**job)
                 except ValueError as e:
                     invalid_fields.append(
@@ -284,45 +325,15 @@ class Schedule(object):
             IntervalKeys.Days: self.days,
             IntervalKeys.Minutes: self.minutes,
             IntervalKeys.Seconds: self.seconds,
+            IntervalKeys.TimeZone: self.time_zone,
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
-            IntervalKeys.TimeZone: self.time_zone,
         }
 
     def to_dict_date(self):
         return {
-            JobKeys.StartDate: self.start_date,
+            DateKeys.RunDate: self.run_date,
             DateKeys.TimeZone: self.time_zone,
-        }
-
-    def to_dict(self):
-        """ Turn the view fields into a dictionary.
-
-        Returns:
-            (dict): A dictionary with the fields corresponding to the job.
-
-                Ex:
-        """
-
-        return {
-            JobKeys.Name: self.name,
-            JobKeys.Kwargs: self.job_kwargs,
-            JobKeys.Operation: self.operation,
-            JobKeys.StartDate: self.start_date,
-            JobKeys.EndDate: self.end_date,
-            JobKeys.Trigger: self.trigger,
-            CronKeys.TimeZone: self.time_zone,
-            CronKeys.Year: self.year,
-            CronKeys.Month: self.month,
-            CronKeys.Day: self.day,
-            CronKeys.DayOfWeek: self.day_of_week,
-            CronKeys.Minute: self.minute,
-            CronKeys.Second: self.second,
-            IntervalKeys.Years: self.years,
-            IntervalKeys.Months: self.months,
-            IntervalKeys.Days: self.days,
-            IntervalKeys.Minutes: self.minutes,
-            IntervalKeys.Seconds: self.seconds,
         }
 
     def to_dict_non_trigger(self):
@@ -341,7 +352,20 @@ class Schedule(object):
         Returns:
             (dict): a dictionary with the non None fields of this view.
         """
-        job_dict = self.to_dict()
+        non_trigger_dict = self.to_dict_non_trigger()
+        if self.trigger == ScheduleTriggers.CRON:
+            trigger_dict = self.to_dict_cron()
+
+        elif self.trigger == ScheduleTriggers.INTERVAL:
+            trigger_dict = self.to_dict_interval()
+
+        elif self.trigger == ScheduleTriggers.DATE:
+            trigger_dict = self.to_dict_date()
+
+        else:
+            trigger_dict = {}
+
+        job_dict = dict(trigger_dict.items() + non_trigger_dict.items())
 
         return {k:job_dict[k] for k in job_dict
                 if job_dict[k] != None}

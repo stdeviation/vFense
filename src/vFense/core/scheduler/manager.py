@@ -298,7 +298,7 @@ class JobManager(object):
         results = {}
         if isinstance(job, Schedule):
             job.fill_in_defaults()
-            if job.start_date and job.trigger == ScheduleTriggers.DATE:
+            if job.run_date and job.trigger == ScheduleTriggers.DATE:
                 results = self.add_job(job)
 
             else:
@@ -363,10 +363,21 @@ class JobManager(object):
                 invalid_fields = job.get_invalid_fields()
                 if not invalid_fields:
                     job.fill_in_defaults()
-                    if isinstance(job.start_date, float):
-                        job.start_date = datetime.fromtimestamp(job.start_date)
+                    if (job.trigger == ScheduleTriggers.CRON or
+                            job.trigger == ScheduleTriggers.INTERVAL):
+                        if isinstance(job.start_date, float):
+                            job.start_date = (
+                                datetime.fromtimestamp(job.start_date)
+                            )
+                    else:
+                        if isinstance(job.run_date, float):
+                            job.run_date = (
+                                datetime.fromtimestamp(job.run_date)
+                            )
+
                     if isinstance(job.end_date, float):
                         job.end_date = datetime.fromtimestamp(job.end_date)
+
                     if not self.job_exist(job.name):
                         job_status = (
                             self.schedule.add_job(
