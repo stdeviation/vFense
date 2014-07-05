@@ -83,6 +83,8 @@ class AgentOperations():
     RA = 'ra'
     REFRESH_RESPONSE_URIS = 'refresh_response_uris'
     AVAILABLE_AGENT_UPDATE = 'available_agent_update'
+    VALIDATE_TOKEN = 'validate_token'
+    NEW_TOKEN = 'new_token'
 
     @staticmethod
     def get_valid_operations():
@@ -162,6 +164,9 @@ class V1ListenerURIs():
 
 class V2ListenerURIs():
     NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
+    NEWAGENT = (
+        AgentOperations.VALIDATE_TOKEN, 'core/validate_token', 'GET', False
+    )
     INSTALL_OS_APPS = (
         AgentOperations.INSTALL_OS_APPS, 'apps/results/install/os', 'PUT',
         True

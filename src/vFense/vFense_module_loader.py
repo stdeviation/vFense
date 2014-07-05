@@ -7,6 +7,7 @@ import traceback
 from vFense.receiver.api.core.newagent import NewAgentV1, NewAgentV2
 from vFense.receiver.api.core.checkin import CheckInV1, CheckInV2
 from vFense.receiver.api.core.startup import StartUpV1, StartUpV2
+from vFense.receiver.api.core.generics import ValidateToken
 from vFense.receiver.api.core.result_uris import ResultURIs, AgentResultURIs
 from vFense.receiver.api.core.results import (
     RebootResultsV1, ShutdownResultsV1, RebootResultsV2, ShutdownResultsV2
@@ -86,6 +87,7 @@ class CoreLoader():
             (r"/rvl/?", RootHandler),
             (r"/rvl/login/?", RvlLoginHandler),
             (r"/rvl/logout/?", RvlLogoutHandler),
+            (r"/rvl/validate?", ValidateToken),
 
             #Operations for the New Core Plugin
             (r"/rvl/v1/core/newagent/?", NewAgentV1),
