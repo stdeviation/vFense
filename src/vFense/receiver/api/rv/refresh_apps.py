@@ -5,7 +5,7 @@ from json import dumps
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.result.error_messages import GenericResults, UpdateApplicationsResults
 from vFense.core.api.base import BaseHandler
-from vFense.core.api.decorators import authenticate_agent
+from vFense.receiver.api.decorators import authenticate_agent
 from vFense.core.decorators import (
     convert_json_to_arguments, results_message
 )

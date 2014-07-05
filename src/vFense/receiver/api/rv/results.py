@@ -14,9 +14,6 @@ from vFense.plugins.patching.operations.patching_results import (
 from vFense.db.notification_sender import send_notifications
 from vFense.result.error_messages import GenericResults
 
-from vFense.core.user import UserKeys
-from vFense.core.user.manager import UserManager
-
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -279,10 +276,6 @@ class UninstallAppsResults(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -318,12 +311,11 @@ class UninstallAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'uninstall_os_apps results', e)
             )
             logger.exception(results)

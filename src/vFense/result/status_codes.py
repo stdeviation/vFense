@@ -201,6 +201,7 @@ class AgentCodes(object):
     ViewsRemovedFromAgent = 3020
     ViewsRemovedFromAgents = 3021
     Disabled = 3022
+    InformationRetrieved = 3023
 
 
 class AgentResultCodes(object):
@@ -208,6 +209,9 @@ class AgentResultCodes(object):
     CheckInSucceeded = 3201
     StartUpSucceeded = 3202
     ResultsUpdated = 3203
+    TokenValidated = 3204
+    AgentAuthenticated = 3205
+    AgentUpdated = 3206
 
 
 class AgentFailureResultCodes(object):
@@ -218,6 +222,8 @@ class AgentFailureResultCodes(object):
     InvalidOperationIdWithAgentId = 3304
     ResultsFailedToUpdate = 3305
     InvalidSuccessValue = 3306
+    OperationFailed = 3307
+    InvalidToken = 3308
 
 
 class AgentFailureCodes(object):

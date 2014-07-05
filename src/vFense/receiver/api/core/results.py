@@ -7,16 +7,12 @@ from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments,
     results_message
 )
-from vFense.core.api.decorators import authenticate_agent
+from vFense.receiver.api.decorators import authenticate_agent
 
 from vFense.core.agent.operations.agent_results import AgentOperationResults
 from vFense.db.notification_sender import send_notifications
 from vFense.result.error_messages import GenericResults
 
-from vFense.core.user import UserKeys
-from vFense.core.user.manager import UserManager
-
-#from server.handlers import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -26,10 +22,6 @@ class RebootResultsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -38,20 +30,18 @@ class RebootResultsV1(BaseHandler):
             success = self.arguments.get('success')
             results = (
                 AgentOperationResults(
-                    username, agent_id, operation_id,
-                    success, error, uri, method
+                    agent_id, operation_id, success, error
                 )
             )
             results_data = self.reboot_results(results)
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'reboot results', e)
             )
             logger.exception(results)
@@ -70,10 +60,6 @@ class RebootResultsV2(BaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -82,20 +68,18 @@ class RebootResultsV2(BaseHandler):
             success = self.arguments.get('success')
             results = (
                 AgentOperationResults(
-                    username, agent_id, operation_id,
-                    success, error, uri, method
+                    agent_id, operation_id, success, error
                 )
             )
             results_data = self.reboot_results(results)
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'reboot results', e)
             )
             logger.exception(results)
@@ -114,10 +98,6 @@ class ShutdownResultsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -126,20 +106,18 @@ class ShutdownResultsV1(BaseHandler):
             success = self.arguments.get('success')
             results = (
                 AgentOperationResults(
-                    username, agent_id, operation_id,
-                    success, error
+                    agent_id, operation_id, success, error
                 )
             )
             results_data = self.shutdown_results(results)
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agents', uri, method
                 ).something_broke(agent_id, 'shutdown results', e)
             )
             logger.exception(results)
@@ -159,10 +137,6 @@ class ShutdownResultsV2(BaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
@@ -172,20 +146,18 @@ class ShutdownResultsV2(BaseHandler):
             status_code = self.arguments.get('status_code')
             results = (
                 AgentOperationResults(
-                    username, agent_id, operation_id,
-                    success, error, status_code
+                    agent_id, operation_id, success, error, status_code
                 )
             )
             results_data = self.shutdown_results(results)
             self.set_status(results_data['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results_data, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'shutdown results', e)
             )
             logger.exception(results)

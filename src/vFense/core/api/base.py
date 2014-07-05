@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from ast import literal_eval
 from vFense.core.api._constants import ApiArguments
 
 try:
@@ -29,6 +29,29 @@ class BaseHandler(tornado.web.RequestHandler):
         #self.clear_all_cookies()
         return self.get_secure_cookie(CommonKeys.USER)
 
+class AgentBaseHandler(tornado.web.RequestHandler):
+
+    def get_token(self):
+        try:
+            auth_headers = (
+                literal_eval(self.request.headers.get('Authentication'))
+            )
+            token = auth_headers.get('token')
+            return token
+
+        except Exception:
+            return None
+
+    def get_agent_id(self):
+        try:
+            auth_headers = (
+                literal_eval(self.request.headers.get('Authentication'))
+            )
+            agent_id = auth_headers.get('agent_id')
+            return agent_id
+
+        except Exception:
+            return None
 
 class RootHandler(BaseHandler):
     @authenticated_request

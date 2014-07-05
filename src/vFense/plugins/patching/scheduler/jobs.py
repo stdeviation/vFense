@@ -85,7 +85,6 @@ def install_os_apps_by_severity_for_agent(severity, agents=None,
             Example.. (critical, optional, recommended)
     Kwargs:
         agents (list): List of agent ids.
-        tags (list): List of tag ids.
         apps (list): List of application ids.
         view_name (str): The name of the view, this operation is being
             performed on.
@@ -102,4 +101,26 @@ def install_os_apps_by_severity_for_agent(severity, agents=None,
             if app_ids:
                 operation.install_os_apps(app_ids, agentids=[agent_id])
 
+def install_os_apps_by_severity_for_tag(severity, tags=None,
+                                        view_name=None, user_name=None):
+    """Install system updates on 1 or multiple tags.
+    Args:
+        severity (str): Install all updates with a severity level.
+            Example.. (critical, optional, recommended)
+    Kwargs:
+        tags (list): List of tag ids.
+        view_name (str): The name of the view, this operation is being
+            performed on.
+        user_name (str): The user who performed this operation.
+    """
+    fetch = FetchAppsIdsForSchedule()
+    operation = StorePatchingOperation(user_name, view_name)
+    if not tags:
+        tags = fetch_tag_ids(view_name)
+
+    if tags:
+        for tag_id in tags:
+            app_ids = fetch.by_sev_for_tag(severity, tag_id)
+            if app_ids:
+                operation.install_os_apps(app_ids, tag_id=[tag_id])
 

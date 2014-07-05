@@ -13,7 +13,7 @@ from vFense.core.decorators import agent_authenticated_request, results_message
 
 from vFense.receiver.corehandler import process_queue_data
 
-from vFense.core.api.decorators import authenticate_agent
+from vFense.receiver.api.decorators import authenticate_agent
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')

@@ -4,6 +4,7 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
+from vFense.receiver.api.base import AgentBaseHandler
 from vFense.core.decorators import (
     convert_json_to_arguments, agent_authenticated_request,
     results_message
@@ -25,8 +26,9 @@ from vFense.receiver.rvhandler import RvHandOff
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.core.api.decorators import authenticate_token
-
+from vFense.receiver.api.decorators import (
+    authenticate_token, agent_results_message
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -107,7 +109,7 @@ class NewAgentV1(BaseHandler):
         return results
 
 
-class NewAgentV2(BaseHandler):
+class NewAgentV2(AgentBaseHandler):
     @authenticate_token
     @convert_json_to_arguments
     def post(self):
@@ -151,7 +153,7 @@ class NewAgentV2(BaseHandler):
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     def add_agent(self, system_info, hardware, views, tags):
         system_info[AgentKeys.Hardware] = hardware

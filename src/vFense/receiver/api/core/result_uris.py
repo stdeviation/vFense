@@ -8,7 +8,7 @@ from vFense.core.decorators import (
 )
 from vFense.core.queue.uris import get_result_uris
 from vFense.result.error_messages import GenericResults
-from vFense.core.api.decorators import authenticate_token
+from vFense.receiver.api.decorators import authenticate_token
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
