@@ -28,7 +28,6 @@ def _get_result_uris_dict(version, agent_id=None):
                 results[uri[0]] = {
                     CommonKeys.RESPONSE_URI: os.path.join(base, uri[1]),
                     CommonKeys.REQUEST_METHOD: uri[2],
-                    CommonKeys.OPERATION: uri[0]
                 }
             else:
                 results[uri[0]] = {
@@ -36,7 +35,6 @@ def _get_result_uris_dict(version, agent_id=None):
                         os.path.join(base_without_agentid, uri[1])
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2],
-                    CommonKeys.OPERATION: uri[0]
                 }
 
     elif version == URIVersions.V1:
@@ -59,7 +57,6 @@ def _get_result_uris_dict(version, agent_id=None):
                         os.path.join(base_without_version, uri[1])
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2],
-                    CommonKeys.OPERATION: uri[0]
                 }
             elif uri[3]:
 
@@ -68,7 +65,6 @@ def _get_result_uris_dict(version, agent_id=None):
                         os.path.join(base, uri[1])
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2],
-                    CommonKeys.OPERATION: uri[0]
                 }
             else:
                 results[uri[0]] = {
@@ -76,7 +72,6 @@ def _get_result_uris_dict(version, agent_id=None):
                         os.path.join(base_without_agentid, uri[1])
                     ),
                     CommonKeys.REQUEST_METHOD: uri[2],
-                    CommonKeys.OPERATION: uri[0]
                 }
 
     return results
@@ -150,7 +145,6 @@ def get_result_uris(agent_id=None, version='v2'):
             }
         }
     """
-    status_code = 0
     result_uris = _get_result_uris_dict(version, agent_id)
 
     generic_status_code = GenericCodes.InformationRetrieved
@@ -159,12 +153,11 @@ def get_result_uris(agent_id=None, version='v2'):
     count = 1
 
     results = {
-        ApiResultKeys.DB_STATUS_CODE: status_code,
         ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
         ApiResultKeys.MESSAGE: msg,
         ApiResultKeys.COUNT: count,
-        ApiResultKeys.OPERATIONS: result_uris,
+        ApiResultKeys.DATA: result_uris,
     }
 
     return results

@@ -9,6 +9,9 @@ from vFense.core.decorators import (
 )
 from vFense.core.queue.uris import get_result_uris
 from vFense.result.error_messages import GenericResults
+from vFense.result._constants import AgentApiResultKeys
+from vFense.core.operations._constants import AgentOperations
+from vFense.result.agent_results import AgentResults
 from vFense.receiver.api.decorators import (
     authenticate_token, agent_results_message
 )
@@ -38,7 +41,11 @@ class AgentResultURIs(BaseHandler):
 
     @results_message
     def get_uris(self, agent_id):
-        results = get_result_uris(agent_id, 'v1')
+        operation = get_result_uris(agent_id, 'v1')
+        operation[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
+        results = {AgentApiResultKeys.OPERATIONS: operation}
         return results
 
 class ResultURIs(BaseHandler):
@@ -63,7 +70,11 @@ class ResultURIs(BaseHandler):
 
     @results_message
     def get_uris(self):
-        results = get_result_uris(version='v1')
+        operation = get_result_uris(version='v1')
+        operation[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
+        results = {AgentApiResultKeys.OPERATIONS: operation}
         return results
 
 class AgentResultURIsV2(AgentBaseHandler):
@@ -75,7 +86,11 @@ class AgentResultURIsV2(AgentBaseHandler):
 
     @agent_results_message
     def get_uris(self, agent_id):
-        results = get_result_uris(agent_id, 'v2')
+        operation = get_result_uris(agent_id, 'v2')
+        operation[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
+        results = {AgentApiResultKeys.OPERATIONS: operation}
         return results
 
 class ResultURIsV2(AgentBaseHandler):
@@ -87,5 +102,9 @@ class ResultURIsV2(AgentBaseHandler):
 
     @agent_results_message
     def get_uris(self):
-        results = get_result_uris(version='v2')
+        operation = get_result_uris(version='v2')
+        operation[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
+        results = {AgentApiResultKeys.OPERATIONS: operation}
         return results

@@ -27,6 +27,7 @@ class ApiResultKeys():
 
 class AgentApiResultKeys(ApiResultKeys):
     OPERATIONS = 'operations'
+    OPERATION = 'operation'
     NEW_TOKEN_ID = 'new_token_id'
     AGENT_ID = 'agent_id'
     UPDATED_ID = 'updated_id'
