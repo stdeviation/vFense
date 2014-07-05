@@ -14,6 +14,7 @@ class AgentResults(object):
         msg = 'data retrieved for agent {0}'.format(self.agent_id)
         status_code = AgentCodes.InformationRetrieved
         data = kwargs.get(AgentApiResultKeys.DATA)
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -23,6 +24,7 @@ class AgentResults(object):
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.DATA: data,
                 AgentApiResultKeys.AGENT_ID: self.agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
             }
         )
 
@@ -30,6 +32,7 @@ class AgentResults(object):
     def authenticated(self, **kwargs):
         msg = '{0} - agent was authenticated'.format(self.agent_id)
         status_code = AgentResultCodes.AgentAuthenticated
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -38,12 +41,15 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.AGENT_ID: self.agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
     def validated(self, **kwargs):
         msg = 'Token {0} validated'.format(self.token)
         status_code = AgentResultCodes.TokenValidated
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -52,6 +58,8 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.AGENT_ID: self.agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
@@ -59,6 +67,8 @@ class AgentResults(object):
         msg = 'New agent succeeded'
         status_code = AgentResultCodes.NewAgentSucceeded
         agent_id = kwargs.get(AgentApiResultKeys.AGENT_ID)
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
+        data = kwargs.get(AgentApiResultKeys.DATA)
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -67,6 +77,8 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.AGENT_ID: agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: data,
             }
         )
 
@@ -74,6 +86,7 @@ class AgentResults(object):
     def new_agent_failed(self, **kwargs):
         msg = 'New agent operation failed'
         status_code = AgentFailureResultCodes.NewAgentFailed
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 409,
@@ -81,6 +94,8 @@ class AgentResults(object):
                 AgentApiResultKeys.URI: self.uri,
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
@@ -89,6 +104,7 @@ class AgentResults(object):
             'Start up operation for agent {0} succeeded'.format(self.agent_id)
         )
         status_code = AgentResultCodes.StartUpSucceeded
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -96,13 +112,16 @@ class AgentResults(object):
                 AgentApiResultKeys.URI: self.uri,
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.OPERATIONS: operations,
                 AgentApiResultKeys.AGENT_ID: self.agent_id,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
     def startup_failed(self, **kwargs):
         msg = 'Start up operation failed for agent {0}'.format(self.agent_id)
         status_code = AgentFailureResultCodes.StartupFailed
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 409,
@@ -110,6 +129,8 @@ class AgentResults(object):
                 AgentApiResultKeys.URI: self.uri,
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
@@ -147,6 +168,7 @@ class AgentResults(object):
     def agent_failed_to_update(self, **kwargs):
         msg = 'Agent {0} update failed'.format(self.agent_id)
         status_code = AgentFailureResultCodes.ResultsFailedToUpdate
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 409,
@@ -155,6 +177,8 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.UNCHANGED_ID: self.agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
@@ -169,6 +193,7 @@ class AgentResults(object):
             )
         )
         data = kwargs.get(AgentApiResultKeys.DATA, [])
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 404,
@@ -178,6 +203,7 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.DATA: data,
+                AgentApiResultKeys.OPERATIONS: operations,
             }
        )
 
@@ -185,6 +211,7 @@ class AgentResults(object):
     def something_broke(self, **kwargs):
         msg = kwargs.get(AgentApiResultKeys.MESSAGE, '')
         data = kwargs.get(AgentApiResultKeys.DATA, [])
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         status_code = (
             kwargs.get(
                 AgentApiResultKeys.VFENSE_STATUS_CODE,
@@ -199,6 +226,7 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.DATA: data,
+                AgentApiResultKeys.OPERATIONS: operations,
             }
         )
 
@@ -206,6 +234,7 @@ class AgentResults(object):
         msg = kwargs.get(AgentApiResultKeys.MESSAGE, '')
         data = kwargs.get(AgentApiResultKeys.DATA, [])
         unchanged_ids = kwargs.get(AgentApiResultKeys.UNCHANGED_IDS, [])
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         status_code = (
             kwargs.get(
                 AgentApiResultKeys.VFENSE_STATUS_CODE,
@@ -221,12 +250,14 @@ class AgentResults(object):
                 AgentApiResultKeys.UNCHANGED_IDS: unchanged_ids,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.DATA: data,
+                AgentApiResultKeys.OPERATIONS: operations,
             }
         )
 
     def invalid_token(self, **kwargs):
         msg = 'Invalid Token {0}'.format(self.token)
         status_code = AgentFailureResultCodes.InvalidToken
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         return(
             {
                 AgentApiResultKeys.HTTP_STATUS_CODE: 200,
@@ -235,6 +266,8 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.INVALID_ID: self.token,
                 AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )
 
@@ -250,5 +283,6 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.DATA: [],
             }
         )

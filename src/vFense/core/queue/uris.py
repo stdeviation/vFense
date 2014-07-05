@@ -164,7 +164,7 @@ def get_result_uris(agent_id=None, version='v2'):
         ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
         ApiResultKeys.MESSAGE: msg,
         ApiResultKeys.COUNT: count,
-        ApiResultKeys.DATA: result_uris,
+        ApiResultKeys.OPERATIONS: result_uris,
     }
 
     return results
