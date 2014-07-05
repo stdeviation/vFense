@@ -42,15 +42,14 @@ class PatchingOperationResults(OperationResults):
     """
 
     def __init__(
-            self, username, agent_id, operation_id,
+            self, agent_id, operation_id,
             success, error=None, status_code=None
         ):
         super(PatchingOperationResults, self).__init__(
-            username, agent_id, operation_id, success,
-            error, status_code
+            agent_id, operation_id, success, error, status_code
         )
 
-        self.operation = PatchingOperation(self.username)
+        self.operation = PatchingOperation()
 
     def _set_global_properties(
             self, app_id, reboot_required,
@@ -139,7 +138,6 @@ class PatchingOperationResults(OperationResults):
             pass
 
         incoming_applications_from_agent(
-            self.username,
             self.view_name,
             self.agent_id,
             self.agent_data[AgentKeys.OsCode],

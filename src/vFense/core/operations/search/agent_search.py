@@ -22,7 +22,6 @@ class AgentOperationRetriever(object):
             offset=DefaultQueryValues.OFFSET,
             sort=SortValues.DESC,
             sort_key=AgentOperationKey.CreatedTime,
-            user_name=None, uri=None, method=None
         ):
         """
         Kwargs:
@@ -38,12 +37,6 @@ class AgentOperationRetriever(object):
                 examples... operation, status, created_time, updated_time,
                 completed_time, and created_by.
                 default = created_time
-            user_name (str): Name of the user, who is retrieving the operations.
-                default = None
-            uri (str): The uri that made this api call.
-                default = None
-            method (str): The http method that was use to make this call.
-                default = None
 
         Basic Usage:
             >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
@@ -51,10 +44,7 @@ class AgentOperationRetriever(object):
             >>> operation = AgentOperationRetriever(view_name)
         """
 
-        self.user_name = user_name
         self.view_name = view_name
-        self.uri = uri
-        self.method = method
         sort_by_list = (
             [
                 AgentOperationKey.Operation,

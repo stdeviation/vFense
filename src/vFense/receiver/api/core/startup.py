@@ -96,7 +96,6 @@ class StartUpV2(BaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def post(self, agent_id):
-        username = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
 
@@ -125,7 +124,7 @@ class StartUpV2(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke('agent', 'startup', e)
             )
             logger.exception(e)

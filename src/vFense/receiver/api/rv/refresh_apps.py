@@ -7,7 +7,7 @@ from vFense.result.error_messages import GenericResults, UpdateApplicationsResul
 from vFense.core.api.base import BaseHandler
 from vFense.core.api.decorators import authenticate_agent
 from vFense.core.decorators import (
-    agent_authenticated_request, convert_json_to_arguments, results_message
+    convert_json_to_arguments, results_message
 )
 
 from vFense.plugins.patching.operations.patching_results import (
@@ -22,9 +22,8 @@ from vFense.core.operations._constants import AgentOperations
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
-
-class UpdateApplicationsV1(BaseHandler):
-    @agent_authenticated_request
+class RefreshAppsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
         uri = self.request.uri
@@ -47,7 +46,7 @@ class UpdateApplicationsV1(BaseHandler):
                     agent_id, operation_id, success, error, status_code
                 )
 
-                results = self.apps_refresh_results(update_results)
+                results = self.refresh_apps_results(update_results)
                 self.set_status(results['http_status'])
                 self.write(dumps(results))
 
@@ -71,7 +70,6 @@ class UpdateApplicationsV1(BaseHandler):
             self.write(dumps(results))
 
     @results_message
-    def apps_refresh_results(update_results):
+    def refresh_apps_results(update_results):
         results = update_results.apps_refresh()
         return results
-

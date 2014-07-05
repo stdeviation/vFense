@@ -36,7 +36,6 @@ class NewAgentV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def post(self):
-        self.username = self.get_current_user()
         self.uri = self.request.uri
         self.http_method = self.request.method
 
@@ -72,7 +71,7 @@ class NewAgentV1(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    self.username, self.uri, self.http_method
+                    'agent', self.uri, self.http_method
                 ).something_broke('agent', 'new_agent', e)
             )
             logger.exception(e)
@@ -112,10 +111,8 @@ class NewAgentV2(BaseHandler):
     @authenticate_token
     @convert_json_to_arguments
     def post(self):
-        username = self.get_current_user()
         uri = self.request.uri
         http_method = self.request.method
-
         try:
             views = self.arguments.get(AgentKeys.Views)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
@@ -146,7 +143,7 @@ class NewAgentV2(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, http_method
+                    'agent', uri, http_method
                 ).something_broke('agent', 'new_agent', e)
             )
             logger.exception(e)

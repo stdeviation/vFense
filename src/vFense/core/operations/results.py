@@ -23,12 +23,11 @@ class OperationResults(object):
     """Update an operation for an agent, based on the results received.
         This is the base class for adding results to an aegnt operation"""
     def __init__(
-            self, username, agent_id, operation_id,
+            self, agent_id, operation_id,
             success, error=None, status_code=None
         ):
         """
         Args:
-            username (str): The name of the user who made this api call
             agent_id (str): 36 character UUID of the agent.
             operation_id (str): 36 character UUID of the operation.
             success (str): true or false.
@@ -39,18 +38,16 @@ class OperationResults(object):
 
         Basic Usage:
             >>> from vFense.core.operations.results import OperationResults
-            >>> username = 'admin'
             >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
             >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
             >>> success = 'true'
             >>> results = OperationResults(
-                    username, agent_id, operation_id, success
+                    agent_id, operation_id, success
                 )
         """
 
         self.agent_id = agent_id
         self.operation_id = operation_id
-        self.username = username
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
         self.date_now = DbTime.time_now()
@@ -58,7 +55,7 @@ class OperationResults(object):
         self.error = error
         self.success = success
         self.status_code = status_code
-        self.operation = AgentOperation(self.username)
+        self.operation = AgentOperation()
 
     def update_operation(self, oper_type):
         """Update an agent operation
@@ -68,12 +65,11 @@ class OperationResults(object):
 
         Basic Usage:
             >>> from vFense.core.operations.results import OperationResults
-            >>> username = 'admin'
             >>> operation_id = '8fed3dc7-33d4-4278-9bd4-398a68bf7f22'
             >>> agent_id = 'db6bf07-c5da-4494-93bb-109db205ca64'
             >>> success = 'true'
             >>> results = OperationResults(
-                    username, agent_id, operation_id, success
+                    agent_id, operation_id, success
                 )
             >>> results.update_operation('reboot')
 

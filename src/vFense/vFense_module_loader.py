@@ -8,7 +8,9 @@ from vFense.receiver.api.core.newagent import NewAgentV1, NewAgentV2
 from vFense.receiver.api.core.checkin import CheckInV1, CheckInV2
 from vFense.receiver.api.core.startup import StartUpV1, StartUpV2
 from vFense.receiver.api.core.result_uris import ResultURIs, AgentResultURIs
-from vFense.receiver.api.core.results import RebootResultsV1, ShutdownResultsV1
+from vFense.receiver.api.core.results import (
+    RebootResultsV1, ShutdownResultsV1, RebootResultsV2, ShutdownResultsV2
+)
 
 from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
 from vFense.core.api.user import UserHandler, UsersHandler
@@ -32,8 +34,17 @@ from vFense.receiver.api.rv.results import (
     InstallSupportedAppsResults, InstallAgentAppsResults,
     UninstallAppsResults
 )
+
+from vFense.receiver.api.rv.app_results import (
+    AppsResultsV2, CustomAppsResultsV2,
+    SupportedAppsResultsV2, vFenseAppsResultsV2,
+    UninstallResultsV2
+)
 from vFense.receiver.api.rv.updateapplications import UpdateApplicationsV1
-from vFense.receiver.api.rv.agent_update import AgentUpdateHandler
+from vFense.receiver.api.rv.refresh_apps import RefreshAppsV2
+from vFense.receiver.api.rv.agent_update import (
+    AgentUpdateHandler, AgentUpdateHandlerV2
+)
 
 from vFense.server.api.email_api import CreateEmailConfigHandler, \
     GetEmailConfigHandler
@@ -43,11 +54,6 @@ from vFense.server.api.reports_api import (AgentsOsDetailsHandler,
     AgentsHardwareDetailsHandler, AgentsCPUDetailsHandler,
     AgentsMemoryDetailsHandler, AgentsDiskDetailsHandler,
     AgentsNetworkDetailsHandler)
-#from vFense.server.api.scheduler_api import (ScheduleListerHandler,
-#    ScheduleAppDetailHandler, SchedulerDateBasedJobHandler,
-#    SchedulerDailyRecurrentJobHandler, SchedulerMonthlyRecurrentJobHandler,
-#    SchedulerYearlyRecurrentJobHandler, SchedulerWeeklyRecurrentJobHandler,
-#    SchedulerCustomRecurrentJobHandler)
 
 from vFense.plugins.patching.api.os_apps import (
     AgentIdOsAppsHandler, TagIdOsAppsHandler, AppIdOsAppsHandler,
@@ -108,13 +114,13 @@ class CoreLoader():
 
 
             #v2 APIS for applications results
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/os?", InstallOsAppsResults),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/custom?", InstallCustomAppsResults),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/supported?", InstallSupportedAppsResults),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/agent?", InstallAgentAppsResults),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/uninstall?", UninstallAppsResults),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/refresh_apps/?", UpdateApplicationsV1),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/available_agent_update/?", AgentUpdateHandler),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/os?", AppsResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/custom?", CustomAppsResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/supported?", SupportedAppsResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/install/agent?", vFenseAppsResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/uninstall?", UninstallResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/results/refresh_apps/?", RefreshAppsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/available_agent_update/?", AgentUpdateHandlerV2),
 
 
             #v2 APIS
@@ -124,8 +130,8 @@ class CoreLoader():
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIs),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?", CheckInV2),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV1),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?", ShutdownResultsV1)
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV2),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?", ShutdownResultsV2)
 
         ]
 

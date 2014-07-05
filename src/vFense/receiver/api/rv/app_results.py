@@ -3,27 +3,25 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
+from vFense.core.api.decorators import authenticate_agent
 from vFense.core.decorators import (
-    convert_json_to_arguments, agent_authenticated_request, results_message
+    convert_json_to_arguments, results_message
 )
 from vFense.core._constants import CommonKeys
 
 from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
-from vFense.db.notification_sender import send_notifications
 from vFense.result.error_messages import GenericResults
 
-from vFense.core.user import UserKeys
-from vFense.core.user.manager import UserManager
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 
-class InstallOsAppsResults(BaseHandler):
-    @agent_authenticated_request
+class AppsResultsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
         uri = self.request.uri
@@ -31,7 +29,6 @@ class InstallOsAppsResults(BaseHandler):
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data', None)
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
@@ -84,8 +81,8 @@ class InstallOsAppsResults(BaseHandler):
         return results
 
 
-class InstallCustomAppsResults(BaseHandler):
-    @agent_authenticated_request
+class CustomAppsResultsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
         uri = self.request.uri
@@ -93,7 +90,6 @@ class InstallCustomAppsResults(BaseHandler):
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
@@ -148,15 +144,14 @@ class InstallCustomAppsResults(BaseHandler):
         return results
 
 
-class InstallSupportedAppsResults(BaseHandler):
-    @agent_authenticated_request
+class SupportedAppsResultsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
         uri = self.request.uri
         method = self.request.method
         try:
             operation_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
@@ -210,8 +205,8 @@ class InstallSupportedAppsResults(BaseHandler):
         return results
 
 
-class InstallAgentAppsResults(BaseHandler):
-    @agent_authenticated_request
+class vFenseAppsResultsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
         uri = self.request.uri
@@ -219,7 +214,6 @@ class InstallAgentAppsResults(BaseHandler):
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
@@ -275,20 +269,15 @@ class InstallAgentAppsResults(BaseHandler):
         return results
 
 
-class UninstallAppsResults(BaseHandler):
-    @agent_authenticated_request
+class UninstallResultsV2(BaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
         uri = self.request.uri
         method = self.request.method
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
-            data = self.arguments.get('data')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
             apps_to_add = self.arguments.get('apps_to_add', [])
             error = self.arguments.get('error', None)
@@ -318,12 +307,11 @@ class UninstallAppsResults(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
-            send_notifications(username, view_name, operation_id, agent_id)
 
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'uninstall_os_apps results', e)
             )
             logger.exception(results)

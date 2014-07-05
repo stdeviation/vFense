@@ -22,14 +22,13 @@ logger = logging.getLogger('rvlistener')
 class CheckInV1(BaseHandler):
     @agent_authenticated_request
     def get(self, agent_id):
-        username = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
         try:
             agent_queue = process_queue_data(agent_id)
             status = (
                 AgentResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).check_in(agent_id, agent_queue)
             )
             self.update_agent_status(agent_id)
@@ -40,7 +39,7 @@ class CheckInV1(BaseHandler):
         except Exception as e:
             status = (
                 GenericResults(
-                    username, uri, method
+                    'agent', uri, method
                 ).something_broke(agent_id, 'check_in', e)
             )
             logger.exception(e)
@@ -59,13 +58,12 @@ class CheckInV1(BaseHandler):
 class CheckInV2(BaseHandler):
     @authenticate_agent
     def get(self, agent_id):
-        username = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
+        self.uri = self.request.uri
+        self.http_method = self.request.method
         try:
             results = (
                 self.update_agent_status(
-                    agent_id, username, uri, http_method
+                    agent_id
                 )
             )
             self.set_status(results['http_status'])
@@ -75,7 +73,7 @@ class CheckInV2(BaseHandler):
         except Exception as e:
             status = (
                 GenericResults(
-                    username, uri, http_method
+                    'agent', self.uri, self.http_method
                 ).something_broke(agent_id, 'check_in', e)
             )
             logger.exception(e)
@@ -84,12 +82,12 @@ class CheckInV2(BaseHandler):
             self.write(dumps(status))
 
 
-    def update_agent_status(self, agent_id, username, uri, http_method):
+    def update_agent_status(self, agent_id):
         manager = AgentManager(agent_id)
         manager.update_last_checkin_time()
         agent_queue = process_queue_data(agent_id)
         data = {ApiResultKeys.OPERATIONS: agent_queue}
         status = (
-            Results(username, uri, http_method).check_in(**data)
+            Results('agent', self.uri, self.http_method).check_in(**data)
         )
         return status
