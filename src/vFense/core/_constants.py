@@ -15,6 +15,7 @@ class CommonKeys():
     METHOD = 'method'
     RESPONSE_URI = 'response_uri'
     REQUEST_METHOD = 'request_method'
+    OPERATION = 'operation'
     REASON = 'reason'
 
 

@@ -27,14 +27,16 @@ def _get_result_uris_dict(version, agent_id=None):
             if uri[3]:
                 results[uri[0]] = {
                     CommonKeys.RESPONSE_URI: os.path.join(base, uri[1]),
-                    CommonKeys.REQUEST_METHOD: uri[2]
+                    CommonKeys.REQUEST_METHOD: uri[2],
+                    CommonKeys.OPERATION: uri[0]
                 }
             else:
                 results[uri[0]] = {
                     CommonKeys.RESPONSE_URI: (
                         os.path.join(base_without_agentid, uri[1])
                     ),
-                    CommonKeys.REQUEST_METHOD: uri[2]
+                    CommonKeys.REQUEST_METHOD: uri[2],
+                    CommonKeys.OPERATION: uri[0]
                 }
 
     elif version == URIVersions.V1:
@@ -56,7 +58,8 @@ def _get_result_uris_dict(version, agent_id=None):
                     CommonKeys.RESPONSE_URI: (
                         os.path.join(base_without_version, uri[1])
                     ),
-                    CommonKeys.REQUEST_METHOD: uri[2]
+                    CommonKeys.REQUEST_METHOD: uri[2],
+                    CommonKeys.OPERATION: uri[0]
                 }
             elif uri[3]:
 
@@ -64,14 +67,16 @@ def _get_result_uris_dict(version, agent_id=None):
                     CommonKeys.RESPONSE_URI: (
                         os.path.join(base, uri[1])
                     ),
-                    CommonKeys.REQUEST_METHOD: uri[2]
+                    CommonKeys.REQUEST_METHOD: uri[2],
+                    CommonKeys.OPERATION: uri[0]
                 }
             else:
                 results[uri[0]] = {
                     CommonKeys.RESPONSE_URI: (
                         os.path.join(base_without_agentid, uri[1])
                     ),
-                    CommonKeys.REQUEST_METHOD: uri[2]
+                    CommonKeys.REQUEST_METHOD: uri[2],
+                    CommonKeys.OPERATION: uri[0]
                 }
 
     return results
@@ -109,7 +114,7 @@ def get_agent_results_uri(agent_id, operation):
 
 
 @time_it
-def get_result_uris(agent_id=None, version='v1'):
+def get_result_uris(agent_id=None, version='v2'):
     """Returns back a dictionary with all of the agent api calls for an agent.
     Kwargs:
         agent_id (str): 36 character UUID of the agent.

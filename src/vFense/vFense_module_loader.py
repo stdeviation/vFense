@@ -8,7 +8,9 @@ from vFense.receiver.api.core.newagent import NewAgentV1, NewAgentV2
 from vFense.receiver.api.core.checkin import CheckInV1, CheckInV2
 from vFense.receiver.api.core.startup import StartUpV1, StartUpV2
 from vFense.receiver.api.core.generics import ValidateToken
-from vFense.receiver.api.core.result_uris import ResultURIs, AgentResultURIs
+from vFense.receiver.api.core.result_uris import (
+    ResultURIs, AgentResultURIs, ResultURIsV2, AgentResultURIsV2
+)
 from vFense.receiver.api.core.results import (
     RebootResultsV1, ShutdownResultsV1, RebootResultsV2, ShutdownResultsV2
 )
@@ -128,9 +130,9 @@ class CoreLoader():
             #v2 APIS
             #Operations for the New Core Plugin
             (r"/rvl/v2/core/newagent/?", NewAgentV2),
-            (r"/rvl/v2/core/uris/response?", ResultURIs),
+            (r"/rvl/v2/core/uris/response?", ResultURIsV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV2),
-            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIs),
+            (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/uris/response/?", ResultURIsV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/checkin/?", CheckInV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/reboot/?", RebootResultsV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/results/shutdown/?", ShutdownResultsV2)
