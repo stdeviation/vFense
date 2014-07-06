@@ -56,8 +56,13 @@ class vFense(object):
             usage='''vfense <api> [<args>]
 
 The various api base calls.
-   users     Search, create, and delete users
-   user      Editing and deleting of a user.
+   users      Search, create, edit and delete users.
+   views      Search, create, edit and delete views.
+   groups     Search, create, edit and delete groups.
+   tags       Search, create, edit and delete tags.
+   agents     Search, edit and delete agents.
+   operations Search operations.
+   schedule   Search, create, and delete schedules.
 ''')
         self.username, self.password, self.url, config_exists = (
             get_credentials()
@@ -66,8 +71,8 @@ The various api base calls.
             parser.add_argument(
                 'api', help='The api you want to run',
                 choices=[
-                    'users', 'user', 'view', 'views', 'group', 'groups',
-                    'agent', 'agents', 'tag', 'tags', 'schedule',
+                    'users', 'views', 'groups',
+                    'agents', 'tags', 'schedule',
                     'operations', 'dashboard'
                 ]
             )
@@ -92,7 +97,7 @@ The various api base calls.
         )
         parser.add_argument(
             'command', help='commands available for agents',
-            choices=['search', 'delete']
+            choices=['search', 'delete', 'edit', 'get']
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.command == 'search':
@@ -183,32 +188,64 @@ The various api base calls.
 
 #######################USER MANAGEMENT######################################
 
-    def user(self):
-        self.users_url = os.path.join(self.url, 'api/v1/user')
-        parser = argparse.ArgumentParser(
-            description='users api calls')
+    def users(self):
+        self.user_url = os.path.join(self.url, 'api/v1/user')
+        self.users_url = os.path.join(self.url, 'api/v1/users')
+        parser = argparse.ArgumentParser(description='users api calls')
         parser.add_argument(
             'command', help='commands available for users',
-            choices=['get', 'edit', 'delete', 'add', 'remove']
+            choices=['get', 'edit', 'delete', 'add', 'remove', 'search']
         )
-        parser.add_argument(
-            'user_name', help='name of the user'
-        )
-        args = parser.parse_args(sys.argv[2:4])
+        args = parser.parse_args(sys.argv[2:3])
         if args.command == 'get':
-            self.user_get(args.user_name)
+            self.user_name(args.command)
 
         elif args.command == 'delete':
-            self.user_delete(args.user_name)
+            self.user_name(args.command)
 
         elif args.command == 'edit':
-            self.user_edit(args.user_name)
+            self.user_name(args.command)
 
-        elif args.command == 'add':
-            self.add_views_or_groups_to_user(args.user_name)
+        elif args.command == 'add_to':
+            self.user_name(args.command)
 
-        elif args.command == 'remove':
-            self.delete_views_or_groups_from_user(args.user_name)
+        elif args.command == 'remove_from':
+            self.user_name(args.command)
+
+        elif args.command == 'search':
+            self.users_search()
+
+        elif args.command == 'create':
+            self.user_create()
+
+        elif args.command == 'delete_multiple':
+            self.delete_users()
+
+
+    def user_name(self, command):
+        parser = argparse.ArgumentParser(
+            description='the user name you are going to manage.'
+        )
+        parser.add_argument(
+            '--user_name', type=str, required=True,
+            help='name of the user'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        user_name = args.user_name
+        if command == 'get':
+            self.user_get(user_name)
+
+        elif command == 'edit':
+            self.user_edit(user_name)
+
+        elif command == 'delete':
+            self.user_delete(user_name)
+
+        elif command == 'add_to':
+            self.add_views_or_groups_to_user(user_name)
+
+        elif command == 'remove_from':
+            self.delete_views_or_groups_from_user(user_name)
 
 
     def user_get(self, user_name):
@@ -323,7 +360,7 @@ The various api base calls.
                 )
             )
             content = json.loads(data.content)
-            print json.dumps(content['data'], indent=4)
+            print json.dumps(content, indent=4)
 
 
     def user_delete(self, user_name):
@@ -338,27 +375,6 @@ The various api base calls.
             )
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
-
-#######################USERS MANAGEMENT######################################
-
-    def users(self):
-        self.users_url = os.path.join(self.url, 'api/v1/users')
-        parser = argparse.ArgumentParser(
-            description='users api calls'
-        )
-        parser.add_argument(
-            'command', help='commands available for users',
-            choices=['search', 'create', 'delete']
-        )
-        args = parser.parse_args(sys.argv[2:3])
-        if args.command == 'search':
-            self.users_search()
-
-        elif args.command == 'create':
-            self.user_create()
-
-        elif args.command == 'delete':
-            self.delete_users()
 
 
     def delete_users(self):

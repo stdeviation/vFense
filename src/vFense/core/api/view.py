@@ -79,7 +79,8 @@ class ViewHandler(BaseHandler):
             fetch_views = RetrieveViews(parent_view=current_view)
 
         results = fetch_views.by_name(view)
-        results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        if results[ApiResultKeys.COUNT] > 0:
+            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
         return results
 
 

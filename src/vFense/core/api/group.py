@@ -70,7 +70,8 @@ class GroupHandler(BaseHandler):
     def get_group(self, group_id, is_global):
         fetch_groups = RetrieveGroups(is_global=is_global)
         results = fetch_groups.by_id(group_id)
-        results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        if results[ApiResultKeys.COUNT] > 0:
+            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
         return results
 
     @authenticated_request
