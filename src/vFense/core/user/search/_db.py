@@ -84,7 +84,7 @@ class FetchUsers(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -98,7 +98,8 @@ class FetchUsers(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
+                .without(UserKeys.Password)
                 .run(conn)
             )
 
@@ -124,7 +125,7 @@ class FetchUsers(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -147,7 +148,8 @@ class FetchUsers(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
+                .without(UserKeys.Password)
                 .run(conn)
             )
 
@@ -172,7 +174,7 @@ class FetchUsers(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -193,7 +195,8 @@ class FetchUsers(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
+                .without(UserKeys.Password)
                 .run(conn)
             )
 
@@ -232,17 +235,10 @@ class FetchUsers(object):
 
         return base
 
-    def _set_map_hash(self):
-        map_hash = (
+    def _set_merge_hash(self):
+        merge_hash = (
             lambda x:
             {
-                UserKeys.DefaultView: x[UserKeys.DefaultView],
-                UserKeys.CurrentView: x[UserKeys.CurrentView],
-                UserKeys.Email: x[UserKeys.Email],
-                UserKeys.FullName: x[UserKeys.FullName],
-                UserKeys.UserName: x[UserKeys.UserName],
-                UserKeys.Enabled: x[UserKeys.Enabled],
-                UserKeys.Global: x[UserKeys.Global],
                 UserMappedKeys.Groups: (
                     r
                     .table(GroupCollections.Groups)
@@ -293,4 +289,4 @@ class FetchUsers(object):
             }
         )
 
-        return map_hash
+        return merge_hash
