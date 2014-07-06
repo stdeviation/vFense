@@ -100,6 +100,12 @@ The various api base calls.
         elif args.command == 'edit':
             self.user_edit(args.user_name)
 
+        elif args.command == 'add':
+            self.add_views_or_groups_to_user(args.user_name)
+
+        elif args.command == 'remove':
+            self.delete_views_or_groups_from_user(args.user_name)
+
 
     def user_get(self, user_name):
         self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
@@ -108,6 +114,60 @@ The various api base calls.
             data = (
                 SESSION.get(
                     self.user_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content['data'], indent=4)
+
+
+    def add_views_or_groups_to_user(self, user_name):
+        msg = 'Add views or groups to this user {0}'.format(user_name)
+        parser = argparse.ArgumentParser(description=msg)
+        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--view_names', dest='view_names', action='append',
+                help='Views to add to this user.'
+            )
+            parser.add_argument(
+                '--group_ids', dest='group_ids', action='append',
+                help='Group ids to add to this user.'
+            )
+            args = parser.parse_args(sys.argv[4:])
+            pay_load = vars(args)
+            pay_load['action'] = 'add'
+            data = (
+                SESSION.post(
+                    self.user_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content['data'], indent=4)
+
+
+    def delete_views_or_groups_from_user(self, user_name):
+        msg = 'Remove views or groups from this user {0}'.format(user_name)
+        parser = argparse.ArgumentParser(description=msg)
+        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--view_names', dest='view_names', action='append',
+                help='Views to remove from this user.'
+            )
+            parser.add_argument(
+                '--group_ids', dest='group_ids', action='append',
+                help='Group ids to deleted from this user.'
+            )
+            args = parser.parse_args(sys.argv[4:])
+            pay_load = vars(args)
+            pay_load['action'] = 'delete'
+            data = (
+                SESSION.post(
+                    self.user_url, data=json.dumps(pay_load), verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
@@ -189,6 +249,34 @@ The various api base calls.
         if args.command == 'search':
             self.users_search()
 
+        elif args.command == 'create':
+            self.user_create()
+
+        elif args.command == 'delete':
+            self.delete_users()
+
+
+    def delete_users(self):
+        parser = argparse.ArgumentParser(
+            description='Delete 1 or multiple users.'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--user_names', dest='user_names', action='append',
+                help='The names of the users, you are deleting.'
+            )
+            vfense = authenticate(self.username, self.password, self.url)
+            if vfense.ok:
+                data = (
+                    SESSION.delete(
+                        self.users_url, verify=False,
+                        headers=HEADERS, cookies=JAR
+                    )
+                )
+                content = json.loads(data.content)
+                print json.dumps(content, indent=4)
+
 
     def user_create(self):
         parser = argparse.ArgumentParser(
@@ -197,11 +285,11 @@ The various api base calls.
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             parser.add_argument(
-                '--user_name', dest='user_name', type=str,
+                '--user_name', dest='user_name', type=str, required=True,
                 help='The name of the user, you are creating.'
             )
             parser.add_argument(
-                '--password', dest='password', type=str,
+                '--password', dest='password', type=str, required=True,
                 help='''The password of the user you are createing.
             The password must contain the following: 1 Special characater,
             1 Uppercase, 1 Lowercase, 1 Number, and a total of 8 characters'''
@@ -215,14 +303,12 @@ The various api base calls.
                 help='The email address of the user, you are creating.'
             )
             parser.add_argument(
-                '--enabled', dest='enabled', type=bool, action='store_true',
+                '--enabled', dest='enabled', action='store_true',
                 help='Create the user as enabled, the default is disabled',
-                default=False
             )
             parser.add_argument(
                 '--is_global', dest='is_global', action='store_true',
                 help='The email address of the user, you are creating.',
-                default=False
             )
             parser.add_argument(
                 '--group_ids', dest='group_ids', action='append',
@@ -233,11 +319,13 @@ The various api base calls.
                 help='''The view this user is being created in.
             The default is to use the view of the currently logged in user.'''
             )
+            parser.set_defaults(is_global=False)
+            parser.set_defaults(enabled=False)
             args = parser.parse_args(sys.argv[3:])
             pay_load = vars(args)
             data = (
                 SESSION.post(
-                    self.user_url, data=json.dumps(pay_load), verify=False,
+                    self.users_url, data=json.dumps(pay_load), verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
