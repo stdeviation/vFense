@@ -15,7 +15,7 @@ from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
     GenericCodes, TagCodes, TagFailureCodes, GenericFailureCodes
 )
-from vFense.core.agent._constants import ProductionLevels
+from vFense.core.agent._constants import Environments
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag import Tag
 from vFense.core.tag.manager import TagManager
@@ -71,7 +71,7 @@ class TagsHandler(BaseHandler):
                 self.get_argument(ApiArguments.SORT_BY, TagKeys.TagName)
             )
             prod_level = (
-                self.get_argument(TagApiArguments.PRODUCTION_LEVEL, None)
+                self.get_argument(TagApiArguments.ENVIRONMENT, None)
             )
             search = (
                 RetrieveTags(active_view, count, offset, sort, sort_by)
@@ -120,7 +120,7 @@ class TagsHandler(BaseHandler):
     @results_message
     def get_all_tags_by_prod_level(self, search, prod_level):
         results = (
-            search.by_key_val(search, TagKeys.ProductionLevel, prod_level)
+            search.by_key_val(search, TagKeys.Environment, prod_level)
         )
         return results
 
@@ -128,7 +128,7 @@ class TagsHandler(BaseHandler):
     def get_all_tags_by_prod_level_and_regex(self, search, prod_level, regex):
         results = (
             search.by_key_val_and_query(
-                search, TagKeys.ProductionLevel, prod_level, regex
+                search, TagKeys.Environment, prod_level, regex
             )
         )
         return results
@@ -147,8 +147,8 @@ class TagsHandler(BaseHandler):
             tag_name = self.arguments.get(TagApiArguments.TAG_NAME)
             prod_level = (
                 self.arguments.get(
-                    TagApiArguments.PRODUCTION_LEVEL,
-                    ProductionLevels.PRODUCTION
+                    TagApiArguments.ENVIRONMENT,
+                    Environments.PRODUCTION
                 )
             )
             if active_view == DefaultViews.GLOBAL:

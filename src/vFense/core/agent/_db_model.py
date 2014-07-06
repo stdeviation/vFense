@@ -15,7 +15,7 @@ class AgentKeys():
     NeedsReboot = 'needs_reboot'
     AgentStatus = 'agent_status'
     BasicStats = 'basic_stats'
-    ProductionLevel = 'production_level'
+    Environment = 'environment'
     SystemInfo = 'system_info'
     Hardware = 'hardware'
     Tags = 'tags'

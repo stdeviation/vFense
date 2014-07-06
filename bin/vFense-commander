@@ -93,7 +93,8 @@ The various api base calls.
     def agents(self):
         self.agents_url = os.path.join(self.url, 'api/v1/agents')
         parser = argparse.ArgumentParser(
-            description='Search for agents and delete agents'
+            description='''Here you can search for agents with various filters
+            as well as modify an agents properties and delete agents.'''
         )
         parser.add_argument(
             'command', help='commands available for agents',
@@ -101,10 +102,91 @@ The various api base calls.
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.command == 'search':
-            self.agents_search()
+            self.agents_id(args.command)
 
         elif args.command == 'delete':
-            self.delete_agents()
+            self.agent_id(args.command)
+
+        elif args.command == 'get':
+            self.agent_id(args.command)
+
+    def agent_id(self, command):
+        parser = argparse.ArgumentParser(
+            description='The agent id you are going to manage.'
+        )
+        parser.add_argument(
+            'agent_id', type=str,
+            help='The id of the agent you are going to manage.'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        agent_id = args.agent_id
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', agent_id)
+        if command == 'get':
+            self.agent_get(agent_id)
+
+        elif command == 'edit':
+            self.agent_edit(agent_id)
+
+        elif command == 'delete':
+            self.agent_delete(agent_id)
+
+        elif command == 'add_to':
+            self.add_views_or_groups_to_user(agent_id)
+
+        elif command == 'remove_from':
+            self.delete_views_or_groups_from_user(agent_id)
+
+
+    def agent_get(self, agent_id):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.agent_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def agent_edit(self, agent_id):
+        msg = 'Edit the attributes of this agent {0}'.format(agent_id)
+        parser = argparse.ArgumentParser(description=msg)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--action', dest='action', type=str,
+                help='''What action you would like to take..
+                This can only be called with --views''',
+                choices=['add', 'delete'], default=None
+            )
+            parser.add_argument(
+                '--display_name', dest='display_name', type=str,
+                help='''Edit the display name in the vFense UI.
+                This does not change the computer name.''', default=None
+            )
+            parser.add_argument(
+                '--environment', dest='environment', type=str,
+                help='''Change the environment this agent belongs too.
+                Example.. Production, Staging, QA, Dev, etc...''',
+                default=None
+            )
+            parser.add_argument(
+                '--views', dest='views', type=str, action='append',
+                help='''The views you want this agent added to
+                or removed from. This must be called with --action''',
+                default=None
+            )
+            args = parser.parse_args(sys.argv[4:])
+            pay_load = vars(args)
+            data = (
+                SESSION.put(
+                    self.agent_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def delete_agents(self):
@@ -132,7 +214,6 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
     def agents_search(self):
-
         parser = self._common_search_parser()
         parser.description = """Search for agents"""
         parser.add_argument(
@@ -227,8 +308,8 @@ The various api base calls.
             description='the user name you are going to manage.'
         )
         parser.add_argument(
-            '--user_name', type=str, required=True,
-            help='name of the user'
+            'user_name', type=str,
+            help='The name of the user you want to manage'
         )
         args = parser.parse_args(sys.argv[3:4])
         user_name = args.user_name

@@ -14,20 +14,20 @@ from vFense.result.status_codes import GenericCodes
 class Tag(object):
     """Used to represent an instance of a tag."""
 
-    def __init__(self, tag_name=None, production_level=None,
+    def __init__(self, tag_name=None, environment=None,
                  view_name=None, is_global=None, agents=None
                  ):
         """
         Kwargs:
             tag_name (str): The name of the tag
-            production_level (str): User defined production level.
+            environment (str): User defined environment.
             view_name (str): The name of the view, this tag belongs too.
             is_global (bool): If this tag is a global tag. A global tag,
                 is a tag that allows agents from any view to be a
                 part of this tag.
         """
         self.tag_name = tag_name
-        self.production_level = production_level
+        self.environment = environment
         self.view_name = view_name
         self.is_global = is_global
         self.agents = agents
@@ -43,8 +43,8 @@ class Tag(object):
             method to fill in the rest.
         """
 
-        if not self.production_level:
-            self.production_level = TagDefaults.PRODUCTION_LEVEL
+        if not self.environment:
+            self.environment = TagDefaults.ENVIRONMENT
 
         if not self.is_global:
             self.is_global = TagDefaults.IS_GLOBAL
@@ -106,11 +106,11 @@ class Tag(object):
                     }
                 )
 
-        if self.production_level:
-            if not isinstance(self.production_level, basestring):
+        if self.environment:
+            if not isinstance(self.environment, basestring):
                 invalid_fields.append(
                     {
-                        TagKeys.ProductionLevel: self.production_level,
+                        TagKeys.Environment: self.environment,
                         CommonKeys.REASON: 'Must be a string',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
@@ -153,7 +153,7 @@ class Tag(object):
         """
 
         return {
-            TagKeys.ProductionLevel: self.production_level,
+            TagKeys.Environment: self.environment,
             TagKeys.TagName: self.tag_name,
             TagKeys.ViewName: self.view_name,
             TagKeys.Global: self.is_global,

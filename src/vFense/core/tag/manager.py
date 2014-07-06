@@ -89,7 +89,7 @@ class TagManager(object):
                 {
                     "data": [
                         {
-                            "production_level": "production",
+                            "environment": "production",
                             "global": true,
                             "view_name": "global",
                             "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316",

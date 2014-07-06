@@ -45,7 +45,7 @@ class AgentApiArguments():
     AGENT_IDS = 'agent_ids'
     AGENT_ID = 'agent_id'
     DISPLAY_NAME = 'display_name'
-    PRODUCTION_LEVEL = 'production_level'
+    ENVIRONMENT = 'environment'
     VIEWS = 'views'
     IP = 'ip'
     MAC = 'mac'
@@ -59,7 +59,7 @@ class TagApiArguments():
     TAG_ID = 'tag_id'
     TAG_IDS = 'tag_ids'
     TAG_NAME = 'name'
-    PRODUCTION_LEVEL = 'production_level'
+    ENVIRONMENT = 'environment'
     VIEW_NAME = 'view_name'
 
 

@@ -1,7 +1,7 @@
-from vFense.core.agent._constants import ProductionLevels
+from vFense.core.agent._constants import Environments
 
 class TagDefaults(object):
-    PRODUCTION_LEVEL = ProductionLevels.PRODUCTION
+    ENVIRONMENT = Environments.PRODUCTION
     IS_GLOBAL = False
     VIEW_NAME = 'global'
     AGENTS = []

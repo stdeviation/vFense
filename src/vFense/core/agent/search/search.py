@@ -35,7 +35,7 @@ class RetrieveAgents(object):
             AgentKeys.DisplayName, AgentKeys.OsCode,
             AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
             AgentKeys.NeedsReboot, AgentKeys.BasicStats,
-            AgentKeys.ProductionLevel, AgentKeys.LastAgentUpdate
+            AgentKeys.Environment, AgentKeys.LastAgentUpdate
         ]
 
         self.valid_keys_to_filter_by = (
@@ -43,7 +43,7 @@ class RetrieveAgents(object):
                 AgentKeys.OsCode,
                 AgentKeys.OsString,
                 AgentKeys.AgentStatus,
-                AgentKeys.ProductionLevel
+                AgentKeys.Environment
             ]
         )
 
@@ -55,7 +55,7 @@ class RetrieveAgents(object):
                 AgentKeys.OsCode,
                 AgentKeys.OsString,
                 AgentKeys.AgentStatus,
-                AgentKeys.ProductionLevel,
+                AgentKeys.Environment,
                 AgentCommonKeys.AVAIL_VULN,
                 AgentCommonKeys.AVAIL_UPDATES,
                 AgentKeys.LastAgentUpdate,
@@ -102,7 +102,7 @@ class RetrieveAgents(object):
                 "data": [
                     {
                         "display_name": null,
-                        "production_level": "Production",
+                        "environment": "Production",
                         "tags": [
                             {
                                 "tag_name": "Foo Bar",
@@ -166,7 +166,7 @@ class RetrieveAgents(object):
                 "data": [
                     {
                         "display_name": null,
-                        "production_level": "Production",
+                        "environment": "Production",
                         "tags": [
                             {
                                 "tag_name": "Foo Bar",
@@ -221,7 +221,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -281,7 +281,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -352,7 +352,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -423,7 +423,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -486,7 +486,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -552,7 +552,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -616,7 +616,7 @@ class RetrieveAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",

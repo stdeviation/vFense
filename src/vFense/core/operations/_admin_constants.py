@@ -75,7 +75,7 @@ class AdminActions():
     EDIT_LOG_SETTINGS = 'edit log settings'
     EDIT_NOTIFICATION = 'edit notification'
     EDIT_AGENT_DISPLAY_NAME = 'edit agent display name'
-    EDIT_AGENT_PRODUCTION_LEVEL = 'edit agent production level'
+    EDIT_AGENT_ENVIRONMENT = 'edit agent environment'
     EDIT_TIME_ZONE = 'edit time zone'
 
     @staticmethod

@@ -768,7 +768,7 @@ def update_tag(tag_id, tag_data):
     Basic Usage:
         >>> from vFense.tag._db import update_tag
         >>> tag_id = ""
-        >>> tag_data = {'production_level': 'Development'}
+        >>> tag_data = {'environment': 'Development'}
         >>> udpate_tag(tag_id, tag_data)
 
     Returns:

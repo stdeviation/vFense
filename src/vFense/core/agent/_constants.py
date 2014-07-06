@@ -13,13 +13,13 @@ class AgentStatusKeys(object):
     DOWN = 'down'
 
 
-class ProductionLevels(object):
+class Environments(object):
     PRODUCTION = 'Production'
 
 
 class AgentDefaults(object):
     NEEDS_REBOOT = False
-    PRODUCTION_LEVEL = ProductionLevels.PRODUCTION
+    ENVIRONMENT = Environments.PRODUCTION
     AGENT_STATUS = 'up'
     REBOOTED = True
     VIEWS = ['global']

@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbTime
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import (
-    fetch_production_levels_from_agent,
+    fetch_environments_from_agent,
     fetch_supported_os_strings, fetch_agent_ids, fetch_agents,
     fetch_agent, update_agent, fetch_all_agents_for_view
 )
@@ -24,21 +24,21 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def get_production_levels(view_name):
-    """Retrieve all the production levels that is in the database.
+def get_environments(view_name):
+    """Retrieve all the environments that is in the database.
     Args:
         view_name (str): Name of the view, where the agent is located.
 
     Basic Usage:
-        >>> from vFense.core.agent.agents import get_production_levels
+        >>> from vFense.core.agent.agents import get_environments
         >>> view_name = 'default'
-        >>> get_production_levels(view_name)
+        >>> get_environments(view_name)
         [
             u'Development',
             u'Production'
         ]
     """
-    data = fetch_production_levels_from_agent(view_name)
+    data = fetch_environments_from_agent(view_name)
     return data
 
 @time_it
@@ -221,11 +221,11 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     Basic Usage::
         >>> from vFense.core.agent.agents import get_agent_info
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
-        >>> keys_to_pluck = ['production_level', 'needs_reboot']
+        >>> keys_to_pluck = ['environment', 'needs_reboot']
         >>> get_agent_info(agent_id, keys_to_pluck)
         {
             u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
-            u'production_level': u'Development'
+            u'environment': u'Development'
         }
     """
 

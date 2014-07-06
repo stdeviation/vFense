@@ -798,7 +798,7 @@ def update_group(group_id, group_data, conn=None):
     Basic Usage::
         >>> from vFense.group._db import update_group
         >>> group_id = 'd081a343-cc6c-4f08-81d9-62a116fda025'
-        >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
+        >>> data = {'environment': 'Development', 'needs_reboot': 'no'}
         >>> update_group(group_id)
 
     Return:

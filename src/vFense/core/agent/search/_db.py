@@ -49,7 +49,7 @@ class FetchAgents(object):
             AgentKeys.ComputerName, AgentKeys.HostName,
             AgentKeys.DisplayName, AgentKeys.OsCode, AgentKeys.Tags,
             AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
-            AgentKeys.NeedsReboot, AgentKeys.ProductionLevel,
+            AgentKeys.NeedsReboot, AgentKeys.Environment,
             AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN,
             AgentKeys.LastAgentUpdate
         ]
@@ -125,7 +125,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -195,7 +195,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -263,7 +263,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -334,7 +334,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -410,7 +410,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -488,7 +488,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -559,7 +559,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",
@@ -633,7 +633,7 @@ class FetchAgents(object):
             [
                 {
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "tags": [
                         {
                             "tag_name": "Foo Bar",

@@ -536,7 +536,7 @@ def update_user(username, user_data, conn=None):
     Basic Usage::
         >>> from vFense.user._db import update_user
         >>> username = 'admin'
-        >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
+        >>> data = {'environment': 'Development', 'needs_reboot': 'no'}
         >>> update_user(username, data)
 
     Returns:

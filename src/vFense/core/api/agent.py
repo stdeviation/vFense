@@ -33,7 +33,7 @@ from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
 from vFense.core.agent.agents import (
-    get_supported_os_codes, get_supported_os_strings, get_production_levels
+    get_supported_os_codes, get_supported_os_strings, get_environments
 )
 
 from vFense.core.decorators import (
@@ -70,7 +70,7 @@ class AgentResultURIs(BaseHandler):
             self.write(json.dumps(status, indent=4))
 
 
-class FetchValidProductionLevels(BaseHandler):
+class FetchValidEnvironments(BaseHandler):
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
@@ -80,7 +80,7 @@ class FetchValidProductionLevels(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            data = get_production_levels(view_name)
+            data = get_environments(view_name)
             results = (
                 GenericResults(
                     username, uri, method
@@ -610,7 +610,7 @@ class AgentHandler(BaseHandler):
                 self.arguments.get(AgentApiArguments.DISPLAY_NAME, None)
             )
             prod_level = (
-                self.arguments.get(AgentApiArguments.PRODUCTION_LEVEL, None)
+                self.arguments.get(AgentApiArguments.ENVIRONMENT, None)
             )
             views = (
                 self.arguments.get(AgentApiArguments.VIEWS, None)
@@ -621,7 +621,7 @@ class AgentHandler(BaseHandler):
                 results = self.edit_display_name(manager, displayname)
 
             elif prod_level and not displayname and not views and not action:
-                results = self.edit_production_level(manager, prod_level)
+                results = self.edit_environment(manager, prod_level)
 
             elif action and views and not prod_level and not displayname:
                 if action == ApiValues.ADD:
@@ -666,9 +666,9 @@ class AgentHandler(BaseHandler):
         return results
 
     @results_message
-    @log_operation(AdminActions.EDIT_AGENT_PRODUCTION_LEVEL, vFenseObjects.AGENT)
-    def edit_production_level(self, manager, production_level):
-        results = manager.edit_production_level(production_level)
+    @log_operation(AdminActions.EDIT_AGENT_ENVIRONMENT, vFenseObjects.AGENT)
+    def edit_environment(self, manager, environment):
+        results = manager.edit_environment(environment)
         return results
 
     @results_message

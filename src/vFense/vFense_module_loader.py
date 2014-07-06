@@ -25,7 +25,7 @@ from vFense.core.api.scheduler import (
 )
 from vFense.core.api.agent import (
     AgentHandler, AgentsHandler, AgentTagHandler,
-    FetchSupportedOperatingSystems, FetchValidProductionLevels
+    FetchSupportedOperatingSystems, FetchValidEnvironments
 )
 from vFense.core.api.base import (
     RootHandler, LoginHandler, LogoutHandler, WebSocketHandler, AdminHandler
@@ -220,7 +220,7 @@ class CoreLoader():
 
             ##### Generic API Handlers
             (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
-            (r"/api/v1/supported/production_levels?", FetchValidProductionLevels),
+            (r"/api/v1/supported/environments?", FetchValidEnvironments),
             (r"/api/v1/supported/timezones?", TimeZonesHandler),
             #(r"/api/package/getDependecies?", GetDependenciesHandler),
 

@@ -33,7 +33,7 @@ class RetrieveTags(object):
 
         self.list_of_valid_keys = [
             TagKeys.TagName, TagKeys.ViewName,
-            TagKeys.ProductionLevel, AgentCommonKeys.AVAIL_UPDATES,
+            TagKeys.Environment, AgentCommonKeys.AVAIL_UPDATES,
             AgentCommonKeys.AVAIL_VULN,
         ]
 
@@ -41,7 +41,7 @@ class RetrieveTags(object):
             [
                 TagKeys.ViewName,
                 TagKeys.TagName,
-                TagKeys.ProductionLevel
+                TagKeys.Environment
             ]
         )
 
@@ -49,7 +49,7 @@ class RetrieveTags(object):
             [
                 TagKeys.ViewName,
                 TagKeys.TagName,
-                TagKeys.ProductionLevel,
+                TagKeys.Environment,
                 AgentCommonKeys.AVAIL_VULN,
                 AgentCommonKeys.AVAIL_UPDATES,
             ]
@@ -218,7 +218,7 @@ class RetrieveTags(object):
         Basic Usage:
             >>> from vFense.core.tag.search.search import RetrieveTags
             >>> view_name = 'default'
-            >>> key = 'production_level'
+            >>> key = 'environment'
             >>> val = 'Development'
             >>> search_tags = RetrieveTags(view_name='default')
             >>> search_tags.by_key_and_val(key, val)
@@ -266,7 +266,7 @@ class RetrieveTags(object):
         Basic Usage:
             >>> from vFense.core.tag.search.search import RetrieveTags
             >>> view_name = 'default'
-            >>> key = 'production_level'
+            >>> key = 'environment'
             >>> val = 'Development'
             >>> query = 'ubu'
             >>> search_tags = RetrieveTags(view_name='default')

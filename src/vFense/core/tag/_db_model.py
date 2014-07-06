@@ -8,7 +8,7 @@ class TagKeys():
     TagName = 'tag_name'
     ViewName = 'view_name'
     Global = 'global'
-    ProductionLevel = 'production_level'
+    Environment = 'environment'
 
 
 class TagMappedKeys():

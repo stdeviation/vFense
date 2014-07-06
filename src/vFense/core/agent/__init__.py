@@ -17,7 +17,7 @@ class Agent(object):
     def __init__(self, computer_name=None, display_name=None,
                  os_code=None, os_string=None, views=None,
                  needs_reboot=None, agent_status=None,
-                 production_level=None, machine_type=None,
+                 environment=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
                  version=None, date_added=None, last_agent_update=None,
                  token=None, assign_new_token=False
@@ -33,7 +33,7 @@ class Agent(object):
             needs_reboot (boolean): Does this agent require a reboot?
             agent_status (str): Is this agent up or down?
                 valid_values: ( up, down )
-            production_level (str): user defined production level.
+            environment (str): user defined environment.
             machine_type (str): Is this machine physical or virtual?
                 valid_values: ( physical, virtual )
             rebooted (bool): Was this agent rebooted?
@@ -52,7 +52,7 @@ class Agent(object):
         self.views = views
         self.needs_reboot = needs_reboot
         self.agent_status = agent_status
-        self.production_level = production_level
+        self.environment = environment
         self.machine_type = machine_type
         self.rebooted = rebooted
         self.hardware = hardware
@@ -77,8 +77,8 @@ class Agent(object):
         if not self.needs_reboot:
             self.needs_reboot = AgentDefaults.NEEDS_REBOOT
 
-        if not self.production_level:
-            self.production_level = AgentDefaults.PRODUCTION_LEVEL
+        if not self.environment:
+            self.environment = AgentDefaults.ENVIRONMENT
 
         if not self.agent_status:
             self.agent_status = AgentDefaults.AGENT_STATUS
@@ -224,7 +224,7 @@ class Agent(object):
                         "memory": 25165824
                     },
                     "display_name": null,
-                    "production_level": "Production",
+                    "environment": "Production",
                     "views": [
                         "global"
                     ],
@@ -250,7 +250,7 @@ class Agent(object):
             AgentKeys.OsString: self.os_string,
             AgentKeys.NeedsReboot: self.needs_reboot,
             AgentKeys.AgentStatus: self.agent_status,
-            AgentKeys.ProductionLevel: self.production_level,
+            AgentKeys.Environment: self.environment,
             AgentKeys.Rebooted: self.rebooted,
             AgentKeys.Hardware: self.hardware,
             AgentKeys.BitType: self.bit_type,

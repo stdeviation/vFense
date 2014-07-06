@@ -21,15 +21,15 @@ logger = logging.getLogger('rvapi')
 
 @time_it
 @db_create_close
-def fetch_production_levels_from_agent(view_name, conn=None):
-    """Retrieve all the production levels that is in the database
+def fetch_environments_from_agent(view_name, conn=None):
+    """Retrieve all the environments that is in the database
     Args:
         view_name (str): Name of the view, where the agent is located
 
     Basic Usage:
-        >>> from vFense.core.agent._db import fetch_production_levels_from_agent
+        >>> from vFense.core.agent._db import fetch_environments_from_agent
         >>> view_name = 'default'
-        >>> fetch_production_levels_from_agent(view_name)
+        >>> fetch_environments_from_agent(view_name)
 
     Returns:
         List of Production levels in the system
@@ -44,9 +44,9 @@ def fetch_production_levels_from_agent(view_name, conn=None):
             r
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.ViewName)
-            .pluck(AgentKeys.ProductionLevel)
+            .pluck(AgentKeys.Environment)
             .distinct()
-            .map(lambda x: x[AgentKeys.ProductionLevel])
+            .map(lambda x: x[AgentKeys.Environment])
             .run(conn)
         )
 
@@ -416,14 +416,14 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_agent
         >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
-        >>> keys_to_pluck = ['production_level', 'needs_reboot']
+        >>> keys_to_pluck = ['environment', 'needs_reboot']
         >>> fetch_agent(agent_id, keys_to_pluck)
 
     Return:
         Dictionary of the agent data
         {
             u'agent_id': u'52faa1db-290a-47a7-a4cf-e4ad70e25c38',
-            u'production_level': u'Development'
+            u'environment': u'Development'
         }
     """
     data = {}
@@ -498,7 +498,7 @@ def update_agent(agent_id, agent_data):
     Basic Usage::
         >>> from vFense.core.agent._db import update_agent
         >>> agent_id = '0a1f9a3c-9200-42ef-ba63-f4fd17f0644c'
-        >>> data = {'production_level': 'Development', 'needs_reboot': 'no'}
+        >>> data = {'environment': 'Development', 'needs_reboot': 'no'}
         >>> update_agent(agent_id, data)
 
     Return:

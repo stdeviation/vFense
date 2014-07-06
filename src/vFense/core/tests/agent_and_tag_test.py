@@ -88,10 +88,10 @@ class AgentsAndTagsTests(unittest.TestCase):
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentCodes.AgentUpdated)
 
-    def test_d_edit2_agent_production_level(self):
+    def test_d_edit2_agent_environment(self):
         agent_ids = fetch_agent_ids_in_views()
         manager = AgentManager(agent_ids[0])
-        results = manager.edit_production_level('Development')
+        results = manager.edit_environment('Development')
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == AgentCodes.AgentUpdated)

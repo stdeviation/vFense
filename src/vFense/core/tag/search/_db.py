@@ -47,7 +47,7 @@ class FetchTags(object):
 
         self.keys_to_pluck = [
             TagKeys.TagName, TagKeys.TagId, TagKeys.ViewName,
-            TagKeys.ProductionLevel, AgentCommonKeys.AVAIL_UPDATES,
+            TagKeys.Environment, AgentCommonKeys.AVAIL_UPDATES,
             AgentCommonKeys.AVAIL_VULN, AgentCollections.Agents
         ]
 
@@ -138,7 +138,7 @@ class FetchTags(object):
                 .zip()
                 .pluck(
                     TagKeys.TagName, TagKeys.TagId,
-                    TagKeys.ViewName, TagKeys.ProductionLevel
+                    TagKeys.ViewName, TagKeys.Environment
                 )
                 .run(conn)
             )
@@ -245,7 +245,7 @@ class FetchTags(object):
         Basic Usage:
             >>> from vFense.core.tag.search._db import FetchTags
             >>> search_tags = FetchTags(view_name='default')
-            >>> search_tags.by_key_val('production_level', 'Development')
+            >>> search_tags.by_key_val('environment', 'Development')
 
         Returns:
             List of dictionairies.
@@ -297,7 +297,7 @@ class FetchTags(object):
             >>> from vFense.core.tag.search._db import FetchTags
             >>> search_tags = FetchTags(view_name='default')
             >>> search_tags.by_key_val(
-                'production_level', 'Development', 'Test'
+                'environment', 'Development', 'Test'
             )
 
         Returns:

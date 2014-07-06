@@ -145,7 +145,7 @@ class AgentManager(object):
                         "memory": 25165824
                     },
                     "display_name": null,
-                    "production_level": "production",
+                    "environment": "production",
                     "os_code": "windows",
                     "version": "6.1.7601",
                     "os_string": "Windows 7 Professional N"
@@ -335,7 +335,7 @@ class AgentManager(object):
                         "memory": 25165824
                     },
                     "display_name": null,
-                    "production_level": "production",
+                    "environment": "production",
                     "os_code": "windows",
                     "version": "6.1.7601",
                     "os_string": "Windows 7 Professional N"
@@ -989,17 +989,17 @@ class AgentManager(object):
         return results
 
     @time_it
-    def edit_production_level(self, production_level):
+    def edit_environment(self, environment):
         """Change current or default view.
         Args:
-            production_level (str): Production level you assigned to this
+            environment (str): Production level you assigned to this
                 agent.
 
         Basic Usage:
             >>> from vFense.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
-            >>> manager.edit_production_level('Development')
+            >>> manager.edit_environment('Development')
 
         Returns:
             >>>
@@ -1017,7 +1017,7 @@ class AgentManager(object):
                 "generic_status_code": 1008
             }
         """
-        agent = Agent(production_level=production_level)
+        agent = Agent(environment=environment)
         results = self.__edit_properties(agent)
         return results
 
