@@ -64,8 +64,12 @@ The various api base calls.
         )
         if config_exists:
             parser.add_argument(
-                'api', help='Api to run',
-                choices=['users', 'user']
+                'api', help='The api you want to run',
+                choices=[
+                    'users', 'user', 'view', 'views', 'group', 'groups',
+                    'agent', 'agents', 'tag', 'tags', 'schedule',
+                    'operations', 'dashboard'
+                ]
             )
             args = parser.parse_args(sys.argv[1:2])
             if not hasattr(self, args.api):
@@ -78,6 +82,106 @@ The various api base calls.
             config_file = os.path.join(os.getenv('HOME'), '.vFense.config')
             print 'Missing config {0}'.format(config_file)
             exit(1)
+
+#######################AGENTS MANAGEMENT######################################
+
+    def agents(self):
+        self.agents_url = os.path.join(self.url, 'api/v1/agents')
+        parser = argparse.ArgumentParser(
+            description='Search for agents and delete agents'
+        )
+        parser.add_argument(
+            'command', help='commands available for agents',
+            choices=['search', 'delete']
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.command == 'search':
+            self.agents_search()
+
+        elif args.command == 'delete':
+            self.delete_agents()
+
+
+    def delete_agents(self):
+        parser = argparse.ArgumentParser(
+            description='''
+        Delete 1 or multiple agents from vFense. This will send the uninstall
+        operation to the agent.
+        '''
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--agent_ids', dest='agent_ids', action='append',
+                help='The ids of the agents, you are deleting.'
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.delete(
+                    self.agents_url, data=json.dumps(pay_load),
+                    verify=False, headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def agents_search(self):
+
+        parser = self._common_search_parser()
+        parser.description = """Search for agents"""
+        parser.add_argument(
+            '--sort_by', dest='sort_by', default='computer_name', type=str,
+            help='The key that will be used to sort by.', choices=[
+                'computer_name', 'display_name', 'os_string',
+                'os_code', 'agent_status', 'available_updates',
+                'available_vulnerabilities' 'production_level',
+                'last_agent_update'
+            ]
+        )
+        parser.add_argument(
+            '--query', dest='query',
+            help='''The regular expression of the computer name
+            or display name you are searching for.'''
+        )
+        parser.add_argument(
+            '--ip', dest='ip',
+            help='''The regular expression of the ip address you are
+            searching for.'''
+        )
+        parser.add_argument(
+            '--mac', dest='mac',
+            help='''The regular expression of the mac address you are
+            searching for.'''
+        )
+        parser.add_argument(
+            '--fkey', dest='fkey',
+            help='''The property you want to filter by. This option is only
+            used with the fval option''',
+            choices=[
+                'os_string', 'os_code', 'agent_status',  'production_level'
+            ]
+        )
+        parser.add_argument(
+            '--fval', dest='fval',
+            help='''The value you are filtering by. This option is only used
+            with the fkey option'''
+        )
+        args = parser.parse_args(sys.argv[3:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.agents_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content['data'], indent=4)
+
+
+#######################USER MANAGEMENT######################################
 
     def user(self):
         self.users_url = os.path.join(self.url, 'api/v1/user')
@@ -235,6 +339,7 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
+#######################USERS MANAGEMENT######################################
 
     def users(self):
         self.users_url = os.path.join(self.url, 'api/v1/users')
@@ -267,15 +372,16 @@ The various api base calls.
                 help='The names of the users, you are deleting.'
             )
             vfense = authenticate(self.username, self.password, self.url)
-            if vfense.ok:
-                data = (
-                    SESSION.delete(
-                        self.users_url, verify=False,
-                        headers=HEADERS, cookies=JAR
-                    )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.delete(
+                    self.users_url, data=json.dumps(pay_load),
+                    verify=False, headers=HEADERS, cookies=JAR
                 )
-                content = json.loads(data.content)
-                print json.dumps(content, indent=4)
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def user_create(self):
@@ -365,6 +471,23 @@ The various api base calls.
             )
             content = json.loads(data.content)
             print json.dumps(content['data'], indent=4)
+
+
+    def _common_search_parser(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument(
+            '--count', dest='count', default=30, type=int,
+            help='The max amount of results to return with this query.'
+        )
+        parser.add_argument(
+            '--offset', dest='offset', default=0, type=int,
+            help='From where the search begins.'
+        )
+        parser.add_argument(
+            '--sort', dest='sort', default='asc', type=str,
+            choices=['asc', 'desc'], help='From where the search begins.'
+        )
+        return parser
 
 
 if __name__ == '__main__':
