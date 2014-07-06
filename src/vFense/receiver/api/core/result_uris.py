@@ -11,7 +11,6 @@ from vFense.core.queue.uris import get_result_uris
 from vFense.result.error_messages import GenericResults
 from vFense.result._constants import AgentApiResultKeys
 from vFense.core.operations._constants import AgentOperations
-from vFense.result.agent_results import AgentResults
 from vFense.receiver.api.decorators import (
     authenticate_token, agent_results_message
 )
@@ -45,7 +44,7 @@ class AgentResultURIs(BaseHandler):
         operation[AgentApiResultKeys.OPERATION] = (
             AgentOperations.REFRESH_RESPONSE_URIS
         )
-        results = {AgentApiResultKeys.OPERATIONS: operation}
+        results = {AgentApiResultKeys.OPERATIONS: [operation]}
         return results
 
 class ResultURIs(BaseHandler):
@@ -74,7 +73,7 @@ class ResultURIs(BaseHandler):
         operation[AgentApiResultKeys.OPERATION] = (
             AgentOperations.REFRESH_RESPONSE_URIS
         )
-        results = {AgentApiResultKeys.OPERATIONS: operation}
+        results = {AgentApiResultKeys.OPERATIONS: [operation]}
         return results
 
 class AgentResultURIsV2(AgentBaseHandler):
@@ -90,7 +89,7 @@ class AgentResultURIsV2(AgentBaseHandler):
         operation[AgentApiResultKeys.OPERATION] = (
             AgentOperations.REFRESH_RESPONSE_URIS
         )
-        results = {AgentApiResultKeys.OPERATIONS: operation}
+        results = {AgentApiResultKeys.OPERATIONS: [operation]}
         return results
 
 class ResultURIsV2(AgentBaseHandler):
@@ -106,5 +105,5 @@ class ResultURIsV2(AgentBaseHandler):
         operation[AgentApiResultKeys.OPERATION] = (
             AgentOperations.REFRESH_RESPONSE_URIS
         )
-        results = {AgentApiResultKeys.OPERATIONS: operation}
+        results = {AgentApiResultKeys.OPERATIONS: [operation]}
         return results

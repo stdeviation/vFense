@@ -315,7 +315,6 @@ class ViewsHandler(BaseHandler):
         method = self.request.method
         all_views = None
         user = UserManager(active_user)
-        #active_view = user.get_attribute(UserKeys.CurrentView)
         is_global = user.get_attribute(UserKeys.Global)
         view_context = self.get_argument('view_context', None)
         parent_view = self.get_argument('parent_view', None)
@@ -432,7 +431,7 @@ class ViewsHandler(BaseHandler):
             agent_queue_ttl = (
                 self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, 10)
             )
-            agent_queue_ttl = (
+            time_zone = (
                 self.arguments.get(ViewApiArguments.TIME_ZONE, 'UTC')
             )
             view = View(

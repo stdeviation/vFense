@@ -109,7 +109,7 @@ class FetchViews(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -123,7 +123,7 @@ class FetchViews(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
                 .run(conn)
             )
 
@@ -181,7 +181,7 @@ class FetchViews(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -198,7 +198,7 @@ class FetchViews(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
                 .run(conn)
             )
 
@@ -256,7 +256,7 @@ class FetchViews(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -279,7 +279,7 @@ class FetchViews(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
                 .run(conn)
             )
 
@@ -338,7 +338,7 @@ class FetchViews(object):
         count = 0
         data = []
         base_filter = self._set_base_query()
-        map_hash = self._set_map_hash()
+        merge_hash = self._set_merge_hash()
 
         try:
             count = (
@@ -361,7 +361,7 @@ class FetchViews(object):
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
-                .map(map_hash)
+                .merge(merge_hash)
                 .run(conn)
             )
 
@@ -391,16 +391,10 @@ class FetchViews(object):
 
         return base
 
-    def _set_map_hash(self):
-        map_hash = (
+    def _set_merge_hash(self):
+        merge_hash = (
             lambda x:
             {
-                ViewKeys.ViewName: x[ViewKeys.ViewName],
-                ViewKeys.CpuThrottle: x[ViewKeys.CpuThrottle],
-                ViewKeys.NetThrottle: x[ViewKeys.NetThrottle],
-                ViewKeys.ServerQueueTTL: x[ViewKeys.ServerQueueTTL],
-                ViewKeys.AgentQueueTTL: x[ViewKeys.AgentQueueTTL],
-                ViewKeys.PackageUrl: x[ViewKeys.PackageUrl],
                 ViewKeys.Users: (
                     r
                     .expr(x[ViewKeys.Users])
@@ -421,6 +415,4 @@ class FetchViews(object):
             }
         )
 
-        return map_hash
-
-
+        return merge_hash
