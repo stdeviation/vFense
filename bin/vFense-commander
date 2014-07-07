@@ -13,6 +13,17 @@ JAR = cookielib.CookieJar()
 HEADERS = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 def get_credentials(config=None):
+    """Retrieve the credentials from the config file
+    The default config file should be read from your home directory.
+    Notes:
+        Config file /home/vFense/.vFense.config
+        [vFense]
+        user_name: global_admin
+        password: vFense#123
+
+    Returns:
+        Tuple (username, password, url)
+    """
     Config = ConfigParser.ConfigParser()
     file_exists = False
     if not config:
@@ -35,6 +46,15 @@ def get_credentials(config=None):
     return(username, password, url, file_exists)
 
 def authenticate(username, password, url):
+    """Authenticates against the vFense server
+    Args:
+        username (str): The username.
+        password (str): The password.
+        url (str): The vFense url.
+
+    Returns:
+        Request object
+    """
     login_url = os.path.join(url, 'login')
     creds = {
         'username': username,
@@ -98,16 +118,25 @@ The various api base calls.
         )
         parser.add_argument(
             'command', help='commands available for agents',
-            choices=['search', 'delete', 'edit', 'get']
+            choices=[
+                'search', 'delete', 'delete_multiple',
+                'edit', 'get', 'apps'
+            ]
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.command == 'search':
-            self.agents_id(args.command)
+            self.agents_search()
+
+        elif args.command == 'delete_multiple':
+            self.delete_agents()
 
         elif args.command == 'delete':
             self.agent_id(args.command)
 
         elif args.command == 'get':
+            self.agent_id(args.command)
+
+        elif args.command == 'apps':
             self.agent_id(args.command)
 
     def agent_id(self, command):
@@ -121,23 +150,27 @@ The various api base calls.
         args = parser.parse_args(sys.argv[3:4])
         agent_id = args.agent_id
         self.agent_url = os.path.join(self.url, 'api/v1/agent', agent_id)
+        self.agent_id = agent_id
         if command == 'get':
-            self.agent_get(agent_id)
+            self.agent_get()
 
         elif command == 'edit':
-            self.agent_edit(agent_id)
+            self.agent_edit()
 
         elif command == 'delete':
-            self.agent_delete(agent_id)
+            self.agent_delete()
 
         elif command == 'add_to':
-            self.add_views_or_groups_to_user(agent_id)
+            self.add_views_or_groups_to_user()
 
         elif command == 'remove_from':
-            self.delete_views_or_groups_from_user(agent_id)
+            self.delete_views_or_groups_from_user()
+
+        elif command == 'apps':
+            self.agent_apps()
 
 
-    def agent_get(self, agent_id):
+    def agent_get(self):
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -149,8 +182,8 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
-    def agent_edit(self, agent_id):
-        msg = 'Edit the attributes of this agent {0}'.format(agent_id)
+    def agent_edit(self):
+        msg = 'Edit the attributes of this agent {0}'.format(self.agent_id)
         parser = argparse.ArgumentParser(description=msg)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
@@ -188,6 +221,18 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
+    def delete_agent(self):
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.delete(
+                    self.agent_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
     def delete_agents(self):
         parser = argparse.ArgumentParser(
@@ -265,6 +310,101 @@ The various api base calls.
             )
             content = json.loads(data.content)
             print json.dumps(content['data'], indent=4)
+
+    def agent_apps(self):
+        parser = argparse.ArgumentParser(
+            description='''Search installed software, available updates.
+            and install updates.'''
+        )
+        parser.add_argument(
+            'command', type=str,
+                help='''Commands you want to perform with applications.''',
+                choices=['search', 'install'], default=None
+            )
+        args = parser.parse_args(sys.argv[4:5])
+        command = args.command
+        if command == 'search':
+            self.agent_apps_type(command)
+
+    def agent_apps_type(self, command):
+        parser = argparse.ArgumentParser(
+            description='''Which type of applications you want to manage.'''
+        )
+        parser.add_argument(
+            'app_type', type=str,
+                help='''The application type.''',
+                choices=['os', 'custom', 'supported'], default='os'
+            )
+        args = parser.parse_args(sys.argv[5:6])
+        app_type = args.app_type
+        if app_type:
+            self.agent_apps_status(app_type)
+
+
+    def agent_apps_status(self, app_type):
+        parser = argparse.ArgumentParser(
+            description='''The status of the applications you want to search .
+            for. installed or available.'''
+        )
+        parser.add_argument(
+            'status', type=str,
+                help='''The status of the applications you are searching
+                for.''',
+                choices=['installed', 'available', 'pending']
+            )
+        args = parser.parse_args(sys.argv[6:7])
+        status = args.status
+        if status:
+            self.agent_apps_search(status, app_type)
+
+    def agent_apps_search(self, status, app_type):
+        parser = self._common_search_parser()
+        self.agent_apps_url = (
+            os.path.join(
+                self.url, 'api/v1/agent', self.agent_id, 'apps', app_type
+            )
+        )
+        parser.description = (
+        '''Search applications by name, or filter by severity
+            or filter by vulnerability or sort by release_date, etc...'''
+        )
+        parser.add_argument(
+            '--sort_by', dest='sort_by', default='app_name', type=str,
+            help='The key that will be used to sort by.', choices=[
+                'app_name', 'version', 'release_date', 'rv_severity',
+                'vulnerability_id'
+            ]
+        )
+        parser.add_argument(
+            '--severity', dest='severity', default=None, type=str,
+            help='The severity of the applications you want to filer on.',
+            choices=['Critical', 'Recommended', 'Optional']
+        )
+        parser.add_argument(
+            '--query', dest='query', default=None, type=str,
+            help='The regex of the application name you are searching for.',
+        )
+        parser.add_argument(
+            '--show_hidden', dest='hidden', default='false',
+            help='Show hidden applications, default is False.',
+        )
+        parser.add_argument(
+            '--vuln', dest='vuln', default=False, action='store_true',
+            help='Only show applications with vulnerabilities.',
+        )
+        args = parser.parse_args(sys.argv[7:])
+        pay_load = vars(args)
+        pay_load['status'] = status
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.agent_apps_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
 #######################USER MANAGEMENT######################################
@@ -536,22 +676,8 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
     def users_search(self):
-
-        parser = argparse.ArgumentParser(
-            description='Search for users.'
-        )
-        parser.add_argument(
-            '--count', dest='count', default=30, type=int,
-            help='The max amount of results to return with this query.'
-        )
-        parser.add_argument(
-            '--offset', dest='offset', default=0, type=int,
-            help='From where the search begins.'
-        )
-        parser.add_argument(
-            '--sort', dest='sort', default='asc', type=str,
-            choices=['asc', 'desc'], help='From where the search begins.'
-        )
+        parser = self._common_search_parser()
+        parser.description = 'Search for users.'
         parser.add_argument(
             '--sort_by', dest='sort_by', default='view_name', type=str,
             choices=['view_name'], help='The key that will be used to sort by.'
@@ -567,7 +693,7 @@ The various api base calls.
                 )
             )
             content = json.loads(data.content)
-            print json.dumps(content['data'], indent=4)
+            print json.dumps(content, indent=4)
 
 
     def _common_search_parser(self):
