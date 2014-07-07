@@ -51,7 +51,7 @@ class FetchAgents(object):
             AgentKeys.OsString, AgentKeys.AgentId, AgentKeys.AgentStatus,
             AgentKeys.NeedsReboot, AgentKeys.Environment,
             AgentCommonKeys.AVAIL_UPDATES, AgentCommonKeys.AVAIL_VULN,
-            AgentKeys.LastAgentUpdate
+            AgentKeys.LastAgentUpdate, AgentKeys.DateAdded
         ]
 
         if sort == SortValues.ASC:
@@ -167,11 +167,11 @@ class FetchAgents(object):
                     |
                     (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
                 )
-                .pluck(self.keys_to_pluck)
                 .order_by(self.sort(self.sort_key))
                 .skip(self.offset)
                 .limit(self.count)
                 .merge(merge_query)
+                .pluck(self.keys_to_pluck)
                 .run(conn)
             )
 
