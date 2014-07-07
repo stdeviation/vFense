@@ -313,8 +313,7 @@ The various api base calls.
 
     def agent_apps(self):
         parser = argparse.ArgumentParser(
-            description='''Search installed software, available updates.
-            and install updates.'''
+            description='''Search or Install applications'''
         )
         parser.add_argument(
             'command', type=str,
@@ -323,7 +322,7 @@ The various api base calls.
             )
         args = parser.parse_args(sys.argv[4:5])
         command = args.command
-        if command == 'search':
+        if command:
             self.agent_apps_type(command)
 
     def agent_apps_type(self, command):
@@ -350,27 +349,28 @@ The various api base calls.
         parser = argparse.ArgumentParser(
             description='''Install applications/updates'''
         )
-        parser.add_argument(
+        install  = parser.add_argument_group('Install arguments')
+        install.add_argument(
             '--app_id', type=str, action='append',
                 help='''The id of the applications you are installing'''
         )
-        parser.add_argument(
+        install.add_argument(
             '--restart', type=str, default='none',
             help='''whether to restart the agent after the updates''',
             choices=['none', 'force', 'needed']
         )
-        parser.add_argument(
+        install.add_argument(
             '--cpu_throttle', type=str, default='normal',
             help='''whether to throttle the cpu on the agent during
             the updates''',
             choices=['idle', 'below_normal', 'normal', 'above_normal', 'high']
         )
-        parser.add_argument(
+        install.add_argument(
             '--net_throttle', type=int, default=0,
             help='''whether to throttle the bandwith on the agent during
             the download of the updates''',
         )
-        jobs = parser.add_argument_group('Schedule options')
+        jobs = parser.add_argument_group('Schedule arguments')
         jobs.add_argument(
             '--job_name', type=str, default=None,
             help='''The name of the scheduled job'''
