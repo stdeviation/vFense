@@ -11,20 +11,9 @@ from vFense.plugins.patching.search.base_search import RetrieveAppsBase
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys
 )
-from vFense.plugins.patching._constants import (
-    CommonAppKeys, CommonSeverityKeys
-)
 from vFense.core._constants import (
     SortValues, DefaultQueryValues, CommonKeys
 )
-
-from vFense.result.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
-from vFense.result._constants import (
-    ApiResultKeys
-)
-
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
