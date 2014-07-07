@@ -80,6 +80,46 @@ class FetchAppsByAgentId(object):
 
 
     @db_create_close
+    def all(self, conn=None):
+        count = 0
+        data = []
+        base_filter = self._set_base_filter()
+        try:
+            base = (
+                base_filter
+            )
+
+            if self.show_hidden == CommonKeys.NO:
+                base = (
+                    base
+                    .filter(
+                        {
+                            DbCommonAppKeys.Hidden: CommonKeys.NO
+                        }
+                    )
+                )
+
+            data = list(
+                base
+                .order_by(self.sort(self.sort_key))
+                .skip(self.offset)
+                .limit(self.count)
+                .run(conn)
+            )
+
+            count = (
+                base
+                .count()
+                .run(conn)
+            )
+
+        except Exception as e:
+            logger.exception(e)
+
+        return(count, data)
+
+
+    @db_create_close
     def by_status(self, status, conn=None):
         count = 0
         data = []
