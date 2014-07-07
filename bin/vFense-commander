@@ -337,7 +337,7 @@ The various api base calls.
             )
         args = parser.parse_args(sys.argv[5:6])
         app_type = args.app_type
-        if app_type:
+        if app_type and command == 'search':
             self.agent_apps_status(app_type)
 
 
