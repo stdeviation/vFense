@@ -43,7 +43,6 @@ logger = logging.getLogger('rvapi')
 class GroupHandler(BaseHandler):
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -67,6 +66,7 @@ class GroupHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_group(self, group_id, is_global):
         fetch_groups = RetrieveGroups(is_global=is_global)
         results = fetch_groups.by_id(group_id)
@@ -76,7 +76,6 @@ class GroupHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -131,23 +130,29 @@ class GroupHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.ADD_VIEWS_TO_GROUP, vFenseObjects.GROUP)
     def add_views(self, group, views):
         results = group.add_views(views)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.ADD_USERS_TO_GROUP, vFenseObjects.GROUP)
     def add_users(self, group, users):
         results = group.add_users(users)
         return results
 
-    @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
     def remove_views(self, group, views, force):
         results = group.remove_views(views, force)
         return results
 
-    @log_operation(AdminActions.REMOVE_USERS_FROM_GROUP, vFenseObjects.GROUP)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_USERS_FROM_GROUP, vFenseObjects.GROUP)
     def remove_users(self, group, users, force):
         results = group.remove_users(users, force)
         return results
@@ -190,7 +195,6 @@ class GroupHandler(BaseHandler):
 class GroupsHandler(BaseHandler):
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -279,16 +283,19 @@ class GroupsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_all_groups(self, fetch_groups):
         results = fetch_groups.all()
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_all_groups_by_regex(self, fetch_groups, regex):
         results = fetch_groups.by_regex(regex)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_group_by_id(self, fetch_groups, group_id):
         results = fetch_groups.by_id(group_id)
         return results
@@ -296,7 +303,6 @@ class GroupsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -357,8 +363,9 @@ class GroupsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-    @log_operation(AdminActions.CREATE_GROUP, vFenseObjects.GROUP)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.CREATE_GROUP, vFenseObjects.GROUP)
     def create_group(self, group):
         manager = GroupManager()
         results = manager.create(group)
@@ -366,7 +373,6 @@ class GroupsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -393,8 +399,9 @@ class GroupsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_GROUPS, vFenseObjects.GROUP)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_GROUPS, vFenseObjects.GROUP)
     def remove_groups(self, group_ids, force=False):
         end_results = {}
         groups_deleted = []

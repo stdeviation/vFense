@@ -143,7 +143,6 @@ class FetchSupportedOperatingSystems(BaseHandler):
 
 class AgentsHandler(BaseHandler):
     @authenticated_request
-    @check_permissions(Permissions.READ)
     def get(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -216,41 +215,49 @@ class AgentsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents(self, search):
         results = search.all()
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_name(self, search, name):
         results = search.by_name(name)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_ip(self, search, ip):
         results = search.by_ip(ip)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_mac(self, search, mac):
         results = search.by_mac(mac)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_key_val(self, search, key, val):
         results = search.by_key_and_val(key, val)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_key_val_and_query(self, search, key, val, query):
         results = search.by_key_and_val(key, val, query)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_ip_and_filter(self, search, ip, key, val):
         results = search.by_ip_and_filter(ip, key, val)
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_agents_by_mac_and_filter(self, search, mac, key, val):
         results = search.by_mac_and_filter(mac, key, val)
         return results
@@ -312,6 +319,7 @@ class AgentsHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
+    @log_operation(AdminActions.ASSIGN_AGENT_TOKEN, vFenseObjects.AGENT)
     def new_token(self, operation, agents, token):
         for agent in agents:
             manager = AgentManager(agent)

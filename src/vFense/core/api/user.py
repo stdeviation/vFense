@@ -93,7 +93,6 @@ class UserHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, username):
         self.active_user = self.get_current_user()
         uri = self.request.uri
@@ -148,26 +147,30 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.ADD_USER_TO_VIEW, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.ADD_USER_TO_VIEW, vFenseObjects.USER)
     def add_to_views(self, user, views):
         results = user.add_to_views(views)
         return results
 
-    @log_operation(AdminActions.ADD_USER_TO_GROUP, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.ADD_USER_TO_GROUP, vFenseObjects.USER)
     def add_to_groups(self, user, group_ids):
         results = user.add_to_groups(group_ids)
         return results
 
-    @log_operation(AdminActions.REMOVE_USER_FROM_VIEW, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_USER_FROM_VIEW, vFenseObjects.USER)
     def remove_from_views(self, user, views):
         results = user.remove_from_views(views)
         return results
 
-    @log_operation(AdminActions.REMOVE_USER_FROM_GROUP, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.REMOVE_USER_FROM_GROUP, vFenseObjects.USER)
+    @check_permissions(Permissions.ADMINISTRATOR)
     def remove_from_groups(self, user, group_ids, force):
         results = user.remove_from_groups(group_ids, force)
         return results
@@ -175,7 +178,6 @@ class UserHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, username):
         active_user = self.get_current_user()
         self.uri = self.request.uri
@@ -251,30 +253,35 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.EDIT_USER_PASSWORD, vFenseObjects.USER)
     def change_password(self, orig_password, new_password):
         results = self.manager.change_password(orig_password, new_password)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.RESET_USER_PASSWORD, vFenseObjects.USER)
     def reset_password(self, password):
         results = self.manager.reset_password(password)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.EDIT_USER_FULL_NAME, vFenseObjects.USER)
     def change_full_name(self, username, full_name):
         results = self.manager.edit_full_name(full_name)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.EDIT_USER_EMAIL, vFenseObjects.USER)
     def change_email(self, username, email):
         results = self.manager.edit_email(email)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.EDIT_CURRENT_VIEW, vFenseObjects.USER)
     def change_current_view(self, username, view):
         user = User(username, current_view=view)
@@ -282,6 +289,7 @@ class UserHandler(BaseHandler):
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.EDIT_DEFAULT_VIEW, vFenseObjects.USER)
     def change_default_view(self, username, view):
         user = User(username, default_view=view)
@@ -289,6 +297,7 @@ class UserHandler(BaseHandler):
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
     def toggle_status(self):
         results = self.manager.toggle_status()
@@ -296,7 +305,6 @@ class UserHandler(BaseHandler):
 
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, username):
         active_user = self.get_current_user()
         self.uri = self.request.uri
@@ -319,8 +327,9 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_USER, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_USER, vFenseObjects.USER)
     def remove_user(self):
         results = self.manager.remove()
         return results
@@ -329,7 +338,6 @@ class UserHandler(BaseHandler):
 class UsersHandler(BaseHandler):
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -419,23 +427,25 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_all_users(self, fetch_users):
         results = fetch_users.all()
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_all_users_by_regex(self, fetch_users, username):
         results = fetch_users.by_regex(username)
         return results
 
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     def get_user_by_name(self, fetch_users, username):
         results = fetch_users.by_name(username)
         return results
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         active_user = self.get_current_user()
         active_view = (
@@ -488,8 +498,9 @@ class UsersHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.CREATE_USER, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.CREATE_USER, vFenseObjects.USER)
     def create_user(self, username, password,
                     fullname, email, view_context,
                     enabled, is_global, group_ids):
@@ -505,7 +516,6 @@ class UsersHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -539,8 +549,9 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
 
-    @log_operation(AdminActions.REMOVE_USERS, vFenseObjects.USER)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_USERS, vFenseObjects.USER)
     def remove_users(self, usernames, force=False):
         end_results = {}
         users_deleted = []

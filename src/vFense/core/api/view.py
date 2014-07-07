@@ -133,26 +133,26 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
     def add_users(self, view, users):
         results = view.add_users(users)
         return results
 
-    @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.ADD_GROUPS_TO_VIEW, vFenseObjects.VIEW)
     def add_groups(self, view, group_ids):
         results = view.add_groups(group_ids)
         return results
 
-    @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.REMOVE_USERS_FROM_VIEW, vFenseObjects.VIEW)
     def remove_users(self, view, users):
         results = view.remove_users(users)
         return results
 
-    @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.REMOVE_GROUPS_FROM_VIEW, vFenseObjects.VIEW)
     def remove_groups(self, view, group_ids):
         results = view.remove_groups(group_ids)
         return results
@@ -292,8 +292,8 @@ class ViewHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
     def remove_view(self, view, delete_agents, view_name):
         if delete_agents:
             view.delete_agents()
@@ -463,8 +463,8 @@ class ViewsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
     def create_view(self, view):
         manager = ViewManager(view.name)
         results = manager.create(view)
@@ -502,8 +502,8 @@ class ViewsHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEW)
     @results_message
+    @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEW)
     def remove_views(self, view_names):
         end_results = {}
         views_deleted = []

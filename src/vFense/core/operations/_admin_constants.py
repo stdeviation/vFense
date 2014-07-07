@@ -33,6 +33,7 @@ class AdminActions():
     ADD_VIEWS_TO_AGENT = 'add views to agent'
     ADD_VIEWS_TO_AGENTS = 'add views to agents'
     ADD_AGENT_TO_TAG = 'add agent to tag'
+    ADD_AGENTS_TO_TAG = 'add agents to tag'
     ###REMOVE
     REMOVE_GROUP = 'remove group'
     REMOVE_GROUPS = 'remove groups'
@@ -57,6 +58,7 @@ class AdminActions():
     REMOVE_USERS_FROM_VIEW = 'remove users from view'
     REMOVE_GROUPS_FROM_VIEW = 'remove groups from view'
     REMOVE_AGENT_FROM_TAG = 'remove agent from tag'
+    REMOVE_AGENTS_FROM_TAG = 'remove agents from tag'
     ###EDIT
     EDIT_GROUP_EMAIL = 'edit group email'
     EDIT_GROUP_PERMISSIONS = 'edit group permissions'
@@ -77,6 +79,8 @@ class AdminActions():
     EDIT_AGENT_DISPLAY_NAME = 'edit agent display name'
     EDIT_AGENT_ENVIRONMENT = 'edit agent environment'
     EDIT_TIME_ZONE = 'edit time zone'
+    ###ASSIGN
+    ASSIGN_AGENT_TOKEN = 'assign new token'
 
     @staticmethod
     def get_admin_actions():

@@ -135,7 +135,6 @@ class TagsHandler(BaseHandler):
 
     @convert_json_to_arguments
     @authenticated_request
-    @check_permissions(Permissions.CREATE_TAG)
     def post(self):
         username = self.get_current_user()
         active_view = (
@@ -175,6 +174,8 @@ class TagsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.CREATE_TAG)
+    @log_operation(AdminActions.CREATE_TAG, vFenseObjects.TAG)
     def create_tag(self, tag):
         manager = TagManager()
         results = manager.create(tag)
@@ -182,7 +183,6 @@ class TagsHandler(BaseHandler):
 
     @convert_json_to_arguments
     @authenticated_request
-    @check_permissions(Permissions.REMOVE_TAG)
     def delete(self):
         username = self.get_current_user()
         uri = self.request.uri
@@ -207,6 +207,7 @@ class TagsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.REMOVE_TAG)
     @log_operation(AdminActions.REMOVE_TAGS, vFenseObjects.TAG)
     def remove_tags(self, tags):
         if not isinstance(tags, list):
@@ -271,7 +272,6 @@ class TagsHandler(BaseHandler):
 
 class TagHandler(BaseHandler):
     @authenticated_request
-    @check_permissions(Permissions.READ)
     def get(self, tag_id):
         username = self.get_current_user()
         active_view = (
@@ -284,6 +284,7 @@ class TagHandler(BaseHandler):
         self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_tag(self, search, tag_id):
         results = search.by_id(tag_id)
         return results
@@ -396,6 +397,7 @@ class TagHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
+    @log_operation(AdminActions.ADD_AGENTS_TO_TAG, vFenseObjects.TAG)
     def add_agents_to_tag(self, manager, agent_ids):
         if not isinstance(agent_ids, list):
             agent_ids = agent_ids.split()
@@ -405,6 +407,7 @@ class TagHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.REMOVE_AGENTS_FROM_TAG)
+    @log_operation(AdminActions.REMOVE_AGENTS_FROM_TAG, vFenseObjects.TAG)
     def remove_agents_from_tag(self, manager, agent_ids):
         if not isinstance(agent_ids, list):
             agent_ids = agent_ids.split()
@@ -438,6 +441,7 @@ class TagHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.REMOVE_TAG)
+    @log_operation(AdminActions.REMOVE_TAG, vFenseObjects.TAG)
     def remove_tag(self, manager):
         results = manager.remove()
         return results
