@@ -337,8 +337,59 @@ The various api base calls.
             )
         args = parser.parse_args(sys.argv[5:6])
         app_type = args.app_type
-        if app_type and command == 'search':
+        if command == 'search':
             self.agent_apps_status(app_type)
+
+        elif command == 'install':
+            self.agent_apps_install(app_type)
+
+    def agent_apps_install(self, app_type):
+        self.agent_apps_url = (
+            os.path.join(self.agent_url, 'apps', app_type)
+        )
+        parser = argparse.ArgumentParser(
+            description='''Install applications/updates'''
+        )
+        parser.add_argument(
+            '--app_id', type=str, action='append',
+                help='''The id of the applications you are installing'''
+        )
+        parser.add_argument(
+            '--restart', type=str, default='none',
+            help='''whether to restart the agent after the updates''',
+            choices=['none', 'force', 'needed']
+        )
+        parser.add_argument(
+            '--cpu_throttle', type=str, default='normal',
+            help='''whether to throttle the cpu on the agent during
+            the updates''',
+            choices=['idle', 'below_normal', 'normal', 'above_normal', 'high']
+        )
+        parser.add_argument(
+            '--net_throttle', type=int, default=0,
+            help='''whether to throttle the bandwith on the agent during
+            the download of the updates''',
+        )
+        jobs = parser.add_argument_group('Schedule options')
+        jobs.add_argument(
+            '--job_name', type=str, default=None,
+            help='''The name of the scheduled job'''
+        )
+        jobs.add_argument(
+            '--run_date', type=float, default=None,
+            help='''The run date in epoch time'''
+        )
+        args = parser.parse_args(sys.argv[6:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.put(
+                    self.agent_apps_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            print data.content
 
 
     def agent_apps_status(self, app_type):
@@ -361,7 +412,7 @@ The various api base calls.
         parser = self._common_search_parser()
         self.agent_apps_url = (
             os.path.join(
-                self.url, 'api/v1/agent', self.agent_id, 'apps', app_type
+                self.agent_url, 'apps', app_type
             )
         )
         parser.description = (
@@ -389,7 +440,7 @@ The various api base calls.
             help='Show hidden applications, default is False.',
         )
         parser.add_argument(
-            '--vuln', dest='vuln', default=False, action='store_true',
+            '--vuln', dest='vuln', default=None, action='store_true',
             help='Only show applications with vulnerabilities.',
         )
         args = parser.parse_args(sys.argv[7:])
@@ -403,8 +454,7 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            content = json.loads(data.content)
-            print json.dumps(content, indent=4)
+            print data.content
 
 
 #######################USER MANAGEMENT######################################

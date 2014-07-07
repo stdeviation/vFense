@@ -145,7 +145,8 @@ def results_message(fn):
         elif (
                 generic_status_code == GenericCodes.InvalidId or
                 generic_status_code == GenericFailureCodes.InvalidId or
-                generic_status_code == GenericFailureCodes.InvalidValue or
+                generic_status_code == GenericCodes.InvalidValue or
+                generic_status_code == GenericFailureCodes.InvalidFilterKey or
                 generic_status_code == GenericFailureCodes.InvalidFields):
 
             status = (

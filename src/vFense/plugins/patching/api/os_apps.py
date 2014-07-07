@@ -115,31 +115,31 @@ class AgentIdOsAppsHandler(BaseHandler):
         elif not vuln and severity and status and query:
             results = (
                 self.by_status_and_name_and_sev(
-                    search, query, status, severity
+                    search, status, query, severity
                 )
             )
 
         elif vuln and severity and status and query:
             results = (
                 self.by_status_and_name_and_sev_and_vuln(
-                    search, query, status, severity
+                    search, status, query, severity
                 )
             )
 
         elif not vuln and not severity and status and query:
             results = (
-                self.by_status_and_name(search, query, status)
+                self.by_status_and_name(search, status, query)
             )
 
         elif not severity and status and query and vuln:
             results = (
-                self.by_status_and_name_and_vuln(search, query, status)
+                self.by_status_and_name_and_vuln(search, status, query)
             )
 
         elif severity and query and not status and not vuln:
             results = (
                 self.by_sev_and_name(
-                    search, query, severity
+                    search, severity, query
                 )
             )
 
@@ -222,8 +222,8 @@ class AgentIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -292,8 +292,8 @@ class AgentIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -519,8 +519,8 @@ class TagIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -588,8 +588,8 @@ class TagIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -725,8 +725,8 @@ class AppIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -794,8 +794,8 @@ class AppIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -938,8 +938,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
@@ -1040,8 +1040,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('time', None)
-            label = self.arguments.get('label', None)
+            epoch_time = self.arguments.get('run_date', None)
+            label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
