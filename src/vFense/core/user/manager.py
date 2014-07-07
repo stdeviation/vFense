@@ -1173,22 +1173,15 @@ class UserManager(object):
 
 
     @time_it
-    def change_full_name(self, user):
+    def edit_full_name(self, full_name):
         """Change current or default view.
         Args:
-            user (User): A user instance filled out with the
-                appropriate fields.
+            full_name (str): The full name of the user.
         Basic Usage:
-            >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'global_admin'
-            >>> user = (
-                    User(
-                        username, full_name="Shaolin Administrator",
-                    )
-                )
-            >>> manager = UserManager(username)
-            >>> manager.change_full_name(user)
+            >>> full_name="Shaolin Administrator"
+            >>> manager = UserManager('global_admin')
+            >>> manager.edit_full_name(full_name)
 
         Return:
             Dictionary of the status of the operation.
@@ -1207,62 +1200,23 @@ class UserManager(object):
                 "generic_status_code": 1008
             }
         """
-        status = self.change_full_name.func_name + ' - '
-        results = {}
-
-        if isinstance(user, User):
-            if user.full_name:
-                results = self.__edit_user_properties(user)
-
-            else:
-                msg = (
-                    'Full name was not set in User instance for user %s - '
-                    % (self.username)
-                )
-                results[ApiResultKeys.MESSAGE] = status + msg
-                results[ApiResultKeys.DATA] = []
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.UpdateFailed
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GenericCodes.InvalidValue
-                )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-
-
-        else:
-            msg = 'An instance of User was not passed - ' % (type(user))
-            results[ApiResultKeys.MESSAGE] = status + msg
-            results[ApiResultKeys.DATA] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.UpdateFailed
-            )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GenericCodes.InvalidValue
-            )
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+        user = User(self.username, full_name=full_name)
+        results = self.__edit_user_properties(user)
 
         return results
 
 
     @time_it
-    def change_email(self, user):
-        """Change current or default view.
+    def edit_email(self, email):
+        """Edit the email address.
         Args:
-            user (User): A user instance filled out with the
-                appropriate fields.
+            email (str): Edit the email address.
 
         Basic Usage:
-            >>> from vFense.user import User
             >>> from vFense.user.manager import UserManager
-            >>> username = 'global_admin'
-            >>> user = (
-                    User(
-                        username, email="shaolin_admin@shaolin.com",
-                    )
-                )
-            >>> manager = UserManager(username)
-            >>> manager.change_email(user)
+            >>> email="shaolin_admin@shaolin.com"
+            >>> manager = UserManager('global_admin')
+            >>> manager.edit_email(email)
 
         Returns:
             >>>
@@ -1280,42 +1234,10 @@ class UserManager(object):
                 "generic_status_code": 1008
             }
         """
-        results = {}
-
-        if isinstance(user, User):
-            if user.email:
-                results = self.__edit_user_properties(user)
-
-            else:
-                msg = (
-                    'email was not set in User instance for user %s - '
-                    % (self.username)
-                )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = []
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericCodes.UpdateFailed
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    GenericCodes.InvalidValue
-                )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-
-
-        else:
-            msg = 'An instance of User was not passed - ' % (type(user))
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.UpdateFailed
-            )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                GenericCodes.InvalidValue
-            )
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+        user = User(self.username, email=email)
+        results = self.__edit_user_properties(user)
 
         return results
-
 
     @time_it
     def __edit_user_properties(self, user):

@@ -342,23 +342,17 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
 
 
     def test_j_change_full_name(self):
-        user = User(
-            DefaultUsers.GLOBAL_ADMIN,
-            full_name="Shaolin Administrator"
-        )
-        manager = UserManager(user.name)
-        results = manager.change_full_name(user)
+        full_name="Shaolin Administrator"
+        manager = UserManager(DefaultUsers.GLOBAL_ADMIN)
+        results = manager.edit_full_name(full_name)
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == UserCodes.UserUpdated)
 
     def test_k_change_email(self):
-        user = User(
-            DefaultUsers.GLOBAL_ADMIN,
-            email="shaolin@foo.com"
-        )
-        manager = UserManager(user.name)
-        results = manager.change_email(user)
+        email="shaolin@foo.com"
+        manager = UserManager(DefaultUsers.GLOBAL_ADMIN)
+        results = manager.edit_email(email)
         print dumps(results, indent=4)
         status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
         self.failUnless(status_code == UserCodes.UserUpdated)

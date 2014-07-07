@@ -250,48 +250,46 @@ class UserHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.EDIT_USER_PASSWORD, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.EDIT_USER_PASSWORD, vFenseObjects.USER)
     def change_password(self, orig_password, new_password):
         results = self.manager.change_password(orig_password, new_password)
         return results
 
-    @log_operation(AdminActions.RESET_USER_PASSWORD, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.RESET_USER_PASSWORD, vFenseObjects.USER)
     def reset_password(self, password):
         results = self.manager.reset_password(password)
         return results
 
+    @results_message
     @log_operation(AdminActions.EDIT_USER_FULL_NAME, vFenseObjects.USER)
-    @results_message
     def change_full_name(self, username, full_name):
-        user = User(username, full_name=full_name)
-        results = self.manager.change_full_name(user)
+        results = self.manager.edit_full_name(full_name)
         return results
 
+    @results_message
     @log_operation(AdminActions.EDIT_USER_EMAIL, vFenseObjects.USER)
-    @results_message
     def change_email(self, username, email):
-        user = User(username, email=email)
-        results = self.manager.change_email(user)
+        results = self.manager.edit_email(email)
         return results
 
-    @log_operation(AdminActions.EDIT_CURRENT_VIEW, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.EDIT_CURRENT_VIEW, vFenseObjects.USER)
     def change_current_view(self, username, view):
         user = User(username, current_view=view)
         results = self.manager.change_view(user)
         return results
 
-    @log_operation(AdminActions.EDIT_DEFAULT_VIEW, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.EDIT_DEFAULT_VIEW, vFenseObjects.USER)
     def change_default_view(self, username, view):
         user = User(username, default_view=view)
         results = self.manager.change_view(user)
         return results
 
-    @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
     @results_message
+    @log_operation(AdminActions.TOGGLE_USER_STATUS, vFenseObjects.USER)
     def toggle_status(self):
         results = self.manager.toggle_status()
         return results

@@ -261,7 +261,8 @@ The various api base calls.
     def agents_search(self):
         parser = self._common_search_parser()
         parser.description = """Search for agents"""
-        parser.add_argument(
+        agent_search  = parser.add_argument_group('Search arguments')
+        agent_search.add_argument(
             '--sort_by', dest='sort_by', default='computer_name', type=str,
             help='The key that will be used to sort by.', choices=[
                 'computer_name', 'display_name', 'os_string',
@@ -270,22 +271,22 @@ The various api base calls.
                 'last_agent_update'
             ]
         )
-        parser.add_argument(
+        agent_search.add_argument(
             '--query', dest='query',
             help='''The regular expression of the computer name
             or display name you are searching for.'''
         )
-        parser.add_argument(
+        agent_search.add_argument(
             '--ip', dest='ip',
             help='''The regular expression of the ip address you are
             searching for.'''
         )
-        parser.add_argument(
+        agent_search.add_argument(
             '--mac', dest='mac',
             help='''The regular expression of the mac address you are
             searching for.'''
         )
-        parser.add_argument(
+        agent_search.add_argument(
             '--fkey', dest='fkey',
             help='''The property you want to filter by. This option is only
             used with the fval option''',
@@ -293,7 +294,7 @@ The various api base calls.
                 'os_string', 'os_code', 'agent_status',  'production_level'
             ]
         )
-        parser.add_argument(
+        agent_search.add_argument(
             '--fval', dest='fval',
             help='''The value you are filtering by. This option is only used
             with the fkey option'''
@@ -313,19 +314,20 @@ The various api base calls.
 
     def agent_apps(self):
         parser = argparse.ArgumentParser(
-            description='''Search or Install applications'''
+            description='''Choose an action'''
         )
         parser.add_argument(
-            'command', type=str,
-                help='''Commands you want to perform with applications.''',
+            'action', type=str,
+                help='''Action you want to perform,
+                concerning applications on this agent.''',
                 choices=['search', 'install'], default=None
             )
         args = parser.parse_args(sys.argv[4:5])
-        command = args.command
-        if command:
-            self.agent_apps_type(command)
+        action = args.action
+        if action:
+            self.agent_apps_type(action)
 
-    def agent_apps_type(self, command):
+    def agent_apps_type(self, action):
         parser = argparse.ArgumentParser(
             description='''Which type of applications you want to manage.'''
         )
@@ -336,10 +338,10 @@ The various api base calls.
             )
         args = parser.parse_args(sys.argv[5:6])
         app_type = args.app_type
-        if command == 'search':
+        if action == 'search':
             self.agent_apps_status(app_type)
 
-        elif command == 'install':
+        elif action == 'install':
             self.agent_apps_install(app_type)
 
     def agent_apps_install(self, app_type):
@@ -389,7 +391,8 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print data.content
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def agent_apps_status(self, app_type):
@@ -457,7 +460,8 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print data.content
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 #######################USER MANAGEMENT######################################
 
@@ -531,7 +535,8 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print json.dumps(data.content, indent=4)
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def add_views_or_groups_to_user(self, user_name):
@@ -563,7 +568,8 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print json.dumps(data.content, indent=4)
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def delete_views_or_groups_from_user(self, user_name):
@@ -595,7 +601,8 @@ The various api base calls.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print json.dumps(data.content, indent=4)
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
     def user_edit(self, user_name):
