@@ -1141,7 +1141,7 @@ The various api base calls.
 
     def groups(self):
         self.group_url = os.path.join(self.url, 'api/v1/group')
-        self.groups_url = os.path.join(self.url, 'api/v1/users')
+        self.groups_url = os.path.join(self.url, 'api/v1/groups')
         parser = argparse.ArgumentParser(description='Groups api calls')
         parser.add_argument(
             'action', help='Actions available',
@@ -1151,19 +1151,19 @@ The various api base calls.
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.action == 'get':
-            self.group_id(args.action)
+            self.group(args.action)
 
         elif args.action == 'delete':
-            self.group_id(args.action)
+            self.group(args.action)
 
         elif args.action == 'edit':
-            self.group_id(args.action)
+            self.group(args.action)
 
         elif args.action == 'add_to':
-            self.group_id(args.action)
+            self.group(args.action)
 
         elif args.action == 'remove_from':
-            self.group_id(args.action)
+            self.group(args.action)
 
         elif args.action == 'search':
             self.search_groups()
@@ -1174,7 +1174,7 @@ The various api base calls.
         elif args.action == 'delete_multiple':
             self.delete_groups()
 
-    def group_id(self, action):
+    def group(self, action):
         parser = argparse.ArgumentParser(
             description='The id of the group you are going to manage.'
         )
@@ -1186,10 +1186,10 @@ The various api base calls.
         group_id = args.group_id
         self.group_id = group_id
         if action == 'get':
-            self.get_group(group_id)
+            self.get_group()
 
         elif action == 'edit':
-            self.edit_group(group_id)
+            self.edit_group()
 
         elif action == 'delete':
             self.delete_group(action)
@@ -1201,8 +1201,8 @@ The various api base calls.
             self.add_or_remove_action_for_groups(action)
 
 
-    def get_group(self, group_id):
-        self.group_url = os.path.join(self.url, 'api/v1/group', group_id)
+    def get_group(self):
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -1386,7 +1386,7 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def delete_group(self, user_name):
+    def delete_group(self):
         self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
@@ -1500,6 +1500,84 @@ The various api base calls.
             data = (
                 SESSION.get(
                     self.groups_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+
+#######################VIEWS MANAGEMENT######################################
+
+    def views(self):
+        self.view_url = os.path.join(self.url, 'api/v1/view')
+        self.viewss_url = os.path.join(self.url, 'api/v1/views')
+        parser = argparse.ArgumentParser(description='Views api calls')
+        parser.add_argument(
+            'action', help='Actions available',
+            choices=[
+                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search'
+            ]
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.action == 'get':
+            self.view(args.action)
+
+        elif args.action == 'delete':
+            self.view(args.action)
+
+        elif args.action == 'edit':
+            self.view(args.action)
+
+        elif args.action == 'add_to':
+            self.view(args.action)
+
+        elif args.action == 'remove_from':
+            self.view(args.action)
+
+        elif args.action == 'search':
+            self.search_views()
+
+        elif args.action == 'create':
+            self.create_view()
+
+        elif args.action == 'delete_multiple':
+            self.delete_views()
+
+    def view(self, action):
+        parser = argparse.ArgumentParser(
+            description='The name of the view you are going to manage.'
+        )
+        parser.add_argument(
+            'view_name', type=str,
+            help='The name of the view you want to manage'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        view_name = args.view_name
+        self.view_name = view_name
+        if action == 'get':
+            self.get_view()
+
+        elif action == 'edit':
+            self.edit_view()
+
+        elif action == 'delete':
+            self.delete_view(action)
+
+        elif action == 'add':
+            self.add_or_remove_action_for_views(action)
+
+        elif action == 'remove':
+            self.add_or_remove_action_for_views(action)
+
+
+    def get_view(self):
+        self.view_url = os.path.join(self.url, 'api/v1/view', self.view_name)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.view_url, verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
