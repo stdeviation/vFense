@@ -1475,6 +1475,24 @@ The various api base calls.
             '--sort_by', dest='sort_by', default='group_name', type=str,
             choices=['group_name'], help='The key that will be used to sort by.'
         )
+        parser.add_argument(
+            '--group_id', dest='group_id', default=None, type=str,
+            help='The id of the group you are retrieving.'
+        )
+        parser.add_argument(
+            '--view_context', dest='view_context', default=None, type=str,
+            help='The name of the view you are retrieving groups from.'
+        )
+        parser.add_argument(
+            '--query', dest='query', default=None, type=str,
+            help='The regex of the group name you are searching for.'
+        )
+        parser.add_argument(
+            '--all_views', dest='all_views', action='store_true',
+            help='''If you are a global user, than you can show all groups,
+            instead of groups in the current view.'''
+        )
+        parser.set_defaults(all_views=None)
         args = parser.parse_args(sys.argv[3:])
         pay_load = vars(args)
         vfense = authenticate(self.username, self.password, self.url)
