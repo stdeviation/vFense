@@ -78,6 +78,7 @@ class AdminActions():
     EDIT_NOTIFICATION = 'edit notification'
     EDIT_AGENT_DISPLAY_NAME = 'edit agent display name'
     EDIT_AGENT_ENVIRONMENT = 'edit agent environment'
+    EDIT_TAG_ENVIRONMENT = 'edit tag environment'
     EDIT_TIME_ZONE = 'edit time zone'
     ###ASSIGN
     ASSIGN_AGENT_TOKEN = 'assign new token'

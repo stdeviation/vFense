@@ -108,6 +108,362 @@ The various api base calls.
             print 'Missing config {0}'.format(config_file)
             exit(1)
 
+#######################TAGS MANAGEMENT######################################
+
+    def tags(self):
+        self.tags_url = os.path.join(self.url, 'api/v1/tags')
+        parser = argparse.ArgumentParser(
+            description='''Here you can search for tags with various filters
+            as well as modify properties of a tag and delete or add agents
+            to a tag.'''
+        )
+        parser.add_argument(
+            'action', help='Actions that you can perform',
+            choices=[
+                'search', 'create', 'delete', 'delete_multiple',
+                'edit', 'get', 'apps'
+            ]
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.action == 'search':
+            self.search_tags()
+
+        elif args.action == 'get':
+            self.tag_id(args.action)
+
+        elif args.action == 'edit':
+            self.tag_id(args.action)
+
+        elif args.action == 'apps':
+            self.tag_id(args.action)
+
+        elif args.action == 'create':
+            self.create_tag()
+
+        elif args.action == 'delete':
+            self.delete_tag()
+
+        elif args.action == 'delete_multiple':
+            self.delete_tags()
+
+    def tag_id(self, action):
+        parser = argparse.ArgumentParser(
+            description='The tag id you are going to manage.'
+        )
+        parser.add_argument(
+            'tag_id', type=str,
+            help='The id of the tag you are going to manage.'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        tag_id = args.tag_id
+        self.tag_url = os.path.join(self.url, 'api/v1/tag', tag_id)
+        self.tag_id = tag_id
+
+        if action == 'get':
+            self.get_tag()
+
+        elif action == 'edit':
+            self.edit_tag()
+
+        elif action == 'delete':
+            self.delete_tag()
+
+        elif action == 'apps':
+            self.apps_action_for_tag()
+
+    def get_tag(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.tag_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def edit_tag(self):
+        msg = 'Edit the attributes of this tag {0}'.format(self.tag_id)
+        parser = argparse.ArgumentParser(description=msg)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--action', dest='action', type=str,
+                help='''What action you would like to take..
+                This can only be called with --agent_ids''',
+                choices=['add', 'delete'], default=None
+            )
+            parser.add_argument(
+                '--display_name', dest='display_name', type=str,
+                help='''Edit the display name in the vFense UI.
+                This does not change the computer name.''', default=None
+            )
+            parser.add_argument(
+                '--environment', dest='environment', type=str,
+                help='''Change the environment this tag belongs too.
+                Example.. Production, Staging, QA, Dev, etc...''',
+                default=None
+            )
+            parser.add_argument(
+                '--agent_ids', dest='agent_ids', type=str, action='append',
+                help='''The agents you want to add or delete from this tag.
+                This must be called with --action''',
+                default=None
+            )
+            args = parser.parse_args(sys.argv[4:])
+            pay_load = vars(args)
+            data = (
+                SESSION.put(
+                    self.tag_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def delete_tag(self):
+        self.tag_url = os.path.join(self.url, 'api/v1/tag', self.tag_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.delete(
+                    self.tag_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def delete_tags(self):
+        parser = argparse.ArgumentParser(
+            description='''Delete 1 or multiple tags from vFense.'''
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser.add_argument(
+                '--tag_ids', dest='tag_ids', action='append',
+                help='The ids of the tags, you are deleting.'
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.delete(
+                    self.tags_url, data=json.dumps(pay_load),
+                    verify=False, headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def search_tags(self):
+        parser = self._common_search_parser()
+        parser.description = """Search for tags"""
+        tag_search  = parser.add_argument_group('Search arguments')
+        tag_search.add_argument(
+            '--sort_by', dest='sort_by', default='tag_name', type=str,
+            help='The key that will be used to sort by.', choices=[
+                'tag_name', 'environment'
+            ]
+        )
+        tag_search.add_argument(
+            '--query', dest='query',
+            help='''The regular expression of the tag name you
+            are searching for.'''
+        )
+        tag_search.add_argument(
+            '--environment', dest='environment',
+            help='''The environment you want to filter on.'''
+        )
+        args = parser.parse_args(sys.argv[3:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.tags_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content['data'], indent=4)
+
+    def create_tag(self):
+        parser = argparse.ArgumentParser(
+            description='Create a new tag'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            tag = parser.add_argument_group('Create tag arguments')
+            tag.add_argument(
+                '--tag_name', dest='tag_name', type=str, required=True,
+                help='The name of the tag, you are creating.'
+            )
+            tag.add_argument(
+                '--environment', dest='environmwnt', type=str, required=True,
+                help='''The environment you want this tag to be a part of.'''
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.post(
+                    self.tags_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def apps_action_for_tag(self):
+        parser = argparse.ArgumentParser(
+            description='''Choose an action'''
+        )
+        parser.add_argument(
+            'action', type=str,
+                help='''Action you want to perform,
+                concerning applications on this tag.''',
+                choices=['search', 'install'], default=None
+            )
+        args = parser.parse_args(sys.argv[4:5])
+        action = args.action
+        if action:
+            self.apps_type_for_tag(action)
+
+    def apps_type_for_tag(self, action):
+        parser = argparse.ArgumentParser(
+            description='''Which type of applications you want to manage.'''
+        )
+        parser.add_argument(
+            'app_type', type=str,
+                help='''The application type.''',
+                choices=['os', 'custom', 'supported'], default='os'
+            )
+        args = parser.parse_args(sys.argv[5:6])
+        app_type = args.app_type
+        if action == 'search':
+            self.apps_status_for_tag(app_type)
+
+        elif action == 'install':
+            self.install_apps_for_tag(app_type)
+
+    def install_apps_for_tag(self, app_type):
+        self.tag_url_for_apps = (
+            os.path.join(self.tag_url, 'apps', app_type)
+        )
+        parser = argparse.ArgumentParser(
+            description='''Install applications/updates'''
+        )
+        install  = parser.add_argument_group('Install arguments')
+        install.add_argument(
+            '--app_id', type=str, action='append',
+                help='''The id of the applications you are installing'''
+        )
+        install.add_argument(
+            '--restart', type=str, default='none',
+            help='''whether to restart the agents after the updates''',
+            choices=['none', 'force', 'needed']
+        )
+        install.add_argument(
+            '--cpu_throttle', type=str, default='normal',
+            help='''whether to throttle the cpu on the agents during
+            the updates''',
+            choices=['idle', 'below_normal', 'normal', 'above_normal', 'high']
+        )
+        install.add_argument(
+            '--net_throttle', type=int, default=0,
+            help='''whether to throttle the bandwith on the agents during
+            the download of the updates''',
+        )
+        jobs = parser.add_argument_group('Schedule arguments')
+        jobs.add_argument(
+            '--job_name', type=str, default=None,
+            help='''The name of the scheduled job'''
+        )
+        jobs.add_argument(
+            '--run_date', type=float, default=None,
+            help='''The run date in epoch time'''
+        )
+        args = parser.parse_args(sys.argv[6:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.put(
+                    self.tag_url_for_apps, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def apps_status_for_tag(self, app_type):
+        parser = argparse.ArgumentParser(
+            description='''The status of the applications you want to search .
+            for. installed or available.'''
+        )
+        parser.add_argument(
+            'status', type=str,
+                help='''The status of the applications you are searching
+                for.''',
+                choices=['installed', 'available', 'pending']
+            )
+        args = parser.parse_args(sys.argv[6:7])
+        status = args.status
+        if status:
+            self.search_apps_in_tag(status, app_type)
+
+    def search_apps_in_tag(self, status, app_type):
+        parser = self._common_search_parser()
+        self.apps_url_for_tag = (
+            os.path.join(
+                self.tag_url, 'apps', app_type
+            )
+        )
+        parser.description = (
+        '''Search applications by name, or filter by severity
+            or filter by vulnerability or sort by release_date, etc...'''
+        )
+        parser.add_argument(
+            '--sort_by', dest='sort_by', default='app_name', type=str,
+            help='The key that will be used to sort by.', choices=[
+                'app_name', 'version', 'release_date', 'rv_severity',
+                'vulnerability_id'
+            ]
+        )
+        search_options = (
+            parser.add_argument_group('Search arguments')
+        )
+        search_options.add_argument(
+            '--severity', dest='severity', default=None, type=str,
+            help='The severity of the applications you want to filer on.',
+            choices=['Critical', 'Recommended', 'Optional']
+        )
+        search_options.add_argument(
+            '--query', dest='query', default=None, type=str,
+            help='The regex of the application name you are searching for.',
+        )
+        search_options.add_argument(
+            '--show_hidden', dest='hidden', default='false',
+            help='Show hidden applications, default is False.',
+        )
+        search_options.add_argument(
+            '--vuln', dest='vuln', default=None, action='store_true',
+            help='Only show applications with vulnerabilities.',
+        )
+        args = parser.parse_args(sys.argv[7:])
+        pay_load = vars(args)
+        pay_load['status'] = status
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.apps_url_for_tag, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
 #######################AGENTS MANAGEMENT######################################
 
     def agents(self):
@@ -117,29 +473,32 @@ The various api base calls.
             as well as modify an agents properties and delete agents.'''
         )
         parser.add_argument(
-            'command', help='commands available for agents',
+            'action', help='Actions available.',
             choices=[
                 'search', 'delete', 'delete_multiple',
                 'edit', 'get', 'apps'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
-        if args.command == 'search':
+        if args.action == 'search':
             self.agents_search()
 
-        elif args.command == 'delete_multiple':
+        elif args.action == 'delete_multiple':
             self.delete_agents()
 
-        elif args.command == 'delete':
-            self.agent_id(args.command)
+        elif args.action == 'delete':
+            self.agent_id(args.action)
 
-        elif args.command == 'get':
-            self.agent_id(args.command)
+        elif args.action == 'get':
+            self.agent_id(args.action)
 
-        elif args.command == 'apps':
-            self.agent_id(args.command)
+        elif args.action == 'edit':
+            self.agent_id(args.action)
 
-    def agent_id(self, command):
+        elif args.action == 'apps':
+            self.agent_id(args.action)
+
+    def agent_id(self, action):
         parser = argparse.ArgumentParser(
             description='The agent id you are going to manage.'
         )
@@ -151,22 +510,16 @@ The various api base calls.
         agent_id = args.agent_id
         self.agent_url = os.path.join(self.url, 'api/v1/agent', agent_id)
         self.agent_id = agent_id
-        if command == 'get':
+        if action == 'get':
             self.agent_get()
 
-        elif command == 'edit':
+        elif action == 'edit':
             self.agent_edit()
 
-        elif command == 'delete':
+        elif action == 'delete':
             self.agent_delete()
 
-        elif command == 'add_to':
-            self.add_views_or_groups_to_user()
-
-        elif command == 'remove_from':
-            self.delete_views_or_groups_from_user()
-
-        elif command == 'apps':
+        elif action == 'apps':
             self.agent_apps()
 
 

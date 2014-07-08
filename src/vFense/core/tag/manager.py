@@ -3,11 +3,13 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
+from vFense.core.decorators import time_it
 from vFense.core.agent.agents import validate_agent_ids
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
     fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
-    delete_tag, fetch_agent_ids_in_tag, fetch_tag_by_name_and_view
+    delete_tag, fetch_agent_ids_in_tag, fetch_tag_by_name_and_view,
+    update_tag
 )
 from vFense.core.view.views import validate_view_names
 from vFense.core.tag._db_model import (
@@ -66,6 +68,7 @@ class TagManager(object):
         return agents
 
 
+    @time_it
     def create(self, tag):
         """Add a tag into vFense.
         Args:
@@ -224,6 +227,7 @@ class TagManager(object):
 
         return results
 
+    @time_it
     def add_agents(self, agent_ids):
         """Add agents to this tag.
         Args:
@@ -358,6 +362,7 @@ class TagManager(object):
 
         return results
 
+    @time_it
     def remove(self):
         """Remove agents from this tag.
         Args:
@@ -431,6 +436,7 @@ class TagManager(object):
         return results
 
 
+    @time_it
     def remove_agents(self, agent_ids):
         """Remove agents from this tag.
         Args:
@@ -522,3 +528,93 @@ class TagManager(object):
             results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
 
         return results
+
+    @time_it
+    def edit_environment(self, environment):
+        """Change the environment to which this tag belongs too.
+        Args:
+            environment (str): The environment name.
+
+        Basic Usage:
+            >>> from vFense.tag.manager import TagManager
+            >>> tag_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> manager = TagManager(tag_id)
+            >>> manager.edit_environment(environment)
+
+        Returns:
+            >>>
+        """
+        tag = Tag(environment=environment)
+        results = self.__edit_properties(tag)
+        return results
+
+    @time_it
+    def __edit_properties(self, tag):
+        """ Edit the properties of this tag.
+        Args:
+            tag (Tag): The Tag instance with all of its properties.
+
+        Basic Usage:
+            >>> from vFense.tag import Tag
+            >>> from vFense.tag.manager import TagManager
+            >>> tag_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
+            >>> tag = Tag(environment='Staging')
+            >>> manager = TagManager(tag_id)
+            >>> manager.__edit_properties(tag)
+
+        Return:
+            Dictionary of the status of the operation.
+            >>>
+        """
+        tag_exist = self.properties
+        results = {}
+        data = {}
+        results[ApiResultKeys.DATA] = []
+        if tag_exist and isinstance(tag, Tag):
+            invalid_fields = tag.get_invalid_fields()
+            data = tag.to_dict_non_null()
+            if not invalid_fields:
+                object_status, _, _, _ = (
+                    update_tag(self.tag_id, data)
+                )
+                if object_status == DbCodes.Replaced:
+                    msg = 'Tag %s was updated - ' % (self.tag_id)
+                    generic_status_code = GenericCodes.ObjectUpdated
+                    vfense_status_code = TagCodes.TagUpdated
+                    results[ApiResultKeys.UPDATED_IDS] = [self.tag_id]
+                    results[ApiResultKeys.DATA] = [data]
+
+                elif object_status == DbCodes.Unchanged:
+                    msg = 'Tag %s was not updated - ' % (self.tag_id)
+                    generic_status_code = GenericCodes.ObjectUnchanged
+                    vfense_status_code = TagCodes.TagUnchanged
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
+
+            else:
+                generic_status_code = GenericCodes.InvalidId
+                vfense_status_code = TagFailureCodes.FailedToUpdateTag
+                msg = 'Tag %s properties were invalid - ' % (self.tag_id)
+                results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
+                results[ApiResultKeys.ERRORS] = invalid_fields
+
+        elif not isinstance(tag, Tag):
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = GenericFailureCodes.InvalidInstanceType
+            msg = (
+                'Tag {0} is not of instance Tag., instanced passed {1}'
+                .format(self.tag_id, type(tag))
+            )
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
+
+        else:
+            generic_status_code = GenericCodes.InvalidId
+            vfense_status_code = AgentFailureCodes.TagIdDoesNotExist
+            msg = 'Tag %s does not exist - ' % (self.tag_id)
+            results[ApiResultKeys.UNCHANGED_IDS] = [self.tag_id]
+
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+        results[ApiResultKeys.MESSAGE] = msg
+
+        return results
+

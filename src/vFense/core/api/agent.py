@@ -605,7 +605,6 @@ class AgentHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, agent_id):
         username = self.get_current_user()
         uri = self.request.uri
@@ -617,7 +616,7 @@ class AgentHandler(BaseHandler):
             displayname = (
                 self.arguments.get(AgentApiArguments.DISPLAY_NAME, None)
             )
-            prod_level = (
+            environment = (
                 self.arguments.get(AgentApiArguments.ENVIRONMENT, None)
             )
             views = (
@@ -625,13 +624,13 @@ class AgentHandler(BaseHandler):
             )
             manager = AgentManager(agent_id)
 
-            if displayname and not prod_level and not views and not action:
+            if displayname and not environment and not views and not action:
                 results = self.edit_display_name(manager, displayname)
 
-            elif prod_level and not displayname and not views and not action:
-                results = self.edit_environment(manager, prod_level)
+            elif environment and not displayname and not views and not action:
+                results = self.edit_environment(manager, environment)
 
-            elif action and views and not prod_level and not displayname:
+            elif action and views and not environment and not displayname:
                 if action == ApiValues.ADD:
                     results = self.add_agent_to_views(manager, views)
 
@@ -668,24 +667,28 @@ class AgentHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.EDIT_AGENT)
     @log_operation(AdminActions.EDIT_AGENT_DISPLAY_NAME, vFenseObjects.AGENT)
     def edit_display_name(self, manager, display_name):
         results = manager.edit_display_name(display_name)
         return results
 
     @results_message
+    @check_permissions(Permissions.EDIT_AGENT)
     @log_operation(AdminActions.EDIT_AGENT_ENVIRONMENT, vFenseObjects.AGENT)
     def edit_environment(self, manager, environment):
         results = manager.edit_environment(environment)
         return results
 
     @results_message
+    @check_permissions(Permissions.EDIT_AGENT)
     @log_operation(AdminActions.ADD_VIEWS_TO_AGENT, vFenseObjects.AGENT)
     def add_agent_to_views(self, manager, views):
         results = manager.add_to_views(views)
         return results
 
     @results_message
+    @check_permissions(Permissions.EDIT_AGENT)
     @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENT, vFenseObjects.AGENT)
     def remove_agent_from_views(self, manager, views):
         results = manager.remove_from_views(views)

@@ -7,6 +7,8 @@ class Permissions():
     SHUTDOWN = 'shutdown'
     CREATE_TAG = 'create tag'
     REMOVE_TAG = 'remove tag'
+    EDIT_TAG = 'edit tag'
+    EDIT_AGENT = 'edit agent'
     ADD_AGENTS_TO_TAG = 'add agents to tag'
     REMOVE_AGENTS_FROM_TAG = 'remove agents from tag'
     CREATE_VIEW = 'create view'

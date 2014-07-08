@@ -244,21 +244,23 @@ class AgentFailureCodes(object):
     FailedToRemoveViewsFromAgents = 3514
     FailedToDeleteAgents = 3515
 
-
 class TagCodes(object):
     TagCreated = 4000
     TagRemoved = 4001
-    TagCreatedAndAgentAdded = 4002
-    RemovedAgentIdFromTag = 4003
-    RemovedTagFromAgentId = 4004
-    RemovedAllAgentsFromTag = 4005
-    FailedToRemoveAllAgentsFromTag = 4006
-    FailedToRemoveTag = 4007
-    TagExistsAndAgentAdded = 4008
-    AgentsAddedToTag = 4009
-    AgentsRemovedFromTag = 4010
-    TagsDeleted = 4011
-    TagsUpdated = 4012
+    TagUpdated = 4002
+    TagUnchanged = 4003
+    TagCreatedAndAgentAdded = 4004
+    RemovedAgentIdFromTag = 4005
+    RemovedTagFromAgentId = 4006
+    RemovedAllAgentsFromTag = 4007
+    FailedToRemoveAllAgentsFromTag = 4008
+    FailedToRemoveTag = 4009
+    TagExistsAndAgentAdded = 4010
+    AgentsAddedToTag = 4011
+    AgentsRemovedFromTag = 4012
+    TagsDeleted = 4013
+    TagsUpdated = 4014
+    TagsUnchanged = 4015
 
 class TagFailureCodes(object):
     FailedToCreateTag = 4501
@@ -268,6 +270,7 @@ class TagFailureCodes(object):
     InvalidTagIds = 4505
     FailedToDeleteTags = 4506
     FailedToUpdateTags = 4507
+    FailedToUpdateTag = 4508
 
 class PackageCodes(object):
     InvalidStatus = 5000

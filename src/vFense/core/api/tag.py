@@ -42,7 +42,6 @@ logger = logging.getLogger('rvapi')
 
 class TagsHandler(BaseHandler):
     @authenticated_request
-    @check_permissions(Permissions.READ)
     def get(self):
         username = self.get_current_user()
         uri = self.request.uri
@@ -70,25 +69,25 @@ class TagsHandler(BaseHandler):
             sort_by = (
                 self.get_argument(ApiArguments.SORT_BY, TagKeys.TagName)
             )
-            prod_level = (
+            environment = (
                 self.get_argument(TagApiArguments.ENVIRONMENT, None)
             )
             search = (
                 RetrieveTags(active_view, count, offset, sort, sort_by)
             )
-            if not query and not prod_level:
+            if not query and not environment:
                 results = self.get_all_tags(search)
 
-            elif query and not prod_level:
+            elif query and not environment:
                 results = self.get_all_tags_by_name(search, query)
 
-            elif prod_level and not query:
-                results = self.get_all_tags_by_prod_level(search, prod_level)
+            elif environment and not query:
+                results = self.get_all_tags_by_prod_level(search, environment)
 
-            elif query and prod_level:
+            elif query and environment:
                 results = (
                     self.get_all_tags_by_prod_level_and_regex(
-                        search, prod_level, query
+                        search, environment, query
                     )
                 )
 
@@ -108,27 +107,31 @@ class TagsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_tags(self, search):
         results = search.all()
         return results
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_all_tags_by_name(self, search, name):
         results = search.by_name(name)
         return results
 
     @results_message
-    def get_all_tags_by_prod_level(self, search, prod_level):
+    @check_permissions(Permissions.READ)
+    def get_all_tags_by_env(self, search, environment):
         results = (
-            search.by_key_val(search, TagKeys.Environment, prod_level)
+            search.by_key_val(search, TagKeys.Environment, environment)
         )
         return results
 
     @results_message
-    def get_all_tags_by_prod_level_and_regex(self, search, prod_level, regex):
+    @check_permissions(Permissions.READ)
+    def get_all_tags_by_env_and_regex(self, search, environment, regex):
         results = (
             search.by_key_val_and_query(
-                search, TagKeys.Environment, prod_level, regex
+                search, TagKeys.Environment, environment, regex
             )
         )
         return results
@@ -144,7 +147,7 @@ class TagsHandler(BaseHandler):
         method = self.request.method
         try:
             tag_name = self.arguments.get(TagApiArguments.TAG_NAME)
-            prod_level = (
+            environment = (
                 self.arguments.get(
                     TagApiArguments.ENVIRONMENT,
                     Environments.PRODUCTION
@@ -155,7 +158,7 @@ class TagsHandler(BaseHandler):
             else:
                 is_global = False
 
-            tag = Tag(tag_name, prod_level, active_view, is_global)
+            tag = Tag(tag_name, environment, active_view, is_global)
             results = self.create_tag(tag)
 
             self.set_status(results['http_status'])
@@ -354,6 +357,8 @@ class TagHandler(BaseHandler):
         results = operation.shutdown(tag_id=tag_id)
         return results
 
+    @results_message
+    @check_permissions(Permissions.READ)
     def apps_refresh(self, operation, tag_id):
         results = operation.apps_refresh(tag_id=tag_id)
         return results
@@ -366,20 +371,26 @@ class TagHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            agent_ids = self.arguments.get('agent_ids')
+            agent_ids = self.arguments.get('agent_ids', None)
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+            environment = self.arguments.get(ApiArguments.ENVIRONMENT, None)
             manager = TagManager(tag_id)
-            if action == ApiValues.ADD:
+            if agent_ids:
+                if not isinstance(agent_ids, list):
+                    agent_ids = agent_ids.split()
+
+            if action == ApiValues.ADD and agent_ids and not environment:
                 results = self.add_agents_to_tag(manager, agent_ids)
-            elif action == ApiValues.DELETE:
+            elif action == ApiValues.DELETE and agent_ids and not environment:
                 results = self.remove_agents_from_tag(manager, agent_ids)
+            elif environment and not agent_ids:
+                results = self.edit_environment(manager, environment)
             else:
                 results = (
                     GenericResults(
                         username, uri, method
                     ).incorrect_arguments()
                 )
-            print results
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -402,7 +413,6 @@ class TagHandler(BaseHandler):
         if not isinstance(agent_ids, list):
             agent_ids = agent_ids.split()
         results = manager.add_agents(agent_ids)
-        print results
         return results
 
     @results_message
@@ -414,6 +424,13 @@ class TagHandler(BaseHandler):
         results = manager.remove_agents(agent_ids)
         return results
 
+    @results_message
+    @check_permissions(Permissions.EDIT_TAG)
+    @log_operation(AdminActions.EDIT_TAG_ENVIRONMENT, vFenseObjects.TAG)
+    def edit_environment(self, manager, environment):
+        results = manager.edit_environment(environment)
+        return results
+
     @convert_json_to_arguments
     @authenticated_request
     def delete(self, tag_id):
@@ -423,7 +440,6 @@ class TagHandler(BaseHandler):
         try:
             manager = TagManager(tag_id)
             results = self.remove_tag(manager)
-            print results
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
