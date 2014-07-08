@@ -24,6 +24,7 @@ class AdminActions():
     ###ADD TO
     ADD_USER_TO_GROUP = 'add user to group'
     ADD_USERS_TO_GROUP = 'add user to group'
+    ADD_PERMISSIONS_TO_GROUP = 'add permissions to group'
     ADD_GROUP_TO_USER = 'add group to user'
     ADD_GROUP_TO_VIEW = 'add group to view'
     ADD_GROUPS_TO_USER = 'add groups to user'
@@ -55,6 +56,7 @@ class AdminActions():
     REMOVE_USER_FROM_VIEW = 'remove user from view'
     REMOVE_USER_FROM_GROUP = 'remove user from group'
     REMOVE_USERS_FROM_GROUP = 'remove users from group'
+    REMOVE_PERMISSIONS_FROM_GROUP = 'remove permissions from group'
     REMOVE_USERS_FROM_VIEW = 'remove users from view'
     REMOVE_GROUPS_FROM_VIEW = 'remove groups from view'
     REMOVE_AGENT_FROM_TAG = 'remove agent from tag'

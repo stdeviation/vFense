@@ -1137,6 +1137,358 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
+#######################GROUPS MANAGEMENT######################################
+
+    def groups(self):
+        self.group_url = os.path.join(self.url, 'api/v1/group')
+        self.groups_url = os.path.join(self.url, 'api/v1/users')
+        parser = argparse.ArgumentParser(description='Groups api calls')
+        parser.add_argument(
+            'action', help='Actions available',
+            choices=[
+                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search'
+            ]
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.action == 'get':
+            self.group_id(args.action)
+
+        elif args.action == 'delete':
+            self.group_id(args.action)
+
+        elif args.action == 'edit':
+            self.group_id(args.action)
+
+        elif args.action == 'add_to':
+            self.group_id(args.action)
+
+        elif args.action == 'remove_from':
+            self.group_id(args.action)
+
+        elif args.action == 'search':
+            self.search_groups()
+
+        elif args.action == 'create':
+            self.create_group()
+
+        elif args.action == 'delete_multiple':
+            self.delete_groups()
+
+    def group_id(self, action):
+        parser = argparse.ArgumentParser(
+            description='The id of the group you are going to manage.'
+        )
+        parser.add_argument(
+            'group_id', type=str,
+            help='The id of the group you want to manage'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        group_id = args.group_id
+        self.group_id = group_id
+        if action == 'get':
+            self.get_group(group_id)
+
+        elif action == 'edit':
+            self.edit_group(group_id)
+
+        elif action == 'delete':
+            self.delete_group(action)
+
+        elif action == 'add':
+            self.add_or_remove_action_for_groups(action)
+
+        elif action == 'remove':
+            self.add_or_remove_action_for_groups(action)
+
+
+    def get_group(self, group_id):
+        self.group_url = os.path.join(self.url, 'api/v1/group', group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.group_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def add_or_remove_action_for_groups(self, action):
+        parser = argparse.ArgumentParser(description='i calls')
+        parser.add_argument(
+            'object', help='The vFense objects you are updating for this group',
+            choices=['views', 'users', 'permissions']
+        )
+        args = parser.parse_args(sys.argv[4])
+        if action == 'add' and args.object == 'views':
+            self.add_views_to_group()
+        elif action == 'add' and args.object == 'users':
+            self.add_users_to_group()
+        elif action == 'add' and args.object == 'permissions':
+            self.add_permissions_to_group()
+        elif action == 'remove' and args.object == 'views':
+            self.delete_views_from_group()
+        elif action == 'remove' and args.object == 'users':
+            self.delete_users_frmo_group()
+        elif action == 'remove' and args.object == 'permissions':
+            self.delete_permissions_from_group()
+
+    def add_views_to_group(self):
+        msg = 'Add views to this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            add_views = (
+                parser.add_argument_group('Add views to group arguments')
+            )
+            add_views.add_argument(
+                '--view_names', dest='view_names', action='append',
+                help='Views to add to this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'add'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def add_users_to_group(self):
+        msg = 'Add users to this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            add_users = (
+                parser.add_argument_group('Add users to group arguments')
+            )
+            add_users.add_argument(
+                '--user_names', dest='user_names', action='append',
+                help='User names to add to this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'add'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def add_permissions_to_group(self):
+        msg = 'Add permissions to this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            add_permissions = (
+                parser.add_argument_group('Add permissions to group arguments')
+            )
+            add_permissions.add_argument(
+                '--permissions', dest='permissions', action='append',
+                help='Permissions to add to this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'add'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+
+    def delete_views_from_group(self):
+        msg = 'Delete views from this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            delete_views = (
+                parser.add_argument_group('Delete views from group arguments')
+            )
+            delete_views.add_argument(
+                '--view_names', dest='view_names', action='append',
+                help='Views to remove from this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'delete'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def delete_users_from_group(self):
+        msg = 'Delete users from this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            delete_users = (
+                parser.add_argument_group('Delete users from group arguments')
+            )
+            delete_users.add_argument(
+                '--user_names', dest='user_names', action='append',
+                help='User names to delete from this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'delete'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def delete_permissions_from_group(self):
+        msg = 'Add permissions to this group {0}'.format(self.group_id)
+        parser = argparse.ArgumentParser(description=msg)
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            delete_users = (
+                parser.add_argument_group('Delete permissions from group arguments')
+            )
+            delete_users.add_argument(
+                '--permissions', dest='permissions', action='append',
+                help='Permissions to delete from this group.'
+            )
+            args = parser.parse_args(sys.argv[5:])
+            pay_load = vars(args)
+            pay_load['action'] = 'delete'
+            data = (
+                SESSION.post(
+                    self.group_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+
+    def delete_group(self, user_name):
+        self.group_url = os.path.join(self.url, 'api/v1/group', self.group_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.delete(
+                    self.group_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def delete_groups(self):
+        parser = argparse.ArgumentParser(
+            description='Delete 1 or multiple groups.'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            user = parser.add_argument_group('Delete multiple groups arguments')
+            user.add_argument(
+                '--group_ids', dest='group_ids', action='append',
+                help='The ids of the groups, you are deleting.'
+            )
+            vfense = authenticate(self.username, self.password, self.url)
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.delete(
+                    self.groups_url, data=json.dumps(pay_load),
+                    verify=False, headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def create_group(self):
+        parser = argparse.ArgumentParser(
+            description='Create a new group'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            group = parser.add_argument_group('Create group arguments')
+            group.add_argument(
+                '--group_name', dest='group_name', type=str, required=True,
+                help='The name of the group, you are creating.'
+            )
+            group.add_argument(
+                '--permissions', dest='permissions', type=str, required=True,
+                help='''The password of the user you are createing.''',
+                choices=[
+                    'add agents to tag', 'add agents to view',
+                    'administrator', 'assign new token to agents', 'create tag',
+                    'create view', 'delete agent', 'edit agent', 'edit tag',
+                    'edit time zone', 'install', 'new agent', 'read', 'reboot',
+                    'remote assistance', 'remove agents from tag',
+                    'remove agents from view', 'remove tag', 'remove view',
+                    'shutdown', 'uninstall'
+                ]
+            )
+            group.add_argument(
+                '--is_global', dest='is_global', action='store_true',
+                help='''Make this group a global group.
+                (ONLY GLOBAL USERS CAN BE IN IN A GLOBAL GROUP.)'''
+            )
+            group.add_argument(
+                '--views', dest='views', type=str, action='append',
+                help='''The views you want this group to be a part of.
+                (THIS IS NOT NEEDED IF --is_global IS PASSED.)'''
+            )
+            parser.set_defaults(is_global=False)
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.post(
+                    self.groups_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def search_groups(self):
+        parser = self._common_search_parser()
+        parser.description = 'Search for groups.'
+        parser.add_argument(
+            '--sort_by', dest='sort_by', default='group_name', type=str,
+            choices=['group_name'], help='The key that will be used to sort by.'
+        )
+        args = parser.parse_args(sys.argv[3:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.groups_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+
     def _common_search_parser(self):
         parser = argparse.ArgumentParser()
         search = parser.add_argument_group('Common search arguments')

@@ -84,8 +84,8 @@ class GroupHandler(BaseHandler):
         try:
             action = self.arguments.get(ApiArguments.ACTION)
             force = self.arguments.get(ApiArguments.FORCE_REMOVE, False)
-            ###Add Users###
-            usernames = self.arguments.get(ApiArguments.USERNAMES, [])
+            ###Users###
+            usernames = self.arguments.get(ApiArguments.USER_NAMES, [])
             if usernames and isinstance(usernames, list):
                 if action == ApiValues.ADD:
                     results = self.add_users(group, usernames)
@@ -93,7 +93,7 @@ class GroupHandler(BaseHandler):
                 if action == ApiValues.DELETE:
                     results = self.remove_users(group, usernames, force)
 
-            ###Add Views###
+            ###Views###
             views = self.arguments.get(ApiArguments.VIEW_NAMES, [])
             if views and isinstance(views, list):
                 if action == ApiValues.ADD:
@@ -101,6 +101,16 @@ class GroupHandler(BaseHandler):
 
                 if action == ApiValues.DELETE:
                     results = self.remove_views(group, views, force)
+
+            ###Permissions###
+            permissions = self.arguments.get(ApiArguments.VIEW_NAMES, [])
+            if views and isinstance(views, list):
+                if action == ApiValues.ADD:
+                    results = self.add_permissions(group, permissions)
+
+                if action == ApiValues.DELETE:
+                    results = self.remove_permissions(group, permissions)
+
 
             if results:
                 self.set_status(results['http_status'])
@@ -145,6 +155,13 @@ class GroupHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.ADD_PERMISSIONS_TO_GROUP, vFenseObjects.GROUP)
+    def add_permissions(self, group, permissions):
+        results = group.add_permissions(permissions)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
     @log_operation(AdminActions.REMOVE_VIEWS_FROM_GROUP, vFenseObjects.GROUP)
     def remove_views(self, group, views, force):
         results = group.remove_views(views, force)
@@ -157,10 +174,15 @@ class GroupHandler(BaseHandler):
         results = group.remove_users(users, force)
         return results
 
+    @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_PERMISSIONS_FROM_GROUP, vFenseObjects.GROUP)
+    def remove_permissions(self, group, permissions):
+        results = group.remove_permissions(permissions)
+        return results
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, group_id):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -185,8 +207,9 @@ class GroupHandler(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
-    @log_operation(AdminActions.REMOVE_GROUP, vFenseObjects.GROUP)
     @results_message
+    @check_permissions(Permissions.ADMINISTRATOR)
+    @log_operation(AdminActions.REMOVE_GROUP, vFenseObjects.GROUP)
     def remove_group(self, manager):
         results = manager.remove()
         return results
@@ -209,7 +232,7 @@ class GroupsHandler(BaseHandler):
         offset = int(self.get_argument('offset', 0))
         sort = self.get_argument('sort', 'asc')
         sort_by = self.get_argument('sort_by', GroupKeys.GroupName)
-        regex = self.get_argument('regex', None)
+        regex = self.get_argument('query', None)
         try:
             granted, status_code = (
                 verify_permission_for_user(

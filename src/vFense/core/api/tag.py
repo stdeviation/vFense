@@ -373,7 +373,9 @@ class TagHandler(BaseHandler):
         try:
             agent_ids = self.arguments.get('agent_ids', None)
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            environment = self.arguments.get(ApiArguments.ENVIRONMENT, None)
+            environment = (
+                self.arguments.get(TagApiArguments.ENVIRONMENT, None)
+            )
             manager = TagManager(tag_id)
             if agent_ids:
                 if not isinstance(agent_ids, list):
