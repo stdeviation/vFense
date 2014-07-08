@@ -66,7 +66,6 @@ class URIVersions():
 
 class AgentOperations():
     NEW_AGENT = 'new_agent'
-    NEW_TOKEN = 'new_token'
     UPDATESAPPLICATIONS = 'updatesapplications'
     REFRESH_APPS = 'refresh_apps'
     CHECK_IN = 'check_in'
@@ -163,8 +162,8 @@ class V1ListenerURIs():
         return valid_uris
 
 class V2ListenerURIs():
-    NEWAGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
-    NEWAGENT = (
+    NEW_AGENT = (AgentOperations.NEW_AGENT, 'core/newagent', 'POST', False)
+    VALIDATE_TOKEN = (
         AgentOperations.VALIDATE_TOKEN, 'core/validate_token', 'GET', False
     )
     INSTALL_OS_APPS = (
