@@ -286,7 +286,7 @@ The various api base calls.
                 )
             )
             content = json.loads(data.content)
-            print json.dumps(content['data'], indent=4)
+            print json.dumps(content, indent=4)
 
     def create_tag(self):
         parser = argparse.ArgumentParser(
@@ -481,24 +481,24 @@ The various api base calls.
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.action == 'search':
-            self.agents_search()
+            self.search_agents()
 
         elif args.action == 'delete_multiple':
             self.delete_agents()
 
         elif args.action == 'delete':
-            self.agent_id(args.action)
+            self.set_agent_id(args.action)
 
         elif args.action == 'get':
-            self.agent_id(args.action)
+            self.set_agent_id(args.action)
 
         elif args.action == 'edit':
-            self.agent_id(args.action)
+            self.set_agent_id(args.action)
 
         elif args.action == 'apps':
-            self.agent_id(args.action)
+            self.set_agent_id(args.action)
 
-    def agent_id(self, action):
+    def set_agent_id(self, action):
         parser = argparse.ArgumentParser(
             description='The agent id you are going to manage.'
         )
@@ -507,14 +507,13 @@ The various api base calls.
             help='The id of the agent you are going to manage.'
         )
         args = parser.parse_args(sys.argv[3:4])
-        agent_id = args.agent_id
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', agent_id)
-        self.agent_id = agent_id
+        self.agent_id = args.agent_id
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
         if action == 'get':
-            self.agent_get()
+            self.get_agent()
 
         elif action == 'edit':
-            self.agent_edit()
+            self.edit_agent()
 
         elif action == 'delete':
             self.agent_delete()
@@ -523,7 +522,7 @@ The various api base calls.
             self.agent_apps()
 
 
-    def agent_get(self):
+    def get_agent(self):
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -535,7 +534,7 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
-    def agent_edit(self):
+    def edit_agent(self):
         msg = 'Edit the attributes of this agent {0}'.format(self.agent_id)
         parser = argparse.ArgumentParser(description=msg)
         vfense = authenticate(self.username, self.password, self.url)
@@ -611,7 +610,7 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
-    def agents_search(self):
+    def search_agents(self):
         parser = self._common_search_parser()
         parser.description = """Search for agents"""
         agent_search  = parser.add_argument_group('Search arguments')
@@ -663,7 +662,7 @@ The various api base calls.
                 )
             )
             content = json.loads(data.content)
-            print json.dumps(content['data'], indent=4)
+            print json.dumps(content, indent=4)
 
     def agent_apps(self):
         parser = argparse.ArgumentParser(
@@ -828,31 +827,31 @@ The various api base calls.
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.command == 'get':
-            self.user_name(args.command)
+            self.set_user_name(args.command)
 
         elif args.command == 'delete':
-            self.user_name(args.command)
+            self.set_user_name(args.command)
 
         elif args.command == 'edit':
-            self.user_name(args.command)
+            self.set_user_name(args.command)
 
         elif args.command == 'add_to':
-            self.user_name(args.command)
+            self.set_user_name(args.command)
 
         elif args.command == 'remove_from':
-            self.user_name(args.command)
+            self.set_user_name(args.command)
 
         elif args.command == 'search':
-            self.users_search()
+            self.search_users()
 
         elif args.command == 'create':
-            self.user_create()
+            self.create_user()
 
         elif args.command == 'delete_multiple':
             self.delete_users()
 
 
-    def user_name(self, command):
+    def set_user_name(self, command):
         parser = argparse.ArgumentParser(
             description='the user name you are going to manage.'
         )
@@ -861,25 +860,25 @@ The various api base calls.
             help='The name of the user you want to manage'
         )
         args = parser.parse_args(sys.argv[3:4])
-        user_name = args.user_name
+        self.user_name = args.user_name
+        self.user_url = os.path.join(self.url, 'api/v1/user', self.user_name)
         if command == 'get':
-            self.user_get(user_name)
+            self.get_user()
 
         elif command == 'edit':
-            self.user_edit(user_name)
+            self.edit_user()
 
         elif command == 'delete':
-            self.user_delete(user_name)
+            self.delete_user()
 
         elif command == 'add_to':
-            self.add_views_or_groups_to_user(user_name)
+            self.add_views_or_groups_to_user()
 
         elif command == 'remove_from':
-            self.delete_views_or_groups_from_user(user_name)
+            self.delete_views_or_groups_from_user()
 
 
-    def user_get(self, user_name):
-        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
+    def get_user(self):
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -892,10 +891,9 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def add_views_or_groups_to_user(self, user_name):
-        msg = 'Add views or groups to this user {0}'.format(user_name)
+    def add_views_or_groups_to_user(self):
+        msg = 'Add views or groups to this user {0}'.format(self.user_name)
         parser = argparse.ArgumentParser(description=msg)
-        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             add_views = (
@@ -925,10 +923,11 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def delete_views_or_groups_from_user(self, user_name):
-        msg = 'Remove views or groups from this user {0}'.format(user_name)
+    def delete_views_or_groups_from_user(self):
+        msg = (
+            'Remove views or groups from this user {0}'.format(self.user_name)
+        )
         parser = argparse.ArgumentParser(description=msg)
-        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             remove_views = (
@@ -958,10 +957,9 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def user_edit(self, user_name):
-        msg = 'Edit the attributes of this user {0}'.format(user_name)
+    def edit_user(self):
+        msg = 'Edit the attributes of this user {0}'.format(self.user_name)
         parser = argparse.ArgumentParser(description=msg)
-        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             edit_passwd = (
@@ -1023,8 +1021,7 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def user_delete(self, user_name):
-        self.user_url = os.path.join(self.url, 'api/v1/user', user_name)
+    def delete_user(self ):
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -1061,7 +1058,7 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
-    def user_create(self):
+    def create_user(self):
         parser = argparse.ArgumentParser(
             description='Create a new user'
         )
@@ -1116,7 +1113,7 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
-    def users_search(self):
+    def search_users(self):
         parser = self._common_search_parser()
         parser.description = 'Search for users.'
         parser.add_argument(
@@ -1555,6 +1552,7 @@ The various api base calls.
         args = parser.parse_args(sys.argv[3:4])
         view_name = args.view_name
         self.view_name = view_name
+        self.view_url = os.path.join(self.url, 'api/v1/view', self.view_name)
         if action == 'get':
             self.get_view()
 
@@ -1572,7 +1570,6 @@ The various api base calls.
 
 
     def get_view(self):
-        self.view_url = os.path.join(self.url, 'api/v1/view', self.view_name)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -1584,7 +1581,197 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
+    def delete_view(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.delete(
+                    self.view_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
+    def delete_views(self):
+        parser = argparse.ArgumentParser(
+            description='Delete 1 or multiple views.'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            user = parser.add_argument_group('Delete multiple groups arguments')
+            user.add_argument(
+                '--view_names', dest='view_names', action='append',
+                help='The names of the views, you are deleting.'
+            )
+            vfense = authenticate(self.username, self.password, self.url)
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.delete(
+                    self.views_url, data=json.dumps(pay_load),
+                    verify=False, headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def create_view(self):
+        parser = argparse.ArgumentParser(
+            description='Create a new view'
+        )
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            view = parser.add_argument_group('Create view arguments')
+            view.add_argument(
+                '--view_name', dest='view_name', type=str, required=True,
+                help='The name of the view, you are creating.'
+            )
+            view.add_argument(
+                '--download_url', dest='download_url', type=str,
+                help='''The url the agents will use while
+                downloading applications.''', default=None
+            )
+            view.add_argument(
+                '--net_throttle', dest='net_throttle', default=0, type=int,
+                help='''The amount of net traffic you want to throttle
+                while downloading applications in KB. Default=0'''
+            )
+            view.add_argument(
+                '--cpu_throttle', dest='cpu_throttle', type=str,
+                choices=['idle', 'below_normal', 'normal', 'above_normal',
+                         'high'],
+                help='''The amount of cpu to use while installing
+                applications. Default=normal''', default='normal'
+            )
+            view.add_argument(
+                '--server_queue_ttl', dest='server_queue_ttl', default=10,
+                type=int, help='''The amount of time in minutes
+                until an operation expires in the server queue.'''
+            )
+            view.add_argument(
+                '--agent_queue_ttl', dest='agent_queue_ttl', default=10,
+                type=int, help='''The amount of time in minutes
+                until an operation is considered invalid in the agent queue.'''
+            )
+            view.add_argument(
+                '--time_zone', dest='time_zone', default='UTC',
+                type=str, help='''The time_zone that vFense will use
+                while scheduling operations'''
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.post(
+                    self.views_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def search_views(self):
+        parser = self._common_search_parser()
+        parser.description = 'Search for groups.'
+        parser.add_argument(
+            '--sort_by', dest='sort_by', default='view_name', type=str,
+            choices=['view_name'], help='The key that will be used to sort by.'
+        )
+        parser.add_argument(
+            '--parent_view', dest='parent_view', default=None, type=str,
+            help='The parent view of the views you are searching for.'
+        )
+        parser.add_argument(
+            '--view_context', dest='view_context', default=None, type=str,
+            help='The name of the view you are retrieving groups from.'
+        )
+        parser.add_argument(
+            '--query', dest='query', default=None, type=str,
+            help='The regex of the view name you are searching for.'
+        )
+        args = parser.parse_args(sys.argv[3:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.groups_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def edit_view(self):
+        msg = 'Edit the attributes of this view {0}'.format(self.view_name)
+        parser = argparse.ArgumentParser(description=msg)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            edit_net_throttle = (
+                parser.add_argument_group('Edit network throttle arguments')
+            )
+            edit_net_throttle.add_argument(
+                '--net_throttle', dest='net_throttle', type=int,
+                help='The amount of bandwidth the agent will throttle.',
+                default=None
+            )
+            edit_cpu_throttle = (
+                parser.add_argument_group('Edit cpu throttle arguments')
+            )
+            edit_cpu_throttle.add_argument(
+                '--cpu_throttle', dest='cpu_throttle', type=str,
+                help='''The amount of cpu the agent will use while performing
+                an operation..''', default=None,
+                choices=['idle', 'below_normal', 'normal', 'above_normal',
+                         'high'],
+            )
+            edit_server_queue_ttl = (
+                parser.add_argument_group('Edit server queue ttl arguments')
+            )
+            edit_server_queue_ttl.add_argument(
+                '--server_queue_ttl', dest='server_queue_ttl', type=int,
+                default=None, help='''The amount of time in minutes
+                until an operation expires in the server queue.'''
+            )
+            edit_agent_queue_ttl = (
+                parser.add_argument_group('Edit agent queue ttl arguments')
+            )
+            edit_agent_queue_ttl.add_argument(
+                '--agent_queue_ttl', dest='agent_queue_ttl', default=None,
+                type=int, help='''The amount of time in minutes
+                until an operation is considered invalid in the agent queue.'''
+            )
+            edit_time_zone = (
+                parser.add_argument_group('Edit time zone arguments')
+            )
+            edit_time_zone.add_argument(
+                '--time_zone', dest='time_zone', default=None,
+                type=str, help='''The time_zone that vFense will use
+                while scheduling operations'''
+            )
+            edit_download_url = (
+                parser.add_argument_group('Edit download url arguments')
+            )
+            edit_download_url.add_argument(
+                '--download_url', dest='download_url', type=str,
+                help='''The url the agents will use while
+                downloading applications.''', default=None
+            )
+            args = parser.parse_args(sys.argv[4:])
+            pay_load = vars(args)
+            data = (
+                SESSION.put(
+                    self.user_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+
+
+
+#######################COMMON CALLS######################################
     def _common_search_parser(self):
         parser = argparse.ArgumentParser()
         search = parser.add_argument_group('Common search arguments')

@@ -556,4 +556,3 @@ class ViewsHandler(BaseHandler):
             end_results[ApiResultKeys.MESSAGE] = msg
 
         return end_results
-
