@@ -93,6 +93,43 @@ def fetch_all_current_tokens(conn=None):
 
 @time_it
 @db_create_close
+def fetch_view_for_token(token, conn=None):
+    """Retrieve the view associated for this token.
+    Args:
+        token (str): Base64 token, that the agent uses to authenticate.
+
+    Basic Usage::
+        >>> from vFense.view._db import fetch_view_for_token
+        >>> fetch_view_for_token(token)
+
+    Returns:
+        Returns True or False
+    """
+    view_name = None
+    try:
+        data = list(
+            r
+            .table(ViewCollections.Views)
+            .filter(
+                lambda x:
+                (x[ViewKeys.Token] ==  token)
+                |
+                (x[ViewKeys.PreviousTokens].contains(token))
+            )
+            .run(conn)
+        )
+        if data:
+            view_name = data[ViewKeys.ViewName]
+
+
+    except Exception as e:
+        logger.exception(e)
+
+    return view_name
+
+
+@time_it
+@db_create_close
 def token_exist_in_current(token, conn=None):
     """Retrieve a list of all current tokens
     Args:

@@ -22,14 +22,15 @@ def log_operation(action, performed_on):
             operation_id = manager.create(operation)
             if operation_id:
                 results = fn(*args, **kwargs)
-                vfense_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
-                generic_code = results[ApiResultKeys.GENERIC_STATUS_CODE]
-                errors = results.get(ApiResultKeys.ERRORS, [])
-                ids_created = results.get(ApiResultKeys.GENERATED_IDS, [])
-                ids_updated = results.get(ApiResultKeys.UPDATED_IDS, [])
-                ids_removed = results.get(ApiResultKeys.DELETED_IDS, [])
+                rcopy = results.copy()
+                vfense_code = rcopy[ApiResultKeys.VFENSE_STATUS_CODE]
+                generic_code = rcopy[ApiResultKeys.GENERIC_STATUS_CODE]
+                errors = rcopy.get(ApiResultKeys.ERRORS, [])
+                ids_created = rcopy.get(ApiResultKeys.GENERATED_IDS, [])
+                ids_updated = rcopy.get(ApiResultKeys.UPDATED_IDS, [])
+                ids_removed = rcopy.get(ApiResultKeys.DELETED_IDS, [])
                 updated_operation = AdminOperation(
-                    status_message=results[ApiResultKeys.MESSAGE],
+                    status_message=rcopy[ApiResultKeys.MESSAGE],
                     generic_status_code=generic_code,
                     vfense_status_code=vfense_code,
                     errors=errors, ids_created=ids_created,

@@ -176,7 +176,6 @@ class AgentManager(object):
             views_are_valid, valid_view_names, invalid_view_names = (
                 validate_view_names(agent_data[AgentKeys.Views])
             )
-
             if views_are_valid and not invalid_fields:
                 status_code, _, _, generated_ids = (
                     insert_agent(agent_data)

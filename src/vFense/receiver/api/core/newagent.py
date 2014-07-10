@@ -154,14 +154,17 @@ class NewAgentV2(AgentBaseHandler):
             self.write(dumps(results, indent=4))
 
     @agent_results_message
-    @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     def add_agent(self, system_info, hardware, views, tags):
         system_info[AgentKeys.Hardware] = hardware
+        if len(views) == 1:
+            if not views[0]:
+                views = None
         system_info[AgentKeys.Views] = views
         agent = Agent(**system_info)
         manager = AgentManager()
         results = manager.create(agent, tags)
-        results[ApiResultKeys.OPERATIONS] = [results[ApiResultKeys.DATA]]
+        results[ApiResultKeys.OPERATIONS] = []
+        results[ApiResultKeys.data] = [results[ApiResultKeys.data]]
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results[ApiResultKeys.GENERATED_IDS]

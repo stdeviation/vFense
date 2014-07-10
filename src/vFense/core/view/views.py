@@ -23,13 +23,14 @@ def validate_view_names(view_names):
         Tuple - (Boolean, [valid list], [invalid list])
         (False, ['default'], ['TOpPatch'])
     """
-    validated = True
+    validated = False
     invalid_names = []
     valid_names = []
     if isinstance(view_names, list):
         for view_name in view_names:
             if fetch_view(view_name):
                 valid_names.append(view_name)
+                validated = True
             else:
                 invalid_names.append(view_name)
                 validated = False
