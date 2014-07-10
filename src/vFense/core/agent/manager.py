@@ -176,7 +176,8 @@ class AgentManager(object):
             views_are_valid, valid_view_names, invalid_view_names = (
                 validate_view_names(agent_data[AgentKeys.Views])
             )
-            if views_are_valid and not invalid_fields:
+            if not invalid_fields:
+                agent_data[AgentKeys.Views] = valid_view_names
                 status_code, _, _, generated_ids = (
                     insert_agent(agent_data)
                 )
@@ -209,7 +210,7 @@ class AgentManager(object):
                     results[ApiResultKeys.MESSAGE] = msg
                     results[ApiResultKeys.DATA] = agent_data
 
-            elif invalid_fields:
+            else:
                 msg = (
                     'Failed to add agent, invalid fields were passed'
                 )
@@ -221,20 +222,6 @@ class AgentManager(object):
                 )
                 results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.ERRORS] = invalid_fields
-                results[ApiResultKeys.DATA] = agent_data
-
-            else:
-                msg = (
-                    'Failed to add agent, invalid views were passed: {0}.'
-                    .format(', '.join(invalid_view_names))
-                )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                    GenericFailureCodes.FailedToCreateObject
-                )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
-                    AgentFailureResultCodes.NewAgentFailed
-                )
-                results[ApiResultKeys.MESSAGE] = msg
                 results[ApiResultKeys.DATA] = agent_data
 
             results[ApiResultKeys.DATA][AgentKeys.LastAgentUpdate] = (
