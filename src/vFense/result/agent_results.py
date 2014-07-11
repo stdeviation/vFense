@@ -67,6 +67,7 @@ class AgentResults(object):
         msg = 'New agent succeeded'
         status_code = AgentResultCodes.NewAgentSucceeded
         agent_id = kwargs.get(AgentApiResultKeys.AGENT_ID)
+        generated_ids = [agent_id]
         operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         data = kwargs.get(AgentApiResultKeys.DATA)
         return(
@@ -78,6 +79,7 @@ class AgentResults(object):
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.AGENT_ID: agent_id,
                 AgentApiResultKeys.OPERATIONS: operations,
+                AgentApiResultKeys.GENERATED_IDS: generated_ids,
                 AgentApiResultKeys.DATA: data,
             }
         )
@@ -138,6 +140,7 @@ class AgentResults(object):
         operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         unchanged_id = kwargs.get(AgentApiResultKeys.UNCHANGED_IDS, None)
         updated_id = kwargs.get(AgentApiResultKeys.UPDATED_IDS, None)
+        generated_ids = kwargs.get(AgentApiResultKeys.GENERATED_IDS, [])
         data = kwargs.get(AgentApiResultKeys.DATA, [])
         msg = (
             kwargs.get(
@@ -159,6 +162,7 @@ class AgentResults(object):
                 AgentApiResultKeys.HTTP_METHOD: self.method,
                 AgentApiResultKeys.UPDATED_ID: updated_id,
                 AgentApiResultKeys.UNCHANGED_ID: unchanged_id,
+                AgentApiResultKeys.GENERATED_IDS: generated_ids,
                 AgentApiResultKeys.MESSAGE: msg,
                 AgentApiResultKeys.DATA: data,
                 AgentApiResultKeys.OPERATIONS: operations,
