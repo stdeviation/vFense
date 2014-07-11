@@ -51,7 +51,7 @@ class AgentApiArguments():
     MAC = 'mac'
     REBOOT = 'reboot'
     SHUTDOWN = 'shutdown'
-    APPS_REFRESH = 'apps_refresh'
+    REFRESH_APPS = 'refresh_apps'
     TOKEN = 'token'
 
 
@@ -61,6 +61,10 @@ class TagApiArguments():
     TAG_NAME = 'name'
     ENVIRONMENT = 'environment'
     VIEW_NAME = 'view_name'
+    TOKEN = 'token'
+    REBOOT = 'reboot'
+    SHUTDOWN = 'shutdown'
+    REFRESH_APPS = 'refresh_apps'
 
 
 class ApiValues():
@@ -81,3 +85,14 @@ class ViewApiArguments():
     MOVE_AGENTS_TO_VIEW = 'move_agents_to_view'
     TIME_ZONE = 'time_zone'
     VIEW_NAME = 'view_name'
+    TOKEN = 'token'
+
+
+class AgentOperationsApiArguments():
+    OPERATION_ID = 'operation_id'
+    OPERATION = 'OPERATION'
+    TAG_ID = 'tag_id'
+    AGENT_ID = 'agent_id'
+    VIEW_NAME = 'view_name'
+    ENVIRONMENT = 'environment'
+

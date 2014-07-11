@@ -68,13 +68,13 @@ class AgentOperationRetriever(object):
             )
         )
 
-    def get_all(self, conn=None):
+    def all(self, conn=None):
         """Get all operations
         Basic Usage:
             >>> from vFense.core.operations.search.agent_search import AgentOperationRetriever
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
-            >>> operation.get_all()
+            >>> operation.all()
 
         Returns:
             Dictionary
@@ -107,7 +107,7 @@ class AgentOperationRetriever(object):
                 ]
             }
         """
-        count, data = self.agent_operations.fetch_all()
+        count, data = self.agent_operations.all()
         generic_status_code = GenericCodes.InformationRetrieved
 
         if count == 0:
@@ -127,7 +127,7 @@ class AgentOperationRetriever(object):
 
         return results
 
-    def get_all_by_agentid(self, agent_id, conn=None):
+    def by_agentid(self, agent_id, conn=None):
         """ Get all operations by agent id
         Args:
             agent_id (str) 36 character uuid
@@ -137,7 +137,7 @@ class AgentOperationRetriever(object):
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> agent_id = '33ba8521-b2e5-47dc-9bdc-0f1e3384049d'
-            >>> operation.get_all_by_agentid(agent_id)
+            >>> operation.by_agentid(agent_id)
 
         Returns:
             Dictionary
@@ -178,7 +178,7 @@ class AgentOperationRetriever(object):
                 ]
             }
         """
-        count, data = self.agent_operations.fetch_all_by_agentid(agent_id)
+        count, data = self.agent_operations.by_agentid(agent_id)
         generic_status_code = GenericCodes.InformationRetrieved
 
         if count == 0:
@@ -198,7 +198,7 @@ class AgentOperationRetriever(object):
 
         return results
 
-    def get_all_by_tagid(self, tag_id, conn=None):
+    def by_tagid(self, tag_id, conn=None):
         """Get all operations by tag id
         Args:
             tag_id (str) 36 character uuid
@@ -208,7 +208,7 @@ class AgentOperationRetriever(object):
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
-            >>> operation.get_all_by_tagid(tag_id)
+            >>> operation.by_tagid(tag_id)
         Returns:
             Dictionary
             {
@@ -240,7 +240,7 @@ class AgentOperationRetriever(object):
                 ]
             }
         """
-        count, data = self.agent_operations.fetch_all_by_tagid(tag_id)
+        count, data = self.agent_operations.by_tagid(tag_id)
         generic_status_code = GenericCodes.InformationRetrieved
 
         if count == 0:
@@ -260,7 +260,7 @@ class AgentOperationRetriever(object):
 
         return results
 
-    def get_all_by_operation(self, action):
+    def by_operation(self, action):
         """Get all operations by operation
         Args:
             action (str) The action the operation will perform.
@@ -314,7 +314,7 @@ class AgentOperationRetriever(object):
         if action in AgentOperations.OPERATIONS:
             generic_status_code = GenericCodes.InformationRetrieved
             count, data = (
-                self.agent_operations.fetch_all_by_operation(action)
+                self.agent_operations.by_operation(action)
             )
             if count == 0:
                 vfense_status_code = GenericFailureCodes.DataIsEmpty
@@ -340,7 +340,7 @@ class AgentOperationRetriever(object):
 
         return results
 
-    def get_install_operation_by_id(self, operation_id, conn=None):
+    def install_operation_by_id(self, operation_id, conn=None):
         """Get install operation by operation id
         Args:
             operation_id (str) 36 character UUID.
@@ -350,7 +350,7 @@ class AgentOperationRetriever(object):
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
-            >>> operation.get_install_operation_by_id(operation_id)
+            >>> operation.install_operation_by_id(operation_id)
 
         Returns:
             Dictionary
@@ -424,7 +424,7 @@ class AgentOperationRetriever(object):
         """
         generic_status_code = GenericCodes.InformationRetrieved
         count, data = (
-            self.agent_operations.fetch_install_operation_by_id(operation_id)
+            self.agent_operations.install_operation_by_id(operation_id)
         )
 
         if count == 0:
@@ -444,7 +444,7 @@ class AgentOperationRetriever(object):
 
         return results
 
-    def get_operation_by_id(self, operation_id, conn=None):
+    def by_id(self, operation_id, conn=None):
         """Get operation by operation id
         Args:
             operation_id (str) 36 character UUID.
@@ -454,7 +454,7 @@ class AgentOperationRetriever(object):
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
-            >>> operation.get_operation_by_id(operation_id)
+            >>> operation.by_id(operation_id)
 
         Returns:
             Dictionary
@@ -504,7 +504,7 @@ class AgentOperationRetriever(object):
         """
         generic_status_code = GenericCodes.InformationRetrieved
         count, data = (
-            self.agent_operations.fetch_operation_by_id(operation_id)
+            self.agent_operations.by_id(operation_id)
         )
 
         if count == 0:

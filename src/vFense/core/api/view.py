@@ -175,6 +175,7 @@ class ViewHandler(BaseHandler):
             agent_queue_ttl = self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, None)
             download_url = self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
             time_zone = self.arguments.get(ViewApiArguments.TIME_ZONE, None)
+            token = self.arguments.get(ViewApiArguments.TOKEN, None)
 
             if net_throttle:
                 results = self.edit_net_throttle(view, net_throttle)
@@ -203,6 +204,11 @@ class ViewHandler(BaseHandler):
 
             if time_zone:
                 results = self.edit_time_zone(view, time_zone)
+                if results.get(ApiResultKeys.DATA, None):
+                    data.append(results.get(ApiResultKeys.DATA))
+
+            if token:
+                results = self.update_token(view)
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
@@ -257,6 +263,12 @@ class ViewHandler(BaseHandler):
     @log_operation(AdminActions.EDIT_TIME_ZONE, vFenseObjects.VIEW)
     def edit_time_zone(self, view, time_zone):
         results = view.edit_time_zone(time_zone)
+        return results
+
+    @results_message
+    @log_operation(AdminActions.NEW_TOKEN, vFenseObjects.VIEW)
+    def update_token(self, view):
+        results = view.update_token()
         return results
 
 

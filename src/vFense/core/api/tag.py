@@ -10,14 +10,18 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
+from vFense.result.results import Results
 from vFense.result.error_messages import GenericResults
 from vFense.result._constants import ApiResultKeys
 from vFense.result.status_codes import (
     GenericCodes, TagCodes, TagFailureCodes, GenericFailureCodes
 )
 from vFense.core.agent._constants import Environments
+from vFense.core.agent.manager import AgentManager
 from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.core.tag import Tag
+from vFense.core.view._db import token_exist_in_current
 from vFense.core.tag.manager import TagManager
 from vFense.core.tag.search.search import RetrieveTags
 from vFense.core._constants import DefaultQueryValues, SortValues
@@ -301,16 +305,17 @@ class TagHandler(BaseHandler):
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
-        method = self.request.method
+        http_method = self.request.method
         try:
             reboot = self.arguments.get(TagApiArguments.REBOOT, None)
             shutdown = self.arguments.get(TagApiArguments.SHUTDOWN, None)
-            apps_refresh = (
-                self.arguments.get(TagApiArguments.APPS_REFRESH, None)
+            token = self.arguments.get(TagApiArguments.TOKEN, None)
+            refresh_apps = (
+                self.arguments.get(TagApiArguments.REFRESH_APPS, None)
             )
             operation = (
                 StoreAgentOperations(
-                    username, view_name, uri, method
+                    username, view_name
                 )
             )
             if reboot:
@@ -320,13 +325,31 @@ class TagHandler(BaseHandler):
             elif shutdown:
                 results = self.shutdown(operation, tag_id)
 
-            elif apps_refresh:
+            elif refresh_apps:
+                operation = (
+                    StorePatchingOperation(
+                        username, view_name
+                    )
+                )
                 results = self.apps_refresh(operation, tag_id)
+
+            elif token:
+                if token_exist_in_current(token):
+                    results = self.assign_new_token(operation, tag_id, token)
+                else:
+                    msg = 'Invalid token {0}'.format(token)
+                    result = Results(username, uri, http_method)
+                    results = result.invalid_token(
+                        **{
+                            ApiResultKeys.INVALID_ID: token,
+                            ApiResultKeys.MESSAGE: msg,
+                        }
+                    )
 
             else:
                 results = (
                     GenericResults(
-                        username, uri, method
+                        username, uri, http_method
                     ).incorrect_arguments()
                 )
 
@@ -337,7 +360,7 @@ class TagHandler(BaseHandler):
         except Exception as e:
             results = (
                 GenericResults(
-                    username, uri, method
+                    username, uri, http_method
                 ).something_broke(tag_id, '', e)
             )
             logger.exception(e)
@@ -361,6 +384,19 @@ class TagHandler(BaseHandler):
     @check_permissions(Permissions.READ)
     def apps_refresh(self, operation, tag_id):
         results = operation.apps_refresh(tag_id=tag_id)
+        return results
+
+
+    @results_message
+    @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
+    @log_operation(AdminActions.ASSIGN_AGENT_TOKEN, vFenseObjects.TAG)
+    def assign_new_token(self, operation, tag_id, token):
+        agents = fetch_agent_ids_in_tag(tag_id)
+        for agent in agents:
+            manager = AgentManager(agent)
+            manager.update_token(True)
+
+        results = operation.new_token(agents, token=token)
         return results
 
 

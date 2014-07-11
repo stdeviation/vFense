@@ -84,6 +84,7 @@ class AdminActions():
     EDIT_TIME_ZONE = 'edit time zone'
     ###ASSIGN
     ASSIGN_AGENT_TOKEN = 'assign new token'
+    NEW_TOKEN = 'new token'
 
     @staticmethod
     def get_admin_actions():

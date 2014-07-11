@@ -4,9 +4,13 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.core.api._constants import ApiArguments
+from vFense.core.api._constants import (
+    ApiArguments, AgentOperationsApiArguments
+)
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.operations._db_model import *
+from vFense.core.operations._db_model import (
+    AgentOperationKey
+)
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import authenticated_request, results_message
@@ -50,7 +54,9 @@ class GetTransactionsHandler(BaseHandler):
                     AgentOperationKey.CreatedTime
                 )
             )
-            operation = self.get_argument(ApiArguments.OPERATION, None)
+            operation = (
+                self.get_argument(AgentOperationsApiArguments.OPERATION, None)
+            )
 
             search = (
                 AgentOperationRetriever(
@@ -81,12 +87,12 @@ class GetTransactionsHandler(BaseHandler):
 
     @results_message
     def get_operations_by_type(self, search, operation):
-        results = search.get_all_by_operation(operation)
+        results = search.by_operation(operation)
         return results
 
     @results_message
     def get_all_operations(self, search):
-        results = search.get_all()
+        results = search.all()
         return results
 
 class AgentOperationsHandler(BaseHandler):
@@ -147,7 +153,7 @@ class AgentOperationsHandler(BaseHandler):
 
     @results_message
     def get_agent_operations(self, search, agent_id):
-        results = search.get_all_by_agentid(agent_id)
+        results = search.by_agentid(agent_id)
         return results
 
 
@@ -209,7 +215,7 @@ class TagOperationsHandler(BaseHandler):
 
     @results_message
     def get_tag_operations(self, search, tag_id):
-        results = search.get_all_by_tagid(tag_id)
+        results = search.by_tagid(tag_id)
         return results
 
 class OperationHandler(BaseHandler):
@@ -274,10 +280,10 @@ class OperationHandler(BaseHandler):
 
     @results_message
     def get_operation_by_id(self, search, operation_id):
-        results = search.get_operation_by_id(operation_id)
+        results = search.by_id(operation_id)
         return results
 
     @results_message
     def get_install_operation_by_id(self, search, operation_id):
-        results = search.get_install_operation_by_id(operation_id)
+        results = search.install_operation_by_id(operation_id)
         return results

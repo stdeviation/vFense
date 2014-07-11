@@ -60,13 +60,14 @@ class FetchAgentOperations(object):
             self.sort = r.desc
 
     @db_create_close
-    def fetch_all(self, conn=None):
+    def all(self, conn=None):
         """Fetch all operations
         Basic Usage:
             >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
-            >>> operation.fetch_all()
+            >>> operation.all()
+
         Returns:
             List
             [
@@ -116,14 +117,15 @@ class FetchAgentOperations(object):
         return(count, data)
 
     @db_create_close
-    def fetch_all_by_agentid(self, agent_id, conn=None):
+    def by_agentid(self, agent_id, conn=None):
         """Fetch all operations by agent id
         Basic Usage:
             >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> agent_id = '6c0209d5-b350-48b7-808a-158ddacb6940'
             >>> operation = FetchAgentOperations(view_name)
-            >>> operation.fetch_all_by_agentid(agent_id)
+            >>> operation.by_agentid(agent_id)
+
         Returns:
             List
             [
@@ -183,14 +185,15 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_all_by_tagid(self, tag_id, conn=None):
+    def by_tagid(self, tag_id, conn=None):
         """Fetch all operations by tag id
         Basic Usage:
             >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
             >>> view_name = 'default'
             >>> tag_id = '78076908-e93f-4116-8d49-ad42b4ad0297'
             >>> operation = FetchAgentOperations(view_name)
-            >>> operation.fetch_all_by_tagid(tag_id)
+            >>> operation.by_tagid(tag_id)
+
         Returns:
             List [count, data]
             [
@@ -253,7 +256,7 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_all_by_operation(self, action, conn=None):
+    def by_operation(self, action, conn=None):
         """Fetch all operations by action
         Args:
             action (str) The action the operation will perform.
@@ -264,7 +267,7 @@ class FetchAgentOperations(object):
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> action = 'install_os_apps'
-            >>> operation.fetch_all_by_operation(action)
+            >>> operation.by_operation(action)
         Returns:
             List of dictionaries
             [
@@ -333,7 +336,7 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_install_operation_by_id(self, operation_id, conn=None):
+    def install_operation_by_id(self, operation_id, conn=None):
         """Fetch install operation by operation id
         Args:
             operation_id (str) 36 character UUID.
@@ -343,7 +346,7 @@ class FetchAgentOperations(object):
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
-            >>> operation.fetch_install_operation_by_id(operation_id)
+            >>> operation.install_operation_by_id(operation_id)
 
         Returns:
             Dictionary
@@ -428,7 +431,7 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_operation_by_id(self, operation_id, conn=None):
+    def by_id(self, operation_id, conn=None):
         """Fetch operation by operation id
         Args:
             operation_id (str) 36 character UUID.
@@ -438,7 +441,7 @@ class FetchAgentOperations(object):
             >>> view_name = 'default'
             >>> operation = FetchAgentOperations(view_name)
             >>> operation_id = 'd6956a46-165f-49b6-a3df-872a1453ab88'
-            >>> operation.fetch_operation_by_id(operation_id)
+            >>> operation.by_id(operation_id)
 
         Returns:
             Dictionary
@@ -503,7 +506,7 @@ class FetchAgentOperations(object):
 
 
     @db_create_close
-    def fetch_install_operation_for_email_alert(self, operation_id, conn=None):
+    def install_operation_for_email_alert(self, operation_id, conn=None):
         count = 0
         data = []
         merge = self._set_install_operation_email_alert_merge()
@@ -528,7 +531,7 @@ class FetchAgentOperations(object):
         return(count, data)
 
     @db_create_close
-    def fetch_operation_for_email_alert(self, operation_id, conn=None):
+    def operation_for_email_alert(self, operation_id, conn=None):
         count = 0
         data = []
         merge = self._set_operation_for_email_alert_merge()

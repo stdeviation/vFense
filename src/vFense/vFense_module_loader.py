@@ -75,7 +75,7 @@ from vFense.plugins.patching.api.stats_api import (AgentSeverityHandler,
     AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
     TagStatsByOsHandler)
 
-from vFense.core.operations.api.agent_operations import (
+from vFense.core.api.agent_operations import (
     AgentOperationsHandler, TagOperationsHandler
 )
 

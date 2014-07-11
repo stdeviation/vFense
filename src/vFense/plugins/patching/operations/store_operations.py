@@ -29,7 +29,7 @@ logger = logging.getLogger('rvapi')
 
 class StorePatchingOperation(StoreAgentOperation):
     """Create operations for the patching plugin"""
-    def apps_refresh(self, agentids=None, tag_id=None):
+    def refresh_apps(self, agentids=None, tag_id=None):
         """Send the apps_refresh operation to the agent,
             Send all installed applications and updates needed
             to the server.
@@ -47,7 +47,7 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/os'
             >>> method = 'PUT'
             >>> operation = StorePatchingOperation(username, view_name, uri, method)
-            >>> operation.apps_refresh(agentids=agentids)
+            >>> operation.refresh_apps(agentids=agentids)
 
         Returns:
         """

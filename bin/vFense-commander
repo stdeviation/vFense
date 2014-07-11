@@ -72,23 +72,25 @@ class vFense(object):
 
     def __init__(self):
         parser = argparse.ArgumentParser(
-            description='vFense command line tool.',
-            usage='''vfense <api> [<args>]
-
-The various api base calls.
-   users      Search, create, edit and delete users.
-   views      Search, create, edit and delete views.
-   groups     Search, create, edit and delete groups.
-   tags       Search, create, edit and delete tags.
-   agents     Search, edit and delete agents.
-   operations Search operations.
-   schedule   Search, create, and delete schedules.
-''')
+            usage='vfense <api> -h',
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''\
+    vFense command line tool.
+These are the various api base calls that you can call.
+    * users
+    * views
+    * groups
+    * tags
+    * agents
+    * operations
+    * schedule'''
+        )
         self.username, self.password, self.url, config_exists = (
             get_credentials()
         )
         if config_exists:
-            parser.add_argument(
+            api_args  = parser.add_argument_group('Choose a valid api')
+            api_args.add_argument(
                 'api', help='The api you want to run',
                 choices=[
                     'users', 'views', 'groups',
@@ -113,15 +115,28 @@ The various api base calls.
     def tags(self):
         self.tags_url = os.path.join(self.url, 'api/v1/tags')
         parser = argparse.ArgumentParser(
-            description='''Here you can search for tags with various filters
-            as well as modify properties of a tag and delete or add agents
-            to a tag.'''
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''
+The various operations you can perform for the tags api.
+    * search
+    * create
+    * delete
+    * delete_multiple
+    * edit
+    * get
+    * reboot
+    * shutdown
+    * refresh_apps
+    * apps
+''',
+            usage='''vFense-commander tags <action> -h'''
         )
         parser.add_argument(
             'action', help='Actions that you can perform',
             choices=[
                 'search', 'create', 'delete', 'delete_multiple',
-                'edit', 'get', 'apps'
+                'edit', 'get', 'apps' 'reboot', 'shutdown', 'refresh_apps',
+                'new_token'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
@@ -143,21 +158,33 @@ The various api base calls.
         elif args.action == 'delete':
             self.delete_tag()
 
+        elif args.action == 'reboot':
+            self.reboot_agents_in_tag()
+
+        elif args.action == 'shutdown':
+            self.shutdown_agents_in_tag()
+
+        elif args.action == 'refresh_apps':
+            self.refresh_agents_in_tag()
+
+        elif args.action == 'new_token':
+            self.assign_token_in_agents_in_tag()
+
         elif args.action == 'delete_multiple':
             self.delete_tags()
 
     def tag_id(self, action):
         parser = argparse.ArgumentParser(
-            description='The tag id you are going to manage.'
+            description='The tag id you are going to manage.',
+            usage='''vFense-commander tags <action> <tag_id> -h'''
         )
         parser.add_argument(
             'tag_id', type=str,
             help='The id of the tag you are going to manage.'
         )
         args = parser.parse_args(sys.argv[3:4])
-        tag_id = args.tag_id
-        self.tag_url = os.path.join(self.url, 'api/v1/tag', tag_id)
-        self.tag_id = tag_id
+        self.tag_id = args.tag_id
+        self.tag_url = os.path.join(self.url, 'api/v1/tag', self.tag_id)
 
         if action == 'get':
             self.get_tag()
@@ -167,6 +194,18 @@ The various api base calls.
 
         elif action == 'delete':
             self.delete_tag()
+
+        elif action == 'reboot':
+            self.reboot_agents_in_tag()
+
+        elif action == 'shutdown':
+            self.shutdown_agents_in_tag()
+
+        elif action == 'refresh_apps':
+            self.refresh_apps_in_agents_in_tag()
+
+        elif action == 'new_token':
+            self.assign_token_in_agents_in_tag()
 
         elif action == 'apps':
             self.apps_action_for_tag()
@@ -185,7 +224,12 @@ The various api base calls.
 
     def edit_tag(self):
         msg = 'Edit the attributes of this tag {0}'.format(self.tag_id)
-        parser = argparse.ArgumentParser(description=msg)
+        parser = (
+            argparse.ArgumentParser(
+                description=msg,
+                usage='''vFense-commander tags <action> <tag_id> -h'''
+            )
+        )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             parser.add_argument(
@@ -195,18 +239,13 @@ The various api base calls.
                 choices=['add', 'delete'], default=None
             )
             parser.add_argument(
-                '--display_name', dest='display_name', type=str,
-                help='''Edit the display name in the vFense UI.
-                This does not change the computer name.''', default=None
-            )
-            parser.add_argument(
                 '--environment', dest='environment', type=str,
                 help='''Change the environment this tag belongs too.
                 Example.. Production, Staging, QA, Dev, etc...''',
                 default=None
             )
             parser.add_argument(
-                '--agent_ids', dest='agent_ids', type=str, action='append',
+                '--agent_ids', dest='agent_ids', type=str, nargs='+',
                 help='''The agents you want to add or delete from this tag.
                 This must be called with --action''',
                 default=None
@@ -223,7 +262,6 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
     def delete_tag(self):
-        self.tag_url = os.path.join(self.url, 'api/v1/tag', self.tag_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -237,12 +275,13 @@ The various api base calls.
 
     def delete_tags(self):
         parser = argparse.ArgumentParser(
-            description='''Delete 1 or multiple tags from vFense.'''
+            description='''Delete 1 or multiple tags from vFense.''',
+            usage='''vFense-commander tags delete -h'''
         )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             parser.add_argument(
-                '--tag_ids', dest='tag_ids', action='append',
+                '--tag_ids', dest='tag_ids', nargs='+',
                 help='The ids of the tags, you are deleting.'
             )
             args = parser.parse_args(sys.argv[3:])
@@ -256,9 +295,75 @@ The various api base calls.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
+    def reboot_agents_in_tag(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'reboot': True}
+            data = (
+                SESSION.post(
+                    self.tag_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def shutdown_agents_in_tag(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'shutdown': True}
+            data = (
+                SESSION.post(
+                    self.tag_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def refresh_apps_in_agents_in_tag(self):
+        self.tag_url = os.path.join(self.url, 'api/v1/tag', self.tag_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'refresh_apps': True}
+            data = (
+                SESSION.post(
+                    self.tag_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def assign_token_in_agents_in_tag(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser = argparse.ArgumentParser(
+                description='''Assign a new token to all agents in this tag''',
+                usage='''vFense-commander tags new_token <tag_id> -h'''
+            )
+            token_options = (
+                parser.add_argument_group('Token arguments')
+            )
+            token_options.add_argument(
+                'token', dest='token',
+                help='The token you are assigning to this agent.'
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.post(
+                    self.tag_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
     def search_tags(self):
         parser = self._common_search_parser()
         parser.description = """Search for tags"""
+        parser.usage = '''vFense-commander tags search -h'''
         tag_search  = parser.add_argument_group('Search arguments')
         tag_search.add_argument(
             '--sort_by', dest='sort_by', default='tag_name', type=str,
@@ -290,7 +395,8 @@ The various api base calls.
 
     def create_tag(self):
         parser = argparse.ArgumentParser(
-            description='Create a new tag'
+            description='Create a new tag',
+            usage='''vFense-commander tags create -h'''
         )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
@@ -316,7 +422,8 @@ The various api base calls.
 
     def apps_action_for_tag(self):
         parser = argparse.ArgumentParser(
-            description='''Choose an action'''
+            description='''Choose an action''',
+            usage='''vFense-commander tags <action> -h'''
         )
         parser.add_argument(
             'action', type=str,
@@ -331,7 +438,8 @@ The various api base calls.
 
     def apps_type_for_tag(self, action):
         parser = argparse.ArgumentParser(
-            description='''Which type of applications you want to manage.'''
+            description='''Which type of applications you want to manage.''',
+            usage='''vFense-commander tags <action> <app_type> -h'''
         )
         parser.add_argument(
             'app_type', type=str,
@@ -351,7 +459,8 @@ The various api base calls.
             os.path.join(self.tag_url, 'apps', app_type)
         )
         parser = argparse.ArgumentParser(
-            description='''Install applications/updates'''
+            description='''Install applications/updates''',
+            usage='''vFense-commander tags install <app_type> -h'''
         )
         install  = parser.add_argument_group('Install arguments')
         install.add_argument(
@@ -399,7 +508,8 @@ The various api base calls.
     def apps_status_for_tag(self, app_type):
         parser = argparse.ArgumentParser(
             description='''The status of the applications you want to search .
-            for. installed or available.'''
+            for. installed or available.''',
+            usage='''vFense-commander tags search <app_type> <status> -h'''
         )
         parser.add_argument(
             'status', type=str,
@@ -423,6 +533,7 @@ The various api base calls.
         '''Search applications by name, or filter by severity
             or filter by vulnerability or sort by release_date, etc...'''
         )
+        parser.usage='''vFense-commander tags search <app_type> <status> -h'''
         parser.add_argument(
             '--sort_by', dest='sort_by', default='app_name', type=str,
             help='The key that will be used to sort by.', choices=[
@@ -469,14 +580,21 @@ The various api base calls.
     def agents(self):
         self.agents_url = os.path.join(self.url, 'api/v1/agents')
         parser = argparse.ArgumentParser(
-            description='''Here you can search for agents with various filters
-            as well as modify an agents properties and delete agents.'''
+            description='''
+        * Search for agents with various filters.
+        * Modify an agents properties.
+        * Reboot and shutdown an agent.
+        * Request the agent inventory.
+        * Delete an agent.
+        * Delete multiple agents.''',
+            usage='''vFense-commander agents <action>'''
         )
         parser.add_argument(
             'action', help='Actions available.',
             choices=[
                 'search', 'delete', 'delete_multiple',
-                'edit', 'get', 'apps'
+                'edit', 'get', 'reboot', 'shutdown',
+                'refresh_apps', 'assign_new_token', 'apps'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
@@ -493,6 +611,18 @@ The various api base calls.
             self.set_agent_id(args.action)
 
         elif args.action == 'edit':
+            self.set_agent_id(args.action)
+
+        elif args.action == 'reboot':
+            self.set_agent_id(args.action)
+
+        elif args.action == 'shutdown':
+            self.set_agent_id(args.action)
+
+        elif args.action == 'refresh_apps':
+            self.set_agent_id(args.action)
+
+        elif args.action == 'assign_new_token':
             self.set_agent_id(args.action)
 
         elif args.action == 'apps':
@@ -516,7 +646,19 @@ The various api base calls.
             self.edit_agent()
 
         elif action == 'delete':
-            self.agent_delete()
+            self.delete_agent()
+
+        elif action == 'reboot':
+            self.reboot_agent()
+
+        elif action == 'shutdown':
+            self.shutdown_agent()
+
+        elif action == 'refresh_apps':
+            self.refresh_apps_agent()
+
+        elif action == 'assign_new_token':
+            self.assign_token_agent()
 
         elif action == 'apps':
             self.agent_apps()
@@ -585,6 +727,74 @@ The various api base calls.
             )
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
+
+    def reboot_agent(self):
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'reboot': True}
+            data = (
+                SESSION.post(
+                    self.agent_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def shutdown_agent(self):
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'shutdown': True}
+            data = (
+                SESSION.post(
+                    self.agent_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def refresh_apps_agent(self):
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            args = {'refresh_apps': True}
+            data = (
+                SESSION.post(
+                    self.agent_url, data=json.dumps(args), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def assign_token_agent(self):
+        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            parser = argparse.ArgumentParser(
+                description='''Assign a new token to this agent'''
+            )
+            token_options = (
+                parser.add_argument_group('Token arguments')
+            )
+            token_options.add_argument(
+                'token', dest='token',
+                help='The token you are assigning to this agent.'
+            )
+            args = parser.parse_args(sys.argv[3:])
+            pay_load = vars(args)
+            data = (
+                SESSION.post(
+                    self.agent_url, data=json.dumps(pay_load), verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
 
     def delete_agents(self):
         parser = argparse.ArgumentParser(
@@ -1757,6 +1967,13 @@ The various api base calls.
                 help='''The url the agents will use while
                 downloading applications.''', default=None
             )
+            new_token = (
+                parser.add_argument_group('Create a new token')
+            )
+            new_token.add_argument(
+                '--token', dest='token', action='store_true',
+                help='''Generate a new token for this view.''', default=None
+            )
             args = parser.parse_args(sys.argv[4:])
             pay_load = vars(args)
             data = (
@@ -1769,6 +1986,85 @@ The various api base calls.
             print json.dumps(content, indent=4)
 
 
+#######################AGENT OPERATIONS MANAGEMENT######################################
+
+    def agent_operations(self):
+        self.agent_operations_url = os.path.join(self.url, 'api/v1/operations')
+        parser = argparse.ArgumentParser(
+            description='''Search for operations'''
+        )
+        parser.add_argument(
+            'action', help='Actions that you can perform',
+            choices=['search', 'get' ]
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.action == 'search':
+            self.search_agent_operations()
+
+        elif args.action == 'get':
+            self.agent_operation_id(args.action)
+
+    def agent_operation_id(self, action):
+        parser = argparse.ArgumentParser(
+            description='The operation id you want to retreive data from.'
+        )
+        parser.add_argument(
+            'agent_operation_id', type=str,
+            help='The id of the operation you want to retrieve.'
+        )
+        args = parser.parse_args(sys.argv[3:4])
+        self.agent_operation_id = args.agent_operation_id
+        self.agent_operation_url = (
+            os.path.join(
+                self.url, 'api/v1/operation', self.agent_operation_id
+            )
+        )
+
+        if action == 'get':
+            self.get_operation()
+
+    def get_agent_operation(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.agent_operation_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
+    def search_agent_operations(self):
+        parser = self._common_search_parser()
+        parser.description = """Search for operations"""
+        search  = parser.add_argument_group('Search arguments')
+        search.add_argument(
+            '--sort_by', dest='sort_by', default='created_time', type=str,
+            help='The key that will be used to sort by.', choices=[
+                'created_time', 'operation_status', 'completed_time',
+                'created_by', 'view_name', 'updated_time', 'operation'
+            ]
+        )
+        search.add_argument(
+            '--operation', dest='operation',
+            help='''The operation type you want to retrieve.''', choices=[
+                'refresh_apps', 'install_os_apps', 'uninstall', 'reboot',
+                'shutdown', 'new_token'
+            ], default=None
+        )
+        args = parser.parse_args(sys.argv[3:])
+        pay_load = vars(args)
+        vfense = authenticate(self.username, self.password, self.url)
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    self.tags_url, params=pay_load, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
 
 
 #######################COMMON CALLS######################################

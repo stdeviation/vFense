@@ -742,8 +742,8 @@ class AgentHandler(BaseHandler):
             reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
             shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
             token = self.arguments.get(AgentApiArguments.TOKEN, None)
-            apps_refresh = (
-                self.arguments.get(AgentApiArguments.APPS_REFRESH, None)
+            refresh_apps = (
+                self.arguments.get(AgentApiArguments.REFRESH_APPS, None)
             )
             operation = (
                 StoreAgentOperations(
@@ -770,13 +770,13 @@ class AgentHandler(BaseHandler):
                     )
 
 
-            elif apps_refresh:
+            elif refresh_apps:
                 operation = (
                     StorePatchingOperation(
                         username, view_name
                     )
                 )
-                results = self.apps_refresh(operation, [agent_id])
+                results = self.refresh_apps(operation, [agent_id])
 
             else:
                 results = (
@@ -820,8 +820,8 @@ class AgentHandler(BaseHandler):
         return results
 
     @results_message
-    def apps_refresh(self, operation, agent_ids):
-        results = operation.apps_refresh(agent_ids)
+    def refresh_apps(self, operation, agent_ids):
+        results = operation.refresh_apps(agent_ids)
         return results
 
 
