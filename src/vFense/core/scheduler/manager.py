@@ -8,6 +8,7 @@ from pytz import utc
 from apscheduler.jobstores.rethinkdb import RethinkDBJobStore
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
@@ -25,7 +26,8 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-def start_scheduler(scheduler_type='tornado', db='vFense', collection='jobs'):
+def start_scheduler(scheduler_type='background', db='vFense',
+                    collection='jobs'):
     """Create an instance of jobManager.
         Args:
             scheduler_type (str): tornado or background.
@@ -44,8 +46,12 @@ def start_scheduler(scheduler_type='tornado', db='vFense', collection='jobs'):
     """
     if scheduler_type == 'tornado':
         Scheduler = TornadoScheduler
-    else:
+
+    elif scheduler_type == 'background':
         Scheduler = BackgroundScheduler
+
+    else:
+        Scheduler = BlockingScheduler
 
 
     jobstore = {

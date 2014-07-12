@@ -20,7 +20,6 @@ logger = logging.getLogger('admin_scheduler')
 
 if __name__ == '__main__':
 
-    sched = start_scheduler(collection=JobCollections.AdministrativeJobs)
     list_of_cron_jobs = [
         {
             'name': 'parse_cve_and_udpatedb',
@@ -63,11 +62,15 @@ if __name__ == '__main__':
             'trigger': 'cron'
         },
     ]
+
+    sched = (
+        start_scheduler(
+            scheduler_type='background',
+            collection=JobCollections.AdministrativeJobs
+        )
+    )
     manager = AdministrativeJobManager(sched, DefaultViews.GLOBAL)
     for cron_job in list_of_cron_jobs:
         job = Schedule(**cron_job)
         manager.add_cron_job(job)
         logger.info('job %s added' % (job.name))
-
-    while True:
-        sleep(60)

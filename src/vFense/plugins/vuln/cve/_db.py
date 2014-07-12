@@ -29,10 +29,12 @@ def fetch_vulnerability_categories(cve_id, conn=None):
         info = (
             r
             .table(CVECollections.CVE)
-            .get(cve_id)
+            .get_all(cve_id)
             .pluck(CveKeys.CveCategories)
             .run(conn)
         )
+        if info:
+            info = info[0]
 
     except Exception as e:
         logger.exception(e)
