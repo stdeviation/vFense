@@ -5,9 +5,16 @@ from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime
 
-from vFense.plugins.patching._db_model import *
-from vFense.core.operations._db_model import *
-from vFense.core.operations._constants import AgentOperations
+from vFense.plugins.patching._db_model import (
+    AppCollections, AppsKey
+)
+from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.core.operations._db_model import (
+    OperationPerAgentKey, AgentOperationKey
+)
+from vFense.core.operations._constants import (
+    AgentOperations, vFensePlugins
+)
 from vFense.core.operations.agent_operations import AgentOperation
 from vFense.plugins.patching.patching import (
     update_app_status_by_agentid_and_appid
@@ -33,15 +40,15 @@ def remove_expired_jobs_and_update_operations():
         )
 
         operation.update_operation_expire_time(
-            job[AgentOperationKey.OperationId],
-            job[AgentOperationPerAgentKey.AgentId],
+            job[OperationPerAgentKey.OperationId],
+            job[OperationPerAgentKey.AgentId],
         )
 
-        if job[OperationKey.Plugin] == RV_PLUGIN:
+        if job[AgentOperationKey.Plugin] == vFensePlugins.RV_PLUGIN:
             collection = AppCollections.UniqueApplications
 
             if re.search('^install', job['operation']):
-                app_status = {STATUS:  AVAILABLE}
+                app_status = {CommonAppKeys.STATUS:  CommonAppKeys.AVAILABLE}
                 if job['operation'] == AgentOperations.INSTALL_CUSTOM_APPS:
                     collection = AppCollections.CustomApps
 
@@ -52,7 +59,7 @@ def remove_expired_jobs_and_update_operations():
                     collection = AppCollections.vFenseApps
 
             elif re.search('^uninstall', job['operation']):
-                app_status = {STATUS:  INSTALLED}
+                app_status = {CommonAppKeys.STATUS:  CommonAppKeys.INSTALLED}
             for app in job[AppsKey.FileData]:
                 update_app_status_by_agentid_and_appid(
                     job[OperationPerAgentKey.AgentId],
