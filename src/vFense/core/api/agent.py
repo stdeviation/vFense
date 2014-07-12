@@ -323,9 +323,9 @@ class AgentsHandler(BaseHandler):
     def new_token(self, operation, agents, token):
         for agent in agents:
             manager = AgentManager(agent)
-            manager.update_token(True)
+            manager.update_token(token)
 
-        results = operation.new_token(agents, token=token)
+        results = operation.new_token(token, agents)
         return results
 
 
@@ -816,7 +816,7 @@ class AgentHandler(BaseHandler):
     @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
     @results_message
     def new_token(self, operation, agent_ids, token):
-        results = operation.new_token(agent_ids, token=token)
+        results = operation.new_token(token, agent_ids)
         return results
 
     @results_message

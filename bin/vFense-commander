@@ -346,7 +346,7 @@ The various operations you can perform for the tags api.
                 parser.add_argument_group('Token arguments')
             )
             token_options.add_argument(
-                'token', dest='token',
+                '--token', dest='token',
                 help='The token you are assigning to this agent.'
             )
             args = parser.parse_args(sys.argv[3:])
@@ -586,6 +586,7 @@ The various operations you can perform for the tags api.
         * Reboot and shutdown an agent.
         * Request the agent inventory.
         * Delete an agent.
+        * Assign a new token to the agent.
         * Delete multiple agents.''',
             usage='''vFense-commander agents <action>'''
         )
@@ -658,7 +659,7 @@ The various operations you can perform for the tags api.
             self.refresh_apps_agent()
 
         elif action == 'assign_new_token':
-            self.assign_token_agent()
+            self.assign_token_in_agent()
 
         elif action == 'apps':
             self.agent_apps()
@@ -716,7 +717,6 @@ The various operations you can perform for the tags api.
             print json.dumps(content, indent=4)
 
     def delete_agent(self):
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -729,7 +729,6 @@ The various operations you can perform for the tags api.
             print json.dumps(content, indent=4)
 
     def reboot_agent(self):
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             args = {'reboot': True}
@@ -743,7 +742,6 @@ The various operations you can perform for the tags api.
             print json.dumps(content, indent=4)
 
     def shutdown_agent(self):
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             args = {'shutdown': True}
@@ -757,7 +755,6 @@ The various operations you can perform for the tags api.
             print json.dumps(content, indent=4)
 
     def refresh_apps_agent(self):
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             args = {'refresh_apps': True}
@@ -770,21 +767,21 @@ The various operations you can perform for the tags api.
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
-    def assign_token_agent(self):
-        self.agent_url = os.path.join(self.url, 'api/v1/agent', self.agent_id)
+    def assign_token_in_agent(self):
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             parser = argparse.ArgumentParser(
-                description='''Assign a new token to this agent'''
+                description='''Assign a new token to this agent''',
+                usage='''vFense-commander agents assign_new_token <agent_id> -h'''
             )
             token_options = (
                 parser.add_argument_group('Token arguments')
             )
             token_options.add_argument(
-                'token', dest='token',
+                '--token', dest='token',
                 help='The token you are assigning to this agent.'
             )
-            args = parser.parse_args(sys.argv[3:])
+            args = parser.parse_args(sys.argv[4:])
             pay_load = vars(args)
             data = (
                 SESSION.post(

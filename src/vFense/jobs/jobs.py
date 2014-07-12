@@ -29,13 +29,12 @@ def remove_expired_jobs_and_update_operations():
     logger.info(msg)
     for job in expired_jobs:
         operation = (
-            AgentOperation('admin', job[OperationKey.ViewName], None, None)
+            AgentOperation()
         )
 
         operation.update_operation_expire_time(
-            job[OperationKey.OperationId],
-            job[OperationPerAgentKey.AgentId],
-            job[OperationKey.Operation]
+            job[AgentOperationKey.OperationId],
+            job[AgentOperationPerAgentKey.AgentId],
         )
 
         if job[OperationKey.Plugin] == RV_PLUGIN:
