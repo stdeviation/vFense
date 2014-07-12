@@ -35,7 +35,7 @@ def authenticate_agent(fn):
             {
                 ApiResultKeys.URI: self.request.uri,
                 ApiResultKeys.HTTP_STATUS_CODE: 403,
-                ApiResultKeys.status_code: (
+                ApiResultKeys.VFENSE_STATUS_CODE: (
                     GenericCodes.AuthorizationDenied
                 ),
                 ApiResultKeys.HTTP_METHOD: self.request.method,
