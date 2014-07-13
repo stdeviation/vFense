@@ -311,7 +311,7 @@ class AgentOperationRetriever(object):
                 ]
             }
         """
-        if action in AgentOperations.OPERATIONS:
+        if action in AgentOperations.get_valid_operations():
             generic_status_code = GenericCodes.InformationRetrieved
             count, data = (
                 self.agent_operations.by_operation(action)

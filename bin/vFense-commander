@@ -795,7 +795,7 @@ Available operations you can perform on an agent.
                     .format(self.agent_id)
                 ),
                 usage=(
-                    'vFense-commander agents assign_new_token -h'
+                    'vFense-commander agents assign_new_token {0} -h'
                     .format(self.agent_id)
                 )
             )
@@ -1405,11 +1405,27 @@ The various actions that you can perform on multiple users.
     def groups(self):
         self.group_url = os.path.join(self.url, 'api/v1/group')
         self.groups_url = os.path.join(self.url, 'api/v1/groups')
-        parser = argparse.ArgumentParser(description='Groups api calls')
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''
+Available actions you can perform on groups.
+    * search
+    * create
+    * delete_multiple
+
+Available operations you can perform on a group.
+    * get
+    * edit
+    * delete
+    * add_to
+    * remove_from
+    '''
+        )
         parser.add_argument(
             'action', help='Actions available',
             choices=[
-                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search'
+                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search',
+                'create', 'delete_multiple'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
@@ -1775,11 +1791,27 @@ The various actions that you can perform on multiple users.
     def views(self):
         self.view_url = os.path.join(self.url, 'api/v1/view')
         self.viewss_url = os.path.join(self.url, 'api/v1/views')
-        parser = argparse.ArgumentParser(description='Views api calls')
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''
+Available actions you can perform on views.
+    * search
+    * create
+    * delete_multiple
+
+Available operations you can perform on a view.
+    * get
+    * edit
+    * delete
+    * add_to
+    * remove_from
+    '''
+        )
         parser.add_argument(
             'action', help='Actions available',
             choices=[
-                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search'
+                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search',
+                'create', 'delete_multiple'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
@@ -1884,7 +1916,8 @@ The various actions that you can perform on multiple users.
 
     def create_view(self):
         parser = argparse.ArgumentParser(
-            description='Create a new view'
+            description='Create a new view',
+            usage='vFense-commander views create -h'
         )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
@@ -1938,7 +1971,10 @@ The various actions that you can perform on multiple users.
 
     def search_views(self):
         parser = self._common_search_parser()
-        parser.description = 'Search for groups.'
+        parser.description = 'Views search handler.'
+        parser.usage = (
+            'vFense-commander views search -h'
+        )
         parser.add_argument(
             '--sort_by', dest='sort_by', default='view_name', type=str,
             choices=['view_name'], help='The key that will be used to sort by.'
@@ -1961,7 +1997,7 @@ The various actions that you can perform on multiple users.
         if vfense.ok:
             data = (
                 SESSION.get(
-                    self.groups_url, params=pay_load, verify=False,
+                    self.views_url, params=pay_load, verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
@@ -1971,6 +2007,9 @@ The various actions that you can perform on multiple users.
     def edit_view(self):
         msg = 'Edit the attributes of this view {0}'.format(self.view_name)
         parser = argparse.ArgumentParser(description=msg)
+        parser.usage = (
+            'vFense-commander views edit {0} -h'.format(self.view_name)
+        )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             edit_net_throttle = (
@@ -2034,7 +2073,7 @@ The various actions that you can perform on multiple users.
             pay_load = vars(args)
             data = (
                 SESSION.put(
-                    self.user_url, data=json.dumps(pay_load), verify=False,
+                    self.views_url, data=json.dumps(pay_load), verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
@@ -2044,10 +2083,18 @@ The various actions that you can perform on multiple users.
 
 #######################AGENT OPERATIONS MANAGEMENT######################################
 
-    def agent_operations(self):
+    def operations(self):
         self.agent_operations_url = os.path.join(self.url, 'api/v1/operations')
         parser = argparse.ArgumentParser(
-            description='''Search for operations'''
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''
+Available actions you can perform on operations.
+    * search
+
+Available operations you can perform on an agent.
+    * get
+    ''',
+            usage='vFense-commander operations -h'
         )
         parser.add_argument(
             'action', help='Actions that you can perform',
@@ -2062,7 +2109,8 @@ The various actions that you can perform on multiple users.
 
     def agent_operation_id(self, action):
         parser = argparse.ArgumentParser(
-            description='The operation id you want to retreive data from.'
+            description='The operation id you want to retreive data from.',
+            usage='vFense-commander operations get -h'
         )
         parser.add_argument(
             'agent_operation_id', type=str,
@@ -2094,7 +2142,7 @@ The various actions that you can perform on multiple users.
     def search_agent_operations(self):
         parser = self._common_search_parser()
         parser.description = '''Search for operations'''
-        parser.usage='''vFense-commander agents operations'''
+        parser.usage='''vFense-commander operations search -h'''
         parser.add_argument(
             '--sort_by', dest='sort_by', default='created_time', type=str,
             help='The key that will be used to sort by.', choices=[
@@ -2109,13 +2157,14 @@ The various actions that you can perform on multiple users.
                 'shutdown', 'new_token'
             ], default=None
         )
-        args = parser.parse_args(sys.argv[4:])
+        args = parser.parse_args(sys.argv[3:])
         pay_load = vars(args)
+        print pay_load
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
                 SESSION.get(
-                    self.tags_url, params=pay_load, verify=False,
+                    self.agent_operations_url, params=pay_load, verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )

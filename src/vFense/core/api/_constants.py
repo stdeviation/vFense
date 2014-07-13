@@ -90,7 +90,7 @@ class ViewApiArguments():
 
 class AgentOperationsApiArguments():
     OPERATION_ID = 'operation_id'
-    OPERATION = 'OPERATION'
+    OPERATION = 'operation'
     TAG_ID = 'tag_id'
     AGENT_ID = 'agent_id'
     VIEW_NAME = 'view_name'
