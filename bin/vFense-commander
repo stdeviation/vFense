@@ -580,14 +580,20 @@ The various operations you can perform for the tags api.
     def agents(self):
         self.agents_url = os.path.join(self.url, 'api/v1/agents')
         parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
             description='''
-        * Search for agents with various filters.
-        * Modify an agents properties.
-        * Reboot and shutdown an agent.
-        * Request the agent inventory.
-        * Delete an agent.
-        * Assign a new token to the agent.
-        * Delete multiple agents.''',
+Available operations you can perform on multiple agents.
+    * search
+    * delete_multiple
+
+Available operations you can perform on an agent.
+    * edit
+    * reboot
+    * refresh_apps
+    * delete
+    * assign_new_token
+    * operations
+    ''',
             usage='''vFense-commander agents <action>'''
         )
         parser.add_argument(
@@ -682,27 +688,40 @@ The various operations you can perform for the tags api.
         parser = argparse.ArgumentParser(description=msg)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
-            parser.add_argument(
+            view_options = (
+                parser.add_argument_group('Add or remove views')
+            )
+            view_options.add_argument(
                 '--action', dest='action', type=str,
                 help='''What action you would like to take..
                 This can only be called with --views''',
                 choices=['add', 'delete'], default=None
             )
-            parser.add_argument(
+            view_options.add_argument(
+                '--views', dest='views', type=str, action='append',
+                help='''The views you want this agent added to
+                or removed from. This must be called with --action''',
+                default=None
+            )
+            view_options.usage = (
+                'vFense-commander agents edit <agent_id> \
+                --action=<action> --views=<views views views>'
+            )
+            edit_display = (
+                parser.add_argument_group('Edit the display name')
+            )
+            edit_display.add_argument(
                 '--display_name', dest='display_name', type=str,
                 help='''Edit the display name in the vFense UI.
                 This does not change the computer name.''', default=None
             )
-            parser.add_argument(
+            edit_environment = (
+                parser.add_argument_group('Edit the environment of <Agent_id>')
+            )
+            edit_environment.add_argument(
                 '--environment', dest='environment', type=str,
                 help='''Change the environment this agent belongs too.
                 Example.. Production, Staging, QA, Dev, etc...''',
-                default=None
-            )
-            parser.add_argument(
-                '--views', dest='views', type=str, action='append',
-                help='''The views you want this agent added to
-                or removed from. This must be called with --action''',
                 default=None
             )
             args = parser.parse_args(sys.argv[4:])
@@ -771,8 +790,14 @@ The various operations you can perform for the tags api.
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             parser = argparse.ArgumentParser(
-                description='''Assign a new token to this agent''',
-                usage='''vFense-commander agents assign_new_token <agent_id> -h'''
+                description=(
+                    'Assign a new token to agent {0}'
+                    .format(self.agent_id)
+                ),
+                usage=(
+                    'vFense-commander agents assign_new_token -h'
+                    .format(self.agent_id)
+                )
             )
             token_options = (
                 parser.add_argument_group('Token arguments')
@@ -798,12 +823,18 @@ The various operations you can perform for the tags api.
             description='''
         Delete 1 or multiple agents from vFense. This will send the uninstall
         operation to the agent.
-        '''
+        ''',
+            usage=(
+                'vFense-commander agents delete_multiple --agent_ids id1 id2 id3'
+            )
         )
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
-            parser.add_argument(
-                '--agent_ids', dest='agent_ids', action='append',
+            delete_options = (
+                parser.add_argument_group('Token arguments')
+            )
+            delete_options.add_argument(
+                '--agent_ids', dest='agent_ids', nargs='+',
                 help='The ids of the agents, you are deleting.'
             )
             args = parser.parse_args(sys.argv[3:])
@@ -820,6 +851,7 @@ The various operations you can perform for the tags api.
     def search_agents(self):
         parser = self._common_search_parser()
         parser.description = """Search for agents"""
+        parser.usage = 'vFense-commander agents search -h'
         agent_search  = parser.add_argument_group('Search arguments')
         agent_search.add_argument(
             '--sort_by', dest='sort_by', default='computer_name', type=str,
@@ -875,6 +907,7 @@ The various operations you can perform for the tags api.
         parser = argparse.ArgumentParser(
             description='''Choose an action'''
         )
+        parser.usage = 'vFense-commander agents apps -h'
         parser.add_argument(
             'action', type=str,
                 help='''Action you want to perform,
@@ -890,6 +923,7 @@ The various operations you can perform for the tags api.
         parser = argparse.ArgumentParser(
             description='''Which type of applications you want to manage.'''
         )
+        parser.usage = 'vFense-commander agents apps <action> -h'
         parser.add_argument(
             'app_type', type=str,
                 help='''The application type.''',
@@ -910,6 +944,7 @@ The various operations you can perform for the tags api.
         parser = argparse.ArgumentParser(
             description='''Install applications/updates'''
         )
+        parser.usage = 'vFense-commander agents apps install <app_type> -h'
         install  = parser.add_argument_group('Install arguments')
         install.add_argument(
             '--app_id', type=str, action='append',
@@ -959,6 +994,9 @@ The various operations you can perform for the tags api.
             description='''The status of the applications you want to search .
             for. installed or available.'''
         )
+        parser.usage = (
+            'vFense-commander agents apps search <app_type> -h'
+        )
         parser.add_argument(
             'status', type=str,
                 help='''The status of the applications you are searching
@@ -972,6 +1010,9 @@ The various operations you can perform for the tags api.
 
     def agent_apps_search(self, status, app_type):
         parser = self._common_search_parser()
+        parser.usage = (
+            'vFense-commander agents apps search <app_type> <status> -h'
+        )
         self.agent_apps_url = (
             os.path.join(
                 self.agent_url, 'apps', app_type
@@ -1027,10 +1068,28 @@ The various operations you can perform for the tags api.
     def users(self):
         self.user_url = os.path.join(self.url, 'api/v1/user')
         self.users_url = os.path.join(self.url, 'api/v1/users')
-        parser = argparse.ArgumentParser(description='users api calls')
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''\
+The various actions that you can perform on a user.
+    * get
+    * edit
+    * delete
+    * add_to
+    * remove_from
+
+The various actions that you can perform on multiple users.
+    * search
+    * create
+    * delete_multiple
+'''
+        )
         parser.add_argument(
             'command', help='commands available for users',
-            choices=['get', 'edit', 'delete', 'add', 'remove', 'search']
+            choices=[
+                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search',
+                'create', 'delete_multiple'
+            ]
         )
         args = parser.parse_args(sys.argv[2:3])
         if args.command == 'get':
@@ -2034,23 +2093,23 @@ The various operations you can perform for the tags api.
 
     def search_agent_operations(self):
         parser = self._common_search_parser()
-        parser.description = """Search for operations"""
-        search  = parser.add_argument_group('Search arguments')
-        search.add_argument(
+        parser.description = '''Search for operations'''
+        parser.usage='''vFense-commander agents operations'''
+        parser.add_argument(
             '--sort_by', dest='sort_by', default='created_time', type=str,
             help='The key that will be used to sort by.', choices=[
                 'created_time', 'operation_status', 'completed_time',
                 'created_by', 'view_name', 'updated_time', 'operation'
             ]
         )
-        search.add_argument(
+        parser.add_argument(
             '--operation', dest='operation',
             help='''The operation type you want to retrieve.''', choices=[
                 'refresh_apps', 'install_os_apps', 'uninstall', 'reboot',
                 'shutdown', 'new_token'
             ], default=None
         )
-        args = parser.parse_args(sys.argv[3:])
+        args = parser.parse_args(sys.argv[4:])
         pay_load = vars(args)
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
