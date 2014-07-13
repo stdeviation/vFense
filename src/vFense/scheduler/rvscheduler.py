@@ -49,7 +49,6 @@ if __name__ == '__main__':
             'name': 'all_agent_status',
             'operation': 'all_agent_status',
             'fn': all_agent_status,
-            'hour': '*',
             'minute': '*/5',
             'trigger': 'cron'
         },
@@ -57,7 +56,6 @@ if __name__ == '__main__':
             'name': 'remove_expired_jobs_and_update_operations',
             'operation': 'remove_expired_jobs_and_update_operations',
             'fn': remove_expired_jobs_and_update_operations,
-            'hour': '*',
             'minute': '*',
             'trigger': 'cron'
         },
@@ -72,5 +70,9 @@ if __name__ == '__main__':
     manager = AdministrativeJobManager(sched, DefaultViews.GLOBAL)
     for cron_job in list_of_cron_jobs:
         job = Schedule(**cron_job)
-        manager.add_cron_job(job)
+        test = manager.add_cron_job(job)
+        print test
         logger.info('job %s added' % (job.name))
+
+    while True:
+        sleep(60)
