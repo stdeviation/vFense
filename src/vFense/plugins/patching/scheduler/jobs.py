@@ -9,22 +9,32 @@ from vFense.core.plugins.patching.scheduler._db import (
     FetchSupportedAppsIdsForSchedule
 )
 
-def install_os_apps_in_agents(agents=None, apps=None,
-                              view_name=None, user_name=None):
+def install_os_apps_in_agents(agents, apps, view_name=None,
+                              user_name=None, restart=None, cpu_throttle=None,
+                              net_throttle=None):
     """Install system updates on 1 or multiple agents.
-    Kwargs:
+    Args:
         agents (list): List of agent ids.
-        tags (list): List of tag ids.
         apps (list): List of application ids.
+
+    Kwargs:
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
+        restart (str): After installing the application, do you want the agent
+            to reboot the host. Valid values: none, needed, and force.
+            default=none
+        cpu_throttle (str): Set the CPU affinity for the install process.
+            Valid values: idle, below_normal, normal, above_normal, high.
+            default=normal
+        net_throttle (str): The amount of traffic in KB to use.
+            default=0 (unlimitted)
     """
     operation = StorePatchingOperation(user_name, view_name)
     if not agents:
         agents = fetch_agent_ids(view_name)
 
-    operation.install_os_apps(agentids=agents)
+    operation.install_os_apps(apps, agentids=agents)
 
 def install_os_apps_in_tags(tags=None, apps=None,
                             view_name=None, user_name=None):

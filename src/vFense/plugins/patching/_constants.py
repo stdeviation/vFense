@@ -94,3 +94,8 @@ class SharedAppKeys():
     Dependencies = 'dependencies'
     LastModifiedTime = 'last_modified_time'
     Update = 'update'
+
+class InstallDefaults():
+    REBOOT = 'none'
+    CPU_THROTTLE = 'normal'
+    NET_THROTTLE = 0

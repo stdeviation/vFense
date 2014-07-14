@@ -7,6 +7,8 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 #from vFense.scheduler.jobManager import schedule_once
+from vFense.core.scheduler.manager import JobManager
+from vFense.core.scheduler import Schedule
 
 from vFense.plugins.patching.search.search_by_tagid import (
     RetrieveAppsByTagId
@@ -222,12 +224,12 @@ class AgentIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('run_date', None)
+            run_date = self.arguments.get('run_date', None)
             label = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_ids:
+            if not run_date and not label and app_ids:
                 operation = (
                     StorePatchingOperation(
                         username, view_name
@@ -244,11 +246,21 @@ class AgentIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and app_ids:
-                date_time = datetime.fromtimestamp(int(epoch_time))
+            elif run_date and label and app_ids:
+                if not isinstance(run_date, float):
+                    run_date = float(run_date)
+
                 sched = self.application.scheduler
+                job = AgentAppsJobManager()
+                job.install_os_apps_once(
+                    run_date, job_name, user_name, app_ids,
+                    [agent_id], time_zone
+                )
                 job = (
                     {
+                        'name': label,
+                        'run_date': run_date,
+                        'trigger': 'date',
                         'cpu_throttle': cpu_throttle,
                         'net_throttle': net_throttle,
                         'restart': restart,
