@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues

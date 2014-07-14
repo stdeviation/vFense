@@ -3,21 +3,21 @@ from vFense.core.tag._db import fetch_tag_ids
 from vFense.core.plugins.patching.operations.store_agent_operations import (
     StorePatchingOperation
 )
+from vFense.core.plugins.patching.operations import Install
 
 from vFense.core.plugins.patching.scheduler._db import (
     FetchAppsIdsForSchedule, FetchCustomAppsIdsForSchedule,
     FetchSupportedAppsIdsForSchedule
 )
 
-def install_os_apps_in_agents(agents, apps, view_name=None,
+def install_os_apps_in_agents(agent_ids=None, app_ids=None, view_name=None,
                               user_name=None, restart=None, cpu_throttle=None,
                               net_throttle=None):
     """Install system updates on 1 or multiple agents.
-    Args:
-        agents (list): List of agent ids.
-        apps (list): List of application ids.
 
     Kwargs:
+        agent_ids (list): List of agent ids.
+        app_ids (list): List of application ids.
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
@@ -31,10 +31,16 @@ def install_os_apps_in_agents(agents, apps, view_name=None,
             default=0 (unlimitted)
     """
     operation = StorePatchingOperation(user_name, view_name)
-    if not agents:
-        agents = fetch_agent_ids(view_name)
+    if not agent_ids:
+        agent_ids = fetch_agent_ids(view_name)
 
-    operation.install_os_apps(apps, agentids=agents)
+    install = (
+        Install(
+            app_ids, agent_ids, user_name, view_name, restart,
+            cpu_throttle, net_throttle
+        )
+    )
+    operation.install_os_apps(install)
 
 def install_os_apps_in_tags(tags=None, apps=None,
                             view_name=None, user_name=None):

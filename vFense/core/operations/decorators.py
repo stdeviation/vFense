@@ -4,7 +4,7 @@ from vFense.core.operations import AdminOperation
 from vFense.core.operations.admin_operations import AdminOperationManager
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 
 def log_operation(action, performed_on):

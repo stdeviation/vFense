@@ -11,7 +11,7 @@ from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_agentid
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -47,7 +47,7 @@ def get_all_agentids(username, view_name, count=30, offset=0,
                     get_all_app_stats_by_agentid(agent[AgentKeys.AgentId])
                 )
         status = (
-                GenericResults(
+                Results(
                     username,  uri, method
                     ).information_retrieved(data, count)
                 )
@@ -55,7 +55,7 @@ def get_all_agentids(username, view_name, count=30, offset=0,
     
     except Exception as e:
         status = (
-                GenericResults(
+                Results(
                     username,  uri, method
                     ).something_broke('get_all_agents', 'agent', e)
                 )
@@ -124,7 +124,7 @@ def systems_os_details(username, view_name, key, query, uri=None, method=None):
     try:
         data = data
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -132,7 +132,7 @@ def systems_os_details(username, view_name, key, query, uri=None, method=None):
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -160,7 +160,7 @@ def systems_hardware_details (username, view_name, key, query,  uri=None, method
     try:
         data = data
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -168,7 +168,7 @@ def systems_hardware_details (username, view_name, key, query,  uri=None, method
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -194,7 +194,7 @@ def systems_network_details(username, view_name, key, query,
     try:
         data = network_stats
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -204,7 +204,7 @@ def systems_network_details(username, view_name, key, query,
 
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -233,7 +233,7 @@ def systems_cpu_details (username, view_name, key, query,
     try:
         data = cpu_stats
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -241,7 +241,7 @@ def systems_cpu_details (username, view_name, key, query,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -272,7 +272,7 @@ def systems_memory_stats(username, view_name, key, query,
     try:
         data = memory_stats
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -280,7 +280,7 @@ def systems_memory_stats(username, view_name, key, query,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -319,7 +319,7 @@ def systems_disk_stats(username, view_name, key, query,
     try:
         data = fs_stats
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -327,7 +327,7 @@ def systems_disk_stats(username, view_name, key, query,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -362,7 +362,7 @@ def agents_last_updated(username, view_name, os_code=None,
     try:
         data = agents_uptime_info
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -370,7 +370,7 @@ def agents_last_updated(username, view_name, os_code=None,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -398,7 +398,7 @@ def agents_reboot_pending(username, view_name, os_code=None,
     try:
         data = data
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -406,7 +406,7 @@ def agents_reboot_pending(username, view_name, os_code=None,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
@@ -434,7 +434,7 @@ def agents_status(username, view_name, os_code=None,
     try:
         data = data
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -442,7 +442,7 @@ def agents_status(username, view_name, os_code=None,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )

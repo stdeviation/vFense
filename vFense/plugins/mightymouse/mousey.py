@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result.error_messages import MightyMouseResults
+from vFense.core.results import MightyMouseResults
 from vFense.plugins.mightymouse.mouse_db import mouse_exists, \
     add_mouse, update_mouse, delete_mouse
 

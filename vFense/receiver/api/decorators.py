@@ -5,7 +5,7 @@ from functools import wraps
 
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.receiver.results import (
     AgentResults
 )

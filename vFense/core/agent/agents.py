@@ -11,7 +11,7 @@ from vFense.core.agent._db import (
 )
 from vFense.core.decorators import time_it
 
-#from vFense.result.results import Results
+#from vFense.core.results import Results
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes

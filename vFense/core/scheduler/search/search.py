@@ -2,7 +2,7 @@ import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 from vFense.core.view._constants import DefaultViews
 from vFense.core.scheduler._db_model import JobKeys

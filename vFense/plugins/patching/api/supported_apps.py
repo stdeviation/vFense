@@ -13,7 +13,7 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
 
-from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.core.results import Results, PackageResults
 
 #from vFense.scheduler.jobManager import schedule_once
 
@@ -150,7 +150,7 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -271,7 +271,7 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_supported_apps', e)
             )
@@ -339,7 +339,7 @@ class AgentIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_supported_apps', e)
             )
@@ -445,7 +445,7 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -566,7 +566,7 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_supported_apps', e)
             )
@@ -633,7 +633,7 @@ class TagIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_supported_apps', e)
             )
@@ -682,7 +682,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
                     app_id, sev_data, AppCollections.SupportedApps
                 )
 
-                results = GenericResults(
+                results = Results(
                     username, uri, method
                 ).object_updated(app_id, 'app severity', [sev_data])
 
@@ -702,7 +702,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'update_severity', e)
             )
@@ -773,7 +773,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_supported_apps', e)
             )
@@ -841,7 +841,7 @@ class AppIdSupportedAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_supported_apps', e)
             )
@@ -905,7 +905,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -990,7 +990,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_supported_apps', e)
             )
@@ -1058,7 +1058,7 @@ class GetAgentsBySupportedAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_supported_apps', e)
             )
@@ -1175,7 +1175,7 @@ class SupportedAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -1209,7 +1209,7 @@ class SupportedAppsHandler(BaseHandler):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_ids, 'toggle hidden on supported_apps', e)
             )

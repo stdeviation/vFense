@@ -9,7 +9,7 @@ from vFense.core.agent._db import (
 )
 from vFense.plugins.patching._db_model import *
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.result.error_messages import *
+from vFense.core.results import *
 
 
 def system_os_details(agent_info):
@@ -116,13 +116,13 @@ def systems_os_details(username, view_name, os_code=None,
 
     try:
         data = systems_os_details
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke('Systems_os_details', 'failed to retrieve data', e)
 
@@ -144,13 +144,13 @@ def systems_hardware_details (username, view_name, os_code=None,
 
     try:
         data = systems_hardware_details
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke(
             'Systems_hardware_details', 'failed to retrieve data', e
@@ -171,7 +171,7 @@ def systems_cpu_details (username, view_name, os_code=None,
     try:
         data = systems_cpu_details
         results = (
-                GenericResults(
+                Results(
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
@@ -179,7 +179,7 @@ def systems_cpu_details (username, view_name, os_code=None,
     except Exception as e:
         logger.exception(e)
         results = (
-                GenericResults(
+                Results(
                     username, uri, method
                     ).something_broke('Systems_cpu_details', 'failed to retrieve data', e)
                 )
@@ -200,13 +200,13 @@ def systems_memory_stats(username, view_name, os_code=None,
 
     try:
         data = systems_memory_details
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke('Systems_os_details', 'failed to retrieve data', e)
 
@@ -228,13 +228,13 @@ def systems_disk_stats(username, view_name, os_code=None,
 
     try:
         data = systems_disk_details
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke('Systems_os_details', 'failed to retrieve data', e)
 
@@ -253,13 +253,13 @@ def systems_network_details(username, view_name, os_code=None,
 
     try:
         data = systems_network_infos
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke('Systems_os_details', 'failed to retrieve data', e)
 

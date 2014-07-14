@@ -315,3 +315,35 @@ class Results(object):
                 ApiResultKeys.DATA: data,
             }
         )
+
+    def permission_denied(self):
+        msg = 'Permission denied for user {0}'.format(self.username)
+
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 403,
+                ApiResultKeys.VFENSE_STATUS_CODE: (
+                    GenericCodes.PermissionDenied
+                ),
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: [],
+            }
+        )
+
+    def invalid_permission(self, **kwargs):
+        msg = 'Invalid permission for user {0}'.format(self.username)
+        data = kwargs.get(ApiResultKeys.DATA, [])
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 403,
+                ApiResultKeys.VFENSE_STATUS_CODE: (
+                    GenericCodes.InvalidPermission
+                ),
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: data,
+            }
+        )

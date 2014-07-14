@@ -1,6 +1,6 @@
 from vFense.core.status_codes import *
 from vFense.plugins.patching.status_codes import *
-from vFense.result._constants import *
+from vFense.core.results import *
 from vFense.core.agent._db_model import *
 
 status = 'http_status'
@@ -19,7 +19,7 @@ generated_ids = 'generated_ids'
 operations = 'operations'
 
 
-class GenericResults(object):
+class Results(object):
     def __init__(self, username, uri, method):
         self.uri = uri
         self.method = method

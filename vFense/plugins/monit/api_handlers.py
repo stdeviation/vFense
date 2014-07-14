@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from vFense.core.decorators import agent_authenticated_request, \
     convert_json_to_arguments
 
@@ -39,7 +39,7 @@ class UpdateMonitoringStatsV1(BaseHandler):
                 file_system=file_system
             )
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).object_updated(agent_id, 'monitoring data')
             )
@@ -49,7 +49,7 @@ class UpdateMonitoringStatsV1(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'monitoring data', e)
             )

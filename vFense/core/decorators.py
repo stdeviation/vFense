@@ -6,11 +6,11 @@ from functools import wraps
 from tornado.web import HTTPError
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
-from vFense.result.results import Results
+from vFense.core.results import Results
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

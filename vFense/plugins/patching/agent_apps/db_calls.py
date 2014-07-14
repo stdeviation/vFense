@@ -2,7 +2,7 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent._db_model import *
-from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.core.results import Results, PackageResults
 
 import logging
 import logging.config
@@ -53,7 +53,7 @@ def get_all_stats_by_appid(username, view_name,
                 data.append(status)
 
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
@@ -62,7 +62,7 @@ def get_all_stats_by_appid(username, view_name,
 
     except Exception as e:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('getting_pkg_stats', 'updates', e)
         )
@@ -128,7 +128,7 @@ def get_all_agents_per_appid(username, view_name,
                 data.append(status)
 
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
@@ -137,7 +137,7 @@ def get_all_agents_per_appid(username, view_name,
 
     except Exception as e:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('getting_pkg_stats', 'updates', e)
         )
@@ -185,7 +185,7 @@ def get_all_stats_by_agentid(username, view_name,
                 data.append(status)
 
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
@@ -194,7 +194,7 @@ def get_all_stats_by_agentid(username, view_name,
 
     except Exception as e:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('getting_pkg_stats', 'updates', e)
         )
@@ -240,7 +240,7 @@ def get_all_stats_by_tagid(username, view_name,
                 data.append(status)
 
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
@@ -249,7 +249,7 @@ def get_all_stats_by_tagid(username, view_name,
 
     except Exception as e:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('getting_pkg_stats', 'updates', e)
         )

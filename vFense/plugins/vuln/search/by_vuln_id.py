@@ -3,7 +3,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.ubuntu.search.search import RetrieveUbuntuVulns
@@ -38,14 +38,14 @@ class RetrieveByVulnerabilityId(object):
         data = self.get_vuln_by_id(self.vuln_id)
         if data:
             status = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).information_retrieved(data, 1)
             )
 
         else:
             status = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).invalid_id(self.vuln_id, 'vulnerability id')
             )

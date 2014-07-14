@@ -8,7 +8,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.plugins.vuln.cve.search.search import RetrieveCVEs
 
 from vFense.core.decorators import authenticated_request, results_message
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

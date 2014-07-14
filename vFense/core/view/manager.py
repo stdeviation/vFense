@@ -31,7 +31,7 @@ from vFense.core.tag._db import (
     delete_agent_ids_from_tags_in_view
 )
 from vFense.core.decorators import time_it
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 from vFense.core.status_codes import (
     DbCodes, GenericCodes

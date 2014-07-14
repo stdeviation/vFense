@@ -8,8 +8,7 @@ from vFense.core.decorators import (
     results_message
 )
 from vFense.core.queue.uris import get_result_uris
-from vFense.result.error_messages import GenericResults
-from vFense.result._constants import AgentApiResultKeys
+from vFense.core.results import AgentApiResultKeys, Results
 from vFense.core.operations._constants import AgentOperations
 from vFense.receiver.api.decorators import (
     authenticate_token, agent_results_message
@@ -21,22 +20,26 @@ logger = logging.getLogger('rvlistener')
 class AgentResultURIs(BaseHandler):
     @authenticate_token
     def get(self, agent_id):
-        username = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
         try:
             results = self.get_uris(agent_id)
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
         except Exception as e:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke('uris', 'refresh_response_uris', e)
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Response URIs for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
-            self.write(dumps(status, indent=4))
+            self.write(dumps(results, indent=4))
 
     @results_message
     def get_uris(self, agent_id):
@@ -50,22 +53,25 @@ class AgentResultURIs(BaseHandler):
 class ResultURIs(BaseHandler):
     @authenticate_token
     def get(self):
-        username = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
         try:
             results = self.get_uris()
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
         except Exception as e:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke('uris', 'refresh_response_uris', e)
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Response URIs broke: {0}'.format(e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
-            self.write(dumps(status, indent=4))
+            self.write(dumps(results, indent=4))
 
     @results_message
     def get_uris(self):

@@ -202,7 +202,7 @@ class AgentResults(object):
         status_code = (
             kwargs.get(
                 AgentApiResultKeys.VFENSE_STATUS_CODE,
-                GenericCodes.InvalidId
+                AgentResultCodes.InvalidId
             )
         )
         data = kwargs.get(AgentApiResultKeys.DATA, [])
@@ -228,7 +228,7 @@ class AgentResults(object):
         status_code = (
             kwargs.get(
                 AgentApiResultKeys.VFENSE_STATUS_CODE,
-                GenericCodes.SomethingBroke
+                AgentResultCodes.SomethingBroke
             )
         )
         return(
@@ -251,7 +251,7 @@ class AgentResults(object):
         status_code = (
             kwargs.get(
                 AgentApiResultKeys.VFENSE_STATUS_CODE,
-                GenericCodes.ObjectExists
+                AgentResultCodes.ObjectExists
             )
         )
         return(
@@ -299,3 +299,19 @@ class AgentResults(object):
                 AgentApiResultKeys.DATA: [],
             }
         )
+
+    def something_broke(self, **kwargs):
+        msg = kwargs.get(ApiResultKeys.MESSAGE, '')
+        data = kwargs.get(ApiResultKeys.DATA, [])
+        status_code = AgentResultCodes.SomethingBroke
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 500,
+                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: data,
+            }
+        )
+

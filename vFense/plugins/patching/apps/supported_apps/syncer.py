@@ -22,7 +22,6 @@ from vFense.plugins.patching.downloader.downloader import \
     download_all_files_in_app
 
 from vFense.db.client import db_connect, r, db_create_close
-from vFense.server.hierarchy import Collection, ViewKey
 
 import redis
 from rq import Queue

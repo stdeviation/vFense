@@ -15,7 +15,7 @@ from vFense.core.view.views import validate_view_names
 from vFense.core.tag._db_model import (
     TagKeys, TagMappedKeys, TagsPerAgentKeys
 )
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
 )

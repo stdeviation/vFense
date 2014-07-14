@@ -5,7 +5,7 @@ from vFense.core.operations._admin_constants import (
     AdminOperationDefaults, AdminActions
 )
 from vFense.core._constants import CommonKeys
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     GenericFailureCodes
 )

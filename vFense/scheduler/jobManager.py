@@ -26,7 +26,7 @@ from vFense.plugins.patching._db import fetch_appids_by_agentid_and_status, \
 
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
 from vFense.core.operations.store_agent_operation import StoreAgentOperation
-from vFense.result.error_messages import GenericResults, SchedulerResults
+from vFense.core.results import Results, SchedulerResults
 from vFense.server.hierarchy import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -188,13 +188,13 @@ def job_lister(sched, view_name, username, uri=None, method=None,
 
     try:
         data = job_listing
-        results = GenericResults(
+        results = Results(
             username, uri, method,
         ).information_retrieved(data, len(data))
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke(
             json_job['job_name'], 'failed to retrieve data', e
@@ -443,14 +443,14 @@ def get_schedule_details(sched, job_name, username, view_name,
                         data['pkg_type'] = None
                         data['severity'] = None
 
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method,
                     ).information_retrieved(data, len(data))
 
 
     except Exception as e:
         logger.exception(e)
-        results = GenericResults(
+        results = Results(
             username, uri, method
         ).something_broke('schedules', 'failed to retrieve data', e)
 
@@ -663,7 +663,7 @@ def add_yearly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -694,7 +694,7 @@ def add_yearly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -724,7 +724,7 @@ def add_yearly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -808,7 +808,7 @@ def add_monthly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -838,7 +838,7 @@ def add_monthly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -868,7 +868,7 @@ def add_monthly_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -949,7 +949,7 @@ def add_daily_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -978,7 +978,7 @@ def add_daily_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -1007,7 +1007,7 @@ def add_daily_recurrent(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -1100,7 +1100,7 @@ def add_weekly_recurrent(sched, view_name, username,
                 except Exception as e:
                     logger.exception(e)
                     results = (
-                        GenericResults(
+                        Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
@@ -1133,7 +1133,7 @@ def add_weekly_recurrent(sched, view_name, username,
                 except Exception as e:
                     logger.exception(e)
                     results = (
-                        GenericResults(
+                        Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
@@ -1167,7 +1167,7 @@ def add_weekly_recurrent(sched, view_name, username,
                 except Exception as e:
                     logger.exception(e)
                     results = (
-                        GenericResults(
+                        Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
                     )
@@ -1239,7 +1239,7 @@ def schedule_once(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -1258,7 +1258,7 @@ def schedule_once(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -1277,7 +1277,7 @@ def schedule_once(sched, view_name, username,
 
                 except Exception as e:
                     logger.exception(e)
-                    results = GenericResults(
+                    results = Results(
                         username, uri, method
                     ).something_broke(name, 'adding schedule', e)
 
@@ -1351,7 +1351,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1374,7 +1374,7 @@ def add_custom_recurrent(sched, view_name, username,
                     except Exception as e:
                         logger.exception(e)
                         results = (
-                                GenericResults(
+                                Results(
                                     username, uri, method
                                     ).something_broke(name, 'adding schedule', e)
                                 )
@@ -1397,7 +1397,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1417,7 +1417,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1438,7 +1438,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1457,7 +1457,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1479,7 +1479,7 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)
 
@@ -1499,6 +1499,6 @@ def add_custom_recurrent(sched, view_name, username,
 
                     except Exception as e:
                         logger.exception(e)
-                        results = GenericResults(
+                        results = Results(
                             username, uri, method
                         ).something_broke(name, 'adding schedule', e)

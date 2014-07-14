@@ -5,7 +5,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from reports.stats import *
 from vFense.core.decorators import authenticated_request
 from vFense.utils.common import *
@@ -35,7 +35,7 @@ class AgentsOsDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -66,7 +66,7 @@ class AgentsHardwareDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -98,7 +98,7 @@ class AgentsCPUDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -132,7 +132,7 @@ class AgentsMemoryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -164,7 +164,7 @@ class AgentsDiskDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -196,7 +196,7 @@ class AgentsNetworkDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )

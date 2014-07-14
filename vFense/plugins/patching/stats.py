@@ -18,9 +18,9 @@ from vFense.plugins.patching._db_stats import (
     fetch_recently_released_apps, fetch_severity_bar_chart_stats_for_view,
     fetch_os_apps_history_for_agent, fetch_os_apps_history_for_tag
 )
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from vFense.core.status_codes import GenericCodes
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 

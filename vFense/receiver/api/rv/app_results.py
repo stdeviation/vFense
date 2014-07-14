@@ -12,7 +12,7 @@ from vFense.core._constants import CommonKeys
 from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 
 
 
@@ -60,7 +60,7 @@ class AppsResultsV2(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_os_apps results', e)
             )
@@ -122,7 +122,7 @@ class CustomAppsResultsV2(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_custom_apps results', e)
             )
@@ -183,7 +183,7 @@ class SupportedAppsResultsV2(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_supported_apps results', e)
             )
@@ -247,7 +247,7 @@ class vFenseAppsResultsV2(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_agent_apps results', e)
             )
@@ -310,7 +310,7 @@ class UninstallResultsV2(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'uninstall_os_apps results', e)
             )

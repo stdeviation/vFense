@@ -7,7 +7,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
 
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_view
 from vFense.plugins.patching.stats import *
 from vFense.core.decorators import authenticated_request
@@ -42,7 +42,7 @@ class ViewStatsByOsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -74,7 +74,7 @@ class TagStatsByOsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -107,7 +107,7 @@ class WidgetHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('widget handler', 'widgets', e)
             )
@@ -187,7 +187,7 @@ class OsAppsOverTimeHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -236,7 +236,7 @@ class AgentOsAppsOverTimeHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -285,7 +285,7 @@ class TagOsAppsOverTimeHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -323,7 +323,7 @@ class TopAppsNeededHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -358,7 +358,7 @@ class RecentlyReleasedHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view os stats', 'os stats', e)
             )
@@ -392,7 +392,7 @@ class ViewSeverityHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('view severity stats', 'sev stats', e)
             )
@@ -426,7 +426,7 @@ class AgentSeverityHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('agent severity stats', 'sev stats', e)
             )
@@ -460,7 +460,7 @@ class TagSeverityHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('tag severity stats', 'sev stats', e)
             )

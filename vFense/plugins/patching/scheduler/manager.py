@@ -28,7 +28,7 @@ class AgentAppsJobManager(JobManager):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
                 install.fill_in_defaults()
-                job_kwargs = install.args_to_dict()
+                job_kwargs = install.to_dict()
                 job = (
                     Schedule(
                         job_name, install_os_apps_in_agents, job_kwargs,
@@ -96,7 +96,7 @@ class AgentAppsJobManager(JobManager):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
                 install.fill_in_defaults()
-                job_kwargs = install.args_to_dict()
+                job_kwargs = install.to_dict()
                 job = (
                     Schedule(
                         job_name, install_os_apps_in_agents, job_kwargs,
@@ -138,4 +138,3 @@ class AgentAppsJobManager(JobManager):
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
-

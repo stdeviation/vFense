@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.api.base import BaseHandler
-from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.core.results import Results, PackageResults
 
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -140,7 +140,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -261,7 +261,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_agent_update', e)
             )
@@ -328,7 +328,7 @@ class AgentIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_agent_update', e)
             )
@@ -434,7 +434,7 @@ class TagIdAgentAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).incorrect_arguments()
             )
@@ -555,7 +555,7 @@ class TagIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_agent_update', e)
             )
@@ -622,7 +622,7 @@ class TagIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_agent_update', e)
             )
@@ -669,7 +669,7 @@ class AppIdAgentAppsHandler(BaseHandler):
                     app_id, sev_data, AppCollections.vFenseApps
                 )
 
-                results = GenericResults(
+                results = Results(
                     username, uri, method
                 ).object_updated(app_id, 'app severity', [sev_data])
 
@@ -689,7 +689,7 @@ class AppIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'update_severity', e)
             )
@@ -760,7 +760,7 @@ class AppIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_agent_update', e)
             )
@@ -828,7 +828,7 @@ class AppIdAgentAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_agent_update', e)
             )
@@ -890,7 +890,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).incorrect_arguments()
             )
@@ -974,7 +974,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_agent_update', e)
             )
@@ -1043,7 +1043,7 @@ class GetAgentsByAgentAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_agent_update', e)
             )
@@ -1158,7 +1158,7 @@ class AgentAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).incorrect_arguments()
             )
@@ -1249,7 +1249,7 @@ class AgentAppsHandler(BaseHandler):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_ids, 'toggle hidden on agent_apps', e)
             )

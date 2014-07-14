@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.result.error_messages import GenericResults, NotificationResults
+from vFense.core.results import Results, NotificationResults
 from vFense.notifications import *
 import simplejson as json
 
@@ -56,7 +56,7 @@ class NotificationsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('Get list of notifications', 'notifications', e)
             )
@@ -168,7 +168,7 @@ class NotificationsHandler(BaseHandler):
 
             else:
                 results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                     ).incorrect_arguments()
                 )
@@ -179,7 +179,7 @@ class NotificationsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('create notification', 'notifications', e)
             )
@@ -207,7 +207,7 @@ class NotificationHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(notification_id, 'notifications', e)
             )
@@ -242,7 +242,7 @@ class NotificationHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('delete notification', 'notifications', e)
             )
@@ -353,7 +353,7 @@ class NotificationHandler(BaseHandler):
 
             else:
                 results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                     ).incorrect_arguments()
                 )
@@ -364,7 +364,7 @@ class NotificationHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke('create notification', 'notifications', e)
             )

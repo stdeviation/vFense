@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result.error_messages import SchedulerResults, GenericResults
+from vFense.core.results import SchedulerResults, Results
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -138,7 +138,7 @@ class JobScheduler(object):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 )
                 .something_broke(kwargs['name'], 'adding schedule', e)

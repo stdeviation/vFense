@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.operations._constants import AgentOperations, vFensePlugins
 from vFense.core.operations.store_agent_operation import StoreAgentOperation
 

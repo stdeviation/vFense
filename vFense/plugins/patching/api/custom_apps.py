@@ -6,7 +6,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.core.results import Results, PackageResults
 
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
@@ -69,7 +69,7 @@ class GetThirdPartyUuidHandler(BaseHandler):
         method = self.request.method
         data = {"uuid": gen_uuid()}
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, 0)
         )
@@ -243,7 +243,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -365,7 +365,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_custom_apps', e)
             )
@@ -432,7 +432,7 @@ class AgentIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'install_custom_apps', e)
             )
@@ -538,7 +538,7 @@ class TagIdCustomAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -660,7 +660,7 @@ class TagIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_custom_apps', e)
             )
@@ -727,7 +727,7 @@ class TagIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(tag_id, 'install_custom_apps', e)
             )
@@ -780,7 +780,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                         app_id, sev_data, AppCollections.CustomApps
                     )
                     results = (
-                        GenericResults(
+                        Results(
                             username, uri, method
                         ).object_updated(app_id, 'app severity', [sev_data])
                     )
@@ -810,7 +810,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                 )
 
                 results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                     ).object_updated(app_id, 'install options updated', [install_options_hash])
                 )
@@ -822,7 +822,7 @@ class AppIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'update_severity', e)
             )
@@ -892,7 +892,7 @@ class AppIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_custom_apps', e)
             )
@@ -960,7 +960,7 @@ class AppIdCustomAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_custom_apps', e)
             )
@@ -1021,7 +1021,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -1105,7 +1105,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_custom_apps', e)
             )
@@ -1173,7 +1173,7 @@ class GetAgentsByCustomAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_id, 'install_custom_apps', e)
             )
@@ -1291,7 +1291,7 @@ class CustomAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
+                Results(
                     username, uri, http_method
                 ).incorrect_arguments()
             )
@@ -1383,7 +1383,7 @@ class CustomAppsHandler(BaseHandler):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_ids, 'toggle hidden on custom_apps', e)
             )
@@ -1432,7 +1432,7 @@ class CustomAppsHandler(BaseHandler):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(app_ids, 'failed to delete custom_apps', e)
             )

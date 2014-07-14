@@ -4,7 +4,7 @@ import os
 import shutil
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.db.client import db_create_close, r
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.utils.common import date_parser, timestamp_verifier
 from vFense.plugins.patching._db_model import *
@@ -55,14 +55,14 @@ def move_packages(username, view_name, uri, method,
             )
 
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).file_uploaded(name, files_stored)
             )
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).file_failed_to_upload(name, e)
             )
@@ -153,7 +153,7 @@ def store_package_info_in_db(
 
             data_to_store['release_date'] = orig_release_date
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).object_created(uuid, 'custom_app', data_to_store)
             )
@@ -161,14 +161,14 @@ def store_package_info_in_db(
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(uuid, 'custom_app', e)
             )
             logger.exception(e)
     else:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).file_doesnt_exist(name, e)
         )

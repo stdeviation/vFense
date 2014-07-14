@@ -10,7 +10,7 @@ from vFense.core._constants import (
     CommonKeys, RebootValues, CPUThrottleValues
 )
 
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
 class Install(object):

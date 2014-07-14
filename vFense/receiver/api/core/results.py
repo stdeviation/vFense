@@ -7,12 +7,14 @@ from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments,
     results_message
 )
-from vFense.receiver.api.decorators import authenticate_agent
+from vFense.receiver.api.decorators import (
+    authenticate_agent, agent_results_message
+)
 
 from vFense.core.agent.operations.agent_results import AgentOperationResults
-from vFense.db.notification_sender import send_notifications
-from vFense.result.error_messages import GenericResults
-
+from vFense.core.results import Results
+from vFense.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.receiver.api.base import AgentBaseHandler
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -22,8 +24,7 @@ class RebootResultsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
         try:
             operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
@@ -39,10 +40,16 @@ class RebootResultsV1(BaseHandler):
             self.write(dumps(results_data, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Reboot results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'reboot results', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -56,12 +63,10 @@ class RebootResultsV1(BaseHandler):
         return results_data
 
 
-class RebootResultsV2(BaseHandler):
+class RebootResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
@@ -77,10 +82,17 @@ class RebootResultsV2(BaseHandler):
             self.write(dumps(results_data, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Reboot results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'reboot results', e)
+                AgentResults(
+                    self.request.uri, self.request.method,
+                    self.get_token(), agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -88,7 +100,7 @@ class RebootResultsV2(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def reboot_results(self, results):
         results_data = results.reboot()
         return results_data
@@ -98,8 +110,7 @@ class ShutdownResultsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
         try:
             operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
@@ -115,10 +126,16 @@ class ShutdownResultsV1(BaseHandler):
             self.write(dumps(results_data, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Shutdown results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agents', uri, method
-                ).something_broke(agent_id, 'shutdown results', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -133,12 +150,10 @@ class ShutdownResultsV1(BaseHandler):
         return results_data
 
 
-class ShutdownResultsV2(BaseHandler):
+class ShutdownResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             operation_id = self.arguments.get('operation_id')
             error = self.arguments.get('error', None)
@@ -155,10 +170,17 @@ class ShutdownResultsV2(BaseHandler):
             self.write(dumps(results_data, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Shutdown results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'shutdown results', e)
+                AgentResults(
+                    self.request.uri, self.request.method,
+                    self.get_token(), agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -167,7 +189,7 @@ class ShutdownResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
 
-    @results_message
+    @agent_results_message
     def shutdown_results(self, results):
         results_data = results.shutdown()
         return results_data

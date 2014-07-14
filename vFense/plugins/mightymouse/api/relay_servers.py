@@ -6,7 +6,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent._db_model import *
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
@@ -43,7 +43,7 @@ class RelayServersHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'get agent_info', e)
             )
@@ -71,7 +71,7 @@ class RelayServersHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'delete agent', e)
             )
@@ -101,7 +101,7 @@ class RelayServersHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, '', e)
             )
@@ -124,7 +124,7 @@ class RelayServerHandler(BaseHandler):
             mouse = mouse_exists(mouse_name)
             mouse = [mouse]
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).information_retrieved(mouse, len(mouse))
             )
@@ -134,7 +134,7 @@ class RelayServerHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(mouse_name, 'get mouse', e)
             )
@@ -163,7 +163,7 @@ class RelayServerHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'modify agent', e)
             )
@@ -189,7 +189,7 @@ class RelayServerHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     username, uri, method
                 ).something_broke(agent_id, 'delete agent', e)
             )

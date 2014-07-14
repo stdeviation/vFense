@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import *
 from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
-from vFense.result.error_messages import GenericResults, NotificationResults
+from vFense.core.results import Results, NotificationResults
 from vFense.core.operations._db_model import *
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *
@@ -59,14 +59,14 @@ class AlertSearcher(object):
                 .run(conn)
             )
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).information_retrieved(data[0], len(data[0]))
             )
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).something_broke(
                     notification_id,

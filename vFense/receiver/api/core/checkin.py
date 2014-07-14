@@ -3,14 +3,14 @@ from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.agent.manager import AgentManager
-from vFense.result.error_messages import (
-    GenericResults, AgentResults
-)
-from vFense.core.results import ApiResultKeys
-from vFense.result.results import Results
+from vFense.core.results import ApiResultKeys, Results
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import agent_authenticated_request, results_message
+from vFense.core.decorators import (
+    agent_authenticated_request, results_message
+)
 
+from vFense.receiver.api.base import AgentBaseHandler
+from vFense.receiver.results import AgentResults
 from vFense.receiver.corehandler import process_queue_data
 
 from vFense.receiver.api.decorators import authenticate_agent
@@ -22,6 +22,7 @@ logger = logging.getLogger('rvlistener')
 class CheckInV1(BaseHandler):
     @agent_authenticated_request
     def get(self, agent_id):
+        active_user = self.get_current_user()
         uri = self.request.uri
         method = self.request.method
         try:
@@ -37,15 +38,21 @@ class CheckInV1(BaseHandler):
             self.write(dumps(status))
 
         except Exception as e:
-            status = (
-                GenericResults(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'check_in', e)
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Checkin operation for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
-            self.set_status(status['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(status))
+            self.write(dumps(results))
 
 
     @results_message
@@ -55,11 +62,9 @@ class CheckInV1(BaseHandler):
         return results
 
 
-class CheckInV2(BaseHandler):
+class CheckInV2(AgentBaseHandler):
     @authenticate_agent
     def get(self, agent_id):
-        self.uri = self.request.uri
-        self.http_method = self.request.method
         try:
             results = (
                 self.update_agent_status(
@@ -71,15 +76,21 @@ class CheckInV2(BaseHandler):
             self.write(dumps(results))
 
         except Exception as e:
-            status = (
-                GenericResults(
-                    'agent', self.uri, self.http_method
-                ).something_broke(agent_id, 'check_in', e)
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Checkin operation for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token()
+                ).something_broke(**data)
             )
             logger.exception(e)
-            self.set_status(status['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(status))
+            self.write(dumps(results))
 
 
     def update_agent_status(self, agent_id):
@@ -88,6 +99,8 @@ class CheckInV2(BaseHandler):
         agent_queue = process_queue_data(agent_id)
         data = {ApiResultKeys.OPERATIONS: agent_queue}
         status = (
-            Results('agent', self.uri, self.http_method).check_in(**data)
+            AgentResults(
+                self.uri, self.http_method, self.get_token(), agent_id
+            ).check_in(**data)
         )
         return status

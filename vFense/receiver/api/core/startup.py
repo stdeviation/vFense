@@ -12,9 +12,11 @@ from vFense.core.decorators import (
 from vFense.core.agent._db_model import (
     AgentKeys
 )
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results, ApiResultKeys
+from vFense.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.receiver.api.base import AgentBaseHandler
+from vFense.receiver.api.decorators import agent_results_message
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import ApiResultKeys
 from vFense.receiver.status_codes import AgentResultCodes
 
 from vFense.core.operations._constants import AgentOperations
@@ -33,9 +35,7 @@ class StartUpV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        username = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
         try:
             rebooted = self.arguments.get(AgentKeys.Rebooted)
             plugins = self.arguments.get(AgentKeys.Plugins)
@@ -47,7 +47,7 @@ class StartUpV1(BaseHandler):
                     agent_id, system_info, hardware, [view_name], rebooted
                 )
             )
-            uris = get_result_uris(agent_id, username, uri, method)
+            uris = get_result_uris(agent_id, 'v1')
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
@@ -65,14 +65,20 @@ class StartUpV1(BaseHandler):
             self.write(dumps(agent_data))
 
         except Exception as e:
-            status = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agent_id, 'startup', e)
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Checkin operation for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
 
-            logger.exception(status['message'])
-            self.write(dumps(status))
+            logger.exception(results['message'])
+            self.write(dumps(results))
 
     @results_message
     def update_agent(self, agent_id, agent_data, hardware, views):
@@ -92,13 +98,10 @@ class StartUpV1(BaseHandler):
         return results
 
 
-class StartUpV2(BaseHandler):
+class StartUpV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def post(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
-
         try:
             views = self.arguments.get(AgentKeys.Views)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
@@ -122,17 +125,23 @@ class StartUpV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'start up operation for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', uri, method
-                ).something_broke('agent', 'startup', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token()
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_header('Content-Type', 'application/json')
             self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def update_agent(self, agent_id, system_info, hardware, views, tags):
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = views

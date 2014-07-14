@@ -8,7 +8,7 @@ from vFense.core.agent._db_model import *
 from vFense.core.tag._db_model import *
 from datetime import datetime
 from vFense.db.client import db_create_close, r
-from vFense.result.error_messages import GenericResults, NotificationResults
+from vFense.core.results import Results, NotificationResults
 from vFense.core.operations._db_model import *
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *
@@ -74,7 +74,7 @@ def get_all_notifications(username, view_name,
             .run(conn)
         )
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
@@ -82,7 +82,7 @@ def get_all_notifications(username, view_name,
     except Exception as e:
         logger.exception(e)
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('notifications', 'retrieve notification', e)
         )
@@ -140,7 +140,7 @@ def get_valid_fields(username, view_name,
         }
 
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, 1)
         )
@@ -148,7 +148,7 @@ def get_valid_fields(username, view_name,
     except Exception as e:
         logger.exception(e)
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('Get Notification Fields', 'Notifications', e)
         )
@@ -188,14 +188,14 @@ class Notifier():
             )
 
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).object_deleted(rule_id, 'notification')
             )
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).something_broke(rule_id, 'Notification Deleted', e)
             )
@@ -265,7 +265,7 @@ class Notifier():
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).something_broke(
                     'Failed to create Notification Rule',
@@ -286,7 +286,7 @@ class Notifier():
 
                 if not is_valid and agent_id:
                     return(
-                        GenericResults(
+                        Results(
                             self.username, self.uri, self.method
                         ).invalid_id(agent_id, 'agent_id')
                     )
@@ -300,7 +300,7 @@ class Notifier():
 
                 if not is_valid and tag_id:
                     return(
-                        GenericResults(
+                        Results(
                             self.username, self.uri, self.method
                         ).invalid_id(tag_id, 'tag_id')
                     )
@@ -375,7 +375,7 @@ class Notifier():
         except Exception as e:
             logger.exception(e)
             return(
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).something_broke(
                     'invalid notification data',
@@ -410,7 +410,7 @@ class Notifier():
                 data_validated['data'][NotificationKeys.CreatedTime] = self.now
                 data_validated['data'][NotificationKeys.ModifiedTime] = self.now
                 results = (
-                    GenericResults(
+                    Results(
                         self.username, self.uri, self.method
                     ).object_updated(
                         data[NotificationKeys.NotificationId],
@@ -419,7 +419,7 @@ class Notifier():
                 )
             else:
                 results = (
-                    GenericResults(
+                    Results(
                         self.username, self.uri, self.method
                     ).invalid_id(
                         data[NotificationKeys.NotificationId],
@@ -430,7 +430,7 @@ class Notifier():
         except Exception as e:
             logger.exception(e)
             return(
-                GenericResults(
+                Results(
                     self.username, self.uri, self.method
                 ).something_broke(
                     'Failed to update notification',

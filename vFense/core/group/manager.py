@@ -1,7 +1,7 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import time_it
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
 )

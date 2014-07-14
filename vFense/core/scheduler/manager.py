@@ -16,7 +16,7 @@ from vFense.core.scheduler._db import (
     fetch_jobs_by_view, fetch_job_by_name_and_view,
     fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
 )

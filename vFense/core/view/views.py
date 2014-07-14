@@ -3,7 +3,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.view._db import fetch_view, update_view
 
 from vFense.core.decorators import results_message, time_it
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

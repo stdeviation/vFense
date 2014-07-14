@@ -3,7 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r, db_connect
-from vFense.result.error_messages import GenericResults, MightyMouseResults
+from vFense.core.results import Results, MightyMouseResults
 
 from vFense.plugins.mightymouse import *
 
@@ -170,14 +170,14 @@ def get_all_mouseys(username, uri, method, view_name=None):
             )
 
         status = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).information_retrieved(data, len(data))
         )
 
     except Exception as e:
         status = (
-            GenericResults(
+            Results(
                 username, uri, method
             ).something_broke('retreiving Relay Servers', 'RelayServers', e)
         )

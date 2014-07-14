@@ -12,7 +12,7 @@ from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
 from vFense.db.notification_sender import send_notifications
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -60,7 +60,7 @@ class InstallOsAppsResults(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_os_apps results', e)
             )
@@ -123,7 +123,7 @@ class InstallCustomAppsResults(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_custom_apps results', e)
             )
@@ -185,7 +185,7 @@ class InstallSupportedAppsResults(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_supported_apps results', e)
             )
@@ -250,7 +250,7 @@ class InstallAgentAppsResults(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'install_agent_apps results', e)
             )
@@ -314,7 +314,7 @@ class UninstallAppsResults(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
+                Results(
                     'agent', uri, method
                 ).something_broke(agent_id, 'uninstall_os_apps results', e)
             )

@@ -7,7 +7,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from server.handlers import BaseHandler
 from db.client import *
-from errorz.error_messages import GenericResults
+from errorz.error_messages import Results
 from errorz.status_codes import GenericCodes
 from reports.filter_reports import *
 from server.hierarchy.manager import get_current_view_name
@@ -40,7 +40,7 @@ class AgentsOsQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -69,7 +69,7 @@ class AgentsHardwareQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -99,7 +99,7 @@ class AgentsCPUQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -129,7 +129,7 @@ class AgentsMemoryQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -159,7 +159,7 @@ class AgentsDiskQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -189,7 +189,7 @@ class AgentsNetworkQueryDetailsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -219,7 +219,7 @@ class AgentsLastUpdatedHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -250,7 +250,7 @@ class AgentsRequireRebootHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )
@@ -281,7 +281,7 @@ class AgentsConnectionStatusHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                    GenericResults(
+                    Results(
                         username, uri, method
                         ).something_broke('no stats', '', e)
                     )

@@ -3,16 +3,15 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.status_codes import GenericCodes
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results, ApiResultKeys
 
-from vFense.core._constants import *
 from vFense.core.user._db_model import UserKeys, UserCollections
 from vFense.core.user._constants import DefaultUsers
 from vFense.core.user._db import fetch_user
 
-from vFense.core.permissions import *
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions._db import validate_permission_for_user
+from vFense.core.group._db_model import GroupKeys
 
 from vFense.core._db import retrieve_object
 from vFense.core.decorators import time_it
@@ -50,23 +49,30 @@ def return_results_for_permissions(
     results = None
     if not granted and status_code == GenericCodes.PermissionDenied:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
-            ).permission_denied(username)
+            ).permission_denied()
         )
 
     elif not granted and status_code == GenericCodes.InvalidPermission:
+        data = {
+            ApiResultKeys.DATA: (
+                {
+                    GroupKeys.Permissions: [permission]
+                }
+            )
+        }
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
-            ).invalid_permission(username, permission)
+            ).invalid_permission(**data)
         )
 
     elif not granted and status_code == GenericCodes.InvalidId:
         results = (
-            GenericResults(
+            Results(
                 username, uri, method
-            ).invalid_id(username, 'permissions')
+            ).invalid_id()
         )
 
     return(results)

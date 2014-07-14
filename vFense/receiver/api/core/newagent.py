@@ -19,9 +19,9 @@ from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import ApiResultKeys
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import ApiResultKeys, Results
 from vFense.receiver.status_codes import AgentResultCodes
+from vFense.receiver.results import AgentResults
 from vFense.receiver.rvhandler import RvHandOff
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
@@ -38,8 +38,7 @@ class NewAgentV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def post(self):
-        self.uri = self.request.uri
-        self.http_method = self.request.method
+        active_user = self.get_current_user()
 
         try:
             view_name = self.arguments.get('customer_name')
@@ -71,10 +70,16 @@ class NewAgentV1(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'New agent operation broke: {0}'
+                    .format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', self.uri, self.http_method
-                ).something_broke('agent', 'new_agent', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_header('Content-Type', 'application/json')
@@ -113,8 +118,6 @@ class NewAgentV2(AgentBaseHandler):
     @authenticate_token
     @convert_json_to_arguments
     def post(self):
-        uri = self.request.uri
-        http_method = self.request.method
         try:
             views = self.arguments.get(AgentKeys.Views)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
@@ -143,10 +146,16 @@ class NewAgentV2(AgentBaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'New agent operation broke: {0}'
+                    .format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    'agent', uri, http_method
-                ).something_broke('agent', 'new_agent', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token()
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_header('Content-Type', 'application/json')

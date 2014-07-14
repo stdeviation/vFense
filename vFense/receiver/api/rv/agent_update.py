@@ -9,8 +9,8 @@ from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments
 )
 
-from vFense.result.error_messages import (
-    GenericResults, UpdateApplicationsResults
+from vFense.core.results import (
+    Results, UpdateApplicationsResults
 )
 
 from vFense.receiver.rvhandler import RvHandOff
@@ -44,7 +44,7 @@ class AgentUpdateHandler(BaseHandler):
             self.write(dumps(results))
 
         except Exception as e:
-            results = GenericResults(
+            results = Results(
                 'agent', uri, method
             ).something_broke(
                 agent_id, AgentOperations.AVAILABLE_AGENT_UPDATE, e
@@ -77,7 +77,7 @@ class AgentUpdateHandlerV2(BaseHandler):
             self.write(dumps(results))
 
         except Exception as e:
-            results = GenericResults(
+            results = Results(
                 'agent', uri, method
             ).something_broke(
                 agent_id, AgentOperations.AVAILABLE_AGENT_UPDATE, e

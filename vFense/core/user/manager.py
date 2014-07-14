@@ -1,6 +1,6 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers

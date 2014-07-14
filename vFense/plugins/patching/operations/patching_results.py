@@ -9,7 +9,7 @@ from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.manager import AgentManager
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults

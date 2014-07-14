@@ -3,7 +3,7 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core._constants import SortValues, DefaultQueryValues
 
 from vFense.core.user._db_model import (

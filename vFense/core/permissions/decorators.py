@@ -2,8 +2,9 @@ from functools import wraps
 from json import dumps
 
 from vFense.core.status_codes import GenericCodes
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import Results, ApiResultKeys
 from vFense.core.permissions.permissions import verify_permission_for_user
+from vFense.core.group._db_model import GroupKeys
 
 
 def check_permissions(permission):
@@ -11,11 +12,11 @@ def check_permissions(permission):
         def wrapped(*args, **kwargs):
             granted = False
             tornado_handler = args[0]
-            username = tornado_handler.get_current_user()
+            active_user = tornado_handler.get_current_user()
             uri = tornado_handler.request.uri
-            method = tornado_handler.request.method
+            http_method = tornado_handler.request.method
             granted, status_code = (
-                verify_permission_for_user(username, permission)
+                verify_permission_for_user(active_user, permission)
             )
             if granted and status_code == GenericCodes.PermissionGranted:
                 data = fn(*args, **kwargs)
@@ -23,9 +24,9 @@ def check_permissions(permission):
 
             elif not granted and status_code == GenericCodes.PermissionDenied:
                 results = (
-                    GenericResults(
-                        username, uri, method
-                    ).permission_denied(username)
+                    Results(
+                        active_user, uri, http_method
+                    ).permission_denied()
                 )
 
                 tornado_handler.set_header('Content-Type', 'application/json')
@@ -33,20 +34,32 @@ def check_permissions(permission):
                 tornado_handler.write(dumps(results, indent=4))
 
             elif not granted and status_code == GenericCodes.InvalidPermission:
+                data = {
+                    ApiResultKeys.DATA: (
+                        {
+                            GroupKeys.Permissions: [permission]
+                        }
+                    )
+                }
                 results = (
-                    GenericResults(
-                        username, uri, method
-                    ).invalid_permission(username, permission)
+                    Results(
+                        active_user, uri, http_method
+                    ).invalid_permission(**data)
                 )
 
                 tornado_handler.set_header('Content-Type', 'application/json')
                 tornado_handler.write(dumps(results, indent=4))
 
             elif not granted and status_code == GenericCodes.InvalidId:
+                msg = {
+                    ApiResultKeys.MESSAGE: (
+                        'Invalid username {0}'.format(active_user)
+                    )
+                }
                 results = (
-                    GenericResults(
-                        username, uri, method
-                    ).invalid_id(username, 'permissions')
+                    Results(
+                        active_user, uri, http_method
+                    ).invalid_id(**msg)
                 )
 
                 tornado_handler.set_header('Content-Type', 'application/json')

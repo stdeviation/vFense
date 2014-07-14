@@ -3,7 +3,7 @@ import logging
 from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.result.error_messages import GenericResults, UpdateApplicationsResults
+from vFense.core.results import Results, UpdateApplicationsResults
 from vFense.core.api.base import BaseHandler
 from vFense.receiver.api.decorators import authenticate_agent
 from vFense.core.decorators import (
@@ -62,7 +62,7 @@ class UpdateApplicationsV1(BaseHandler):
                 self.write(dumps(results))
 
         except Exception as e:
-            results = GenericResults(
+            results = Results(
                 'agent', uri, method
             ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
             logger.exception(results)

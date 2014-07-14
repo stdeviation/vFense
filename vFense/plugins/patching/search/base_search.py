@@ -17,7 +17,7 @@ from vFense.plugins.patching.search._db_search import FetchApps
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
-from vFense.result._constants import (
+from vFense.core.results import (
     ApiResultKeys
 )
 

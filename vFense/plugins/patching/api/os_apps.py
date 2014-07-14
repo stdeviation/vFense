@@ -7,8 +7,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 #from vFense.scheduler.jobManager import schedule_once
-from vFense.core.scheduler.manager import JobManager
-from vFense.core.scheduler import Schedule
+from vFense.plugins.patching.scheduler.manager import AgentAppsJobManager
+from vFense.plugins.patching.operations._constants import InstallKeys
+from vFense.plugins.patching.operations import Install
 
 from vFense.plugins.patching.search.search_by_tagid import (
     RetrieveAppsByTagId
@@ -31,7 +32,7 @@ from vFense.plugins.patching._db_model import AppsKey
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
-from vFense.result.error_messages import GenericResults, PackageResults
+from vFense.core.results import Results, ApiResultKeys
 
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -58,9 +59,7 @@ logger = logging.getLogger('rvapi')
 class AgentIdOsAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
-        uri = self.request.uri
-        http_method = self.request.method
-        username = self.get_current_user().encode('utf-8')
+        active_user = self.get_current_user().encode('utf-8')
         query = (
             self.get_argument(ApiArguments.QUERY, None)
         )
@@ -149,10 +148,15 @@ class AgentIdOsAppsHandler(BaseHandler):
             results = self.by_name(search, query)
 
         else:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Incorrect arguments while searching for applications'
+                )
+            }
             results = (
-                GenericResults(
-                    username, uri, http_method
-                ).incorrect_arguments()
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).incorrect_arguments(**data)
             )
 
         self.set_status(results['http_status'])
@@ -216,105 +220,114 @@ class AgentIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             run_date = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not run_date and not label and app_ids:
-                operation = (
-                    StorePatchingOperation(
-                        username, view_name
-                    )
+            time_zone = self.arguments.get('time_zone', None)
+            install = (
+                Install(
+                    app_ids, [agent_id], user_name=active_user,
+                    active_view=active_view, restart=restart,
+                    net_throttle=net_throttle, cpu_throttle=cpu_throttle
                 )
+            )
+            if not run_date and not job_name and app_ids:
+                operation = (
+                    StorePatchingOperation(active_user, active_view)
+                )
+                results = self.install(operation, install)
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+            elif run_date and job_name and app_ids:
+                if not isinstance(run_date, float):
+                    run_date = float(run_date)
+
                 results = (
-                    operation.install_os_apps(
-                        app_ids, cpu_throttle,
-                        net_throttle, restart,
-                        agentids=[agent_id]
+                    self.schedule_install(
+                        install, run_date, job_name, time_zone
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif run_date and label and app_ids:
-                if not isinstance(run_date, float):
-                    run_date = float(run_date)
-
-                sched = self.application.scheduler
-                job = AgentAppsJobManager()
-                job.install_os_apps_once(
-                    run_date, job_name, user_name, app_ids,
-                    [agent_id], time_zone
-                )
-                job = (
-                    {
-                        'name': label,
-                        'run_date': run_date,
-                        'trigger': 'date',
-                        'cpu_throttle': cpu_throttle,
-                        'net_throttle': net_throttle,
-                        'restart': restart,
-                        'pkg_type': 'system_apps',
-                        'app_ids': app_ids
-                    }
-                )
-                add_install_job = (
-                    schedule_once(
-                        sched, view_name, username,
-                        [agent_id], operation='install',
-                        name=label, date=date_time, uri=uri,
-                        method=method, job_extra=job
+            else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Invalid arguments passed for agent {0}'
+                        .format(agent_id)
                     )
+                }
+                results = (
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).invalid_arguments(**data)
                 )
-                result = add_install_job
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(result))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Installing applications on agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agent_id, 'install_os_apps', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def install(self, operation, install):
+        results = operation.install_os_apps(install)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def schedule_install(self, install, run_date, job_name, time_zone):
+        sched = self.application.scheduler
+        job_data = install.to_dict()
+        job = AgentAppsJobManager(sched, job_data[InstallKeys.ActiveView])
+        results = job.install_os_apps_once(
+            install, run_date, job_name, time_zone
+        )
+        return results
+
 
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, agent_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_ids:
-                operation = (
-                    StorePatchingOperation(
-                        username, view_name
-                    )
-                )
+            if not epoch_time and not job_name and app_ids:
+                operation = StorePatchingOperation(active_user, active_view)
                 results = (
                     operation.uninstall_apps(
                         app_ids, cpu_throttle,
@@ -326,7 +339,7 @@ class AgentIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and app_ids:
+            elif epoch_time and job_name and app_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -340,9 +353,9 @@ class AgentIdOsAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         [agent_id], operation='uninstall',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -351,10 +364,16 @@ class AgentIdOsAppsHandler(BaseHandler):
                 self.write(json.dumps(result))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Uninstalling applications on agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(agent_id, 'uninstall_os_apps', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -365,9 +384,7 @@ class AgentIdOsAppsHandler(BaseHandler):
 class TagIdOsAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
-        username = self.get_current_user().encode('utf-8')
-        uri = self.request.uri
-        http_method = self.request.method
+        active_user = self.get_current_user().encode('utf-8')
         query = (
             self.get_argument(ApiArguments.QUERY, None)
         )
@@ -457,12 +474,16 @@ class TagIdOsAppsHandler(BaseHandler):
             results = self.by_name(search, query)
 
         else:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Incorrect arguments on tag {0}'.format(tag_id)
+                )
+            }
             results = (
-                GenericResults(
-                    username, uri, http_method
-                ).incorrect_arguments()
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).incorrect_arguments(**data)
             )
-
         self.set_status(results['http_status'])
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
@@ -523,25 +544,19 @@ class TagIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
     def put(self, tag_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_ids:
-                operation = (
-                    StorePatchingOperation(
-                        username, view_name
-                    )
-                )
+            if not epoch_time and not job_name and app_ids:
+                operation = StorePatchingOperation(active_user, active_view)
                 results = (
                     operation.install_os_apps(
                         app_ids, cpu_throttle,
@@ -553,7 +568,7 @@ class TagIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and app_ids:
+            elif epoch_time and job_name and app_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -567,9 +582,9 @@ class TagIdOsAppsHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         tag_ids=[tag_id], operation='install',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -578,10 +593,16 @@ class TagIdOsAppsHandler(BaseHandler):
                 self.write(json.dumps(result))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Installing applications on tag {0} broke: {1}'
+                    .format(tag_id, e)
+                )
+            }
             results = (
-                GenericResults(
-                    username, uri, method
-                ).something_broke(tag_id, 'install_os_apps', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -592,23 +613,23 @@ class TagIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, tag_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_ids:
+            if not epoch_time and not job_name and app_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name
+                        active_user, active_view
                     )
                 )
                 results = (
@@ -622,7 +643,7 @@ class TagIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and app_ids:
+            elif epoch_time and job_name and app_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -634,9 +655,9 @@ class TagIdOsAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         tag_ids=[tag_id], operation='uninstall',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -646,8 +667,8 @@ class TagIdOsAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(tag_id, 'install_os_apps', e)
             )
             logger.exception(e)
@@ -659,9 +680,9 @@ class TagIdOsAppsHandler(BaseHandler):
 class AppIdOsAppsHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
-        username = self.get_current_user().encode('utf-8')
+        active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         search = RetrieveApps(active_view)
         results = self.by_id(search, app_id)
@@ -678,9 +699,9 @@ class AppIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, app_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
@@ -696,8 +717,8 @@ class AppIdOsAppsHandler(BaseHandler):
                     app_id, sev_data
                 )
                 results = (
-                    GenericResults(
-                        username, uri, method
+                    Results(
+                        active_user, uri, method
                     ).object_updated(app_id, 'app severity', [sev_data])
                 )
                 self.set_status(results['http_status'])
@@ -707,7 +728,7 @@ class AppIdOsAppsHandler(BaseHandler):
             else:
                 results = (
                     PackageResults(
-                        username, uri, method
+                        active_user, uri, method
                     ).invalid_severity(severity)
                 )
                 self.set_status(results['http_status'])
@@ -716,8 +737,8 @@ class AppIdOsAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_id, 'update_severity', e)
             )
             logger.exception(e)
@@ -729,23 +750,23 @@ class AppIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and agent_ids:
+            if not epoch_time and not job_name and agent_ids:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name
+                        active_user, active_view
                     )
                 )
                 results = (
@@ -759,7 +780,7 @@ class AppIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and agent_ids:
+            elif epoch_time and job_name and agent_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -773,9 +794,9 @@ class AppIdOsAppsHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         agent_ids=[agent_ids], operation='install',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -785,8 +806,8 @@ class AppIdOsAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_id, 'install_os_apps', e)
             )
             logger.exception(e)
@@ -798,23 +819,23 @@ class AppIdOsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_id:
+            if not epoch_time and not job_name and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name
+                        active_user, active_view
                     )
                 )
                 results = (
@@ -828,7 +849,7 @@ class AppIdOsAppsHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and agent_ids:
+            elif epoch_time and job_name and agent_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -840,9 +861,9 @@ class AppIdOsAppsHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         agent_ids=[agent_ids], operation='uninstall',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -852,8 +873,8 @@ class AppIdOsAppsHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_id, 'install_os_apps', e)
             )
             logger.exception(e)
@@ -865,7 +886,7 @@ class AppIdOsAppsHandler(BaseHandler):
 class GetAgentsByAppIdHandler(BaseHandler):
     @authenticated_request
     def get(self, app_id):
-        username = self.get_current_user().encode('utf-8')
+        active_user = self.get_current_user().encode('utf-8')
         uri = self.request.uri
         http_method = self.request.method
         query = (
@@ -913,8 +934,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
-                    username, uri, http_method
+                Results(
+                    active_user, uri, http_method
                 ).incorrect_arguments()
             )
 
@@ -942,21 +963,21 @@ class GetAgentsByAppIdHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
     def put(self, app_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and agent_ids:
-                operation = StorePatchingOperation(username, view_name)
+            if not epoch_time and not job_name and agent_ids:
+                operation = StorePatchingOperation(active_user, active_view)
                 results = (
                     self.install(
                         operation, app_id, agent_ids,
@@ -967,7 +988,7 @@ class GetAgentsByAppIdHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and agent_ids:
+            elif epoch_time and job_name and agent_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -981,9 +1002,9 @@ class GetAgentsByAppIdHandler(BaseHandler):
                 )
                 add_install_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         agent_ids=agent_ids, operation='install',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -993,8 +1014,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_id, 'install_os_apps', e)
             )
             logger.exception(e)
@@ -1016,7 +1037,7 @@ class GetAgentsByAppIdHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.INSTALL)
-    def schedule_install(self, epoch_time, label, app_id, agent_ids,
+    def schedule_install(self, epoch_time, job_name, app_id, agent_ids,
                          cpu_throttle, net_throttle, restart):
         date_time = datetime.fromtimestamp(int(epoch_time))
         sched = self.application.scheduler
@@ -1031,8 +1052,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
         )
         results = (
             schedule_once(
-                sched, view_name, username, agent_ids=agent_ids,
-                operation='install', name=label, date=date_time, uri=uri,
+                sched, active_view, active_user, agent_ids=agent_ids,
+                operation='install', name=job_name, date=date_time, uri=uri,
                 method=method, job_extra=job
             )
         )
@@ -1044,23 +1065,23 @@ class GetAgentsByAppIdHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, app_id):
-        username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         uri = self.request.uri
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
             epoch_time = self.arguments.get('run_date', None)
-            label = self.arguments.get('job_name', None)
+            job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not label and app_id:
+            if not epoch_time and not job_name and app_id:
                 operation = (
                     StorePatchingOperation(
-                        username, view_name
+                        active_user, active_view
                     )
                 )
                 results = (
@@ -1074,7 +1095,7 @@ class GetAgentsByAppIdHandler(BaseHandler):
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and label and agent_ids:
+            elif epoch_time and job_name and agent_ids:
                 date_time = datetime.fromtimestamp(int(epoch_time))
                 sched = self.application.scheduler
                 job = (
@@ -1086,9 +1107,9 @@ class GetAgentsByAppIdHandler(BaseHandler):
                 )
                 add_uninstall_job = (
                     schedule_once(
-                        sched, view_name, username,
+                        sched, active_view, active_user,
                         agent_ids=agent_ids, operation='uninstall',
-                        name=label, date=date_time, uri=uri,
+                        name=job_name, date=date_time, uri=uri,
                         method=method, job_extra=job
                     )
                 )
@@ -1098,8 +1119,8 @@ class GetAgentsByAppIdHandler(BaseHandler):
 
         except Exception as e:
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_id, 'install_os_apps', e)
             )
             logger.exception(e)
@@ -1113,9 +1134,9 @@ class OsAppsHandler(BaseHandler):
     def get(self):
         uri = self.request.uri
         http_method = self.request.method
-        username = self.get_current_user().encode('utf-8')
+        active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         query = (
             self.get_argument(ApiArguments.QUERY, None)
@@ -1214,8 +1235,8 @@ class OsAppsHandler(BaseHandler):
 
         else:
             results = (
-                GenericResults(
-                    username, uri, http_method
+                Results(
+                    active_user, uri, http_method
                 ).incorrect_arguments()
             )
 
@@ -1284,7 +1305,7 @@ class OsAppsHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
-        username = self.get_current_user().encode('utf-8')
+        active_user = self.get_current_user().encode('utf-8')
         uri = self.request.uri
         method = self.request.method
 
@@ -1294,7 +1315,7 @@ class OsAppsHandler(BaseHandler):
             results = (
                 toggle_hidden_status(
                     app_ids, toggle,
-                    username=username, uri=uri, method=method
+                    active_user=active_user, uri=uri, method=method
                 )
             )
 
@@ -1305,8 +1326,8 @@ class OsAppsHandler(BaseHandler):
         except Exception as e:
             logger.exception(e)
             results = (
-                GenericResults(
-                    username, uri, method
+                Results(
+                    active_user, uri, method
                 ).something_broke(app_ids, 'toggle hidden on os_apps', e)
             )
 

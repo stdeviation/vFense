@@ -3,8 +3,8 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import db_create_close, r
-from vFense.result.error_messages import GenericResults, PackageResults
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import Results, PackageResults
+from vFense.core.results import ApiResultKeys
 from vFense.core._constants import SortValues, DefaultQueryValues, SortLogic
 from vFense.plugins.vuln.cve._db_model import CveKeys, CVECollections
 from vFense.plugins.vuln.cve._constants import *
