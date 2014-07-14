@@ -3,9 +3,8 @@ import logging
 from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.results import Results, UpdateApplicationsResults
+from vFense.core.results import Results, ApiResultKeys
 from vFense.core.api.base import BaseHandler
-from vFense.receiver.api.decorators import authenticate_agent
 from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments, results_message
 )
@@ -15,7 +14,6 @@ from vFense.plugins.patching.operations.patching_results import (
 )
 from vFense.receiver.rvhandler import RvHandOff
 
-from vFense.core.operations._constants import AgentOperations
 
 #from server.handlers import *
 
@@ -27,9 +25,7 @@ class UpdateApplicationsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
-
+        active_user = self.get_current_user()
         try:
             operation_id = self.arguments.get('operation_id', None)
             error = self.arguments.get('error', None)
@@ -52,19 +48,33 @@ class UpdateApplicationsV1(BaseHandler):
                 self.write(dumps(results))
 
             else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Received application updates for agent {0}'
+                    .format(agent_id)
+                    )
+                }
                 results = (
-                    UpdateApplicationsResults('agent', uri, method)
-                    .applications_updated(agent_id, apps_data)
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).information_retrieved(**data)
                 )
-
                 results['data'] = []
                 self.set_status(results['http_status'])
                 self.write(dumps(results))
 
         except Exception as e:
-            results = Results(
-                'agent', uri, method
-            ).something_broke(agent_id, AgentOperations.REFRESH_APPS, e)
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Refresh apps failed for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
+            )
             logger.exception(results)
 
             self.set_status(results['http_status'])

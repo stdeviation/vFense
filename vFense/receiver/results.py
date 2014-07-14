@@ -37,6 +37,28 @@ class AgentResults(object):
             }
         )
 
+    def data_received(self, **kwargs):
+        msg = (
+            'Data was received successfully for agent {0}'
+            .format(self.agent_id)
+        )
+        status_code = AgentResultCodes.DataReceivedSuccessfully
+        data = kwargs.get(AgentApiResultKeys.DATA)
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
+        return(
+            {
+                AgentApiResultKeys.HTTP_STATUS_CODE: 200,
+                AgentApiResultKeys.VFENSE_STATUS_CODE: status_code,
+                AgentApiResultKeys.URI: self.uri,
+                AgentApiResultKeys.HTTP_METHOD: self.method,
+                AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.DATA: data,
+                AgentApiResultKeys.AGENT_ID: self.agent_id,
+                AgentApiResultKeys.OPERATIONS: operations,
+            }
+        )
+
+
 
     def authenticated(self, **kwargs):
         msg = '{0} - agent was authenticated'.format(self.agent_id)
@@ -220,28 +242,6 @@ class AgentResults(object):
             }
        )
 
-
-    def something_broke(self, **kwargs):
-        msg = kwargs.get(AgentApiResultKeys.MESSAGE, '')
-        data = kwargs.get(AgentApiResultKeys.DATA, [])
-        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
-        status_code = (
-            kwargs.get(
-                AgentApiResultKeys.VFENSE_STATUS_CODE,
-                AgentResultCodes.SomethingBroke
-            )
-        )
-        return(
-            {
-                AgentApiResultKeys.HTTP_STATUS_CODE: 500,
-                AgentApiResultKeys.VFENSE_STATUS_CODE: status_code,
-                AgentApiResultKeys.URI: self.uri,
-                AgentApiResultKeys.HTTP_METHOD: self.method,
-                AgentApiResultKeys.MESSAGE: msg,
-                AgentApiResultKeys.DATA: data,
-                AgentApiResultKeys.OPERATIONS: operations,
-            }
-        )
 
     def object_exists(self, **kwargs):
         msg = kwargs.get(AgentApiResultKeys.MESSAGE, '')

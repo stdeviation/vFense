@@ -43,5 +43,3 @@ class AgentFailureCodes(GenericFailureCodes):
     FailedToAddViewsToAgents = 3513
     FailedToRemoveViewsFromAgents = 3514
     FailedToDeleteAgents = 3515
-
-

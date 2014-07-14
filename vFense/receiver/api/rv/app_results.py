@@ -2,11 +2,12 @@ import logging
 from json import dumps
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.api.base import BaseHandler
-from vFense.receiver.api.decorators import authenticate_agent
-from vFense.core.decorators import (
-    convert_json_to_arguments, results_message
+from vFense.receiver.api.decorators import (
+    authenticate_agent, agent_results_message
 )
+from vFense.receiver.api.base import AgentBaseHandler
+from vFense.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.core.decorators import convert_json_to_arguments
 from vFense.core._constants import CommonKeys
 
 from vFense.plugins.patching.operations.patching_results import (
@@ -20,12 +21,10 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
 
 
-class AppsResultsV2(BaseHandler):
+class AppsResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
@@ -59,10 +58,17 @@ class AppsResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Application results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                Results(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'install_os_apps results', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -70,7 +76,7 @@ class AppsResultsV2(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def update_app_results(self, update_results, app_id,
                            reboot_required, apps_to_delete, apps_to_add):
         results = (
@@ -81,12 +87,10 @@ class AppsResultsV2(BaseHandler):
         return results
 
 
-class CustomAppsResultsV2(BaseHandler):
+class CustomAppsResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
@@ -121,10 +125,17 @@ class CustomAppsResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Application results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                Results(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'install_custom_apps results', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -132,7 +143,7 @@ class CustomAppsResultsV2(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def update_custom_app_results(self, update_results, app_id,
                                   reboot_required, apps_to_delete,
                                   apps_to_add):
@@ -144,12 +155,10 @@ class CustomAppsResultsV2(BaseHandler):
         return results
 
 
-class SupportedAppsResultsV2(BaseHandler):
+class SupportedAppsResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             operation_id = self.arguments.get('operation_id')
             apps_to_delete = self.arguments.get('apps_to_delete', [])
@@ -182,10 +191,17 @@ class SupportedAppsResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Application results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                Results(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'install_supported_apps results', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -193,7 +209,7 @@ class SupportedAppsResultsV2(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def update_supported_app_results(self, update_results, app_id,
                                      reboot_required, apps_to_delete,
                                      apps_to_add):
@@ -205,12 +221,10 @@ class SupportedAppsResultsV2(BaseHandler):
         return results
 
 
-class vFenseAppsResultsV2(BaseHandler):
+class vFenseAppsResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
@@ -246,10 +260,17 @@ class vFenseAppsResultsV2(BaseHandler):
             self.write(dumps(results_data, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Application results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                Results(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'install_agent_apps results', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -257,7 +278,7 @@ class vFenseAppsResultsV2(BaseHandler):
             self.set_header('Content-Type', 'application/json')
             self.write(dumps(results, indent=4))
 
-    @results_message
+    @agent_results_message
     def update_agent_app_results(self, update_results, app_id,
                                  reboot_required, apps_to_delete,
                                  apps_to_add):
@@ -269,12 +290,10 @@ class vFenseAppsResultsV2(BaseHandler):
         return results
 
 
-class UninstallResultsV2(BaseHandler):
+class UninstallResultsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
         try:
             logger.info(self.request.body)
             operation_id = self.arguments.get('operation_id')
@@ -309,10 +328,17 @@ class UninstallResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                AgentApiResultKeys.MESSAGE: (
+                    'Application results for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
             results = (
-                Results(
-                    'agent', uri, method
-                ).something_broke(agent_id, 'uninstall_os_apps results', e)
+                AgentResults(
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
+                ).something_broke(**data)
             )
             logger.exception(results)
 
@@ -321,7 +347,7 @@ class UninstallResultsV2(BaseHandler):
             self.write(dumps(results, indent=4))
 
 
-    @results_message
+    @agent_results_message
     def update_app_results(self, update_results, app_id, reboot_required,
                            apps_to_delete, apps_to_add):
         results = (

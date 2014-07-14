@@ -8,6 +8,7 @@ class AgentResultCodes(GenericCodes):
     TokenValidated = 3204
     AgentAuthenticated = 3205
     AgentUpdated = 3206
+    DataReceivedSuccessfully = 3207
 
 
 class AgentFailureResultCodes(GenericFailureCodes):
@@ -20,3 +21,4 @@ class AgentFailureResultCodes(GenericFailureCodes):
     InvalidSuccessValue = 3306
     OperationFailed = 3307
     InvalidToken = 3308
+    DataReceivedFailure = 3309

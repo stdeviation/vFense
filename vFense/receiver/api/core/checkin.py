@@ -10,7 +10,7 @@ from vFense.core.decorators import (
 )
 
 from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.results import AgentResults
+from vFense.receiver.results import AgentResults, AgentApiResultKeys
 from vFense.receiver.corehandler import process_queue_data
 
 from vFense.receiver.api.decorators import authenticate_agent
@@ -23,19 +23,24 @@ class CheckInV1(BaseHandler):
     @agent_authenticated_request
     def get(self, agent_id):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
         try:
             agent_queue = process_queue_data(agent_id)
-            status = (
-                AgentResults(
-                    'agent', uri, method
-                ).check_in(agent_id, agent_queue)
+            data = {
+                ApiResultKeys.DATA: agent_queue,
+                ApiResultKeys.MESSAGE: (
+                    '{0} - checkin succeeded for agent_id {1}'
+                    .format(active_user, agent_id)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             self.update_agent_status(agent_id)
-            self.set_status(status['http_status'])
+            self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(dumps(status))
+            self.write(dumps(results))
 
         except Exception as e:
             data = {
@@ -77,14 +82,15 @@ class CheckInV2(AgentBaseHandler):
 
         except Exception as e:
             data = {
-                ApiResultKeys.MESSAGE: (
+                AgentApiResultKeys.MESSAGE: (
                     'Checkin operation for agent {0} broke: {1}'
                     .format(agent_id, e)
                 )
             }
             results = (
                 AgentResults(
-                    self.request.uri, self.request.method, self.get_token()
+                    self.request.uri, self.request.method, self.get_token(),
+                    agent_id
                 ).something_broke(**data)
             )
             logger.exception(e)
