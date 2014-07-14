@@ -1,4 +1,4 @@
-from vFense.tunnels import ssh
+from vFense.core.tunnels import ssh
 from vFense.plugins import ra
 
 

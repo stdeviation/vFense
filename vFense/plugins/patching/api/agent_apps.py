@@ -5,7 +5,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.api.base import BaseHandler
-from vFense.core.results import Results, PackageResults
+from vFense.core.results import Results
 
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions

@@ -13,7 +13,7 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
 
-from vFense.core.results import Results, PackageResults
+from vFense.core.results import Results
 
 #from vFense.scheduler.jobManager import schedule_once
 

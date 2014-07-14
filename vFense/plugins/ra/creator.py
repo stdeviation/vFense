@@ -5,7 +5,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.settings import Default
-from vFense.tunnels import TunnelKey, reverse_tunnel_params
+from vFense.core.tunnels import TunnelKey, reverse_tunnel_params
 
 from vFense.plugins import ra
 from vFense.plugins.ra.raoperation import store_in_agent_queue, save_operation

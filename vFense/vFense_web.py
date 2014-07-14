@@ -20,7 +20,7 @@ import vFense_module_loader
 
 from redis import StrictRedis
 
-from vFense.server.api.reports_api import *
+from vFense.core.api.reports_api import *
 
 from vFense.db.create_indexes import initialize_indexes_and_create_tables
 from vFense.core.scheduler.manager import start_scheduler
@@ -28,21 +28,20 @@ from vFense.core.scheduler.manager import start_scheduler
 ##from server.api.auth_api import LoginHandler, LogoutHandler
 from vFense.core.api.agent import *
 from vFense.plugins.patching.api.stats_api import *
-from vFense.plugins.patching.api.notification_handler import *
+#from vFense.plugins.patching.api.notification_handler import *
 from vFense.plugins.patching.api.os_apps import *
 from vFense.plugins.patching.api.agent_apps import *
 from vFense.plugins.patching.api.custom_apps import *
 from vFense.plugins.patching.api.supported_apps import *
-from vFense.plugins.mightymouse.api.relay_servers import *
+#from vFense.plugins.mightymouse.api.relay_servers import *
 ##Vulnerability APIs
 from vFense.plugins.vuln.api.vulnerability import *
 from vFense.plugins.vuln.api.cve import *
 
-from vFense.plugins.ra.api.status import RDStatusQueue
-from vFense.plugins.ra.api.rdsession import RDSession
-from vFense.plugins.ra.api.settings import SetPassword
-from vFense.server.hierarchy import db as hierarchy_db
-from vFense.server.api.monit_api import *
+#from vFense.plugins.ra.api.status import RDStatusQueue
+#from vFense.plugins.ra.api.rdsession import RDSession
+#from vFense.plugins.ra.api.settings import SetPassword
+from vFense.core.api.monit_api import *
 from vFense.core.api.permission import RetrieveValidPermissionsHandler
 from vFense.core.api.agent_operations import GetTransactionsHandler, \
     AgentOperationsHandler, TagOperationsHandler, OperationHandler
@@ -66,10 +65,10 @@ class Application(tornado.web.Application):
         handlers = [
 
             ##### Notification API
-            (r"/api/v1/notifications?", NotificationsHandler),
-            (r"/api/v1/notification/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", NotificationHandler),
-            (r"/api/v1/notifications/get_valid_fields/?",
-                GetAllValidFieldsForNotifications),
+            #(r"/api/v1/notifications?", NotificationsHandler),
+            #(r"/api/v1/notification/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", NotificationHandler),
+            #(r"/api/v1/notifications/get_valid_fields/?",
+            #    GetAllValidFieldsForNotifications),
             (r"/api/v1/permissions?", RetrieveValidPermissionsHandler),
 
             ##### RA Api

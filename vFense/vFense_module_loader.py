@@ -49,11 +49,11 @@ from vFense.receiver.api.rv.agent_update import (
     AgentUpdateHandler, AgentUpdateHandlerV2
 )
 
-from vFense.server.api.email_api import CreateEmailConfigHandler, \
+from vFense.core.api.email_api import CreateEmailConfigHandler, \
     GetEmailConfigHandler
-from vFense.server.api.log_api import LoggingModifyerHandler, \
+from vFense.core.api.log_api import LoggingModifyerHandler, \
     LoggingListerHandler
-from vFense.server.api.reports_api import (AgentsOsDetailsHandler,
+from vFense.core.api.reports_api import (AgentsOsDetailsHandler,
     AgentsHardwareDetailsHandler, AgentsCPUDetailsHandler,
     AgentsMemoryDetailsHandler, AgentsDiskDetailsHandler,
     AgentsNetworkDetailsHandler)

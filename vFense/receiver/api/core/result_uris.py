@@ -8,8 +8,9 @@ from vFense.core.decorators import (
     results_message
 )
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import AgentApiResultKeys, Results
+from vFense.core.results import Results
 from vFense.core.operations._constants import AgentOperations
+from vFense.receiver.results import AgentApiResultKeys
 from vFense.receiver.api.decorators import (
     authenticate_token, agent_results_message
 )

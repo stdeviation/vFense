@@ -6,7 +6,7 @@ import redis
 
 import settings
 
-from vFense.tunnels import get_available_port
+from vFense.core.tunnels import get_available_port
 
 from vFense.plugins import ra
 from vFense.plugins.ra import RaValue

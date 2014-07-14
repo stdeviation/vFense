@@ -1,6 +1,6 @@
 import subprocess
 
-from vFense.tunnels import _db as db
+from vFense.core.tunnels import _db as db
 
 _sshd_config_path = '/etc/ssh/sshd_config'
 

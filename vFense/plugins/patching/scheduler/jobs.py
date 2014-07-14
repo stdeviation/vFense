@@ -1,11 +1,11 @@
 from vFense.core.agent._db import fetch_agent_ids
 from vFense.core.tag._db import fetch_tag_ids
-from vFense.core.plugins.patching.operations.store_agent_operations import (
+from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
 )
-from vFense.core.plugins.patching.operations import Install
+from vFense.plugins.patching.operations import Install
 
-from vFense.core.plugins.patching.scheduler._db import (
+from vFense.plugins.patching.scheduler._db import (
     FetchAppsIdsForSchedule, FetchCustomAppsIdsForSchedule,
     FetchSupportedAppsIdsForSchedule
 )

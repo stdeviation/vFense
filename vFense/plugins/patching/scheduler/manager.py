@@ -1,6 +1,6 @@
 from vFense.core.operations._constants import AgentOperations
 from vFense.plugins.patching.operations import Install
-from vFense.plugins.patching.operations.jobs import install_os_apps_in_agents
+from vFense.plugins.patching.scheduler.jobs import install_os_apps_in_agents
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
@@ -9,7 +9,7 @@ from vFense.core.scheduler.manager import JobManager
 from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
-from vFense.results._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 
 class AgentAppsJobManager(JobManager):
     def install_os_apps_once(self, install, run_date, job_name,

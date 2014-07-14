@@ -11,7 +11,6 @@ from vFense.core._constants import CommonKeys
 from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
-from vFense.db.notification_sender import send_notifications
 from vFense.core.results import Results, ApiResultKeys
 
 

@@ -2,11 +2,10 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core.results import Results, PackageResults
 from vFense.core.results import ApiResultKeys
 from vFense.core.decorators import time_it
 from vFense.core._constants import (
-    SortValues, DefaultQueryValues, SortLogic
+    SortValues, DefaultQueryValues
 )
 from vFense.plugins.vuln.cve._db_model import CveKeys
 from vFense.plugins.vuln.cve._constants import *

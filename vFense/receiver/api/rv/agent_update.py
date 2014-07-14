@@ -8,15 +8,13 @@ from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments
 )
 
-from vFense.core.results import (
-    Results, UpdateApplicationsResults
-)
+from vFense.core.results import Results, ApiResultKeys
 
 from vFense.receiver.rvhandler import RvHandOff
 from vFense.receiver.api.base import AgentBaseHandler
 from vFense.receiver.results import AgentResults, AgentApiResultKeys
 from vFense.receiver.api.decorators import (
-    authenticate_agent, agent_results_message
+    authenticate_agent
 )
 
 from vFense.core.operations._constants import AgentOperations
@@ -29,18 +27,23 @@ class AgentUpdateHandler(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
-        uri = self.request.uri
-        method = self.request.method
+        active_user = self.get_current_user()
 
         try:
             app_data = self.arguments.get('data')
 
             RvHandOff(
             ).available_agent_update_operation(agent_id, app_data)
-
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Received application updates for agent {0}'
+                    .format(agent_id)
+                )
+            }
             results = (
-                UpdateApplicationsResults('agent', uri, method)
-                .applications_updated(agent_id, app_data)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).information_retrieved(**data)
             )
 
             results['data'] = []
@@ -48,10 +51,16 @@ class AgentUpdateHandler(BaseHandler):
             self.write(dumps(results))
 
         except Exception as e:
-            results = Results(
-                'agent', uri, method
-            ).something_broke(
-                agent_id, AgentOperations.AVAILABLE_AGENT_UPDATE, e
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Failed tp receive agent updates for agent {0} broke: {1}'
+                    .format(agent_id, e)
+                )
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(results)
 
