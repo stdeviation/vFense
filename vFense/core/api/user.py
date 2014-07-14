@@ -1,5 +1,4 @@
 import json
-from time import sleep
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
@@ -9,7 +8,6 @@ from vFense.core.decorators import (
     convert_json_to_arguments, authenticated_request, results_message
 )
 
-from vFense.core._constants import CommonKeys
 from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.permissions import (
@@ -27,11 +25,7 @@ from vFense.core.user import User
 from vFense.core.user.manager import UserManager
 from vFense.core.user.search.search import RetrieveUsers
 
-from vFense.core.results import ApiResultKeys
-from vFense.result.error_messages import GenericResults
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
+from vFense.core.results import ApiResultKeys, Results
 from vFense.core.user.status_codes import (
     UserCodes, UserFailureCodes
 )
@@ -46,8 +40,6 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, username):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         is_global = UserManager(active_user).get_attribute(UserKeys.Global)
         try:
             granted, status_code = (
@@ -65,7 +57,8 @@ class UserHandler(BaseHandler):
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, uri, http_method
+                        Permissions.ADMINISTRATOR, self.request.uri,
+                        self.request.method
                     )
                 )
 
@@ -74,10 +67,16 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Retrieving user {0} broke: {1}'
+                    .format(username, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -97,9 +96,7 @@ class UserHandler(BaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     def post(self, username):
-        self.active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
+        active_user = self.get_current_user()
         user = UserManager(username)
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
@@ -129,10 +126,16 @@ class UserHandler(BaseHandler):
                 self.write(json.dumps(results, indent=4))
 
             else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Incorrect arguments while editing user {0}'
+                        .format(username)
+                    )
+                }
                 results = (
-                    GenericResults(
-                        self.active_user, uri, http_method
-                    ).incorrect_arguments()
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).incorrect_arguments(**data)
                 )
 
                 self.set_status(results['http_status'])
@@ -140,10 +143,16 @@ class UserHandler(BaseHandler):
                 self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Editing user {0} broke: {1}'
+                    .format(username, e)
+                )
+            }
             results = (
-                GenericResults(
-                    self.active_user, uri, http_method
-                ).something_broke(username, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -183,8 +192,6 @@ class UserHandler(BaseHandler):
     @convert_json_to_arguments
     def put(self, username):
         active_user = self.get_current_user()
-        self.uri = self.request.uri
-        self.http_method = self.request.method
         self.manager = UserManager(username)
         try:
             ###Password Changer###
@@ -234,21 +241,32 @@ class UserHandler(BaseHandler):
                 self.write(json.dumps(results, indent=4))
 
             else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Incorrect arguments while editing user {0}'
+                        .format(username)
+                    )
+                }
                 results = (
-                    GenericResults(
-                        active_user, self.uri, self.http_method
-                    ).incorrect_arguments()
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).incorrect_arguments(**data)
                 )
-
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Editing user {0} broke: {1}'
+                    .format(username, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, self.uri, self.http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -310,8 +328,6 @@ class UserHandler(BaseHandler):
     @authenticated_request
     def delete(self, username):
         active_user = self.get_current_user()
-        self.uri = self.request.uri
-        self.http_method = self.request.method
         self.manager = UserManager(username)
         try:
             results = self.remove_user()
@@ -320,10 +336,16 @@ class UserHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Deleting user {0} broke: {1}'
+                    .format(username, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, self.uri, self.http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -343,8 +365,6 @@ class UsersHandler(BaseHandler):
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
         is_global = user.get_attribute(UserKeys.Global)
@@ -410,7 +430,8 @@ class UsersHandler(BaseHandler):
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, uri, http_method
+                        Permissions.ADMINISTRATOR, self.request.uri,
+                        self.request.method
                     )
                 )
 
@@ -419,10 +440,15 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Searching for users broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -454,8 +480,6 @@ class UsersHandler(BaseHandler):
         active_view = (
             UserManager(self.active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        http_method = self.request.method
         try:
             username = self.arguments.get(ApiArguments.USER_NAME)
             password = self.arguments.get(ApiArguments.PASSWORD)
@@ -490,13 +514,17 @@ class UsersHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Create user broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    self.active_user, uri, http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
-
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -521,8 +549,6 @@ class UsersHandler(BaseHandler):
     @convert_json_to_arguments
     def delete(self):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
         usernames = self.arguments.get(ApiArguments.USER_NAMES)
         try:
             if not isinstance(usernames, list):
@@ -531,20 +557,31 @@ class UsersHandler(BaseHandler):
             if not active_user in usernames:
                 results = self.remove_users(usernames)
             else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Can not delete yourself {0}'
+                        .format(active_user)
+                    )
+                }
                 results = (
-                    GenericResults(
-                        active_user, uri, method
-                    ).something_broke(active_user, 'User', 'can not delete yourself')
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).invalid_id(**data)
                 )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Deleting of users broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -576,7 +613,7 @@ class UsersHandler(BaseHandler):
                 % (', '.join(users_deleted), ', '.join(users_unchanged))
             )
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericFailureCodes.FailedToDeleteAllObjects
+                UserFailureCodes.FailedToDeleteAllObjects
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserFailureCodes.FailedToDeleteAllUsers
@@ -586,7 +623,7 @@ class UsersHandler(BaseHandler):
         elif users_deleted and not users_unchanged:
             msg = 'user names deleted: %s' % (', '.join(users_deleted))
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.ObjectsDeleted
+                UserCodes.ObjectsDeleted
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserCodes.UsersDeleted
@@ -596,7 +633,7 @@ class UsersHandler(BaseHandler):
         elif users_unchanged and not users_deleted:
             msg = 'user names unchanged: %s' % (', '.join(users_unchanged))
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.ObjectsUnchanged
+                UserCodes.ObjectsUnchanged
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 UserCodes.UsersUnchanged

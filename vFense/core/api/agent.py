@@ -322,7 +322,7 @@ class AgentsHandler(BaseHandler):
                 results = (
                     Results(
                         active_user, self.request.uri, self.request.method
-                    ).something_broke(**data)
+                    ).incorrect_arguments(**data)
                 )
 
             self.set_status(results['http_status'])
@@ -664,7 +664,7 @@ class AgentHandler(BaseHandler):
                     results = (
                         Results(
                             active_user, self.request.uri, self.request.method
-                        ).something_broke(**data)
+                        ).incorrect_arguments(**data)
                     )
 
             else:
@@ -677,7 +677,7 @@ class AgentHandler(BaseHandler):
                 results = (
                     Results(
                         active_user, self.request.uri, self.request.method
-                    ).something_broke(**data)
+                    ).incorrect_arguments(**data)
                 )
 
             self.set_status(results['http_status'])

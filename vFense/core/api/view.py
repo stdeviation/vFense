@@ -31,13 +31,8 @@ from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
 
-from vFense.result._constants import ApiResultKeys
-from vFense.result.error_messages import GenericResults
+from vFense.core.results import ApiResultKeys, Results
 from vFense.core.view.status_codes import ViewFailureCodes, ViewCodes
-
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -49,8 +44,6 @@ class ViewHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, view_name):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         user = UserManager(active_user)
         is_global = user.get_attribute(UserKeys.Global)
         current_view = user.get_attribute(UserKeys.CurrentView)
@@ -61,10 +54,15 @@ class ViewHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Retrieving of view broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -89,8 +87,6 @@ class ViewHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, view_name):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         view = ViewManager(view_name)
         try:
             action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
@@ -123,10 +119,15 @@ class ViewHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Editing of view {0} broke: {1}'.format(view_name, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'Views', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -163,8 +164,6 @@ class ViewHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, view_name):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         view = ViewManager(view_name)
         results = {}
         data = []
@@ -219,10 +218,15 @@ class ViewHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Editing of view {0} broke: {1}'.format(view_name, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'Views', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -277,8 +281,6 @@ class ViewHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, view_name):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         view = ViewManager(view_name)
         try:
             delete_agents = (
@@ -294,10 +296,15 @@ class ViewHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Deleting of view {0} broke: {1}'.format(view_name, e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -324,8 +331,6 @@ class ViewsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
         all_views = None
         user = UserManager(active_user)
         is_global = user.get_attribute(UserKeys.Global)
@@ -373,7 +378,8 @@ class ViewsHandler(BaseHandler):
                 results = (
                     return_results_for_permissions(
                         active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, uri, method
+                        Permissions.ADMINISTRATOR, self.request.uri,
+                        self.request.method
                     )
                 )
 
@@ -382,10 +388,15 @@ class ViewsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Retrieving of views broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, method
-                ).something_broke(active_user, 'Views', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -418,8 +429,6 @@ class ViewsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        http_method = self.request.method
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
         try:
@@ -465,10 +474,15 @@ class ViewsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Create view broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, http_method
-                ).something_broke(self.active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -488,8 +502,6 @@ class ViewsHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
         active_user = self.get_current_user()
-        uri = self.request.uri
-        method = self.request.method
         try:
             view_names = (
                 self.arguments.get(ApiArguments.VIEW_NAMES)
@@ -504,10 +516,15 @@ class ViewsHandler(BaseHandler):
             self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Deleting of views broke: {0}'.format(e)
+                )
+            }
             results = (
-                GenericResults(
-                    active_user, uri, method
-                ).something_broke(active_user, 'User', e)
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])
@@ -538,7 +555,7 @@ class ViewsHandler(BaseHandler):
                 % (', '.join(views_deleted), ', '.join(views_unchanged))
             )
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericFailureCodes.FailedToDeleteAllObjects
+                ViewFailureCodes.FailedToDeleteAllObjects
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewFailureCodes.FailedToDeleteAllViews
@@ -550,7 +567,7 @@ class ViewsHandler(BaseHandler):
                 'view names deleted: %s' % (', '.join(views_deleted))
             )
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.ObjectsDeleted
+                ViewCodes.ObjectsDeleted
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewCodes.ViewsDeleted
@@ -560,7 +577,7 @@ class ViewsHandler(BaseHandler):
         elif views_unchanged and not views_deleted:
             msg = 'view names unchanged: %s' % (', '.join(views_unchanged))
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
-                GenericCodes.ObjectsUnchanged
+                ViewCodes.ObjectsUnchanged
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewCodes.ViewsUnchanged
