@@ -12,8 +12,16 @@ from vFense.core._db_constants import DbTime
 from vFense.core.operations.agent_operations import AgentOperation, \
     operation_for_agent_exist, get_agent_operation
 
-from vFense.core.status_codes import AgentOperationCodes, GenericCodes, \
-    GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
+from vFense.receiver.status_codes import (
+    AgentFailureResultCodes, AgentResultCodes
+)
+
+from vFense.core.status_codes import (
+    GenericCodes, GenericFailureCodes
+)
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes
+)
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

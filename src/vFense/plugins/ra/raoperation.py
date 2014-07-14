@@ -6,7 +6,7 @@ from vFense.core.queue.queue import AgentQueue
 from vFense.settings import Default
 from vFense.core.operations.agent_operations import AgentOperation
 
-from vFense.result.error_messages import AgentOperationCodes
+from vFense.core.operations.status_codes import AgentOperationCodes
 
 from vFense.plugins import ra
 from vFense.plugins.ra import DesktopProtocol

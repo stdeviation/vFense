@@ -16,8 +16,13 @@ from vFense.core.operations.results import OperationResults
 from vFense.core.operations.agent_operations import \
     operation_for_agent_and_app_exist
 
-from vFense.core.status_codes import AgentOperationCodes, GenericCodes, \
-    GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+
+from vFense.core.operations.status_codes import AgentOperationCodes
+
+from vFense.receiver.status_codes import (
+    AgentFailureResultCodes, AgentResultCodes
+)
 
 from vFense.plugins.patching._db_model import AppCollections
 from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys

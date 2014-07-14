@@ -1,6 +1,12 @@
 from vFense.result._constants import AgentApiResultKeys
 from vFense.core.status_codes import (
-    AgentResultCodes, AgentFailureResultCodes, GenericCodes, AgentCodes
+    GenericCodes
+)
+from vFense.receiver.status_codes import (
+    AgentResultCodes, AgentFailureResultCodes
+)
+from vFense.core.agent.status_codes import (
+    AgentCodes
 )
 
 class AgentResults(object):

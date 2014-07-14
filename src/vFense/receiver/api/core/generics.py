@@ -7,8 +7,8 @@ from vFense.receiver.api.base import AgentBaseHandler
 from vFense.core.decorators import (
     convert_json_to_arguments, results_message
 )
-from vFense.result._constants import AgentApiResultKeys
-from vFense.core.status_codes import AgentResultCodes
+from vFense.receiver.results import AgentApiResultKeys
+from vFense.receiver.status_codes import AgentResultCodes
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects

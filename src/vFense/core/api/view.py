@@ -33,7 +33,7 @@ from vFense.core.operations._constants import vFenseObjects
 
 from vFense.result._constants import ApiResultKeys
 from vFense.result.error_messages import GenericResults
-from vFense.core.status_codes import ViewFailureCodes, ViewCodes
+from vFense.core.view.status_codes import ViewFailureCodes, ViewCodes
 
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes

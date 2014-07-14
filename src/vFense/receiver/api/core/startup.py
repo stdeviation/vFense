@@ -15,7 +15,7 @@ from vFense.core.agent._db_model import (
 from vFense.result.error_messages import GenericResults
 from vFense.core.queue.uris import get_result_uris
 from vFense.core.results import ApiResultKeys
-from vFense.core.receiver.status_codes import AgentResultCodes
+from vFense.receiver.status_codes import AgentResultCodes
 
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations._db_model import AgentOperationKey

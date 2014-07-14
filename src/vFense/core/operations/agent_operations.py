@@ -16,8 +16,12 @@ from vFense.core.operations._db_agent import fetch_agent_operation, \
     update_completed_and_pending_count, update_agent_operation_pickup_time, \
     insert_agent_into_agent_operations
 
-from vFense.core.status_codes import DbCodes, AgentOperationCodes, \
-    OperationPerAgentCodes
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes, OperationPerAgentCodes
+)
+from vFense.core.status_codes import (
+    DbCodes
+)
 
 
 logger = logging.getLogger('rvapi')

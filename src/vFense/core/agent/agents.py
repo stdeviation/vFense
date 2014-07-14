@@ -12,10 +12,12 @@ from vFense.core.agent._db import (
 from vFense.core.decorators import time_it
 
 #from vFense.result.results import Results
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
-    DbCodes, GenericCodes, AgentCodes, AgentFailureCodes,
-    GenericFailureCodes
+    DbCodes, GenericCodes, GenericFailureCodes
+)
+from vFense.core.agent.status_codes import (
+    AgentCodes, AgentFailureCodes
 )
 #from vFense.plugins.patching._db_model import *
 

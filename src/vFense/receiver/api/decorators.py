@@ -6,13 +6,20 @@ from functools import wraps
 
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.result._constants import ApiResultKeys
-from vFense.result.agent_results import (
+from vFense.receiver.results import (
     AgentResults
 )
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
-    ViewCodes, ViewFailureCodes, AgentCodes, AgentResultCodes,
-    AgentFailureResultCodes
+)
+from vFense.core.view.status_codes import (
+    ViewCodes, ViewFailureCodes
+)
+from vFense.receiver.status_codes import (
+    AgentResultCodes, AgentFailureResultCodes
+)
+from vFense.core.agent.status_codes import (
+    AgentCodes
 )
 from vFense.core.agent.manager import AgentManager
 from vFense.core.agent._db_model import AgentKeys

@@ -10,11 +10,14 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.result.results import Results
+from vFense.core.results import Results
 from vFense.result.error_messages import GenericResults
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
-    GenericCodes, TagCodes, TagFailureCodes, GenericFailureCodes
+    GenericCodes, GenericFailureCodes
+)
+from vFense.core.tag.status_codes import (
+    TagCodes, TagFailureCodes
 )
 from vFense.core.agent._constants import Environments
 from vFense.core.agent.manager import AgentManager

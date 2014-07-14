@@ -27,11 +27,13 @@ from vFense.core.user import User
 from vFense.core.user.manager import UserManager
 from vFense.core.user.search.search import RetrieveUsers
 
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.result.error_messages import GenericResults
 from vFense.core.status_codes import (
-    UserCodes, UserFailureCodes, GenericCodes,
-    GenericFailureCodes
+    GenericCodes, GenericFailureCodes
+)
+from vFense.core.user.status_codes import (
+    UserCodes, UserFailureCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

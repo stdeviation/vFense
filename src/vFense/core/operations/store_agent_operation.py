@@ -10,9 +10,11 @@ from vFense.core.operations._db_model import (
 from vFense.core.decorators import results_message
 from vFense.core.queue.queue import AgentQueue
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.result._constants import ApiResultKeys
-from vFense.core.status_codes import GenericCodes, AgentOperationCodes, \
-    GenericFailureCodes, AgentOperationFailureCodes
+from vFense.core.results import ApiResultKeys
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes, AgentOperationFailureCodes
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
