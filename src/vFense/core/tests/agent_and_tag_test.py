@@ -11,7 +11,7 @@ from vFense.core.agent._db import fetch_agent_ids_in_views
 from vFense.core.tag.manager import TagManager
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     AgentCodes, AgentResultCodes, TagCodes, ViewCodes
 )
 from vFense.result._constants import ApiResultKeys

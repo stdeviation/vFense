@@ -13,7 +13,7 @@ from vFense.core.operations._constants import vFenseObjects
 from vFense.result.results import Results
 from vFense.result.error_messages import GenericResults
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, TagCodes, TagFailureCodes, GenericFailureCodes
 )
 from vFense.core.agent._constants import Environments

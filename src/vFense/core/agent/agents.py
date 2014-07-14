@@ -13,7 +13,7 @@ from vFense.core.decorators import time_it
 
 #from vFense.result.results import Results
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     DbCodes, GenericCodes, AgentCodes, AgentFailureCodes,
     GenericFailureCodes
 )

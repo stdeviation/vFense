@@ -7,7 +7,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.search._db_agent_search import FetchAgentOperations
-from vFense.result.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.result._constants import ApiResultKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

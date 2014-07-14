@@ -17,11 +17,13 @@ from vFense.core.scheduler._db import (
     fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
-    SchedulerCodes, SchedulerFailureCodes
 )
 
+from vFense.core.scheduler.status_codes import (
+    SchedulerCodes, SchedulerFailureCodes
+)
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 

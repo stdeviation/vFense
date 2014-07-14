@@ -15,7 +15,7 @@ from vFense.core.operations._db_model import (
 from vFense.core.operations._db_sub_queries import OperationPerAgentMerge
 
 from vFense.core.decorators import return_status_tuple, time_it
-from vFense.result.status_codes import AgentOperationCodes
+from vFense.core.status_codes import AgentOperationCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

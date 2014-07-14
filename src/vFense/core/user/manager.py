@@ -33,7 +33,7 @@ from vFense.core.view.views import validate_view_names
 
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     UserFailureCodes, UserCodes, GenericFailureCodes, GenericCodes,
     DbCodes, ViewFailureCodes, GroupFailureCodes, GroupCodes,
     ViewCodes

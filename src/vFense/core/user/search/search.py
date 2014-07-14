@@ -19,7 +19,7 @@ from vFense.core.view._db_model import (
 )
 
 from vFense.core.user.search._db import FetchUsers
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

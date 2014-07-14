@@ -1,4 +1,5 @@
-from vFense.result.status_codes import *
+from vFense.core.status_codes import *
+from vFense.plugins.patching.status_codes import *
 from vFense.result._constants import *
 from vFense.core.agent._db_model import *
 

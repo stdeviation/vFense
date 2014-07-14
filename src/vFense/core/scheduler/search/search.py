@@ -11,7 +11,7 @@ from vFense.core.scheduler.search._db import (
     FetchJobs, FetchAgentJobs, FetchTagJobs
 )
 from vFense.core.decorators import time_it
-from vFense.result.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from pytz import all_timezones
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

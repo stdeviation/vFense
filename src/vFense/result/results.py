@@ -1,5 +1,5 @@
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes, ViewFailureCodes, AgentCodes
 )
 

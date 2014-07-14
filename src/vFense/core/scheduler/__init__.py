@@ -11,7 +11,7 @@ from vFense.core._constants import (
     CommonKeys
 )
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import GenericCodes
+from vFense.core.status_codes import GenericCodes
 from pytz import all_timezones
 
 

@@ -10,8 +10,8 @@ from vFense.core._constants import (
     CommonKeys, RebootValues, CPUThrottleValues
 )
 
-from vFense.results._constants import ApiResultKeys
-from vFense.results.status_codes import GenericCodes
+from vFense.result._constants import ApiResultKeys
+from vFense.core.status_codes import GenericCodes
 
 class Install(object):
     """Used to represent an instance of an agent."""
@@ -167,6 +167,24 @@ class Install(object):
                 )
 
         return invalid_fields
+
+    def args_to_dict(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            InstallKeys.AGENT_IDS: self.agent_ids,
+            InstallKeys.APP_IDS: self.app_ids,
+            InstallKeys.NET_THROTTLE: self.net_throttle,
+            InstallKeys.CPU_THROTTLE: self.cpu_throttle,
+            InstallKeys.RESTART: self.cpu_throttle,
+        }
+
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.

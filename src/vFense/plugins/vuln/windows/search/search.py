@@ -10,7 +10,7 @@ from vFense.core._constants import (
 from vFense.plugins.vuln.windows.search._db import FetchWindowVulns
 from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
 
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

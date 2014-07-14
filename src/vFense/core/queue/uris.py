@@ -7,7 +7,7 @@ from vFense.core.operations._constants import (
 
 from vFense.core.decorators import time_it
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import *
+from vFense.core.status_codes import *
 
 
 def _get_result_uris_dict(version, agent_id=None):

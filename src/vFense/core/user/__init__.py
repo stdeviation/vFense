@@ -5,7 +5,7 @@ from vFense.core._constants import (
 )
 from vFense.core.user._constants import UserDefaults
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import UserFailureCodes, GenericCodes
+from vFense.core.status_codes import UserFailureCodes, GenericCodes
 from vFense.utils.security import check_password
 
 

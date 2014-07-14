@@ -9,7 +9,7 @@ from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.view._db_model import ViewKeys
 
 from vFense.core.view.search._db import FetchViews
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

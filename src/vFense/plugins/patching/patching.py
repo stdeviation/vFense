@@ -11,9 +11,12 @@ from vFense.core._db import object_exist, insert_data_in_table, \
     delete_data_in_table
 
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import DbCodes, GenericCodes, \
-    GenericFailureCodes, PackageCodes, PackageFailureCodes
+from vFense.core.status_codes import DbCodes, GenericCodes, \
+    GenericFailureCodes
 
+from vFense.plugins.patching.status_codes import (
+    PackageCodes, PackageFailureCodes
+)
 from vFense.plugins.patching.file_data import add_file_data
 from vFense.plugins.patching.utils import build_agent_app_id
 from vFense.plugins.patching._db_model import AppsKey, AppCollections, \

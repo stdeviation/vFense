@@ -40,7 +40,7 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes, AgentCodes, AgentFailureCodes,
     ViewCodes
 )

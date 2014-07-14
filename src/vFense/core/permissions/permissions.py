@@ -2,7 +2,7 @@ import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.result.status_codes import GenericCodes
+from vFense.core.status_codes import GenericCodes
 from vFense.result.error_messages import GenericResults
 
 from vFense.core._constants import *

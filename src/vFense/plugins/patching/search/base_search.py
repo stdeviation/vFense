@@ -14,7 +14,7 @@ from vFense.core._constants import (
 from vFense.core.view._constants import DefaultViews
 from vFense.plugins.patching.search._db_search import FetchApps
 
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 from vFense.result._constants import (

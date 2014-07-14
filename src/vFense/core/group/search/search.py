@@ -10,7 +10,7 @@ from vFense.core.group._db_model import GroupKeys
 
 
 from vFense.core.group.search._db import FetchGroups
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

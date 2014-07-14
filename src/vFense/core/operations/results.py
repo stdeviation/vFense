@@ -12,7 +12,7 @@ from vFense.core._db_constants import DbTime
 from vFense.core.operations.agent_operations import AgentOperation, \
     operation_for_agent_exist, get_agent_operation
 
-from vFense.result.status_codes import AgentOperationCodes, GenericCodes, \
+from vFense.core.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
 
 

@@ -13,7 +13,7 @@ from vFense.plugins.patching._constants import (
     CommonAppKeys
 )
 
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 from vFense.result._constants import (

@@ -9,7 +9,7 @@ from vFense.result._constants import ApiResultKeys
 from vFense.result.agent_results import (
     AgentResults
 )
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
     ViewCodes, ViewFailureCodes, AgentCodes, AgentResultCodes,
     AgentFailureResultCodes

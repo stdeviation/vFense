@@ -12,7 +12,7 @@ from vFense.plugins.vuln.cve._db_model import CveKeys
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.cve.search._db import FetchCves
 
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 

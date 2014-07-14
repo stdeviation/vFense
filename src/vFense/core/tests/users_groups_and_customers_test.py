@@ -13,7 +13,7 @@ from vFense.core.view import View
 from vFense.core.view.manager import ViewManager
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     ViewCodes, GroupCodes, UserCodes
 )
 from vFense.result._constants import ApiResultKeys

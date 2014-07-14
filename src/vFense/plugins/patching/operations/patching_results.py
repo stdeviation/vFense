@@ -16,7 +16,7 @@ from vFense.core.operations.results import OperationResults
 from vFense.core.operations.agent_operations import \
     operation_for_agent_and_app_exist
 
-from vFense.result.status_codes import AgentOperationCodes, GenericCodes, \
+from vFense.core.status_codes import AgentOperationCodes, GenericCodes, \
     GenericFailureCodes, AgentFailureResultCodes, AgentResultCodes
 
 from vFense.plugins.patching._db_model import AppCollections

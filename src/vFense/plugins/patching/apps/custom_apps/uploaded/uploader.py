@@ -5,7 +5,7 @@ import shutil
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.db.client import db_create_close, r
 from vFense.result.error_messages import GenericResults
-from vFense.result.status_codes import PackageCodes
+from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.utils.common import date_parser, timestamp_verifier
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents

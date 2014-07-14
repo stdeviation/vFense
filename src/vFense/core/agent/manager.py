@@ -23,7 +23,7 @@ from vFense.core.tag._db import (
 )
 from vFense.core.view.views import validate_view_names
 from vFense.result._constants import ApiResultKeys
-from vFense.result.status_codes import (
+from vFense.core.status_codes import (
     DbCodes, GenericCodes, AgentResultCodes, GenericFailureCodes,
     AgentFailureResultCodes, AgentFailureCodes, AgentCodes
 )

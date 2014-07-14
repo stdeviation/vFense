@@ -13,7 +13,7 @@ from vFense.core.view._db_model import (
 from vFense.core.view._constants import ViewDefaults
 from vFense.result._constants import ApiResultKeys
 
-from vFense.result.status_codes import ViewFailureCodes, GenericCodes
+from vFense.core.status_codes import ViewFailureCodes, GenericCodes
 from pytz import all_timezones
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
