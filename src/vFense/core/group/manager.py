@@ -3,8 +3,10 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import time_it
 from vFense.result._constants import ApiResultKeys
 from vFense.core.status_codes import (
-    GroupCodes, GenericCodes, GenericFailureCodes,
-    GroupFailureCodes, DbCodes
+    GenericCodes, GenericFailureCodes,
+)
+from vFense.core.group.status_codes import (
+    GroupCodes, GroupFailureCodes
 )
 from vFense.core.group import Group
 from vFense.core.group._db import (

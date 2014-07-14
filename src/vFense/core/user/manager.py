@@ -34,10 +34,18 @@ from vFense.core.view.views import validate_view_names
 from vFense.utils.security import Crypto, check_password
 from vFense.core.decorators import time_it
 from vFense.core.status_codes import (
-    UserFailureCodes, UserCodes, GenericFailureCodes, GenericCodes,
-    DbCodes, ViewFailureCodes, GroupFailureCodes, GroupCodes,
-    ViewCodes
+    GenericFailureCodes, GenericCodes, DbCodes
 )
+from vFense.core.user.status_codes import (
+    UserFailureCodes, UserCodes,
+)
+from vFense.core.group.status_codes import (
+    GroupFailureCodes, GroupCodes,
+)
+from vFense.core.view.status_codes import (
+    ViewFailureCodes, ViewCodes
+)
+
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

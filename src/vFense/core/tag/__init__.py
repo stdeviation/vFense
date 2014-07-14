@@ -1,13 +1,11 @@
-from time import time
 from vFense.core.tag._db_model import TagKeys, TagMappedKeys
 from vFense.core.tag._constants import (
     TagDefaults
 )
-from vFense.core._db_constants import DbTime
 from vFense.core._constants import (
     CommonKeys
 )
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
 

@@ -18,6 +18,8 @@ from vFense.core.tag._db_model import (
 from vFense.result._constants import ApiResultKeys
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
+)
+from vFense.core.tag.status_codes import (
     TagFailureCodes, TagCodes
 )
 

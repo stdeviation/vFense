@@ -4,8 +4,8 @@ from vFense.core._constants import (
     RegexPattern, DefaultStringLength, CommonKeys
 )
 from vFense.core.user._constants import UserDefaults
-from vFense.result._constants import ApiResultKeys
-from vFense.core.status_codes import UserFailureCodes, GenericCodes
+from vFense.core.results import ApiResultKeys
+from vFense.core.user.status_codes import UserFailureCodes, UserCodes
 from vFense.utils.security import check_password
 
 
@@ -140,7 +140,7 @@ class User(object):
                         UserKeys.Enabled: self.enabled,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            UserCodes.InvalidValue
                         )
                     }
                 )
@@ -152,7 +152,7 @@ class User(object):
                         UserKeys.Global: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            UserCodes.InvalidValue
                         )
                     }
                 )

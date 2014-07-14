@@ -34,8 +34,13 @@ from vFense.core.decorators import time_it
 from vFense.result._constants import ApiResultKeys
 
 from vFense.core.status_codes import (
-    DbCodes, ViewCodes, GenericCodes, AgentCodes,
-    ViewFailureCodes, AgentFailureCodes
+    DbCodes, GenericCodes
+)
+from vFense.core.view.status_codes import (
+    ViewCodes, ViewFailureCodes
+)
+from vFense.core.agent.status_codes import (
+    AgentCodes, AgentFailureCodes
 )
 from vFense.utils.security import generate_token
 

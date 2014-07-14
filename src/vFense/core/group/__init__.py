@@ -1,9 +1,9 @@
 import re
 from vFense.core.group._constants import GroupDefaults
 from vFense.core.permissions._constants import Permissions
-from vFense.result._constants import ApiResultKeys
-from vFense.core.status_codes import (
-    GenericCodes, GroupFailureCodes
+from vFense.core.results import ApiResultKeys
+from vFense.core.group.status_codes import (
+    GroupCodes, GroupFailureCodes
 )
 from vFense.core._constants import (
     CommonKeys, DefaultStringLength, RegexPattern
@@ -138,7 +138,7 @@ class Group(object):
                         GroupKeys.Global: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            GroupCodes.InvalidValue
                         )
                     }
                 )
@@ -150,7 +150,7 @@ class Group(object):
                         GroupKeys.Permissions: self.permissions,
                         CommonKeys.REASON: 'Must be a list of permissions',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            GroupCodes.InvalidValue
                         )
                     }
                 )
@@ -165,7 +165,7 @@ class Group(object):
                             GroupKeys.Permissions: self.permissions,
                             CommonKeys.REASON: 'Invalid permissions',
                             ApiResultKeys.VFENSE_STATUS_CODE: (
-                                GenericCodes.InvalidValue
+                                GroupCodes.InvalidValue
                             )
                         }
                     )
@@ -177,7 +177,7 @@ class Group(object):
                         GroupKeys.Views: self.views,
                         CommonKeys.REASON: 'Must be a list of views',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            GroupCodes.InvalidValue
                         )
                     }
                 )
@@ -190,7 +190,7 @@ class Group(object):
             #                GroupKeys.Views: self.views,
             #                CommonKeys.REASON: 'Invalid views',
             #                ApiResultKeys.VFENSE_STATUS_CODE: (
-            #                    GenericCodes.InvalidValue
+            #                    GroupCodes.InvalidValue
             #                )
             #            }
             #        )
@@ -202,7 +202,7 @@ class Group(object):
                         GroupKeys.Users: self.users,
                         CommonKeys.REASON: 'Must be a list of usernames',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            GenericCodes.InvalidValue
+                            GroupCodes.InvalidValue
                         )
                     }
                 )

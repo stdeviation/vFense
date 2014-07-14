@@ -1,6 +1,12 @@
 from vFense.result._constants import ApiResultKeys
 from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes, ViewFailureCodes, AgentCodes
+    GenericCodes, GenericFailureCodes
+)
+from vFense.core.view.status_codes import (
+    ViewFailureCodes
+)
+from vFense.core.agent.status_codes import (
+    AgentCodes
 )
 
 class Results(object):
