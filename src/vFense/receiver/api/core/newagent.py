@@ -21,7 +21,7 @@ from vFense.core.agent.manager import AgentManager
 from vFense.core.queue.uris import get_result_uris
 from vFense.core.results import ApiResultKeys
 from vFense.result.error_messages import GenericResults
-from vFense.reciever.status_codes import AgentResultCodes
+from vFense.receiver.status_codes import AgentResultCodes
 from vFense.receiver.rvhandler import RvHandOff
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions

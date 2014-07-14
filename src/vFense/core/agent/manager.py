@@ -26,10 +26,10 @@ from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
 )
-from vFense.core.status_codes import (
+from vFense.core.agent.status_codes import (
     AgentFailureCodes, AgentCodes
 )
-from vFense.reciever.status_codes import (
+from vFense.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
 

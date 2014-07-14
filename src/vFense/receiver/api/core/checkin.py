@@ -6,7 +6,7 @@ from vFense.core.agent.manager import AgentManager
 from vFense.result.error_messages import (
     GenericResults, AgentResults
 )
-from vFense.result._constants import ApiResultKeys
+from vFense.core.results import ApiResultKeys
 from vFense.result.results import Results
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import agent_authenticated_request, results_message
