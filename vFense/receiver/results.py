@@ -6,7 +6,6 @@ from vFense.receiver.status_codes import (
 
 class AgentApiResultKeys(ApiResultKeys):
     OPERATIONS = 'operations'
-    OPERATION = 'operation'
     NEW_TOKEN_ID = 'new_token_id'
     AGENT_ID = 'agent_id'
     UPDATED_ID = 'updated_id'
@@ -302,16 +301,18 @@ class AgentResults(object):
 
     def something_broke(self, **kwargs):
         msg = kwargs.get(ApiResultKeys.MESSAGE, '')
-        data = kwargs.get(ApiResultKeys.DATA, [])
+        operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
+        data = kwargs.get(AgentApiResultKeys.DATA, [])
         status_code = AgentResultCodes.SomethingBroke
         return(
             {
-                ApiResultKeys.HTTP_STATUS_CODE: 500,
-                ApiResultKeys.VFENSE_STATUS_CODE: status_code,
-                ApiResultKeys.URI: self.uri,
-                ApiResultKeys.HTTP_METHOD: self.method,
-                ApiResultKeys.MESSAGE: msg,
-                ApiResultKeys.DATA: data,
+                AgentApiResultKeys.HTTP_STATUS_CODE: 500,
+                AgentApiResultKeys.VFENSE_STATUS_CODE: status_code,
+                AgentApiResultKeys.URI: self.uri,
+                AgentApiResultKeys.HTTP_METHOD: self.method,
+                AgentApiResultKeys.MESSAGE: msg,
+                AgentApiResultKeys.DATA: data,
+                AgentApiResultKeys.OPERATIONS: operations,
             }
         )
 

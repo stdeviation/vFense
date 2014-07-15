@@ -44,11 +44,8 @@ class AgentResultURIs(BaseHandler):
 
     @results_message
     def get_uris(self, agent_id):
-        operation = get_result_uris(agent_id, 'v1')
-        operation[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results = {AgentApiResultKeys.OPERATIONS: [operation]}
+        results = get_result_uris(agent_id, 'v1')
+        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
 class ResultURIs(BaseHandler):
@@ -76,11 +73,8 @@ class ResultURIs(BaseHandler):
 
     @results_message
     def get_uris(self):
-        operation = get_result_uris(version='v1')
-        operation[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results = {AgentApiResultKeys.OPERATIONS: [operation]}
+        results = get_result_uris(version='v1')
+        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
 class AgentResultURIsV2(AgentBaseHandler):
@@ -92,11 +86,8 @@ class AgentResultURIsV2(AgentBaseHandler):
 
     @agent_results_message
     def get_uris(self, agent_id):
-        operation = get_result_uris(agent_id, 'v2')
-        operation[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results = {AgentApiResultKeys.OPERATIONS: [operation]}
+        results = get_result_uris(agent_id, 'v2')
+        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
 class ResultURIsV2(AgentBaseHandler):
@@ -108,9 +99,6 @@ class ResultURIsV2(AgentBaseHandler):
 
     @agent_results_message
     def get_uris(self):
-        operation = get_result_uris(version='v2')
-        operation[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results = {AgentApiResultKeys.OPERATIONS: [operation]}
+        results = get_result_uris(version='v2')
+        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results

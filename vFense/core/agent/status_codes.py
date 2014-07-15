@@ -23,7 +23,6 @@ class AgentCodes(GenericCodes):
     ViewsRemovedFromAgent = 3020
     ViewsRemovedFromAgents = 3021
     Disabled = 3022
-    InformationRetrieved = 3023
 
 
 class AgentFailureCodes(GenericFailureCodes):
