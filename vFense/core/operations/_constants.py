@@ -200,7 +200,7 @@ class V2ListenerURIs():
     )
     AVAILABLE_AGENT_UPDATE = (
         AgentOperations.AVAILABLE_AGENT_UPDATE, 'apps/available_agent_update',
-        'PUT', False
+        'PUT', True
     )
     START_UP = (AgentOperations.START_UP, 'core/startup', 'PUT', True)
     CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
