@@ -228,28 +228,6 @@ def create_symlinks():
                 ],
             )
 
-    if os.path.exists(get_sheduler_location()):
-        subprocess.Popen(
-            [
-                'patch', '-N',
-                get_sheduler_location(),
-                os.path.join(VFENSE_CONF_PATH, 'patches/scheduler.patch')
-            ],
-        )
-    rethink_job_store = (
-        os.path.join(
-            '/'.join(get_sheduler_location().split('/')[:-1]),
-            'jobstores', 'rethinkdb_store.py'
-        )
-    )
-    if not os.path.exists(rethink_job_store):
-        shutil.copy(
-            os.path.join(
-                VFENSE_CONF_PATH, 'patches', 'rethinkdb_store.py'
-            ),
-            rethink_job_store
-        )
-
 
 def add_local_user():
     try:
