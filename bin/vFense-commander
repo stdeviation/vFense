@@ -947,7 +947,7 @@ Available operations you can perform on an agent.
         parser.usage = 'vFense-commander agents apps install <app_type> -h'
         install  = parser.add_argument_group('Install arguments')
         install.add_argument(
-            '--app_id', type=str, action='append',
+            '--app_ids', type=str, nargs='+',
                 help='''The id of the applications you are installing'''
         )
         install.add_argument(
@@ -977,15 +977,18 @@ Available operations you can perform on an agent.
         )
         args = parser.parse_args(sys.argv[6:])
         pay_load = vars(args)
+        print pay_load
+        print self.agent_apps_url
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
                 SESSION.put(
-                    self.agent_apps_url, params=pay_load, verify=False,
+                    self.agent_apps_url, data=json.dumps(pay_load), verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
             print data.content
+            print data
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
