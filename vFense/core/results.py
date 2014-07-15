@@ -347,3 +347,19 @@ class Results(object):
                 ApiResultKeys.DATA: data,
             }
         )
+
+    def incorrect_arguments(self, **kwargs):
+        msg = 'Incorrect arguments'
+        data = kwargs.get(ApiResultKeys.DATA, [])
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 200,
+                ApiResultKeys.VFENSE_STATUS_CODE: (
+                    GenericCodes.IncorrectArguments
+                ),
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: data,
+            }
+        )

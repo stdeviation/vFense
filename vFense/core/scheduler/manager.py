@@ -392,6 +392,7 @@ class JobManager(object):
                                 **job.to_dict_non_null()
                             )
                         )
+                        print job_status
 
                         msg = 'Job {0} added successfully'.format(job.name)
                         results[ApiResultKeys.GENERIC_STATUS_CODE] = (

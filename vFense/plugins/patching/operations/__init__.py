@@ -59,7 +59,7 @@ class Install(object):
         if not self.restart:
             self.restart = InstallDefaults.REBOOT
 
-        if not self.CPU_THROTTLE:
+        if not self.cpu_throttle:
             self.cpu_throttle= InstallDefaults.CPU_THROTTLE
 
         if not self.net_throttle:

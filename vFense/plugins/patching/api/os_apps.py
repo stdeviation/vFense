@@ -218,7 +218,6 @@ class AgentIdOsAppsHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.INSTALL)
     def put(self, agent_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
@@ -235,7 +234,7 @@ class AgentIdOsAppsHandler(BaseHandler):
             install = (
                 Install(
                     app_ids, [agent_id], user_name=active_user,
-                    active_view=active_view, restart=restart,
+                    view_name=active_view, restart=restart,
                     net_throttle=net_throttle, cpu_throttle=cpu_throttle
                 )
             )
@@ -271,7 +270,7 @@ class AgentIdOsAppsHandler(BaseHandler):
                 results = (
                     Results(
                         active_user, self.request.uri, self.request.method
-                    ).invalid_arguments(**data)
+                    ).incorrect_arguments(**data)
                 )
 
         except Exception as e:
@@ -294,6 +293,7 @@ class AgentIdOsAppsHandler(BaseHandler):
     @results_message
     @check_permissions(Permissions.INSTALL)
     def install(self, operation, install):
+        logger.info(install.to_dict())
         results = operation.install_os_apps(install)
         return results
 
@@ -301,11 +301,11 @@ class AgentIdOsAppsHandler(BaseHandler):
     @check_permissions(Permissions.INSTALL)
     def schedule_install(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
-        job_data = install.to_dict()
-        job = AgentAppsJobManager(sched, job_data[InstallKeys.ActiveView])
+        job = AgentAppsJobManager(sched, install.view_name)
         results = job.install_os_apps_once(
             install, run_date, job_name, time_zone
         )
+        print results
         return results
 
 

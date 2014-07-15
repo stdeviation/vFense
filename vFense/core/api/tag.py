@@ -356,7 +356,7 @@ class TagHandler(BaseHandler):
                 results = (
                     Results(
                         active_user, self.request.uri, self.request.method
-                    ).invalid_arguments(**data)
+                    ).incorrect_arguments(**data)
                 )
 
             self.set_status(results['http_status'])
@@ -441,7 +441,7 @@ class TagHandler(BaseHandler):
                 results = (
                     Results(
                         active_user, self.request.uri, self.request.method
-                    ).invalid_arguments(**data)
+                    ).incorrect_arguments(**data)
                 )
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
