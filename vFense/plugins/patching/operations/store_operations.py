@@ -73,7 +73,7 @@ class StorePatchingOperation(StoreAgentOperation):
             This will install a list of applications on n
             number of agents or tag id.
 
-        Kwargs:
+        Args:
             install (Install): An instance of install.
 
         Basic Usage:
@@ -118,51 +118,31 @@ class StorePatchingOperation(StoreAgentOperation):
 
         return results
 
-    def install_custom_apps(
-            self, app_ids, cpu_throttle=CPUThrottleValues.NORMAL,
-            net_throttle=0, restart=RebootValues.NONE,
-            agent_ids=None, tag_id=None
-        ):
+    def install_custom_apps(self, install):
         """Send the install_custom_apps operation to the agent,
             This will install a list of applications on n
             number of agents or tag id.
-        Args:
-            app_ids (list): List of the application ids,
-                that you want to install.
 
-        Kwargs:
-            cpu_throttle (str): Throttle how much cpu to use while installing
-                the applications.
-                default = normal
-            net_throttle (int): Throttle how much bandwidth is being used,
-                while the agent is downloading the applications.
-                default = 0 (unlimited)
-            restart (str): Choose if you want to restart the system after
-                the application is installed. Examples (none, needed, forced)
-                default = 'none' (do not reboot)
-            agent_ids (str): List of agent ids.
-                default = None
-            tag_id (str): 36 character UUID of the agent.
-                default = None
+        Args:
+            install (Install): An instance of install.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> from vFense.plugins.patching.operations import Install
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/custom'
-            >>> method = 'PUT'
             >>> app_ids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
             >>> reboot = 'needed'
             >>> cpu = 'high'
             >>> net = 100
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, view_name, uri, method)
-            >>> operation.install_custom_apps(
-                    app_ids, cpu_throttle=cpu, net_throttle=net,
-                    restart=reboot, agent_ids=agent_ids
-                )
-        """
+            >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
+            >>> operation = StorePatchingOperation(username, view_name)
+            >>> operation.install_custom_apps(install)
 
+        Returns:
+
+        """
         oper_type = AgentOperations.INSTALL_CUSTOM_APPS
 
         self.CurrentAppsCollection = AppCollections.CustomApps
@@ -170,57 +150,49 @@ class StorePatchingOperation(StoreAgentOperation):
         self.CurrentAppsPerAgentCollection = AppCollections.CustomAppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
-        return(
-            self.install_apps(
-                oper_type, app_ids,
-                cpu_throttle, net_throttle,
-                restart, agent_ids, tag_id
-            )
-        )
+        if isinstance(install, Install):
+            results = self.install_apps(install, oper_type)
 
-    def install_supported_apps(
-            self, app_ids, cpu_throttle=CPUThrottleValues.NORMAL,
-            net_throttle=0, restart=RebootValues.NONE,
-            agent_ids=None, tag_id=None
-        ):
+        else:
+            results = {}
+            msg = (
+                'Invalid instance {0}, please pass an instance of Install'
+                .format(type(install))
+            )
+            status_code = AgentOperationFailureCodes.FailedToCreateObject
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
+            results[ApiResultKeys.GENERATED_IDS] = []
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
+
+
+    def install_supported_apps(self, install):
         """Send the install_supported_apps operation to the agent,
             This will install a list of supported applications on n
             number of agents or tag id.
-        Args:
-            app_ids (list): List of the application ids,
-                that you want to install.
 
-        Kwargs:
-            cpu_throttle (str): Throttle how much cpu to use while installing
-                the applications.
-                default = normal
-            net_throttle (int): Throttle how much bandwidth is being used,
-                while the agent is downloading the applications.
-                default = 0 (unlimited)
-            restart (str): Choose if you want to restart the system after
-                the application is installed. Examples (none, needed, forced)
-                default = 'none' (do not reboot)
-            agent_ids (str): List of agent ids.
-                default = None
-            tag_id (str): 36 character UUID of the agent.
-                default = None
+        Args:
+            install (Install): An instance of install.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> from vFense.plugins.patching.operations import Install
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/supported'
-            >>> method = 'PUT'
             >>> app_ids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
             >>> reboot = 'needed'
             >>> cpu = 'high'
             >>> net = 100
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, view_name, uri, method)
-            >>> operation.install_supported_apps(
-                    app_ids, cpu_throttle=cpu, net_throttle=net,
-                    restart=reboot, agent_ids=agent_ids
-                )
+            >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
+            >>> operation = StorePatchingOperation(username, view_name)
+            >>> operation.install_supported_apps(install)
+
+        Returns:
+
         """
 
         oper_type = AgentOperations.INSTALL_SUPPORTED_APPS
@@ -230,57 +202,49 @@ class StorePatchingOperation(StoreAgentOperation):
         self.CurrentAppsPerAgentCollection = AppCollections.SupportedAppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
-        return(
-            self.install_apps(
-                oper_type, app_ids,
-                cpu_throttle, net_throttle,
-                restart, agent_ids, tag_id
-            )
-        )
+        if isinstance(install, Install):
+            results = self.install_apps(install, oper_type)
 
-    def install_agent_update(
-            self, app_ids, cpu_throttle=CPUThrottleValues.NORMAL,
-            net_throttle=0, restart=RebootValues.NONE,
-            agent_ids=None, tag_id=None
-        ):
+        else:
+            results = {}
+            msg = (
+                'Invalid instance {0}, please pass an instance of Install'
+                .format(type(install))
+            )
+            status_code = AgentOperationFailureCodes.FailedToCreateObject
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
+            results[ApiResultKeys.GENERATED_IDS] = []
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
+
+
+    def install_agent_update(self, install):
         """Send the install_agent_update operation to the agent,
             This will install the agent update on n
             number of agents or tag id.
-        Args:
-            app_ids (list): List of the application ids,
-                that you want to install.
 
-        Kwargs:
-            cpu_throttle (str): Throttle how much cpu to use while installing
-                the applications.
-                default = normal
-            net_throttle (int): Throttle how much bandwidth is being used,
-                while the agent is downloading the applications.
-                default = 0 (unlimited)
-            restart (str): Choose if you want to restart the system after
-                the application is installed. Examples (none, needed, forced)
-                default = 'none' (do not reboot)
-            agent_ids (str): List of agent ids.
-                default = None
-            tag_id (str): 36 character UUID of the agent.
-                default = None
+        Args:
+            install (Install): An instance of install.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> from vFense.plugins.patching.operations import Install
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
-            >>> method = 'PUT'
             >>> app_ids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
             >>> reboot = 'needed'
             >>> cpu = 'high'
             >>> net = 100
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, view_name, uri, method)
-            >>> operation.install_agent_update(
-                    app_ids, cpu_throttle=cpu, net_throttle=net,
-                    restart=reboot, agent_ids=agent_ids
-                )
+            >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
+            >>> operation = StorePatchingOperation(username, view_name)
+            >>> operation.install_agent_update(install)
+
+        Returns:
+
         """
 
         oper_type = AgentOperations.INSTALL_AGENT_UPDATE
@@ -290,59 +254,49 @@ class StorePatchingOperation(StoreAgentOperation):
         self.CurrentAppsPerAgentCollection = AppCollections.vFenseAppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
-        return self.install_apps(
-            oper_type,
-            app_ids,
-            cpu_throttle,
-            net_throttle,
-            restart,
-            agent_ids,
-            tag_id
-        )
+        if isinstance(install, Install):
+            results = self.install_apps(install, oper_type)
 
-    def uninstall_apps(
-            self, app_ids, cpu_throttle=CPUThrottleValues.NORMAL,
-            net_throttle=0, restart=RebootValues.NONE,
-            agent_ids=None, tag_id=None
-        ):
+        else:
+            results = {}
+            msg = (
+                'Invalid instance {0}, please pass an instance of Install'
+                .format(type(install))
+            )
+            status_code = AgentOperationFailureCodes.FailedToCreateObject
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
+            results[ApiResultKeys.GENERATED_IDS] = []
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
+
+
+    def uninstall_apps(self, install):
         """Send the uninstall_apps operation to the agent,
             This will uninstall the applications from n
             number of agents or tag id.
-        Args:
-            app_ids (list): List of the application ids,
-                that you want to install.
 
-        Kwargs:
-            cpu_throttle (str): Throttle how much cpu to use while installing
-                the applications.
-                default = normal
-            net_throttle (int): Throttle how much bandwidth is being used,
-                while the agent is downloading the applications.
-                default = 0 (unlimited)
-            restart (str): Choose if you want to restart the system after
-                the application is installed. Examples (none, needed, forced)
-                default = 'none' (do not reboot)
-            agent_ids (str): List of agent ids.
-                default = None
-            tag_id (str): 36 character UUID of the agent.
-                default = None
+        Args:
+            install (Install): An instance of install.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+            >>> from vFense.plugins.patching.operations import Install
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> uri = '/api/v1/agent/e9a8871a-5ae8-40fb-9316-b0918947f736/apps/agent'
-            >>> method = 'PUT'
             >>> app_ids = ['000bd2abd0f5197612dad031eb5d04abc082aba1b904b801c7b2d7925ac248a3']
             >>> reboot = 'needed'
             >>> cpu = 'high'
             >>> net = 100
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
-            >>> operation = StorePatchingOperation(username, view_name, uri, method)
-            >>> operation.uninstall_apps(
-                    app_ids, cpu_throttle=cpu, net_throttle=net,
-                    restart=reboot, agent_ids=agent_ids
-                )
+            >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
+            >>> operation = StorePatchingOperation(username, view_name)
+            >>> operation.uninstall_apps(install)
+
+        Returns:
+
         """
 
         oper_type = AgentOperations.UNINSTALL
@@ -352,13 +306,24 @@ class StorePatchingOperation(StoreAgentOperation):
         self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
-        return(
-            self.install_apps(
-                oper_type, app_ids,
-                cpu_throttle, net_throttle,
-                restart, agent_ids, tag_id
+        if isinstance(install, Install):
+            results = self.install_apps(install, oper_type)
+
+        else:
+            results = {}
+            msg = (
+                'Invalid instance {0}, please pass an instance of Install'
+                .format(type(install))
             )
-        )
+            status_code = AgentOperationFailureCodes.FailedToCreateObject
+            vfense_status_code = (
+                AgentOperationFailureCodes.FailedToCreateOperation
+            )
+            results[ApiResultKeys.GENERATED_IDS] = []
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
+            results[ApiResultKeys.MESSAGE] = msg
+
 
     def install_apps(self, install, oper_type):
         """This method creates the operation and stores it into the agent queue.
