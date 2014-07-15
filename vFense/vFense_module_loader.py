@@ -129,6 +129,7 @@ class CoreLoader():
             #v2 APIS
             #Operations for the New Core Plugin
             (r"/rvl/v2/core/newagent/?", NewAgentV2),
+            (r"/rvl/v2/core/validate_token/?", ValidateToken),
             (r"/rvl/v2/core/uris/response?", ResultURIsV2),
             (r"/rvl/v2/apps/available_agent_update/?", AgentUpdateHandlerV2),
             (r"/rvl/v2/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/core/startup/?", StartUpV2),

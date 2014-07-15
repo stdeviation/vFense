@@ -49,6 +49,7 @@ class AgentResultURIs(BaseHandler):
             AgentOperations.REFRESH_RESPONSE_URIS
         )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
+        results[AgentApiResultKeys.DATA] = []
         return results
 
 class ResultURIs(BaseHandler):
@@ -81,6 +82,7 @@ class ResultURIs(BaseHandler):
             AgentOperations.REFRESH_RESPONSE_URIS
         )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
+        results[AgentApiResultKeys.DATA] = []
         return results
 
 class AgentResultURIsV2(AgentBaseHandler):
@@ -97,6 +99,7 @@ class AgentResultURIsV2(AgentBaseHandler):
             AgentOperations.REFRESH_RESPONSE_URIS
         )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
+        results[AgentApiResultKeys.DATA] = []
         return results
 
 class ResultURIsV2(AgentBaseHandler):
@@ -113,4 +116,5 @@ class ResultURIsV2(AgentBaseHandler):
             AgentOperations.REFRESH_RESPONSE_URIS
         )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
+        results[AgentApiResultKeys.DATA] = []
         return results

@@ -98,7 +98,7 @@ class AgentResults(object):
         msg = 'New agent succeeded'
         status_code = AgentResultCodes.NewAgentSucceeded
         agent_id = kwargs.get(AgentApiResultKeys.AGENT_ID)
-        generated_ids = [agent_id]
+        generated_ids = kwargs.get(AgentApiResultKeys.AGENT_ID)
         operations = kwargs.get(AgentApiResultKeys.OPERATIONS, [])
         data = kwargs.get(AgentApiResultKeys.DATA)
         return(
