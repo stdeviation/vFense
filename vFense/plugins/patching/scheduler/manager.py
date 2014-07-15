@@ -1,7 +1,9 @@
 from vFense.core.operations._constants import AgentOperations
 from vFense.plugins.patching.operations import Install
-from vFense.plugins.patching.scheduler.jobs import install_os_apps_in_agents
+from vFense.plugins.patching.scheduler.jobs import (
+    agent_apps_operation, tag_apps_operation)
 from vFense.core.scheduler import Schedule
+from vFense.plugins.patching.operations._constants import InstallKeys
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
 )
@@ -12,8 +14,12 @@ from vFense.core.scheduler.status_codes import (
 from vFense.core.results import ApiResultKeys
 
 class AgentAppsJobManager(JobManager):
-    def install_os_apps_once(self, install, run_date, job_name,
-                             time_zone=None):
+    def __init__(self):
+        self.once_func = agent_apps_operation
+        self.cron_func = agent_apps_operation
+
+    def once(self, install, run_date, job_name, time_zone=None,
+             operation=AgentOperations.INSTALL_OS_APPS):
         """Install 1 or multiple applications to 1 or multiple agents.
         Args:
             install (Install): An instance of Install.
@@ -22,6 +28,8 @@ class AgentAppsJobManager(JobManager):
 
         Kwargs:
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            operation (str): The name of the operation.
+                example install_os_apps, uninstall
         """
         results = {}
         if isinstance(install, Install):
@@ -29,11 +37,11 @@ class AgentAppsJobManager(JobManager):
             if not invalid_fields:
                 install.fill_in_defaults()
                 job_kwargs = install.to_dict()
+                job_kwargs[InstallKeys.OPERATION] = operation
                 job = (
                     Schedule(
-                        job_name, install_os_apps_in_agents, job_kwargs,
-                        run_date=run_date,
-                        operation=AgentOperations.INSTALL_OS_APPS,
+                        job_name, self.once_func, job_kwargs,
+                        run_date=run_date, operation=operation,
                         time_zone=time_zone, trigger=ScheduleTriggers.DATE
                     )
                 )
@@ -68,11 +76,10 @@ class AgentAppsJobManager(JobManager):
 
         return results
 
-    def install_os_apps_for_agent_cron(self, install, job_name, start_date,
-                                       year=None, month=None, day=None,
-                                       day_of_week=None, hour=None,
-                                       minute=None, time_zone=None,
-                                       end_date=None):
+    def cron(self, install, job_name, start_date, year=None, month=None,
+             day=None, day_of_week=None, hour=None, minute=None,
+             time_zone=None, end_date=None,
+             operation=AgentOperations.INSTALL_OS_APPS):
         """Install 1 or multiple applications to 1 or multiple agents.
         Args:
             install (Install): An instance of Install.
@@ -89,6 +96,8 @@ class AgentAppsJobManager(JobManager):
             hour (int|str): hour (0-23)
             minute (int|str): minute (0-59)
             end_date (float): The unix time, aka epoch time
+            operation (str): The name of the operation.
+                example install_os_apps, uninstall
         """
 
         results = {}
@@ -97,13 +106,14 @@ class AgentAppsJobManager(JobManager):
             if not invalid_fields:
                 install.fill_in_defaults()
                 job_kwargs = install.to_dict()
+                job_kwargs[InstallKeys.OPERATION] = operation
                 job = (
                     Schedule(
-                        job_name, install_os_apps_in_agents, job_kwargs,
+                        job_name, self.cron_func, job_kwargs,
                         start_date,
-                        operation=AgentOperations.INSTALL_OS_APPS,
-                        time_zone=time_zone, trigger=ScheduleTriggers.CRON,
-                        year=year, hour=hour, day_of_week=day_of_week,
+                        operation=operation, time_zone=time_zone,
+                        trigger=ScheduleTriggers.CRON, year=year,
+                        hour=hour, day_of_week=day_of_week,
                         month=month, day=day, minute=minute, end_date=end_date
                     )
                 )
@@ -138,3 +148,9 @@ class AgentAppsJobManager(JobManager):
             results[ApiResultKeys.MESSAGE] = msg
 
         return results
+
+
+class TagAppsJobManager(AgentAppsJobManager):
+    def __init__(self):
+        self.once_func = tag_apps_operation
+        self.cron_func = tag_apps_operation

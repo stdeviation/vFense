@@ -316,51 +316,56 @@ class AgentIdOsAppsHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        method = self.request.method
         try:
             app_ids = self.arguments.get('app_ids')
-            epoch_time = self.arguments.get('run_date', None)
+            run_date = self.arguments.get('run_date', None)
             job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not job_name and app_ids:
-                operation = StorePatchingOperation(active_user, active_view)
+            time_zone = self.arguments.get('time_zone', None)
+            install = (
+                Install(
+                    app_ids, [agent_id], user_name=active_user,
+                    view_name=active_view, restart=restart,
+                    net_throttle=net_throttle, cpu_throttle=cpu_throttle
+                )
+            )
+            if not run_date and not job_name and app_ids:
+                operation = (
+                    StorePatchingOperation(active_user, active_view)
+                )
+                results = self.uninstall(operation, install)
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+            elif run_date and job_name and app_ids:
+                if not isinstance(run_date, float):
+                    run_date = float(run_date)
+
                 results = (
-                    operation.uninstall_apps(
-                        app_ids, cpu_throttle,
-                        net_throttle, restart,
-                        agentids=[agent_id]
+                    self.schedule_uninstall(
+                        install, run_date, job_name, time_zone
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and job_name and app_ids:
-                date_time = datetime.fromtimestamp(int(epoch_time))
-                sched = self.application.scheduler
-                job = (
-                    {
-                        'cpu_throttle': cpu_throttle,
-                        'net_throttle': net_throttle,
-                        'restart': restart,
-                        'pkg_type': 'system_apps',
-                        'app_ids': app_ids
-                    }
-                )
-                add_uninstall_job = (
-                    schedule_once(
-                        sched, active_view, active_user,
-                        [agent_id], operation='uninstall',
-                        name=job_name, date=date_time, uri=uri,
-                        method=method, job_extra=job
+            else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Invalid arguments passed for agent {0}'
+                        .format(agent_id)
                     )
+                }
+                results = (
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).incorrect_arguments(**data)
                 )
-                result = add_uninstall_job
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(result))
+
 
         except Exception as e:
             data = {
@@ -378,6 +383,24 @@ class AgentIdOsAppsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def uninstall(self, operation, install):
+        logger.info(install.to_dict())
+        results = operation.uninstall_apps(install)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def schedule_uninstall(self, install, run_date, job_name, time_zone):
+        sched = self.application.scheduler
+        job = AgentAppsJobManager(sched, install.view_name)
+        results = job.uninstall_os_apps_once(
+            install, run_date, job_name, time_zone
+        )
+        return results
+
 
 
 class TagIdOsAppsHandler(BaseHandler):
