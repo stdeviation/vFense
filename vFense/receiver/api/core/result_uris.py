@@ -45,6 +45,9 @@ class AgentResultURIs(BaseHandler):
     @results_message
     def get_uris(self, agent_id):
         results = get_result_uris(agent_id, 'v1')
+        results[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
@@ -74,6 +77,9 @@ class ResultURIs(BaseHandler):
     @results_message
     def get_uris(self):
         results = get_result_uris(version='v1')
+        results[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
@@ -87,6 +93,9 @@ class AgentResultURIsV2(AgentBaseHandler):
     @agent_results_message
     def get_uris(self, agent_id):
         results = get_result_uris(agent_id, 'v2')
+        results[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
 
@@ -100,5 +109,8 @@ class ResultURIsV2(AgentBaseHandler):
     @agent_results_message
     def get_uris(self):
         results = get_result_uris(version='v2')
+        results[AgentApiResultKeys.OPERATION] = (
+            AgentOperations.REFRESH_RESPONSE_URIS
+        )
         results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
         return results
