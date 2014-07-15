@@ -305,7 +305,6 @@ class AgentIdOsAppsHandler(BaseHandler):
         results = job.install_os_apps_once(
             install, run_date, job_name, time_zone
         )
-        print results
         return results
 
 

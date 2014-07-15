@@ -977,8 +977,6 @@ Available operations you can perform on an agent.
         )
         args = parser.parse_args(sys.argv[6:])
         pay_load = vars(args)
-        print pay_load
-        print self.agent_apps_url
         vfense = authenticate(self.username, self.password, self.url)
         if vfense.ok:
             data = (
@@ -987,8 +985,6 @@ Available operations you can perform on an agent.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            print data.content
-            print data
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
 
