@@ -6,7 +6,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
-    ApiArguments, AgentApiArguments, ApiValues, TagApiArguments
+    ApiArguments, AgentApiArguments, ApiValues, TagApiArguments,
+    ContentTypes, Outputs
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -46,6 +47,9 @@ from vFense.core.view.status_codes import (
     ViewCodes
 )
 
+from vFense.utils.output import tableify
+from vFense.utils.output import csvify
+
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -56,8 +60,25 @@ class AgentResultURIs(BaseHandler):
         active_user = self.get_current_user()
         try:
             results = get_result_uris(agent_id)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
+            self.set_status(results['http_status'])
+
+            if output == Outputs.CSV:
+                data = csvify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.CSV)
+                self.set_header(
+                    'Content-Disposition', 'attachement; filename=uris.csv'
+                )
+                self.write(data)
+
+            elif output == Outputs.TEXT:
+                data = tableify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.TEXT)
+                self.write(data)
+
+            else:
+                self.set_header('Content-Type', ContentTypes.JSON)
+                self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             data = {
@@ -85,6 +106,7 @@ class FetchValidEnvironments(BaseHandler):
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             data = { ApiResultKeys.DATA: get_environments(active_view)}
             results = (
                 Results(
@@ -92,8 +114,24 @@ class FetchValidEnvironments(BaseHandler):
                 ).information_retrieved(data, len(**data))
             )
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+
+            if output == Outputs.CSV:
+                data = csvify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.CSV)
+                self.set_header(
+                    'Content-Disposition',
+                    'attachement; filename=environments.csv'
+                )
+                self.write(data)
+
+            elif output == Outputs.TEXT:
+                data = tableify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.TEXT)
+                self.write(data)
+
+            else:
+                self.set_header('Content-Type', ContentTypes.JSON)
+                self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             data = {
@@ -122,6 +160,8 @@ class FetchSupportedOperatingSystems(BaseHandler):
         try:
             os_code = self.get_argument('os_code', None)
             os_string = self.get_argument('os_string', None)
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
+
             if not os_code and not os_string or os_code and not os_string:
                 os_data = get_supported_os_codes()
 
@@ -137,9 +177,26 @@ class FetchSupportedOperatingSystems(BaseHandler):
                     active_user, self.request.uri, self.request.method
                 ).information_retrieved(**data)
             )
+
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+
+            if output == Outputs.CSV:
+                data = csvify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.CSV)
+                self.set_header(
+                    'Content-Disposition',
+                    'attachement; filename=platforms.csv'
+                )
+                self.write(data)
+
+            elif output == Outputs.TEXT:
+                data = tableify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.TEXT)
+                self.write(data)
+
+            else:
+                self.set_header('Content-Type', ContentTypes.JSON)
+                self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             data = {
@@ -174,6 +231,7 @@ class AgentsHandler(BaseHandler):
             mac = self.get_argument('mac', None)
             sort = self.get_argument('sort', 'asc')
             sort_by = self.get_argument('sort_by', AgentKeys.ComputerName)
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             search = (
                 RetrieveAgents(active_view, count, offset, sort, sort_by)
@@ -215,8 +273,24 @@ class AgentsHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+
+            if output == Outputs.CSV:
+                data = csvify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.CSV)
+                self.set_header(
+                    'Content-Disposition',
+                    'attachement; filename=agents.csv'
+                )
+                self.write(data)
+
+            elif output == Outputs.TEXT:
+                data = tableify(results[ApiResultKeys.DATA])
+                self.set_header('Content-Type', ContentTypes.TEXT)
+                self.write(data)
+
+            else:
+                self.set_header('Content-Type', ContentTypes.JSON)
+                self.write(json.dumps(results, indent=4))
 
         except Exception as e:
             data = {
