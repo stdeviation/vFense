@@ -1049,6 +1049,11 @@ Available operations you can perform on an agent.
             '--vuln', dest='vuln', default=None, action='store_true',
             help='Only show applications with vulnerabilities.',
         )
+        search_options.add_argument(
+            '--output', dest='output', default='json', type=str,
+            help='The regex of the application name you are searching for.',
+            choices=['json', 'text', 'csv']
+        )
         args = parser.parse_args(sys.argv[7:])
         pay_load = vars(args)
         pay_load['status'] = status
@@ -1060,8 +1065,11 @@ Available operations you can perform on an agent.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            content = json.loads(data.content)
-            print json.dumps(content, indent=4)
+            if args.output == 'json':
+                content = json.loads(data.content)
+                print json.dumps(content, indent=4)
+            else:
+                print data.content
 
 #######################USER MANAGEMENT######################################
 

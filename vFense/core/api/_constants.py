@@ -39,9 +39,10 @@ class ApiArguments():
     FULL_NAME = 'full_name'
     EMAIL = 'email'
     FORCE_REMOVE = 'force_remove'
+    OUTPUT = 'output'
 
 
-class AgentApiArguments():
+class AgentApiArguments(ApiArguments):
     AGENT_IDS = 'agent_ids'
     AGENT_ID = 'agent_id'
     DISPLAY_NAME = 'display_name'
@@ -55,7 +56,7 @@ class AgentApiArguments():
     TOKEN = 'token'
 
 
-class TagApiArguments():
+class TagApiArguments(ApiArguments):
     TAG_ID = 'tag_id'
     TAG_IDS = 'tag_ids'
     TAG_NAME = 'name'
@@ -75,7 +76,7 @@ class ApiValues():
     NO = 'no'
 
 
-class ViewApiArguments():
+class ViewApiArguments(ApiArguments):
     DOWNLOAD_URL = 'download_url'
     NET_THROTTLE = 'net_throttle'
     CPU_THROTTLE = 'cpu_throttle'
@@ -88,7 +89,7 @@ class ViewApiArguments():
     TOKEN = 'token'
 
 
-class AgentOperationsApiArguments():
+class AgentOperationsApiArguments(ApiArguments):
     OPERATION_ID = 'operation_id'
     OPERATION = 'operation'
     TAG_ID = 'tag_id'
@@ -96,3 +97,22 @@ class AgentOperationsApiArguments():
     VIEW_NAME = 'view_name'
     ENVIRONMENT = 'environment'
 
+class Outputs():
+    JSON = 'json'
+    CSV = 'csv'
+    TEXT = 'text'
+
+    @staticmethod
+    def get_valid_outputs():
+        valid_plugins = (
+            map(
+                lambda x:
+                getattr(Outputs, x), dir(Outputs)[:-3]
+            )
+        )
+        return valid_plugins
+
+class ContentTypes():
+    JSON = 'application/json'
+    CSV = 'text/csv'
+    TEXT = 'text/plain'

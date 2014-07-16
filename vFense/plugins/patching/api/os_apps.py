@@ -1,9 +1,9 @@
+import logging
+import logging.config
 from datetime import datetime
 import simplejson as json
 
 from vFense.core.api.base import BaseHandler
-import logging
-import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 #from vFense.scheduler.jobManager import schedule_once
@@ -43,7 +43,9 @@ from vFense.core.decorators import (
 
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
-from vFense.core.api._constants import ApiArguments
+from vFense.core.api._constants import (
+    ApiArguments, Outputs, ContentTypes
+)
 from vFense.core._constants import DefaultQueryValues, SortValues
 from vFense.plugins.patching.api._constants import (
     AppApiArguments, AppFilterValues
@@ -51,6 +53,9 @@ from vFense.plugins.patching.api._constants import (
 from vFense.plugins.patching._constants import (
     AppStatuses, CommonSeverityKeys
 )
+
+from vFense.utils.output import tableify
+from vFense.utils.output import csvify
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -91,6 +96,7 @@ class AgentIdOsAppsHandler(BaseHandler):
         severity = self.get_argument(AppApiArguments.SEVERITY, None)
         vuln = self.get_argument(AppApiArguments.VULN, None)
         hidden = self.get_argument(AppApiArguments.HIDDEN, 'false')
+        output = self.get_argument(AppApiArguments.OUTPUT, 'json')
         if hidden == 'false':
             hidden = CommonKeys.NO
         else:
@@ -160,8 +166,24 @@ class AgentIdOsAppsHandler(BaseHandler):
             )
 
         self.set_status(results['http_status'])
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+
+        if output == Outputs.CSV:
+            data = csvify(results[ApiResultKeys.DATA])
+            self.set_header('Content-Type', ContentTypes.CSV)
+            self.set_header(
+                'Content-Disposition', 'attachement; filename=apps.csv'
+            )
+            self.write(data)
+
+        elif output == Outputs.TEXT:
+            data = tableify(results[ApiResultKeys.DATA])
+            self.set_header('Content-Type', ContentTypes.TEXT)
+            self.write(data)
+
+        else:
+            self.set_header('Content-Type', ContentTypes.JSON)
+            self.write(json.dumps(results, indent=4))
+
 
     @results_message
     def by_name(self, search, name):
@@ -302,7 +324,7 @@ class AgentIdOsAppsHandler(BaseHandler):
     def schedule_install(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, install.view_name)
-        results = job.install_os_apps_once(
+        results = job.once(
             install, run_date, job_name, time_zone
         )
         return results
@@ -396,7 +418,7 @@ class AgentIdOsAppsHandler(BaseHandler):
     def schedule_uninstall(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, install.view_name)
-        results = job.uninstall_os_apps_once(
+        results = job.once(
             install, run_date, job_name, time_zone
         )
         return results
