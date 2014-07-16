@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from ast import literal_eval
 from vFense.core.api._constants import ApiArguments
 
 try:
@@ -12,14 +11,20 @@ import tornado.gen
 import tornado.web
 import tornado.websocket
 import tornadoredis
-from vFense.db.client import *
-from vFense.core._constants import *
+from vFense.core._constants import CommonKeys
+from vFense.core.results import ApiResultKeys
+from vFense.core.api._constants import (
+    ContentTypes, Outputs
+)
 from vFense.core.permissions.permissions import authenticate_user
 
 from vFense.core.decorators import authenticated_request, \
     convert_json_to_arguments
 
 from tornado import ioloop
+
+from vFense.utils.output import tableify
+from vFense.utils.output import csvify
 
 LISTENERS = []
 
@@ -29,29 +34,25 @@ class BaseHandler(tornado.web.RequestHandler):
         #self.clear_all_cookies()
         return self.get_secure_cookie(CommonKeys.USER)
 
-class AgentBaseHandler(tornado.web.RequestHandler):
-
-    def get_token(self):
-        try:
-            auth_headers = (
-                literal_eval(self.request.headers.get('Authentication'))
+    def modified_output(self, results, content_type, file_name):
+        if content_type == Outputs.CSV:
+            data = csvify(results[ApiResultKeys.DATA])
+            self.set_header('Content-Type', ContentTypes.CSV)
+            self.set_header(
+                'Content-Disposition',
+                'attachement; filename={0}.csv'.format(file_name)
             )
-            token = auth_headers.get('token')
-            return token
+            self.write(data)
 
-        except Exception:
-            return None
+        elif content_type == Outputs.TEXT:
+            data = tableify(results[ApiResultKeys.DATA])
+            self.set_header('Content-Type', ContentTypes.TEXT)
+            self.write(data)
 
-    def get_agent_id(self):
-        try:
-            auth_headers = (
-                literal_eval(self.request.headers.get('Authentication'))
-            )
-            agent_id = auth_headers.get('agent_id')
-            return agent_id
+        else:
+            self.set_header('Content-Type', ContentTypes.JSON)
+            self.write(json.dumps(results, indent=4))
 
-        except Exception:
-            return None
 
 class RootHandler(BaseHandler):
     @authenticated_request

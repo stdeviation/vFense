@@ -45,10 +45,10 @@ class GroupHandler(BaseHandler):
         active_user = self.get_current_user()
         is_global = UserManager(active_user).get_attribute(UserKeys.Global)
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             results = self.get_group(group_id, is_global)
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'group')
 
         except Exception as e:
             data = {
@@ -247,6 +247,7 @@ class GroupsHandler(BaseHandler):
         sort = self.get_argument('sort', 'asc')
         sort_by = self.get_argument('sort_by', GroupKeys.GroupName)
         regex = self.get_argument('query', None)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         try:
             granted, status_code = (
                 verify_permission_for_user(
@@ -305,8 +306,7 @@ class GroupsHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'groups')
 
 
         except Exception as e:

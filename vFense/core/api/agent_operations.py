@@ -55,6 +55,7 @@ class GetTransactionsHandler(BaseHandler):
             operation = (
                 self.get_argument(AgentOperationsApiArguments.OPERATION, None)
             )
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             search = (
                 AgentOperationRetriever(
@@ -69,8 +70,7 @@ class GetTransactionsHandler(BaseHandler):
                 results = self.get_all_operations(search)
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'operations')
 
         except Exception as e:
             data = {
@@ -128,6 +128,7 @@ class AgentOperationsHandler(BaseHandler):
                     AgentOperationKey.CreatedTime
                 )
             )
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             search = (
                 AgentOperationRetriever(
@@ -138,8 +139,7 @@ class AgentOperationsHandler(BaseHandler):
             results = self.get_agent_operations(search, agent_id)
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'operations')
 
         except Exception as e:
             data = {
@@ -200,12 +200,12 @@ class TagOperationsHandler(BaseHandler):
                     active_view, count, offset, sort, sort_by,
                 )
             )
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             results = self.get_tag_operations(search, tag_id)
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'operations')
 
         except Exception as e:
             data = {
@@ -259,6 +259,7 @@ class OperationHandler(BaseHandler):
                     AgentOperationKey.CreatedTime
                 )
             )
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             search = (
                 AgentOperationRetriever(
@@ -272,9 +273,9 @@ class OperationHandler(BaseHandler):
                     results = self.get_install_operation_by_id(search, operation_id)
                 else:
                     results = self.get_operation_by_id(search, operation_id)
+
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'operations')
 
         except Exception as e:
             data = {

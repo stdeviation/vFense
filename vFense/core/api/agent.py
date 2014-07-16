@@ -7,7 +7,6 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
     ApiArguments, AgentApiArguments, ApiValues, TagApiArguments,
-    ContentTypes, Outputs
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -47,9 +46,6 @@ from vFense.core.view.status_codes import (
     ViewCodes
 )
 
-from vFense.utils.output import tableify
-from vFense.utils.output import csvify
-
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -62,23 +58,7 @@ class AgentResultURIs(BaseHandler):
             results = get_result_uris(agent_id)
             output = self.get_argument(ApiArguments.OUTPUT, 'json')
             self.set_status(results['http_status'])
-
-            if output == Outputs.CSV:
-                data = csvify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.CSV)
-                self.set_header(
-                    'Content-Disposition', 'attachement; filename=uris.csv'
-                )
-                self.write(data)
-
-            elif output == Outputs.TEXT:
-                data = tableify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.TEXT)
-                self.write(data)
-
-            else:
-                self.set_header('Content-Type', ContentTypes.JSON)
-                self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'uris')
 
         except Exception as e:
             data = {
@@ -114,24 +94,7 @@ class FetchValidEnvironments(BaseHandler):
                 ).information_retrieved(data, len(**data))
             )
             self.set_status(results['http_status'])
-
-            if output == Outputs.CSV:
-                data = csvify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.CSV)
-                self.set_header(
-                    'Content-Disposition',
-                    'attachement; filename=environments.csv'
-                )
-                self.write(data)
-
-            elif output == Outputs.TEXT:
-                data = tableify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.TEXT)
-                self.write(data)
-
-            else:
-                self.set_header('Content-Type', ContentTypes.JSON)
-                self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'environments')
 
         except Exception as e:
             data = {
@@ -179,24 +142,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
             )
 
             self.set_status(results['http_status'])
-
-            if output == Outputs.CSV:
-                data = csvify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.CSV)
-                self.set_header(
-                    'Content-Disposition',
-                    'attachement; filename=platforms.csv'
-                )
-                self.write(data)
-
-            elif output == Outputs.TEXT:
-                data = tableify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.TEXT)
-                self.write(data)
-
-            else:
-                self.set_header('Content-Type', ContentTypes.JSON)
-                self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'platforms')
 
         except Exception as e:
             data = {
@@ -273,24 +219,7 @@ class AgentsHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-
-            if output == Outputs.CSV:
-                data = csvify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.CSV)
-                self.set_header(
-                    'Content-Disposition',
-                    'attachement; filename=agents.csv'
-                )
-                self.write(data)
-
-            elif output == Outputs.TEXT:
-                data = tableify(results[ApiResultKeys.DATA])
-                self.set_header('Content-Type', ContentTypes.TEXT)
-                self.write(data)
-
-            else:
-                self.set_header('Content-Type', ContentTypes.JSON)
-                self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'agents')
 
         except Exception as e:
             data = {
@@ -665,12 +594,12 @@ class AgentHandler(BaseHandler):
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             search = (
                 RetrieveAgents(active_view)
             )
             results = self.get_agent_by_id(search, agent_id)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'agent')
 
         except Exception as e:
             data = {
@@ -957,6 +886,7 @@ class AgentTagHandler(BaseHandler):
         )
         try:
             name = self.get_argument(ApiArguments.QUERY, None)
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             search = (
                 RetrieveAgents(active_view)
             )
@@ -964,8 +894,8 @@ class AgentTagHandler(BaseHandler):
                 results = self.search_tags_by_name(search, name)
             else:
                 results = self.get_tags_by_agent_id(search, agent_id)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+
+            self.modified_output(results, output, 'agent')
 
         except Exception as e:
             data = {
