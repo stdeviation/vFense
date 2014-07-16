@@ -9,7 +9,6 @@ var/tmp
 .idea/
 *.adb
 *.last_uptime
-*.log
 *.oqd
 *.rqd
 *.xml
