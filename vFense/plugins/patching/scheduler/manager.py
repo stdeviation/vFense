@@ -14,7 +14,7 @@ from vFense.core.scheduler.status_codes import (
 from vFense.core.results import ApiResultKeys
 
 class AgentAppsJobManager(JobManager):
-    def __init__(self):
+    def _set_funcs(self):
         self.once_func = agent_apps_operation
         self.cron_func = agent_apps_operation
 
@@ -32,6 +32,7 @@ class AgentAppsJobManager(JobManager):
                 example install_os_apps, uninstall
         """
         results = {}
+        self._set_funcs()
         if isinstance(install, Install):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
@@ -99,7 +100,7 @@ class AgentAppsJobManager(JobManager):
             operation (str): The name of the operation.
                 example install_os_apps, uninstall
         """
-
+        self._set_funcs()
         results = {}
         if isinstance(install, Install):
             invalid_fields = install.get_invalid_fields()
@@ -151,6 +152,6 @@ class AgentAppsJobManager(JobManager):
 
 
 class TagAppsJobManager(AgentAppsJobManager):
-    def __init__(self):
+    def _set_funcs(self):
         self.once_func = tag_apps_operation
         self.cron_func = tag_apps_operation
