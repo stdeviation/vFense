@@ -262,30 +262,53 @@ class AppIdOsAppsHandler(AppsBaseHandler):
                 update_app_data_by_app_id(
                     app_id, sev_data
                 )
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Severity updated for app id: {0}'.format(app_id)
+                    ),
+                    ApiResultKeys.DATA: [sev_data],
+                    ApiResultKeys.UPDATED_IDS: app_id
+                }
                 results = (
                     Results(
                         active_user, uri, method
-                    ).object_updated(app_id, 'app severity', [sev_data])
+                    ).object_updated(**data)
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
             else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Severity failed to update for app id: {0}'
+                        .format(app_id)
+                    ),
+                    ApiResultKeys.DATA: [sev_data],
+                    ApiResultKeys.UNCHANGED_IDS: app_id
+                }
                 results = (
-                    PackageResults(
+                    Results(
                         active_user, uri, method
-                    ).invalid_severity(severity)
+                    ).objects_failed_to_update(severity)
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
         except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Severity failed to update for app id {0}, error: {1}'
+                    .format(app_id, e)
+                ),
+                ApiResultKeys.DATA: [sev_data],
+                ApiResultKeys.UNCHANGED_IDS: app_id
+            }
             results = (
                 Results(
                     active_user, uri, method
-                ).something_broke(app_id, 'update_severity', e)
+                ).something_broke(**data)
             )
             logger.exception(e)
             self.set_status(results['http_status'])

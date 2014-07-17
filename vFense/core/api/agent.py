@@ -99,7 +99,7 @@ class FetchValidEnvironments(BaseHandler):
         except Exception as e:
             data = {
                 ApiResultKeys.MESSAGE: (
-                    'Retrieving enviironment broke: {0}'.format(e)
+                    'Retrieving environment broke: {0}'.format(e)
                 )
             }
             results = (
