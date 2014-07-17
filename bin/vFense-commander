@@ -673,15 +673,28 @@ Available operations you can perform on an agent.
 
     def get_agent(self):
         vfense = authenticate(self.username, self.password, self.url)
+        parser = argparse.ArgumentParser(
+            description='Get information for agent {0}'.format(self.agent_id)
+        )
+        parser.add_argument(
+            '--output', dest='output', default='json', type=str,
+            help='How you want to output the data, default=json',
+            choices=['json', 'text', 'csv']
+        )
+        args = parser.parse_args(sys.argv[4:])
+        pay_load = vars(args)
         if vfense.ok:
             data = (
                 SESSION.get(
-                    self.agent_url, verify=False,
+                    self.agent_url, params=pay_load, verify=False,
                     headers=HEADERS, cookies=JAR
                 )
             )
-            content = json.loads(data.content)
-            print json.dumps(content, indent=4)
+            if args.output == 'json':
+                content = json.loads(data.content)
+                print json.dumps(content, indent=4)
+            else:
+                print data.content
 
     def edit_agent(self):
         msg = 'Edit the attributes of this agent {0}'.format(self.agent_id)
@@ -890,6 +903,11 @@ Available operations you can perform on an agent.
             help='''The value you are filtering by. This option is only used
             with the fkey option'''
         )
+        agent_search.add_argument(
+            '--output', dest='output', default='json', type=str,
+            help='How you want to output the data, default=json',
+            choices=['json', 'text', 'csv']
+        )
         args = parser.parse_args(sys.argv[3:])
         pay_load = vars(args)
         vfense = authenticate(self.username, self.password, self.url)
@@ -900,8 +918,11 @@ Available operations you can perform on an agent.
                     headers=HEADERS, cookies=JAR
                 )
             )
-            content = json.loads(data.content)
-            print json.dumps(content, indent=4)
+            if args.output == 'json':
+                content = json.loads(data.content)
+                print json.dumps(content, indent=4)
+            else:
+                print data.content
 
     def agent_apps(self):
         parser = argparse.ArgumentParser(
@@ -1051,7 +1072,7 @@ Available operations you can perform on an agent.
         )
         search_options.add_argument(
             '--output', dest='output', default='json', type=str,
-            help='The regex of the application name you are searching for.',
+            help='How you want to output the data, default=json',
             choices=['json', 'text', 'csv']
         )
         args = parser.parse_args(sys.argv[7:])
