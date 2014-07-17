@@ -46,18 +46,16 @@ from vFense.core.decorators import (
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.api._constants import (
-    ApiArguments, Outputs, ContentTypes
+    ApiArguments
 )
 from vFense.core._constants import DefaultQueryValues, SortValues
+from vFense.core.operations._constants import AgentOperations
 from vFense.plugins.patching.api._constants import (
     AppApiArguments, AppFilterValues
 )
 from vFense.plugins.patching._constants import (
     AppStatuses, CommonSeverityKeys
 )
-
-from vFense.utils.output import tableify
-from vFense.utils.output import csvify
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -310,8 +308,9 @@ class AgentIdOsAppsHandler(BaseHandler):
     def schedule_install(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.INSTALL_OS_APPS
         results = job.once(
-            install, run_date, job_name, time_zone
+            install, run_date, job_name, time_zone, oper
         )
         return results
 
@@ -404,8 +403,9 @@ class AgentIdOsAppsHandler(BaseHandler):
     def schedule_uninstall(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.UNINSTALL
         results = job.once(
-            install, run_date, job_name, time_zone
+            install, run_date, job_name, time_zone, oper
         )
         return results
 
@@ -657,8 +657,9 @@ class TagIdOsAppsHandler(BaseHandler):
     def schedule_install(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = TagAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.INSTALL_OS_APPS
         results = job.once(
-            install, run_date, job_name, time_zone
+            install, run_date, job_name, time_zone, oper
         )
         return results
 
@@ -745,8 +746,9 @@ class TagIdOsAppsHandler(BaseHandler):
     def schedule_uninstall(self, install, run_date, job_name, time_zone):
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.UNINSTALL
         results = job.once(
-            install, run_date, job_name, time_zone
+            install, run_date, job_name, time_zone, oper
         )
         return results
 
@@ -832,51 +834,54 @@ class AppIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('run_date', None)
+            run_date = self.arguments.get('run_date', None)
             job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not job_name and agent_ids:
-                operation = (
-                    StorePatchingOperation(
-                        active_user, active_view
-                    )
+            time_zone = self.arguments.get('time_zone', None)
+            install = (
+                Install(
+                    [app_id], agent_ids, user_name=active_user,
+                    view_name=active_view, restart=restart,
+                    net_throttle=net_throttle, cpu_throttle=cpu_throttle
                 )
+            )
+            if not run_date and not job_name and app_id:
+                operation = (
+                    StorePatchingOperation(active_user, active_view)
+                )
+                results = self.install(operation, install)
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+            elif run_date and job_name and app_id:
+                if not isinstance(run_date, float):
+                    run_date = float(run_date)
+
                 results = (
-                    operation.install_os_apps(
-                        [app_id], cpu_throttle,
-                        net_throttle, restart,
-                        agentids=agent_ids
+                    self.schedule_install(
+                        install, run_date, job_name, time_zone
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and job_name and agent_ids:
-                date_time = datetime.fromtimestamp(int(epoch_time))
-                sched = self.application.scheduler
-                job = (
-                    {
-                        'cpu_throttle': cpu_throttle,
-                        'net_throttle': net_throttle,
-                        'restart': restart,
-                        'pkg_type': 'system_apps',
-                        'app_ids': [app_id]
-                    }
-                )
-                add_install_job = (
-                    schedule_once(
-                        sched, active_view, active_user,
-                        agent_ids=[agent_ids], operation='install',
-                        name=job_name, date=date_time, uri=uri,
-                        method=method, job_extra=job
+            else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Invalid arguments passed for app {0}'
+                        .format(app_id)
                     )
+                }
+                results = (
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).incorrect_arguments(**data)
                 )
-                result = add_install_job
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(result))
+
 
         except Exception as e:
             results = (
@@ -888,6 +893,25 @@ class AppIdOsAppsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def install(self, operation, install):
+        logger.info(install.to_dict())
+        results = operation.install_os_apps(install)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def schedule_install(self, install, run_date, job_name, time_zone):
+        sched = self.application.scheduler
+        job = TagAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.INSTALL_OS_APPS
+        results = job.once(
+            install, run_date, job_name, time_zone, oper
+        )
+        return results
 
     @authenticated_request
     @convert_json_to_arguments
@@ -901,49 +925,54 @@ class AppIdOsAppsHandler(BaseHandler):
         method = self.request.method
         try:
             agent_ids = self.arguments.get('agent_ids')
-            epoch_time = self.arguments.get('run_date', None)
+            run_date = self.arguments.get('run_date', None)
             job_name = self.arguments.get('job_name', None)
             restart = self.arguments.get('restart', 'none')
             cpu_throttle = self.arguments.get('cpu_throttle', 'normal')
             net_throttle = self.arguments.get('net_throttle', 0)
-            if not epoch_time and not job_name and app_id:
-                operation = (
-                    StorePatchingOperation(
-                        active_user, active_view
-                    )
+            time_zone = self.arguments.get('time_zone', None)
+            install = (
+                Install(
+                    [app_id], agent_ids, user_name=active_user,
+                    view_name=active_view, restart=restart,
+                    net_throttle=net_throttle, cpu_throttle=cpu_throttle
                 )
+            )
+            if not run_date and not job_name and app_id:
+                operation = (
+                    StorePatchingOperation(active_user, active_view)
+                )
+                results = self.install(operation, install)
+                self.set_status(results['http_status'])
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results, indent=4))
+
+            elif run_date and job_name and app_id:
+                if not isinstance(run_date, float):
+                    run_date = float(run_date)
+
                 results = (
-                    operation.uninstall_apps(
-                        [app_id], cpu_throttle,
-                        net_throttle, restart,
-                        agentids=agent_ids
+                    self.schedule_install(
+                        install, run_date, job_name, time_zone
                     )
                 )
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
 
-            elif epoch_time and job_name and agent_ids:
-                date_time = datetime.fromtimestamp(int(epoch_time))
-                sched = self.application.scheduler
-                job = (
-                    {
-                        'restart': restart,
-                        'pkg_type': 'system_apps',
-                        'app_ids': [app_id]
-                    }
-                )
-                add_uninstall_job = (
-                    schedule_once(
-                        sched, active_view, active_user,
-                        agent_ids=[agent_ids], operation='uninstall',
-                        name=job_name, date=date_time, uri=uri,
-                        method=method, job_extra=job
+            else:
+                data = {
+                    ApiResultKeys.MESSAGE: (
+                        'Invalid arguments passed for app {0}'
+                        .format(app_id)
                     )
+                }
+                results = (
+                    Results(
+                        active_user, self.request.uri, self.request.method
+                    ).incorrect_arguments(**data)
                 )
-                result = add_uninstall_job
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(result))
+
 
         except Exception as e:
             results = (
@@ -955,6 +984,25 @@ class AppIdOsAppsHandler(BaseHandler):
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
+
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def uninstall(self, operation, install):
+        logger.info(install.to_dict())
+        results = operation.uninstall_apps(install)
+        return results
+
+    @results_message
+    @check_permissions(Permissions.INSTALL)
+    def schedule_uninstall(self, install, run_date, job_name, time_zone):
+        sched = self.application.scheduler
+        job = AgentAppsJobManager(sched, install.view_name)
+        oper = AgentOperations.UNINSTALL
+        results = job.once(
+            install, run_date, job_name, time_zone, oper
+        )
+        return results
 
 
 class GetAgentsByAppIdHandler(BaseHandler):
