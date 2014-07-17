@@ -48,10 +48,10 @@ class ViewHandler(BaseHandler):
         is_global = user.get_attribute(UserKeys.Global)
         current_view = user.get_attribute(UserKeys.CurrentView)
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             results = self.get_view(view_name, is_global, current_view)
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'view')
 
         except Exception as e:
             data = {
@@ -341,6 +341,7 @@ class ViewsHandler(BaseHandler):
         offset = int(self.get_argument('offset', 0))
         sort = self.get_argument('sort', 'asc')
         sort_by = self.get_argument('sort_by', ViewKeys.ViewName)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         fetch_views = (
             RetrieveViews(
                 parent_view, count, offset, sort, sort_by, is_global
@@ -384,8 +385,7 @@ class ViewsHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'views')
 
         except Exception as e:
             data = {

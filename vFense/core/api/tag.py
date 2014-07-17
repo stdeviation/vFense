@@ -72,6 +72,8 @@ class TagsHandler(BaseHandler):
             environment = (
                 self.get_argument(TagApiArguments.ENVIRONMENT, None)
             )
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
+
             search = (
                 RetrieveTags(active_view, count, offset, sort, sort_by)
             )
@@ -92,8 +94,7 @@ class TagsHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'tags')
 
         except Exception as e:
             data = {
@@ -291,11 +292,11 @@ class TagHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveTags(active_view)
         results = self.get_tag(search, tag_id)
         self.set_status(results['http_status'])
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'tag')
 
     @results_message
     @check_permissions(Permissions.READ)

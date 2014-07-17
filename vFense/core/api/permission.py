@@ -4,6 +4,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
+from vFense.core.api._constants import ApiArguments
 from vFense.core.decorators import authenticated_request
 
 from vFense.core.permissions._constants import Permissions
@@ -21,6 +22,7 @@ class RetrieveValidPermissionsHandler(BaseHandler):
         count = 0
         permissions = []
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             permissions = Permissions.get_valid_permissions()
             count = len(permissions)
             data = {
@@ -33,8 +35,7 @@ class RetrieveValidPermissionsHandler(BaseHandler):
                 ).information_retrieved(**data)
             )
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'uris')
 
         except Exception as e:
             data = {

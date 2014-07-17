@@ -42,6 +42,7 @@ class UserHandler(BaseHandler):
         active_user = self.get_current_user()
         is_global = UserManager(active_user).get_attribute(UserKeys.Global)
         try:
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             granted, status_code = (
                 verify_permission_for_user(
                     active_user, Permissions.ADMINISTRATOR
@@ -63,8 +64,7 @@ class UserHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'user')
 
         except Exception as e:
             data = {
@@ -378,6 +378,7 @@ class UsersHandler(BaseHandler):
             sort = self.get_argument('sort', 'asc')
             sort_by = self.get_argument('sort_by', UserKeys.UserName)
             regex = self.get_argument('regex', None)
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             granted, status_code = (
                 verify_permission_for_user(
                     active_user, Permissions.ADMINISTRATOR
@@ -436,8 +437,7 @@ class UsersHandler(BaseHandler):
                 )
 
             self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.modified_output(results, output, 'users')
 
         except Exception as e:
             data = {

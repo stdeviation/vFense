@@ -42,10 +42,10 @@ class TimeZonesHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self):
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         results = self.get_timezones()
         self.set_header('Content-Type', 'application/json')
-        self.set_status(results['http_status'])
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'timezones')
 
     @results_message
     def get_timezones(self):
@@ -67,12 +67,11 @@ class JobHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveJobs(active_view)
         results = self.get_job_by_id(search, job_id)
-        self.set_header('Content-Type', 'application/json')
         self.set_status(results['http_status'])
-        self.write(json.dumps(results, indent=4))
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'job')
 
     @results_message
     def get_job_by_id(self, search, job_id):
@@ -95,6 +94,7 @@ class JobsHandler(BaseHandler):
         timezone = self.get_argument('timezone', None)
         sort = self.get_argument('sort', 'desc')
         sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
             RetrieveJobs(active_view, count, offset, sort, sort_by)
@@ -132,8 +132,7 @@ class JobsHandler(BaseHandler):
             )
 
         self.set_status(results['http_status'])
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'jobs')
 
     @results_message
     def get_all_jobs(self, search):
@@ -194,6 +193,7 @@ class AgentJobsHandler(BaseHandler):
         timezone = self.get_argument('timezone', None)
         sort = self.get_argument('sort', 'desc')
         sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
             RetrieveJobs(agent_id, count, offset, sort, sort_by)
@@ -231,8 +231,7 @@ class AgentJobsHandler(BaseHandler):
             )
 
         self.set_status(results['http_status'])
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'jobs')
 
     @results_message
     def get_all_jobs(self, search):
@@ -292,6 +291,7 @@ class TagJobsHandler(BaseHandler):
         timezone = self.get_argument('timezone', None)
         sort = self.get_argument('sort', 'desc')
         sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
             RetrieveJobs(tag_id, count, offset, sort, sort_by)
@@ -329,8 +329,7 @@ class TagJobsHandler(BaseHandler):
             )
 
         self.set_status(results['http_status'])
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.modified_output(results, output, 'jobs')
 
     @results_message
     def get_all_jobs(self, search):
