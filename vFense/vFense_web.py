@@ -30,9 +30,7 @@ from vFense.core.api.agent import *
 from vFense.plugins.patching.api.stats_api import *
 #from vFense.plugins.patching.api.notification_handler import *
 from vFense.plugins.patching.api.os_apps import *
-from vFense.plugins.patching.api.agent_apps import *
 from vFense.plugins.patching.api.custom_apps import *
-from vFense.plugins.patching.api.supported_apps import *
 #from vFense.plugins.mightymouse.api.relay_servers import *
 ##Vulnerability APIs
 from vFense.plugins.vuln.api.vulnerability import *
