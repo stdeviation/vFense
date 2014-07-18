@@ -17,13 +17,28 @@ from vFense.plugins.patching._constants import (
 )
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.results import Results, ApiResultKeys
-from vFense.plugins.patching._db_model import AppsKey
+from vFense.plugins.patching._db_model import AppsKey, AppCollections
+from vFense.plugins.patching.api._constants import vFenseAppTypes
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.plugins.patching.scheduler.manager import (
     AgentAppsJobManager, TagAppsJobManager
 )
+from vFense.plugins.patching.search.search_by_agentid import (
+    RetrieveAppsByAgentId, RetrieveCustomAppsByAgentId,
+    RetrieveSupportedAppsByAgentId, RetrieveAgentAppsByAgentId
+)
+
+from vFense.plugins.patching.search.search_by_tagid import (
+    RetrieveAppsByTagId, RetrieveCustomAppsByTagId,
+    RetrieveSupportedAppsByTagId, RetrieveAgentAppsByTagId
+)
+from vFense.plugins.patching.search.search import (
+    RetrieveApps, RetrieveCustomApps, RetrieveSupportedApps,
+    RetrieveAgentApps
+)
+from vFense.plugins.patching.patching import toggle_hidden_status
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -264,6 +279,150 @@ class AppsBaseHandler(BaseHandler):
                 Results(
                     active_user, self.request.uri, self.request.method
                 ).incorrect_arguments(**data)
+            )
+
+        return results
+
+    def set_search_for_agent(self, oper, agent_id):
+        if oper == AgentOperations.INSTALL_OS_APPS:
+            search = (
+                RetrieveAppsByAgentId(
+                    agent_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
+            search = (
+                RetrieveCustomAppsByAgentId(
+                    agent_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
+            search = (
+                RetrieveSupportedAppsByAgentId(
+                    agent_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
+            search = (
+                RetrieveAgentAppsByAgentId(
+                    agent_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        return search
+
+    def set_search_for_tag(self, oper, tag_id):
+        if oper == AgentOperations.INSTALL_OS_APPS:
+            search = (
+                RetrieveAppsByTagId(
+                    tag_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
+            search = (
+                RetrieveCustomAppsByTagId(
+                    tag_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
+            search = (
+                RetrieveSupportedAppsByTagId(
+                    tag_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
+            search = (
+                RetrieveAgentAppsByTagId(
+                    tag_id, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        return search
+
+    def set_base_search(self, oper, view_name):
+        if oper == AgentOperations.INSTALL_OS_APPS:
+            search = (
+                RetrieveApps(
+                    view_name, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
+            search = (
+                RetrieveCustomApps(
+                    view_name, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
+            search = (
+                RetrieveSupportedApps(
+                    view_name, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
+            search = (
+                RetrieveAgentApps(
+                    view_name, self.count, self.offset,
+                    self.sort, self.sort_by, show_hidden=self.hidden
+                )
+            )
+
+        return search
+
+
+    def return_operation_type(self, oper):
+        return vFenseAppTypes.return_app_operation(oper)
+
+    @results_message
+    def set_toggle_status(self, oper):
+        if oper == AgentOperations.INSTALL_OS_APPS:
+            results = (
+                toggle_hidden_status(
+                    self.app_ids, self.toggle
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
+            results = (
+                toggle_hidden_status(
+                    self.app_ids, self.toggle,
+                    collection=AppCollections.CustomApps
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
+            results = (
+                toggle_hidden_status(
+                    self.app_ids, self.toggle,
+                    collection=AppCollections.SupportedApps
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
+            results = (
+                toggle_hidden_status(
+                    self.app_ids, self.toggle,
+                    collection=AppCollections.vFenseApps
+                )
             )
 
         return results

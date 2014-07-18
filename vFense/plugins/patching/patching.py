@@ -956,8 +956,7 @@ def delete_apps_from_agent_by_name_and_version(
 @results_message
 def toggle_hidden_status(
         app_ids, hidden=CommonKeys.TOGGLE,
-        collection=AppCollections.UniqueApplications,
-        username=None, uri=None, method=None
+        collection=AppCollections.UniqueApplications
     ):
     """Toggle the hidden status of an application
     Args:
@@ -968,9 +967,6 @@ def toggle_hidden_status(
             default = toggle
         collection (str, optional): The collection you are updating for.
             collection = unique_applications
-        username (str): The name of the user who called this function.
-        uri (str): The uri that was used to call this function.
-        method (str): The HTTP methos that was used to call this function.
 
     Basic Usage:
         >>> from vFense.plugins.patching.patching import toggle_hidden_status
@@ -983,9 +979,6 @@ def toggle_hidden_status(
     status = toggle_hidden_status.func_name + ' - '
     results = {
         ApiResultKeys.DATA: [],
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method,
     }
     status_code, count, error, generated_ids = update_hidden_status(
         app_ids, hidden, collection

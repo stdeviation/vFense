@@ -14,14 +14,6 @@ from vFense.plugins.patching.scheduler.manager import (
 from vFense.plugins.patching.operations._constants import InstallKeys
 from vFense.plugins.patching.operations import Install
 
-from vFense.plugins.patching.search.search_by_tagid import (
-    RetrieveAppsByTagId
-)
-
-from vFense.plugins.patching.search.search_by_agentid import (
-    RetrieveAppsByAgentId
-)
-
 from vFense.plugins.patching.search.search_by_appid import (
     RetrieveAgentsByAppId
 )
@@ -62,18 +54,13 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class AgentIdOsAppsHandler(AppsBaseHandler):
+class AgentIdAppsHandler(AppsBaseHandler):
     @authenticated_request
-    def get(self, agent_id):
+    def get(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         self.get_and_set_search_arguments()
-        search = (
-            RetrieveAppsByAgentId(
-                agent_id, self.count, self.offset,
-                self.sort, self.sort_by, show_hidden=self.hidden
-            )
-        )
-
+        oper = self.return_operation_type(oper_type)
+        search = self.set_search_for_agent(oper, agent_id)
         results = self.app_search_results(search, active_user)
         self.set_status(results['http_status'])
         self.modified_output(results, self.output, 'apps')
@@ -81,7 +68,7 @@ class AgentIdOsAppsHandler(AppsBaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    def put(self, agent_id):
+    def put(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -101,10 +88,10 @@ class AgentIdOsAppsHandler(AppsBaseHandler):
 
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, active_view)
+        oper = self.return_operation_type(oper_type)
         results = (
             self.get_install_results(
-                operation, install, active_user, job,
-                AgentOperations.INSTALL_OS_APPS
+                operation, install, active_user, job, oper
             )
         )
         self.set_status(results['http_status'])
@@ -115,7 +102,7 @@ class AgentIdOsAppsHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
-    def delete(self, agent_id):
+    def delete(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -145,24 +132,20 @@ class AgentIdOsAppsHandler(AppsBaseHandler):
         self.write(json.dumps(results, indent=4))
 
 
-class TagIdOsAppsHandler(AppsBaseHandler):
+class TagIdAppsHandler(AppsBaseHandler):
     @authenticated_request
-    def get(self, tag_id):
+    def get(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         self.get_and_set_search_arguments()
-        search = (
-            RetrieveAppsByTagId(
-                tag_id, self.count, self.offset,
-                self.sort, self.sort_by, show_hidden=self.hidden
-            )
-        )
+        oper = self.return_operation_type(oper_type)
+        search = self.set_search_for_tag(oper, tag_id)
         results = self.app_search_results(search, active_user)
         self.set_status(results['http_status'])
         self.modified_output(results, self.output, 'apps')
 
     @authenticated_request
     @convert_json_to_arguments
-    def put(self, tag_id):
+    def put(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -182,10 +165,10 @@ class TagIdOsAppsHandler(AppsBaseHandler):
 
         sched = self.application.scheduler
         job = TagAppsJobManager(sched, active_view)
+        oper = self.return_operation_type(oper_type)
         results = (
             self.get_install_results(
-                operation, install, active_user, job,
-                AgentOperations.INSTALL_OS_APPS
+                operation, install, active_user, job, oper
             )
         )
         self.set_status(results['http_status'])
@@ -196,7 +179,7 @@ class TagIdOsAppsHandler(AppsBaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    def delete(self, tag_id):
+    def delete(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -226,9 +209,9 @@ class TagIdOsAppsHandler(AppsBaseHandler):
         self.write(json.dumps(results, indent=4))
 
 
-class AppIdOsAppsHandler(AppsBaseHandler):
+class AppIdAppsHandler(AppsBaseHandler):
     @authenticated_request
-    def get(self, app_id):
+    def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -247,7 +230,7 @@ class AppIdOsAppsHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def post(self, app_id):
+    def post(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         uri = self.request.uri
         method = self.request.method
@@ -318,7 +301,7 @@ class AppIdOsAppsHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
-    def put(self, app_id):
+    def put(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -339,10 +322,10 @@ class AppIdOsAppsHandler(AppsBaseHandler):
 
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, active_view)
+        oper = self.return_operation_type(oper_type)
         results = (
             self.get_install_results(
-                operation, install, active_user, job,
-                AgentOperations.INSTALL_OS_APPS
+                operation, install, active_user, job, oper
             )
         )
         self.set_status(results['http_status'])
@@ -353,7 +336,7 @@ class AppIdOsAppsHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
-    def delete(self, app_id):
+    def delete(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -387,7 +370,7 @@ class AppIdOsAppsHandler(AppsBaseHandler):
 
 class GetAgentsByAppIdHandler(AppsBaseHandler):
     @authenticated_request
-    def get(self, app_id):
+    def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         uri = self.request.uri
         http_method = self.request.method
@@ -464,7 +447,7 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.INSTALL)
-    def put(self, app_id):
+    def put(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -485,10 +468,10 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
 
         sched = self.application.scheduler
         job = AgentAppsJobManager(sched, active_view)
+        oper = self.return_operation_type(oper_type)
         results = (
             self.get_install_results(
-                operation, install, active_user, job,
-                AgentOperations.INSTALL_OS_APPS
+                operation, install, active_user, job, oper
             )
         )
         self.set_status(results['http_status'])
@@ -500,7 +483,7 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
-    def delete(self, app_id):
+    def delete(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
@@ -532,20 +515,16 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
         return results
 
 
-class OsAppsHandler(AppsBaseHandler):
+class AppsHandler(AppsBaseHandler):
     @authenticated_request
-    def get(self):
+    def get(self, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         self.get_and_set_search_arguments()
-        search = (
-            RetrieveApps(
-                active_view, self.count, self.offset,
-                self.sort, self.sort_by, show_hidden=self.hidden
-            )
-        )
+        oper = self.return_operation_type(oper_type)
+        search = self.set_base_search(oper, active_view)
         if (not self.query and not self.severity and not self.vuln
                 and not self.status):
             results = self.all(search)
@@ -565,33 +544,13 @@ class OsAppsHandler(AppsBaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def put(self):
-        active_user = self.get_current_user().encode('utf-8')
-        uri = self.request.uri
-        method = self.request.method
+    def put(self, oper_type):
+        oper = self.return_operation_type(oper_type)
 
-        try:
-            app_ids = self.arguments.get('app_ids')
-            toggle = self.arguments.get('hide', 'toggle')
-            results = (
-                toggle_hidden_status(
-                    app_ids, toggle,
-                    active_user=active_user, uri=uri, method=method
-                )
-            )
+        self.app_ids = self.arguments.get('app_ids')
+        self.toggle = self.arguments.get('hide', 'toggle')
+        results = self.set_toggle_status(oper)
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            logger.exception(e)
-            results = (
-                Results(
-                    active_user, uri, method
-                ).something_broke(app_ids, 'toggle hidden on os_apps', e)
-            )
-
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results['http_status'])
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))

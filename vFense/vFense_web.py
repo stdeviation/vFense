@@ -90,16 +90,6 @@ class Application(tornado.web.Application):
             (r"/upload/package?",ThirdPartyPackageUploadHandler),
             (r"/api/v1/apps/custom/upload/uuid?", GetThirdPartyUuidHandler),
 
-            ##### Supported Apps API Handlers
-            (r"/api/v1/app/supported/([0-9A-Za-z]{64})?", AppIdSupportedAppsHandler),
-            (r"/api/v1/app/supported/([0-9A-Za-z]{64})/agents?", GetAgentsBySupportedAppIdHandler),
-            (r"/api/v1/apps/supported?", SupportedAppsHandler),
-
-            ##### Agent Apps API Handlers
-            (r"/api/v1/app/remediationvault/([0-9A-Za-z]{64})?", AppIdAgentAppsHandler),
-            (r"/api/v1/app/remediationvault/([0-9A-Za-z]{64})/agents?", GetAgentsByAgentAppIdHandler),
-            (r"/api/v1/apps/remediationvault?", AgentAppsHandler),
-
             ##### Dashboard API Handlers
             (r"/api/v1/dashboard/graphs/bar/severity?",ViewSeverityHandler),
             #(r"/api/v1/dashboard/graphs/linear/severity?",PackageSeverityOverTimeHandler),
