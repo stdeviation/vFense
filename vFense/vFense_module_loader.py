@@ -62,15 +62,6 @@ from vFense.plugins.patching.api.os_apps import (
     AgentIdAppsHandler, TagIdAppsHandler, AppIdAppsHandler,
     GetAgentsByAppIdHandler, AppsHandler
 )
-from vFense.plugins.patching.api.agent_apps import (
-    AgentIdAgentAppsHandler, TagIdAgentAppsHandler
-)
-from vFense.plugins.patching.api.supported_apps import (
-    AgentIdSupportedAppsHandler, TagIdSupportedAppsHandler
-)
-from vFense.plugins.patching.api.custom_apps import (
-    AgentIdCustomAppsHandler, TagIdCustomAppsHandler
-)
 from vFense.plugins.patching.api.stats_api import (AgentSeverityHandler,
     AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
     TagStatsByOsHandler)
@@ -219,7 +210,7 @@ class CoreLoader():
             (r"/api/v1/supported/timezones?", TimeZonesHandler),
             #(r"/api/package/getDependecies?", GetDependenciesHandler),
 
-            ##### Os Apps API Handlers
+            ##### Apps API Handlers
             (r"/api/v1/app/(os|supported|agentupdates|)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
             (r"/api/v1/app/(os|supported|agentupdates)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
             (r"/api/v1/apps/(os|supported|agentupdates)", AppsHandler),
