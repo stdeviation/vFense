@@ -2261,7 +2261,8 @@ The various operations you can perform for the apps api.
 
     def upload(self):
         vfense = authenticate(self.username, self.password, self.url)
-        upload_url = os.path.join(self.url, 'upload')
+        upload_url = os.path.join(self.url, 'api/v1/apps/upload')
+        print upload_url
         parser = argparse.ArgumentParser()
         upload = parser.add_argument_group('upload arguments')
         upload.add_argument(

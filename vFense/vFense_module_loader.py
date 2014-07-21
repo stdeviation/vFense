@@ -144,7 +144,6 @@ class CoreLoader():
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
             (r"/api/v1/authenticated?", Authentication),
-            (r"/upload?", UploadHandler),
 
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
@@ -218,6 +217,7 @@ class CoreLoader():
             (r"/api/v1/app/(os|supported|agentupdates|)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
             (r"/api/v1/app/(os|supported|agentupdates)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
             (r"/api/v1/apps/(os|supported|agentupdates)", AppsHandler),
+            (r"/api/v1/apps/upload?", UploadHandler),
 
         ]
 

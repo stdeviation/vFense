@@ -414,5 +414,5 @@ def md5sum(file_path, blocksize=65536):
     hasher = hashlib.md5()
     with open(file_path, "r+b") as f:
         for block in iter(lambda: f.read(blocksize), ""):
-            hasher.__update(block)
-    return hasher.__hexdigest()
+            hasher.update(block)
+    return hasher.hexdigest()
