@@ -64,7 +64,7 @@ class UploadHandler(BaseHandler):
         try:
             file_name = self.request.headers.get('x-Filename')
             tmp_path = self.request.headers.get('x-File')
-            uuid = self.request.headers.get('Fileuuid')
+            uuid = self.request.headers.get('x-Fileuuid')
             results = self.return_uploaded_data(file_name, tmp_path, uuid)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')

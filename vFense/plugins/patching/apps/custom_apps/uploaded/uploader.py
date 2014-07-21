@@ -5,7 +5,9 @@ import shutil
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.db.client import db_create_close, r
 from vFense.core.results import Results
-from vFense.plugins.patching.status_codes import PackageCodes
+from vFense.plugins.patching.status_codes import (
+    PackageCodes, PackageFailureCodes
+)
 from vFense.utils.common import date_parser, timestamp_verifier, md5sum
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
@@ -28,7 +30,7 @@ def gen_uuid():
 def move_app_from_tmp(file_name, tmp_path, uuid):
     results = {}
     base_app_dir = os.path.join(TMP_DIR, uuid)
-    full_app_path = os.path.join(BASE_APP_DIR, file_name)
+    full_app_path = os.path.join(base_app_dir, file_name)
 
 
     if not os.path.exists(base_app_dir):

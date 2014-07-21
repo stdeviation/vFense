@@ -2,6 +2,7 @@
 import os
 import sys
 import json
+from uuid import uuid4
 import ConfigParser
 import argparse
 import cookielib
@@ -2267,12 +2268,18 @@ The various operations you can perform for the apps api.
             '--file', dest='file_loc',
             help='The file location.'
         )
+        upload.add_argument(
+            '--uuid', dest='uuid', default=uuid4().__str__(),
+            help='''The the primary key of this file, which will be inserted
+                into the database.'''
+        )
         args = parser.parse_args(sys.argv[3:])
         if os.path.exists(args.file_loc):
             file_name = args.file_loc.split('/')[-1]
             file_to_upload = open(args.file_loc, 'r').read()
             if vfense.ok:
                 HEADERS['X-FileName'] = file_name
+                HEADERS['X-Fileuuid'] = args.uuid
                 data = (
                     SESSION.post(
                         upload_url, verify=False, data=file_to_upload,
