@@ -363,3 +363,18 @@ class Results(object):
                 ApiResultKeys.DATA: data,
             }
         )
+
+    def auth_granted(self, **kwargs):
+        msg = 'Authorization granted'
+        return(
+            {
+                ApiResultKeys.HTTP_STATUS_CODE: 200,
+                ApiResultKeys.VFENSE_STATUS_CODE: (
+                    GenericCodes.AuthorizationGranted
+                ),
+                ApiResultKeys.URI: self.uri,
+                ApiResultKeys.HTTP_METHOD: self.method,
+                ApiResultKeys.MESSAGE: msg,
+                ApiResultKeys.DATA: [],
+            }
+        )

@@ -96,6 +96,13 @@ def results_message(fn):
                 ).objects_created(**data)
             )
 
+        elif generic_status_code == GenericCodes.AuthorizationGranted:
+            status = (
+                Results(
+                    username, uri, method
+                ).auth_granted(**data)
+            )
+
         elif generic_status_code == GenericFailureCodes.FailedToCreateObject:
             status = (
                 Results(

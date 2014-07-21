@@ -21,9 +21,11 @@ class PackageCodes(GenericCodes):
     AgentWillDownloadFromVendor = 5016
     PackageDeleted = 5017
     PackagesDeletionFailed = 5018
+    FileUploadedSuccessfully = 5019
 
 
 class PackageFailureCodes(GenericFailureCodes):
     ToggleHiddenFailed = 5300
     InvalidToggle = 5301
     ApplicationDoesNotExist = 5302
+    FileUploadFailed = 5303

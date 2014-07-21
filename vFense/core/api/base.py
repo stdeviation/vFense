@@ -12,14 +12,16 @@ import tornado.web
 import tornado.websocket
 import tornadoredis
 from vFense.core._constants import CommonKeys
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResultKeys, Results
+from vFense.core.status_codes import GenericCodes
 from vFense.core.api._constants import (
     ContentTypes, Outputs
 )
 from vFense.core.permissions.permissions import authenticate_user
 
-from vFense.core.decorators import authenticated_request, \
-    convert_json_to_arguments
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments, results_message
+)
 
 from tornado import ioloop
 
@@ -218,3 +220,24 @@ class AdminHandler(BaseHandler):
 
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(result))
+
+
+class Authentication(BaseHandler):
+    @authenticated_request
+    def get(self):
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.authenticated()
+        self.set_status(results['http_status'])
+        self.modified_output(results, output, 'authenticated')
+
+    @results_message
+    def authenticated(self):
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: (
+                GenericCodes.AuthorizationGranted
+            ),
+            ApiResultKeys.VFENSE_STATUS_CODE: (
+                GenericCodes.AuthorizationGranted
+            )
+        }
+        return results

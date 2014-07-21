@@ -6,9 +6,10 @@ from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.db.client import db_create_close, r
 from vFense.core.results import Results
 from vFense.plugins.patching.status_codes import PackageCodes
-from vFense.utils.common import date_parser, timestamp_verifier
+from vFense.utils.common import date_parser, timestamp_verifier, md5sum
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
+from vFense.core.results import Results, ApiResultKeys
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -22,6 +23,72 @@ if not os.path.exists(TMP_DIR):
 
 def gen_uuid():
     return(str(uuid4()))
+
+
+def move_app_from_tmp(file_name, tmp_path, uuid):
+    results = {}
+    base_app_dir = os.path.join(TMP_DIR, uuid)
+    full_app_path = os.path.join(BASE_APP_DIR, file_name)
+
+
+    if not os.path.exists(base_app_dir):
+        try:
+            os.mkdir(base_app_dir)
+        except Exception as e:
+            logger.exception(e)
+
+    try:
+        if os.path.exists(tmp_path):
+            fsize = os.stat(tmp_path).st_size
+            md5 = md5sum(tmp_path)
+            shutil.move(tmp_path, full_app_path)
+            data = [
+                {
+                    'uuid': uuid,
+                    'name': file_name,
+                    'size': fsize,
+                    'md5': md5,
+                    'file_path': full_app_path
+                }
+            ]
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                PackageCodes.ObjectCreated
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                PackageCodes.FileUploadedSuccessfully
+            )
+            results[ApiResultKeys.DATA] = data
+            results[ApiResultKeys.MESSAGE] = (
+                'File {0} successfully uploaded'.format(file_name)
+            )
+
+        else:
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                PackageFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                PackageFailureCodes.FileUploadFailed
+            )
+            results[ApiResultKeys.DATA] = []
+            results[ApiResultKeys.MESSAGE] = (
+                'File {0} failed to upload'.format(file_name)
+            )
+
+    except Exception as e:
+        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            PackageFailureCodes.FailedToCreateObject
+        )
+        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            PackageFailureCodes.FileUploadFailed
+        )
+        results[ApiResultKeys.DATA] = []
+        results[ApiResultKeys.MESSAGE] = (
+            'File {0} failed to upload: error {1}'
+            .format(file_name, e)
+        )
+        logger.exception(e)
+
+    return(results)
 
 
 @db_create_close

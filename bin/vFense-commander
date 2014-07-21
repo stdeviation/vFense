@@ -83,7 +83,8 @@ These are the various api base calls that you can call.
     * tags
     * agents
     * operations
-    * schedule'''
+    * schedule
+    * apps'''
         )
         self.username, self.password, self.url, config_exists = (
             get_credentials()
@@ -95,7 +96,7 @@ These are the various api base calls that you can call.
                 choices=[
                     'users', 'views', 'groups',
                     'agents', 'tags', 'schedule',
-                    'operations', 'dashboard'
+                    'operations', 'dashboard', 'apps'
                 ]
             )
             args = parser.parse_args(sys.argv[1:2])
@@ -1106,6 +1107,7 @@ The various actions that you can perform on a user.
     * delete
     * add_to
     * remove_from
+    * authenticated
 
 The various actions that you can perform on multiple users.
     * search
@@ -1116,8 +1118,8 @@ The various actions that you can perform on multiple users.
         parser.add_argument(
             'command', help='commands available for users',
             choices=[
-                'get', 'edit', 'delete', 'add_to', 'remove_from', 'search',
-                'create', 'delete_multiple'
+                'get', 'edit', 'delete', 'add_to', 'remove_from',
+                'authenticated', 'search', 'create', 'delete_multiple'
             ]
         )
         args = parser.parse_args(sys.argv[2:3])
@@ -1134,6 +1136,9 @@ The various actions that you can perform on multiple users.
             self.set_user_name(args.command)
 
         elif args.command == 'remove_from':
+            self.set_user_name(args.command)
+
+        elif args.command == 'authenticated':
             self.set_user_name(args.command)
 
         elif args.command == 'search':
@@ -1172,6 +1177,9 @@ The various actions that you can perform on multiple users.
         elif command == 'remove_from':
             self.delete_views_or_groups_from_user()
 
+        elif command == 'authenticated':
+            self.user_authenticated()
+
 
     def get_user(self):
         vfense = authenticate(self.username, self.password, self.url)
@@ -1184,6 +1192,20 @@ The various actions that you can perform on multiple users.
             )
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
+
+    def user_authenticated(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        authenticated_url = os.path.join(self.url, 'api/v1/authenticated')
+        if vfense.ok:
+            data = (
+                SESSION.get(
+                    authenticated_url, verify=False,
+                    headers=HEADERS, cookies=JAR
+                )
+            )
+            content = json.loads(data.content)
+            print json.dumps(content, indent=4)
+
 
 
     def add_views_or_groups_to_user(self):
@@ -2199,6 +2221,68 @@ Available operations you can perform on an agent.
             )
             content = json.loads(data.content)
             print json.dumps(content, indent=4)
+
+#######################APPLICATION MANAGEMENT######################################
+
+    def apps(self):
+        self.apps_url = os.path.join(self.url, 'api/v1/apps')
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            description='''
+The various operations you can perform for the apps api.
+    * os
+    * custom
+    * upload
+    * get
+    * edit
+''',
+            usage='''vFense-commander tags <action> -h'''
+        )
+        parser.add_argument(
+            'action', help='Actions that you can perform',
+            choices=[
+                'os', 'custom', 'upload', 'get', 'edit'
+            ]
+        )
+        args = parser.parse_args(sys.argv[2:3])
+        if args.action == 'os':
+            self.os_apps()
+
+        elif args.action == 'get':
+            self.app_id(args.action)
+
+        elif args.action == 'edit':
+            self.app_id(args.action)
+
+        elif args.action == 'upload':
+            self.upload()
+
+
+    def upload(self):
+        vfense = authenticate(self.username, self.password, self.url)
+        upload_url = os.path.join(self.url, 'upload')
+        parser = argparse.ArgumentParser()
+        upload = parser.add_argument_group('upload arguments')
+        upload.add_argument(
+            '--file', dest='file_loc',
+            help='The file location.'
+        )
+        args = parser.parse_args(sys.argv[3:])
+        if os.path.exists(args.file_loc):
+            file_name = args.file_loc.split('/')[-1]
+            file_to_upload = open(args.file_loc, 'r').read()
+            if vfense.ok:
+                HEADERS['X-FileName'] = file_name
+                data = (
+                    SESSION.post(
+                        upload_url, verify=False, data=file_to_upload,
+                        headers=HEADERS, cookies=JAR#, allow_redirects=True
+                    )
+                )
+                content = json.loads(data.content)
+                print json.dumps(content, indent=4)
+        else:
+            print 'File {0} does not exist'.format(args.file_loc)
 
 
 #######################COMMON CALLS######################################

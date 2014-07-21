@@ -1,3 +1,4 @@
+from __future__ import with_statement
 import re
 import os
 import hashlib
@@ -173,7 +174,7 @@ def date_parser(unformatted_date, convert_to_timestamp=True):
                     formatted_date = datetime(1970, 1, 1)
 
         except Exception as e:
-            pass 
+            pass
 
     else:
         if convert_to_timestamp:
@@ -407,3 +408,11 @@ def hash_verify(orig_hash=None, file_path=None):
             )
 
     return verified
+
+
+def md5sum(file_path, blocksize=65536):
+    hasher = hashlib.md5()
+    with open(file_path, "r+b") as f:
+        for block in iter(lambda: f.read(blocksize), ""):
+            hasher.__update(block)
+    return hasher.__hexdigest()

@@ -49,9 +49,47 @@ from vFense.plugins.patching.api._constants import (
 from vFense.plugins.patching._constants import (
     AppStatuses, CommonSeverityKeys
 )
+from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import (
+    move_app_from_tmp
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
+
+class UploadHandler(BaseHandler):
+    @authenticated_request
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def post(self):
+        active_user = self.get_current_user()
+        try:
+            file_name = self.request.headers.get('x-Filename')
+            tmp_path = self.request.headers.get('x-File')
+            uuid = self.request.headers.get('Fileuuid')
+            results = self.return_uploaded_data(file_name, tmp_path, uuid)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+        except Exception as e:
+            data = {
+                ApiResultKeys.MESSAGE: (
+                    'Failed to upload file, error: {0}'.format(e)
+                ),
+                ApiResultKeys.DATA: [],
+            }
+            results = (
+                Results(
+                    active_user, self.request.uri, self.request.method
+                ).something_broke(**data)
+            )
+            logger.exception(e)
+            self.set_status(results['http_status'])
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
+
+    @results_message
+    def return_uploaded_data(self, file_name, tmp_path, uuid):
+        results = move_app_from_tmp(file_name, tmp_path, uuid)
+        return results
 
 
 class AgentIdAppsHandler(AppsBaseHandler):

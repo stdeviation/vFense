@@ -15,7 +15,9 @@ from vFense.receiver.api.core.results import (
     RebootResultsV1, ShutdownResultsV1, RebootResultsV2, ShutdownResultsV2
 )
 
-from vFense.core.api.base import RootHandler, RvlLoginHandler, RvlLogoutHandler
+from vFense.core.api.base import (
+    RootHandler, RvlLoginHandler, RvlLogoutHandler, Authentication
+)
 from vFense.core.api.user import UserHandler, UsersHandler
 from vFense.core.api.group import GroupHandler, GroupsHandler
 from vFense.core.api.view import ViewHandler, ViewsHandler
@@ -60,7 +62,7 @@ from vFense.core.api.reports_api import (AgentsOsDetailsHandler,
 
 from vFense.plugins.patching.api.os_apps import (
     AgentIdAppsHandler, TagIdAppsHandler, AppIdAppsHandler,
-    GetAgentsByAppIdHandler, AppsHandler
+    GetAgentsByAppIdHandler, AppsHandler, UploadHandler
 )
 from vFense.plugins.patching.api.stats_api import (AgentSeverityHandler,
     AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
@@ -141,6 +143,8 @@ class CoreLoader():
             (r"/logout/?", LogoutHandler),
             #(r"/ws/?", WebSocketHandler),
             (r"/adminForm", AdminHandler),
+            (r"/api/v1/authenticated?", Authentication),
+            (r"/upload?", UploadHandler),
 
             ##### New User API
             (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
