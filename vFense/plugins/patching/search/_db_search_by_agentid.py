@@ -61,7 +61,7 @@ class FetchAppsByAgentId(FetchAppsBase):
                 DbCommonAppKeys.ReleaseDate,
                 DbCommonAppKeys.Hidden,
                 DbCommonAppKeys.RebootRequired,
-                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.vFenseSeverity,
                 DbCommonAppKeys.FilesDownloadStatus,
                 DbCommonAppPerAgentKeys.Dependencies,
                 DbCommonAppPerAgentKeys.InstallDate,
@@ -93,8 +93,8 @@ class FetchAppsByAgentId(FetchAppsBase):
                 DbCommonAppKeys.ReleaseDate: (
                     x['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time()
                 ),
-                DbCommonAppKeys.RvSeverity: (
-                    x['right'][DbCommonAppKeys.RvSeverity]
+                DbCommonAppKeys.vFenseSeverity: (
+                    x['right'][DbCommonAppKeys.vFenseSeverity]
                 ),
                 DbCommonAppKeys.RebootRequired: (
                     x['right'][DbCommonAppKeys.RebootRequired]
@@ -155,7 +155,7 @@ class FetchAppsByAgentId(FetchAppsBase):
                     x[DbCommonAppKeys.AppId], sev
                 ],
                 r.table(self.apps_collection),
-                index=DbCommonAppIndexes.AppIdAndRvSeverity
+                index=DbCommonAppIndexes.AppIdAndvFenseSeverity
             )
             .map(map_hash)
         )
@@ -177,7 +177,7 @@ class FetchAppsByAgentId(FetchAppsBase):
                     x[DbCommonAppKeys.AppId], sev
                 ],
                 r.table(self.apps_collection),
-                index=DbCommonAppIndexes.AppIdAndRvSeverity
+                index=DbCommonAppIndexes.AppIdAndvFenseSeverity
             )
             .map(map_hash)
         )

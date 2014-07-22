@@ -103,8 +103,8 @@ def initialize_indexes_and_create_tables():
         r.table(AgentCollections.Agents).index_create(AgentIndexes.OsCode).run(conn)
 
 #################################### AppsCollection Indexes ###################################################
-    if not AppsIndexes.RvSeverity in unique_app_list:
-        r.table(AppCollections.UniqueApplications).index_create(AppsIndexes.RvSeverity).run(conn)
+    if not AppsIndexes.vFenseSeverity in unique_app_list:
+        r.table(AppCollections.UniqueApplications).index_create(AppsIndexes.vFenseSeverity).run(conn)
 
     if not AppsIndexes.Name in unique_app_list:
         r.table(AppCollections.UniqueApplications).index_create(AppsIndexes.Name).run(conn)
@@ -114,11 +114,11 @@ def initialize_indexes_and_create_tables():
             AppsIndexes.NameAndVersion, lambda x: [
                 x[AppsKey.Name], x[AppsKey.Version]]).run(conn)
 
-    if not AppsIndexes.AppIdAndRvSeverity in unique_app_list:
+    if not AppsIndexes.AppIdAndvFenseSeverity in unique_app_list:
         r.table(AppCollections.UniqueApplications).index_create(
-            AppsIndexes.AppIdAndRvSeverity, lambda x: [
+            AppsIndexes.AppIdAndvFenseSeverity, lambda x: [
                 x[AppsKey.AppId],
-                x[AppsKey.RvSeverity]]).run(conn)
+                x[AppsKey.vFenseSeverity]]).run(conn)
 
 
 #################################### FilesColleciton Indexes ###################################################
@@ -175,8 +175,8 @@ def initialize_indexes_and_create_tables():
 
 
 #################################### CustomAppsCollection Indexes ###################################################
-    if not CustomAppsIndexes.RvSeverity in custom_app_list:
-        r.table(AppCollections.CustomApps).index_create(CustomAppsIndexes.RvSeverity).run(conn)
+    if not CustomAppsIndexes.vFenseSeverity in custom_app_list:
+        r.table(AppCollections.CustomApps).index_create(CustomAppsIndexes.vFenseSeverity).run(conn)
 
     if not CustomAppsIndexes.Name in custom_app_list:
         r.table(AppCollections.CustomApps).index_create(CustomAppsIndexes.Name).run(conn)
@@ -187,11 +187,11 @@ def initialize_indexes_and_create_tables():
                 x[CustomAppsKey.Name], x[CustomAppsKey.Version]]).run(conn)
 
 
-    if not CustomAppsIndexes.AppIdAndRvSeverity in custom_app_list:
+    if not CustomAppsIndexes.AppIdAndvFenseSeverity in custom_app_list:
         r.table(AppCollections.CustomApps).index_create(
-            CustomAppsIndexes.AppIdAndRvSeverity, lambda x: [
+            CustomAppsIndexes.AppIdAndvFenseSeverity, lambda x: [
                 x[CustomAppsKey.AppId],
-                x[CustomAppsKey.RvSeverity]]).run(conn)
+                x[CustomAppsKey.vFenseSeverity]]).run(conn)
 
 #################################### CustomAppsPerAgentCollection Indexes ###################################################
     if not CustomAppsPerAgentIndexes.Status in custom_app_per_agent_list:
@@ -220,8 +220,8 @@ def initialize_indexes_and_create_tables():
                 x[CustomAppsPerAgentKey.Status], x[CustomAppsPerAgentKey.AgentId]]).run(conn)
 
 #################################### SupportedAppsCollection Indexes ###################################################
-    if not SupportedAppsIndexes.RvSeverity in supported_app_list:
-        r.table(AppCollections.SupportedApps).index_create(SupportedAppsIndexes.RvSeverity).run(conn)
+    if not SupportedAppsIndexes.vFenseSeverity in supported_app_list:
+        r.table(AppCollections.SupportedApps).index_create(SupportedAppsIndexes.vFenseSeverity).run(conn)
 
     if not SupportedAppsIndexes.Name in supported_app_list:
         r.table(AppCollections.SupportedApps).index_create(SupportedAppsIndexes.Name).run(conn)
@@ -231,11 +231,11 @@ def initialize_indexes_and_create_tables():
             SupportedAppsIndexes.NameAndVersion, lambda x: [
                 x[SupportedAppsKey.Name], x[SupportedAppsKey.Version]]).run(conn)
 
-    if not SupportedAppsIndexes.AppIdAndRvSeverity in supported_app_list:
+    if not SupportedAppsIndexes.AppIdAndvFenseSeverity in supported_app_list:
         r.table(AppCollections.SupportedApps).index_create(
-            SupportedAppsIndexes.AppIdAndRvSeverity, lambda x: [
+            SupportedAppsIndexes.AppIdAndvFenseSeverity, lambda x: [
                 x[SupportedAppsKey.AppId],
-                x[SupportedAppsKey.RvSeverity]]).run(conn)
+                x[SupportedAppsKey.vFenseSeverity]]).run(conn)
 
 #################################### SupportedAppsPerAgentCollection Indexes ###################################################
     if not SupportedAppsPerAgentIndexes.Status in supported_app_per_agent_list:
@@ -264,8 +264,8 @@ def initialize_indexes_and_create_tables():
                 x[SupportedAppsPerAgentKey.Status], x[SupportedAppsPerAgentKey.AgentId]]).run(conn)
 
 #################################### vFenseAppsCollection Indexes ###################################################
-    if not vFenseAppsIndexes.RvSeverity in vfense_app_list:
-        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.RvSeverity).run(conn)
+    if not vFenseAppsIndexes.vFenseSeverity in vfense_app_list:
+        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.vFenseSeverity).run(conn)
 
     if not vFenseAppsIndexes.Name in vfense_app_list:
         r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.Name).run(conn)
@@ -276,11 +276,11 @@ def initialize_indexes_and_create_tables():
                 x[vFenseAppsKey.Name], x[vFenseAppsKey.Version]]).run(conn)
 
 
-    if not vFenseAppsIndexes.AppIdAndRvSeverity in vfense_app_list:
+    if not vFenseAppsIndexes.AppIdAndvFenseSeverity in vfense_app_list:
         r.table(AppCollections.vFenseApps).index_create(
-            vFenseAppsIndexes.AppIdAndRvSeverity, lambda x: [
+            vFenseAppsIndexes.AppIdAndvFenseSeverity, lambda x: [
                 x[vFenseAppsKey.AppId],
-                x[vFenseAppsKey.RvSeverity]]).run(conn)
+                x[vFenseAppsKey.vFenseSeverity]]).run(conn)
 
 #################################### vFenseAppsPerAgentCollection Indexes ###################################################
     if not vFenseAppsPerAgentIndexes.Status in vfense_app_per_agent_list:

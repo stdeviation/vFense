@@ -763,7 +763,7 @@ def application_updater(app_data, os_string,
                 "repo": "precise-updates/main",
                 "support_url": "",
                 "version": "3.4.2-0ubuntu2.4",
-                "rv_severity": "Recommended",
+                "vfense_severity": "Recommended",
                 "uninstallable": "yes",
                 "name": "gwibber-service-facebook"
             }

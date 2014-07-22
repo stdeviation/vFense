@@ -309,7 +309,7 @@ class AppIdAppsHandler(AppsBaseHandler):
             if severity in CommonSeverityKeys.ValidRvSeverities:
                 sev_data = (
                     {
-                        AppsKey.RvSeverity: severity
+                        AppsKey.vFenseSeverity: severity
                     }
                 )
                 update_app_data_by_app_id(

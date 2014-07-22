@@ -1,3 +1,4 @@
+from vFense.plugins.patching.status_codes import PackageCodes
 class CommonAppKeys():
     ViewName = 'view_name'
     Id = 'id'
@@ -60,6 +61,16 @@ class CommonSeverityKeys():
     RECOMMENDED = 'Recommended'
     ValidRvSeverities = (CRITICAL, RECOMMENDED, OPTIONAL)
 
+    @staticmethod
+    def get_valid_severities():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(CommonSeverityKeys, x), dir(CommonSeverityKeys)[:-3]
+            )
+        )
+        return valid_values
+
 
 class FileLocationUris():
     PACKAGES = 'packages'
@@ -84,7 +95,7 @@ class SharedAppKeys():
     SupportUrl = 'support_url'
     Version = 'version'
     OsCode = 'os_code'
-    RvSeverity = 'rv_severity'
+    vFenseSeverity = 'vfense_severity'
     VendorSeverity = 'vendor_severity'
     VendorName = 'vendor_name'
     FilesDownloadStatus = 'files_download_status'
@@ -99,3 +110,45 @@ class InstallDefaults():
     REBOOT = 'none'
     CPU_THROTTLE = 'normal'
     NET_THROTTLE = 0
+
+class AppDefaults():
+    REBOOT_REQUIRED = 'possible'
+    HIDDEN = 'no'
+    UPDATE = PackageCodes.ThisIsNotAnUpdate
+    DOWNLOAD_STATUS = PackageCodes.FileCompletedDownload
+    VFENSE_SEVERITY = 'Optional'
+
+
+class PossibleRebootValues():
+    POSSIBLE = 'possible'
+    NO = 'no'
+    REQUIRED = 'required'
+
+    @staticmethod
+    def get_reboot_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(
+                    PossibleRebootValues, x),
+                dir(PossibleRebootValues)[:-3]
+            )
+        )
+        return valid_values
+
+
+class PossibleHiddenValues():
+    YES = 'yes'
+    NO = 'no'
+
+    @staticmethod
+    def get_hidden_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(
+                    PossibleHiddenValues, x),
+                dir(PossibleHiddenValues)[:-3]
+            )
+        )
+        return valid_values

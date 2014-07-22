@@ -334,21 +334,21 @@ def top_packages_needed(view_name, count=5):
                 "data": [
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "1a3c80714af0eeb7f739e8f42f80d41fe33ffce1d012fff7648b6e5658594e90",
                     "name": "rethinkdb"
                 },
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7",
                     "name": "python3-lxml"
                 },
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "8683a443a58aefcd5cef3025e6307569c6b722eccb64c9573750a4d11c0ffbe8",
                     "name": "python-lxml"
@@ -398,21 +398,21 @@ def recently_released_packages(view_name, count=5):
                 "data": [
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "1a3c80714af0eeb7f739e8f42f80d41fe33ffce1d012fff7648b6e5658594e90",
                     "name": "rethinkdb"
                 },
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7",
                     "name": "python3-lxml"
                 },
                 {
                     "count": 1,
-                    "rv_severity": "Recommended",
+                    "vfense_severity": "Recommended",
                     "release_date": 1400644800,
                     "app_id": "8683a443a58aefcd5cef3025e6307569c6b722eccb64c9573750a4d11c0ffbe8",
                     "name": "python-lxml"

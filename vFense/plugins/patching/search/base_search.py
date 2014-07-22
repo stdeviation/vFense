@@ -78,7 +78,7 @@ class RetrieveAppsBase(object):
                     "count": 254,
                     "data": [
                         {
-                            "rv_severity": "Recommended",
+                            "vfense_severity": "Recommended",
                             "release_date": 1400212800,
                             "app_id": "d582e489691f78314b483ab12557933abc1194bb57041e787faf1328429c09f4",
                             "version": "2.14.1-0ubuntu3.2",
@@ -137,7 +137,7 @@ class RetrieveAppsBase(object):
                     "count": 165,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1403755200,
                             "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
                             "version": "1.4.16-1ubuntu2.1",
@@ -198,7 +198,7 @@ class RetrieveAppsBase(object):
                     "count": 25,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1403755200,
                             "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
                             "version": "1.4.16-1ubuntu2.1",
@@ -256,7 +256,7 @@ class RetrieveAppsBase(object):
                     "count": 25,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1403755200,
                             "app_id": "b7b02f38f3176cb3d0614170d0b4ae8c888e81e999f0e7f5ee8dbc13bdd7a739",
                             "version": "1.4.16-1ubuntu2.1",
@@ -309,7 +309,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Recommended",
+                            "vfense_severity": "Recommended",
                             "release_date": 0,
                             "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
                             "version": "0.13-2ubuntu6",
@@ -364,7 +364,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Recommended",
+                            "vfense_severity": "Recommended",
                             "release_date": 0,
                             "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
                             "version": "0.13-2ubuntu6",
@@ -426,7 +426,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",
@@ -493,7 +493,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Recommended",
+                            "vfense_severity": "Recommended",
                             "release_date": 0,
                             "app_id": "8174d8162ba128746ce1bb6e7d56cdd079729ecb91722fb26ca5d9b6c49689bc",
                             "version": "0.13-2ubuntu6",
@@ -564,7 +564,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",
@@ -631,7 +631,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",
@@ -691,7 +691,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",
@@ -753,7 +753,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",
@@ -813,7 +813,7 @@ class RetrieveAppsBase(object):
                     "count": 1,
                     "data": [
                         {
-                            "rv_severity": "Critical",
+                            "vfense_severity": "Critical",
                             "release_date": 1402545600,
                             "app_id": "bee662f542aaa86ce6889d570e2c404c93dfb7514cdbcd9a878f13a8db790073",
                             "version": "0.11-3ubuntu1.2",

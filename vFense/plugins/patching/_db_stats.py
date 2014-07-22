@@ -1064,12 +1064,12 @@ def fetch_severity_bar_chart_stats_for_view(view_name, conn=None):
                     DbCommonAppKeys.AppId: (
                         r.row['right'][DbCommonAppKeys.AppId]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        r.row['right'][DbCommonAppKeys.vFenseSeverity]
                     )
                 }
             )
-            .group(DbCommonAppKeys.RvSeverity)
+            .group(DbCommonAppKeys.vFenseSeverity)
             .count()
             .ungroup()
             .map(
@@ -1140,12 +1140,12 @@ def fetch_severity_bar_chart_stats_for_agent(agent_id, conn=None):
                     DbCommonAppKeys.AppId: (
                         r.row['right'][DbCommonAppKeys.AppId]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        r.row['right'][DbCommonAppKeys.vFenseSeverity]
                     )
                 }
             )
-            .group(DbCommonAppKeys.RvSeverity)
+            .group(DbCommonAppKeys.vFenseSeverity)
             .count()
             .ungroup()
             .map(
@@ -1230,12 +1230,12 @@ def fetch_severity_bar_chart_stats_for_tag(tag_id, conn=None):
                     DbCommonAppKeys.AppId: (
                         r.row['right'][DbCommonAppKeys.AppId]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        r.row['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        r.row['right'][DbCommonAppKeys.vFenseSeverity]
                     )
                 }
             )
-            .group(DbCommonAppKeys.RvSeverity)
+            .group(DbCommonAppKeys.vFenseSeverity)
             .count()
             .ungroup()
             .map(
@@ -1277,21 +1277,21 @@ def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
         [
             {
                 "count": 1,
-                "rv_severity": "Recommended",
+                "vfense_severity": "Recommended",
                 "release_date": 1400644800,
                 "app_id": "1a3c80714af0eeb7f739e8f42f80d41fe33ffce1d012fff7648b6e5658594e90",
                 "name": "rethinkdb"
             },
             {
                 "count": 1,
-                "rv_severity": "Recommended",
+                "vfense_severity": "Recommended",
                 "release_date": 1400644800,
                 "app_id": "e49d2d84cb5c1e63df9b984646f38e6127242aeba258e29eeefaf180a9be98e7",
                 "name": "python3-lxml"
             },
             {
                 "count": 1,
-                "rv_severity": "Recommended",
+                "vfense_severity": "Recommended",
                 "release_date": 1400644800,
                 "app_id": "8683a443a58aefcd5cef3025e6307569c6b722eccb64c9573750a4d11c0ffbe8",
                 "name": "python-lxml"
@@ -1327,8 +1327,8 @@ def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
                 {
                     DbCommonAppKeys.Name: x['right'][DbCommonAppKeys.Name],
                     DbCommonAppKeys.AppId: x['right'][DbCommonAppKeys.AppId],
-                    DbCommonAppKeys.RvSeverity: (
-                        x['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        x['right'][DbCommonAppKeys.vFenseSeverity]
                     ),
                     DbCommonAppKeys.ReleaseDate: (
                         x['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time()
@@ -1337,7 +1337,7 @@ def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
             )
             .group(
                 DbCommonAppKeys.Name, DbCommonAppKeys.AppId,
-                DbCommonAppKeys.RvSeverity, DbCommonAppKeys.ReleaseDate
+                DbCommonAppKeys.vFenseSeverity, DbCommonAppKeys.ReleaseDate
             )
             .count()
             .ungroup()
@@ -1346,7 +1346,7 @@ def fetch_top_apps_needed_for_view(view_name, count=5, conn=None):
                 {
                     DbCommonAppKeys.Name: x['group'][0],
                     DbCommonAppKeys.AppId: x['group'][1],
-                    DbCommonAppKeys.RvSeverity: x['group'][2],
+                    DbCommonAppKeys.vFenseSeverity: x['group'][2],
                     DbCommonAppKeys.ReleaseDate: x['group'][3],
                     'count': x['reduction'],
                 }
@@ -1381,7 +1381,7 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
     >>> [
         {
             "count": 1,
-            "rv_severity": "Recommended",
+            "vfense_severity": "Recommended",
             "release_date": 1400644800,
             "app_id": "4aaad1b2275141e0ccc5ee607377be28a947c0349128d3f066dba6b266fb2cf2",
             "hidden": "no",
@@ -1389,7 +1389,7 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
         },
         {
             "count": 1,
-            "rv_severity": "Recommended",
+            "vfense_severity": "Recommended",
             "release_date": 1400644800,
             "app_id": "8bfbffd62cb74869119f28dbbdc06d4ce651286a5105b3c20227b60e4fad741d",
             "hidden": "no",
@@ -1397,7 +1397,7 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
         },
         {
             "count": 1,
-            "rv_severity": "Recommended",
+            "vfense_severity": "Recommended",
             "release_date": 1400644800,
             "app_id": "d081e1372cee5ae368b94d064982ddaad67c40aacd8c845570b97ee69c5adef4",
             "hidden": "no",
@@ -1435,8 +1435,8 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
                     DbCommonAppKeys.AppId: (
                         x['right'][DbCommonAppKeys.AppId]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        x['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        x['right'][DbCommonAppKeys.vFenseSeverity]
                     ),
                     DbCommonAppKeys.Hidden: (
                         x['right'][DbCommonAppKeys.Hidden]
@@ -1468,7 +1468,7 @@ def fetch_recently_released_apps(view_name, count=5, conn=None):
             )
             .pluck(
                 DbCommonAppKeys.Name, DbCommonAppKeys.AppId,
-                DbCommonAppKeys.Hidden, DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.Hidden, DbCommonAppKeys.vFenseSeverity,
                 DbCommonAppKeys.ReleaseDate, 'count'
             )
             .order_by(r.desc(DbCommonAppKeys.ReleaseDate))
@@ -1571,8 +1571,8 @@ def fetch_os_apps_history(
                     DbCommonAppKeys.ReleaseDate: (
                         x['right'][DbCommonAppKeys.ReleaseDate]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        x['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        x['right'][DbCommonAppKeys.vFenseSeverity]
                     ),
                 }
             )
@@ -1599,8 +1599,8 @@ def fetch_os_apps_history(
                                 DbCommonAppKeys.Version: (
                                     x[DbCommonAppKeys.Version]
                                 ),
-                                DbCommonAppKeys.RvSeverity: (
-                                    x[DbCommonAppKeys.RvSeverity]
+                                DbCommonAppKeys.vFenseSeverity: (
+                                    x[DbCommonAppKeys.vFenseSeverity]
                                 )
                             }
                         ],
@@ -1622,7 +1622,7 @@ def fetch_os_apps_history(
                     'details': (
                         r.row['reduction']['details']
                         .group(
-                            lambda a: a['rv_severity']
+                            lambda a: a['vfense_severity']
                         )
                         .map(
                             lambda a:
@@ -1744,8 +1744,8 @@ def fetch_os_apps_history_for_agent(
                     DbCommonAppKeys.ReleaseDate: (
                         x['right'][DbCommonAppKeys.ReleaseDate]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        x['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        x['right'][DbCommonAppKeys.vFenseSeverity]
                     ),
                 }
             )
@@ -1772,8 +1772,8 @@ def fetch_os_apps_history_for_agent(
                                 DbCommonAppKeys.Version: (
                                     x[DbCommonAppKeys.Version]
                                 ),
-                                DbCommonAppKeys.RvSeverity: (
-                                    x[DbCommonAppKeys.RvSeverity]
+                                DbCommonAppKeys.vFenseSeverity: (
+                                    x[DbCommonAppKeys.vFenseSeverity]
                                 )
                             }
                         ],
@@ -1795,7 +1795,7 @@ def fetch_os_apps_history_for_agent(
                     'details': (
                         r.row['reduction']['details']
                         .group(
-                            lambda a: a['rv_severity']
+                            lambda a: a['vfense_severity']
                         )
                         .map(
                             lambda a:
@@ -1926,8 +1926,8 @@ def fetch_os_apps_history_for_tag(
                     DbCommonAppKeys.ReleaseDate: (
                         x['right'][DbCommonAppKeys.ReleaseDate]
                     ),
-                    DbCommonAppKeys.RvSeverity: (
-                        x['right'][DbCommonAppKeys.RvSeverity]
+                    DbCommonAppKeys.vFenseSeverity: (
+                        x['right'][DbCommonAppKeys.vFenseSeverity]
                     ),
                 }
             )
@@ -1954,8 +1954,8 @@ def fetch_os_apps_history_for_tag(
                                 DbCommonAppKeys.Version: (
                                     x[DbCommonAppKeys.Version]
                                 ),
-                                DbCommonAppKeys.RvSeverity: (
-                                    x[DbCommonAppKeys.RvSeverity]
+                                DbCommonAppKeys.vFenseSeverity: (
+                                    x[DbCommonAppKeys.vFenseSeverity]
                                 )
                             }
                         ],
@@ -1977,7 +1977,7 @@ def fetch_os_apps_history_for_tag(
                     'details': (
                         r.row['reduction']['details']
                         .group(
-                            lambda a: a['rv_severity']
+                            lambda a: a['vfense_severity']
                         )
                         .map(
                             lambda a:

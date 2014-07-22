@@ -61,7 +61,7 @@ class FetchApps(FetchAppsBase):
                 DbCommonAppKeys.Version,
                 DbCommonAppKeys.Name,
                 DbCommonAppKeys.ReleaseDate,
-                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.vFenseSeverity,
                 DbCommonAppKeys.VulnerabilityId,
             ]
         )

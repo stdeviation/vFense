@@ -214,7 +214,7 @@ def fetch_app_data_by_appid_and_agentid(
             "support_url": "",
             "version": "3.4.2-0ubuntu2.4",
             "cve_ids": [],
-            "rv_severity": "Recommended",
+            "vfense_severity": "Recommended",
             "hidden": "no",
             "uninstallable": "yes",
             "vulnerability_id": "",
@@ -297,7 +297,7 @@ def fetch_apps_data_by_os_code(
                 "support_url": "",
                 "version": "3.4.2-0ubuntu2.4",
                 "cve_ids": [],
-                "rv_severity": "Recommended",
+                "vfense_severity": "Recommended",
                 "hidden": "no",
                 "uninstallable": "yes",
                 "vulnerability_id": "",
@@ -473,7 +473,7 @@ def fetch_appids_by_agentid_and_status(agent_id, status, sev=None,
                     sev
                 ],
                 r.table(join_table),
-                index=DbCommonAppIndexes.AppIdAndRvSeverity
+                index=DbCommonAppIndexes.AppIdAndvFenseSeverity
             )
             .map(
                 lambda y: y['right'][DbCommonAppKeys.AppId]
@@ -624,7 +624,7 @@ def insert_app_data(app_data, collection=AppCollections.UniqueApplications):
                 "reboot_required": "no", "os_code": "linux",
                 "repo": "precise-updates/main", "support_url": "",
                 "version": "3.4.2-0ubuntu2.4", "cve_ids": [],
-                "rv_severity": "Recommended", "hidden": "no",
+                "vfense_severity": "Recommended", "hidden": "no",
                 "uninstallable": "yes", "vulnerability_id": "",
                 "name": "gwibber-service-facebook"
             }

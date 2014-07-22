@@ -62,7 +62,7 @@ class FetchAppsIdsForSchedule(object):
                 [
                     x[DbCommonAppKeys.AppId], sev, CommonKeys.NO
                 ],
-                index=DbCommonAppIndexes.AppIdAndRvSeverityAndHidden
+                index=DbCommonAppIndexes.AppIdAndvFenseSeverityAndHidden
             )
             .map(
                 lambda x: x['right'][DbCommonAppKeys.AppId]
@@ -108,7 +108,7 @@ class FetchAppsIdsForSchedule(object):
                     x['right'][DbCommonAppKeys.AppId], sev, CommonKeys.NO
                 ],
                 r.table(self.app_collection),
-                index=DbCommonAppIndexes.AppIdAndRvSeverityAndHidden
+                index=DbCommonAppIndexes.AppIdAndvFenseSeverityAndHidden
             )
             .map(
                 lambda x: x['right'][DbCommonAppKeys.AppId]

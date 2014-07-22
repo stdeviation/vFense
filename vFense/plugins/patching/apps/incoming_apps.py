@@ -43,7 +43,7 @@ class IncomingApplications():
     def _set_app_per_node_parameters(self, app):
         app[AppsPerAgentKey.AgentId] = self.agent_id
         app[AppsKey.OsCode] = self.os_code
-        app[AppsKey.RvSeverity] = get_proper_severity(
+        app[AppsKey.vFenseSeverity] = get_proper_severity(
             app[AppsKey.VendorSeverity]
         )
 

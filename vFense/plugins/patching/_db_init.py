@@ -20,12 +20,12 @@ def initialize_collections(collection, current_collections):
 
 @db_create_close
 def initialize_app_indexes(collection, indexes, conn=None):
-    if not DbCommonAppIndexes.RvSeverity in indexes:
+    if not DbCommonAppIndexes.vFenseSeverity in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppIndexes.RvSeverity
+                DbCommonAppIndexes.vFenseSeverity
             )
             .run(conn)
         )
@@ -53,16 +53,16 @@ def initialize_app_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
-    if not DbCommonAppIndexes.AppIdAndRvSeverity in indexes:
+    if not DbCommonAppIndexes.AppIdAndvFenseSeverity in indexes:
         (
             r
             .table(collection)
             .index_create(
-                DbCommonAppIndexes.AppIdAndRvSeverity,
+                DbCommonAppIndexes.AppIdAndvFenseSeverity,
                 lambda x:
                 [
                     x[DbCommonAppKeys.AppId],
-                    x[DbCommonAppKeys.RvSeverity]
+                    x[DbCommonAppKeys.vFenseSeverity]
                 ]
             )
             .run(conn)

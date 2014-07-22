@@ -773,7 +773,7 @@ class AppIdCustomAppsHandler(BaseHandler):
                     severity = severity.capitalize()
                     sev_data = (
                         {
-                            AppsKey.RvSeverity: severity
+                            AppsKey.vFenseSeverity: severity
                         }
                     )
                     update_app_data_by_app_id(
@@ -1230,7 +1230,7 @@ class CustomAppsHandler(BaseHandler):
             hidden = CommonKeys.YES
 
         if sort_by == AppFilterValues.SEVERITY:
-            sort_by = AppsKey.RvSeverity
+            sort_by = AppsKey.vFenseSeverity
 
 
         search = (

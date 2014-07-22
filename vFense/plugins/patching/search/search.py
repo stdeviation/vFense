@@ -48,7 +48,7 @@ class RetrieveApps(RetrieveAppsBase):
                     "count": 1,
                     "data": {
                         "kb": "",
-                        "rv_severity": "Recommended",
+                        "vfense_severity": "Recommended",
                         "vendor_name": "",
                         "support_url": "http://www.abisource.com/",
                         "description": "efficient, featureful word processor with collaboration\n AbiWord is a full-featured, efficient word processing application.\n It is suitable for a wide variety of word processing tasks, and\n is extensible with a variety of plugins.\n .\n This package includes many of the available import/export plugins allowing\n AbiWord to interact with ODT, WordPerfect, and other formats.  It also\n includes tools plugins, offering live collaboration with AbiWord users\n on Linux and Windows (using TCP or Jabber/XMPP), web translation and\n dictionary support, and more.\n .\n Additional plugins that require significant amounts of extra software to\n function are in the various abiword-plugin-* packages.",

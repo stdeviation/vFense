@@ -60,7 +60,7 @@ class FetchAppsBase(object):
                 DbCommonAppKeys.Version,
                 DbCommonAppKeys.Name,
                 DbCommonAppKeys.ReleaseDate,
-                DbCommonAppKeys.RvSeverity,
+                DbCommonAppKeys.vFenseSeverity,
                 DbCommonAppKeys.VulnerabilityId,
             ]
         )
@@ -351,7 +351,7 @@ class FetchAppsBase(object):
                 base
                 .filter(
                     lambda x:
-                    (x[DbCommonAppKeys.RvSeverity] == sev)
+                    (x[DbCommonAppKeys.vFenseSeverity] == sev)
                     &
                     (x[DbCommonAppKeys.Name].match("(?i)"+name))
                 )
@@ -366,7 +366,7 @@ class FetchAppsBase(object):
                 base
                 .filter(
                     lambda x:
-                    (x[DbCommonAppKeys.RvSeverity] == sev)
+                    (x[DbCommonAppKeys.vFenseSeverity] == sev)
                     &
                     (x[DbCommonAppKeys.Name].match("(?i)"+name))
                 )
@@ -405,7 +405,7 @@ class FetchAppsBase(object):
                 base
                 .filter(
                     lambda x:
-                    (x[DbCommonAppKeys.RvSeverity] == sev)
+                    (x[DbCommonAppKeys.vFenseSeverity] == sev)
                     &
                     (x[DbCommonAppKeys.Name].match("(?i)"+name))
                 )
@@ -424,7 +424,7 @@ class FetchAppsBase(object):
                 base
                 .filter(
                     lambda x:
-                    (x[DbCommonAppKeys.RvSeverity] == sev)
+                    (x[DbCommonAppKeys.vFenseSeverity] == sev)
                     &
                     (x[DbCommonAppKeys.Name].match("(?i)"+name))
                 )
@@ -663,8 +663,8 @@ class FetchAppsBase(object):
                     x['right'][DbCommonAppKeys.Name],
                 DbCommonAppKeys.ReleaseDate:
                     x['right'][DbCommonAppKeys.ReleaseDate].to_epoch_time(),
-                DbCommonAppKeys.RvSeverity:
-                    x['right'][DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.vFenseSeverity:
+                    x['right'][DbCommonAppKeys.vFenseSeverity],
                 DbCommonAppKeys.VulnerabilityId:
                     x['right'][DbCommonAppKeys.VulnerabilityId],
                 DbCommonAppKeys.Hidden:
@@ -687,8 +687,8 @@ class FetchAppsBase(object):
                     r.row[DbCommonAppKeys.Name],
                 DbCommonAppKeys.ReleaseDate:
                     r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time(),
-                DbCommonAppKeys.RvSeverity:
-                    r.row[DbCommonAppKeys.RvSeverity],
+                DbCommonAppKeys.vFenseSeverity:
+                    r.row[DbCommonAppKeys.vFenseSeverity],
                 DbCommonAppKeys.VulnerabilityId:
                     r.row[DbCommonAppKeys.VulnerabilityId],
                 DbCommonAppKeys.Hidden:
@@ -758,7 +758,7 @@ class FetchAppsBase(object):
                         x['right'][DbCommonAppKeys.AppId], sev
                     ],
                     r.table(self.apps_collection),
-                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                    index=DbCommonAppIndexes.AppIdAndvFenseSeverity
                 )
                 .map(map_hash)
             )
@@ -770,7 +770,7 @@ class FetchAppsBase(object):
                 .table(self.apps_collection)
                 .get_all(
                     sev,
-                    index=DbCommonAppIndexes.RvSeverity
+                    index=DbCommonAppIndexes.vFenseSeverity
                 )
                 .map(map_hash)
             )
@@ -847,7 +847,7 @@ class FetchAppsBase(object):
                         x['right'][DbCommonAppPerAgentKeys.AppId], sev
                     ],
                     r.table(self.apps_collection),
-                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                    index=DbCommonAppIndexes.AppIdAndvFenseSeverity
                 )
                 .map(map_hash)
             )
@@ -867,7 +867,7 @@ class FetchAppsBase(object):
                         x[DbCommonAppPerAgentKeys.AppId], sev
                     ],
                     r.table(self.apps_collection),
-                    index=DbCommonAppIndexes.AppIdAndRvSeverity
+                    index=DbCommonAppIndexes.AppIdAndvFenseSeverity
                 )
                 .pluck('right')
                 .map(map_hash)

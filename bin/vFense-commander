@@ -539,7 +539,7 @@ The various operations you can perform for the tags api.
         parser.add_argument(
             '--sort_by', dest='sort_by', default='app_name', type=str,
             help='The key that will be used to sort by.', choices=[
-                'app_name', 'version', 'release_date', 'rv_severity',
+                'app_name', 'version', 'release_date', 'vfense_severity',
                 'vulnerability_id'
             ]
         )
@@ -1048,7 +1048,7 @@ Available operations you can perform on an agent.
         parser.add_argument(
             '--sort_by', dest='sort_by', default='app_name', type=str,
             help='The key that will be used to sort by.', choices=[
-                'app_name', 'version', 'release_date', 'rv_severity',
+                'app_name', 'version', 'release_date', 'vfense_severity',
                 'vulnerability_id'
             ]
         )

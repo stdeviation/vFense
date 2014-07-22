@@ -312,7 +312,7 @@ def get_appid_list(agent_id, severity=None,
 
 
 def get_app_for_appids(collection, app_id, conn=None):
-    fields_to_pluck = [AppsKey.AppId, AppsKey.Name, AppsKey.RvSeverity]
+    fields_to_pluck = [AppsKey.AppId, AppsKey.Name, AppsKey.vFenseSeverity]
     app = fetch_app_data(
         app_id, collection=collection, fields_to_pluck=fields_to_pluck
     )
@@ -327,7 +327,7 @@ def get_agent_apps_details(job, agent_id, details=True, conn=None):
     app_keys_to_pluck = [
         AppsKey.AppId,
         AppsKey.Name,
-        AppsKey.RvSeverity
+        AppsKey.vFenseSeverity
     ]
 
     if job['pkg_type'] == 'system_apps':
