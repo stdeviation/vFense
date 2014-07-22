@@ -28,10 +28,27 @@ def gen_uuid():
 
 
 def move_app_from_tmp(file_name, tmp_path, uuid):
+    """
+    Move application from the temporary directory to the
+        the var/packages/tmp directory.
+
+    Args
+        file_name (str): The name of the file that was uploaded.
+        tmp_path (str): The location to where the file was uploaded.
+        uuid (str): The generated UUID.
+
+    Basic Usage:
+        >>> from vFense.plugins.patching.apps.custom_apps.uploaded.uploader import move_app_from_tmp
+        >>> file_name = "apps.csv"
+        >>> tmp_path = "/tmp/apps/0000001"
+        >>> uuid = "bda154f3-c941-465d-ac9b-0c2821d4a4a2"
+        >>> move_app_from_tmp(file_name, tmp_path, uuid)
+
+    Returns:
+    """
     results = {}
     base_app_dir = os.path.join(TMP_DIR, uuid)
     full_app_path = os.path.join(base_app_dir, file_name)
-
 
     if not os.path.exists(base_app_dir):
         try:
@@ -44,15 +61,13 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
             fsize = os.stat(tmp_path).st_size
             md5 = md5sum(tmp_path)
             shutil.move(tmp_path, full_app_path)
-            data = [
-                {
-                    'uuid': uuid,
-                    'name': file_name,
-                    'size': fsize,
-                    'md5': md5,
-                    'file_path': full_app_path
-                }
-            ]
+            data = {
+                'uuid': uuid,
+                'name': file_name,
+                'size': fsize,
+                'md5': md5,
+                'file_path': full_app_path
+            }
             results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 PackageCodes.ObjectCreated
             )

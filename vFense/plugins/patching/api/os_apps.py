@@ -91,6 +91,38 @@ class UploadHandler(BaseHandler):
         results = move_app_from_tmp(file_name, tmp_path, uuid)
         return results
 
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.ADMINISTRATOR)
+    def put(self):
+        username = self.get_current_user()
+        view_name = (
+            UserManager(username).get_attribute(UserKeys.CurrentView)
+        )
+        name = self.arguments.get('name')
+        version = self.arguments.get('version')
+        md5 = self.arguments.get('md5')
+        arch = self.arguments.get('arch')
+        uuid = self.arguments.get('uuid')
+        size = self.arguments.get('size', None)
+        kb = self.arguments.get('kb', '')
+        support_url = self.arguments.get('support_url', '')
+        severity = self.arguments.get('severity', 'Optional')
+        operating_system = self.arguments.get('operating_system')
+        vendor_name = self.arguments.get('vendor_name', None)
+        description = self.arguments.get('description', None)
+        cli_options = self.arguments.get('cli_options', None)
+        release_date = self.arguments.get('release_date', None)
+
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(result, indent=4))
+
+    @results_message
+    def finalize_upload(self, app):
+        pass
+
+
+
 
 class AgentIdAppsHandler(AppsBaseHandler):
     @authenticated_request
