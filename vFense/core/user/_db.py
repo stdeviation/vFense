@@ -3,7 +3,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import *
 from vFense.core.user._db_model import (
-    UserKeys, UserCollections, UserMappedKeys
+    UserKeys, UserCollections, UserMappedKeys, UserIndexes
 )
 from vFense.core.user._constants import *
 from vFense.core.group._db_model import (

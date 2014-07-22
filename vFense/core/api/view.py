@@ -510,7 +510,7 @@ class ViewsHandler(BaseHandler):
             if not isinstance(view_names, list):
                 view_names = view_names.split(',')
 
-            results = self.remove_views(view_names)
+            results = self.remove_views(view_names, True)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
@@ -533,16 +533,16 @@ class ViewsHandler(BaseHandler):
 
     @results_message
     @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEW)
-    def remove_views(self, view_names):
+    def remove_views(self, view_names, force=False):
         end_results = {}
         views_deleted = []
         views_unchanged = []
         for view_name in view_names:
             manager = ViewManager(view_name)
             manager.remove_agents()
-            results = manager.remove()
+            results = manager.remove(force)
             if (results[ApiResultKeys.VFENSE_STATUS_CODE]
-                    == ViewCodes.Deleted):
+                    == ViewCodes.ViewDeleted):
                 views_deleted.append(view_name)
             else:
                 views_unchanged.append(view_name)
@@ -575,13 +575,14 @@ class ViewsHandler(BaseHandler):
             end_results[ApiResultKeys.MESSAGE] = msg
 
         elif views_unchanged and not views_deleted:
-            msg = 'view names unchanged: %s' % (', '.join(views_unchanged))
             end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                 ViewCodes.ObjectsUnchanged
             )
             end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
                 ViewCodes.ViewsUnchanged
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results[ApiResultKeys.MESSAGE] = (
+                results[ApiResultKeys.MESSAGE]
+            )
 
         return end_results

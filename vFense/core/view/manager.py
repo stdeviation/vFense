@@ -1098,11 +1098,15 @@ class ViewManager(object):
 
                 if object_status == DbCodes.Deleted:
                     if force:
-                        delete_all_users_from_view(self.name)
-                        delete_all_groups_from_view(self.name)
-                        self.remove_agents()
-                        delete_tag_ids_per_agent(self.tags)
-                        delete_tag_ids_from_view(self.name)
+                        if self.users:
+                            delete_all_users_from_view(self.name)
+                        if self.groups:
+                            delete_all_groups_from_view(self.name)
+                        if self.agents:
+                            self.remove_agents()
+                        if self.tags:
+                            delete_tag_ids_per_agent(self.tags)
+                            delete_tag_ids_from_view(self.name)
                         text = (
                             'View {view_name} deleted' +
                             'and all users: {users} and groups: {groups}' +
@@ -1129,8 +1133,8 @@ class ViewManager(object):
 
             else:
                 msg = (
-                    'Can not remove view %s, while users: %s'+'exist in view: %s'
-                    % (self.name, self.users)
+                    'Can not remove view %s, while users: %s'
+                    % (self.name, ', '.join(self.users))
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     GenericCodes.ObjectUnchanged

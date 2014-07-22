@@ -176,7 +176,7 @@ def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
             tag_info = list(
                 r
                 .expr(tag_ids)
-                .map(
+                .concat_map(
                     lambda tag_id:
                     r
                     .table(TagCollections.Tags)
@@ -189,7 +189,7 @@ def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
             tag_info = list(
                 r
                 .expr(tag_ids)
-                .map(
+                .concat_map(
                     lambda tag_id:
                     r
                     .table(TagCollections.Tags)

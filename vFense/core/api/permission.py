@@ -32,7 +32,7 @@ class RetrieveValidPermissionsHandler(BaseHandler):
             results = (
                 Results(
                     active_user, self.request.uri, self.request.method
-                ).information_retrieved(**data)
+                ).data_retrieved(**data)
             )
             self.set_status(results['http_status'])
             self.modified_output(results, output, 'uris')

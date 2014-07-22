@@ -147,7 +147,7 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
         if views and not os_string:
             data = list(
                 r.expr(views)
-                .map(
+                .concat_map(
                     lambda view:
                     r
                     .table(AgentCollections.Agents)
@@ -160,7 +160,7 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
         elif views and os_string:
             data = list(
                 r.expr(views)
-                .map(
+                .concat_map(
                     lambda view:
                     r
                     .table(AgentCollections.Agents)
@@ -174,7 +174,7 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
         elif not views and os_string:
             data = list(
                 r.expr(views)
-                .map(
+                .concat_map(
                     lambda view:
                     r
                     .table(AgentCollections.Agents)
