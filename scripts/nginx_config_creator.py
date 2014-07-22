@@ -23,7 +23,7 @@ server {
     ssl_protocols               SSLv3 TLSv1;
     ssl_ciphers                 ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
     ssl_prefer_server_ciphers   on;
-    client_max_body_size	    1G;
+    client_max_body_sizei       1G;
     client_body_buffer_size     100m;
 
     location /nginx_status {
@@ -34,23 +34,28 @@ server {
         deny all;
     }
 
-    location /upload/package {
-        upload_store %(app_tmp_path)s/;
-        upload_store_access user:rw group:rw all:rw;
-        upload_set_form_field $upload_field_name.name "$upload_file_name";
-        upload_set_form_field $upload_field_name.content_type "$upload_content_type";
-        upload_set_form_field $upload_field_name.path "$upload_tmp_path";
-        upload_aggregate_form_field "$upload_field_name.md5" "$upload_file_md5";
-        upload_aggregate_form_field "$upload_field_name.size" "$upload_file_size";
-        upload_pass @after_upload;
-        upload_pass_form_field "^id$";
-        upload_pass_form_field ".*";
-        upload_cleanup 400 404 499 500-505;
+    location ^~ /api/v1/apps/upload {
+        auth_request                /api/v1/authenticated;
+        client_body_temp_path       /tmp/apps/;
+
+        client_body_in_file_only    on;
+        client_body_buffer_size     128K;
+        proxy_set_header            X-FILE $request_body_file;
+        proxy_pass_request_headers  on;
+        proxy_set_header            Content-Length "";
+        proxy_set_body              off;
+        proxy_redirect              off;
+        proxy_pass_request_body     off;
+        proxy_pass                  https://rvweb;
     }
-      
-    location @after_upload {
-        proxy_pass              https://rvweb;
-    } 
+
+    location ^~ /api/v1/authenticated {
+        proxy_pass_request_body     off;
+        proxy_set_header            Content-Length "";
+        proxy_set_header            Content-Type "";
+        proxy_set_header            X-Original-URI $request_uri;
+        proxy_pass                  https://rvweb;
+    }
 
     location ^~ /api/ {
         proxy_pass              https://rvweb;
@@ -58,16 +63,16 @@ server {
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_intercept_errors  off;
-        proxy_redirect          http:// https://; 
+        proxy_redirect          http:// https://;
     }
 
-    location ~ /ra/websockify/(.*)/([0-9]+) {                                                                                                             
-        proxy_pass              http://$1:$2/websockify;                           
-        proxy_read_timeout      2592000;                                           
-        proxy_http_version      1.1;                                               
-        proxy_set_header        Upgrade $http_upgrade;                             
-        proxy_set_header        Connection "upgrade";                               
-    } 
+    location ~ /ra/websockify/(.*)/([0-9]+) {
+        proxy_pass              http://$1:$2/websockify;
+        proxy_read_timeout      2592000;
+        proxy_http_version      1.1;
+        proxy_set_header        Upgrade $http_upgrade;
+        proxy_set_header        Connection "upgrade";
+    }
 
     location ~ /ra/(.*)/([0-9]+)/(.*$) {
         proxy_pass              http://$1:$2/$3;
@@ -75,8 +80,7 @@ server {
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_intercept_errors  off;
-        proxy_redirect          http:// https://; 
-	#echo 			"im in the location";
+        proxy_redirect          http:// https://;
     }
 
     location  ^~ /ws/ {
