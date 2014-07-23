@@ -1,48 +1,40 @@
 import logging
 import logging.config
-from datetime import datetime
 import simplejson as json
 
-from vFense.core.api.base import BaseHandler
 from vFense import VFENSE_LOGGING_CONFIG
 
-#from vFense.scheduler.jobManager import schedule_once
+from vFense.core.api.base import BaseHandler
+from vFense.core.agent._db_model import AgentKeys
+from vFense.core._constants import CommonKeys
+from vFense.core.results import Results, ApiResultKeys
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.decorators import check_permissions
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments, results_message
+)
+from vFense.core._constants import DefaultQueryValues, SortValues
+from vFense.core.user import UserKeys
+from vFense.core.user.manager import UserManager
+from vFense.core.operations._constants import AgentOperations
+from vFense.core.api._constants import ApiArguments
+
+from vFense.plugins.patching import Apps, Files
 from vFense.plugins.patching.api.base import AppsBaseHandler
 from vFense.plugins.patching.scheduler.manager import (
     AgentAppsJobManager, TagAppsJobManager
 )
-from vFense.plugins.patching.operations._constants import InstallKeys
 from vFense.plugins.patching.operations import Install
-
 from vFense.plugins.patching.search.search_by_appid import (
     RetrieveAgentsByAppId
 )
-
-from vFense.plugins.patching.search.search import (
-    RetrieveApps
-)
-
-from vFense.core.agent._db_model import AgentKeys
-from vFense.plugins.patching._db_model import AppsKey
-from vFense.core._constants import CommonKeys
-from vFense.core.permissions._constants import Permissions
-from vFense.core.permissions.decorators import check_permissions
-from vFense.core.results import Results, ApiResultKeys
-
+from vFense.plugins.patching.search.search import RetrieveApps
 from vFense.plugins.patching._db import update_app_data_by_app_id
-from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
+from vFense.plugins.patching._db_model import AppsKey
+from vFense.plugins.patching.operations.store_operations import (
+    StorePatchingOperation
+)
 from vFense.plugins.patching.patching import toggle_hidden_status
-from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
-)
-
-from vFense.core.user import UserKeys
-from vFense.core.user.manager import UserManager
-from vFense.core.api._constants import (
-    ApiArguments
-)
-from vFense.core._constants import DefaultQueryValues, SortValues
-from vFense.core.operations._constants import AgentOperations
 from vFense.plugins.patching.api._constants import (
     AppApiArguments, AppFilterValues
 )
@@ -99,29 +91,49 @@ class UploadHandler(BaseHandler):
         view_name = (
             UserManager(username).get_attribute(UserKeys.CurrentView)
         )
-        name = self.arguments.get('name')
-        version = self.arguments.get('version')
-        md5 = self.arguments.get('md5')
-        arch = self.arguments.get('arch')
-        uuid = self.arguments.get('uuid')
-        size = self.arguments.get('size', None)
-        kb = self.arguments.get('kb', '')
-        support_url = self.arguments.get('support_url', '')
-        severity = self.arguments.get('severity', 'Optional')
-        operating_system = self.arguments.get('operating_system')
-        vendor_name = self.arguments.get('vendor_name', None)
-        description = self.arguments.get('description', None)
-        cli_options = self.arguments.get('cli_options', None)
-        release_date = self.arguments.get('release_date', None)
+        try:
+            name = self.arguments.get('name')
+            version = self.arguments.get('version')
+            md5 = self.arguments.get('md5')
+            arch = self.arguments.get('arch')
+            uuid = self.arguments.get('uuid')
+            size = self.arguments.get('size', None)
+            kb = self.arguments.get('kb', '')
+            support_url = self.arguments.get('support_url', '')
+            severity = self.arguments.get('severity', 'Optional')
+            operating_system = self.arguments.get('operating_system')
+            platform = self.arguments.get('platform')
+            vendor_name = self.arguments.get('vendor_name', None)
+            description = self.arguments.get('description', None)
+            cli_options = self.arguments.get('cli_options', None)
+            release_date = self.arguments.get('release_date', None)
+            reboot_required = self.arguments.get('reboot_required', None)
+            vulnerability_id = self.arguments.get('vulnerability_id', None)
+            vulnerability_categories = (
+                self.arguments.get('vulnerability_categories', None)
+            )
+            cve_ids = self.arguments.get('cve_ids', None)
+            app = (
+                Apps(
+                    name, version, arch, uuid, kb, support_url, severity,
+                    operating_system, platform, vendor_name, description,
+                    cli_options, release_date,
+                    reboot_required=reboot_required,
+                    vulnerability_id=vulnerability_id,
+                    vulnerability_categories=vulnerability_categories,
+                    cve_ids=cve_ids
+                )
+            )
+            results = self.finalize_upload(app)
+            self.set_header('Content-Type', 'application/json')
+            self.write(json.dumps(results, indent=4))
 
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(result, indent=4))
+        except Exception as e:
+            logger.exception(e)
 
     @results_message
     def finalize_upload(self, app):
         pass
-
-
 
 
 class AgentIdAppsHandler(AppsBaseHandler):

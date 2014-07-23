@@ -118,6 +118,10 @@ class AppDefaults():
     DOWNLOAD_STATUS = PackageCodes.FileCompletedDownload
     VFENSE_SEVERITY = 'Optional'
 
+class FileDefaults():
+    AGENT_IDS = []
+    APP_IDS = []
+
 
 class PossibleRebootValues():
     POSSIBLE = 'possible'

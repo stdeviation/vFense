@@ -39,7 +39,7 @@ from vFense.plugins.patching.search.search_by_appid import (
 )
 
 from vFense.plugins.patching.uploader.uploader import (
-    gen_uuid, move_packages, store_package_info_in_db
+    gen_uuid, move_app_from_tmp, store_package_info_in_db
 )
 
 from vFense.core.user import UserKeys
@@ -75,76 +75,6 @@ class GetThirdPartyUuidHandler(BaseHandler):
         )
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results, indent=4))
-
-
-class ThirdPartyPackageUploadHandler(BaseHandler):
-    @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
-    def post(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri = self.request.uri
-        method = self.request.method
-        name = self.get_argument('pkg.name')
-        path = self.get_argument('pkg.path')
-        size = self.get_argument('pkg.size')
-        md5 = self.get_argument('pkg.md5')
-        uuid = self.request.headers.get('Fileuuid')
-
-        if uuid and name and md5 and path and size:
-            result = (
-                move_packages(
-                    username, view_name, uri, method,
-                    name=name, path=path, size=size,
-                    md5=md5, uuid=uuid
-                )
-            )
-
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(result, indent=4))
-
-
-class ThirdPartyUploadHandler(BaseHandler):
-    @authenticated_request
-    @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
-    def post(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri = self.request.uri
-        method = self.request.method
-        name = self.arguments.get('name', None)
-        release_date = self.arguments.get('release_date', None)
-        severity = self.arguments.get('severity', 'Optional')
-        description = self.arguments.get('description', None)
-        kb = self.arguments.get('kb', '')
-        support_url = self.arguments.get('support_url', '')
-        major_version = self.arguments.get('major_version', None)
-        minor_version = self.arguments.get('minor_version', None)
-        vendor_name = self.arguments.get('vendor_name', None)
-        operating_system = self.arguments.get('operating_system', None)
-        size = self.arguments.get('size', None)
-        md5 = self.arguments.get('md5_hash', None)
-        cli_options = self.arguments.get('cli_options', None)
-        arch = self.arguments.get('arch', None)
-        uuid = self.arguments.get('id', None)
-
-        result = (
-            store_package_info_in_db(
-                username, view_name, uri, method,
-                size, md5, operating_system, uuid, name,
-                severity, arch, major_version, minor_version,
-                release_date, vendor_name, description,
-                cli_options, support_url, kb
-            )
-        )
-
-        self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(result, indent=4))
 
 
 class AgentIdCustomAppsHandler(BaseHandler):

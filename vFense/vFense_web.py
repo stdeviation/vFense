@@ -83,10 +83,10 @@ class Application(tornado.web.Application):
             (r"/api/v1/app/custom/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/agents?", GetAgentsByCustomAppIdHandler),
             (r"/api/v1/apps/custom?", CustomAppsHandler),
 
-            (r"/api/v1/apps/custom/upload/finalize?", ThirdPartyPackageUploadHandler),
-            (r"/api/v1/apps/custom/upload/data?",ThirdPartyUploadHandler),
-            (r"/upload/package?",ThirdPartyPackageUploadHandler),
-            (r"/api/v1/apps/custom/upload/uuid?", GetThirdPartyUuidHandler),
+            #(r"/api/v1/apps/custom/upload/finalize?", ThirdPartyPackageUploadHandler),
+            #(r"/api/v1/apps/custom/upload/data?",ThirdPartyUploadHandler),
+            #(r"/upload/package?",ThirdPartyPackageUploadHandler),
+            #(r"/api/v1/apps/custom/upload/uuid?", GetThirdPartyUuidHandler),
 
             ##### Dashboard API Handlers
             (r"/api/v1/dashboard/graphs/bar/severity?",ViewSeverityHandler),
