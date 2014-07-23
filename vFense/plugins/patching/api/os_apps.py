@@ -87,9 +87,9 @@ class UploadHandler(BaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        active_user = self.get_current_user()
+        active_view = (
+            UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         try:
             name = self.arguments.get('name')
@@ -124,7 +124,8 @@ class UploadHandler(BaseHandler):
                     cve_ids=cve_ids
                 )
             )
-            results = self.finalize_upload(app)
+            file_data = Files(name, md5, size)
+            results = self.finalize_upload(app, file_data, active_view)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results, indent=4))
 
@@ -132,7 +133,7 @@ class UploadHandler(BaseHandler):
             logger.exception(e)
 
     @results_message
-    def finalize_upload(self, app):
+    def finalize_upload(self, app, file_data, active_view):
         pass
 
 
