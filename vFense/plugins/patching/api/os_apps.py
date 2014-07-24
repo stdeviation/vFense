@@ -41,7 +41,7 @@ from vFense.plugins.patching.api._constants import (
 from vFense.plugins.patching._constants import (
     AppStatuses, CommonSeverityKeys
 )
-from vFense.plugins.patching.uploader.uploader import (
+from vFense.plugins.patching.uploader.manager import (
     move_app_from_tmp
 )
 

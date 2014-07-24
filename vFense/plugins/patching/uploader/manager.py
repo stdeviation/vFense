@@ -6,11 +6,13 @@ from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.core.view.manager import ViewManager
 from vFense.core.view import ViewKeys
 from vFense.core._db_constants import DbTime
+from vFense.core.status_codes import DbCodes
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
 from vFense.utils.common import md5sum
 from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching._db import insert_app_data
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys
 )
@@ -165,9 +167,13 @@ class UploadManager(object):
                         insert_app_data(app_data, AppCollections.CustomApps)
                     )
                     if object_status == DbCodes.Inserted:
+                        if views:
+                            views = list(set(views).union([self.view]))
+                        else:
+                            views = [self.view_name]
                         add_custom_app_to_agents(
                             username, view_name,
-                            uri, method, file_data,
+                            file_data,
                             app_id=uuid
                         )
                         msg = 'app %s uploaded succesfully - ' % (app.name)

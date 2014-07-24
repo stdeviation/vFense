@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+    <head>
+        <title>USN-2298-1: Oxide vulnerabilities | Ubuntu</title>
+        <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
+        
+<style>
+dt {
+	font-weight: bold;
+	padding: 12px 0 8px 0px;
+}
+dd, dt {
+	line-height: 16px;
+	color: #333;
+}
+dd {
+	padding-left: 16px;
+}
+dd span {
+    padding-left: 10px;
+}
+</style>
+
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/forms.css"/>
+    </head>
+    <body>
+        <div id="container">
+            <div id="container-inner">
+                <div id="header">
+                    
+                    <h1 id="ubuntu-header"><a href="http://www.ubuntu.com/">Ubuntu</a></h1>
+                    
+                    
+    
+    <ul id="primary-links">
+<li><a href="http://www.ubuntu.com/cloud">Cloud</a></li>
+<li><a href="http://www.ubuntu.com/server">Server</a></li>
+<li><a href="http://www.ubuntu.com/desktop">Desktop</a></li>
+<li><a href="http://www.ubuntu.com/phone">Phone</a></li>
+<li><a href="http://www.ubuntu.com/tablet">Tablet</a></li>
+<li><a href="http://www.ubuntu.com/tv">TV</a></li>
+<li><a href="http://www.ubuntu.com/management">Management</a></li>
+<li><a href="http://www.ubuntu.com/download">Download</a></li>
+</ul>
+
+
+                </div>
+                <div id="menu-search">
+                    
+                    <div id="search-box">
+                        <form id="sitesearch" action="http://www.ubuntu.com/search/node" method="post">
+                          <input type="text" maxlength="128" name="search_theme_form" id="search-box-input"
+                                 value="Type to search" title="Enter the terms you wish to search for."
+                                 onblur="if(this.value==&#039;&#039;){this.value=&#039;Type to search&#039;;}"
+                                 onfocus="if(this.value==&#039;Type to search&#039;){this.value=&#039;&#039;}"
+                          />
+                          <button type="submit" name="op" id="search-box-button"><span>go</span></button>
+                          <input type="hidden" name="form_build_id" id="form-967ff0ccc1a2f6f6d92f3e8c0822866d" value="form-967ff0ccc1a2f6f6d92f3e8c0822866d" />
+                          <input type="hidden" name="form_token" id="a-unique-id" value="656a58b3b2c4f37a2af1d6b188a4a595" />
+                          <input type="hidden" name="form_id" id="edit-search-theme-form" value="search_theme_form" />
+                        </form>
+                    </div>
+                    
+                </div>
+                <div id="title">
+                    <h1>USN-2298-1: Oxide vulnerabilities</h1>
+                </div>
+
+                <div id="content" class="clearfix content-area">
+
+    
+<h2>Ubuntu Security Notice USN-2298-1</h2>
+<p><em>23rd July, 2014</em></p>
+<h3>oxide-qt vulnerabilities</h3>
+<p>A security issue affects these releases of Ubuntu and its 
+    derivatives:</p>
+<ul>
+
+    <li>Ubuntu 14.04 LTS</li>
+
+</ul>
+
+
+<h3>Summary</h3>
+<p>Several security issues were fixed in Oxide.
+</p>
+
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>oxide-qt 
+    - Web browser engine library for Qt
+    
+    </li>
+  
+
+</ul>
+
+
+<h3>Details</h3>
+<p>A type confusion bug was discovered in V8. If a user were tricked in to<br />opening a specially crafted website, an attacker could potentially exploit<br />this to cause a denial of service via renderer crash, or execute arbitrary<br />code with the privileges of the sandboxed render process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1730">CVE-2014-1730</a>)</p>
+
+<p>A type confusion bug was discovered in Blink. If a user were tricked in to<br />opening a specially crafted website, an attacker could potentially exploit<br />this to cause a denial of service via renderer crash, or execute arbitrary<br />code with the privileges of the sandboxed render process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1731">CVE-2014-1731</a>)</p>
+
+<p>Multiple security issues including memory safety bugs were discovered in<br />Chromium. If a user were tricked in to opening a specially crafted website,<br />an attacker could potentially exploit these to cause a denial of service via<br />application crash or execute arbitrary code with the privileges of the<br />user invoking the program. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1735">CVE-2014-1735</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3162">CVE-2014-3162</a>)</p>
+
+<p>Multiple use-after-free issues were discovered in the WebSockets<br />implementation. If a user were tricked in to opening a specially crafted<br />website, an attacker could potentially exploit these to cause a denial of<br />service via application crash or execute arbitrary code with the<br />privileges of the user invoking the program. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1740">CVE-2014-1740</a>)</p>
+
+<p>Multiple integer overflows were discovered in CharacterData<br />implementation. If a user were tricked in to opening a specially crafted<br />website, an attacker could potentially exploit these to cause a denial of<br />service via renderer crash or execute arbitrary code with the privileges<br />of the sandboxed render process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1741">CVE-2014-1741</a>)</p>
+
+<p>Multiple use-after-free issues were discovered in Blink. If a user were<br />tricked in to opening a specially crafted website, an attacker could<br />potentially exploit these to cause a denial of service via renderer crash<br />or execute arbitrary code with the privileges of the sandboxed render<br />process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1742">CVE-2014-1742</a>, <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1743">CVE-2014-1743</a>)</p>
+
+<p>An integer overflow bug was discovered in Chromium. If a user were<br />tricked in to opening a specially crafted website, an attacker could<br />potentially exploit this to cause a denial of service via application<br />crash or execute arbitrary code with the privileges of the user invoking<br />the program. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1744">CVE-2014-1744</a>)</p>
+
+<p>An out-of-bounds read was discovered in Chromium. If a user were tricked<br />in to opening a specially crafter website, an attacker could potentially<br />exploit this to cause a denial of service via application crash.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1746">CVE-2014-1746</a>)</p>
+
+<p>It was discovered that Blink allowed scrollbar painting to extend in to<br />the parent frame in some circumstances. An attacker could potentially<br />exploit this to conduct clickjacking attacks via UI redress.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1748">CVE-2014-1748</a>)</p>
+
+<p>An integer underflow was discovered in Blink. If a user were tricked in to<br />opening a specially crafter website, an attacker could potentially exploit<br />this to cause a denial of service via renderer crash or execute arbitrary<br />code with the privileges of the sandboxed render process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3152">CVE-2014-3152</a>)</p>
+
+<p>A use-after-free was discovered in Chromium. If a use were tricked in to<br />opening a specially crafted website, an attacker could potentially exploit<br />this to cause a denial of service via renderer crash or execute arbitrary<br />code with the privileges of the sandboxed render process.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3154">CVE-2014-3154</a>)</p>
+
+<p>A security issue was discovered in the SPDY implementation. An attacker<br />could potentially exploit this to cause a denial of service via<br />application crash or execute arbitrary code with the privileges of the<br />user invoking the program. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3155">CVE-2014-3155</a>)</p>
+
+<p>A heap overflow was discovered in Chromium. If a use were tricked in to<br />opening a specially crafted website, an attacker could potentially exploit<br />this to cause a denial of service via renderer crash or execute arbitrary<br />code with the privileges of the sandboxed render process. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3157">CVE-2014-3157</a>)</p>
+
+<p>It was discovered that Blink did not enforce security rules for<br />subresource loading in SVG images. If a user opened a site that embedded a<br />specially crafted image, an attacker could exploit this to log page views.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3160">CVE-2014-3160</a>)</p>
+
+<p>It was discovered that the SpeechInput feature in Blink could be activated<br />without consent or any visible indication. If a user were tricked in to<br />opening a specially crafted website, an attacker could exploit this to<br />eavesdrop on the user. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3803">CVE-2014-3803</a>)<br /></p>
+
+<h3>Update instructions</h3>
+<p> The problem can be corrected by updating your system to the following
+package version:</p>
+<dl>
+
+<dt>Ubuntu 14.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/oxide-qt">liboxideqtcore0</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/oxide-qt/1.0.4-0ubuntu0.14.04.1">1.0.4-0ubuntu0.14.04.1</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/oxide-qt">oxideqt-codecs</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/oxide-qt/1.0.4-0ubuntu0.14.04.1">1.0.4-0ubuntu0.14.04.1</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/oxide-qt">oxideqt-codecs-extra</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/oxide-qt/1.0.4-0ubuntu0.14.04.1">1.0.4-0ubuntu0.14.04.1</a>
+    </span>
+  </dd>
+    
+  
+
+</dl>
+<p>To update your system, please follow these instructions:
+<a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
+</p>
+<p>In general, a standard system update will make all the necessary changes.<br /></p>
+
+
+
+<h3>References</h3>
+<p>
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1730">CVE-2014-1730</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1731">CVE-2014-1731</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1735">CVE-2014-1735</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1740">CVE-2014-1740</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1741">CVE-2014-1741</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1742">CVE-2014-1742</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1743">CVE-2014-1743</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1744">CVE-2014-1744</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1746">CVE-2014-1746</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-1748">CVE-2014-1748</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3152">CVE-2014-3152</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3154">CVE-2014-3154</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3155">CVE-2014-3155</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3157">CVE-2014-3157</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3160">CVE-2014-3160</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3162">CVE-2014-3162</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3803">CVE-2014-3803</a>, 
+
+        <a href="https://launchpad.net/bugs/1337301">LP: 1337301</a>
+        
+
+</p>
+
+
+
+
+
+                </div>
+
+            </div>
+            <div id="footer" class="clearfix">
+              
+                <div class="footer-div">
+                    <p class="footer-title">Ubuntu</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/ubuntu/features">Features</a></li>
+                        <li><a href="http://www.ubuntu.com/ubuntu/whats-new">What's new?</a></li>
+                        <li><a href="http://www.ubuntu.com/ubuntu/why-is-it-free">Why is it free?</a></li>
+                        <li><a href="http://www.ubuntu.com/ubuntu/why-use-ubuntu">Why use Ubuntu?</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Business</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/business/desktop/overview">Desktop</a></li>
+                        <li><a href="http://www.ubuntu.com/business/server/overview">Server</a></li>
+                        <li><a href="http://www.ubuntu.com/business/cloud/overview">Cloud</a></li>
+                        <li><a href="http://www.ubuntu.com/business/services/overview">Services</a></li>
+                        <li><a href="http://www.ubuntu.com/business/case-studies">Case studies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Download</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/download/ubuntu/download">Ubuntu</a></li>
+                        <li><a href="http://www.ubuntu.com/download/server/download">Ubuntu Server</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Support</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/support/community">Community</a></li>
+                        <li><a href="http://www.ubuntu.com/support/training">Training</a></li>
+                        <li><a href="http://www.ubuntu.com/support/services">Services</a></li>
+                        <li><a href="http://www.ubuntu.com/usn">Security notices</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Project</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/project/about-ubuntu">About Ubuntu</a></li>
+                        <li><a href="http://www.ubuntu.com/project/canonical-and-ubuntu">Canonical and Ubuntu</a></li>
+                        <li><a href="http://www.ubuntu.com/project/open-source">Open source</a></li>
+                        <li><a href="http://www.ubuntu.com/project/derivatives">Derivatives</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Community</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/community/conduct">Code of conduct</a></li>
+                        <li><a href="http://www.ubuntu.com/community/get-involved">Get involved</a></li>
+                        <li><a href="http://www.ubuntu.com/community/report-problem">Report a problem</a></li>
+                        <li><a href="http://www.ubuntu.com/community/ubuntu-and-debian">Ubuntu and Debian</a></li>
+                        <li><a href="http://www.ubuntu.com/community/ubuntuvalues">Ubuntu values</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Partners</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/partners/programme">Partner programme</a></li>
+                        <li><a href="http://partners.canonical.com/">Find a partner</a></li>
+                        <li><a href="https://certification.canonical.com/">Hardware certification</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Further links</p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/contact-us">Contact us</a></li>
+                        <li><a href="http://www.ubuntu.com/aboutus/trademarkpolicy">Trademark policy</a></li>
+                        <li><a href="http://www.ubuntu.com/legal">Legal information</a></li>
+                        <li><a href="http://www.canonical.com/about-canonical/careers">Careers</a></li>
+                        <li><a href="http://www.ubuntu.com/rss.xml" class="newsfeed">News feed</a></li>
+                    </ul>
+                </div>
+            
+            </div>
+            <div id="copyright">
+                <a href="http://www.ubuntu.com"></a>
+                <p>&copy; 2010, 2011 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-1018242-4']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        
+    </body>
+</html>
