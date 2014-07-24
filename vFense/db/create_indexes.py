@@ -215,10 +215,10 @@ def initialize_indexes_and_create_tables():
 
 #################################### vFenseAppsCollection Indexes ###################################################
     if not vFenseAppsIndexes.vFenseSeverity in vfense_app_list:
-        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.vFenseSeverity).run(conn)
+        r.table(AppCollections.vFenseApps).index_create(vFenseAppsIndexes.vFenseSeverity).run(conn)
 
     if not vFenseAppsIndexes.Name in vfense_app_list:
-        r.table(AppCollections.vFenseApps).index_create(AgentAppsIndexes.Name).run(conn)
+        r.table(AppCollections.vFenseApps).index_create(vFenseAppsIndexes.Name).run(conn)
 
     if not vFenseAppsIndexes.NameAndVersion in vfense_app_list:
         r.table(AppCollections.vFenseApps).index_create(
@@ -234,13 +234,13 @@ def initialize_indexes_and_create_tables():
 
 #################################### vFenseAppsPerAgentCollection Indexes ###################################################
     if not vFenseAppsPerAgentIndexes.Status in vfense_app_per_agent_list:
-        r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.Status).run(conn)
+        r.table(AppCollections.vFenseAppsPerAgent).index_create(vFenseAppsPerAgentIndexes.Status).run(conn)
 
     if not vFenseAppsPerAgentIndexes.AgentId in vfense_app_per_agent_list:
-        r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.AgentId).run(conn)
+        r.table(AppCollections.vFenseAppsPerAgent).index_create(vFenseAppsPerAgentIndexes.AgentId).run(conn)
 
     if not vFenseAppsPerAgentIndexes.AppId in vfense_app_per_agent_list:
-        r.table(AppCollections.vFenseAppsPerAgent).index_create(AgentAppsPerAgentIndexes.AppId).run(conn)
+        r.table(AppCollections.vFenseAppsPerAgent).index_create(vFenseAppsPerAgentIndexes.AppId).run(conn)
 
     if not vFenseAppsPerAgentIndexes.AgentIdAndAppId in vfense_app_per_agent_list:
         r.table(AppCollections.vFenseAppsPerAgent).index_create(

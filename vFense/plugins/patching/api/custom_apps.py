@@ -39,7 +39,7 @@ from vFense.plugins.patching.search.search_by_appid import (
 )
 
 from vFense.plugins.patching.uploader.uploader import (
-    gen_uuid, move_app_from_tmp, store_package_info_in_db
+    gen_uuid, move_app_from_tmp, UploadManager
 )
 
 from vFense.core.user import UserKeys

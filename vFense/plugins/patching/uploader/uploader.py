@@ -3,13 +3,17 @@ import logging
 import os
 import shutil
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
-from vFense.db.client import db_create_close, r
-from vFense.core.results import Results
+from vFense.core.view.manager import ViewManager
+from vFense.core.view import ViewKeys
+from vFense.core._db_constants import DbTime
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
-from vFense.utils.common import date_parser, timestamp_verifier, md5sum
-from vFense.plugins.patching._db_model import *
+from vFense.utils.common import md5sum
+from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching._db_model import (
+    AppCollections, DbCommonAppKeys
+)
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
 from vFense.core.results import Results, ApiResultKeys
 
@@ -108,107 +112,72 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
     return(results)
 
 
-@db_create_close
-def store_package_info_in_db(
-        username, view_name, uri, method,
-        size, md5, operating_system,
-        uuid, name, severity, arch, major_version,
-        minor_version, release_date=0.0,
-        vendor_name=None, description=None,
-        cli_options=None, support_url=None,
-        kb=None, conn=None):
+class UploadManager(object):
+    def __init__(self, view):
+        self.view = view
 
-    PKG_FILE = TMP_DIR + uuid + '/' + name
-    URL_PATH = 'https://localhost/packages/tmp/' + uuid + '/'
-    url = URL_PATH + name
+    def url_tmp_path(self, uuid, app_name):
+        view = ViewManager(self.view)
+        tmp_url = (
+            os.path.join(
+                view.get_attribute(ViewKeys.PackageUrl),
+                'tmp', uuid, app_name
+            )
+        )
+        return tmp_url
 
-    if os.path.exists(PKG_FILE):
-        if (isinstance(release_date, str) or
-            isinstance(release_date, unicode)):
+    def local_file_path(self, uuid, app_name):
+        return os.path.join(VFENSE_APP_TMP_PATH, uuid, app_name)
 
-            orig_release_date = release_date
-            if (len(release_date.split('-')) == 3 or len(release_date.split('/')) == 3):
-                release_date = (
-                    r
-                    .epoch_time(date_parser(release_date))
-                )
+    def store_app_in_db(self, app, file_data, views=None):
+        """Store the uploaded application into the vFense database.
+        Args:
+            apps (Apps): The App instance that contains all the application
+                data.
+            file_data (Files): The Files instance that contains all the
+                file related data.
 
-            else:
-                release_date = (
-                    r
-                    .epoch_time(
-                        timestamp_verifier(release_date)
+        Kwargs:
+            views (list): List of views, you want this application to be made
+                available.
+
+        Basic Usage:
+            >>> from vFense.plugins.patching.uploader.uploader import UploadManager
+            >>> from vFense.plugins.patching import Apps, Files
+
+
+        Returns:
+        """
+        results = {}
+        if isinstance(app, Apps) and isinstance(file_data, Files):
+            app_invalid_fields = app.get_invalid_fields()
+            file_invalid_fields = file_data.get_invalid_fields()
+            if not app_invalid_fields and not file_invalid_fields:
+                app_location = self.local_file_path(app.name, app.app_id)
+                app_url = self.url_tmp_path(app.name, app.app_id)
+                if os.path.exists(app_location):
+                    app.fill_in_defaults()
+                    app_data = app.to_dict().copy()
+                    app_data[DbCommonAppKeys.ReleaseDate] = (
+                        DbTime.epoch_time_to_db_time(app.release_date)
                     )
-                )
+                    object_status, _, _, _ = (
+                        insert_app_data(app_data, AppCollections.CustomApps)
+                    )
+                    if object_status == DbCodes.Inserted:
+                        add_custom_app_to_agents(
+                            username, view_name,
+                            uri, method, file_data,
+                            app_id=uuid
+                        )
+                        msg = 'app %s uploaded succesfully - ' % (app.name)
+                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                            PackageCodes.ObjectCreated
+                        )
+                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                            PackageCodes.FileUploadedSuccessfully
+                        )
+                        results[ApiResultKeys.MESSAGE] = msg
+                        results[ApiResultKeys.DATA] = [app.to_dict()]
 
-        data_to_store = {
-            CustomAppsKey.Name: name,
-            CustomAppsPerAgentKey.Dependencies: [],
-            CustomAppsKey.vFenseSeverity: severity,
-            CustomAppsKey.VendorSeverity: severity,
-            CustomAppsKey.ReleaseDate: release_date,
-            CustomAppsKey.VendorName: vendor_name,
-            CustomAppsKey.Description: description,
-            CustomAppsKey.MajorVersion: major_version,
-            CustomAppsKey.MinorVersion: minor_version,
-            CustomAppsKey.Version: major_version + '.' + minor_version,
-            CustomAppsKey.OsCode: operating_system,
-            CustomAppsKey.Kb: kb,
-            CustomAppsKey.Hidden: 'no',
-            CustomAppsKey.CliOptions: cli_options,
-            CustomAppsKey.Arch: arch,
-            CustomAppsKey.RebootRequired: 'possible',
-            CustomAppsKey.SupportUrl: support_url,
-            CustomAppsKey.Views: [view_name],
-            CustomAppsPerAgentKey.Update: PackageCodes.ThisIsNotAnUpdate,
-            CustomAppsKey.FilesDownloadStatus: PackageCodes.FileCompletedDownload,
-            CustomAppsKey.AppId: uuid
-        }
-        file_data = (
-            [
-                {
-                    FilesKey.FileUri: url,
-                    FilesKey.FileSize: int(size),
-                    FilesKey.FileHash: md5,
-                    FilesKey.FileName: name
-                }
-            ]
-        )
-        try:
-            updated = (
-                r
-                .table(AppCollections.CustomApps)
-                .insert(data_to_store, upsert=True)
-                .run(conn)
-            )
-
-            add_custom_app_to_agents(
-                username, view_name,
-                uri, method, file_data,
-                app_id=uuid
-            )
-
-            data_to_store['release_date'] = orig_release_date
-            results = (
-                Results(
-                    username, uri, method
-                ).object_created(uuid, 'custom_app', data_to_store)
-            )
-            logger.info(results)
-
-        except Exception as e:
-            results = (
-                Results(
-                    username, uri, method
-                ).something_broke(uuid, 'custom_app', e)
-            )
-            logger.exception(e)
-    else:
-        results = (
-            Results(
-                username, uri, method
-            ).file_doesnt_exist(name, e)
-        )
-        logger.info(results)
-
-    return(results)
+        return results
