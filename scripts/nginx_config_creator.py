@@ -23,7 +23,7 @@ server {
     ssl_protocols               SSLv3 TLSv1;
     ssl_ciphers                 ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
     ssl_prefer_server_ciphers   on;
-    client_max_body_sizei       1G;
+    client_max_body_size        1G;
     client_body_buffer_size     100m;
 
     location /nginx_status {
