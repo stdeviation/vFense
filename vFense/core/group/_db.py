@@ -723,6 +723,47 @@ def fetch_groups(
 
 @time_it
 @db_create_close
+def fetch_groupids(is_global=False, conn=None):
+    """Retrieve a list of group_ids from the database
+    Kwargs:
+        is_global (bool): Only search for global groups.
+
+    Basic Usage:
+        >>> from vFense.group._db import fetch_groupids
+        >>> is_global = True
+        >>> fetch_groupids(is_global)
+
+    Returns:
+        List of usernames
+    """
+    data = []
+    try:
+        if is_global:
+            data = list(
+                r
+                .table(GroupCollections.Groups)
+                .filter(lambda x: x[GroupKeys.Global] == True)
+                .map(lambda x: x[GroupKeys.GroupId])
+                .run(conn)
+            )
+
+        else:
+            data = list(
+                r
+                .table(GroupCollections.Groups)
+                .filter(lambda x: x[GroupKeys.Global] == False)
+                .map(lambda x: x[GroupKeys.GroupId])
+                .run(conn)
+            )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+
+@time_it
+@db_create_close
 @return_status_tuple
 def insert_group(group_data, conn=None):
     """ Insert a new group into the database

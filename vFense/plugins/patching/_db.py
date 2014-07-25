@@ -74,7 +74,7 @@ def fetch_app_data(
         Dictionary
     """
     data = {}
-    merge = AppsMerge.RELEASE_DATE
+    merge = AppsMerge.release_date()
     try:
         if fields_to_pluck:
             data = (
@@ -253,7 +253,7 @@ def fetch_app_data_by_appid_and_agentid(
 
 @db_create_close
 def fetch_apps_data_by_os_code(
-        os_code, view_name=None,
+        os_code, views=None,
         collection=AppCollections.UniqueApplications,
         fields_to_pluck=None, conn=None
     ):
@@ -262,9 +262,8 @@ def fetch_apps_data_by_os_code(
         os_code (str): linux or darwin or windows
 
     Kwargs:
-        view_name (str, optional): The name of the view
-            you are searching on.
-        collection (str, optional): The name of the collection,
+        views (list): The list of the views you are searching on.
+        collection (str): The name of the collection,
             default = unique_applications.
         fields_to_pluck (list, optional): Fields you want to pluck from
             the database.
@@ -273,8 +272,8 @@ def fetch_apps_data_by_os_code(
         >>> from vFense.plugins.patching._db import fetch_apps_data_by_os_code
         >>> collection = 'unique_applications'
         >>> os_code = 'linux'
-        >>> view_name = 'default'
-        >>> fetch_apps_data_by_os_code(os_code, view_name. collection)
+        >>> views = ['global']
+        >>> fetch_apps_data_by_os_code(os_code, views. collection)
 
     Returns:
         List of dictionaries.
@@ -308,35 +307,45 @@ def fetch_apps_data_by_os_code(
 
     data = {}
     index_to_use = DbCommonAppIndexes.Views
-    merge = AppsMerge.RELEASE_DATE
+    app_merge = AppsMerge.release_date()
     try:
-        if view_name and fields_to_pluck:
+        if views and fields_to_pluck:
             data = list(
                 r
-                .table(collection)
-                .get_all(view_name, index=index_to_use)
-                .filter({AppsKey.OsCode: os_code})
-                .merge(merge)
-                .pluck(fields_to_pluck)
+                .expr(views)
+                .concat_map(
+                    lambda view:
+                    r
+                    .table(collection)
+                    .get_all(view, index=index_to_use)
+                    .filter({AppsKey.OsCode: os_code})
+                    .merge(app_merge)
+                    .pluck(fields_to_pluck)
+                )
                 .run(conn)
             )
 
-        elif view_name and not fields_to_pluck:
+        elif views and not fields_to_pluck:
             data = list(
                 r
-                .table(collection)
-                .get_all(view_name, index=index_to_use)
-                .filter({AppsKey.OsCode: os_code})
-                .merge(merge)
+                .expr(views)
+                .concat_map(
+                    lambda view:
+                    r
+                    .table(collection)
+                    .get_all(view, index=index_to_use)
+                    .filter({AppsKey.OsCode: os_code})
+                    .merge(app_merge)
+                )
                 .run(conn)
             )
 
-        elif not view_name and fields_to_pluck:
+        elif not views and fields_to_pluck:
             data = list(
                 r
                 .table(collection)
                 .filter({AppsKey.OsCode: os_code})
-                .merge(merge)
+                .merge(app_merge)
                 .pluck(fields_to_pluck)
                 .run(conn)
             )
@@ -346,7 +355,7 @@ def fetch_apps_data_by_os_code(
                 r
                 .table(collection)
                 .filter({AppsKey.OsCode: os_code})
-                .merge(merge)
+                .merge(app_merge)
                 .run(conn)
             )
 

@@ -38,7 +38,7 @@ from vFense.plugins.patching.search.search_by_appid import (
     RetrieveAgentsByCustomAppId
 )
 
-from vFense.plugins.patching.uploader.uploader import (
+from vFense.plugins.patching.uploader.manager import (
     gen_uuid, move_app_from_tmp, UploadManager
 )
 

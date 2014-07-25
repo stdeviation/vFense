@@ -22,7 +22,9 @@ def log_operation(action, performed_on):
             operation_id = manager.create(operation)
             if operation_id:
                 results = fn(*args, **kwargs)
+                print results
                 rcopy = results.copy()
+                print rcopy
                 vfense_code = rcopy[ApiResultKeys.VFENSE_STATUS_CODE]
                 generic_code = rcopy[ApiResultKeys.GENERIC_STATUS_CODE]
                 errors = rcopy.get(ApiResultKeys.ERRORS, [])

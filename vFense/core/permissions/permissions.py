@@ -101,7 +101,7 @@ def verify_permission_for_user(
     """
     granted = False
     status_code = GenericCodes.PermissionDenied
-    if username == DefaultUsers.ADMIN:
+    if username == DefaultUsers.GLOBAL_ADMIN:
         granted = True
         status_code = GenericCodes.PermissionGranted
         return(granted, status_code)

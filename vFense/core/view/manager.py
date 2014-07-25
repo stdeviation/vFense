@@ -11,7 +11,7 @@ from vFense.core.group.groups import validate_groups
 from vFense.core.group._db import (
     fetch_group_ids_for_view, delete_all_groups_from_view,
     delete_users_in_group_containing_view, delete_groups_from_view,
-    add_views_to_groups
+    add_views_to_groups, fetch_groupids, add_view_to_groups
 )
 
 from vFense.core.view._db import (
@@ -214,7 +214,9 @@ class ViewManager(object):
                 )
 
             usernames = list(set(fetch_usernames(True) + view.users))
+            groupids = list(set(fetch_groupids(True) + view.users))
             view.users = usernames
+            view.groups = groupids
             view_data = view.to_dict()
             view_data[ViewKeys.Token] = self.generate_auth_token()
             object_status, _, _, generated_ids = (
@@ -237,6 +239,12 @@ class ViewManager(object):
                     update_views_for_users(
                         usernames, [view.name]
                     )
+
+                if groupids:
+                    add_view_to_groups(
+                        groupids, view.name
+                    )
+
                 if parent_view:
                     update_children_for_view(
                         parent_view[ViewKeys.ViewName], view.name

@@ -1842,7 +1842,7 @@ Available operations you can perform on a group.
 
     def views(self):
         self.view_url = os.path.join(self.url, 'api/v1/view')
-        self.viewss_url = os.path.join(self.url, 'api/v1/views')
+        self.views_url = os.path.join(self.url, 'api/v1/views')
         parser = argparse.ArgumentParser(
             formatter_class=argparse.RawDescriptionHelpFormatter,
             description='''

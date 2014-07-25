@@ -95,7 +95,7 @@ def fetch_usernames(is_global=False, conn=None):
             data = list(
                 r
                 .table(UserCollections.Users)
-                .filter(lambda x: x[UserKeys.Global] == False)
+                .filter(lambda x: x[UserKeys.Global] == True)
                 .map(lambda x: x[UserKeys.UserName])
                 .run(conn)
             )

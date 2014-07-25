@@ -860,8 +860,8 @@ class UserManager(object):
                 status_code, _, _, _ = (
                     delete_user_in_views(self.username, views)
                 )
+                delete_views_in_user(self.username, views)
                 if status_code == DbCodes.Replaced:
-                    delete_views_in_user(self.username, views)
                     msg = (
                         'removed views from user %s: views = %s' %
                         (self.username, ', '.join(views))
@@ -874,6 +874,20 @@ class UserManager(object):
                         ViewCodes.ViewsRemovedFromUser
                     )
                     results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                else:
+                    msg = (
+                        'view names do not exist: %s for user %s' %
+                        (', '.join(views), self.username)
+                    )
+                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        GenericCodes.DoesNotExist
+                    )
+                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        ViewFailureCodes.UsersDoNotExistForView
+                    )
+                    results[ApiResultKeys.INVALID_IDS] = [views]
+                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results[ApiResultKeys.MESSAGE] = msg
 
             else:
                 msg = (
@@ -888,6 +902,7 @@ class UserManager(object):
                 )
                 results[ApiResultKeys.INVALID_IDS] = [views]
                 results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results[ApiResultKeys.MESSAGE] = msg
 
         else:
             msg = 'Invalid username %s' % (self.username)
