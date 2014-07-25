@@ -117,6 +117,10 @@ class AppDefaults():
     UPDATE = PackageCodes.ThisIsNotAnUpdate
     DOWNLOAD_STATUS = PackageCodes.FileCompletedDownload
     VFENSE_SEVERITY = 'Optional'
+    VULNERABILITY_CATEGORIES = []
+    VULNERABILITY_ID = ''
+    CVE_IDS = []
+    DEPENDENCIES = []
 
 class FileDefaults():
     AGENT_IDS = []

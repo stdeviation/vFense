@@ -7,7 +7,7 @@ from vFense.plugins.patching._constants import (
     CommonSeverityKeys, FileDefaults
 )
 from vFense.plugins.patching._db_model import (
-    DbCommonAppKeys, FilesKey
+    DbCommonAppKeys, FilesKey, DbCommonAppPerAgentKeys
 )
 
 from vFense.plugins.patching.status_codes import (
@@ -50,6 +50,11 @@ class Apps(object):
                 application is a new install or an update.
             download_status (int): The integer status code that represents
                 if this application has been downlaoded successfully.
+            vulnerability_id (str): The vulnerability identifier assigned
+                by the respective vendor.
+            vulnerability_categories (list): List of vulnerabilty categories.
+            cve_ids (list): List of cve ids that reference this application.
+
         """
         self.name = name
         self.version = version
@@ -97,6 +102,17 @@ class Apps(object):
 
         if not self.vfense_severity:
             self.vfense_severity = AppDefaults.VFENSE_SEVERITY
+
+        if not self.vulnerability_categories:
+            self.vulnerability_categories = (
+                AppDefaults.VULNERABILITY_CATEGORIES
+            )
+
+        if not self.vulnerability_id:
+            self.vulnerability_id = AppDefaults.VULNERABILITY_ID
+
+        if not self.cve_ids:
+            self.cve_ids = AppDefaults.cve_ids
 
 
     def get_invalid_fields(self):
@@ -256,6 +272,188 @@ class Apps(object):
         return {k:install_dict[k] for k in install_dict
                 if install_dict[k] != None}
 
+
+class AppsPerAgent(object):
+    """Used to represent an instance of an app."""
+
+    def __init__(self, id=None, app_id=None, install_date=None, status=None,
+                 agent_id=None, dependencies=None, last_modified_time=None,
+                 update=None, os_code=None, os_string=None, views=None,
+                 cve_ids=None, vulnerability_id=None):
+        """
+        Kwargs:
+            id (str): The primary key of this application.
+            app_id (str): The application id of this application.
+            install_date (float): The Unix timestamp aka epoch time.
+            status (str): installed or available or pending.
+            agent_id (str): The id of the agent that requires this application.
+            last_modified_time (float): The Unix timestamp aka epoch time.
+            update (int): The integer status code that represents if this
+                application is a new install or an update.
+            os_code (str): windows, linux, or darwin
+            os_string (str): CentOS 6.5, Ubuntu 12.0.4, etc...
+            views (list): List of of views this agent is a part of.
+            cve_ids (list): List of cve ids that reference this application.
+            vulnerability_id (str): The vulnerability identifier assigned
+                by the respective vendor.
+        """
+        self.id = id
+        self.app_id = app_id
+        self.install_date = install_date
+        self.status = status
+        self.agent_id = agent_id
+        self.dependencies = dependencies
+        self.last_modified_time = last_modified_time
+        self.update = update
+        self.os_code = os_code
+        self.os_string = os_string
+        self.views = views
+        self.cve_ids = cve_ids
+        self.vulnerability_id = vulnerability_id
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+
+        if not self.vulnerability_categories:
+            self.vulnerability_categories = (
+                AppDefaults.VULNERABILITY_CATEGORIES
+            )
+
+        if not self.vulnerability_id:
+            self.vulnerability_id = AppDefaults.VULNERABILITY_ID
+
+        if not self.cve_ids:
+            self.cve_ids = AppDefaults.CVE_IDS
+
+        if not self.dependencies:
+            self.dependencies = AppDefaults.DEPENDENCIES
+
+
+    def get_invalid_fields(self):
+        """Check the app for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+
+                Ex:
+                    [
+                        {'view_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
+        """
+        invalid_fields = []
+
+        if self.install_date:
+            if not isinstance(self.install_date, float):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.InstallDate: self.install_date,
+                        CommonKeys.REASON: (
+                            '{0} not a valid install date'
+                            .format(self.install_date)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+            if not isinstance(self.last_modified_time, float):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.LastModifiedTime: (
+                            self.last_modified_time
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid last modified time'
+                            .format(self.last_modified_time)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+            if not isinstance(self.dependencies, list):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.Dependencies: (
+                            self.dependencies
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'
+                            .format(self.dependencies)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+            if not isinstance(self.views, list):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.Views: (
+                            self.views
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'
+                            .format(self.views)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+        return invalid_fields
+
+    def to_dict(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            DbCommonAppPerAgentKeys.Id: self.id,
+            DbCommonAppPerAgentKeys.AppId: self.app_id,
+            DbCommonAppPerAgentKeys.AgentId: self.agent_id,
+            DbCommonAppPerAgentKeys.InstallDate: self.install_date,
+            DbCommonAppPerAgentKeys.OsCode: self.os_code,
+            DbCommonAppPerAgentKeys.OsString: self.os_string,
+            DbCommonAppPerAgentKeys.Update: self.update,
+            DbCommonAppPerAgentKeys.Views: self.views,
+            DbCommonAppPerAgentKeys.Dependencies: self.dependencies,
+            DbCommonAppPerAgentKeys.LastModifiedTime: self.last_modified_time,
+            DbCommonAppPerAgentKeys.VulnerabilityCategories: (
+                self.vulnerability_categories
+            ),
+            DbCommonAppPerAgentKeys.VulnerabilityId: self.vulnerability_id,
+            DbCommonAppPerAgentKeys.CveIds: self.cve_ids
+        }
+
+    def to_dict_non_null(self):
+        """ Use to get non None fields of an install. Useful when
+        filling out just a few fields to perform an install.
+
+        Returns:
+            (dict): a dictionary with the non None fields of this install.
+        """
+        install_dict = self.to_dict()
+
+        return {k:install_dict[k] for k in install_dict
+                if install_dict[k] != None}
 
 
 class Files(object):
