@@ -19,6 +19,27 @@ from vFense.plugins.patching._db import fetch_app_data, \
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
+class CustomAppsManager(object):
+    def __init__(self):
+        self.apps_collection = AppCollections.CustomApps
+        self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
+
+    def get_apps(self, os_code, views):
+        apps_info = (
+            fetch_apps_data_by_os_code(
+                os_code, views,
+                collection=self.apps_collection
+            )
+        )
+        return apps_info
+
+    def get_agent_ids(self, os_code, views):
+        agent_ids = (
+            fetch_agent_ids_in_views(
+                views=views, os_code=os_code
+            )
+        )
+        return agent_ids
 
 def add_custom_app_to_agents(file_data, views=None,
                              agent_id=None, app_id=None):
