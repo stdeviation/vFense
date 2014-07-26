@@ -369,11 +369,10 @@ def load_up_all_xml_into_db():
     nvd_files = []
     if not os.path.exists(CVEDataDir.XML_DIR):
         os.makedirs(CVEDataDir.XML_DIR)
-    xml_exists = os.listdir(CVEDataDir.XML_DIR)
+    #xml_exists = os.listdir(CVEDataDir.XML_DIR)
     logger.info('starting cve/nvd update process')
-    if not xml_exists:
-        logger.info('downloading nvd/cve xml data files')
-        start_nvd_xml_download()
+    logger.info('downloading nvd/cve xml data files')
+    start_nvd_xml_download()
     for directory, _, files in os.walk(CVEDataDir.XML_DIR):
         for xml_file in files:
             nvd_file = os.path.join(directory, xml_file)
