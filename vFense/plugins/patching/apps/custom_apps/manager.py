@@ -48,7 +48,7 @@ class CustomAppsManager(object):
         )
         return agent_ids
 
-    def add_apps_to_agents(self, file_data, views=None, agent_id=None,
+    def add_apps_to_agents(self, file_data=None, views=None, agent_id=None,
                            app_id=None):
 
         if app_id and not agent_id:

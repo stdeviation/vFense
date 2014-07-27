@@ -17,6 +17,8 @@ from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys
 )
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
+from vFense.plugins.patching._db_files import fetch_file_data
+from vFense.plugins.patching.file_data import add_file_data
 from vFense.core.results import Results, ApiResultKeys
 
 
@@ -131,15 +133,34 @@ class UploadManager(object):
     def local_file_path(self, uuid, app_name):
         return os.path.join(VFENSE_APP_TMP_PATH, uuid, app_name)
 
+    def store_file_data_in_db(self, file_data, app_ids=None, agent_ids=None):
+        """Store the uploaded application into the vFense database.
+        Args:
+            file_data (list): List of Files instances that contains all the
+                file related data.
+        """
+        if isinstance(file_data, list):
+            data_to_insert = []
+            for data in file_data:
+                if isinstance(data, Files):
+                    invalid_fields = data.get_invalid_fields()
+                    if not invalid_fields:
+                        data.fill_in_defaults()
+                        data_to_insert.append(data.to_dict())
+
+            if data_to_insert:
+                add_file_data(app_id, file_data, agent_id)
+
+
     def store_app_in_db(self, app, file_data, views=None):
         """Store the uploaded application into the vFense database.
         Args:
             apps (Apps): The App instance that contains all the application
                 data.
-            file_data (Files): The Files instance that contains all the
-                file related data.
 
         Kwargs:
+            file_data (list): List of Files instances that contains all the
+                file related data.
             views (list): List of views, you want this application to be made
                 available.
 
@@ -151,10 +172,9 @@ class UploadManager(object):
         Returns:
         """
         results = {}
-        if isinstance(app, Apps) and isinstance(file_data, Files):
+        if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
-            file_invalid_fields = file_data.get_invalid_fields()
-            if not app_invalid_fields and not file_invalid_fields:
+            if not app_invalid_fields:
                 app_location = self.local_file_path(app.name, app.app_id)
                 app_url = self.url_tmp_path(app.name, app.app_id)
                 if os.path.exists(app_location):
@@ -171,6 +191,7 @@ class UploadManager(object):
                             views = list(set(views).union([self.view]))
                         else:
                             views = [self.view_name]
+
                         add_custom_app_to_agents(
                             username, view_name,
                             file_data,
