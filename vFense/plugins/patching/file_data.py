@@ -36,9 +36,11 @@ def add_file_data(app_id, file_data, agent_id=None):
         ]
 
     Returns:
+        Boolean
     """
     data_to_insert = []
     data_to_update = []
+    data_inserted = False
     for uri in file_data:
         if file_data_exists(uri[FilesKey.FileName]):
             data_to_update.append(uri)
@@ -50,3 +52,8 @@ def add_file_data(app_id, file_data, agent_id=None):
 
     elif data_to_update:
         update_file_data(app_id, data_to_update, agent_id)
+
+    if data_to_insert or data_to_update:
+        data_inserted = True
+
+    return data_inserted
