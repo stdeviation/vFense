@@ -145,7 +145,7 @@ def fetch_all_file_data(conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def insert_file_data(app_id, file_data, agent_id=None, conn=None):
+def insert_file_data(file_data, conn=None):
     """Insert file data into the database.
     Args:
         app_id (str): 64 character hex digest of the application.
@@ -156,16 +156,6 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
 
     Basic Usage:
         >>> from vFense.plugins.patching._db_files import insert_file_data
-        >>> app_id = '3e480d178a945e8c35479c60a398da3d16a0f8c2aecf3306b2341466b5e897ae'
-        >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
-        >>> file_data = [
-            {
-                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c",
-                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
-                "file_size": 7782
-            }
-        ]
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -173,49 +163,12 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
     """
     data = {}
     try:
-        if agent_id:
-            data = (
-                r
-                .expr(file_data)
-                .for_each(
-                    lambda file_info:
-                    r
-                    .table(FileCollections.Files)
-                    .insert(
-                        {
-                            FilesKey.AppIds: [app_id],
-                            FilesKey.AgentIds: [agent_id],
-                            FilesKey.FileName: file_info[FilesKey.FileName],
-                            FilesKey.FileSize: file_info[FilesKey.FileSize],
-                            FilesKey.FileUri: file_info[FilesKey.FileUri],
-                            FilesKey.FileHash: file_info[FilesKey.FileHash],
-                        }
-                    )
-                )
-                .run(conn)
-            )
-
-        else:
-            data = (
-                r
-                .expr(file_data)
-                .for_each(
-                    lambda file_info:
-                    r
-                    .table(FileCollections.Files)
-                    .insert(
-                        {
-                            FilesKey.AppIds: [app_id],
-                            FilesKey.AgentIds: [],
-                            FilesKey.FileName: file_info[FilesKey.FileName],
-                            FilesKey.FileSize: file_info[FilesKey.FileSize],
-                            FilesKey.FileUri: file_info[FilesKey.FileUri],
-                            FilesKey.FileHash: file_info[FilesKey.FileHash],
-                        }
-                    )
-                )
-                .run(conn)
-            )
+        data = (
+            r
+            .table(FileCollections.Files)
+            .insert(file_data)
+            .run(conn)
+        )
 
     except Exception as e:
         logger.exception(e)
@@ -225,26 +178,12 @@ def insert_file_data(app_id, file_data, agent_id=None, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def update_file_data(app_id, file_data, agent_id=None, conn=None):
+def update_file_data(file_names, agent_ids=False, app_ids=False, conn=None):
     """Update the file data in the database.
     Args:
-        app_id (str): 64 character hex digest of the application.
-        file_data (list): List of dictionaries.
-
-    Kwargs:
-        agent_id (str): 36 character UUID of the agent.
+        file_names (list): List of file_names to update.
 
     Basic Usage:
-        >>> app_id = '3e480d178a945e8c35479c60a398da3d16a0f8c2aecf3306b2341466b5e897ae'
-        >>> agent_id = '272ce70a-6cb1-4903-b395-bba4386a5171'
-        >>> file_data = [
-            {
-                "file_hash": "d9af1cb42d87235d83aadeb014a542105ee7eea99fe45bed594b27008bb2c10c",
-                "file_name": "gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
-                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/g/gwibber/gwibber-service-facebook_3.4.2-0ubuntu2.4_all.deb",
-                "file_size": 7782
-            }
-        ]
 
     Returns:
         Tuple (status_code, count, error, generated ids)
@@ -252,25 +191,25 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
     """
     data = {}
     try:
-        if agent_id:
+        if agent_ids and app_ids:
             data = (
                 r
-                .expr(file_data)
+                .expr(file_names)
                 .for_each(
-                    lambda file_info:
+                    lambda file_name:
                     r
                     .table(FileCollections.Files)
-                    .get(file_info[FilesKey.FileName])
+                    .get(file_name)
                     .update(
                         lambda fd:
                         {
                             FilesKey.AppIds: (
                                 fd[FilesKey.AppIds]
-                                .set_insert(app_id)
+                                .set_union(app_ids)
                             ),
                             FilesKey.AgentIds: (
                                 fd[FilesKey.AgentIds]
-                                .set_insert(agent_id)
+                                .set_union(agent_ids)
                             )
                         }
                     )
@@ -278,22 +217,22 @@ def update_file_data(app_id, file_data, agent_id=None, conn=None):
                 .run(conn)
             )
 
-        else:
+        elif app_ids and not agent_ids:
             data = (
                 r
-                .expr(file_data)
+                .expr(file_names)
                 .for_each(
-                    lambda file_info:
+                    lambda file_name:
                     r
                     .table(FileCollections.Files)
-                    .get(file_info[FilesKey.FileName])
+                    .get(file_name)
                     .update(
+                        lambda fd:
                         {
-                            FilesKey.AppIds: (
-                                file_info[FilesKey.AppIds]
-                                .set_insert(app_id)
-                            ),
-                            FilesKey.AgentIds: []
+                            FilesKey.AgentIds: (
+                                fd[FilesKey.AppIds]
+                                .set_union(app_ids)
+                            )
                         }
                     )
                 )

@@ -12,15 +12,11 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def add_file_data(app_id, file_data, agent_id=None):
+def add_file_data(file_data):
     """Insert or Update the file data information for application id.
 
     Args:
-        app_id (str): The 64 character hex digest of the application.
-        file_data (list): List of dictionaries
-
-    Kwargs:
-        agent_id (str): The 36 character UUID of the agent.
+        file_data (list): List of Files instances.
 
     Basic Usage:
         >>> from vFense.plugins.patching.file_data import add_file_data
@@ -48,10 +44,10 @@ def add_file_data(app_id, file_data, agent_id=None):
             data_to_insert.append(uri)
 
     if data_to_insert:
-        insert_file_data(app_id, data_to_insert, agent_id)
+        insert_file_data(data_to_insert, agent_id)
 
     elif data_to_update:
-        update_file_data(app_id, data_to_update, agent_id)
+        update_file_data(data_to_update, agent_id)
 
     if data_to_insert or data_to_update:
         data_inserted = True
