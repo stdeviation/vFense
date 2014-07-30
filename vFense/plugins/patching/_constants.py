@@ -127,36 +127,52 @@ class FileDefaults():
     APP_IDS = []
 
 
-class PossibleRebootValues():
+class RebootValues():
     POSSIBLE = 'possible'
     NO = 'no'
     REQUIRED = 'required'
 
     @staticmethod
-    def get_reboot_values():
+    def get_values():
         valid_values = (
             map(
                 lambda x:
                 getattr(
-                    PossibleRebootValues, x),
-                dir(PossibleRebootValues)[:-3]
+                    RebootValues, x),
+                dir(RebootValues)[:-3]
             )
         )
         return valid_values
 
 
-class PossibleHiddenValues():
+class HiddenValues():
     YES = 'yes'
     NO = 'no'
 
     @staticmethod
-    def get_hidden_values():
+    def get_values():
         valid_values = (
             map(
                 lambda x:
                 getattr(
-                    PossibleHiddenValues, x),
-                dir(PossibleHiddenValues)[:-3]
+                    HiddenValues, x),
+                dir(HiddenValues)[:-3]
+            )
+        )
+        return valid_values
+
+class UninstallableValues():
+    YES = 'yes'
+    NO = 'no'
+
+    @staticmethod
+    def get_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(
+                    UninstallableValues, x),
+                dir(UninstallableValues)[:-3]
             )
         )
         return valid_values

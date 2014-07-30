@@ -12,11 +12,12 @@ from vFense.core.status_codes import GenericCodes
 class Tag(object):
     """Used to represent an instance of a tag."""
 
-    def __init__(self, tag_name=None, environment=None,
+    def __init__(self, tag_id=None, tag_name=None, environment=None,
                  view_name=None, is_global=None, agents=None
                  ):
         """
         Kwargs:
+            tag_id (str): The id of the tag
             tag_name (str): The name of the tag
             environment (str): User defined environment.
             view_name (str): The name of the view, this tag belongs too.
@@ -24,6 +25,7 @@ class Tag(object):
                 is a tag that allows agents from any view to be a
                 part of this tag.
         """
+        self.tag_id = tag_id
         self.tag_name = tag_name
         self.environment = environment
         self.view_name = view_name

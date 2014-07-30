@@ -62,6 +62,8 @@ class AppsKey():
     VendorName = 'vendor_name'
     FilesDownloadStatus = 'files_download_status'
     Arch = 'arch'
+    Uninstallable = 'uninstallable'
+    Repo = 'repo'
     VulnerabilityId = 'vulnerability_id'
     VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'

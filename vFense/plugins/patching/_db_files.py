@@ -178,10 +178,17 @@ def insert_file_data(file_data, conn=None):
 @time_it
 @db_create_close
 @return_status_tuple
-def update_file_data(file_names, agent_ids=False, app_ids=False, conn=None):
+def update_file_data(file_name, agent_ids=False, app_ids=False, conn=None):
     """Update the file data in the database.
     Args:
-        file_names (list): List of file_names to update.
+        file_name (string): The file name to update.
+
+    Kwargs:
+        agent_ids (list): List of agent ids you want to associate with
+            this file.
+
+        app_ids (list): List of application ids you want to associate with
+            this file.
 
     Basic Usage:
 
@@ -194,25 +201,20 @@ def update_file_data(file_names, agent_ids=False, app_ids=False, conn=None):
         if agent_ids and app_ids:
             data = (
                 r
-                .expr(file_names)
-                .for_each(
-                    lambda file_name:
-                    r
-                    .table(FileCollections.Files)
-                    .get(file_name)
-                    .update(
-                        lambda fd:
-                        {
-                            FilesKey.AppIds: (
-                                fd[FilesKey.AppIds]
-                                .set_union(app_ids)
-                            ),
-                            FilesKey.AgentIds: (
-                                fd[FilesKey.AgentIds]
-                                .set_union(agent_ids)
-                            )
-                        }
-                    )
+                .table(FileCollections.Files)
+                .get(file_name)
+                .update(
+                    lambda fd:
+                    {
+                        FilesKey.AppIds: (
+                            fd[FilesKey.AppIds]
+                            .set_union(app_ids)
+                        ),
+                        FilesKey.AgentIds: (
+                            fd[FilesKey.AgentIds]
+                            .set_union(agent_ids)
+                        )
+                    }
                 )
                 .run(conn)
             )
@@ -220,21 +222,33 @@ def update_file_data(file_names, agent_ids=False, app_ids=False, conn=None):
         elif app_ids and not agent_ids:
             data = (
                 r
-                .expr(file_names)
-                .for_each(
-                    lambda file_name:
-                    r
-                    .table(FileCollections.Files)
-                    .get(file_name)
-                    .update(
-                        lambda fd:
-                        {
-                            FilesKey.AgentIds: (
-                                fd[FilesKey.AppIds]
-                                .set_union(app_ids)
-                            )
-                        }
-                    )
+                .table(FileCollections.Files)
+                .get(file_name)
+                .update(
+                    lambda fd:
+                    {
+                        FilesKey.AppIds: (
+                            fd[FilesKey.AppIds]
+                            .set_union(app_ids)
+                        )
+                    }
+                )
+                .run(conn)
+            )
+
+        elif agent_ids and not app_ids:
+            data = (
+                r
+                .table(FileCollections.Files)
+                .get(file_name)
+                .update(
+                    lambda fd:
+                    {
+                        FilesKey.AgentIds: (
+                            fd[FilesKey.AgentIds]
+                            .set_union(agent_ids)
+                        )
+                    }
                 )
                 .run(conn)
             )

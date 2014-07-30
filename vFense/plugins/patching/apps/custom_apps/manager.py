@@ -1,20 +1,28 @@
+import os
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent._db_model import *
-from vFense.db.client import r
-from vFense.plugins.patching import AppsPerAgent, Files
-from vFense.plugins.patching._db_model import *
+from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
+from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching._db_model import (
+    AppsKey, AppCollections, DbCommonAppPerAgentKeys, DbCommonAppKeys
+)
 from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import(
     fetch_agent, fetch_agent_ids_in_views
 )
-from vFense.core.tag._db_model import *
+from vFense.core._db_constants import DbTime
+from vFense.core.status_codes import DbCodes
+from vFense.core.results import ApiResultKeys
+from vFense.core.view._db_model import ViewKeys
+from vFense.core.view.manager import ViewManager
 from vFense.plugins.patching._db_files import fetch_file_data
+from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.plugins.patching.file_data import add_file_data
 
-from vFense.plugins.patching._db import fetch_app_data, \
-    fetch_apps_data_by_os_code, insert_app_data
+from vFense.plugins.patching._db import (
+    fetch_app_data, fetch_apps_data_by_os_code, insert_app_data
+)
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -23,7 +31,7 @@ logger = logging.getLogger('rvapi')
 class CustomAppsManager(object):
     def __init__(self):
         self.apps_collection = AppCollections.CustomApps
-        self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
+        self.apps_per_agent_collection = AppCollections.DbCommonAppsPerAgent
 
     def url_path(self, app_id, app_name, view):
         view = ViewManager(view)
@@ -76,7 +84,7 @@ class CustomAppsManager(object):
 
 
     def store_app_in_db(self, app, file_data, views=None):
-        """Store the uploaded application into the vFense database.
+        """Store the application into the vFense database.
         Args:
             apps (Apps): The App instance that contains all the application
                 data.
@@ -109,13 +117,9 @@ class CustomAppsManager(object):
                     object_status, _, _, _ = (
                         insert_app_data(app_data, self.apps_collection)
                     )
+                    self.store_app_in_db(file_data)
                     if object_status == DbCodes.Inserted:
-                        add_custom_app_to_agents(
-                            username, view_name,
-                            file_data,
-                            app_id=uuid
-                        )
-                        msg = 'app %s uploaded succesfully - ' % (app.name)
+                        msg = 'app %s stored succesfully - ' % (app.name)
                         results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                             PackageCodes.ObjectCreated
                         )
@@ -127,34 +131,44 @@ class CustomAppsManager(object):
 
         return results
 
-    def add_apps_to_agents(self, file_data=None, views=None, agent_id=None,
-                           app_id=None):
-
-        if app_id and not agent_id:
-            app_info = (
-                fetch_app_data(
-                app_id, collection=AppCollections.CustomApps
-                )
+    def add_app_to_agent(self, app_id, agent_id, status):
+        app_info = (
+            fetch_app_data(
+                app_id, collection=self.apps_collection,
+                fields_to_pluck=[
+                    AppsKey.CveIds, AppsKey.VulnerabilityCategories,
+                    AppsKey.VulnerabilityId, AppsKey.AppId
+                ]
             )
+        )
 
-            agent_ids = (
-                self.get_agent_ids(app_info[AgentKeys.OsCode], views)
+        agent_info = (
+            fetch_agent(
+                agent_id, keys_to_pluck=[
+                    AgentKeys.OsCode, AgentKeys.OsString,
+                    AgentKeys.Views, AgentKeys.AgentId
+               ]
             )
+        )
+
+        if agent_info and app_info:
+            data = dict(agent_info.items() + app_info.items())
+            data[DbCommonAppPerAgentKeys.Status] = status
 
             if len(agent_ids) > 0:
                 for agentid in agent_ids:
                     add_file_data(app_id, file_data, agent_id)
                     agent_info_to_insert = (
                         {
-                            CustomAppsPerAgentKey.AgentId: agentid,
-                            CustomAppsPerAgentKey.AppId: app_id,
-                            CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
-                            CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
+                            DbCommonAppPerAgentKeys.AgentId: agentid,
+                            DbCommonAppPerAgentKeys.AppId: app_id,
+                            DbCommonAppPerAgentKeys.Status: CommonAppKeys.AVAILABLE,
+                            DbCommonAppPerAgentKeys.InstallDate: r.epoch_time(0.0)
                         }
                     )
                     insert_app_data(
                         agent_info_to_insert,
-                        collection=AppCollections.CustomAppsPerAgent
+                        collection=AppCollections.DbCommonAppsPerAgent
                     )
 
         elif agent_id and not app_id:
@@ -170,18 +184,18 @@ class CustomAppsManager(object):
                 add_file_data(app_id, file_data, agent_id)
 
                 agent_info_to_insert = {
-                    CustomAppsPerAgentKey.AgentId: agent_id,
-                    CustomAppsPerAgentKey.AppId: app_id,
-                    CustomAppsPerAgentKey.Status: CommonAppKeys.AVAILABLE,
-                    CustomAppsPerAgentKey.InstallDate: r.epoch_time(0.0)
+                    DbCommonAppPerAgentKeys.AgentId: agent_id,
+                    DbCommonAppPerAgentKeys.AppId: app_id,
+                    DbCommonAppPerAgentKeys.Status: CommonAppKeys.AVAILABLE,
+                    DbCommonAppPerAgentKeys.InstallDate: r.epoch_time(0.0)
                 }
 
                 insert_app_data(
-                    agent_info_to_insert, collection=AppCollections.CustomAppsPerAgent
+                    agent_info_to_insert, collection=AppCollections.DbCommonAppsPerAgent
                 )
 
 
-    def store_file_data_in_db(self, file_data, app_ids=None, agent_ids=None):
+    def store_file_data_in_db(self, file_data):
         """Store the uploaded application into the vFense database.
         Args:
             file_data (list): List of Files instances that contains all the
@@ -192,13 +206,11 @@ class CustomAppsManager(object):
             data_to_insert = []
             for data in file_data:
                 if isinstance(data, Files):
-                    invalid_fields = data.get_invalid_fields()
-                    if not invalid_fields:
-                        data.fill_in_defaults()
-                        data_to_insert.append(data.to_dict())
+                    if not data.get_invalid_fields():
+                        data_to_insert.append(data)
 
             if data_to_insert:
-                data_stored = add_file_data(app_id, file_data, agent_id)
+                data_stored = add_file_data(file_data)
 
         return data_stored
 

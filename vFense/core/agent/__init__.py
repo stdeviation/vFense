@@ -13,7 +13,7 @@ from vFense.core.status_codes import GenericCodes
 class Agent(object):
     """Used to represent an instance of an agent."""
 
-    def __init__(self, computer_name=None, display_name=None,
+    def __init__(self, agent_id=None, computer_name=None, display_name=None,
                  os_code=None, os_string=None, views=None,
                  needs_reboot=None, agent_status=None,
                  environment=None, machine_type=None,
@@ -23,6 +23,7 @@ class Agent(object):
                  ):
         """
         Kwargs:
+            agent_id (str): The id of the agent.
             computer_name (str): The computer_name or host_name of the agent.
             display_name (str): The name displayed in the vFense web UI.
             os_code (str): linux, darwin, or windows
@@ -44,6 +45,7 @@ class Agent(object):
             token (str): Base64 encoded string.
             assign_new_token (bool): Assign this agent a new token.
         """
+        self.agent_id = agent_id
         self.computer_name = computer_name
         self.display_name = display_name
         self.os_code = os_code

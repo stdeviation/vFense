@@ -3,7 +3,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core.results import ApiResultKeys
 from vFense.plugins.patching._constants import (
-    AppDefaults, PossibleRebootValues, PossibleHiddenValues,
+    AppDefaults, RebootValues, HiddenValues, UninstallableValues,
     CommonSeverityKeys, FileDefaults
 )
 from vFense.plugins.patching._db_model import (
@@ -26,6 +26,7 @@ class Apps(object):
                  os_string=None, vendor=None, description=None,
                  cli_options=None, release_date=None,
                  reboot_required=None, hidden=None, update=None,
+                 uninstallable=None, repo=None,
                  download_status=None, vulnerability_id=None,
                  vulnerability_categories=None, cve_ids=None):
         """
@@ -48,6 +49,8 @@ class Apps(object):
             hidden (str): no or yes.
             update (int): The integer status code that represents if this
                 application is a new install or an update.
+            uninstallable (str): yes or no.
+            repo (str): repository this application belongs too.
             download_status (int): The integer status code that represents
                 if this application has been downlaoded successfully.
             vulnerability_id (str): The vulnerability identifier assigned
@@ -74,6 +77,8 @@ class Apps(object):
         self.hidden = hidden
         self.update = update
         self.download_status = download_status
+        self.uninstallable = uninstallable
+        self.repo = repo
         self.vulnerability_id = vulnerability_id
         self.vulnerability_categories = vulnerability_categories
         self.cve_ids = cve_ids
@@ -162,7 +167,7 @@ class Apps(object):
 
         if self.reboot_required:
             if (self.reboot_required not
-                    in PossibleRebootValues.get_reboot_values()):
+                    in RebootValues.get_values()):
                 invalid_fields.append(
                     {
                         DbCommonAppKeys.RebootRequired: self.reboot_required,
@@ -179,13 +184,28 @@ class Apps(object):
 
         if self.hidden:
             if (self.hidden not
-                    in PossibleHiddenValues.get_hidden_values()):
+                    in HiddenValues.get_values()):
                 invalid_fields.append(
                     {
                         DbCommonAppKeys.Hidden: self.hidden,
                         CommonKeys.REASON: (
                             '{0} not a valid hidden value'
                             .format(self.hidden)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.uninstallable:
+            if self.uninstallable not in UninstallableValues.get_values():
+                invalid_fields.append(
+                    {
+                        DbCommonAppKeys.Uninstallable: self.uninstallable,
+                        CommonKeys.REASON: (
+                            '{0} not a valid uninstallable value'
+                            .format(self.uninstallable)
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             PackageCodes.InvalidValue
@@ -253,6 +273,8 @@ class Apps(object):
             DbCommonAppKeys.VendorSeverity: self.vendor_severity,
             DbCommonAppKeys.VendorName: self.vendor_name,
             DbCommonAppKeys.FilesDownloadStatus: self.download_status,
+            DbCommonAppKeys.Uninstallable: self.uninstallable,
+            DbCommonAppKeys.Repo: self.repo,
             DbCommonAppKeys.VulnerabilityId: self.vulnerability_id,
             DbCommonAppKeys.VulnerabilityCategories: (
                 self.vulnerability_categories
@@ -470,9 +492,9 @@ class Files(object):
             app_ids (list): The application ids, this file is associated with.
             agent_ids (list): The agent ids this file is associated with.
         """
-        self.name = file_name
+        self.file_name = file_name
         self.file_hash = file_hash
-        self.size = file_size
+        self.file_size = file_size
         self.download_url = download_url
         self.app_ids = app_ids
         self.agent_ids = agent_ids

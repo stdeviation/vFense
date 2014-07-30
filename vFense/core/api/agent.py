@@ -979,7 +979,15 @@ class AgentTagHandler(BaseHandler):
     @results_message
     @check_permissions(Permissions.CREATE_TAG)
     def create_tag(self, tag_name, agent_id, active_view):
-        tag = Tag(tag_name, active_view, agents=[agent_id])
+        environment = (
+            AgentManager(agent_id).get_attribute(AgentKeys.Environment)
+        )
+        tag = (
+            Tag(
+                tag_name=tag_name, environment=environment,
+                view_name=active_view, agents=[agent_id]
+            )
+        )
         manager = TagManager()
         results = manager.create(tag)
         return results
