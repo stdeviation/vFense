@@ -7,16 +7,20 @@ from vFense.plugins.patching._db_model import (
     AppsKey, AppCollections, DbCommonAppPerAgentKeys, DbCommonAppKeys
 )
 from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.core.agent import Agent
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import(
     fetch_agent, fetch_agent_ids_in_views
 )
 from vFense.core._db_constants import DbTime
+from vFense.core._db import insert_data_in_table
 from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResultKeys
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
-from vFense.plugins.patching._db_files import fetch_file_data
+from vFense.plugins.patching._db_files import (
+    fetch_file_data, delete_apps_per_agent_older_than
+)
 from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.plugins.patching.file_data import add_file_data
 
@@ -110,12 +114,11 @@ class CustomAppsManager(object):
                 app_url = self.url_tmp_path(app.name, app.app_id)
                 if os.path.exists(app_location):
                     app.fill_in_defaults()
-                    app_data = app.to_dict().copy()
-                    app_data[DbCommonAppKeys.ReleaseDate] = (
-                        DbTime.epoch_time_to_db_time(app.release_date)
-                    )
                     object_status, _, _, _ = (
-                        insert_app_data(app_data, self.apps_collection)
+                        insert_app_data(
+                            app.to_dict_db_apps(),
+                            self.apps_collection
+                        )
                     )
                     self.store_app_in_db(file_data)
                     if object_status == DbCodes.Inserted:
@@ -131,69 +134,56 @@ class CustomAppsManager(object):
 
         return results
 
-    def add_app_to_agent(self, app_id, agent_id, status):
-        app_info = (
-            fetch_app_data(
-                app_id, collection=self.apps_collection,
-                fields_to_pluck=[
-                    AppsKey.CveIds, AppsKey.VulnerabilityCategories,
-                    AppsKey.VulnerabilityId, AppsKey.AppId
-                ]
-            )
-        )
+    def add_app_to_agent(self, app):
+        if isinstance(app, Apps):
+            invalid_keys = app.get_invalid_fields()
+            if not invalid_keys:
+                return
 
-        agent_info = (
-            fetch_agent(
-                agent_id, keys_to_pluck=[
-                    AgentKeys.OsCode, AgentKeys.OsString,
-                    AgentKeys.Views, AgentKeys.AgentId
-               ]
-            )
-        )
 
-        if agent_info and app_info:
-            data = dict(agent_info.items() + app_info.items())
-            data[DbCommonAppPerAgentKeys.Status] = status
+    def add_apps_to_agent(agent_id, app_list, now=None,
+                          delete_afterwards=True):
 
-            if len(agent_ids) > 0:
-                for agentid in agent_ids:
-                    add_file_data(app_id, file_data, agent_id)
-                    agent_info_to_insert = (
-                        {
-                            DbCommonAppPerAgentKeys.AgentId: agentid,
-                            DbCommonAppPerAgentKeys.AppId: app_id,
-                            DbCommonAppPerAgentKeys.Status: CommonAppKeys.AVAILABLE,
-                            DbCommonAppPerAgentKeys.InstallDate: r.epoch_time(0.0)
-                        }
-                    )
-                    insert_app_data(
-                        agent_info_to_insert,
-                        collection=AppCollections.DbCommonAppsPerAgent
-                    )
+        updated = 0
+        inserted = 0
+        deleted = 0
+        apps_to_insert = []
+        if isinstance(app_list, list):
+            for app in app_list:
+                if isinstance(app, Apps):
+                    apps_to_insert.append(app.to_dict_db_apps_per_agent())
 
-        elif agent_id and not app_id:
-            agent_info = fetch_agent(agent_id)
-            apps_info = fetch_apps_data_by_os_code(
-                agent_info[AgentKeys.OsCode], views,
-                collection=AppCollections.CustomApps
+        if apps_to_insert:
+            status_code, count, _, _ = (
+                insert_data_in_table(apps_to_insert, self.apps_collection)
             )
 
-            for app_info in apps_info:
-                app_id = app_info.get(CustomAppsKey.AppId)
-                file_data = fetch_file_data(app_id)
-                add_file_data(app_id, file_data, agent_id)
+            if isinstance(count, list):
+                if len(count) > 1:
+                    inserted = count[0]
+                    updated = count[1]
 
-                agent_info_to_insert = {
-                    DbCommonAppPerAgentKeys.AgentId: agent_id,
-                    DbCommonAppPerAgentKeys.AppId: app_id,
-                    DbCommonAppPerAgentKeys.Status: CommonAppKeys.AVAILABLE,
-                    DbCommonAppPerAgentKeys.InstallDate: r.epoch_time(0.0)
-                }
+            else:
+                if status_code == DbCodes.Replaced:
+                    updated = count
+                elif status_code == DbCodes.Inserted:
+                    inserted = count
 
-                insert_app_data(
-                    agent_info_to_insert, collection=AppCollections.DbCommonAppsPerAgent
-                )
+            if delete_afterwards:
+                if not now:
+                    now = DbTime.time_now()
+                else:
+                    if isinstance(now, float) or isinstance(now, int):
+                        now = DbTime.epoch_time_to_db_time(now)
 
+            status_code, count, _, _ = (
+                delete_apps_per_agent_older_than(
+                    agent_id, now, self.apps_collection)
+            )
+
+            deleted = count
+
+        return inserted, updated, deleted
 
     def store_file_data_in_db(self, file_data):
         """Store the uploaded application into the vFense database.

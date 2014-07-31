@@ -1216,7 +1216,7 @@ def update_hidden_status(
                         }
                     )
                 )
-                .run(conn)
+                .run(conn, no_reply=True, durability='soft')
             )
 
         elif hidden == CommonKeys.TOGGLE:
@@ -1236,7 +1236,7 @@ def update_hidden_status(
                             )
                         }
                     )
-                    .run(conn)
+                    .run(conn, no_reply=True, durability='soft')
                 )
 
     except Exception as e:
@@ -1281,21 +1281,21 @@ def delete_app_from_vfense(
             .table(collection)
             .filter({DbCommonAppKeys.AppId: app_id})
             .delete()
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
         (
             r
             .table(per_agent_collection)
             .filter({DbCommonAppKeys.AppId: app_id})
             .delete()
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
         (
             r
             .table(FileCollections.Files)
             .filter(lambda x: x[FilesKey.AppIds].contains(app_id))
             .delete()
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
         completed = True
 

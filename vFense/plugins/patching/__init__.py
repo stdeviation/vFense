@@ -5,7 +5,7 @@ from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
 from vFense.plugins.patching._constants import (
     AppDefaults, RebootValues, HiddenValues, UninstallableValues,
-    CommonSeverityKeys, FileDefaults
+    CommonSeverityKeys, FileDefaults, AppStatuses
 )
 from vFense.plugins.patching._db_model import (
     DbCommonAppKeys, FilesKey, DbCommonAppPerAgentKeys
@@ -15,6 +15,9 @@ from vFense.plugins.patching.status_codes import (
     PackageCodes
 )
 
+from vFense.plugins.patching.utils import (
+    build_app_id, build_agent_app_id, get_proper_severity
+)
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -25,10 +28,11 @@ class Apps(object):
                  arch=None, app_id=None, kb=None, support_url=None,
                  vendor_severity=None, vfense_severity=None,
                  os_code=None, os_string=None, vendor=None, description=None,
-                 cli_options=None, release_date=None,
-                 reboot_required=None, hidden=None, update=None,
-                 uninstallable=None, repo=None,
-                 download_status=None, vulnerability_id=None,
+                 cli_options=None, release_date=None, reboot_required=None,
+                 hidden=None, uninstallable=None, repo=None,
+                 download_status=None, vulnerability_id=None, id=None,
+                 update=None,install_date=None, status=None, agent_id=None,
+                 dependencies=None, last_modified_time=None,
                  vulnerability_categories=None, cve_ids=None):
         """
         Kwargs:
@@ -48,8 +52,6 @@ class Apps(object):
             release_date (float): The Unix timestamp aka epoch time.
             reboot_required (str): possible, required, none
             hidden (str): no or yes.
-            update (int): The integer status code that represents if this
-                application is a new install or an update.
             uninstallable (str): yes or no.
             repo (str): repository this application belongs too.
             download_status (int): The integer status code that represents
@@ -58,6 +60,13 @@ class Apps(object):
                 by the respective vendor.
             vulnerability_categories (list): List of vulnerabilty categories.
             cve_ids (list): List of cve ids that reference this application.
+            id (str): The primary key of this application.
+            update (int): The integer status code that represents if this
+                application is a new install or an update.
+            install_date (float): The Unix timestamp aka epoch time.
+            status (str): installed or available or pending.
+            agent_id (str): The id of the agent that requires this application.
+            last_modified_time (float): The Unix timestamp aka epoch time.
 
         """
         self.name = name
@@ -76,13 +85,19 @@ class Apps(object):
         self.release_date = release_date
         self.reboot_required = reboot_required
         self.hidden = hidden
-        self.update = update
         self.download_status = download_status
         self.uninstallable = uninstallable
         self.repo = repo
         self.vulnerability_id = vulnerability_id
         self.vulnerability_categories = vulnerability_categories
         self.cve_ids = cve_ids
+        self.install_date = install_date
+        self.id = id
+        self.update = update
+        self.status = status
+        self.agent_id = agent_id
+        self.dependencies = dependencies
+        self.last_modified_time = last_modified_time
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -94,20 +109,20 @@ class Apps(object):
             functions to call this method to fill in the rest.
         """
 
+        if not self.app_id:
+            self.app_id = build_app_id(self.name, self.version)
+
         if not self.hidden:
             self.hidden = AppDefaults.HIDDEN
 
         if not self.reboot_required:
             self.reboot_required= AppDefaults.REBOOT_REQUIRED
 
-        if not self.update:
-            self.update = AppDefaults.UPDATE
-
         if not self.download_status:
             self.download_status = AppDefaults.DOWNLOAD_STATUS
 
         if not self.vfense_severity:
-            self.vfense_severity = AppDefaults.VFENSE_SEVERITY
+            self.vfense_severity = get_proper_severity(self.vendor_severity)
 
         if not self.vulnerability_categories:
             self.vulnerability_categories = (
@@ -119,6 +134,25 @@ class Apps(object):
 
         if not self.cve_ids:
             self.cve_ids = AppDefaults.cve_ids
+
+    def fill_in_app_per_agent_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+
+        if not self.dependencies:
+            self.dependencies = AppDefaults.DEPENDENCIES
+
+        if not self.id:
+            self.id = build_agent_app_id(self.agent_id, self.app_id)
+
+        if not self.update:
+            self.update = AppDefaults.UPDATE
 
 
     def get_invalid_fields(self):
@@ -246,10 +280,69 @@ class Apps(object):
                     }
                 )
 
+        if self.install_date:
+            if not isinstance(self.install_date, float):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.InstallDate: self.install_date,
+                        CommonKeys.REASON: (
+                            '{0} not a valid install date'
+                            .format(self.install_date)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if not isinstance(self.last_modified_time, float):
+            invalid_fields.append(
+                {
+                    DbCommonAppPerAgentKeys.LastModifiedTime: (
+                            self.last_modified_time
+                    ),
+                    CommonKeys.REASON: (
+                            '{0} not a valid last modified time'
+                            .format(self.last_modified_time)
+                    ),
+                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                    )
+                }
+            )
+
+        if not isinstance(self.dependencies, list):
+            invalid_fields.append(
+                {
+                    DbCommonAppPerAgentKeys.Dependencies: self.dependencies,
+                    CommonKeys.REASON: (
+                        '{0} not a valid list'.format(self.dependencies)
+                    ),
+                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                        PackageCodes.InvalidValue
+                    )
+                }
+            )
+
+        if self.status:
+            if self.status not in AppStatuses.get_values():
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.Status: self.status,
+                        CommonKeys.REASON: (
+                            '{0} not a valid application status'
+                            .format(self.status)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
 
         return invalid_fields
 
-    def to_dict(self):
+    def to_dict_apps(self):
         """ Turn the view fields into a dictionary.
 
         Returns:
@@ -283,7 +376,7 @@ class Apps(object):
             DbCommonAppKeys.CveIds: self.cve_ids
         }
 
-    def to_dict_db(self):
+    def to_dict_db_apps(self):
         """ Turn the view fields into a dictionary.
 
         Returns:
@@ -298,165 +391,10 @@ class Apps(object):
             ),
         }
 
-        return dict(self.to_dict_non_null().items() + data.items())
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
+        return dict(self.to_dict_apps().items() + data.items())
 
 
-class AppsPerAgent(object):
-    """Used to represent an instance of an app."""
-
-    def __init__(self, id=None, app_id=None, install_date=None, status=None,
-                 agent_id=None, dependencies=None, last_modified_time=None,
-                 update=None, os_code=None, os_string=None, views=None,
-                 cve_ids=None, vulnerability_id=None):
-        """
-        Kwargs:
-            id (str): The primary key of this application.
-            app_id (str): The application id of this application.
-            install_date (float): The Unix timestamp aka epoch time.
-            status (str): installed or available or pending.
-            agent_id (str): The id of the agent that requires this application.
-            last_modified_time (float): The Unix timestamp aka epoch time.
-            update (int): The integer status code that represents if this
-                application is a new install or an update.
-            os_code (str): windows, linux, or darwin
-            os_string (str): CentOS 6.5, Ubuntu 12.0.4, etc...
-            views (list): List of of views this agent is a part of.
-            cve_ids (list): List of cve ids that reference this application.
-            vulnerability_id (str): The vulnerability identifier assigned
-                by the respective vendor.
-        """
-        self.id = id
-        self.app_id = app_id
-        self.install_date = install_date
-        self.status = status
-        self.agent_id = agent_id
-        self.dependencies = dependencies
-        self.last_modified_time = last_modified_time
-        self.update = update
-        self.os_code = os_code
-        self.os_string = os_string
-        self.views = views
-        self.cve_ids = cve_ids
-        self.vulnerability_id = vulnerability_id
-
-    def fill_in_defaults(self):
-        """Replace all the fields that have None as their value with
-        the hardcoded default values.
-
-        Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
-            functions to call this method to fill in the rest.
-        """
-
-        if not self.vulnerability_categories:
-            self.vulnerability_categories = (
-                AppDefaults.VULNERABILITY_CATEGORIES
-            )
-
-        if not self.vulnerability_id:
-            self.vulnerability_id = AppDefaults.VULNERABILITY_ID
-
-        if not self.cve_ids:
-            self.cve_ids = AppDefaults.CVE_IDS
-
-        if not self.dependencies:
-            self.dependencies = AppDefaults.DEPENDENCIES
-
-
-    def get_invalid_fields(self):
-        """Check the app for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        invalid_fields = []
-
-        if self.install_date:
-            if not isinstance(self.install_date, float):
-                invalid_fields.append(
-                    {
-                        DbCommonAppPerAgentKeys.InstallDate: self.install_date,
-                        CommonKeys.REASON: (
-                            '{0} not a valid install date'
-                            .format(self.install_date)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-            if not isinstance(self.last_modified_time, float):
-                invalid_fields.append(
-                    {
-                        DbCommonAppPerAgentKeys.LastModifiedTime: (
-                            self.last_modified_time
-                        ),
-                        CommonKeys.REASON: (
-                            '{0} not a valid last modified time'
-                            .format(self.last_modified_time)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-            if not isinstance(self.dependencies, list):
-                invalid_fields.append(
-                    {
-                        DbCommonAppPerAgentKeys.Dependencies: (
-                            self.dependencies
-                        ),
-                        CommonKeys.REASON: (
-                            '{0} not a valid list'
-                            .format(self.dependencies)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-            if not isinstance(self.views, list):
-                invalid_fields.append(
-                    {
-                        DbCommonAppPerAgentKeys.Views: (
-                            self.views
-                        ),
-                        CommonKeys.REASON: (
-                            '{0} not a valid list'
-                            .format(self.views)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-        return invalid_fields
-
-    def to_dict(self):
+    def to_dict_apps_per_agent(self):
         """ Turn the view fields into a dictionary.
 
         Returns:
@@ -483,7 +421,7 @@ class AppsPerAgent(object):
             DbCommonAppPerAgentKeys.CveIds: self.cve_ids
         }
 
-    def to_dict_db(self):
+    def to_dict_db_apps_per_agent(self):
         """ Turn the view fields into a dictionary.
 
         Returns:
@@ -501,7 +439,7 @@ class AppsPerAgent(object):
             ),
         }
 
-        return dict(self.to_dict_non_null().items() + data.items())
+        return dict(self.to_dict_apps_per_agent().items() + data.items())
 
 
     def to_dict_non_null(self):

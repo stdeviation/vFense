@@ -217,7 +217,7 @@ def insert_data_in_table(data, collection, conn=None):
             r
             .table(collection)
             .insert(data, upsert=True)
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -291,7 +291,7 @@ def update_data_in_table(primary_key, data, collection, conn=None):
             .table(collection)
             .get(primary_key)
             .update(data)
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
 
     except Exception as e:
@@ -325,7 +325,7 @@ def delete_all_in_table(collection, conn=None):
             r
             .table(collection)
             .delete()
-            .run(conn)
+            .run(conn, no_reply=True, durability='soft')
         )
     except Exception as e:
         logger.exception(e)

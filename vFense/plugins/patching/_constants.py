@@ -36,7 +36,7 @@ class AppStatuses():
     PENDING = 'pending'
 
     @staticmethod
-    def get_valid_statuses():
+    def get_values():
         valid_statuses = (
             map(
                 lambda x:
