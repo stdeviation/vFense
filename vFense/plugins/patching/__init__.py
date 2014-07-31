@@ -1,6 +1,7 @@
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
+from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
 from vFense.plugins.patching._constants import (
     AppDefaults, RebootValues, HiddenValues, UninstallableValues,
@@ -20,10 +21,10 @@ logger = logging.getLogger('rvapi')
 class Apps(object):
     """Used to represent an instance of an app."""
 
-    def __init__(self, name=None, version=None, arch=None, app_id=None,
-                 kb=None, support_url=None, vendor_severity=None,
-                 vfense_severity=None, os_code=None,
-                 os_string=None, vendor=None, description=None,
+    def __init__(self, name=None, version=None,
+                 arch=None, app_id=None, kb=None, support_url=None,
+                 vendor_severity=None, vfense_severity=None,
+                 os_code=None, os_string=None, vendor=None, description=None,
                  cli_options=None, release_date=None,
                  reboot_required=None, hidden=None, update=None,
                  uninstallable=None, repo=None,
@@ -282,6 +283,23 @@ class Apps(object):
             DbCommonAppKeys.CveIds: self.cve_ids
         }
 
+    def to_dict_db(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        data = {
+            DbCommonAppPerAgentKeys.ReleaseDate: (
+                DbTime.epoch_time_to_db_time(self.release_date)
+            ),
+        }
+
+        return dict(self.to_dict_non_null().items() + data.items())
+
     def to_dict_non_null(self):
         """ Use to get non None fields of an install. Useful when
         filling out just a few fields to perform an install.
@@ -464,6 +482,27 @@ class AppsPerAgent(object):
             DbCommonAppPerAgentKeys.VulnerabilityId: self.vulnerability_id,
             DbCommonAppPerAgentKeys.CveIds: self.cve_ids
         }
+
+    def to_dict_db(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        data = {
+            DbCommonAppPerAgentKeys.InstallDate: (
+                DbTime.epoch_time_to_db_time(self.install_date)
+            ),
+            DbCommonAppPerAgentKeys.LastModifiedTime: (
+                DbTime.epoch_time_to_db_time(self.last_modified_time)
+            ),
+        }
+
+        return dict(self.to_dict_non_null().items() + data.items())
+
 
     def to_dict_non_null(self):
         """ Use to get non None fields of an install. Useful when
