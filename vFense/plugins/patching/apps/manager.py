@@ -149,6 +149,7 @@ class AppsManager(object):
                     'Failed to add {0}, contained invalid_fields {1}'
                     .format(app.name, ', '.join(app_invalid_fields))
                 )
+                results[ApiResultKeys.ERRORS] = app_invalid_fields
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                     PackageFailureCodes.FailedToCreateObject
                 )
