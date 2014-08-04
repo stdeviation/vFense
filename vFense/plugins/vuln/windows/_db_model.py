@@ -1,15 +1,13 @@
+from vFense.plugins.vuln._db_model import VulnerabilityKeys
+
 class WindowsSecurityCollection():
     Bulletin = 'windows_security_bulletin'
 
 
-class WindowsSecurityBulletinKey():
-    Id = 'id'
-    DatePosted = 'date_posted'
-    BulletinId = 'bulletin_id'
-    BulletinKb = 'bulletin_kb'
+class WindowsSecurityBulletinKey(VulnerabilityKeys):
+    Kb = 'kb'
     BulletinSeverity = 'bulletin_severity'
     BulletinImpact = 'bulletin_impact'
-    Details = 'bulletin_details'
     AffectedProduct = 'affected_product'
     ComponentKb = 'component_kb'
     AffectedComponent = 'affected_component'
@@ -18,9 +16,7 @@ class WindowsSecurityBulletinKey():
     SupersedesBulletinId = 'supercedes_bulletin_id'
     SupersedesBulletinKb = 'supercedes_bulletin_kb'
     Supersedes = 'supercedes'
-    SupportUrl = 'support_url'
     Reboot = 'reboot'
-    CveIds = 'cve_ids'
 
 class WindowsSecurityBulletinIndexes():
     BulletinId = 'bulletin_id'

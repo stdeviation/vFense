@@ -1,13 +1,9 @@
 import os
+import re
 import logging
 from time import time
 
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
-from vFense.plugins.patching import Apps, Files
-from vFense.plugins.patching._constants import AppStatuses
-from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys
-)
 from vFense.core.agent._db import(
     fetch_agent_ids_in_views
 )
@@ -18,6 +14,11 @@ from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResultKeys
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
+from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching._constants import AppStatuses, CommonAppKeys
+from vFense.plugins.patching._db_model import (
+    AppCollections, DbCommonAppKeys
+)
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
@@ -31,6 +32,10 @@ from vFense.plugins.patching._db import (
 from vFense.plugins.patching.downloader.downloader import (
     download_all_files_in_app
 )
+
+import vFense.plugins.vuln.windows.ms as ms
+import vFense.plugins.vuln.ubuntu.usn as usn
+import vFense.plugins.vuln.cve.cve as cve
 
 
 import redis
@@ -98,6 +103,52 @@ class AppsManager(object):
 
         return agent_ids
 
+    def _set_download_status(self, status, file_data=False):
+        download_status = None
+        if file_data and status == CommonAppKeys.AVAILABLE:
+            download_status = PackageCodes.FilePendingDownload
+
+        elif not file_data and status == CommonAppKeys.AVAILABLE:
+            download_status = PackageCodes.MissingUri
+
+        elif status == CommonAppKeys.INSTALLED:
+            download_status = PackageCodes.FileNotRequired
+
+        return download_status
+
+
+    def _set_vulnerability_info(self, app):
+        """Retrieve the relevant vulnerability for an application if
+            it exist. We search by using the kb for Windows and by using the name
+            and version for Ubuntu.
+        """
+
+
+        if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
+            vuln_info = ms.get_vuln_ids(app.kb)
+
+        elif (re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
+              and app.name and app.version):
+            vuln_info = (
+                Apps(
+                    **usn.get_vuln_ids(
+                        app.name, app.version, app.os_string
+                    )
+                )
+            )
+
+        if vuln_info:
+            app.cve_ids = vuln_info.cve_ids
+            app.vulnerability_id = vuln_info.bulletin_id
+            for cve_id in app.cve_ids:
+                app.vulnerability_categories += (
+                    cve.get_vulnerability_categories(cve_id)
+                )
+
+            app.vulnerability_categories = (
+                list(set(app.vulnerability_categories))
+            )
+
 
     def store_app_in_db(self, app, file_data, views=None):
         """Store the application into the vFense database.
@@ -122,7 +173,6 @@ class AppsManager(object):
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
-                app.fill_in_defaults()
                 object_status, _, _, _ = (
                     insert_app_data(
                         app.to_dict_db_apps(), self.apps_collection
@@ -228,7 +278,8 @@ class AppsManager(object):
 
             status_code, count, _, _ = (
                 delete_apps_per_agent_older_than(
-                    agent_id, now, self.apps_collection)
+                    agent_id, now, self.apps_collection
+                )
             )
 
             deleted = count
@@ -274,8 +325,12 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
         for app in apps:
             files_data = []
             files = app.pop(DbCommonAppKeys.FileData)
-            app.views = agent.views
             app_data = Apps(**app)
+            app_data.views = agent.views
+            app_data.os_code = agent.os_code
+            app_data.os_string = agent.os_string
+            app_data.agent_id = agent_id
+            app.fill_in_defaults()
             if isinstance(files, list):
                 for file_data in files:
                     files_data.append(Files(**file_data))

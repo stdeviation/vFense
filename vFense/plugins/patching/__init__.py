@@ -33,7 +33,7 @@ class Apps(object):
                  repo=None, download_status=None, vulnerability_id=None,
                  id=None, update=None,install_date=None, status=None,
                  agent_id=None, dependencies=None, last_modified_time=None,
-                 vulnerability_categories=None, cve_ids=None):
+                 vulnerability_categories=None, cve_ids=None, views=None):
         """
         Kwargs:
             name (str): Name of the application.
@@ -55,7 +55,7 @@ class Apps(object):
             uninstallable (str): yes or no.
             repo (str): repository this application belongs too.
             download_status (int): The integer status code that represents
-                if this application has been downlaoded successfully.
+                if this application has been downloaded successfully.
             vulnerability_id (str): The vulnerability identifier assigned
                 by the respective vendor.
             vulnerability_categories (list): List of vulnerabilty categories.
