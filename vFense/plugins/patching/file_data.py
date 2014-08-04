@@ -35,6 +35,7 @@ def add_file_data(file_data):
     """
     data_to_insert = []
     data_inserted = False
+    print len(file_data)
     for fd in file_data:
         if file_data_exists(fd.file_name):
             if fd.agent_ids:

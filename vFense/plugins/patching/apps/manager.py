@@ -1,35 +1,45 @@
 import os
 import logging
+from time import time
 
 from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching._constants import AppStatuses
 from vFense.plugins.patching._db_model import (
-    AppsKey, AppCollections, DbCommonAppPerAgentKeys, DbCommonAppKeys
+    AppCollections, DbCommonAppKeys
 )
-from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.core.agent import Agent
-from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import(
-    fetch_agent, fetch_agent_ids_in_views
+    fetch_agent_ids_in_views
 )
-from vFense.core._db_constants import DbTime
+from vFense.core.agent import Agent
+from vFense.core.agent.manager import AgentManager
 from vFense.core._db import insert_data_in_table
 from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResultKeys
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
-from vFense.plugins.patching._db_files import (
-    fetch_file_data, delete_apps_per_agent_older_than
-)
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
 from vFense.plugins.patching.file_data import add_file_data
 
 from vFense.plugins.patching._db import (
-    fetch_app_data, fetch_apps_data_by_os_code, insert_app_data
+    fetch_app_data, fetch_apps_data_by_os_code, insert_app_data,
+    delete_apps_per_agent_older_than
 )
 
+from vFense.plugins.patching.downloader.downloader import (
+    download_all_files_in_app
+)
+
+
+import redis
+from rq import Queue
+
+RQ_HOST = 'localhost'
+RQ_PORT = 6379
+RQ_DB = 0
+RQ_PKG_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -37,7 +47,7 @@ logger = logging.getLogger('rvapi')
 class AppsManager(object):
     def __init__(self):
         self.apps_collection = AppCollections.CustomApps
-        self.apps_per_agent_collection = AppCollections.DbCommonAppsPerAgent
+        self.apps_per_agent_collection = AppCollections.AppsPerAgent
 
     def url_path(self, app_id, app_name, view):
         view = ViewManager(view)
@@ -112,17 +122,19 @@ class AppsManager(object):
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
-                app_location = self.local_file_path(app.name, app.app_id)
-                app_url = self.url_tmp_path(app.name, app.app_id)
                 app.fill_in_defaults()
                 object_status, _, _, _ = (
                     insert_app_data(
                         app.to_dict_db_apps(), self.apps_collection
                     )
                 )
-                self.store_app_in_db(file_data)
+                self.store_file_data_in_db(file_data)
+                if app.status == AppStatuses.AVAILABLE:
+                    self.download_app_files(app, file_data)
+
                 if (object_status == DbCodes.Inserted or
-                        object_status == DbCodes.Replaced):
+                        object_status == DbCodes.Replaced or
+                        object_status == DbCodes.Unchanged):
                     msg = 'App %s stored succesfully' % (app.name)
                     results[ApiResultKeys.GENERIC_STATUS_CODE] = (
                         PackageCodes.ObjectCreated
@@ -131,7 +143,7 @@ class AppsManager(object):
                         PackageCodes.FileUploadedSuccessfully
                     )
                     results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [app.to_dict()]
+                    results[ApiResultKeys.DATA] = [app.to_dict_apps()]
 
                 else:
                     msg = 'Failed to add app %s' % (app.name)
@@ -142,7 +154,7 @@ class AppsManager(object):
                         PackageFailureCodes.FileUploadFailed
                     )
                     results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [app.to_dict()]
+                    results[ApiResultKeys.DATA] = [app.to_dict_apps()]
 
             else:
                 msg = (
@@ -157,7 +169,21 @@ class AppsManager(object):
                     PackageFailureCodes.FileUploadFailed
                 )
                 results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [app.to_dict()]
+                results[ApiResultKeys.DATA] = [app.to_dict_apps()]
+
+        else:
+            msg = (
+                'Not a valid Apps {0} or Files {1} instance'
+                .format(type(app), type(file_data))
+            )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    PackageFailureCodes.FailedToCreateObject
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    PackageFailureCodes.FileUploadFailed
+            )
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.DATA] = []
 
         return results
 
@@ -165,10 +191,10 @@ class AppsManager(object):
         if isinstance(app, Apps):
             invalid_keys = app.get_invalid_fields()
             if not invalid_keys:
-                return
+                pass
 
 
-    def add_apps_to_agent(agent_id, app_list, now=None,
+    def add_apps_to_agent(self, agent_id, app_list, now=None,
                           delete_afterwards=True):
 
         updated = 0
@@ -177,6 +203,10 @@ class AppsManager(object):
         apps_to_insert = []
         if isinstance(app_list, list):
             for app in app_list:
+                if not now:
+                    now = time()
+
+                app.last_modified_time = now
                 if isinstance(app, Apps):
                     apps_to_insert.append(app.to_dict_db_apps_per_agent())
 
@@ -195,13 +225,6 @@ class AppsManager(object):
                     updated = count
                 elif status_code == DbCodes.Inserted:
                     inserted = count
-
-            if delete_afterwards:
-                if not now:
-                    now = DbTime.time_now()
-                else:
-                    if isinstance(now, float) or isinstance(now, int):
-                        now = DbTime.epoch_time_to_db_time(now)
 
             status_code, count, _, _ = (
                 delete_apps_per_agent_older_than(
@@ -231,4 +254,33 @@ class AppsManager(object):
 
         return data_stored
 
+    def download_app_files(self, app, file_data):
 
+        rv_q = Queue('downloader', connection=RQ_PKG_POOL)
+        rv_q.enqueue_call(
+            func=download_all_files_in_app,
+            args=(app, file_data, 0, self.apps_collection),
+            timeout=86400
+        )
+
+
+def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
+
+    manager = AppsManager()
+    apps_data = []
+    now = time()
+    agent = AgentManager(agent_id)
+    if isinstance(apps, list):
+        for app in apps:
+            files_data = []
+            files = app.pop(DbCommonAppKeys.FileData)
+            app.views = agent.views
+            app_data = Apps(**app)
+            if isinstance(files, list):
+                for file_data in files:
+                    files_data.append(Files(**file_data))
+
+            apps_data.append(Apps(app_data))
+            manager.store_app_in_db(app_data, files_data)
+
+        manager.add_apps_to_agent(agent_id, apps_data, now, delete_afterwards)

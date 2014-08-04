@@ -121,6 +121,7 @@ class AppDefaults():
     VULNERABILITY_ID = ''
     CVE_IDS = []
     DEPENDENCIES = []
+    VIEWS = []
 
 class FileDefaults():
     AGENT_IDS = []

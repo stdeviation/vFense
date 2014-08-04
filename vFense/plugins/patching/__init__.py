@@ -27,12 +27,12 @@ class Apps(object):
     def __init__(self, name=None, version=None,
                  arch=None, app_id=None, kb=None, support_url=None,
                  vendor_severity=None, vfense_severity=None,
-                 os_code=None, os_string=None, vendor=None, description=None,
-                 cli_options=None, release_date=None, reboot_required=None,
-                 hidden=None, uninstallable=None, repo=None,
-                 download_status=None, vulnerability_id=None, id=None,
-                 update=None,install_date=None, status=None, agent_id=None,
-                 dependencies=None, last_modified_time=None,
+                 os_code=None, os_string=None, vendor_name=None,
+                 description=None, cli_options=None, release_date=None,
+                 reboot_required=None, hidden=None, uninstallable=None,
+                 repo=None, download_status=None, vulnerability_id=None,
+                 id=None, update=None,install_date=None, status=None,
+                 agent_id=None, dependencies=None, last_modified_time=None,
                  vulnerability_categories=None, cve_ids=None):
         """
         Kwargs:
@@ -45,7 +45,7 @@ class Apps(object):
             vfense_severity (str): Optional, Recommended, or Critical
             os_code (str): windows, linux, or darwin
             os_string (str): CentOS 6.5, Ubuntu 12.0.4, etc...
-            vendor (str): The vendor, this application belongs too.
+            vendor_name (str): The vendor, this application belongs too.
             description (str): The description of this application.
             cli_options (str): Options to be passed while installing this
                 application.
@@ -67,6 +67,7 @@ class Apps(object):
             status (str): installed or available or pending.
             agent_id (str): The id of the agent that requires this application.
             last_modified_time (float): The Unix timestamp aka epoch time.
+            views (list): List of views, this application is associated with.
 
         """
         self.name = name
@@ -79,7 +80,7 @@ class Apps(object):
         self.vfense_severity = vfense_severity
         self.os_code = os_code
         self.os_string = os_string
-        self.vendor = vendor
+        self.vendor_name = vendor_name
         self.description = description
         self.cli_options = cli_options
         self.release_date = release_date
@@ -98,6 +99,7 @@ class Apps(object):
         self.agent_id = agent_id
         self.dependencies = dependencies
         self.last_modified_time = last_modified_time
+        self.views = views
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -133,7 +135,7 @@ class Apps(object):
             self.vulnerability_id = AppDefaults.VULNERABILITY_ID
 
         if not self.cve_ids:
-            self.cve_ids = AppDefaults.cve_ids
+            self.cve_ids = AppDefaults.CVE_IDS
 
     def fill_in_app_per_agent_defaults(self):
         """Replace all the fields that have None as their value with
@@ -154,6 +156,9 @@ class Apps(object):
         if not self.update:
             self.update = AppDefaults.UPDATE
 
+        if not self.views:
+            self.cve_ids = AppDefaults.VIEWS
+
 
     def get_invalid_fields(self):
         """Check the app for any invalid fields.
@@ -171,7 +176,7 @@ class Apps(object):
         invalid_fields = []
 
         if self.name:
-            if len(self.name) <= 1:
+            if len(self.name) < 1:
                 invalid_fields.append(
                     {
                         DbCommonAppKeys.Name: self.name,
@@ -186,7 +191,7 @@ class Apps(object):
                 )
 
         if self.version:
-            if len(self.version) <= 1:
+            if len(self.version) < 1:
                 invalid_fields.append(
                     {
                         DbCommonAppKeys.Version: self.version,
@@ -249,7 +254,8 @@ class Apps(object):
                 )
 
         if self.release_date:
-            if not isinstance(self.release_date, float):
+            if (not isinstance(self.release_date, float) and
+                    not isinstance(self.release_date, int)):
                 invalid_fields.append(
                     {
                         DbCommonAppKeys.ReleaseDate: self.release_date,
@@ -281,13 +287,14 @@ class Apps(object):
                 )
 
         if self.install_date:
-            if not isinstance(self.install_date, float):
+            if (not isinstance(self.install_date, float) and
+                    not isinstance(self.install_date, int)):
                 invalid_fields.append(
                     {
                         DbCommonAppPerAgentKeys.InstallDate: self.install_date,
                         CommonKeys.REASON: (
-                            '{0} not a valid install date'
-                            .format(self.install_date)
+                            '{0} not a valid install date, float or int only'
+                            .format(type(self.install_date))
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             PackageCodes.InvalidValue
@@ -295,34 +302,55 @@ class Apps(object):
                     }
                 )
 
-        if not isinstance(self.last_modified_time, float):
-            invalid_fields.append(
-                {
-                    DbCommonAppPerAgentKeys.LastModifiedTime: (
+        if self.last_modified_time:
+            if (not isinstance(self.last_modified_time, float) and
+                    not isinstance(self.last_modified_time, int)):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.LastModifiedTime: (
                             self.last_modified_time
-                    ),
-                    CommonKeys.REASON: (
+                        ),
+                        CommonKeys.REASON: (
                             '{0} not a valid last modified time'
                             .format(self.last_modified_time)
-                    ),
-                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
                             PackageCodes.InvalidValue
-                    )
-                }
-            )
+                        )
+                    }
+                )
 
-        if not isinstance(self.dependencies, list):
-            invalid_fields.append(
-                {
-                    DbCommonAppPerAgentKeys.Dependencies: self.dependencies,
-                    CommonKeys.REASON: (
-                        '{0} not a valid list'.format(self.dependencies)
-                    ),
-                    ApiResultKeys.VFENSE_STATUS_CODE: (
-                        PackageCodes.InvalidValue
-                    )
-                }
-            )
+        if self.dependencies:
+            if not isinstance(self.dependencies, list):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.Dependencies: (
+                            self.dependencies
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'.format(self.dependencies)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.views:
+            if not isinstance(self.views, list):
+                invalid_fields.append(
+                    {
+                        DbCommonAppPerAgentKeys.Views: (
+                            self.views
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'.format(self.views)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            PackageCodes.InvalidValue
+                        )
+                    }
+                )
 
         if self.status:
             if self.status not in AppStatuses.get_values():
@@ -386,7 +414,7 @@ class Apps(object):
         """
 
         data = {
-            DbCommonAppPerAgentKeys.ReleaseDate: (
+            DbCommonAppKeys.ReleaseDate: (
                 DbTime.epoch_time_to_db_time(self.release_date)
             ),
         }
@@ -459,20 +487,20 @@ class Files(object):
     """Used to represent an instance of an app."""
 
     def __init__(self, file_name=None, file_hash=None, file_size=None,
-                 download_url=None, app_ids=None, agent_ids=None):
+                 file_uri=None, app_ids=None, agent_ids=None):
         """
         Kwargs:
             file_name (str): Name of the file.
             file_hash (str): The md54 hash of the file.
             file_size (int): Size of the file in kb.
-            download_url (str): The url where this file can be downloaded from.
+            file_uri (str): The url where this file can be downloaded from.
             app_ids (list): The application ids, this file is associated with.
             agent_ids (list): The agent ids this file is associated with.
         """
         self.file_name = file_name
         self.file_hash = file_hash
         self.file_size = file_size
-        self.download_url = download_url
+        self.download_url = file_uri
         self.app_ids = app_ids
         self.agent_ids = agent_ids
 
@@ -538,7 +566,7 @@ class Files(object):
                 )
 
         if self.file_hash:
-            if len(self.file_has) <= 1:
+            if len(self.file_hash) <= 1:
                 invalid_fields.append(
                     {
                         FilesKey.FileHash: self.file_hash,
@@ -612,7 +640,7 @@ class Files(object):
             FilesKey.FileName: self.file_name,
             FilesKey.AppIds: self.app_ids,
             FilesKey.AgentIds: self.agent_ids,
-            FilesKey.Uri: self.download_url,
+            FilesKey.FileUri: self.download_url,
             FilesKey.FileHash: self.file_hash,
             FilesKey.FileSize: self.file_size,
         }
