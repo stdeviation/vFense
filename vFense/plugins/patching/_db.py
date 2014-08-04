@@ -530,7 +530,7 @@ def fetch_app_id_by_name_and_version(app_name, app_version,
         >>> app_name = 'libpangoxft-1.0-0'
         >>> app_version = '1.36.3-1ubuntu1'
         >>> collection = 'apps_per_agent'
-        >>> fetch_app_id_by_name_and_version(name, version, collection)
+        >>> fetch_app_id_by_name_and_version(app_name, app_version, collection)
 
     Returns:
         String
