@@ -1,4 +1,9 @@
-from vFense.plugins.vuln import VulnDefaults
+from vFense.core._constants import CommonKeys
+from vFense.core._db_constants import DbTime
+from vFense.core.results import ApiResultKeys
+from vFense.core.status_codes import GenericCodes
+from vFense.plugins.vuln._constants import VulnDefaults
+from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
 
 class Vulnerability(object):
@@ -62,91 +67,63 @@ class Vulnerability(object):
             if not isinstance(self.cve_ids, list):
                 invalid_fields.append(
                     {
-                        FilesKey.FileName: self.file_name,
-                        CommonKeys.REASON: (
-                            '{0} not a valid file name'
-                            .format(self.file_name)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-        if self.file_size:
-            if not int(self.file_size):
-                invalid_fields.append(
-                    {
-                        FilesKey.FileSize: self.file_size,
-                        CommonKeys.REASON: (
-                            '{0} not a valid file size'
-                            .format(self.file_size)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-        if self.file_hash:
-            if len(self.file_hash) <= 1:
-                invalid_fields.append(
-                    {
-                        FilesKey.FileHash: self.file_hash,
-                        CommonKeys.REASON: (
-                            '{0} not a valid hash'
-                            .format(self.file_hash)
-                        ),
-                        ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
-                        )
-                    }
-                )
-
-        if self.app_ids:
-            if not isinstance(self.app_ids, list):
-                invalid_fields.append(
-                    {
-                        FilesKey.AppIds: self.app_ids,
+                        VulnerabilityKeys.CveIds: self.cve_ids,
                         CommonKeys.REASON: (
                             '{0} not a valid list'
-                            .format(self.app_ids)
+                            .format(self.cve_ids)
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
+                            GenericCodes.InvalidValue
                         )
                     }
                 )
 
-        if self.agent_ids:
-            if not isinstance(self.agent_ids, list):
+        if self.apps:
+            if not isinstance(self.apps, list):
                 invalid_fields.append(
                     {
-                        FilesKey.AgentIds: self.agent_ids,
+                        VulnerabilityKeys.Apps: self.apps,
                         CommonKeys.REASON: (
                             '{0} not a valid list'
-                            .format(self.agent_ids)
+                            .format(self.apps)
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
+                            GenericCodes.InvalidValue
                         )
                     }
                 )
 
-        if self.download_url:
-            if len(self.download_url) <= 1:
+        if self.os_strings:
+            if not isinstance(self.os_strings, list):
                 invalid_fields.append(
                     {
-                        FilesKey.FileUri: self.download_url,
+                        VulnerabilityKeys.OsStrings: self.os_strings,
                         CommonKeys.REASON: (
-                            '{0} not a valid url'
-                            .format(self.download_url)
+                            '{0} not a valid list'
+                            .format(self.os_strings)
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            PackageCodes.InvalidValue
+                            GenericCodes.InvalidValue
                         )
                     }
                 )
+
+        if self.date_posted:
+            if (not isinstance(self.date_posted, float) and
+                    not isinstance(self.date_posted, int)):
+                invalid_fields.append(
+                    {
+                        VulnerabilityKeys.DatePosted: self.date_posted,
+                        CommonKeys.REASON: (
+                            '{0} not a valid date, float or int only'
+                            .format(type(self.date_posted))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
 
         return invalid_fields
 
@@ -160,13 +137,32 @@ class Vulnerability(object):
         """
 
         return {
-            FilesKey.FileName: self.file_name,
-            FilesKey.AppIds: self.app_ids,
-            FilesKey.AgentIds: self.agent_ids,
-            FilesKey.FileUri: self.download_url,
-            FilesKey.FileHash: self.file_hash,
-            FilesKey.FileSize: self.file_size,
+            VulnerabilityKeys.VulnerabilityId: self.vulnerability_id,
+            VulnerabilityKeys.Apps: self.apps,
+            VulnerabilityKeys.DatePosted: self.date_posted,
+            VulnerabilityKeys.CveIds: self.cve_ids,
+            VulnerabilityKeys.OsStrings: self.os_strings,
+            VulnerabilityKeys.Details: self.details,
+            VulnerabilityKeys.SupportUrl: self.support_url,
         }
+
+    def to_dict_db(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        data = {
+            VulnerabilityKeys.DatePosted: (
+                DbTime.epoch_time_to_db_time(self.date_posted)
+            ),
+        }
+
+        return dict(self.to_dict().items() + data.items())
+
 
     def to_dict_non_null(self):
         """ Use to get non None fields of an install. Useful when
