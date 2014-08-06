@@ -37,16 +37,19 @@ class Vulnerability(object):
             self.cve_ids = VulnDefaults.CVE_IDS
 
         if not self.os_strings:
-            self.os_strings= VulnDefaults.OS_STRINGS
+            self.os_strings = VulnDefaults.OS_STRINGS
 
         if not self.support_url:
-            self.support_url= VulnDefaults.SUPPORT_URL
+            self.support_url = VulnDefaults.SUPPORT_URL
 
         if not self.details:
-            self.details= VulnDefaults.DETAILS
+            self.details = VulnDefaults.DETAILS
 
         if not self.apps:
-            self.apps= VulnDefaults.APPS
+            self.apps = VulnDefaults.APPS
+
+        if not self.date_posted:
+            self.date_posted = 0
 
     def get_invalid_fields(self):
         """Check the app for any invalid fields.

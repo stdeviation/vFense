@@ -45,7 +45,7 @@ class Windows(Vulnerability):
         """
         vuln_data = super(Windows, self).to_dict_db()
 
-        return dict(vuln_data.items() + self.to_dict())
+        return dict(vuln_data.items() + self.to_dict().items())
 
 
 class WindowsVulnApp(object):
@@ -76,6 +76,9 @@ class WindowsVulnApp(object):
         """
         if not self.supercedes:
             self.supercedes = VulnDefaults.SUPERCEDES
+
+        if not self.cve_ids:
+            self.cve_ids = VulnDefaults.CVE_IDS
 
 
     def to_dict(self):

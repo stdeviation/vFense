@@ -1,7 +1,7 @@
 from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
 class WindowsVulnerabilityCollections():
-    Vulnerabiltiies = 'windows_vulnerabilities'
+    Vulnerabilities = 'windows_vulnerabilities'
 
 
 class WindowsVulnerabilityKeys(VulnerabilityKeys):

@@ -43,7 +43,7 @@ def parse_spread_sheet(bulletin_file):
 
         if row[2] != '':
             row[2] = 'KB' + str(int(row[2]))
-
+        print row[1]
         if row[1] != vuln.vulnerability_id:
             if count > 0:
                 data_to_store.append(vuln.to_dict_db())
@@ -58,7 +58,7 @@ def parse_spread_sheet(bulletin_file):
             vuln.impact = row[4]
             vuln.details = row[5]
             vuln.date_posted = epoch_time
-
+            count = count + 1
 
         # Need to see if I can pull the column names and use that instead
         # of using the row number
@@ -91,14 +91,18 @@ def parse_spread_sheet(bulletin_file):
                 vulnerability_id = bulletin_data[0]
                 kb = None
 
-            app.supercedes.append(
-                {
-                    WindowsVulnSubKeys.VULNERABILITY_ID: vulnerability_id,
-                    WindowsVulnSubKeys.KB: kb
-                }
-            )
+            if kb and vulnerability_id:
+                app.supercedes.append(
+                    {
+                        WindowsVulnSubKeys.VULNERABILITY_ID: vulnerability_id,
+                        WindowsVulnSubKeys.KB: kb
+                    }
+                )
+        print app.to_dict()
         vuln.apps.append(app.to_dict())
-        count += 1
+
+        if count == 3:
+            return data_to_store
 
     return(data_to_store)
 
@@ -111,7 +115,9 @@ def parse_bulletin_and_updatedb():
     downloaded, xls_file = download_latest_xls_from_msft()
     if downloaded:
         bulletin_data = parse_spread_sheet(xls_file)
-        insert_bulletin_data(bulletin_data)
+        print len(bulletin_data)
+        #insert_bulletin_data(bulletin_data)
+        return bulletin_data
 
     logger.info('finished microsoft security bulletin update process')
     gc.collect()
