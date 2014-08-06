@@ -14,5 +14,4 @@ class VulnDefaults():
     APPS = []
     DETAILS = ''
     SUPPORT_URL = ''
-
-
+    SUPERCEDES = []
