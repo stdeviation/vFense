@@ -32,7 +32,7 @@ class Windows(Vulnerability):
             WindowsVulnerabilityKeys.Severity: self.severity,
         }
 
-        return dict(vuln_data.items() + data.items())
+        return dict(data.items() + vuln_data.items())
 
 
     def to_dict_db(self):
@@ -43,9 +43,9 @@ class Windows(Vulnerability):
                 install operation.
 
         """
-        vuln_data = super(Windows, self).to_dict_db()
+        data = super(Windows, self).to_dict_db()
 
-        return dict(vuln_data.items() + self.to_dict().items())
+        return dict(self.to_dict().items() + data.items())
 
 
 class WindowsVulnApp(object):

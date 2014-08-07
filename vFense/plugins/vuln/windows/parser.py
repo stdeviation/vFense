@@ -15,7 +15,9 @@ from vFense.plugins.vuln.windows._constants import (
     WindowsVulnSubKeys, WindowsDataDir, WindowsBulletinStrings
 )
 from vFense.plugins.vuln.windows._db import insert_bulletin_data
-from vFense.plugins.vuln.windows.downloader import download_latest_xls_from_msft
+from vFense.plugins.vuln.windows.downloader import (
+    download_latest_xls_from_msft
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
@@ -97,7 +99,6 @@ def parse_spread_sheet(bulletin_file):
                     }
                 )
         vuln.apps.append(app.to_dict())
-        print len(vuln.apps)
 
     return(data_to_store)
 
@@ -114,5 +115,3 @@ def parse_bulletin_and_updatedb():
 
     logger.info('finished microsoft security bulletin update process')
     gc.collect()
-
-#parse_bulletin_and_updatedb()

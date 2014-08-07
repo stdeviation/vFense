@@ -163,7 +163,6 @@ class Vulnerability(object):
                 DbTime.epoch_time_to_db_time(self.date_posted)
             ),
         }
-
         return dict(self.to_dict().items() + data.items())
 
 
