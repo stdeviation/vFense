@@ -43,25 +43,23 @@ def parse_spread_sheet(bulletin_file):
 
         if row[2] != '':
             row[2] = 'KB' + str(int(row[2]))
-        print row[1]
         if row[1] != vuln.vulnerability_id:
             if count > 0:
                 data_to_store.append(vuln.to_dict_db())
 
-            date = xldate_as_tuple(row[0], workbook.datemode)
-            epoch_time = mktime(datetime(*date).timetuple())
             vuln = Windows()
             vuln.fill_in_defaults()
-            vuln.vulnerability_id = row[1]
-            vuln.kb = row[2]
-            vuln.severity = row[3]
-            vuln.impact = row[4]
-            vuln.details = row[5]
-            vuln.date_posted = epoch_time
             count = count + 1
 
-        # Need to see if I can pull the column names and use that instead
-        # of using the row number
+        date = xldate_as_tuple(row[0], workbook.datemode)
+        epoch_time = mktime(datetime(*date).timetuple())
+        vuln.vulnerability_id = row[1]
+        vuln.kb = row[2]
+        vuln.severity = row[3]
+        vuln.impact = row[4]
+        vuln.details = row[5]
+        vuln.date_posted = epoch_time
+
         app = WindowsVulnApp()
         app.fill_in_defaults()
         app.product = row[6]
@@ -98,11 +96,7 @@ def parse_spread_sheet(bulletin_file):
                         WindowsVulnSubKeys.KB: kb
                     }
                 )
-        print app.to_dict()
         vuln.apps.append(app.to_dict())
-
-        if count == 3:
-            return data_to_store
 
     return(data_to_store)
 

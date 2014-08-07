@@ -34,19 +34,19 @@ class Vulnerability(object):
         """
 
         if not self.cve_ids:
-            self.cve_ids = VulnDefaults.CVE_IDS
+            self.cve_ids = VulnDefaults.cve_ids()
 
         if not self.os_strings:
-            self.os_strings = VulnDefaults.OS_STRINGS
+            self.os_strings = VulnDefaults.os_strings()
 
         if not self.support_url:
-            self.support_url = VulnDefaults.SUPPORT_URL
+            self.support_url = VulnDefaults.support_url()
 
         if not self.details:
-            self.details = VulnDefaults.DETAILS
+            self.details = VulnDefaults.details()
 
         if not self.apps:
-            self.apps = VulnDefaults.APPS
+            self.apps = VulnDefaults.apps()
 
         if not self.date_posted:
             self.date_posted = 0
