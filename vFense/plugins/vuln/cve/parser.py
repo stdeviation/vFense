@@ -14,7 +14,10 @@ from vFense.plugins.vuln.cve._constants import (
     CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
     CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
     CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
-    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS
+    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS,
+    CVSS_ENVIRONMENTAL_VECTOR_CDP_VALUES, CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES,
+    CVSS_ENVIRONMENTAL_VECTOR_CR_VALUES, CVSS_ENVIRONMENTAL_VECTOR_IR_VALUES,
+    CVSS_ENVIRONMENTAL_VECTOR_AR_VALUES
 )
 
 from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
@@ -271,11 +274,8 @@ class NvdParser(object):
         elif metric in CVSS_ENVIRONMENTAL_VECTORS:
             translated_metric = CVSS_ENVIRONMENTAL_VECTORS[metric]
 
-            # TODO(urgent): what happened to the BASE_VECTOR and
-            # ENVIRONMENTAL_VECTOR dictionaries?
-
             if metric == CVEVectors.ENVIRONMENTAL_METRIC_CDP:
-                translated_value = CVSS_BASE_VECTOR_CDP_VALUES[value]
+                translated_value = CVSS_ENVIRONMENTAL_VECTOR_CDP_VALUES[value]
 
             elif metric == CVEVectors.ENVIRONMENTAL_METRIC_TD:
                 translated_value = CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES[value]

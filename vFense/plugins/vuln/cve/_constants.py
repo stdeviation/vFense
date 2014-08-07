@@ -21,6 +21,18 @@ class NVDFeeds():
     REFS = '{http://nvd.nist.gov/feeds/cve/1.2}refs'
     VULN_SOFT = '{http://nvd.nist.gov/feeds/cve/1.2}vuln_soft'
 
+class CveDefaults():
+    @staticmethod
+    def vulnerability_categories():
+        return list()
+
+    @staticmethod
+    def references():
+        return list()
+
+    @staticmethod
+    def descriptions():
+        return list()
 
 class CVEStrings():
     START_YEAR = 2002
@@ -68,6 +80,16 @@ class CVEVectors():
     ENVIRONMENTAL_METRIC_IR = 'IR'
     ENVIRONMENTAL_METRIC_AR = 'AR'
 
+    @staticmethod
+    def get_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(CVEVectors, x), dir(CVEVectors)[:-3]
+            )
+        )
+        return valid_values
+
 
 class CVECategories():
     CSRF = 'CSRF'
@@ -84,15 +106,16 @@ class CVECategories():
     GAIN_PRIVILEGE = 'Gain Privilege'
     DIRECTORY_TRAVERSAL = 'Directory Traversal'
     BYPASS = 'Bypass'
-    CATEGORIES = (
-        [
-            CSRF, DDOS, CSS, SQLI, MEM_CORRUPTION,
-            SENSTIVE_INFORMATION, CODE_EXECUTION,
-            FILE_INCLUSION, HTTP_RESPONSE_SPLITTING_ATTACKS,
-            OVERFLOWS, GAIN_PRIVILEGE, DIRECTORY_TRAVERSAL,
-            BYPASS, BUFFER_OVERFLOW
-        ]
-    )
+
+    @staticmethod
+    def get_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(CVECategories, x), dir(CVECategories)[:-3]
+            )
+        )
+        return valid_values
 
 #########CVS_BASE_VECTORS######################################3
 CVSS_BASE_VECTORS = (
@@ -205,7 +228,7 @@ CVSS_ENVIRONMENTAL_VECTORS = (
     }
 )
 
-CVSS_ENVIRONMENTAL_CDP_VALUES = (
+CVSS_ENVIRONMENTAL_VECTOR_CDP_VALUES = (
     {
         'N': 'None',
         'L': 'Low',
@@ -217,7 +240,7 @@ CVSS_ENVIRONMENTAL_CDP_VALUES = (
     }
 )
 
-CVSS_ENVIRONMENTAL_TD_VALUES = (
+CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES = (
     {
         'N': 'None (0%)',
         'L': 'Low (1-25%)',
@@ -227,7 +250,7 @@ CVSS_ENVIRONMENTAL_TD_VALUES = (
     }
 )
 
-CVSS_ENVIRONMENTAL_CR_VALUES = (
+CVSS_ENVIRONMENTAL_VECTOR_CR_VALUES = (
     {
         'L': 'Low',
         'M': 'Medium',
@@ -236,7 +259,7 @@ CVSS_ENVIRONMENTAL_CR_VALUES = (
     }
 )
 
-CVSS_ENVIRONMENTAL_IR_VALUES = (
+CVSS_ENVIRONMENTAL_VECTOR_IR_VALUES = (
     {
         'L': 'Low',
         'M': 'Medium',
@@ -245,7 +268,7 @@ CVSS_ENVIRONMENTAL_IR_VALUES = (
     }
 )
 
-CVSS_ENVIRONMENTAL_AR_VALUES = (
+CVSS_ENVIRONMENTAL_VECTOR_AR_VALUES = (
     {
         'L': 'Low',
         'M': 'Medium',
