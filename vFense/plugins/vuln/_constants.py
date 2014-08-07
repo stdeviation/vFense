@@ -11,7 +11,7 @@ class VulnCommonKeys():
 class VulnDefaults():
     CVE_IDS = []
     OS_STRINGS = []
-    APPS = []
+    APPS = list()
     DETAILS = ''
     SUPPORT_URL = ''
     SUPERCEDES = []

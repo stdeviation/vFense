@@ -34,10 +34,10 @@ class Vulnerability(object):
         """
 
         if not self.cve_ids:
-            self.cve_ids = VulnDefaults.CVE_IDS
+            self.cve_ids = list()
 
         if not self.os_strings:
-            self.os_strings = VulnDefaults.OS_STRINGS
+            self.os_strings = list()
 
         if not self.support_url:
             self.support_url = VulnDefaults.SUPPORT_URL
@@ -46,7 +46,7 @@ class Vulnerability(object):
             self.details = VulnDefaults.DETAILS
 
         if not self.apps:
-            self.apps = VulnDefaults.APPS
+            self.apps = list()
 
         if not self.date_posted:
             self.date_posted = 0

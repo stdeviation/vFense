@@ -75,10 +75,10 @@ class WindowsVulnApp(object):
             functions to call this method to fill in the rest.
         """
         if not self.supercedes:
-            self.supercedes = VulnDefaults.SUPERCEDES
+            self.supercedes = list()
 
         if not self.cve_ids:
-            self.cve_ids = VulnDefaults.CVE_IDS
+            self.cve_ids = list()
 
 
     def to_dict(self):
