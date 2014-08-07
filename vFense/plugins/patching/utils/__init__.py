@@ -12,8 +12,8 @@ def build_app_id(name, version):
         name and the version of the application.
 
     Args:
-        app (dict): Dictionary containing the name and version of the
-            application.
+        name (str): The name of the application
+        version (str): The version of the application
 
     Basic Usage:
         >>> from vFense.plugins.patching.utils import build_app_id

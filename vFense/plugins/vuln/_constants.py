@@ -10,6 +10,14 @@ class VulnCommonKeys():
 
 class VulnDefaults():
     @staticmethod
+    def version():
+        return str()
+
+    @staticmethod
+    def os_string():
+        return str()
+
+    @staticmethod
     def cve_ids():
         return list()
 
@@ -23,11 +31,11 @@ class VulnDefaults():
 
     @staticmethod
     def details():
-        return ''
+        return str()
 
     @staticmethod
     def support_url():
-        return ''
+        return str()
 
     @staticmethod
     def supercedes():

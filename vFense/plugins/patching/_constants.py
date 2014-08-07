@@ -112,20 +112,54 @@ class InstallDefaults():
     NET_THROTTLE = 0
 
 class AppDefaults():
-    REBOOT_REQUIRED = 'possible'
-    HIDDEN = 'no'
-    UPDATE = PackageCodes.ThisIsNotAnUpdate
-    DOWNLOAD_STATUS = PackageCodes.FileCompletedDownload
-    VFENSE_SEVERITY = 'Optional'
-    VULNERABILITY_CATEGORIES = []
-    VULNERABILITY_ID = ''
-    CVE_IDS = []
-    DEPENDENCIES = []
-    VIEWS = []
+    @staticmethod
+    def reboot_required():
+        return 'possible'
+
+    @staticmethod
+    def hidden():
+        return 'no'
+
+    @staticmethod
+    def update():
+        return PackageCodes.ThisIsNotAnUpdate
+
+    @staticmethod
+    def download_status():
+        return PackageCodes.FileCompletedDownload
+
+    @staticmethod
+    def vfense_severity():
+        return 'Optional'
+
+    @staticmethod
+    def vuln_categories():
+        return list()
+
+    @staticmethod
+    def vuln_id():
+        return str()
+
+    @staticmethod
+    def cve_ids():
+        return list()
+
+    @staticmethod
+    def dependencies():
+        return list()
+
+    @staticmethod
+    def views():
+        return list()
 
 class FileDefaults():
-    AGENT_IDS = []
-    APP_IDS = []
+    @staticmethod
+    def agent_ids():
+        return list()
+
+    @staticmethod
+    def app_ids():
+        return list()
 
 
 class RebootValues():

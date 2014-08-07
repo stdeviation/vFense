@@ -115,27 +115,25 @@ class Apps(object):
             self.app_id = build_app_id(self.name, self.version)
 
         if not self.hidden:
-            self.hidden = AppDefaults.HIDDEN
+            self.hidden = AppDefaults.hidden()
 
         if not self.reboot_required:
-            self.reboot_required= AppDefaults.REBOOT_REQUIRED
+            self.reboot_required= AppDefaults.reboot_required()
 
         if not self.download_status:
-            self.download_status = AppDefaults.DOWNLOAD_STATUS
+            self.download_status = AppDefaults.download_status
 
         if not self.vfense_severity:
             self.vfense_severity = get_proper_severity(self.vendor_severity)
 
         if not self.vulnerability_categories:
-            self.vulnerability_categories = (
-                AppDefaults.VULNERABILITY_CATEGORIES
-            )
+            self.vulnerability_categories = AppDefaults.vuln_categories()
 
         if not self.vulnerability_id:
-            self.vulnerability_id = AppDefaults.VULNERABILITY_ID
+            self.vulnerability_id = AppDefaults.vuln_id()
 
         if not self.cve_ids:
-            self.cve_ids = AppDefaults.CVE_IDS
+            self.cve_ids = AppDefaults.cve_ids()
 
     def fill_in_app_per_agent_defaults(self):
         """Replace all the fields that have None as their value with
@@ -148,16 +146,16 @@ class Apps(object):
         """
 
         if not self.dependencies:
-            self.dependencies = AppDefaults.DEPENDENCIES
+            self.dependencies = AppDefaults.dependencies()
 
         if not self.id:
             self.id = build_agent_app_id(self.agent_id, self.app_id)
 
         if not self.update:
-            self.update = AppDefaults.UPDATE
+            self.update = AppDefaults.update()
 
         if not self.views:
-            self.cve_ids = AppDefaults.VIEWS
+            self.cve_ids = AppDefaults.views()
 
 
     def get_invalid_fields(self):
@@ -515,10 +513,10 @@ class Files(object):
         """
 
         if not self.agent_ids:
-            self.agent_ids = FileDefaults.AGENT_IDS
+            self.agent_ids = FileDefaults.agent_ids()
 
         if not self.app_ids:
-            self.app_ids= FileDefaults.APP_IDS
+            self.app_ids= FileDefaults.app_ids()
 
     def get_invalid_fields(self):
         """Check the app for any invalid fields.

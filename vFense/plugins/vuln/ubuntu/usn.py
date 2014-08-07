@@ -5,8 +5,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import return_status_tuple, time_it
 
 from vFense.plugins.vuln.ubuntu._db_model import (
-    UbuntuSecurityCollection, UbuntuSecurityBulletinIndexes,
-    UbuntuSecurityBulletinKey
+    UbuntuVulnerabilityCollections, UbuntuVulnerabilityIndexes,
+    UbuntuVulnerabilityKeys
 )
 from vFense.plugins.vuln.ubuntu._db import (
     fetch_vuln_ids, fetch_vuln_data
@@ -35,8 +35,8 @@ def get_vuln_ids(name, version, os_string):
     """
 
     info = {
-        UbuntuSecurityBulletinKey.BulletinId: '',
-        UbuntuSecurityBulletinKey.CveIds: []
+        UbuntuVulnerabilityKeys.VulnerabilityId: '',
+        UbuntuVulnerabilityKeys.CveIds: []
     }
 
     data = fetch_vuln_ids(name, version, os_string)

@@ -7,7 +7,7 @@ from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
 
 class Vulnerability(object):
-    """Used to represent an instance of an app."""
+    """Used to represent an instance of a vulnerability."""
 
     def __init__(self, vulnerability_id=None, date_posted=None,
                  details=None, cve_ids=None, support_url=None,

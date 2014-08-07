@@ -5,8 +5,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.plugins.vuln.ubuntu._db_model import (
-    UbuntuSecurityCollection, UbuntuSecurityBulletinIndexes,
-    UbuntuSecurityBulletinKey
+    UbuntuVulnerabilityCollections, UbuntuVulnerabilityIndexes,
+    UbuntuVulnerabilityKeys
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -16,7 +16,7 @@ class FetchUbuntuVulns(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=UbuntuSecurityBulletinKey.DatePosted
+        sort_key=UbuntuVulnerabilityKeys.DatePosted
         ):
 
         self.count = count
@@ -62,7 +62,7 @@ class FetchUbuntuVulns(object):
 
 
     def _set_base_query(self):
-        base = r.table(UbuntuSecurityCollection.Bulletin)
+        base = r.table(UbuntuVulnerabilityCollections.Vulnerabilities)
         return base
 
 
@@ -70,8 +70,8 @@ class FetchUbuntuVulns(object):
         merge_hash = (
             lambda x:
             {
-                UbuntuSecurityBulletinKey.DatePosted: (
-                    x[UbuntuSecurityBulletinKey.DatePosted].to_epoch_time()
+                UbuntuVulnerabilityKeys.DatePosted: (
+                    x[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time()
                 ),
             }
         )

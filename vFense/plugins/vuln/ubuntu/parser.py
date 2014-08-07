@@ -8,64 +8,19 @@ from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime
 from datetime import datetime
 
-from vFense.db.client import r
-
 from vFense.utils.common import month_to_num_month
-from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.ubuntu._db_model import (
-    UbuntuSecurityBulletinKey
+from vFense.plugins.patching.utils import build_app_id
+from vFense.plugins.vuln.ubuntu import Ubuntu, UbuntuVulnApp
+from vFense.plugins.vuln.ubuntu._constants import (
+    UbuntuUSNStrings, UbuntuDataDir
 )
-from vFense.plugins.vuln.ubuntu._constants import *
 from vFense.plugins.vuln.ubuntu._db import insert_bulletin_data
 
 import requests
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, Tag
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
-
-def format_data_to_insert_into_db(
-    usn_id, details, cve_ids,
-    apps_data, date_posted
-    ):
-    """Parse the ubuntu data and place it into a array
-    Args:
-        usn_id (str): The Ubuntu Bulletin Id.
-        details (str): The description of the bulletin.
-        cve_ids (list): List of cve ids.
-        apps_data (list): List of dictionaries, containing
-            the app name and version.
-        date_posted (str) The time in epoch
-    Returns:
-        Dictionary inside of a list
-
-    """
-
-    data_to_insert = []
-    try:
-        if isinstance(details, unicode):
-            details = details.decode('utf-8')
-        elif isinstance(details, basestring):
-            details = unicode(details.decode('utf-8'))
-    except Exception as e:
-        details = details.encode('utf-8').decode('utf-8')
-
-    data_to_insert.append(
-        {
-            UbuntuSecurityBulletinKey.BulletinId: usn_id,
-            UbuntuSecurityBulletinKey.Details: details,
-            UbuntuSecurityBulletinKey.DatePosted: date_posted,
-            UbuntuSecurityBulletinKey.Apps: (
-                apps_data[UbuntuSecurityBulletinKey.Apps]
-            ),
-            UbuntuSecurityBulletinKey.OsStrings: (
-                apps_data[UbuntuSecurityBulletinKey.OsStrings]
-            ),
-            UbuntuSecurityBulletinKey.CveIds: cve_ids
-        }
-    )
-
-    return(data_to_insert)
 
 
 def get_cve_info(cve_references):
@@ -86,24 +41,22 @@ def parse_multiple_dd_tags(info, os_string):
     """
     app_info = []
     while True:
+        app = UbuntuVulnApp()
+        app.fill_in_defaults()
         if 'name' in dir(info):
             if info.name == 'dt' or info.name == 'dl' or info.name == 'dd':
                 if info.a:
-                    app_info.append(
-                        {
-                            'name': info.a.text,
-                            'version': info.span.a.text,
-                            'os_string': os_string,
-                        }
-                    )
+                    app.name = info.a.text
+                    app.version = info.span.a.text
+                    app.os_string = os_string
+                    app.app_id = build_app_id(app.name, app.version)
+                    app_info.append(app.to_dict())
                 else:
-                    app_info.append(
-                        {
-                            'name': info.contents[0],
-                            'version': info.span.text,
-                            'os_string': os_string,
-                        }
-                    )
+                    app.name = info.contents[0]
+                    app.version = info.span.text
+                    app.os_string = os_string
+                    app.app_id = build_app_id(app.name, app.version)
+                    app_info.append(app.to_dict())
 
                 info = info.findNextSibling()
                 if info:
@@ -111,42 +64,43 @@ def parse_multiple_dd_tags(info, os_string):
                         break
                 else:
                     break
+
     return(info, app_info)
 
 
-def get_app_info(info):
+def get_app_info(html_tag):
     """Parse dt, dl, and dd tags, to retrieve the app data
         and os_string.
     Args:
-        info (str):
+        html_tag (str): Either a dt, dl, or dd tag.
     """
-    app_data = {}
-    app_data['os_strings'] = []
-    app_data['apps'] = []
-    while True:
-        if info.name == 'dt' or info.name == 'dl':
-            if info.name == 'dt':
-                os_string = info.text.replace(':', '')
-                app_data['os_strings'].append(os_string)
-                info, apps = (
-                    parse_multiple_dd_tags(
-                        info.findNextSibling(), os_string
+    vuln_apps = []
+    os_strings = []
+    if isinstance(html_tag, Tag):
+        while True:
+            if html_tag.name == 'dt' or html_tag.name == 'dl':
+                if html_tag.name == 'dt':
+                    os_string = html_tag.text.replace(':', '')
+                    os_strings.append(os_string)
+                    html_tag, apps = (
+                        parse_multiple_dd_tags(
+                            html_tag.findNextSibling(), os_string
+                        )
                     )
-                )
-                app_data['apps'] += apps
+                    vuln_apps.extend(apps)
 
-            elif info.name == 'dl':
-                os_string = info.dt.text.replace(':', '')
-                app_data['os_strings'].append(os_string)
-                info, apps = (
-                    parse_multiple_dd_tags(info.dd, os_string)
-                )
-                app_data['apps'] += apps
+                elif html_tag.name == 'dl':
+                    os_string = html_tag.dt.text.replace(':', '')
+                    os_strings.append(os_string)
+                    html_tag, apps = (
+                        parse_multiple_dd_tags(html_tag.dd, os_string)
+                    )
+                    vuln_apps.extend(apps)
 
-            if not info:
-                break
+                if not html_tag:
+                    break
 
-    return(app_data)
+    return(os_strings, vuln_apps)
 
 def get_date_posted(date_em):
     """Parse em tags, to retrieve the date posted
@@ -160,9 +114,7 @@ def get_date_posted(date_em):
         day = int(re.sub('[a-zA-Z]+', '', day))
         month = month_to_num_month[re.sub(',', '', month)]
         year = int(year)
-        date_posted = (
-            r.epoch_time(mktime(datetime(year, month, day).timetuple()))
-        )
+        date_posted = mktime(datetime(year, month, day).timetuple())
     except Exception as e:
         logger.exception(e)
 
@@ -178,13 +130,26 @@ def get_details(soup_details):
         tag = soup_details.findNext()
         if tag.name != 'h3':
             if tag.name == 'p':
-                text = unicode(tag.text).encode(sys.stdout.encoding, 'replace').decode('utf-8')
+                text = (
+                    unicode(tag.text).encode(sys.stdout.encoding, 'replace')
+                    .decode('utf-8')
+                )
                 details = details + text + '\n\n'
         else:
             break
         soup_details = tag
 
     details = unicode(details).encode(sys.stdout.encoding, 'replace')
+    try:
+        if isinstance(details, unicode):
+            details = details.decode('utf-8')
+
+        if isinstance(details, basestring):
+            details = unicode(details.decode('utf-8'))
+
+    except Exception as e:
+        details = details.encode('utf-8').decode('utf-8')
+
     return(details)
 
 def write_content_to_file(file_location, url, content=None):
@@ -287,12 +252,8 @@ def process_usn_page(usn_uri):
 
     """
     content, completed = get_url_content(usn_uri)
-    details = ''
-    date_posted = ''
-    bulletin_id = ''
-    app_info = []
-    data = []
-    cve_references = []
+    vuln = Ubuntu()
+    vuln.fill_in_defaults()
     if content:
         soup = BeautifulSoup(content.replace('<br />', '\n'))
         date_posted_em = soup.find('em')
@@ -301,36 +262,33 @@ def process_usn_page(usn_uri):
         app_info_dl = soup.div.findAll('dl')
         cve_info_h3 = soup.div.findAll('h3', text='References')
         if date_posted_em:
-            date_posted = get_date_posted(date_posted_em)
+            vuln.date_posted = get_date_posted(date_posted_em)
 
         if bulletin_h2:
-            bulletin_id = bulletin_h2.text.split()[-1]
+            vuln.vulnerability_id = bulletin_h2.text.split()[-1]
         else:
             return([], False)
 
         if details_h3:
-            details = get_details(details_h3)
+            vuln.details = get_details(details_h3)
         else:
             return([], False)
 
         if len(app_info_dl) > 0:
             if len(app_info_dl[0]) > 1:
-                app_info = get_app_info(app_info_dl[0])
+                os_strings, apps = get_app_info(app_info_dl[0])
+                vuln.os_strings.extend(os_strings)
+                vuln.apps.extend(apps)
             else:
                 return([], False)
 
         if len(cve_info_h3) > 0:
-            cve_references = (
+            vuln.cve_ids.extend(
                 get_cve_info(
                     cve_info_h3[0].findAllNext('a', href=re.compile('.*cve'))
                 )
             )
-        data = (
-            format_data_to_insert_into_db(
-                bulletin_id, details, cve_references, app_info, date_posted
-            )
-        )
-    return(data, completed)
+    return(vuln.to_dict_db(), completed)
 
 
 def begin_usn_home_page_processing(next_page=None, full_parse=False):
@@ -392,7 +350,7 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
                 for usn_uri in usn_uris:
                     data_to_update, ok = process_usn_page(usn_uri['href'])
                     if ok:
-                        data = data + data_to_update
+                        data.append(data_to_update)
                 insert_bulletin_data(data)
 
             if full_parse:
