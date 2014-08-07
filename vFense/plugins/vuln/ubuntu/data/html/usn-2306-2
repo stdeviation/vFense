@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+    <head>
+        <title>USN-2306-2: GNU C Library regression | Ubuntu</title>
+        <link rel="shortcut icon" href="/usn/assets/light/images/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/reset.css"/>
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/styles.css"/>
+        
+<style>
+dt {
+	font-weight: bold;
+	padding: 12px 0 8px 0px;
+}
+dd, dt {
+	line-height: 16px;
+	color: #333;
+}
+dd {
+	padding-left: 16px;
+}
+dd span {
+    padding-left: 10px;
+}
+</style>
+
+        <link rel="stylesheet" type="text/css" href="/usn/assets/light/css/forms.css"/>
+    </head>
+    <body>
+        <div id="container">
+            <div id="container-inner">
+                <div id="header">
+                    
+                    <h1 id="ubuntu-header"><a href="http://www.ubuntu.com/">Ubuntu</a></h1>
+                    
+                    
+    
+    <ul id="primary-links">
+<li><a href="http://www.ubuntu.com/cloud">Cloud</a></li>
+<li><a href="http://www.ubuntu.com/server">Server</a></li>
+<li><a href="http://www.ubuntu.com/desktop">Desktop</a></li>
+<li><a href="http://www.ubuntu.com/phone">Phone</a></li>
+<li><a href="http://www.ubuntu.com/tablet">Tablet</a></li>
+<li><a href="http://www.ubuntu.com/tv">TV</a></li>
+<li><a href="http://www.ubuntu.com/management">Management</a></li>
+<li><a href="http://www.ubuntu.com/download">Download</a></li>
+</ul>
+
+
+                </div>
+                <div id="menu-search">
+                    
+                    <div id="search-box">
+                        <form id="sitesearch" action="http://www.ubuntu.com/search">
+                          <input name="q" id="search-box-input" placeholder="Type to search" />
+                          <button type="submit" id="search-box-button"><span>go</span></button>
+                        </form>
+                    </div>
+                    
+                </div>
+                <div id="title">
+                    <h1>USN-2306-2: GNU C Library regression</h1>
+                </div>
+
+                <div id="content" class="clearfix content-area">
+
+    
+<h2>Ubuntu Security Notice USN-2306-2</h2>
+<p><em>5th August, 2014</em></p>
+<h3>eglibc regression</h3>
+<p>A security issue affects these releases of Ubuntu and its 
+    derivatives:</p>
+<ul>
+
+    <li>Ubuntu 10.04 LTS</li>
+
+</ul>
+
+
+<h3>Summary</h3>
+<p>USN-2306-1 introduced a regression in the GNU C Library.
+</p>
+
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>eglibc 
+    - GNU C Library
+    
+    </li>
+  
+
+</ul>
+
+
+<h3>Details</h3>
+<p>USN-2306-1 fixed vulnerabilities in the GNU C Library. On Ubuntu 10.04 LTS,<br />the security update cause a regression in certain environments that use<br />the Name Service Caching Daemon (nscd), such as those configured for LDAP<br />or MySQL authentication. In these environments, the nscd daemon may need<br />to be stopped manually for name resolution to resume working so that<br />updates can be downloaded, including environments configured for unattended<br />updates.</p>
+
+<p>We apologize for the inconvenience.</p>
+
+<p>Original advisory details:</p>
+
+<p> Maksymilian Arciemowicz discovered that the GNU C Library incorrectly<br /> handled the getaddrinfo() function. An attacker could use this issue to<br /> cause a denial of service. This issue only affected Ubuntu 10.04 LTS.<br /> (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2013-4357">CVE-2013-4357</a>)<br /> <br /> It was discovered that the GNU C Library incorrectly handled the<br /> getaddrinfo() function. An attacker could use this issue to cause a denial<br /> of service. This issue only affected Ubuntu 10.04 LTS and Ubuntu 12.04 LTS.<br /> (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2013-4458">CVE-2013-4458</a>)<br /> <br /> Stephane Chazelas discovered that the GNU C Library incorrectly handled<br /> locale environment variables. An attacker could use this issue to possibly<br /> bypass certain restrictions such as the ForceCommand restrictions in<br /> OpenSSH. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-0475">CVE-2014-0475</a>)<br /> <br /> David Reid, Glyph Lefkowitz, and Alex Gaynor discovered that the GNU C<br /> Library incorrectly handled posix_spawn_file_actions_addopen() path<br /> arguments. An attacker could use this issue to cause a denial of service.<br /> (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-4043">CVE-2014-4043</a>)<br /></p>
+
+<h3>Update instructions</h3>
+<p> The problem can be corrected by updating your system to the following
+package version:</p>
+<dl>
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/eglibc">libc6</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/eglibc/2.11.1-0ubuntu7.15">2.11.1-0ubuntu7.15</a>
+    </span>
+  </dd>
+    
+  
+
+</dl>
+<p>To update your system, please follow these instructions:
+<a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
+</p>
+<p>After a standard system update you need to reboot your computer to make<br />all the necessary changes.<br /></p>
+
+
+
+<h3>References</h3>
+<p>
+
+        <a href="https://launchpad.net/bugs/1352504">LP: 1352504</a>
+        
+
+</p>
+
+
+
+
+
+                </div>
+
+            </div>
+            <div id="footer" class="clearfix">
+              
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/ubuntu">Ubuntu</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/ubuntu/features">Features</a></li>
+						<li><a href="http://www.ubuntu.com/ubuntu/whats-new">What&#039;s new?</a></li>
+						<li><a href="http://www.ubuntu.com/ubuntu/why-is-it-free">Why is it free?</a></li>
+						<li><a href="http://www.ubuntu.com/ubuntu/why-use-ubuntu">Why use Ubuntu?</a></li>
+						<li><a href="http://www.ubuntu.com/ubuntu/take-the-tour">Take the tour</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/business">Business</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/business/desktop">Desktop</a></li>
+						<li><a href="http://www.ubuntu.com/business/server">Server</a></li>
+						<li><a href="http://www.ubuntu.com/business/systems-management">Systems management</a></li>
+						<li><a href="http://www.ubuntu.com/business/services">Services</a></li>
+						<li><a href="http://www.ubuntu.com/business/case-studies">Case studies</a></li>
+						<li><a href="http://www.ubuntu.com/business/services/contact">Contact Canonical</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/devices">Devices</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/devices/phone">Ubuntu for phones</a></li>
+						<li><a href="http://www.ubuntu.com/devices/tablet">Ubuntu on tablets</a></li>
+						<li><a href="http://www.ubuntu.com/devices/android">Ubuntu for Android</a></li>
+						<li><a href="http://www.ubuntu.com/devices/tv">Ubuntu TV</a></li>
+						<li><a href="http://www.ubuntu.com/devices/backed-by-canonical">Backed by Canonical</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/cloud/insights">Cloud</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/cloud/insights">Insights</a></li>
+					    <li><a href="http://www.ubuntu.com/cloud/public-cloud">Public cloud</a></li>
+					    <li><a href="http://www.ubuntu.com/cloud/private-cloud">Private cloud</a></li>
+					    <li><a href="http://www.ubuntu.com/cloud/orchestration">Orchestration</a></li>
+					    <li><a href="http://www.ubuntu.com/cloud/solutions">Solutions</a></li>
+					    <li><a href="http://www.ubuntu.com/cloud/technical-resources">Technical resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/download">Download</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/download/desktop">Desktop</a></li>
+						<li><a href="http://www.ubuntu.com/download/server">Server</a></li>
+						<li><a href="http://www.ubuntu.com/download/cloud">Cloud</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/support">Support</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/support/community">Community</a></li>
+						<li><a href="http://www.ubuntu.com/usn">Security notices</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/project">Project</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/project/about-ubuntu">About Ubuntu</a></li>
+						<li><a href="http://www.ubuntu.com/project/canonical-and-ubuntu">Canonical and Ubuntu</a></li>
+						<li><a href="http://www.ubuntu.com/project/ubuntu-font">Ubuntu font</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/community">Community</a></p>
+                    <ul>
+                        <li><a href="http://www.ubuntu.com/community/get-involved">Get involved</a></li>
+						<li><a href="http://www.ubuntu.com/community/report-problem">Report a problem</a></li>
+						<li><a href="http://www.ubuntu.com/community/stay-connected">Stay connected</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title"><a href="http://www.ubuntu.com/partners">Partners</a></p>
+                    <ul>
+                        <li><a href="http://webapps.ubuntu.com/partners/">Find a partner</a></li>
+						<li><a href="http://webapps.ubuntu.com/partners/certified-software/">Certified software</a></li>
+						<li><a href="http://www.ubuntu.com/certification/">Certified hardware</a></li>
+						<li><a href="http://www.ubuntu.com/certification/catalog">Component Catalog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-div">
+                    <p class="footer-title">Further links</p>
+                    <ul>
+                        <li><a accesskey="7" href="http://www.ubuntu.com/contact-us">Contact us</a></li>
+						<li><a href="http://www.ubuntu.com/trademark-policy">Trademark policy</a></li>
+						<li><a href="http://www.ubuntu.com/legal">Legal information</a></li>
+						<li><a accesskey="8" href="http://www.ubuntu.com/privacy-policy">Privacy Policy</a></li>
+						<li><a href="http://www.canonical.com/about-canonical/careers">Careers</a></li>
+						<li><a accesskey="2" href="http://www.canonical.com/rss.xml">Canonical news feed</a></li>
+                    </ul>
+                </div>
+            
+            </div>
+            <div id="copyright">
+                <p>&copy; 2009 - 2013 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-1018242-4']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        
+    </body>
+</html>
