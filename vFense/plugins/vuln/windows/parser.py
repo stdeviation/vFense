@@ -48,7 +48,6 @@ def parse_spread_sheet(bulletin_file):
             if count > 0:
                 data_to_store.append(vuln.to_dict_db())
             count = count + 1
-            del(vuln)
             vuln = Windows()
             vuln.fill_in_defaults()
 
@@ -100,9 +99,6 @@ def parse_spread_sheet(bulletin_file):
         vuln.apps.append(app.to_dict())
         print len(vuln.apps)
 
-        if count == 3:
-            return data_to_store
-
     return(data_to_store)
 
 def parse_bulletin_and_updatedb():
@@ -114,9 +110,7 @@ def parse_bulletin_and_updatedb():
     downloaded, xls_file = download_latest_xls_from_msft()
     if downloaded:
         bulletin_data = parse_spread_sheet(xls_file)
-        print len(bulletin_data)
-        #insert_bulletin_data(bulletin_data)
-        return bulletin_data
+        insert_bulletin_data(bulletin_data)
 
     logger.info('finished microsoft security bulletin update process')
     gc.collect()

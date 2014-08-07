@@ -9,9 +9,26 @@ class VulnCommonKeys():
 
 
 class VulnDefaults():
-    CVE_IDS = []
-    OS_STRINGS = []
-    APPS = list()
-    DETAILS = ''
-    SUPPORT_URL = ''
-    SUPERCEDES = []
+    @staticmethod
+    def cve_ids():
+        return list()
+
+    @staticmethod
+    def os_strings():
+        return list()
+
+    @staticmethod
+    def apps():
+        return list()
+
+    @staticmethod
+    def details():
+        return ''
+
+    @staticmethod
+    def support_url():
+        return ''
+
+    @staticmethod
+    def supercedes():
+        return list()

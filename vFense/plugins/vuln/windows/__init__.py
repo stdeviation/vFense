@@ -75,11 +75,10 @@ class WindowsVulnApp(object):
             functions to call this method to fill in the rest.
         """
         if not self.supercedes:
-            self.supercedes = list()
+            self.supercedes = VulnDefaults.supercedes()
 
         if not self.cve_ids:
-            self.cve_ids = list()
-
+            self.cve_ids = VulnDefaults.cve_ids()
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.
