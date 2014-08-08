@@ -204,3 +204,176 @@ class Cve(object):
 
         return {k:install_dict[k] for k in install_dict
                 if install_dict[k] != None}
+
+
+class CvssVector(object):
+    """Used to represent an instance of a vulnerability."""
+
+    def __init__(self, metric=None, value=None):
+        """
+        Kwargs:
+        """
+        self.metric = metric
+        self.value = value
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+
+        if not self.metric:
+            self.metric = (
+                CveDefaults.vulnerability_categories()
+            )
+
+        if not self.value:
+            self.value = (
+                CveDefaults.references()
+            )
+
+    def get_invalid_fields(self):
+        """Check the app for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+
+                Ex:
+                    [
+                        {'view_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
+        """
+        invalid_fields = []
+
+        if self.descriptions:
+            if not isinstance(self.descriptions, list):
+                invalid_fields.append(
+                    {
+                        CveKeys.Descriptions: self.descriptions,
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'
+                            .format(self.descriptions)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.references:
+            if not isinstance(self.references, list):
+                invalid_fields.append(
+                    {
+                        CveKeys.References: self.references,
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'
+                            .format(self.references)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.vulnerability_categories:
+            if not isinstance(self.vulnerability_categories, list):
+                invalid_fields.append(
+                    {
+                        CveKeys.VulnerabilityCategories: (
+                            self.vulnerability_categories
+                        ),
+                        CommonKeys.REASON: (
+                            '{0} not a valid list'
+                            .format(self.vulnerability_categories)
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.date_posted:
+            if (not isinstance(self.date_posted, float) and
+                    not isinstance(self.date_posted, int)):
+                invalid_fields.append(
+                    {
+                        CveKeys.DatePosted: self.date_posted,
+                        CommonKeys.REASON: (
+                            '{0} not a valid date, float or int only'
+                            .format(type(self.date_posted))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.date_modified:
+            if (not isinstance(self.date_modified, float) and
+                    not isinstance(self.date_modified, int)):
+                invalid_fields.append(
+                    {
+                        CveKeys.DateModified: self.date_modified,
+                        CommonKeys.REASON: (
+                            '{0} not a valid date, float or int only'
+                            .format(type(self.date_modified))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+
+        return invalid_fields
+
+    def to_dict(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            CveKeys.CveId: self.cve_id,
+        }
+
+    def to_dict_db(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        data = {
+            CveKeys.DatePosted: (
+                DbTime.epoch_time_to_db_time(self.date_posted)
+            ),
+            CveKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+        return dict(self.to_dict().items() + data.items())
+
+
+    def to_dict_non_null(self):
+        """ Use to get non None fields of an install. Useful when
+        filling out just a few fields to perform an install.
+
+        Returns:
+            (dict): a dictionary with the non None fields of this install.
+        """
+        install_dict = self.to_dict()
+
+        return {k:install_dict[k] for k in install_dict
+                if install_dict[k] != None}
