@@ -64,6 +64,22 @@ class CVEStrings():
     NVD_MODIFIED_URL = NVD_DOWNLOAD_URL + NVDCVE_MODIFIED
 
 
+class VectorKeys():
+    Metric = 'metric'
+    Value = 'value'
+
+
+class DescriptionKeys():
+    Description = 'description'
+    Source = 'source'
+
+
+class ReferenceKeys():
+    URL = 'url'
+    Source = 'source'
+    Id = 'id'
+
+
 class CVEVectors():
     BASE_METRIC_AV = 'AV'
     BASE_METRIC_AC = 'AC'

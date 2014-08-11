@@ -6,18 +6,12 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from lxml import etree
 from re import sub
+from vFense.plugins.vulncve import (
+    Cve, CvssVector, CveDescriptions, CveReferences
+)
 from vFense.plugins.vuln.cve._db_model import CveKeys
 from vFense.plugins.vuln.cve._constants import (
-    CVEDataDir, NVDFeeds, CVEStrings, CVEVectors,
-    CVSS_BASE_VECTORS, CVSS_BASE_VECTOR_AV_VALUES,
-    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
-    CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
-    CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
-    CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
-    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS,
-    CVSS_ENVIRONMENTAL_VECTOR_CDP_VALUES, CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES,
-    CVSS_ENVIRONMENTAL_VECTOR_CR_VALUES, CVSS_ENVIRONMENTAL_VECTOR_IR_VALUES,
-    CVSS_ENVIRONMENTAL_VECTOR_AR_VALUES
+    CVEDataDir, NVDFeeds, CVEStrings, CVEVectors
 )
 
 from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
