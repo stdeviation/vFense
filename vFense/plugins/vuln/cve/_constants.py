@@ -110,6 +110,7 @@ class CVEVectors():
 class CVECategories():
     CSRF = 'CSRF'
     DDOS = 'Denial Of Service'
+    DDOS_1 = 'DDOS'
     CSS = 'Cross-site Scripting'
     SQLI = 'SQL Injection'
     MEM_CORRUPTION = 'Memory Corruption'
@@ -122,6 +123,7 @@ class CVECategories():
     GAIN_PRIVILEGE = 'Gain Privilege'
     DIRECTORY_TRAVERSAL = 'Directory Traversal'
     BYPASS = 'Bypass'
+    REMOTE_ATTACK = 'remote attack'
 
     @staticmethod
     def get_values():

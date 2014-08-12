@@ -1,6 +1,6 @@
 import os
-import sys
 import gc
+import re
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
@@ -11,7 +11,7 @@ from vFense.plugins.vuln.cve import (
     Cve, CvssVector, CveDescriptions, CveReferences
 )
 from vFense.plugins.vuln.cve._constants import (
-    CVEDataDir, NVDFeeds, CVEStrings
+    CVEDataDir, NVDFeeds, CVEStrings, CVECategories
 )
 
 from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
@@ -70,7 +70,7 @@ class NvdParser(object):
             entry (lxml.etree._Element): This is an lxml Element
 
         Returns:
-            List of dictionaires
+            Tuple (descriptions, categories)
             [
                 {
                     "source": "cve",
@@ -79,19 +79,24 @@ class NvdParser(object):
                         n CVE-2014-1959."
                 }
             ]
-
         """
         list_of_descriptions = []
+        categories = []
         for desc in entry:
             description = (
                 CveDescriptions(
-                    description=desc.text,
+                    description=unicode(desc.text),
                     source = desc.attrib.get(CVEStrings.DESCRIPTION_SOURCE)
                 )
             )
+
+            for category in CVECategories.get_values():
+                if re.search(category, unicode(desc.text), re.IGNORECASE):
+                    categories.append(category)
+
             list_of_descriptions.append(description.to_dict())
 
-        return(list_of_descriptions)
+        return(list_of_descriptions, categories)
 
     def get_refs(self, entry):
         """Parse the refs object under the top level entry object
@@ -207,7 +212,9 @@ def parse_cve_and_udpatedb(
                 cve = parser.get_entry_info(entry)
 
             if entry.tag == NVDFeeds.DESC and event == 'start':
-                cve.descriptions = parser.get_descriptions(entry)
+                cve.descriptions, cve.categories = (
+                    parser.get_descriptions(entry)
+                )
 
             if entry.tag == NVDFeeds.REFS and event == 'start':
                 cve.references = parser.get_refs(entry)
@@ -251,6 +258,6 @@ def load_up_all_xml_into_db():
 
     nvd_files.sort()
     parse_cve_and_udpatedb(False, nvd_files)
-    update_cve_categories()
+    #update_cve_categories()
     logger.info('finished cve/nvd update process')
     gc.collect()
