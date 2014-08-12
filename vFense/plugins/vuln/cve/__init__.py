@@ -262,32 +262,32 @@ class CvssVector(object):
         if self.untranslated_metric in CVSS_BASE_VECTORS:
             self.metric = CVSS_BASE_VECTORS[self.untranslated_metric]
 
-            if self.metric == CVEVectors.BASE_METRIC_AV:
+            if self.untranslated_metric == CVEVectors.BASE_METRIC_AV:
                 self.value = (
                     CVSS_BASE_VECTOR_AV_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.BASE_METRIC_AC:
+            elif self.untranslated_metric == CVEVectors.BASE_METRIC_AC:
                 self.value = (
                     CVSS_BASE_VECTOR_AC_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.BASE_METRIC_Au:
+            elif self.untranslated_metric == CVEVectors.BASE_METRIC_Au:
                 self.value = (
                     CVSS_BASE_VECTOR_AU_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.BASE_METRIC_C:
+            elif self.untranslated_metric == CVEVectors.BASE_METRIC_C:
                 self.value = (
                     CVSS_BASE_VECTOR_C_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.BASE_METRIC_I:
+            elif self.untranslated_metric == CVEVectors.BASE_METRIC_I:
                 self.value = (
                     CVSS_BASE_VECTOR_I_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.BASE_METRIC_A:
+            elif self.untranslated_metric == CVEVectors.BASE_METRIC_A:
                 self.value = (
                     CVSS_BASE_VECTOR_A_VALUES[self.untranslated_value]
                 )
@@ -302,12 +302,12 @@ class CvssVector(object):
                     CVSS_TEMPORAL_VECTOR_E_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.TEMPORAL_METRIC_RL:
+            elif self.untranslated_metric == CVEVectors.TEMPORAL_METRIC_RL:
                 self.value = (
                     CVSS_TEMPORAL_VECTOR_RL_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.TEMPORAL_METRIC_RC:
+            elif self.untranslated_metric == CVEVectors.TEMPORAL_METRIC_RC:
                 self.value = (
                     CVSS_TEMPORAL_VECTOR_RC_VALUES[self.untranslated_value]
                 )
@@ -322,22 +322,22 @@ class CvssVector(object):
                     CVSS_ENVIRONMENTAL_VECTOR_CDP_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.ENVIRONMENTAL_METRIC_TD:
+            elif self.untranslated_metric == CVEVectors.ENVIRONMENTAL_METRIC_TD:
                 self.value = (
                     CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.ENVIRONMENTAL_METRIC_CR:
+            elif self.untranslated_metric == CVEVectors.ENVIRONMENTAL_METRIC_CR:
                 self.value = (
                     CVSS_ENVIRONMENTAL_VECTOR_CR_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.ENVIRONMENTAL_METRIC_IR:
+            elif self.untranslated_metric == CVEVectors.ENVIRONMENTAL_METRIC_IR:
                 self.value = (
                     CVSS_ENVIRONMENTAL_VECTOR_IR_VALUES[self.untranslated_value]
                 )
 
-            elif self.metric == CVEVectors.ENVIRONMENTAL_METRIC_AR:
+            elif self.untranslated_metric == CVEVectors.ENVIRONMENTAL_METRIC_AR:
                 self.value = (
                     CVSS_ENVIRONMENTAL_VECTOR_AR_VALUES[self.untranslated_value]
                 )
@@ -450,7 +450,7 @@ class CveDescriptions(object):
         """
 
         return {
-            DescriptionKeys.Description: self.descriptions,
+            DescriptionKeys.Description: self.description,
             DescriptionKeys.Source: self.source,
         }
 

@@ -35,7 +35,7 @@ from vFense.plugins.patching._db import (fetch_file_servers_addresses,
 from vFense.core.decorators import time_it, results_message
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
-from vFense.plugins.vuln import SecurityBulletinKey
+from vFense.plugins.vuln import VulnerabilityKeys
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
@@ -703,23 +703,23 @@ def get_vulnerability_info_for_app(app):
     vuln_data[AppsKey.VulnerabilityId] = ""
     vuln_data[AppsKey.VulnerabilityCategories] = []
 
-    if kb != "" and re.search(r'Windows', os_string, re.IGNORECASE):
-        vuln_info = ms.get_vuln_ids(kb)
+    if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
+        vuln_info = ms.get_vuln_ids(app.kb)
 
     elif (
-            re.search(r'Ubuntu|Mint', os_string, re.IGNORECASE)
-            and app_name and app_version
+            re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
+            and app.name and app.version
          ):
         vuln_info = (
             usn.get_vuln_ids(
-                app_name, app_version, os_string
+                app.name, app.version, app.os_string
             )
         )
 
     if vuln_info:
-        vuln_data[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
+        vuln_data[AppsKey.CveIds] = vuln_info[VulnerabilityKeys.CveIds]
         vuln_data[AppsKey.VulnerabilityId] = (
-            vuln_info[SecurityBulletinKey.BulletinId]
+            vuln_info[VulnerabilityKeys.VulnerabilityId]
         )
         for cve_id in vuln_data[AppsKey.CveIds]:
             vuln_data[AppsKey.VulnerabilityCategories] += (
