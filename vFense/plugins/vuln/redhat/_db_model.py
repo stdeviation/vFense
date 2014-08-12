@@ -1,22 +1,17 @@
-class RedHatSecurityCollection():
-    Bulletin = 'redhat_security_bulletin'
+from vFense.plugins.vuln._db_model import VulnerabilityKeys
+
+class RedHatVulnerabilityCollections():
+    Vulnerabilities = 'redhat_vulnerabilities'
 
 
-class RedhatSecurityBulletinKey():
-    Id = 'id'
-    DatePosted = 'date_posted'
-    BulletinId = 'bulletin_id'
-    Summary = 'bulletin_summary'
-    Details = 'bulletin_details'
+class RedhatVulnerabilityKeys(VulnerabilityKeys):
+    Summary = 'summary'
     Apps = 'apps'
     AppsLink = 'solution_apps'
     OsString = 'os_string'
     CveIds = 'cve_ids'
-    SupportUrl = 'support_url'
     Solutions = 'solutions'
-    References ='references'
     Product = 'product'
 
-class RedhatSecurityBulletinIndexes():
-    BulletinId = 'bulletin_id'
+class RedhatVulnerabilityIndexes():
     CveIds = 'cve_ids'

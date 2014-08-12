@@ -20,4 +20,4 @@ class CveKeys():
     Type = 'type'
 
 class CveIndexes():
-    CveCategories = 'vulnerability_categories'
+    Categories = 'vulnerability_categories'

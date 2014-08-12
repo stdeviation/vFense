@@ -102,17 +102,17 @@ def fetch_cve_data(cve_id, conn=None):
     map_hash = (
         {
             CveKeys.CveId: r.row[CveKeys.CveId],
-            CveKeys.CveCategories: r.row[CveKeys.CveCategories],
-            CveKeys.CveDescriptions: r.row[CveKeys.CveDescriptions],
-            CveKeys.CveRefs: r.row[CveKeys.CveRefs],
-            CveKeys.CveSev: r.row[CveKeys.CveSev],
-            CveKeys.CvssScore: r.row[CveKeys.CvssScore],
-            CveKeys.CvssBaseScore: r.row[CveKeys.CvssBaseScore],
-            CveKeys.CvssImpactSubScore: r.row[CveKeys.CvssImpactSubScore],
-            CveKeys.CvssExploitSubScore: r.row[CveKeys.CvssExploitSubScore],
-            CveKeys.CvssVector: r.row[CveKeys.CvssVector],
-            CveKeys.CvePublishedDate: r.row[CveKeys.CvePublishedDate].to_epoch_time(),
-            CveKeys.CveModifiedDate: r.row[CveKeys.CveModifiedDate].to_epoch_time(),
+            CveKeys.Categories: r.row[CveKeys.Categories],
+            CveKeys.Descriptions: r.row[CveKeys.Descriptions],
+            CveKeys.References: r.row[CveKeys.References],
+            CveKeys.Severity: r.row[CveKeys.Severity],
+            CveKeys.Score: r.row[CveKeys.Score],
+            CveKeys.BaseScore: r.row[CveKeys.BaseScore],
+            CveKeys.ImpactScore: r.row[CveKeys.ImpactScore],
+            CveKeys.ExploitScore: r.row[CveKeys.ExploitScore],
+            CveKeys.Vector: r.row[CveKeys.Vector],
+            CveKeys.DatePosted: r.row[CveKeys.DatePosted].to_epoch_time(),
+            CveKeys.DateModified: r.row[CveKeys.DateModified].to_epoch_time(),
         }
     )
     try:
@@ -182,14 +182,14 @@ def update_cve_categories(conn=None):
     try:
         data = (
             r
-            .expr(CVECategories.CATEGORIES)
+            .expr(CVECategories.get_values())
             .for_each(
                 lambda category:
                 r
                 .table(CVECollections.CVE)
                 .filter(
                     lambda x:
-                    x[CveKeys.CveDescriptions]
+                    x[CveKeys.Descriptions]
                     .contains(
                         lambda y:
                             y[CVEStrings.DESCRIPTION].match('(?i)'+category)
@@ -197,8 +197,8 @@ def update_cve_categories(conn=None):
                 ).update(
                     lambda y:
                     {
-                        CveKeys.CveCategories:
-                            y[CveKeys.CveCategories].set_insert(category)
+                        CveKeys.Categories:
+                            y[CveKeys.Categories].set_insert(category)
                     }
                 )
             )
