@@ -426,11 +426,11 @@ def decoder(string):
             string = string.decode('utf-8')
 
         if isinstance(string, basestring):
-            string = unicode(string.decode('utf-8'))
+            string = unicode(string.decode('utf-8', 'ignore'))
 
     except Exception as e:
-        print type(string), string, e
-        string = string.encode('utf-8').decode('utf-8')
+        logger.exception(e)
+        #string = string.encode('utf-8').decode('utf-8')
 
     return(string)
 
