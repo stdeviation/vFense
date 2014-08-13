@@ -6,10 +6,8 @@ class RedHatVulnerabilityCollections():
 
 class RedhatVulnerabilityKeys(VulnerabilityKeys):
     Summary = 'summary'
-    Apps = 'apps'
     AppsLink = 'solution_apps'
     OsString = 'os_string'
-    CveIds = 'cve_ids'
     Solutions = 'solutions'
     Product = 'product'
 

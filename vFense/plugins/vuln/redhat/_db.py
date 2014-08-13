@@ -1,13 +1,14 @@
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 from vFense.plugins.vuln.redhat._db_model import (
-    RedhatSecurityBulletinKey, RedHatSecurityCollection,
-    RedhatSecurityBulletinIndexes
+    RedhatVulnerabilityKeys, RedHatVulnerabilityCollections,
+    RedhatVulnerabilityIndexes
 )
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 @time_it
@@ -16,20 +17,20 @@ def get_redhat_vulnerability_data_by_vuln_id(vuln_id, conn=None):
     info = {}
     map_hash = (
         {
-            RedhatSecurityBulletinKey.BulletinId: r.row[RedhatSecurityBulletinKey.BulletinId],
-            RedhatSecurityBulletinKey.DatePosted: r.row[RedhatSecurityBulletinKey.DatePosted],
-            RedhatSecurityBulletinKey.Details: r.row[RedhatSecurityBulletinKey.Details],
-            RedhatSecurityBulletinKey.CveIds: r.row[RedhatSecurityBulletinKey.CveIds],
-            RedhatSecurityBulletinKey.Apps: r.row[RedhatSecurityBulletinKey.Apps],
-            RedhatSecurityBulletinKey.Product : r.row[RedhatSecurityBulletinKey.Product],
-            RedhatSecurityBulletinKey.AppsLink : r.row[RedhatSecurityBulletinKey.AppsLink],
+            RedhatVulnerabilityKeys.VulnerabilityId: r.row[RedhatVulnerabilityKeys.VulnerabilityId],
+            RedhatVulnerabilityKeys.DatePosted: r.row[RedhatVulnerabilityKeys.DatePosted],
+            RedhatVulnerabilityKeys.Details: r.row[RedhatVulnerabilityKeys.Details],
+            RedhatVulnerabilityKeys.CveIds: r.row[RedhatVulnerabilityKeys.CveIds],
+            RedhatVulnerabilityKeys.Apps: r.row[RedhatVulnerabilityKeys.Apps],
+            RedhatVulnerabilityKeys.Product : r.row[RedhatVulnerabilityKeys.Product],
+            RedhatVulnerabilityKeys.AppsLink : r.row[RedhatVulnerabilityKeys.AppsLink],
         }
     )
     try:
         info = list(
             r
-            .table(RedHatSecurityCollection.Bulletin)
-            .get_all(vuln_id, index=RedhatSecurityBulletinIndexes.BulletinId)
+            .table(RedHatVulnerabilityCollections.Vulnerabilities)
+            .get_all(vuln_id)
             .map(map_hash)
             .run(conn)
         )
@@ -59,7 +60,7 @@ def insert_bulletin_data(bulletin_data, conn=None):
     try:
         data = (
             r
-            .table(RedHatSecurityCollection.Bulletin)
+            .table(RedHatVulnerabilityCollections.Vulnerabilities)
             .insert(bulletin_data, upsert=True)
             .run(conn)
         )

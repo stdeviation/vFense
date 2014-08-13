@@ -4,18 +4,19 @@ import re
 import sys
 import logging
 import logging.config
+from vFense import VFENSE_LOGGING_CONFIG
 from time import mktime, sleep
 from datetime import datetime
 
 from vFense.db.client import r
 
-from vFense.utils.common import month_to_num_month
+from vFense.utils.common import month_to_num_month, decoder
 from vFense.plugins.vuln import *
 from vFense.plugins.vuln.redhat._constants import *
 from vFense.plugins.vuln.redhat._db import *
 from vFense.plugins.vuln.common import build_bulletin_id
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 URL = REDHAT_ARCHIVE
@@ -290,17 +291,17 @@ def get_rh_data(dfile):
         summary = None
         smry = re.search('1\.\s+Summary:\n\n(\w.*)\n\n.*2.', data, re.DOTALL)
         if smry:
-            summary = smry.group(1)
+            summary = decoder(smry.group(1))
 
         descriptions = None
         desc=(re.search('Description:\n\n(\w.*)\n\n.*\s+Solution', data, re.DOTALL))
         if desc:
-            descriptions=desc.group(1)
+            descriptions=decoder(desc.group(1))
 
         solutions = None
         sol = (re.search('Solution:\n\n(\w.*)\n\n.*\.\s+Bugs fixed', data, re.DOTALL))
         if sol:
-            solutions=sol.group(1)
+            solutions=decoder(sol.group(1))
         #bug_fixed=re.search('5\.\s+Bugs fixed:\n\n(\w.*)\n\n.*6\.\s+Package List', data, re.DOTALL).group(1)
 
         pkg_list = get_rpm_pkgs(dfile=dfile)
