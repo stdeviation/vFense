@@ -1,15 +1,13 @@
-from vFense.plugins.vuln._db_model import VulnerabilityKeys
+from vFense.plugins.vuln._db_model import (
+    VulnerabilityKeys, VulnerabilityIndexes
+)
 
 class RedHatVulnerabilityCollections():
     Vulnerabilities = 'redhat_vulnerabilities'
 
 
 class RedhatVulnerabilityKeys(VulnerabilityKeys):
-    Summary = 'summary'
-    AppsLink = 'solution_apps'
-    OsString = 'os_string'
-    Solutions = 'solutions'
-    Product = 'product'
+    pass
 
-class RedhatVulnerabilityIndexes():
-    CveIds = 'cve_ids'
+class RedhatVulnerabilityIndexes(VulnerabilityIndexes):
+    pass

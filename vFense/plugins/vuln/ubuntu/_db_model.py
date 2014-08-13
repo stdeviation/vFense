@@ -1,4 +1,6 @@
-from vFense.plugins.vuln._db_model import VulnerabilityKeys
+from vFense.plugins.vuln._db_model import (
+    VulnerabilityKeys, VulnerabilityIndexes
+)
 
 class UbuntuVulnerabilityCollections():
     Vulnerabilities = 'ubuntu_vulnerabilities'
@@ -7,6 +9,5 @@ class UbuntuVulnerabilityCollections():
 class UbuntuVulnerabilityKeys(VulnerabilityKeys):
     pass
 
-class UbuntuVulnerabilityIndexes():
-    NameAndVersion = 'name_and_version'
-    CveIds = 'cve_ids'
+class UbuntuVulnerabilityIndexes(VulnerabilityIndexes):
+    pass

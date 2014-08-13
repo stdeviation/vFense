@@ -6,3 +6,9 @@ class VulnerabilityKeys():
     OsStrings = 'os_strings'
     SupportUrl = 'support_url'
     Details = 'details'
+
+
+class VulnerabilityIndexes():
+    NameAndVersion = 'name_and_version'
+    CveIds = 'cve_ids'
+    AppId = 'app_id'
