@@ -1,0 +1,210 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1087&#45;01] Important: mod_jk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 9 Jun 2009 10:46:27 &#45;0400 -->
+<!--X-Message-Id: 200906091446.n59EkRxp032358@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1087-01] Important: mod_jk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1087-01] Important: mod_jk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1087-01] Important: mod_jk security update</li>
+<li><em>Date</em>: Tue, 9 Jun 2009 10:46:27 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mod_jk security update
+Advisory ID:       RHSA-2009:1087-01
+Product:           Red Hat Application Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1087.html">https://rhn.redhat.com/errata/RHSA-2009-1087.html</a>
+Issue date:        2009-06-09
+CVE Names:         CVE-2008-5519 
+=====================================================================
+
+1. Summary:
+
+Updated mod_jk packages that fix one security issue are now available for
+Red Hat Application Server v2.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Application Server v2 4AS - i386, ia64, ppc, x86_64
+Red Hat Application Server v2 4ES - i386, ia64, x86_64
+Red Hat Application Server v2 4WS - i386, ia64, x86_64
+
+3. Description:
+
+mod_jk is an Apache Tomcat connector that allows Apache Tomcat and the
+Apache HTTP Server to communicate with each other.
+
+An information disclosure flaw was found in mod_jk. In certain situations,
+if a faulty client set the &quot;Content-Length&quot; header without providing data,
+or if a user sent repeated requests very quickly, one user may view a
+response intended for another user. (CVE-2008-5519)
+
+All mod_jk users are advised to upgrade to these updated packages. They
+provide mod_jk 1.2.28, which is not vulnerable to this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+490201 - CVE-2008-5519 mod_jk: session information leak
+
+6. Package List:
+
+Red Hat Application Server v2 4AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm</a>
+
+i386:
+mod_jk-ap20-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.i386.rpm
+
+ia64:
+mod_jk-ap20-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.ia64.rpm
+
+ppc:
+mod_jk-ap20-1.2.28-1jpp_3rh.ppc.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.ppc.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.ppc.rpm
+
+x86_64:
+mod_jk-ap20-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.x86_64.rpm
+
+Red Hat Application Server v2 4ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm</a>
+
+i386:
+mod_jk-ap20-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.i386.rpm
+
+ia64:
+mod_jk-ap20-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.ia64.rpm
+
+x86_64:
+mod_jk-ap20-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.x86_64.rpm
+
+Red Hat Application Server v2 4WS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/RHAPS/SRPMS/mod_jk-1.2.28-1jpp_3rh.src.rpm</a>
+
+i386:
+mod_jk-ap20-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.i386.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.i386.rpm
+
+ia64:
+mod_jk-ap20-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.ia64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.ia64.rpm
+
+x86_64:
+mod_jk-ap20-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-debuginfo-1.2.28-1jpp_3rh.x86_64.rpm
+mod_jk-manual-1.2.28-1jpp_3rh.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5519">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5519</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKLnVlXlSAg2UNWIIRAlgMAJ9WQyTF5Gf7BRDQkZwR7CBj0uPU0wCeKHvm
+hA3HxFjrL4/7mOyst8XZIzg=
+=hJi+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

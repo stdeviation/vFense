@@ -1,0 +1,265 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1466&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 29 Sep 2009 12:17:53 &#45;0400 -->
+<!--X-Message-Id: 200909291617.n8TGHq8T012257@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1466-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1466-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1466-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 29 Sep 2009 12:17:52 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1466-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1466.html">https://rhn.redhat.com/errata/RHSA-2009-1466.html</a>
+Issue date:        2009-09-29
+CVE Names:         CVE-2009-2847 CVE-2009-2848 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 5.3 Extended Update Support.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5.3.z server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update includes backported fixes for two security issues. These issues
+only affected users of Red Hat Enterprise Linux 5.3 Extended Update Support
+as they have already been addressed for users of Red Hat Enterprise Linux 5
+in the 5.4 update, RHSA-2009:1243.
+
+In accordance with the support policy, future security updates to Red Hat
+Enterprise Linux 5.3 Extended Update Support will only include issues of
+critical security impact.
+
+This update fixes the following security issues:
+
+* it was discovered that, when executing a new process, the clear_child_tid
+pointer in the Linux kernel is not cleared. If this pointer points to a
+writable portion of the memory of the new program, the kernel could corrupt
+four bytes of memory, possibly leading to a local denial of service or
+privilege escalation. (CVE-2009-2848, Important)
+
+* a flaw was found in the way the do_sigaltstack() function in the Linux
+kernel copies the stack_t structure to user-space. On 64-bit machines, this
+flaw could lead to a four-byte information leak. (CVE-2009-2847, Moderate)
+
+This update also fixes the following bugs:
+
+* a regression was found in the SCSI retry logic: SCSI mode select was not
+retried when retryable errors were encountered. In Device-Mapper Multipath
+environments, this could cause paths to fail, or possibly prevent
+successful failover. (BZ#506905)
+
+* the gcc flag &quot;-fno-delete-null-pointer-checks&quot; was added to the kernel
+build options. This prevents gcc from optimizing out NULL pointer checks
+after the first use of a pointer. NULL pointer bugs are often exploited by
+attackers, and keeping these checks is considered a safety measure.
+(BZ#515468)
+
+* due to incorrect APIC timer calibration, a system hang could have
+occurred while booting certain systems. This incorrect timer calibration
+could have also caused the system time to become faster or slower. With
+this update, it is still possible for APIC timer calibration issues to
+occur; however, a clear warning is now provided if they do. (BZ#521237)
+
+* gettimeofday() experienced poor performance (which caused performance
+problems for applications using gettimeofday()) when running on hypervisors
+that use hardware assisted virtualization. With this update, MFENCE/LFENCE
+is used instead of CPUID for gettimeofday() serialization, which resolves
+this issue. (BZ#523280)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+506905 - LTC 49790: Sync up SCSI DH code with mainline changes [rhel-5.3.z]
+515392 - CVE-2009-2847 kernel: information leak in sigaltstack
+515423 - CVE-2009-2848 kernel: execve: must clear current-&gt;clear_child_tid
+515468 - kernel: build with -fno-delete-null-pointer-checks [rhel-5.3.z]
+521237 - [RHEL 5] Hang on boot due to wrong APIC timer calibration [rhel-5.3.z]
+523280 - RFE: improve gettimeofday performance on hypervisors [rhel-5.3.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux (v. 5.3.z server):
+
+i386:
+kernel-2.6.18-128.8.1.el5.i686.rpm
+kernel-PAE-2.6.18-128.8.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-128.8.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-128.8.1.el5.i686.rpm
+kernel-debug-2.6.18-128.8.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-128.8.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-128.8.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-128.8.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-128.8.1.el5.i686.rpm
+kernel-devel-2.6.18-128.8.1.el5.i686.rpm
+kernel-headers-2.6.18-128.8.1.el5.i386.rpm
+kernel-xen-2.6.18-128.8.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-128.8.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-128.8.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-128.8.1.el5.ia64.rpm
+kernel-debug-2.6.18-128.8.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-128.8.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-128.8.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-128.8.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-128.8.1.el5.ia64.rpm
+kernel-devel-2.6.18-128.8.1.el5.ia64.rpm
+kernel-headers-2.6.18-128.8.1.el5.ia64.rpm
+kernel-xen-2.6.18-128.8.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-128.8.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-128.8.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-128.8.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-debug-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-devel-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-headers-2.6.18-128.8.1.el5.ppc.rpm
+kernel-headers-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-128.8.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-128.8.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-128.8.1.el5.s390x.rpm
+kernel-debug-2.6.18-128.8.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-128.8.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-128.8.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-128.8.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-128.8.1.el5.s390x.rpm
+kernel-devel-2.6.18-128.8.1.el5.s390x.rpm
+kernel-headers-2.6.18-128.8.1.el5.s390x.rpm
+kernel-kdump-2.6.18-128.8.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-128.8.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-128.8.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-debug-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-devel-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-headers-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-xen-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-128.8.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-128.8.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKwjMlXlSAg2UNWIIRAkYKAJ4tHjqVF8SG2mPzo/Sw/SYXzkLW7QCdHZkM
+rZ/np7FbkVx8zWpyzTlQ8wQ=
+=9r2o
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

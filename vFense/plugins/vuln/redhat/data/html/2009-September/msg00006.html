@@ -1,0 +1,313 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1307&#45;02] Low: ecryptfs&#45;utils security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Sep 2009 03:44:04 &#45;0400 -->
+<!--X-Message-Id: 200909020744.n827i3b4024842@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1307-02] Low: ecryptfs-utils security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1307-02] Low: ecryptfs-utils security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1307-02] Low: ecryptfs-utils security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 2 Sep 2009 03:44:03 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: ecryptfs-utils security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1307-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1307.html">https://rhn.redhat.com/errata/RHSA-2009-1307.html</a>
+Issue date:        2009-09-02
+CVE Names:         CVE-2008-5188 
+=====================================================================
+
+1. Summary:
+
+Updated ecryptfs-utils packages that fix a security issue, various bugs,
+and add enhancements are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+eCryptfs is a stacked, cryptographic file system. It is transparent to the
+underlying file system and provides per-file granularity.
+
+eCryptfs is released as a Technology Preview for Red Hat Enterprise Linux
+5.4. These updated ecryptfs-utils packages have been upgraded to upstream
+version 75, which provides a number of bug fixes and enhancements over the
+previous version. In addition, these packages provide a graphical program
+to help configure and use eCryptfs. To start this program, run the command:
+
+	ecryptfs-mount-helper-gui
+
+Important: the syntax of certain eCryptfs mount options has changed. Users
+who were previously using the initial Technology Preview release of
+ecryptfs-utils are advised to refer to the ecryptfs(7) man page, and to
+update any affected mount scripts and /etc/fstab entries for eCryptfs file
+systems.
+
+A disclosure flaw was found in the way the &quot;ecryptfs-setup-private&quot; script
+passed passphrases to the &quot;ecryptfs-wrap-passphrase&quot; and
+&quot;ecryptfs-add-passphrase&quot; commands as command line arguments. A local user
+could obtain the passphrases of other users who were running the script
+from the process listing. (CVE-2008-5188)
+
+These updated packages provide various enhancements, including a mount
+helper and supporting libraries to perform key management and mounting
+functions.
+
+Notable enhancements include:
+
+* a new package, ecryptfs-utils-gui, has been added to this update. This
+package depends on the pygtk2 and pygtk2-libglade packages and provides the
+eCryptfs Mount Helper GUI program. To install the GUI, first install
+ecryptfs-utils and then issue the following command:
+
+	yum install ecryptfs-utils-gui
+
+(BZ#500997)
+
+* the &quot;ecryptfs-rewrite-file&quot; utility is now more intelligent when dealing
+with non-existent files and with filtering special files such as the &quot;.&quot;
+directory. In addition, the progress output from &quot;ecryptfs-rewrite-file&quot;
+has been improved and is now more explicit about the success status of each
+target. (BZ#500813)
+
+* descriptions of the &quot;verbose&quot; flag and the &quot;verbosity=[x]&quot; option, where
+[x] is either 0 or 1, were missing from a number of eCryptfs manual pages,
+and have been added. Refer to the eCryptfs man pages for important
+information regarding using the verbose and/or verbosity options.
+(BZ#470444)
+
+These updated packages also fix the following bugs:
+
+* mounting a directory using the eCryptfs mount helper with an RSA key that
+was too small did not allow the eCryptfs mount helper to encrypt the entire
+key. When this situation occurred, the mount helper did not display an
+error message alerting the user to the fact that the key size was too
+small, possibly leading to corrupted files. The eCryptfs mount helper now
+refuses RSA keys which are to small to encrypt the eCryptfs key.
+(BZ#499175)
+
+* when standard input was redirected from /dev/null or was unavailable,
+attempting to mount a directory with the eCryptfs mount helper caused it to
+become unresponsive and eventually crash, or an &quot;invalid value&quot; error
+message, depending on if the &quot;--verbosity=[value]&quot; option was provided as
+an argument, and, if so, its value. With these updated packages, attempting
+to mount a directory using &quot;mount.ecryptfs&quot; under the same conditions
+results in either the mount helper attempting to use default values (if
+&quot;verbosity=0&quot; is supplied), or an &quot;invalid value&quot; error message (instead of
+the mount helper hanging) if standard input is redirected and
+&quot;--verbosity=1&quot; is supplied, or that option is omitted entirely.
+(BZ#499367)
+
+* attempting to use the eCryptfs mount helper with an OpenSSL key when the
+keyring did not contain enough space for the key resulted in an unhelpful
+error message. The user is now alerted when this situation occurs.
+(BZ#501460)
+
+* the eCryptfs mount helper no longer fails upon receiving an incorrect or
+empty answer to &quot;yes/no&quot; questions. (BZ#466210)
+
+Users are advised to upgrade to these updated ecryptfs-utils packages,
+which resolve these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+460496 - ecryptfs complains about a missing module, fails and then loads it
+472524 - CVE-2008-5188 ecryptfs-utils: potential provided password disclosure in the process table
+475969 - difference between the name of the binary and the name in its usage message
+482834 - RHEL5: update ecryptfs-utils to latest
+499128 - `man ecryptfs' is wrong on what to write to openssl_passwd_file=XXX
+499367 - mount.ecrytfs hangs when used with wrong/missing stdin
+500352 - mount helper asks different set questions when the mount options are OK and when are not
+500361 - [ecryptfs-add-passphrase] adding key, which is in keyring already, results in error msg
+500566 - When kernel does not support filename encryption `ecryptfs-add-passphrase --fnek' should exit with exit code != 0
+500623 - Access-Your-Private-Data.desktop file should have an icon associated
+500804 - Typo in ecryptfs-rewrite-file(1)
+500810 - ecryptfs-insert-wrapped-passphrase-into-keyring fails to add passphrase to keyring if the passphrase is in the keyring already
+500813 - ecryptfs-rewrite-file should be more wise when dealing with non-existing/bogus files
+500817 - ecryptfs-dot-private is not expected to be executed, remove the &quot;x&quot; permission
+500820 - ecryptfs-setup-swap: vol_id: command not found
+500824 - Possible missing runtime dependencies for `ecryptfs-setup-swap'
+500829 - `ecryptfs-setup-swap' tries to restart service ``cryptdisks'' which is not present in RHEL/Fedora
+500850 - [RFE] ecryptfs-manager should ask for password confirmation when creating openssl key
+500997 - ecryptfs-utils-gui must require pygtk2-libglade
+501275 - Select key bytes: item &quot;default&quot; is bogus
+501460 - Error msg from ecryptfs-utils does not reflect reality when adding key to &quot;full&quot; keyring
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm</a>
+
+i386:
+ecryptfs-utils-75-5.el5.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-gui-75-5.el5.i386.rpm
+
+x86_64:
+ecryptfs-utils-75-5.el5.i386.rpm
+ecryptfs-utils-75-5.el5.x86_64.rpm
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5.x86_64.rpm
+ecryptfs-utils-gui-75-5.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm</a>
+
+i386:
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-devel-75-5.el5.i386.rpm
+
+x86_64:
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5.x86_64.rpm
+ecryptfs-utils-devel-75-5.el5.i386.rpm
+ecryptfs-utils-devel-75-5.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ecryptfs-utils-75-5.el5.src.rpm</a>
+
+i386:
+ecryptfs-utils-75-5.el5.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-devel-75-5.el5.i386.rpm
+ecryptfs-utils-gui-75-5.el5.i386.rpm
+
+ia64:
+ecryptfs-utils-75-5.el5.ia64.rpm
+ecryptfs-utils-debuginfo-75-5.el5.ia64.rpm
+ecryptfs-utils-devel-75-5.el5.ia64.rpm
+ecryptfs-utils-gui-75-5.el5.ia64.rpm
+
+ppc:
+ecryptfs-utils-75-5.el5.ppc.rpm
+ecryptfs-utils-75-5.el5.ppc64.rpm
+ecryptfs-utils-debuginfo-75-5.el5.ppc.rpm
+ecryptfs-utils-debuginfo-75-5.el5.ppc64.rpm
+ecryptfs-utils-devel-75-5.el5.ppc.rpm
+ecryptfs-utils-devel-75-5.el5.ppc64.rpm
+ecryptfs-utils-gui-75-5.el5.ppc.rpm
+
+s390x:
+ecryptfs-utils-75-5.el5.s390.rpm
+ecryptfs-utils-75-5.el5.s390x.rpm
+ecryptfs-utils-debuginfo-75-5.el5.s390.rpm
+ecryptfs-utils-debuginfo-75-5.el5.s390x.rpm
+ecryptfs-utils-devel-75-5.el5.s390.rpm
+ecryptfs-utils-devel-75-5.el5.s390x.rpm
+ecryptfs-utils-gui-75-5.el5.s390x.rpm
+
+x86_64:
+ecryptfs-utils-75-5.el5.i386.rpm
+ecryptfs-utils-75-5.el5.x86_64.rpm
+ecryptfs-utils-debuginfo-75-5.el5.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5.x86_64.rpm
+ecryptfs-utils-devel-75-5.el5.i386.rpm
+ecryptfs-utils-devel-75-5.el5.x86_64.rpm
+ecryptfs-utils-gui-75-5.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5188">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5188</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKniI4XlSAg2UNWIIRAnbuAKCxF6t6zHtZhvTvlCFIc20n9dSEvwCdHNuT
+YCW86YXnHTHnXN3JMDAAD/Y=
+=D68/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

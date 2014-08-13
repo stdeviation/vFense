@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0194&#45;01] Important: xen security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 13 May 2008 08:29:02 &#45;0400 -->
+<!--X-Message-Id: 200805131229.m4DCT1dR015998@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0194-01] Important: xen security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0194-01] Important: xen security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0194-01] Important: xen security and bug fix update</li>
+<li><em>Date</em>: Tue, 13 May 2008 08:29:01 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xen security and bug fix update
+Advisory ID:       RHSA-2008:0194-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0194.html">https://rhn.redhat.com/errata/RHSA-2008-0194.html</a>
+Issue date:        2008-05-13
+CVE Names:         CVE-2007-3919 CVE-2007-5730 CVE-2008-0928 
+                   CVE-2008-1943 CVE-2008-1944 CVE-2008-2004 
+=====================================================================
+
+1. Summary:
+
+Updated xen packages that fix several security issues and a bug are now
+available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+
+3. Description:
+
+The xen packages contain tools for managing the virtual machine monitor in
+Red Hat Virtualization.
+
+These updated packages fix the following security issues:
+
+Daniel P. Berrange discovered that the hypervisor's para-virtualized
+framebuffer (PVFB) backend failed to validate the format of messages
+serving to update the contents of the framebuffer. This could allow a
+malicious user to cause a denial of service, or compromise the privileged
+domain (Dom0). (CVE-2008-1944)
+
+Markus Armbruster discovered that the hypervisor's para-virtualized
+framebuffer (PVFB) backend failed to validate the frontend's framebuffer
+description. This could allow a malicious user to cause a denial of
+service, or to use a specially crafted frontend to compromise the
+privileged domain (Dom0). (CVE-2008-1943)
+
+Chris Wright discovered a security vulnerability in the QEMU block format
+auto-detection, when running fully-virtualized guests. Such
+fully-virtualized guests, with a raw formatted disk image, were able
+to write a header to that disk image describing another format. This could
+allow such guests to read arbitrary files in their hypervisor's host.
+(CVE-2008-2004)
+
+Ian Jackson discovered a security vulnerability in the QEMU block device
+drivers backend. A guest operating system could issue a block device
+request and read or write arbitrary memory locations, which could lead to
+privilege escalation. (CVE-2008-0928)
+
+Tavis Ormandy found that QEMU did not perform adequate sanity-checking of
+data received via the &quot;net socket listen&quot; option. A malicious local
+administrator of a guest domain could trigger this flaw to potentially
+execute arbitrary code outside of the domain. (CVE-2007-5730)
+
+Steve Kemp discovered that the xenbaked daemon and the XenMon utility
+communicated via an insecure temporary file. A malicious local
+administrator of a guest domain could perform a symbolic link attack,
+causing arbitrary files to be truncated. (CVE-2007-3919)
+
+As well, in the previous xen packages, it was possible for Dom0 to fail to
+flush data from a fully-virtualized guest to disk, even if the guest
+explicitly requested the flush. This could cause data integrity problems on
+the guest. In these updated packages, Dom0 always respects the request to
+flush to disk.
+
+Users of xen are advised to upgrade to these updated packages, which
+resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+350421 - CVE-2007-3919 xen xenmon.py / xenbaked insecure temporary file accesss
+360381 - CVE-2007-5730 QEMU Buffer overflow via crafted &quot;net socket listen&quot; option
+433560 - CVE-2008-0928 Qemu insufficient block device address range checking
+435495 - [RHEL5.2]: LTC41676-Xen full virt has data integrity issue
+443078 - CVE-2008-1943 PVFB backend fails to validate frontend's framebuffer description
+443390 - CVE-2008-1944 PVFB SDL backend chokes on bogus screen updates
+444583 - CVE-2008-2004 qemu/kvm/xen: qemu block format auto-detection vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-libs-3.0.3-41.el5_1.5.i386.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.x86_64.rpm
+xen-libs-3.0.3-41.el5_1.5.i386.rpm
+xen-libs-3.0.3-41.el5_1.5.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm</a>
+
+i386:
+xen-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-devel-3.0.3-41.el5_1.5.i386.rpm
+
+x86_64:
+xen-3.0.3-41.el5_1.5.x86_64.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.x86_64.rpm
+xen-devel-3.0.3-41.el5_1.5.i386.rpm
+xen-devel-3.0.3-41.el5_1.5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-libs-3.0.3-41.el5_1.5.i386.rpm
+
+ia64:
+xen-debuginfo-3.0.3-41.el5_1.5.ia64.rpm
+xen-libs-3.0.3-41.el5_1.5.ia64.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.x86_64.rpm
+xen-libs-3.0.3-41.el5_1.5.i386.rpm
+xen-libs-3.0.3-41.el5_1.5.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-41.el5_1.5.src.rpm</a>
+
+i386:
+xen-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-devel-3.0.3-41.el5_1.5.i386.rpm
+
+ia64:
+xen-3.0.3-41.el5_1.5.ia64.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.ia64.rpm
+xen-devel-3.0.3-41.el5_1.5.ia64.rpm
+
+x86_64:
+xen-3.0.3-41.el5_1.5.x86_64.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.i386.rpm
+xen-debuginfo-3.0.3-41.el5_1.5.x86_64.rpm
+xen-devel-3.0.3-41.el5_1.5.i386.rpm
+xen-devel-3.0.3-41.el5_1.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3919">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3919</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5730">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5730</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0928">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0928</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1943">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1943</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1944">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1944</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2004">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2004</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIKYl8XlSAg2UNWIIRAhx7AKClR1PG+iH8wkI/lOgfpPtOLmSzpgCgvURY
+VbxfWvdPToJNVkcDf1gn5Qg=
+=PXkq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

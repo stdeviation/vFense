@@ -1,0 +1,215 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0201&#45;01] Critical: redhat&#45;ds&#45;admin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Apr 2008 07:57:41 &#45;0400 -->
+<!--X-Message-Id: 200804161157.m3GBvewR027602@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0201-01] Critical: redhat-ds-admin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0201-01] Critical: redhat-ds-admin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0201-01] Critical: redhat-ds-admin security update</li>
+<li><em>Date</em>: Wed, 16 Apr 2008 07:57:40 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: redhat-ds-admin security update
+Advisory ID:       RHSA-2008:0201-01
+Product:           Red Hat Directory Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0201.html">https://rhn.redhat.com/errata/RHSA-2008-0201.html</a>
+Issue date:        2008-04-15
+CVE Names:         CVE-2008-0892 CVE-2008-0893 
+=====================================================================
+
+1. Summary:
+
+An updated redhat-ds-admin package that fixes security issues is now
+available for Red Hat Directory Server 8.0.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Directory Server 8.0 (for AS v. 4) - i386, x86_64
+Red Hat Directory Server 8.0 (for ES v. 4) - i386, x86_64
+Red Hat Directory Server 8.0 (for RHEL 5 Server) - i386, x86_64
+
+3. Description:
+
+Red Hat Administration Server is an HTTP agent that provides management
+features for Red Hat Directory Server, an LDAPv3 compliant server.
+
+A shell command injection flaw was discovered in the Red Hat Administration
+Server replication monitor CGI script used by Red Hat Directory Server 8.0.
+An attacker with access to the replication monitor web page could execute
+arbitrary shell commands with the privileges of the Administration Server.
+Please Note: by default, the Red Hat Administration Server is run as the
+unprivileged user, &quot;nobody&quot;. (CVE-2008-0892)
+
+It was discovered that the Red Hat Administration Server did to properly
+restrict access to CGI scripts. An unauthenticated remote user with access
+to the TCP port used by the Administration Server could access information
+or perform certain tasks that should have been restricted to Directory
+Server administrative users. Please note: by default the Red Hat
+Administration Server uses port 9830, although this can be changed by the
+Red Hat Directory Server administrator. (CVE-2008-0893)
+
+In combination, these two flaws allowed an unauthenticated remote attacker
+able to access the Red Hat Administration Server TCP port to run arbitrary
+code as the user &quot;nobody&quot;.
+
+All users of Red Hat Directory Server should upgrade to this updated
+package, which addresses these vulnerabilities.
+
+
+4. Solution:
+
+Users running Red Hat Directory Server on Red Hat Enterprise Linux:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+Users running Red Hat Directory Server on Solaris:
+
+An archive (in .tar.gz format) containing the updated Solaris packages in
+.pkg format is available in the Red Hat Directory Server 8.0 Solaris
+channel on the Red Hat Network. This archive also contains a file with
+further instructions about how to install/upgrade the packages using
+Solaris native package management tools.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+437301 - CVE-2008-0892 Director Server: shell command injection in CGI replication monitor
+437320 - CVE-2008-0893 Directory Server: unrestricted access to CGI scripts
+
+6. Package List:
+
+Red Hat Directory Server 8.0 (for AS v. 4):
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el4dsrv.src.rpm</a>
+
+i386:
+redhat-ds-admin-8.0.0-6.el4dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el4dsrv.i386.rpm
+
+x86_64:
+redhat-ds-admin-8.0.0-6.el4dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el4dsrv.x86_64.rpm
+
+Red Hat Directory Server 8.0 (for ES v. 4):
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el4dsrv.src.rpm</a>
+
+i386:
+redhat-ds-admin-8.0.0-6.el4dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el4dsrv.i386.rpm
+
+x86_64:
+redhat-ds-admin-8.0.0-6.el4dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el4dsrv.x86_64.rpm
+
+Red Hat Directory Server 8.0 (for RHEL 5 Server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-admin-8.0.0-6.el5dsrv.src.rpm</a>
+
+i386:
+redhat-ds-admin-8.0.0-6.el5dsrv.i386.rpm
+redhat-ds-admin-8.0.0-6.el5dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el5dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el5dsrv.i386.rpm
+
+x86_64:
+redhat-ds-admin-8.0.0-6.el5dsrv.x86_64.rpm
+redhat-ds-admin-8.0.0-6.el5dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el5dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.0.0-6.el5dsrv.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0892">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0892</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0893">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0893</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIBeljXlSAg2UNWIIRAnm6AKC/5KV0qzDBvFh2glK9vPwuZZDI5gCeL1Rb
+0x4osYjIk4D654RNeOg+sm8=
+=pAH+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

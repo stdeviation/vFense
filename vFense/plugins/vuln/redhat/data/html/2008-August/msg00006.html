@@ -1,0 +1,238 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0814&#45;01] Moderate: condor security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 11 Aug 2008 13:50:38 &#45;0400 -->
+<!--X-Message-Id: 200808111750.m7BHob7a001993@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0814-01] Moderate: condor security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0814-01] Moderate: condor security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0814-01] Moderate: condor security and bug fix update</li>
+<li><em>Date</em>: Mon, 11 Aug 2008 13:50:37 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: condor security and bug fix update
+Advisory ID:       RHSA-2008:0814-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0814.html">https://rhn.redhat.com/errata/RHSA-2008-0814.html</a>
+Issue date:        2008-08-11
+CVE Names:         CVE-2008-3424 
+=====================================================================
+
+1. Summary:
+
+Updated condor packages that fix a security issue and several bugs are now
+available for Red Hat Enterprise MRG.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Grid for RHEL 5 Server - i386, x86_64
+
+3. Description:
+
+Condor is a specialized workload management system for compute-intensive
+jobs. It provides a job queuing mechanism, scheduling policy, priority
+scheme, and resource monitoring and management.
+
+A flaw was found in the way Condor interpreted wildcards in authorization
+lists. Certain authorization lists using wildcards in DENY rules, such as
+DENY_WRITE or HOSTDENY_WRITE, that conflict with the definitions in ALLOW
+rules, could permit authenticated remote users to submit computation jobs,
+even when such access should have been denied. (CVE-2008-3424)
+
+Bug fixes:
+
+* the /etc/condor/condor_config file started with &quot;What machine is your
+central manager?&quot;. The following line was blank, instead of having the
+&quot;CONDOR_HOST&quot; option, causing confusion. The &quot;What machine...&quot; text is now
+removed.
+
+* condor_config.local defined &quot;LOCK = /tmp/[lock file]&quot;. This is no longer
+explicitly defined; however, lock files may be in &quot;/tmp/&quot;, and could be
+removed by tmpwatch. A &quot;LOCK_FILE_UPDATE_INTERVAL&quot; option, which defaults
+to eight hours, has been added. This updates the timestamps on lock files,
+preventing them from being removed by tools such as tmpwatch.
+
+* when a &quot;SCHEDD_NAME&quot; name in condor_config ended with an &quot;@&quot;, the
+system's hostname was appended. For example, if &quot;SCHEDD_NAME = test@&quot; was
+configured, &quot;condor_q -name test@&quot; failed with an &quot;Collector has no record
+of schedd/submitter&quot; error. Now, the hostname is not appended when a name
+ends with an &quot;@&quot;. In High Availability (HA) Schedd deployments, this allows
+a name to be shared by multiple Schedds.
+
+* when too few arguments were passed to &quot;condor_qedit&quot;, such as
+&quot;condor_qedit -constraint TRUE&quot;, a segfault occurred. Better argument
+handling has been added to resolve this.
+
+* due to missing common_createddl.sql and pgsql_createddl.sql files,
+it was not possible to use Quill. Now, these files are included in
+&quot;/usr/share/condor/sql/&quot;.
+
+* &quot;condor_submit -dump ad [file-name]&quot; caused a segfault if the [file-name]
+job contained &quot;universe = grid&quot;.
+
+* previously, a condor user and group were created if they did not exist,
+without specifying a specific UID and GID. Now, UID and GID 64 are used.
+The effect of this change is non-existent if upgrading the condor packages.
+If an existing condor user and group are manually changed, problems with
+file ownership will occur.
+
+Configuration changes (from the Condor release notes - see link below):
+
+* a new CKPT_SERVER_CHECK_PARENT_INTERVAL variable sets the time interval
+between a checkpoint server checking if its parent is running. If the
+parent server has died, the checkpoint server is shut down.
+
+* a new CKPT_PROBE variable to define an executable for the helper process
+Condor uses for information about the CheckpointPlatform attribute.
+
+* STARTER_UPLOAD_TIMEOUT now defaults to 300 seconds.
+
+* new variables (booleans) PREEMPTION_REQUIREMENTS_STABLE and
+PREEMPTION_RANK_STABLE, configure whether attributes used in
+PREEMPTION_REQUIREMENTS and PREEMPTION_RANK change during negotiation
+cycles.
+
+* a new GRIDMANAGER_MAX_WS_DESTROYS_PER_RESOURCE variable, with a
+default value of 5, defines the number of simultaneous WS destroy commands
+that can be sent to a server for type gt4 grid universe jobs.
+
+* now, VALID_SPOOL_FILES automatically includes the &quot;SCHEDD.lock&quot; lock file
+for condor_schedd HA failover.
+
+* the default value for SEC_DEFAULT_SESSION_DURATION has been changed from
+8640000 seconds (100 days) to 86400 seconds (one day).
+
+Important: these updated packages upgrade Condor to version 7.0.4. For a
+full list of changes, refer to the Condor release notes:
+www.cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html
+
+condor users should upgrade to these updated packages, which resolve these
+issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+447830 - /etc/condor/condor_config file missing CONDOR_HOST = option
+449043 - condor_config.local sets up LOCK in /tmp
+452512 - SCHEDD_NAME always appends @$(FULL_HOSTNAME)
+452515 - condor_qedit segfault with too few arguments
+455338 - Necessary Quill setup files?
+456080 - Red Hat RPMs should identify their buildid, differentiate from UW's builds
+456478 - condor_submit -dump segfaults when universe = grid
+457141 - Rebase on Condor 7.0.4
+457372 - CVE-2008-3424 condor: incorrect handling of wild cards in authorization lists
+458157 - Add newly assigned UID/GID for condor to product
+
+6. Package List:
+
+MRG Grid for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.0.4-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.0.4-4.el5.src.rpm</a>
+
+i386:
+condor-7.0.4-4.el5.i386.rpm
+condor-debuginfo-7.0.4-4.el5.i386.rpm
+condor-static-7.0.4-4.el5.i386.rpm
+condor-test-7.0.4-4.el5.i386.rpm
+
+x86_64:
+condor-7.0.4-4.el5.x86_64.rpm
+condor-debuginfo-7.0.4-4.el5.x86_64.rpm
+condor-static-7.0.4-4.el5.x86_64.rpm
+condor-test-7.0.4-4.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3424">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3424</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIoHt2XlSAg2UNWIIRAqp3AJ4j4V/E1WktkqBJXTFz08HwpgP5GgCgqZZW
+quNQO5n62XBjUhTJowt4Rv4=
+=jMrF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

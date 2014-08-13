@@ -1,0 +1,271 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1083&#45;01] Moderate: thunderbird security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 19 Dec 2007 11:57:08 &#45;0500 -->
+<!--X-Message-Id: 200712191657.lBJGv7wN030729@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1083-01] Moderate: thunderbird security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1083-01] Moderate: thunderbird security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1083-01] Moderate: thunderbird security update</li>
+<li><em>Date</em>: Wed, 19 Dec 2007 11:57:07 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: thunderbird security update
+Advisory ID:       RHSA-2007:1083-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1083.html">https://rhn.redhat.com/errata/RHSA-2007-1083.html</a>
+Issue date:        2007-12-19
+Updated on:        2007-12-19
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-5947 CVE-2007-5959 CVE-2007-5960 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated thunderbird packages that fix several security issues are now
+available for Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+
+3. Problem description:
+
+Mozilla Thunderbird is a standalone mail and newsgroup client.
+
+A cross-site scripting flaw was found in the way Thunderbird handled the
+jar: URI scheme. It may be possible for a malicious HTML mail message to
+leverage this flaw, and conduct a cross-site scripting attack against a
+user running Thunderbird. (CVE-2007-5947)
+
+Several flaws were found in the way Thunderbird processed certain malformed
+HTML mail content. A HTML mail message containing malicious content could
+cause Thunderbird to crash, or potentially execute arbitrary code as the
+user running Thunderbird. (CVE-2007-5959)
+
+A race condition existed when Thunderbird set the &quot;window.location&quot;
+property when displaying HTML mail content. This flaw could allow a HTML
+mail message to set an arbitrary Referer header, which may lead to a
+Cross-site Request Forgery (CSRF) attack against websites that rely only on
+the Referer header for protection. (CVE-2007-5960) 
+
+All users of thunderbird are advised to upgrade to these updated packages,
+which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+394211 - CVE-2007-5947 Mozilla jar: protocol XSS
+394241 - CVE-2007-5959 Multiple flaws in Firefox
+394261 - CVE-2007-5960 Mozilla Cross-site Request Forgery flaw
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm</a>
+4d7be8e483560839d3409364a18a8e02  thunderbird-1.5.0.12-7.el4.src.rpm
+
+i386:
+e2caa338f6077d4bab35d93f80ad8bb0  thunderbird-1.5.0.12-7.el4.i386.rpm
+1ae9c96c94590bcb7e9696f66df111b0  thunderbird-debuginfo-1.5.0.12-7.el4.i386.rpm
+
+ia64:
+36a9b04d91727541053c5335ea72eec1  thunderbird-1.5.0.12-7.el4.ia64.rpm
+5c54a0682230239d62bc4ed9c653875c  thunderbird-debuginfo-1.5.0.12-7.el4.ia64.rpm
+
+ppc:
+42c2f013857d712c3ec3b941cc2ce4bc  thunderbird-1.5.0.12-7.el4.ppc.rpm
+c169dbac589f5a4cd3168729441bfdab  thunderbird-debuginfo-1.5.0.12-7.el4.ppc.rpm
+
+s390:
+4573e3b986a4c851c489aa6848c9de3d  thunderbird-1.5.0.12-7.el4.s390.rpm
+0db4521326a8c9c3582ce3c575d70c16  thunderbird-debuginfo-1.5.0.12-7.el4.s390.rpm
+
+s390x:
+2faffc589ae1ac537fd7da3cc2ffb530  thunderbird-1.5.0.12-7.el4.s390x.rpm
+dfce2d56babd016ccba6e042fc21c56e  thunderbird-debuginfo-1.5.0.12-7.el4.s390x.rpm
+
+x86_64:
+395bc4da647ad1c1fd89af612bd63b13  thunderbird-1.5.0.12-7.el4.x86_64.rpm
+e8a7d8d02630d8b0028796792fe8781b  thunderbird-debuginfo-1.5.0.12-7.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm</a>
+4d7be8e483560839d3409364a18a8e02  thunderbird-1.5.0.12-7.el4.src.rpm
+
+i386:
+e2caa338f6077d4bab35d93f80ad8bb0  thunderbird-1.5.0.12-7.el4.i386.rpm
+1ae9c96c94590bcb7e9696f66df111b0  thunderbird-debuginfo-1.5.0.12-7.el4.i386.rpm
+
+x86_64:
+395bc4da647ad1c1fd89af612bd63b13  thunderbird-1.5.0.12-7.el4.x86_64.rpm
+e8a7d8d02630d8b0028796792fe8781b  thunderbird-debuginfo-1.5.0.12-7.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm</a>
+4d7be8e483560839d3409364a18a8e02  thunderbird-1.5.0.12-7.el4.src.rpm
+
+i386:
+e2caa338f6077d4bab35d93f80ad8bb0  thunderbird-1.5.0.12-7.el4.i386.rpm
+1ae9c96c94590bcb7e9696f66df111b0  thunderbird-debuginfo-1.5.0.12-7.el4.i386.rpm
+
+ia64:
+36a9b04d91727541053c5335ea72eec1  thunderbird-1.5.0.12-7.el4.ia64.rpm
+5c54a0682230239d62bc4ed9c653875c  thunderbird-debuginfo-1.5.0.12-7.el4.ia64.rpm
+
+x86_64:
+395bc4da647ad1c1fd89af612bd63b13  thunderbird-1.5.0.12-7.el4.x86_64.rpm
+e8a7d8d02630d8b0028796792fe8781b  thunderbird-debuginfo-1.5.0.12-7.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/thunderbird-1.5.0.12-7.el4.src.rpm</a>
+4d7be8e483560839d3409364a18a8e02  thunderbird-1.5.0.12-7.el4.src.rpm
+
+i386:
+e2caa338f6077d4bab35d93f80ad8bb0  thunderbird-1.5.0.12-7.el4.i386.rpm
+1ae9c96c94590bcb7e9696f66df111b0  thunderbird-debuginfo-1.5.0.12-7.el4.i386.rpm
+
+ia64:
+36a9b04d91727541053c5335ea72eec1  thunderbird-1.5.0.12-7.el4.ia64.rpm
+5c54a0682230239d62bc4ed9c653875c  thunderbird-debuginfo-1.5.0.12-7.el4.ia64.rpm
+
+x86_64:
+395bc4da647ad1c1fd89af612bd63b13  thunderbird-1.5.0.12-7.el4.x86_64.rpm
+e8a7d8d02630d8b0028796792fe8781b  thunderbird-debuginfo-1.5.0.12-7.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-1.5.0.12-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-1.5.0.12-7.el5.src.rpm</a>
+1d338b7e5786b0681bc04a29a8222053  thunderbird-1.5.0.12-7.el5.src.rpm
+
+i386:
+315152126ddf479cc763bb8aafc44454  thunderbird-1.5.0.12-7.el5.i386.rpm
+1d56153e5debd06b15a594fc27b3bfea  thunderbird-debuginfo-1.5.0.12-7.el5.i386.rpm
+
+x86_64:
+ae49af405b680729c770fa1ac4dd603d  thunderbird-1.5.0.12-7.el5.x86_64.rpm
+c74f2cbf03f9feb664c2538d62084a3c  thunderbird-debuginfo-1.5.0.12-7.el5.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-1.5.0.12-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-1.5.0.12-7.el5.src.rpm</a>
+1d338b7e5786b0681bc04a29a8222053  thunderbird-1.5.0.12-7.el5.src.rpm
+
+i386:
+315152126ddf479cc763bb8aafc44454  thunderbird-1.5.0.12-7.el5.i386.rpm
+1d56153e5debd06b15a594fc27b3bfea  thunderbird-debuginfo-1.5.0.12-7.el5.i386.rpm
+
+x86_64:
+ae49af405b680729c770fa1ac4dd603d  thunderbird-1.5.0.12-7.el5.x86_64.rpm
+c74f2cbf03f9feb664c2538d62084a3c  thunderbird-debuginfo-1.5.0.12-7.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5947">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5947</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5959">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5959</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5960">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5960</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHaU02XlSAg2UNWIIRAkHSAJ4vkA7LYJhUnW9vcwF42C506AuRAgCgwd2z
+BsTZBmr9MHXx22+N/5THU3E=
+=h6hI
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

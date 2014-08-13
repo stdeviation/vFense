@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1081&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Jun 2009 12:01:15 &#45;0400 -->
+<!--X-Message-Id: 200906031601.n53G1EB9011182@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1081-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1081-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1081-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Wed, 3 Jun 2009 12:01:14 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2009:1081-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1081.html">https://rhn.redhat.com/errata/RHSA-2009-1081.html</a>
+Issue date:        2009-06-03
+CVE Names:         CVE-2009-1072 CVE-2009-1192 CVE-2009-1338 
+                   CVE-2009-1439 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix several security issues and various
+bugs are now available for Red Hat Enterprise MRG 1.1.3.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* a buffer overflow flaw was found in the CIFSTCon() function of the Linux
+kernel Common Internet File System (CIFS) implementation. When mounting a
+CIFS share, a malicious server could send an overly-long string to the
+client, possibly leading to a denial of service or privilege escalation on
+the client mounting the CIFS share. (CVE-2009-1439, Important)
+
+* the Linux kernel Network File System daemon (nfsd) implementation did not
+drop the CAP_MKNOD capability when handling requests from local,
+unprivileged users. This flaw could possibly lead to an information leak or
+privilege escalation. (CVE-2009-1072, Moderate)
+
+* a deficiency was found in the Linux kernel signals implementation. The
+kill_something_info() function did not check if a process was outside the
+caller's namespace before sending the kill signal, making it possible to
+kill processes in all process ID (PID) namespaces, breaking PID namespace
+isolation. (CVE-2009-1338, Moderate)
+
+* a flaw was found in the AGPGART driver. The agp_generic_alloc_page() and
+agp_generic_alloc_pages() functions did not zero out the memory pages they
+allocate, which may later be available to user-space processes. This flaw
+could possibly lead to an information leak. (CVE-2009-1192, Low)
+
+These updated packages also fix the following bugs:
+
+* the &quot;-fwrapv&quot; flag was added to the gcc build options to prevent gcc from
+optimizing away wrapping arithmetic, as optimizing away wrapping may lead
+to unexpected results. (BZ#491264)
+
+* the bnx2x driver may have failed when highly-stressed by network
+stress-tests, resulting in network access being unavailable. This driver
+has been updated to resolve this issue. (BZ#495472)
+
+* the file system mask, which lists capabilities for users with a file
+system user ID (fsuid) of 0, was missing the CAP_MKNOD and
+CAP_LINUX_IMMUTABLE capabilities. This could, potentially, allow users with
+an fsuid other than 0 to perform actions on some file system types that
+would otherwise be prevented. This update adds these capabilities.
+(BZ#497047)
+
+* &quot;/proc/[pid]/maps&quot; and &quot;/proc/[pid]/smaps&quot; can only be read by processes
+able to use the ptrace() call on a given process; however, certain
+information from &quot;/proc/[pid]/stat&quot; and &quot;/proc/[pid]/wchan&quot; could be used
+to reconstruct memory maps, making it possible to bypass the Address Space
+Layout Randomization (ASLR) security feature. This update addresses this
+issue. (BZ#499550)
+
+* the get_random_int() function returned the same number until the jiffies
+counter (which ticks at a clock interrupt frequency) or process ID (PID)
+changed, making it possible to predict the random numbers. This may have
+helped to bypass the ASLR security feature. With this update,
+get_random_int() is more random and no longer uses a common seed value.
+This reduces the possibility of predicting the values get_random_int()
+returns. (BZ#499787)
+
+All Red Hat Enterprise MRG users should upgrade to these updated packages,
+which contain backported patches to resolve these issues. Note: The system
+must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+491264 - kernel-rt should be built with -fwrapv [mrg-1]
+491572 - CVE-2009-1072 kernel: nfsd should drop CAP_MKNOD for non-root
+494275 - CVE-2009-1439 kernel: cifs: memory overwrite when saving nativeFileSystem field during mount
+495472 - [Broadcom10gb] daEth stress breaks bnx2x driver in MRG1.1
+496031 - CVE-2009-1338 kernel: 'kill sig -1' must only apply to caller's pid namespace
+497020 - CVE-2009-1192 kernel: agp: zero pages before sending to userspace
+497047 - kernel: add some long-missing capabilities to fs_mask
+499550 - kernel: proc: avoid information leaks to non-privileged processes [mrg-1]
+499787 - kernel: random: make get_random_int() more random [mrg-1]
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-117.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-117.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-117.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-117.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-117.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-117.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-117.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1072</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1192">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1192</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1338">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1338</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1439">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1439</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKJp07XlSAg2UNWIIRAll6AKCbfB6SuiR5x0MLd5azamdiOoZvggCdFjZq
+xKDYRt3qEqkALt29cyVa3KE=
+=OhiE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

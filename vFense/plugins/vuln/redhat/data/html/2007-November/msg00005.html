@@ -1,0 +1,271 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1068&#45;01] Important: pcre security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 Nov 2007 10:09:45 &#45;0500 -->
+<!--X-Message-Id: 200711291509.lATF9iQt029261@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1068-01] Important: pcre security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1068-01] Important: pcre security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1068-01] Important: pcre security update</li>
+<li><em>Date</em>: Thu, 29 Nov 2007 10:09:44 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: pcre security update
+Advisory ID:       RHSA-2007:1068-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1068.html">https://rhn.redhat.com/errata/RHSA-2007-1068.html</a>
+Issue date:        2007-11-29
+Updated on:        2007-11-29
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2006-7225 CVE-2006-7226 CVE-2006-7228 
+                   CVE-2006-7230 CVE-2007-1659 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated pcre packages that resolve several security issues are now
+available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Problem description:
+
+PCRE is a Perl-compatible regular expression library.
+
+Flaws were discovered in the way PCRE handles certain malformed regular
+expressions. If an application linked against PCRE, such as Konqueror,
+parses a malicious regular expression, it may have been possible to run
+arbitrary code as the user running the application.
+(CVE-2006-7225, CVE-2006-7226, CVE-2006-7228, CVE-2006-7230, CVE-2007-1659)
+
+Users of PCRE are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+Red Hat would like to thank Ludwig Nussel for reporting these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+315871 - CVE-2007-1659 pcre regular expression flaws
+383371 - CVE-2006-7228 pcre integer overflow
+384761 - CVE-2006-7225 pcre miscalculation of memory requirements for malformed Posix character class
+384781 - CVE-2006-7226 pcre miscalculation of memory requirements for repeated subpattern containing a named recursion or subroutine reference
+384801 - CVE-2006-7230 pcre miscalculation of memory requirements if options are changed during pattern compilation
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm</a>
+3fc0fdaf84b06cdf5788640cff0026f6  pcre-4.5-4.el4_6.6.src.rpm
+
+i386:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+9965f80d4d5ab3b571ab3c3cc9898990  pcre-devel-4.5-4.el4_6.6.i386.rpm
+
+ia64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+33f4eab971ef408facd1641eabaa467a  pcre-4.5-4.el4_6.6.ia64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+e5a27c2bddd2644641b1ad235508fbda  pcre-debuginfo-4.5-4.el4_6.6.ia64.rpm
+6dfe274bd09371d8e0de10c5cc92bc26  pcre-devel-4.5-4.el4_6.6.ia64.rpm
+
+ppc:
+47acc99aadd1698c477beb54465e13f9  pcre-4.5-4.el4_6.6.ppc.rpm
+c7bc58a2b1b45cba707f6e32f6b5182b  pcre-4.5-4.el4_6.6.ppc64.rpm
+91d3d8000f09f9f3c8da971773718f24  pcre-debuginfo-4.5-4.el4_6.6.ppc.rpm
+3efa974cd8f22041f71552ae295fc477  pcre-debuginfo-4.5-4.el4_6.6.ppc64.rpm
+ffc58e305b91c427bab0f1d536bf8e3a  pcre-devel-4.5-4.el4_6.6.ppc.rpm
+
+s390:
+db4e05d53ed8fb12030d2f6684d9d869  pcre-4.5-4.el4_6.6.s390.rpm
+4c60f3a6fa76de879ace31d7c635b68f  pcre-debuginfo-4.5-4.el4_6.6.s390.rpm
+28d5cef76bf6ad728e777cd80e0e6628  pcre-devel-4.5-4.el4_6.6.s390.rpm
+
+s390x:
+db4e05d53ed8fb12030d2f6684d9d869  pcre-4.5-4.el4_6.6.s390.rpm
+934cdcaa114cd70bf10f089fff41fea1  pcre-4.5-4.el4_6.6.s390x.rpm
+4c60f3a6fa76de879ace31d7c635b68f  pcre-debuginfo-4.5-4.el4_6.6.s390.rpm
+fc3a110b4cd548dc04590636f57c28ea  pcre-debuginfo-4.5-4.el4_6.6.s390x.rpm
+f8589e25f1c60407ae174a941b3fa51f  pcre-devel-4.5-4.el4_6.6.s390x.rpm
+
+x86_64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+5ec42946ee8eea49029ff7b06ee58234  pcre-4.5-4.el4_6.6.x86_64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+d39e0bdc461577451e10a9d855e6fc73  pcre-debuginfo-4.5-4.el4_6.6.x86_64.rpm
+d2464456a160a001ee8810a35235b3ae  pcre-devel-4.5-4.el4_6.6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm</a>
+3fc0fdaf84b06cdf5788640cff0026f6  pcre-4.5-4.el4_6.6.src.rpm
+
+i386:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+9965f80d4d5ab3b571ab3c3cc9898990  pcre-devel-4.5-4.el4_6.6.i386.rpm
+
+x86_64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+5ec42946ee8eea49029ff7b06ee58234  pcre-4.5-4.el4_6.6.x86_64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+d39e0bdc461577451e10a9d855e6fc73  pcre-debuginfo-4.5-4.el4_6.6.x86_64.rpm
+d2464456a160a001ee8810a35235b3ae  pcre-devel-4.5-4.el4_6.6.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm</a>
+3fc0fdaf84b06cdf5788640cff0026f6  pcre-4.5-4.el4_6.6.src.rpm
+
+i386:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+9965f80d4d5ab3b571ab3c3cc9898990  pcre-devel-4.5-4.el4_6.6.i386.rpm
+
+ia64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+33f4eab971ef408facd1641eabaa467a  pcre-4.5-4.el4_6.6.ia64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+e5a27c2bddd2644641b1ad235508fbda  pcre-debuginfo-4.5-4.el4_6.6.ia64.rpm
+6dfe274bd09371d8e0de10c5cc92bc26  pcre-devel-4.5-4.el4_6.6.ia64.rpm
+
+x86_64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+5ec42946ee8eea49029ff7b06ee58234  pcre-4.5-4.el4_6.6.x86_64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+d39e0bdc461577451e10a9d855e6fc73  pcre-debuginfo-4.5-4.el4_6.6.x86_64.rpm
+d2464456a160a001ee8810a35235b3ae  pcre-devel-4.5-4.el4_6.6.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/pcre-4.5-4.el4_6.6.src.rpm</a>
+3fc0fdaf84b06cdf5788640cff0026f6  pcre-4.5-4.el4_6.6.src.rpm
+
+i386:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+9965f80d4d5ab3b571ab3c3cc9898990  pcre-devel-4.5-4.el4_6.6.i386.rpm
+
+ia64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+33f4eab971ef408facd1641eabaa467a  pcre-4.5-4.el4_6.6.ia64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+e5a27c2bddd2644641b1ad235508fbda  pcre-debuginfo-4.5-4.el4_6.6.ia64.rpm
+6dfe274bd09371d8e0de10c5cc92bc26  pcre-devel-4.5-4.el4_6.6.ia64.rpm
+
+x86_64:
+2fc7dcfeab667b57d6cd72b3900e23e4  pcre-4.5-4.el4_6.6.i386.rpm
+5ec42946ee8eea49029ff7b06ee58234  pcre-4.5-4.el4_6.6.x86_64.rpm
+1792b64ed883f57a999ed859b9a9e554  pcre-debuginfo-4.5-4.el4_6.6.i386.rpm
+d39e0bdc461577451e10a9d855e6fc73  pcre-debuginfo-4.5-4.el4_6.6.x86_64.rpm
+d2464456a160a001ee8810a35235b3ae  pcre-devel-4.5-4.el4_6.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7225">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7225</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7226">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7226</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7228">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7228</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7230">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7230</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1659">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1659</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHTtY1XlSAg2UNWIIRAikxAJ9OELYnFxcI0Y1oBXxErFmXwA1qUQCguVY1
+7EQaFgPnBgKIqdZL0S7M/Xo=
+=JPO8
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

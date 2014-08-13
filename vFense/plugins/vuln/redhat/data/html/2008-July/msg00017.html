@@ -1,0 +1,450 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0545&#45;01] Moderate: php security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Jul 2008 05:57:42 &#45;0400 -->
+<!--X-Message-Id: 200807160957.m6G9vfl2029836@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0545-01] Moderate: php security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0545-01] Moderate: php security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0545-01] Moderate: php security and bug fix update</li>
+<li><em>Date</em>: Wed, 16 Jul 2008 05:57:41 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: php security and bug fix update
+Advisory ID:       RHSA-2008:0545-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0545.html">https://rhn.redhat.com/errata/RHSA-2008-0545.html</a>
+Issue date:        2008-07-16
+CVE Names:         CVE-2008-2051 CVE-2007-5898 CVE-2007-5899 
+                   CVE-2007-4782 CVE-2008-2107 CVE-2008-2108 
+=====================================================================
+
+1. Summary:
+
+Updated php packages that fix several security issues and a bug are now
+available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+PHP is an HTML-embedded scripting language commonly used with the Apache
+HTTP Web server.
+
+It was discovered that the PHP escapeshellcmd() function did not properly
+escape multi-byte characters which are not valid in the locale used by the
+script. This could allow an attacker to bypass quoting restrictions imposed
+by escapeshellcmd() and execute arbitrary commands if the PHP script was
+using certain locales. Scripts using the default UTF-8 locale are not
+affected by this issue. (CVE-2008-2051)
+
+The PHP functions htmlentities() and htmlspecialchars() did not properly
+recognize partial multi-byte sequences. Certain sequences of bytes could be
+passed through these functions without being correctly HTML-escaped.
+Depending on the browser being used, an attacker could use this flaw to
+conduct cross-site scripting attacks. (CVE-2007-5898)
+
+A PHP script which used the transparent session ID configuration option, or
+which used the output_add_rewrite_var() function, could leak session
+identifiers to external web sites. If a page included an HTML form with an
+ACTION attribute referencing a non-local URL, the user's session ID would
+be included in the form data passed to that URL. (CVE-2007-5899)
+
+It was discovered that the PHP fnmatch() function did not restrict the
+length of the string argument. An attacker could use this flaw to crash the
+PHP interpreter where a script used fnmatch() on untrusted input data.
+(CVE-2007-4782)
+
+It was discovered that PHP did not properly seed its pseudo-random number
+generator used by functions such as rand() and mt_rand(), possibly allowing
+an attacker to easily predict the generated pseudo-random values.
+(CVE-2008-2107, CVE-2008-2108)
+
+As well, these updated packages fix the following bug:
+
+* after 2008-01-01, when using PEAR version 1.3.6 or older, it was not
+possible to use the PHP Extension and Application Repository (PEAR) to
+upgrade or install packages. In these updated packages, PEAR has been
+upgraded to version 1.4.9, which restores support for the current
+pear.php.net update server. The following changes were made to the PEAR
+packages included in php-pear: Console_Getopt and Archive_Tar are now
+included by default, and XML_RPC has been upgraded to version 1.5.0.
+
+All php users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+263501 - fix PEAR with current pear.php.net server
+285881 - CVE-2007-4782 php crash in glob() and fnmatch() functions
+382411 - CVE-2007-5898 php htmlentities/htmlspecialchars multibyte sequences
+382431 - CVE-2007-5899 php session ID leakage
+445006 - CVE-2008-2051 PHP multibyte shell escape flaw
+445684 - CVE-2008-2107 PHP 32 bit weak random seed
+445685 - CVE-2008-2108 PHP weak 64 bit random seed
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm</a>
+
+i386:
+php-4.3.9-3.22.12.i386.rpm
+php-debuginfo-4.3.9-3.22.12.i386.rpm
+php-devel-4.3.9-3.22.12.i386.rpm
+php-domxml-4.3.9-3.22.12.i386.rpm
+php-gd-4.3.9-3.22.12.i386.rpm
+php-imap-4.3.9-3.22.12.i386.rpm
+php-ldap-4.3.9-3.22.12.i386.rpm
+php-mbstring-4.3.9-3.22.12.i386.rpm
+php-mysql-4.3.9-3.22.12.i386.rpm
+php-ncurses-4.3.9-3.22.12.i386.rpm
+php-odbc-4.3.9-3.22.12.i386.rpm
+php-pear-4.3.9-3.22.12.i386.rpm
+php-pgsql-4.3.9-3.22.12.i386.rpm
+php-snmp-4.3.9-3.22.12.i386.rpm
+php-xmlrpc-4.3.9-3.22.12.i386.rpm
+
+ia64:
+php-4.3.9-3.22.12.ia64.rpm
+php-debuginfo-4.3.9-3.22.12.ia64.rpm
+php-devel-4.3.9-3.22.12.ia64.rpm
+php-domxml-4.3.9-3.22.12.ia64.rpm
+php-gd-4.3.9-3.22.12.ia64.rpm
+php-imap-4.3.9-3.22.12.ia64.rpm
+php-ldap-4.3.9-3.22.12.ia64.rpm
+php-mbstring-4.3.9-3.22.12.ia64.rpm
+php-mysql-4.3.9-3.22.12.ia64.rpm
+php-ncurses-4.3.9-3.22.12.ia64.rpm
+php-odbc-4.3.9-3.22.12.ia64.rpm
+php-pear-4.3.9-3.22.12.ia64.rpm
+php-pgsql-4.3.9-3.22.12.ia64.rpm
+php-snmp-4.3.9-3.22.12.ia64.rpm
+php-xmlrpc-4.3.9-3.22.12.ia64.rpm
+
+ppc:
+php-4.3.9-3.22.12.ppc.rpm
+php-debuginfo-4.3.9-3.22.12.ppc.rpm
+php-devel-4.3.9-3.22.12.ppc.rpm
+php-domxml-4.3.9-3.22.12.ppc.rpm
+php-gd-4.3.9-3.22.12.ppc.rpm
+php-imap-4.3.9-3.22.12.ppc.rpm
+php-ldap-4.3.9-3.22.12.ppc.rpm
+php-mbstring-4.3.9-3.22.12.ppc.rpm
+php-mysql-4.3.9-3.22.12.ppc.rpm
+php-ncurses-4.3.9-3.22.12.ppc.rpm
+php-odbc-4.3.9-3.22.12.ppc.rpm
+php-pear-4.3.9-3.22.12.ppc.rpm
+php-pgsql-4.3.9-3.22.12.ppc.rpm
+php-snmp-4.3.9-3.22.12.ppc.rpm
+php-xmlrpc-4.3.9-3.22.12.ppc.rpm
+
+s390:
+php-4.3.9-3.22.12.s390.rpm
+php-debuginfo-4.3.9-3.22.12.s390.rpm
+php-devel-4.3.9-3.22.12.s390.rpm
+php-domxml-4.3.9-3.22.12.s390.rpm
+php-gd-4.3.9-3.22.12.s390.rpm
+php-imap-4.3.9-3.22.12.s390.rpm
+php-ldap-4.3.9-3.22.12.s390.rpm
+php-mbstring-4.3.9-3.22.12.s390.rpm
+php-mysql-4.3.9-3.22.12.s390.rpm
+php-ncurses-4.3.9-3.22.12.s390.rpm
+php-odbc-4.3.9-3.22.12.s390.rpm
+php-pear-4.3.9-3.22.12.s390.rpm
+php-pgsql-4.3.9-3.22.12.s390.rpm
+php-snmp-4.3.9-3.22.12.s390.rpm
+php-xmlrpc-4.3.9-3.22.12.s390.rpm
+
+s390x:
+php-4.3.9-3.22.12.s390x.rpm
+php-debuginfo-4.3.9-3.22.12.s390x.rpm
+php-devel-4.3.9-3.22.12.s390x.rpm
+php-domxml-4.3.9-3.22.12.s390x.rpm
+php-gd-4.3.9-3.22.12.s390x.rpm
+php-imap-4.3.9-3.22.12.s390x.rpm
+php-ldap-4.3.9-3.22.12.s390x.rpm
+php-mbstring-4.3.9-3.22.12.s390x.rpm
+php-mysql-4.3.9-3.22.12.s390x.rpm
+php-ncurses-4.3.9-3.22.12.s390x.rpm
+php-odbc-4.3.9-3.22.12.s390x.rpm
+php-pear-4.3.9-3.22.12.s390x.rpm
+php-pgsql-4.3.9-3.22.12.s390x.rpm
+php-snmp-4.3.9-3.22.12.s390x.rpm
+php-xmlrpc-4.3.9-3.22.12.s390x.rpm
+
+x86_64:
+php-4.3.9-3.22.12.x86_64.rpm
+php-debuginfo-4.3.9-3.22.12.x86_64.rpm
+php-devel-4.3.9-3.22.12.x86_64.rpm
+php-domxml-4.3.9-3.22.12.x86_64.rpm
+php-gd-4.3.9-3.22.12.x86_64.rpm
+php-imap-4.3.9-3.22.12.x86_64.rpm
+php-ldap-4.3.9-3.22.12.x86_64.rpm
+php-mbstring-4.3.9-3.22.12.x86_64.rpm
+php-mysql-4.3.9-3.22.12.x86_64.rpm
+php-ncurses-4.3.9-3.22.12.x86_64.rpm
+php-odbc-4.3.9-3.22.12.x86_64.rpm
+php-pear-4.3.9-3.22.12.x86_64.rpm
+php-pgsql-4.3.9-3.22.12.x86_64.rpm
+php-snmp-4.3.9-3.22.12.x86_64.rpm
+php-xmlrpc-4.3.9-3.22.12.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm</a>
+
+i386:
+php-4.3.9-3.22.12.i386.rpm
+php-debuginfo-4.3.9-3.22.12.i386.rpm
+php-devel-4.3.9-3.22.12.i386.rpm
+php-domxml-4.3.9-3.22.12.i386.rpm
+php-gd-4.3.9-3.22.12.i386.rpm
+php-imap-4.3.9-3.22.12.i386.rpm
+php-ldap-4.3.9-3.22.12.i386.rpm
+php-mbstring-4.3.9-3.22.12.i386.rpm
+php-mysql-4.3.9-3.22.12.i386.rpm
+php-ncurses-4.3.9-3.22.12.i386.rpm
+php-odbc-4.3.9-3.22.12.i386.rpm
+php-pear-4.3.9-3.22.12.i386.rpm
+php-pgsql-4.3.9-3.22.12.i386.rpm
+php-snmp-4.3.9-3.22.12.i386.rpm
+php-xmlrpc-4.3.9-3.22.12.i386.rpm
+
+x86_64:
+php-4.3.9-3.22.12.x86_64.rpm
+php-debuginfo-4.3.9-3.22.12.x86_64.rpm
+php-devel-4.3.9-3.22.12.x86_64.rpm
+php-domxml-4.3.9-3.22.12.x86_64.rpm
+php-gd-4.3.9-3.22.12.x86_64.rpm
+php-imap-4.3.9-3.22.12.x86_64.rpm
+php-ldap-4.3.9-3.22.12.x86_64.rpm
+php-mbstring-4.3.9-3.22.12.x86_64.rpm
+php-mysql-4.3.9-3.22.12.x86_64.rpm
+php-ncurses-4.3.9-3.22.12.x86_64.rpm
+php-odbc-4.3.9-3.22.12.x86_64.rpm
+php-pear-4.3.9-3.22.12.x86_64.rpm
+php-pgsql-4.3.9-3.22.12.x86_64.rpm
+php-snmp-4.3.9-3.22.12.x86_64.rpm
+php-xmlrpc-4.3.9-3.22.12.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm</a>
+
+i386:
+php-4.3.9-3.22.12.i386.rpm
+php-debuginfo-4.3.9-3.22.12.i386.rpm
+php-devel-4.3.9-3.22.12.i386.rpm
+php-domxml-4.3.9-3.22.12.i386.rpm
+php-gd-4.3.9-3.22.12.i386.rpm
+php-imap-4.3.9-3.22.12.i386.rpm
+php-ldap-4.3.9-3.22.12.i386.rpm
+php-mbstring-4.3.9-3.22.12.i386.rpm
+php-mysql-4.3.9-3.22.12.i386.rpm
+php-ncurses-4.3.9-3.22.12.i386.rpm
+php-odbc-4.3.9-3.22.12.i386.rpm
+php-pear-4.3.9-3.22.12.i386.rpm
+php-pgsql-4.3.9-3.22.12.i386.rpm
+php-snmp-4.3.9-3.22.12.i386.rpm
+php-xmlrpc-4.3.9-3.22.12.i386.rpm
+
+ia64:
+php-4.3.9-3.22.12.ia64.rpm
+php-debuginfo-4.3.9-3.22.12.ia64.rpm
+php-devel-4.3.9-3.22.12.ia64.rpm
+php-domxml-4.3.9-3.22.12.ia64.rpm
+php-gd-4.3.9-3.22.12.ia64.rpm
+php-imap-4.3.9-3.22.12.ia64.rpm
+php-ldap-4.3.9-3.22.12.ia64.rpm
+php-mbstring-4.3.9-3.22.12.ia64.rpm
+php-mysql-4.3.9-3.22.12.ia64.rpm
+php-ncurses-4.3.9-3.22.12.ia64.rpm
+php-odbc-4.3.9-3.22.12.ia64.rpm
+php-pear-4.3.9-3.22.12.ia64.rpm
+php-pgsql-4.3.9-3.22.12.ia64.rpm
+php-snmp-4.3.9-3.22.12.ia64.rpm
+php-xmlrpc-4.3.9-3.22.12.ia64.rpm
+
+x86_64:
+php-4.3.9-3.22.12.x86_64.rpm
+php-debuginfo-4.3.9-3.22.12.x86_64.rpm
+php-devel-4.3.9-3.22.12.x86_64.rpm
+php-domxml-4.3.9-3.22.12.x86_64.rpm
+php-gd-4.3.9-3.22.12.x86_64.rpm
+php-imap-4.3.9-3.22.12.x86_64.rpm
+php-ldap-4.3.9-3.22.12.x86_64.rpm
+php-mbstring-4.3.9-3.22.12.x86_64.rpm
+php-mysql-4.3.9-3.22.12.x86_64.rpm
+php-ncurses-4.3.9-3.22.12.x86_64.rpm
+php-odbc-4.3.9-3.22.12.x86_64.rpm
+php-pear-4.3.9-3.22.12.x86_64.rpm
+php-pgsql-4.3.9-3.22.12.x86_64.rpm
+php-snmp-4.3.9-3.22.12.x86_64.rpm
+php-xmlrpc-4.3.9-3.22.12.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/php-4.3.9-3.22.12.src.rpm</a>
+
+i386:
+php-4.3.9-3.22.12.i386.rpm
+php-debuginfo-4.3.9-3.22.12.i386.rpm
+php-devel-4.3.9-3.22.12.i386.rpm
+php-domxml-4.3.9-3.22.12.i386.rpm
+php-gd-4.3.9-3.22.12.i386.rpm
+php-imap-4.3.9-3.22.12.i386.rpm
+php-ldap-4.3.9-3.22.12.i386.rpm
+php-mbstring-4.3.9-3.22.12.i386.rpm
+php-mysql-4.3.9-3.22.12.i386.rpm
+php-ncurses-4.3.9-3.22.12.i386.rpm
+php-odbc-4.3.9-3.22.12.i386.rpm
+php-pear-4.3.9-3.22.12.i386.rpm
+php-pgsql-4.3.9-3.22.12.i386.rpm
+php-snmp-4.3.9-3.22.12.i386.rpm
+php-xmlrpc-4.3.9-3.22.12.i386.rpm
+
+ia64:
+php-4.3.9-3.22.12.ia64.rpm
+php-debuginfo-4.3.9-3.22.12.ia64.rpm
+php-devel-4.3.9-3.22.12.ia64.rpm
+php-domxml-4.3.9-3.22.12.ia64.rpm
+php-gd-4.3.9-3.22.12.ia64.rpm
+php-imap-4.3.9-3.22.12.ia64.rpm
+php-ldap-4.3.9-3.22.12.ia64.rpm
+php-mbstring-4.3.9-3.22.12.ia64.rpm
+php-mysql-4.3.9-3.22.12.ia64.rpm
+php-ncurses-4.3.9-3.22.12.ia64.rpm
+php-odbc-4.3.9-3.22.12.ia64.rpm
+php-pear-4.3.9-3.22.12.ia64.rpm
+php-pgsql-4.3.9-3.22.12.ia64.rpm
+php-snmp-4.3.9-3.22.12.ia64.rpm
+php-xmlrpc-4.3.9-3.22.12.ia64.rpm
+
+x86_64:
+php-4.3.9-3.22.12.x86_64.rpm
+php-debuginfo-4.3.9-3.22.12.x86_64.rpm
+php-devel-4.3.9-3.22.12.x86_64.rpm
+php-domxml-4.3.9-3.22.12.x86_64.rpm
+php-gd-4.3.9-3.22.12.x86_64.rpm
+php-imap-4.3.9-3.22.12.x86_64.rpm
+php-ldap-4.3.9-3.22.12.x86_64.rpm
+php-mbstring-4.3.9-3.22.12.x86_64.rpm
+php-mysql-4.3.9-3.22.12.x86_64.rpm
+php-ncurses-4.3.9-3.22.12.x86_64.rpm
+php-odbc-4.3.9-3.22.12.x86_64.rpm
+php-pear-4.3.9-3.22.12.x86_64.rpm
+php-pgsql-4.3.9-3.22.12.x86_64.rpm
+php-snmp-4.3.9-3.22.12.x86_64.rpm
+php-xmlrpc-4.3.9-3.22.12.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2051">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2051</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5898">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5898</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5899">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5899</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4782">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4782</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2107">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2107</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2108">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2108</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIfcYSXlSAg2UNWIIRAil/AJ9cQt3gaHonckDOFrZYj4Y33+D5xgCgpehn
++2tIq9ImTxk4fLQtIePfzkk=
+=R25d
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

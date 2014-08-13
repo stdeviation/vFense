@@ -1,0 +1,350 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0300&#45;02] Moderate: bind security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:30:31 &#45;0400 -->
+<!--X-Message-Id: 200805211430.m4LEUUUL030709@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0300-02] Moderate: bind security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0300-02] Moderate: bind security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0300-02] Moderate: bind security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:30:30 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: bind security, bug fix, and enhancement update
+Advisory ID:       RHSA-2008:0300-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0300.html">https://rhn.redhat.com/errata/RHSA-2008-0300.html</a>
+Issue date:        2008-05-20
+Updated on:        2008-05-21
+Keywords:          gss-tsig lsb sdb
+CVE Names:         CVE-2007-6283 CVE-2008-0122 
+=====================================================================
+
+1. Summary:
+
+Updated bind packages that fix two security issues, several bugs, and add
+enhancements are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+It was discovered that the bind packages created the &quot;rndc.key&quot; file with
+insecure file permissions. This allowed any local user to read the content
+of this file. A local user could use this flaw to control some aspects of
+the named daemon by using the rndc utility, for example, stopping the named
+daemon. This problem did not affect systems with the bind-chroot package
+installed. (CVE-2007-6283)
+
+A buffer overflow flaw was discovered in the &quot;inet_network()&quot; function, as
+implemented by libbind. An attacker could use this flaw to crash an
+application calling this function, with an argument provided from an
+untrusted source. (CVE-2008-0122)
+
+As well, these updated packages fix the following bugs:
+
+* when using an LDAP backend, missing function declarations caused
+segmentation faults, due to stripped pointers on machines where pointers
+are longer than integers.
+
+* starting named may have resulted in named crashing, due to a race
+condition during D-BUS connection initialization. This has been resolved in
+these updated packages.
+
+* the named init script returned incorrect error codes, causing the
+&quot;status&quot; command to return an incorrect status. In these updated packages,
+the named init script is Linux Standard Base (LSB) compliant.
+
+* in these updated packages, the &quot;rndc [command] [zone]&quot; command, where
+[command] is an rndc command, and [zone] is the specified zone, will find
+the [zone] if the zone is unique to all views.
+
+* the default named log rotation script did not work correctly when using
+the bind-chroot package. In these updated packages, installing
+bind-chroot creates the symbolic link &quot;/var/log/named.log&quot;, which points
+to &quot;/var/named/chroot/var/log/named.log&quot;, which resolves this issue.
+
+* a previous bind update incorrectly changed the permissions on the
+&quot;/etc/openldap/schema/dnszone.schema&quot; file to mode 640, instead of mode
+644, which resulted in OpenLDAP not being able to start. In these updated
+packages, the permissions are correctly set to mode 644.
+
+* the &quot;checkconfig&quot; parameter was missing in the named usage report. For
+example, running the &quot;service named&quot; command did not return &quot;checkconfig&quot;
+in the list of available options.
+
+* due to a bug in the named init script not handling the rndc return value
+correctly, the &quot;service named stop&quot; and &quot;service named restart&quot; commands
+failed on certain systems.
+
+* the bind-chroot spec file printed errors when running the &quot;%pre&quot; and
+&quot;%post&quot; sections. Errors such as the following occurred:
+
+Locating //etc/named.conf failed:
+[FAILED]
+
+This has been resolved in these updated packages.
+
+* installing the bind-chroot package creates a &quot;/dev/random&quot; file in the
+chroot environment; however, the &quot;/dev/random&quot; file had an incorrect
+SELinux label. Starting named resulted in an 'avc: denied { getattr } for
+pid=[pid] comm=&quot;named&quot; path=&quot;/dev/random&quot;' error being logged. The
+&quot;/dev/random&quot; file has the correct SELinux label in these updated packages.
+
+* in certain situations, running the &quot;bind +trace&quot; command resulted in
+random segmentation faults.
+
+As well, these updated packages add the following enhancements:
+
+* support has been added for GSS-TSIG (RFC 3645).
+
+* the &quot;named.root&quot; file has been updated to reflect the new address for
+L.ROOT-SERVERS.NET.
+
+* updates BIND to the latest 9.3 maintenance release.
+
+All users of bind are advised to upgrade to these updated packages, which
+resolve these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+240788 - bind_sdb, ldap2zone segfaulting
+240876 - bind crashes on restart and also when running without forwarders
+242734 - Wrong init script
+247486 - bind-chroot does not modify /etc/logrotate.d/named
+250118 - dnszone.schema bad file permissions
+250744 - missed parameter &quot;configtest&quot; in init script usage report
+250901 - &quot;service named restart&quot; fails
+251528 - RFE: add support for GSSTSIG
+252334 - bind-chroot-9.3.3-9.0.1 leaks error noise in its scripts
+253537 - avc:  denied  { getattr } for comm=&quot;named&quot; path=&quot;/dev/random&quot;
+353741 - Rebase to latest 9.3 maintenance release
+363531 - New L.ROOT-SERVERS.NET address
+419421 - CVE-2007-6283 bind: /etc/rndc.key has 644 permissions by default
+423741 - resolver library causes segfaults in bind-utils such as dig,ping
+429149 - CVE-2008-0122 libbind off-by-one buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm</a>
+
+i386:
+bind-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-libs-9.3.4-6.P1.el5.i386.rpm
+bind-sdb-9.3.4-6.P1.el5.i386.rpm
+bind-utils-9.3.4-6.P1.el5.i386.rpm
+
+x86_64:
+bind-9.3.4-6.P1.el5.x86_64.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.x86_64.rpm
+bind-libs-9.3.4-6.P1.el5.i386.rpm
+bind-libs-9.3.4-6.P1.el5.x86_64.rpm
+bind-sdb-9.3.4-6.P1.el5.x86_64.rpm
+bind-utils-9.3.4-6.P1.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm</a>
+
+i386:
+bind-chroot-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.i386.rpm
+caching-nameserver-9.3.4-6.P1.el5.i386.rpm
+
+x86_64:
+bind-chroot-9.3.4-6.P1.el5.x86_64.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.x86_64.rpm
+bind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-devel-9.3.4-6.P1.el5.x86_64.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.x86_64.rpm
+caching-nameserver-9.3.4-6.P1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.4-6.P1.el5.src.rpm</a>
+
+i386:
+bind-9.3.4-6.P1.el5.i386.rpm
+bind-chroot-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-libs-9.3.4-6.P1.el5.i386.rpm
+bind-sdb-9.3.4-6.P1.el5.i386.rpm
+bind-utils-9.3.4-6.P1.el5.i386.rpm
+caching-nameserver-9.3.4-6.P1.el5.i386.rpm
+
+ia64:
+bind-9.3.4-6.P1.el5.ia64.rpm
+bind-chroot-9.3.4-6.P1.el5.ia64.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.ia64.rpm
+bind-devel-9.3.4-6.P1.el5.ia64.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.ia64.rpm
+bind-libs-9.3.4-6.P1.el5.i386.rpm
+bind-libs-9.3.4-6.P1.el5.ia64.rpm
+bind-sdb-9.3.4-6.P1.el5.ia64.rpm
+bind-utils-9.3.4-6.P1.el5.ia64.rpm
+caching-nameserver-9.3.4-6.P1.el5.ia64.rpm
+
+ppc:
+bind-9.3.4-6.P1.el5.ppc.rpm
+bind-chroot-9.3.4-6.P1.el5.ppc.rpm
+bind-debuginfo-9.3.4-6.P1.el5.ppc.rpm
+bind-debuginfo-9.3.4-6.P1.el5.ppc64.rpm
+bind-devel-9.3.4-6.P1.el5.ppc.rpm
+bind-devel-9.3.4-6.P1.el5.ppc64.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.ppc.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.ppc64.rpm
+bind-libs-9.3.4-6.P1.el5.ppc.rpm
+bind-libs-9.3.4-6.P1.el5.ppc64.rpm
+bind-sdb-9.3.4-6.P1.el5.ppc.rpm
+bind-utils-9.3.4-6.P1.el5.ppc.rpm
+caching-nameserver-9.3.4-6.P1.el5.ppc.rpm
+
+s390x:
+bind-9.3.4-6.P1.el5.s390x.rpm
+bind-chroot-9.3.4-6.P1.el5.s390x.rpm
+bind-debuginfo-9.3.4-6.P1.el5.s390.rpm
+bind-debuginfo-9.3.4-6.P1.el5.s390x.rpm
+bind-devel-9.3.4-6.P1.el5.s390.rpm
+bind-devel-9.3.4-6.P1.el5.s390x.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.s390.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.s390x.rpm
+bind-libs-9.3.4-6.P1.el5.s390.rpm
+bind-libs-9.3.4-6.P1.el5.s390x.rpm
+bind-sdb-9.3.4-6.P1.el5.s390x.rpm
+bind-utils-9.3.4-6.P1.el5.s390x.rpm
+caching-nameserver-9.3.4-6.P1.el5.s390x.rpm
+
+x86_64:
+bind-9.3.4-6.P1.el5.x86_64.rpm
+bind-chroot-9.3.4-6.P1.el5.x86_64.rpm
+bind-debuginfo-9.3.4-6.P1.el5.i386.rpm
+bind-debuginfo-9.3.4-6.P1.el5.x86_64.rpm
+bind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-devel-9.3.4-6.P1.el5.x86_64.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.i386.rpm
+bind-libbind-devel-9.3.4-6.P1.el5.x86_64.rpm
+bind-libs-9.3.4-6.P1.el5.i386.rpm
+bind-libs-9.3.4-6.P1.el5.x86_64.rpm
+bind-sdb-9.3.4-6.P1.el5.x86_64.rpm
+bind-utils-9.3.4-6.P1.el5.x86_64.rpm
+caching-nameserver-9.3.4-6.P1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6283">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6283</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0122">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0122</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDHvXlSAg2UNWIIRAia8AJ9cwIMZ6KExQLVgCPAIMULjcefR1ACgnlYa
+0//nmfeApeTQaT/uZaR3LRQ=
+=nRjq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

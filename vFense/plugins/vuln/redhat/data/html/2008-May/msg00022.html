@@ -1,0 +1,247 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0389&#45;02] Low: nss_ldap security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:31:29 &#45;0400 -->
+<!--X-Message-Id: 200805211431.m4LEVSaU030806@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0389-02] Low: nss_ldap security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0389-02] Low: nss_ldap security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0389-02] Low: nss_ldap security and bug fix update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:31:28 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: nss_ldap security and bug fix update
+Advisory ID:       RHSA-2008:0389-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0389.html">https://rhn.redhat.com/errata/RHSA-2008-0389.html</a>
+Issue date:        2008-05-20
+Updated on:        2008-05-21
+Keywords:          dns thread port rebuild exop referral
+CVE Names:         CVE-2007-5794 
+=====================================================================
+
+1. Summary:
+
+An updated nss_ldap package that fixes a security issue and several bugs is
+now available.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The nss_ldap package contains the nss_ldap and pam_ldap modules. The
+nss_ldap module is a plug-in which allows applications to retrieve
+information about users and groups from a directory server. The pam_ldap
+module allows PAM-aware applications to use a directory server to verify
+user passwords.
+
+A race condition was discovered in nss_ldap which affected certain
+applications which make LDAP connections, such as Dovecot. This could cause
+nss_ldap to answer a request for information about one user with
+information about a different user. (CVE-2007-5794)
+
+In addition, these updated packages fix the following bugs:
+
+* a build error prevented the nss_ldap module from being able to use DNS to
+discover the location of a directory server. For example, when the
+/etc/nsswitch.conf configuration file was configured to use &quot;ldap&quot;, but no
+&quot;host&quot; or &quot;uri&quot; option was configured in the /etc/ldap.conf configuration
+file, no directory server was contacted, and no results were returned.
+
+* the &quot;port&quot; option in the /etc/ldap.conf configuration file on client
+machines was ignored. For example, if a directory server which you were
+attempting to use was listening on a non-default port (i.e. not ports 389
+or 636), it was only possible to use that directory server by including the
+port number in the &quot;uri&quot; option. In this updated package, the &quot;port&quot; option
+works as expected.
+
+* pam_ldap failed to change an expired password if it had to follow a
+referral to do so, which could occur, for example, when using a slave
+directory server in a replicated environment. An error such as the
+following occurred after entering a new password: &quot;LDAP password
+information update failed: Can't contact LDAP server Insufficient 'write'
+privilege to the 'userPassword' attribute&quot;
+
+This has been resolved in this updated package.
+
+* when the &quot;pam_password exop_send_old&quot; password-change method was
+configured in the /etc/ldap.conf configuration file, a logic error in the
+pam_ldap module caused client machines to attempt to change a user's
+password twice. First, the pam_ldap module attempted to change the password
+using the &quot;exop&quot; request, and then again using an LDAP modify request.
+
+* on Red Hat Enterprise Linux 5.1, rebuilding nss_ldap-253-5.el5 when the
+krb5-*-1.6.1-17.el5 packages were installed failed due to an error such as
+the following:
+
+	+ /builddir/build/SOURCES/dlopen.sh ./nss_ldap-253/nss_ldap.so
+	dlopen() of &quot;././nss_ldap-253/nss_ldap.so&quot; failed:
+	./././nss_ldap-253/nss_ldap.so: undefined symbol: request_key
+	error: Bad exit status from /var/tmp/rpm-tmp.62652 (%build)
+
+The missing libraries have been added, which resolves this issue.
+
+When recursively enumerating the set of members in a given group, the
+module would allocate insufficient space for storing the set of member
+names if the group itself contained other groups, thus corrupting the heap.
+This update includes a backported fix for this bug.
+
+Users of nss_ldap should upgrade to these updated packages, which contain
+backported patches to correct this issue and fix these bugs.
+
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+254172 - Automatic DNS discovery of the LDAP server does not work
+364501 - pam_ldap tries to change passwords twice
+367461 - CVE-2007-5794 nss_ldap randomly replying with wrong user's data
+427370 - RHEL 5.1 nss_ldap does not build with RHEL 5.1 krb5 packages
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss_ldap-253-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss_ldap-253-12.el5.src.rpm</a>
+
+i386:
+nss_ldap-253-12.el5.i386.rpm
+nss_ldap-debuginfo-253-12.el5.i386.rpm
+
+x86_64:
+nss_ldap-253-12.el5.i386.rpm
+nss_ldap-253-12.el5.x86_64.rpm
+nss_ldap-debuginfo-253-12.el5.i386.rpm
+nss_ldap-debuginfo-253-12.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss_ldap-253-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss_ldap-253-12.el5.src.rpm</a>
+
+i386:
+nss_ldap-253-12.el5.i386.rpm
+nss_ldap-debuginfo-253-12.el5.i386.rpm
+
+ia64:
+nss_ldap-253-12.el5.i386.rpm
+nss_ldap-253-12.el5.ia64.rpm
+nss_ldap-debuginfo-253-12.el5.i386.rpm
+nss_ldap-debuginfo-253-12.el5.ia64.rpm
+
+ppc:
+nss_ldap-253-12.el5.ppc.rpm
+nss_ldap-253-12.el5.ppc64.rpm
+nss_ldap-debuginfo-253-12.el5.ppc.rpm
+nss_ldap-debuginfo-253-12.el5.ppc64.rpm
+
+s390x:
+nss_ldap-253-12.el5.s390.rpm
+nss_ldap-253-12.el5.s390x.rpm
+nss_ldap-debuginfo-253-12.el5.s390.rpm
+nss_ldap-debuginfo-253-12.el5.s390x.rpm
+
+x86_64:
+nss_ldap-253-12.el5.i386.rpm
+nss_ldap-253-12.el5.x86_64.rpm
+nss_ldap-debuginfo-253-12.el5.i386.rpm
+nss_ldap-debuginfo-253-12.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5794">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5794</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDI3XlSAg2UNWIIRApZPAJ9Kf+xkClLPFcxM+DsAGRJ81cIT8ACgh419
+X1FNfKJ0Jq3S2cGXVoxUr0g=
+=86EC
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

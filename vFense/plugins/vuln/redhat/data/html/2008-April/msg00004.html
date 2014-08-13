@@ -1,0 +1,309 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0151&#45;01] Moderate: JBoss Enterprise Application Platform	4.2.0CP02 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Apr 2008 17:05:44 &#45;0400 -->
+<!--X-Message-Id: 200804022105.m32L5hNx016270@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0151-01] Moderate: JBoss Enterprise Application Platform	4.2.</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0151-01] Moderate: JBoss Enterprise Application Platform	4.2.0CP02 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0151-01] Moderate: JBoss Enterprise Application Platform	4.2.0CP02 security update</li>
+<li><em>Date</em>: Wed, 2 Apr 2008 17:05:43 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: JBoss Enterprise Application Platform 4.2.0CP02 security update
+Advisory ID:       RHSA-2008:0151-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0151.html">https://rhn.redhat.com/errata/RHSA-2008-0151.html</a>
+Issue date:        2008-04-02
+CVE Names:         CVE-2007-6306 CVE-2007-4575 CVE-2007-6433 
+=====================================================================
+
+1. Summary:
+
+Updated JBoss Enterprise Application Platform (JBEAP) packages that fix
+several security issues are now available.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform for RHEL 4 AS - noarch
+JBoss Enterprise Application Platform for RHEL 4 ES - noarch
+
+3. Description:
+
+JBoss Enterprise Application Platform (JBEAP) is a middleware platform for
+Java 2 Platform, Enterprise Edition (J2EE) applications.
+
+This release of JBEAP for Red Hat Enterprise Linux 4 contains the JBoss
+Application Server and JBoss Seam. This release serves as a replacement to
+JBEAP 4.2.0.GA. It fixes several security issues:
+
+The JFreeChart component was vulnerable to multiple cross-site scripting
+(XSS) vulnerabilities. An attacker could misuse the image map feature to
+inject arbitrary web script, or HTML, via several attributes of the chart
+area. (CVE-2007-6306)
+
+A vulnerability caused by exposing static Java methods was located within
+the HSQLDB component. This could be utilized by an attacker to execute
+arbitrary static Java methods. (CVE-2007-4575)
+
+The setOrder method in the org.jboss.seam.framework.Query class did not
+correctly validate user-supplied parameters. This vulnerability allowed
+remote attackers to inject, and execute, arbitrary Enterprise JavaBeans
+Query Language (EJB QL) commands via the order parameter. (CVE-2007-6433)
+
+These updated packages include bug fixes and enhancements which are not
+listed here. For a full list, please refer to the JBEAP 4.2.0CP02 release
+notes:
+<a  rel="nofollow" href="http://redhat.com/docs/manuals/jboss/jboss-eap-4.2.0.cp02/readme.html">http://redhat.com/docs/manuals/jboss/jboss-eap-4.2.0.cp02/readme.html</a>
+
+Warning: before applying this update, please backup the JBEAP
+&quot;server/[configuration]/deploy/&quot; directory, and any other customized
+configuration files.
+
+All users of JBEAP on Red Hat Enterprise Linux 4 are advised to upgrade to
+these updated packages, which resolve these issues.
+
+4. Solution:
+
+A complete installation guide for this new release is linked to in the
+References section below.
+
+Before installing this upgrade, make sure all previously released errata
+relevant to your system have been applied.
+
+To update all RPMs for your particular architecture, run:
+
+rpm -Fvh [filenames]
+
+where [filenames] is a list of the RPMs you wish to upgrade.  Only those
+RPMs which are currently installed will be updated.  Those RPMs which are
+not installed but included in the list will not be updated.  Note that you
+can also use wildcards (*.rpm) if your current directory *only* contains
+the desired RPMs.
+
+Please note that this update is also available via Red Hat Network.  Many
+people find this an easier way to apply updates.  To use Red Hat Network,
+launch the Red Hat Update Agent with the following command:
+
+up2date
+
+This will start an interactive process that will result in the appropriate
+RPMs being upgraded on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+299801 - CVE-2007-4575 OpenOffice.org-base allows Denial-of-Service and command injection
+421081 - CVE-2007-6306 JFreeChart: XSS vulnerabilities in the image map feature
+426206 - CVE-2007-6433 EJBQL injection via 'order' parameter
+
+6. Package List:
+
+JBoss Enterprise Application Platform for RHEL 4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/concurrent-1.3.4-7jpp.ep1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/concurrent-1.3.4-7jpp.ep1.6.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jaf-1.1.0-0jpp.ep1.10.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jaf-1.1.0-0jpp.ep1.10.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-javamail-1.4.0-0jpp.ep1.8.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-javamail-1.4.0-0jpp.ep1.8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jstl-1.2.0-0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/glassfish-jstl-1.2.0-0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jacorb-2.3.0-1jpp.ep1.4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jacorb-2.3.0-1jpp.ep1.4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-common-1.2.1-0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-common-1.2.1-0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-seam-1.2.1-1.ep1.3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-seam-1.2.1-1.ep1.3.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossas-4.2.0-3.GA_CP02.ep1.3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossas-4.2.0-3.GA_CP02.ep1.3.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossweb-2.0.0-3.CP05.0jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossweb-2.0.0-3.CP05.0jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jcommon-1.0.12-1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jcommon-1.0.12-1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jfreechart-1.0.9-1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jfreechart-1.0.9-1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jgroups-2.4.1-1.SP4.0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jgroups-2.4.1-1.SP4.0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/wsdl4j-1.6.2-1jpp.ep1.8.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/wsdl4j-1.6.2-1jpp.ep1.8.src.rpm</a>
+
+noarch:
+concurrent-1.3.4-7jpp.ep1.6.el4.noarch.rpm
+glassfish-jaf-1.1.0-0jpp.ep1.10.el4.noarch.rpm
+glassfish-javamail-1.4.0-0jpp.ep1.8.noarch.rpm
+glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.noarch.rpm
+glassfish-jstl-1.2.0-0jpp.ep1.2.noarch.rpm
+hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.noarch.rpm
+hibernate3-annotations-javadoc-3.2.1-1.patch02.1jpp.ep1.2.el4.noarch.rpm
+hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.noarch.rpm
+hibernate3-entitymanager-javadoc-3.2.1-1jpp.ep1.6.el4.noarch.rpm
+hibernate3-javadoc-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.noarch.rpm
+hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.noarch.rpm
+jacorb-2.3.0-1jpp.ep1.4.noarch.rpm
+jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.noarch.rpm
+jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.noarch.rpm
+jboss-common-1.2.1-0jpp.ep1.2.noarch.rpm
+jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.noarch.rpm
+jboss-seam-1.2.1-1.ep1.3.el4.noarch.rpm
+jboss-seam-docs-1.2.1-1.ep1.3.el4.noarch.rpm
+jbossas-4.2.0-3.GA_CP02.ep1.3.el4.noarch.rpm
+jbossweb-2.0.0-3.CP05.0jpp.ep1.1.noarch.rpm
+jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.noarch.rpm
+jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.noarch.rpm
+jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.noarch.rpm
+jcommon-1.0.12-1jpp.ep1.2.el4.noarch.rpm
+jfreechart-1.0.9-1jpp.ep1.2.el4.noarch.rpm
+jgroups-2.4.1-1.SP4.0jpp.ep1.2.noarch.rpm
+rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.noarch.rpm
+rh-eap-docs-examples-4.2.0-3.GA_CP02.ep1.1.el4.noarch.rpm
+wsdl4j-1.6.2-1jpp.ep1.8.noarch.rpm
+
+JBoss Enterprise Application Platform for RHEL 4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/concurrent-1.3.4-7jpp.ep1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/concurrent-1.3.4-7jpp.ep1.6.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jaf-1.1.0-0jpp.ep1.10.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jaf-1.1.0-0jpp.ep1.10.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-javamail-1.4.0-0jpp.ep1.8.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-javamail-1.4.0-0jpp.ep1.8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jstl-1.2.0-0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/glassfish-jstl-1.2.0-0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jacorb-2.3.0-1jpp.ep1.4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jacorb-2.3.0-1jpp.ep1.4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-common-1.2.1-0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-common-1.2.1-0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-seam-1.2.1-1.ep1.3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-seam-1.2.1-1.ep1.3.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossas-4.2.0-3.GA_CP02.ep1.3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossas-4.2.0-3.GA_CP02.ep1.3.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossweb-2.0.0-3.CP05.0jpp.ep1.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossweb-2.0.0-3.CP05.0jpp.ep1.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jcommon-1.0.12-1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jcommon-1.0.12-1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jfreechart-1.0.9-1jpp.ep1.2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jfreechart-1.0.9-1jpp.ep1.2.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jgroups-2.4.1-1.SP4.0jpp.ep1.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jgroups-2.4.1-1.SP4.0jpp.ep1.2.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/wsdl4j-1.6.2-1jpp.ep1.8.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/wsdl4j-1.6.2-1jpp.ep1.8.src.rpm</a>
+
+noarch:
+concurrent-1.3.4-7jpp.ep1.6.el4.noarch.rpm
+glassfish-jaf-1.1.0-0jpp.ep1.10.el4.noarch.rpm
+glassfish-javamail-1.4.0-0jpp.ep1.8.noarch.rpm
+glassfish-jsf-1.2_04-1.p02.0jpp.ep1.18.noarch.rpm
+glassfish-jstl-1.2.0-0jpp.ep1.2.noarch.rpm
+hibernate3-annotations-3.2.1-1.patch02.1jpp.ep1.2.el4.noarch.rpm
+hibernate3-annotations-javadoc-3.2.1-1.patch02.1jpp.ep1.2.el4.noarch.rpm
+hibernate3-entitymanager-3.2.1-1jpp.ep1.6.el4.noarch.rpm
+hibernate3-entitymanager-javadoc-3.2.1-1jpp.ep1.6.el4.noarch.rpm
+hibernate3-javadoc-3.2.4-1.SP1_CP02.0jpp.ep1.1.el4.noarch.rpm
+hsqldb-1.8.0.8-2.patch01.1jpp.ep1.1.noarch.rpm
+jacorb-2.3.0-1jpp.ep1.4.noarch.rpm
+jboss-aop-1.5.5-1.CP01.0jpp.ep1.1.el4.noarch.rpm
+jboss-cache-1.4.1-4.SP8_CP01.1jpp.ep1.1.el4.noarch.rpm
+jboss-common-1.2.1-0jpp.ep1.2.noarch.rpm
+jboss-remoting-2.2.2-3.SP4.0jpp.ep1.1.noarch.rpm
+jboss-seam-1.2.1-1.ep1.3.el4.noarch.rpm
+jboss-seam-docs-1.2.1-1.ep1.3.el4.noarch.rpm
+jbossas-4.2.0-3.GA_CP02.ep1.3.el4.noarch.rpm
+jbossweb-2.0.0-3.CP05.0jpp.ep1.1.noarch.rpm
+jbossws-jboss42-1.2.1-0jpp.ep1.2.el4.noarch.rpm
+jbossws-wsconsume-impl-2.0.0-0jpp.ep1.3.noarch.rpm
+jbossxb-1.0.0-2.SP1.0jpp.ep1.2.el4.noarch.rpm
+jcommon-1.0.12-1jpp.ep1.2.el4.noarch.rpm
+jfreechart-1.0.9-1jpp.ep1.2.el4.noarch.rpm
+jgroups-2.4.1-1.SP4.0jpp.ep1.2.noarch.rpm
+rh-eap-docs-4.2.0-3.GA_CP02.ep1.1.el4.noarch.rpm
+rh-eap-docs-examples-4.2.0-3.GA_CP02.ep1.1.el4.noarch.rpm
+wsdl4j-1.6.2-1jpp.ep1.8.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6306">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6306</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4575">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4575</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6433">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6433</a>
+<a  rel="nofollow" href="http://redhat.com/docs/manuals/jboss/jboss-eap-4.2.0.cp02/readme.html">http://redhat.com/docs/manuals/jboss/jboss-eap-4.2.0.cp02/readme.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH8/UXXlSAg2UNWIIRAi4iAJ9xf+kNhqRZpraSjWxyqbhNbCu8igCgwpdq
+tdUOokFGk8a5l7EgZRpmRck=
+=/6qA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

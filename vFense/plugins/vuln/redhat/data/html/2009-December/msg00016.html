@@ -1,0 +1,385 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1671&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Dec 2009 12:39:25 &#45;0500 -->
+<!--X-Message-Id: 200912151739.nBFHdM36017760@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1671-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1671-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1671-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 15 Dec 2009 12:39:22 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1671-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1671.html">https://rhn.redhat.com/errata/RHSA-2009-1671.html</a>
+Issue date:        2009-12-15
+CVE Names:         CVE-2009-2910 CVE-2009-3613 CVE-2009-3620 
+                   CVE-2009-3621 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* a flaw was found in the Realtek r8169 Ethernet driver in the Linux
+kernel. pci_unmap_single() presented a memory leak that could lead to IOMMU
+space exhaustion and a system crash. An attacker on the local network could
+trigger this flaw by using jumbo frames for large amounts of network
+traffic. (CVE-2009-3613, Important)
+
+* NULL pointer dereference flaws were found in the r128 driver in the Linux
+kernel. Checks to test if the Concurrent Command Engine state was
+initialized were missing in private IOCTL functions. An attacker could use
+these flaws to cause a local denial of service or escalate their
+privileges. (CVE-2009-3620, Important)
+
+* an information leak was found in the Linux kernel. On AMD64 systems,
+32-bit processes could access and read certain 64-bit registers by
+temporarily switching themselves to 64-bit mode. (CVE-2009-2910, Moderate)
+
+* the unix_stream_connect() function in the Linux kernel did not check if a
+UNIX domain socket was in the shutdown state. This could lead to a
+deadlock. A local, unprivileged user could use this flaw to cause a denial
+of service. (CVE-2009-3621, Moderate)
+
+This update also fixes the following bugs:
+
+* an iptables rule with the recent module and a hit count value greater
+than the ip_pkt_list_tot parameter (the default is 20), did not have any
+effect over packets, as the hit count could not be reached. (BZ#529306)
+
+* in environments that use dual-controller storage devices with the cciss
+driver, Device-Mapper Multipath maps could not be detected and configured,
+due to the cciss driver not exporting the bus attribute via sysfs. This
+attribute is now exported. (BZ#529309)
+
+* the kernel crashed with a divide error when a certain joystick was
+attached. (BZ#532027)
+
+* a bug in the mptctl_do_mpt_command() function in the mpt driver may have
+resulted in crashes during boot on i386 systems with certain adapters using
+the mpt driver, and also running the hugemem kernel. (BZ#533798)
+
+* on certain hardware, the igb driver was unable to detect link statuses
+correctly. This may have caused problems for network bonding, such as
+failover not occurring. (BZ#534105)
+
+* the RHSA-2009:1024 update introduced a regression. After updating to Red
+Hat Enterprise Linux 4.8 and rebooting, network links often failed to be
+brought up for interfaces using the forcedeth driver. &quot;no link during
+initialization&quot; messages may have been logged. (BZ#534112)
+
+* the RHSA-2009:1024 update introduced a second regression. On certain
+systems, PS/2 keyboards failed to work. (BZ#537344)
+
+* a bug in checksum offload calculations could have crashed the bnx2x
+firmware when the iptable_nat module was loaded, causing network traffic
+to stop. (BZ#537013)
+
+* a check has been added to the IPv4 code to make sure that the routing
+table data structure, rt, is not NULL, to help prevent future bugs in
+functions that call ip_append_data() from being exploitable. (BZ#537016)
+
+* possible kernel pointer dereferences on systems with several NFS mounts
+(a mixture of &quot;-o lock&quot; and &quot;-o nolock&quot;), which in rare cases may have
+caused a system crash, have been resolved. (BZ#537017)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+526788 - CVE-2009-2910 kernel: x86_64 32 bit process register leak
+529137 - CVE-2009-3613 kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+529306 - kernel: ipt_recent: sanity check hit count [rhel-4.9] [rhel-4.8.z]
+529309 - CCISS device-mapper-multipath support: missing sysfs attributes [rhel-4.8.z]
+529597 - CVE-2009-3620 kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+529626 - CVE-2009-3621 kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
+532027 - kernel hid-input.c divide error crash [rhel-4.8.z]
+533798 - [Cisco/LSI 4.8.z bug] mptctl module dereferences a userspace address, triggering a crash [rhel-4.8.z]
+534105 - EL4.8: igb driver fails to detect link status change on SERDES interface [rhel-4.8.z]
+534112 - Upgrade from RHEL4U7 to U8 fails to bring up networking with forcedeth driver. [simple patch] [rhel-4.8.z]
+537013 - bnx2x fails when iptables is on [rhel-4.8.z]
+537016 - kernel: ipv4: make ip_append_data() handle NULL routing table [rhel-4.8.z]
+537017 - NLM: Fix Oops in nlmclnt_mark_reclaim() [rhel-4.8.z]
+537344 - RHEL4.8 regression: PS/2 keyboard doesn't work on PRIMERGY TX120S1 [rhel-4.8.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.18.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.i686.rpm
+kernel-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.18.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-89.0.18.EL.ppc64.rpm
+kernel-2.6.9-89.0.18.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-89.0.18.EL.ppc64.rpm
+kernel-devel-2.6.9-89.0.18.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-89.0.18.EL.s390.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.s390.rpm
+kernel-devel-2.6.9-89.0.18.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-89.0.18.EL.s390x.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.s390x.rpm
+kernel-devel-2.6.9-89.0.18.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.18.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.i686.rpm
+kernel-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.i686.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.18.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.18.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.i686.rpm
+kernel-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.18.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.18.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.18.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.i686.rpm
+kernel-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.18.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-2.6.9-89.0.18.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.18.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.18.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.18.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.18.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2910.html">https://www.redhat.com/security/data/cve/CVE-2009-2910.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3613.html">https://www.redhat.com/security/data/cve/CVE-2009-3613.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3620.html">https://www.redhat.com/security/data/cve/CVE-2009-3620.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3621.html">https://www.redhat.com/security/data/cve/CVE-2009-3621.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLJ8m7XlSAg2UNWIIRAsWJAJ4mEMYJQj0Ip6III9iOvjX2Sy8IUwCfQn4X
+Fcu+dr6IYIeh7sWonyPng2A=
+=Sw46
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

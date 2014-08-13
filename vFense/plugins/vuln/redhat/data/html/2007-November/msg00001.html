@@ -1,0 +1,292 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:0993&#45;01] Important: kernel security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 Nov 2007 09:49:11 &#45;0500 -->
+<!--X-Message-Id: 200711291449.lATEnAvx025923@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:0993-01] Important: kernel security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:0993-01] Important: kernel security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:0993-01] Important: kernel security update</li>
+<li><em>Date</em>: Thu, 29 Nov 2007 09:49:10 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security update
+Advisory ID:       RHSA-2007:0993-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-0993.html">https://rhn.redhat.com/errata/RHSA-2007-0993.html</a>
+Issue date:        2007-11-29
+Updated on:        2007-11-29
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-4571  CVE-2007-4997 
+                   CVE-2007-5494 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated kernel packages that fix various security issues in the Red Hat
+Enterprise Linux 5 kernel are now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Problem description:
+
+The Linux kernel handles the basic functions of the operating system.
+
+These new kernel packages contain fixes for the following security issues:
+
+A memory leak was found in the Red Hat Content Accelerator kernel patch.  A
+local user could use this flaw to cause a denial of service (memory
+exhaustion). (CVE-2007-5494, Important)
+
+A flaw was found in the handling of IEEE 802.11 frames affecting several
+wireless LAN modules.  In certain circumstances, a remote attacker could
+trigger this flaw by sending a malicious packet over a wireless network and
+cause a denial of service (kernel crash). (CVE-2007-4997, Important). 
+
+A flaw was found in the Advanced Linux Sound Architecture (ALSA). A local
+user who had the ability to read the /proc/driver/snd-page-alloc file could
+see portions of kernel memory. (CVE-2007-4571, Moderate). 
+
+In addition to the security issues described above, several bug fixes
+preventing possible memory corruption, system crashes, SCSI I/O fails,
+networking drivers performance regression and journaling block device layer
+issue were also included.
+
+Red Hat Enterprise Linux 5 users are advised to upgrade to these packages,
+which contain backported patches to resolve these issues.
+
+Red Hat would like to credit Vasily Averin, Chris Evans, and Neil Kettle 
+for reporting the security issues corrected by this update.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+288961 - CVE-2007-4571 ALSA memory disclosure flaw
+305011 - [RHEL 5.1.z]: Tick divider bugs on x86_64
+315051 - CVE-2007-5494 open(O_ATOMICLOOKUP) leaks dentry
+345141 - [PATCH] jbd: wait for already submitted t_sync_datalist buffer to complete (Possibility of in-place data destruction)
+345151 - LSPP: audit rule causes kernel 'out of memory' condition and auditd failure
+345161 - [EL5][BUG] Unexpected SIGILL on NFS/Montecito(ia64)
+345171 - task-&amp;gt;mm or slab corruption with CIFS
+346341 - CVE-2007-4997 kernel ieee80211 off-by-two integer underflow
+381001 - LSPP: audit enable not picking up all processes
+381021 - [Broadcom 5.1.z bug] Performance regression on 5705 TG3 NICs
+381101 - LTC35628-kexec/kdump kernel hung on Power5+ and Power6 based systems
+381121 - LTC38135-vSCSI client reports 'Device sdX not ready' after deactive/active device on vSCSI server
+381131 - forcedeth driver mishandles MSI interrupts under high load
+
+6. RPMs required:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-53.1.4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-53.1.4.el5.src.rpm</a>
+f4ddc1c32090e95051a82221882f7f07  kernel-2.6.18-53.1.4.el5.src.rpm
+
+i386:
+7db3e79c57682e6ccd52808899b615df  kernel-2.6.18-53.1.4.el5.i686.rpm
+3c710dd56c71e05a719254eabe5bef4e  kernel-PAE-2.6.18-53.1.4.el5.i686.rpm
+f7abc5aa783e93096d38c54b59c090d2  kernel-PAE-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+dc530282b624ccba683f4b181a6f3a07  kernel-PAE-devel-2.6.18-53.1.4.el5.i686.rpm
+f18ab8596f0de5f8aec9c5c06aa0772c  kernel-debug-2.6.18-53.1.4.el5.i686.rpm
+78fb69f9be4c5e3376ef657578bcbf3b  kernel-debug-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+9e7dabd8afecabf2d81b7244e248d085  kernel-debug-devel-2.6.18-53.1.4.el5.i686.rpm
+8ced8998555bd4ca582718aa4de6491a  kernel-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+82cb46f9d27253be25240cdae5303f48  kernel-debuginfo-common-2.6.18-53.1.4.el5.i686.rpm
+46c3986d06610e1ff1f13aea20e12a55  kernel-devel-2.6.18-53.1.4.el5.i686.rpm
+03ecab2d61860ff849f17ed525f68a9b  kernel-headers-2.6.18-53.1.4.el5.i386.rpm
+3ac39f5fcd33e7c1e8d374cf26f23bba  kernel-xen-2.6.18-53.1.4.el5.i686.rpm
+866a71427e007f544ffa867f14e4ec2d  kernel-xen-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+2d25af7fd212ed6bfe30b0fefd89e400  kernel-xen-devel-2.6.18-53.1.4.el5.i686.rpm
+
+noarch:
+ab3753a735ea61deb37182250b04c9d0  kernel-doc-2.6.18-53.1.4.el5.noarch.rpm
+
+x86_64:
+e071879c6de07723825ff525634ef14a  kernel-2.6.18-53.1.4.el5.x86_64.rpm
+a328b40f9eb70cf9e0a4340ffcec53c8  kernel-debug-2.6.18-53.1.4.el5.x86_64.rpm
+45e5066c1c1cdfe1c920f1ace4cf7268  kernel-debug-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+98613f3375199acf9ee60b5c8c407958  kernel-debug-devel-2.6.18-53.1.4.el5.x86_64.rpm
+82206cb4393732d240ac50dce71c1510  kernel-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+4d470ccb5145a0fc225f44afca2c32ae  kernel-debuginfo-common-2.6.18-53.1.4.el5.x86_64.rpm
+5302a54d9169a4df8a048f67d3b2e518  kernel-devel-2.6.18-53.1.4.el5.x86_64.rpm
+a63da08cd0cca7cec81542537decb183  kernel-headers-2.6.18-53.1.4.el5.x86_64.rpm
+5fa46572f8d861903ecf1d6d983e7153  kernel-xen-2.6.18-53.1.4.el5.x86_64.rpm
+8ea07b9267a2c3265fb285a05b2ca982  kernel-xen-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+9877be5ebfd8402f5bd65d241bcf55f3  kernel-xen-devel-2.6.18-53.1.4.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-53.1.4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-53.1.4.el5.src.rpm</a>
+f4ddc1c32090e95051a82221882f7f07  kernel-2.6.18-53.1.4.el5.src.rpm
+
+i386:
+7db3e79c57682e6ccd52808899b615df  kernel-2.6.18-53.1.4.el5.i686.rpm
+3c710dd56c71e05a719254eabe5bef4e  kernel-PAE-2.6.18-53.1.4.el5.i686.rpm
+f7abc5aa783e93096d38c54b59c090d2  kernel-PAE-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+dc530282b624ccba683f4b181a6f3a07  kernel-PAE-devel-2.6.18-53.1.4.el5.i686.rpm
+f18ab8596f0de5f8aec9c5c06aa0772c  kernel-debug-2.6.18-53.1.4.el5.i686.rpm
+78fb69f9be4c5e3376ef657578bcbf3b  kernel-debug-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+9e7dabd8afecabf2d81b7244e248d085  kernel-debug-devel-2.6.18-53.1.4.el5.i686.rpm
+8ced8998555bd4ca582718aa4de6491a  kernel-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+82cb46f9d27253be25240cdae5303f48  kernel-debuginfo-common-2.6.18-53.1.4.el5.i686.rpm
+46c3986d06610e1ff1f13aea20e12a55  kernel-devel-2.6.18-53.1.4.el5.i686.rpm
+03ecab2d61860ff849f17ed525f68a9b  kernel-headers-2.6.18-53.1.4.el5.i386.rpm
+3ac39f5fcd33e7c1e8d374cf26f23bba  kernel-xen-2.6.18-53.1.4.el5.i686.rpm
+866a71427e007f544ffa867f14e4ec2d  kernel-xen-debuginfo-2.6.18-53.1.4.el5.i686.rpm
+2d25af7fd212ed6bfe30b0fefd89e400  kernel-xen-devel-2.6.18-53.1.4.el5.i686.rpm
+
+ia64:
+c4b5c7f03fe8aa5770515d2926360589  kernel-2.6.18-53.1.4.el5.ia64.rpm
+9d93070855eb35f4c9c51ba96544513b  kernel-debug-2.6.18-53.1.4.el5.ia64.rpm
+0724c9c99e58c2acc4190e5ed49f7a05  kernel-debug-debuginfo-2.6.18-53.1.4.el5.ia64.rpm
+d920157b8a5bb9c9b908924e1fe1ca5f  kernel-debug-devel-2.6.18-53.1.4.el5.ia64.rpm
+8685ce4e872ab826646f1db5193480e9  kernel-debuginfo-2.6.18-53.1.4.el5.ia64.rpm
+f8db66a50e12476bb86186bf9715d4cc  kernel-debuginfo-common-2.6.18-53.1.4.el5.ia64.rpm
+ddffbae0bc152f6863d0ee443de9048c  kernel-devel-2.6.18-53.1.4.el5.ia64.rpm
+20971ff3bd352465d95f9687256b15df  kernel-headers-2.6.18-53.1.4.el5.ia64.rpm
+d28c5d53ae4bf8f382ec428e32203e66  kernel-xen-2.6.18-53.1.4.el5.ia64.rpm
+408a5a1dd9994a11a0547b8750def8a0  kernel-xen-debuginfo-2.6.18-53.1.4.el5.ia64.rpm
+8f4c718a88b46be011e49c745d6ce4f2  kernel-xen-devel-2.6.18-53.1.4.el5.ia64.rpm
+
+noarch:
+ab3753a735ea61deb37182250b04c9d0  kernel-doc-2.6.18-53.1.4.el5.noarch.rpm
+
+ppc:
+bd068aebc02e617f34caee156d252841  kernel-2.6.18-53.1.4.el5.ppc64.rpm
+d277953a40d21ba17dbed7fd6c6f680f  kernel-debug-2.6.18-53.1.4.el5.ppc64.rpm
+0c62d227991dbaee59c812d1c252df88  kernel-debug-debuginfo-2.6.18-53.1.4.el5.ppc64.rpm
+5ef886d8a3eece47fd0232d229264bac  kernel-debug-devel-2.6.18-53.1.4.el5.ppc64.rpm
+eb49f51637a97ad6806cc19a3bc078d0  kernel-debuginfo-2.6.18-53.1.4.el5.ppc64.rpm
+45131661332edcf45b864400399abb9c  kernel-debuginfo-common-2.6.18-53.1.4.el5.ppc64.rpm
+4164d433f794761cd04d2d455f3924e4  kernel-devel-2.6.18-53.1.4.el5.ppc64.rpm
+951eee41009d6a83c90c535864f5bad7  kernel-headers-2.6.18-53.1.4.el5.ppc.rpm
+3b14f2e47dde5989f2f26794b2fe012c  kernel-headers-2.6.18-53.1.4.el5.ppc64.rpm
+fc215987bde440bbf9890392ad349a05  kernel-kdump-2.6.18-53.1.4.el5.ppc64.rpm
+444294c39857ad466ab0bb4dab2b8f71  kernel-kdump-debuginfo-2.6.18-53.1.4.el5.ppc64.rpm
+fc5c6c3f402b21502ef445ac0b7feefd  kernel-kdump-devel-2.6.18-53.1.4.el5.ppc64.rpm
+
+s390x:
+2c3701f34e15686807a362d304b8894f  kernel-2.6.18-53.1.4.el5.s390x.rpm
+d47000222a8ec41fad683f222b0594a4  kernel-debug-2.6.18-53.1.4.el5.s390x.rpm
+e674b9c3f52f21850e8ebaeb68e8758b  kernel-debug-debuginfo-2.6.18-53.1.4.el5.s390x.rpm
+a4ce8f8b5cdd2655b69f39445de25825  kernel-debug-devel-2.6.18-53.1.4.el5.s390x.rpm
+f86888ee8a26a352070cc3523c75e7c9  kernel-debuginfo-2.6.18-53.1.4.el5.s390x.rpm
+abee5165caaad3c697fc4934f874090a  kernel-debuginfo-common-2.6.18-53.1.4.el5.s390x.rpm
+8578e33e3544a093221a9299b0b50c1b  kernel-devel-2.6.18-53.1.4.el5.s390x.rpm
+9d94999160c4adeea1e65b0207219628  kernel-headers-2.6.18-53.1.4.el5.s390x.rpm
+
+x86_64:
+e071879c6de07723825ff525634ef14a  kernel-2.6.18-53.1.4.el5.x86_64.rpm
+a328b40f9eb70cf9e0a4340ffcec53c8  kernel-debug-2.6.18-53.1.4.el5.x86_64.rpm
+45e5066c1c1cdfe1c920f1ace4cf7268  kernel-debug-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+98613f3375199acf9ee60b5c8c407958  kernel-debug-devel-2.6.18-53.1.4.el5.x86_64.rpm
+82206cb4393732d240ac50dce71c1510  kernel-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+4d470ccb5145a0fc225f44afca2c32ae  kernel-debuginfo-common-2.6.18-53.1.4.el5.x86_64.rpm
+5302a54d9169a4df8a048f67d3b2e518  kernel-devel-2.6.18-53.1.4.el5.x86_64.rpm
+a63da08cd0cca7cec81542537decb183  kernel-headers-2.6.18-53.1.4.el5.x86_64.rpm
+5fa46572f8d861903ecf1d6d983e7153  kernel-xen-2.6.18-53.1.4.el5.x86_64.rpm
+8ea07b9267a2c3265fb285a05b2ca982  kernel-xen-debuginfo-2.6.18-53.1.4.el5.x86_64.rpm
+9877be5ebfd8402f5bd65d241bcf55f3  kernel-xen-devel-2.6.18-53.1.4.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4571">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4571</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=">http://cve.mitre.org/cgi-bin/cvename.cgi?name=</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4997">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4997</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5494">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5494</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHTtFLXlSAg2UNWIIRAgoWAJsHN/PKUKAfrg+z2CKG88A8BcFnSgCgtLOp
+90k6eLxwtAXrJpXPKfYbmbs=
+=6rbk
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

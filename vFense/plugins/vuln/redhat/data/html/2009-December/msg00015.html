@@ -1,0 +1,388 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1670&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Dec 2009 12:39:03 &#45;0500 -->
+<!--X-Message-Id: 200912151739.nBFHd3lq017679@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1670-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1670-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1670-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 15 Dec 2009 12:39:03 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1670-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1670.html">https://rhn.redhat.com/errata/RHSA-2009-1670.html</a>
+Issue date:        2009-12-15
+CVE Names:         CVE-2009-3612 CVE-2009-3620 CVE-2009-3621 
+                   CVE-2009-3726 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Security fixes:
+
+* NULL pointer dereference flaws in the r128 driver. Checks to test if the
+Concurrent Command Engine state was initialized were missing in private
+IOCTL functions. An attacker could use these flaws to cause a local denial
+of service or escalate their privileges. (CVE-2009-3620, Important)
+
+* a NULL pointer dereference flaw in the NFSv4 implementation. Several
+NFSv4 file locking functions failed to check whether a file had been opened
+on the server before performing locking operations on it. A local user on a
+system with an NFSv4 share mounted could possibly use this flaw to cause a
+denial of service or escalate their privileges. (CVE-2009-3726, Important)
+
+* a flaw in tcf_fill_node(). A certain data structure in this function was
+not initialized properly before being copied to user-space. This could lead
+to an information leak. (CVE-2009-3612, Moderate)
+
+* unix_stream_connect() did not check if a UNIX domain socket was in the
+shutdown state. This could lead to a deadlock. A local, unprivileged user
+could use this flaw to cause a denial of service. (CVE-2009-3621, Moderate)
+
+Knowledgebase DOC-20536 has steps to mitigate NULL pointer dereference
+flaws.
+
+Bug fixes:
+
+* frequently changing a CPU between online and offline caused a kernel
+panic on some systems. (BZ#545583)
+
+* for the LSI Logic LSI53C1030 Ultra320 SCSI controller, read commands sent
+could receive incorrect data, preventing correct data transfer. (BZ#529308)
+
+* pciehp could not detect PCI Express hot plug slots on some systems.
+(BZ#530383)
+
+* soft lockups: inotify race and contention on dcache_lock. (BZ#533822,
+BZ#537019)
+
+* priority ordered lists are now used for threads waiting for a given
+mutex. (BZ#533858)
+
+* a deadlock in DLM could cause GFS2 file systems to lock up. (BZ#533859)
+
+* use-after-free bug in the audit subsystem crashed certain systems when
+running usermod. (BZ#533861)
+
+* on certain hardware configurations, a kernel panic when the Broadcom
+iSCSI offload driver (bnx2i.ko and cnic.ko) was loaded. (BZ#537014)
+
+* qla2xxx: Enabled MSI-X, and correctly handle the module parameter to
+control it. This improves performance for certain systems. (BZ#537020)
+
+* system crash when reading the cpuaffinity file on a system. (BZ#537346)
+
+* suspend-resume problems on systems with lots of logical CPUs, e.g. BX-EX.
+(BZ#539674)
+
+* off-by-one error in the legacy PCI bus check. (BZ#539675)
+
+* TSC was not made available on systems with multi-clustered APICs. This
+could cause slow performance for time-sensitive applications. (BZ#539676)
+
+* ACPI: ARB_DISABLE now disabled on platforms that do not need it.
+(BZ#539677)
+
+* fix node to core and power-aware scheduling issues, and a kernel panic
+during boot on certain AMD Opteron processors. (BZ#539678, BZ#540469,
+BZ#539680, BZ#539682)
+
+* APIC timer interrupt issues on some AMD Opteron systems prevented
+achieving full power savings. (BZ#539681)
+
+* general OProfile support for some newer Intel processors. (BZ#539683)
+
+* system crash during boot when NUMA is enabled on systems using MC and
+kernel-xen. (BZ#539684)
+
+* on some larger systems, performance issues due to a spinlock. (BZ#539685)
+
+* APIC errors when IOMMU is enabled on some AMD Opteron systems.
+(BZ#539687)
+
+* on some AMD Opteron systems, repeatedly taking a CPU offline then online
+caused a system hang. (BZ#539688)
+
+* I/O page fault errors on some systems. (BZ#539689)
+
+* certain memory configurations could cause the kernel-xen kernel to fail
+to boot on some AMD Opteron systems. (BZ#539690)
+
+* NMI watchdog is now disabled for offline CPUs. (BZ#539691)
+
+* duplicate directories in /proc/acpi/processor/ on BX-EX systems.
+(BZ#539692)
+
+* links did not come up when using bnx2x with certain Broadcom devices.
+(BZ#540381)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+528868 - CVE-2009-3612 kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
+529227 - CVE-2009-3726 kernel: nfsv4: kernel panic in nfs4_proc_lock()
+529308 - [5.4]The errata 28 fix on LSI53C1030 hasn't been included yet. [rhel-5.4.z]
+529597 - CVE-2009-3620 kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+529626 - CVE-2009-3621 kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
+530383 - [5.3] PCIe hotplug slot detection failure [rhel-5.4.z]
+533822 - CRM 1908390 - BUG: warning at fs/inotify.c:181/set_dentry_child_flags() [rhel-5.4.z]
+533858 - threads on pthread_mutex_lock wake in fifo order, but posix specifies by priority [rhel-5.4.z]
+533859 - dlm_recv deadlock under memory pressure while processing GFP_KERNEL locks. [rhel-5.4.z]
+533861 - system crashes in audit_update_watch() [rhel-5.4.z]
+537014 - Panic on boot when loading iscsid with broadcom NIC [rhel-5.4.z]
+537019 - kernel: BUG: soft lockup with dcache_lock [rhel-5.4.z]
+537020 - [QLogic 5.4.z bug] qla2xxx - enable MSI-X and correct/cleanup irq request code [rhel-5.4.z]
+537346 - kernel: NULL pointer dereference in pci_bus_show_cpuaffinity() [rhel-5.4.z]
+539675 - [Intel 5.5 FEAT] Add ability to access Nehalem uncore config space [rhel-5.4.z]
+539676 - [Intel 5.5 FEAT] Support Intel multi-APIC-cluster systems [rhel-5.4.z]
+539677 - [Intel 5.5 FEAT] ACPI: Disable ARB_DISABLE on platforms where it is not needed [rhel-5.4.z]
+539678 - Fix node to core association [rhel-5.4.z]
+539680 - Fix Power-aware scheduling [rhel-5.4.z]
+539681 - Fix AMD erratum - server C1E [rhel-5.4.z]
+539682 - Fix kernel panic while booting RHEL5 32-bit kernel [rhel-5.4.z]
+539683 - [Intel 5.5 FEAT] Oprofile: Add support for arch perfmon - kernel component [rhel-5.4.z]
+539684 - EXPERIMENTAL EX/MC: Fix Xen NUMA [rhel-5.4.z]
+539685 - [Intel 5.5 FEAT] Fix spinlock issue which causes performance impact on large systems [rhel-5.4.z]
+539687 - EXPERIMENTAL MC/EX: Fix APIC error IOMMU issues [rhel-5.4.z]
+539688 - EXPERIMENTAL MC/EX: Issue when bringing CPU offline and online with 32-bit kernel [rhel-5.4.z]
+539689 - EXPERIMENTAL EX/MC: AMD IOMMU Linux driver with latest BIOS has IO PAGE FAULTS [rhel-5.4.z]
+539690 - EXPERIMENTAL MC/EX: Incorrect memory setup can cause Xen crash [rhel-5.4.z]
+539691 - [Intel 5.5 BUG] NMI and Watchdog are not disabled on CPU when CPU is off-lined [rhel-5.4.z]
+540381 - Broadcom Everest Dual port 10Gb with SFP+ (57711) NIC fails with no link [rhel-5.4.z]
+540469 - EXPERIMENTAL EX/MC: Fix node to core issue [rhel-5.4.z]
+545583 - kernel panic when doing cpu offline/online frequently on hp-dl785g5-01.rhts.eng.bos.redhat.com [rhel-5.4.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-164.9.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-164.9.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.i686.rpm
+kernel-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-headers-2.6.18-164.9.1.el5.i386.rpm
+kernel-xen-2.6.18-164.9.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-164.9.1.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-164.9.1.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-devel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-headers-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-164.9.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-164.9.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-164.9.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.i686.rpm
+kernel-devel-2.6.18-164.9.1.el5.i686.rpm
+kernel-headers-2.6.18-164.9.1.el5.i386.rpm
+kernel-xen-2.6.18-164.9.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-164.9.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-164.9.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-164.9.1.el5.ia64.rpm
+kernel-debug-2.6.18-164.9.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.ia64.rpm
+kernel-devel-2.6.18-164.9.1.el5.ia64.rpm
+kernel-headers-2.6.18-164.9.1.el5.ia64.rpm
+kernel-xen-2.6.18-164.9.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-164.9.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-164.9.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-164.9.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-debug-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-devel-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-headers-2.6.18-164.9.1.el5.ppc.rpm
+kernel-headers-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-164.9.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-164.9.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-164.9.1.el5.s390x.rpm
+kernel-debug-2.6.18-164.9.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.s390x.rpm
+kernel-devel-2.6.18-164.9.1.el5.s390x.rpm
+kernel-headers-2.6.18-164.9.1.el5.s390x.rpm
+kernel-kdump-2.6.18-164.9.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-164.9.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-164.9.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-devel-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-headers-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-164.9.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-164.9.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3612.html">https://www.redhat.com/security/data/cve/CVE-2009-3612.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3620.html">https://www.redhat.com/security/data/cve/CVE-2009-3620.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3621.html">https://www.redhat.com/security/data/cve/CVE-2009-3621.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3726.html">https://www.redhat.com/security/data/cve/CVE-2009-3726.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20536">http://kbase.redhat.com/faq/docs/DOC-20536</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLJ8maXlSAg2UNWIIRAspdAJ9snL9coMoBs6EsIPtbeGSFN1rkVwCfZoZ4
+GF10zDJTMEN78Yztkoy4UAU=
+=vFYn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

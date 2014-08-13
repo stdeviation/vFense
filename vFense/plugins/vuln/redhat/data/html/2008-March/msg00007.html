@@ -1,0 +1,269 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0173&#45;01] Important: Red Hat Directory Server 7.1 Service	Pack 4 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 11 Mar 2008 10:37:32 &#45;0400 -->
+<!--X-Message-Id: 200803111437.m2BEbVw7030083@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0173-01] Important: Red Hat Directory Server 7.1 Service	Pack</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0173-01] Important: Red Hat Directory Server 7.1 Service	Pack 4 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0173-01] Important: Red Hat Directory Server 7.1 Service	Pack 4 security update</li>
+<li><em>Date</em>: Tue, 11 Mar 2008 10:37:31 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Directory Server 7.1 Service Pack 4 security update
+Advisory ID:       RHSA-2008:0173-01
+Product:           Red Hat Directory Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0173.html">https://rhn.redhat.com/errata/RHSA-2008-0173.html</a>
+Issue date:        2008-03-11
+Obsoletes:         RHBA-2006:0623
+CVE Names:         CVE-2008-0890 
+=====================================================================
+
+1. Summary:
+
+Red Hat Directory Server 7.1 Service Pack 4: an updated redhat-ds package
+that fixes a security issue and several bugs is now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL 3 Directory Server AS - i386
+RHEL 3 Directory Server ES - i386
+RHEL 4 Directory Server AS - i386
+RHEL 4 Directory Server ES - i386
+
+3. Description:
+
+Red Hat Directory Server is an LDAPv3 compliant server.
+
+It was discovered that Red Hat Directory Server 7.1, when running on Red
+Hat Enterprise Linux, used insecure permissions on certain directories.
+Local users could replace Java(TM) Archive (JAR) files and run arbitrary
+code with the privileges of the user running Red Hat Directory Server, or
+its applications. (CVE-2008-0890)
+
+As well, this updated package fixes the followings bugs:
+
+* when LDAP operations such as &quot;ldapsearch&quot; were issued while the server
+was creating a browsing index for the suffix, Red Hat Directory Server
+hanged.
+
+* when a bind operation returned LDAP controls, such as in pass-through
+authentication, Red Hat Directory Server crashed.
+
+* if multiple-simultaneous LDAP operations were issued on entries, which
+were indexed in a VLV index, Red Hat Directory Server hanged.
+
+* minor memory leaks, including memory leaks in replication, SASL, and
+indexing, have been resolved.
+
+* the Red Hat Directory Server crashed during start up if a log rotation
+file, such as &quot;access.rotationinfo&quot;, had a size value of 0 bytes.
+
+* on 64-bit platforms, LDAP search operations would intermittently time
+out, causing them to fail.
+
+* it was not possible to send data larger than 512 bytes through SASL
+GSSAPI. Connections failed with a message decoding error.
+
+* when the password lockout option was set, previous log in failures were
+not cleared from the passwordCount attribute, even after a successful log
+in.
+
+* when an entry had a NULL attribute value for an attribute in a VLV index,
+editing the entry caused Red Hat Directory Server to crash.
+
+* repeatedly removing and adding the same replica and replication
+agreement, caused Red Hat Directory Server to crash.
+
+* random operation failures occurred when multiple-simultaneous SASL
+operations were initiated.
+
+* while VLV indexes were being created, Red Hat Directory Server ignored
+stop operations. Stop operations sent during index creation hanged.
+
+* adding an invalid DN syntax caused Red Hat Directory Server to crash,
+instead of rejecting the entry.
+
+* modify operations that included an invalid attribute value, caused Red
+Hat Directory server to crash.
+
+* malformed member URLs for dynamic groups, such as ones missing the
+terminal parentheses, caused Red Hat Directory Server to crash.
+
+* in the previous redhat-ds package, SASL mappings were hard coded. In
+this updated package, SASL mappings use regular expressions, that are
+dynamically generated on start up. A &quot;*&quot; character can no longer be used
+for the SASL mapping search filter.
+
+* repeatedly creating and deleting databases with VLV indexes, caused Red
+Hat Directory Server to crash.
+
+* editing an entry with an attribute with non-ASCII values, and indexed
+with a substring index, caused Red Hat Directory Server to crash.
+
+* in the previous redhat-ds package, SASL operations did not properly
+switch the SASL I/O function set to the original I/O function set.
+
+* during online replication initialization, if the data included any entry
+larger than 80% of the entry cache size, Red Hat Directory Server crashed.
+
+* online-replication initialization hanged endlessly when the import data
+included two consecutive entries, which totaled more than 80% of the entry
+cache size.
+
+For further information, please refer to the Red Hat Directory Server 7.1
+SP4 release notes:
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP4/">http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP4/</a>
+
+Users of redhat-ds are advised to upgrade to this updated package, which
+resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to the system have been applied.
+
+To update all RPMs for the particular architecture, run the following command:
+
+rpm -Fvh [filenames]
+
+where [filenames] is a list of the RPMs to be upgraded. Only those
+RPMs which are currently installed will be updated. Those RPMs which are
+not installed but included in the list will not be updated.  Note that it
+is possible to use wildcards (*.rpm) if the current directory *only*
+contains the desired RPMs.
+
+This update is also available via Red Hat Network. Many
+people find this an easier way to apply updates. To use Red Hat Network,
+launch the Red Hat Update Agent with the following command:
+
+up2date
+
+This starts an interactive process that will result in the appropriate
+RPMs being upgraded on the system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+436116 - CVE-2008-0890 DirServ 7.1: insecure default permissions on jars directory
+
+6. Package List:
+
+RHEL 3 Directory Server AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL3.src.rpm</a>
+
+i386:
+redhat-ds-7.1SP4-7.RHEL3.i386.rpm
+
+RHEL 3 Directory Server ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL3.src.rpm</a>
+
+i386:
+redhat-ds-7.1SP4-7.RHEL3.i386.rpm
+
+RHEL 4 Directory Server AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL4.src.rpm</a>
+
+i386:
+redhat-ds-7.1SP4-7.RHEL4.i386.rpm
+
+RHEL 4 Directory Server ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-7.1SP4-7.RHEL4.src.rpm</a>
+
+i386:
+redhat-ds-7.1SP4-7.RHEL4.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0890">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0890</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP4/">http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP4/</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH1phxXlSAg2UNWIIRAtgTAKCmtA6R9YRrLmYOxLlSMdxOQROhJACfZL7L
+je/My6eepI7gQBxmlzUNCX0=
+=9XAL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1086&#45;01] Moderate: java&#45;1.4.2&#45;bea security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 12 Dec 2007 07:34:26 &#45;0500 -->
+<!--X-Message-Id: 200712121234.lBCCYPFb007895@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1086-01] Moderate: java-1.4.2-bea security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1086-01] Moderate: java-1.4.2-bea security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1086-01] Moderate: java-1.4.2-bea security update</li>
+<li><em>Date</em>: Wed, 12 Dec 2007 07:34:25 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: java-1.4.2-bea security update
+Advisory ID:       RHSA-2007:1086-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1086.html">https://rhn.redhat.com/errata/RHSA-2007-1086.html</a>
+Issue date:        2007-12-12
+Updated on:        2007-12-12
+Product:           Red Hat Enterprise Linux Extras
+Keywords:          Security
+CVE Names:         CVE-2007-4381 CVE-2007-2788 CVE-2007-2789 
+                   CVE-2007-3004 CVE-2007-3005 CVE-2007-3698 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated java-1.4.2-bea packages that correct several security issues and
+add enhancements are now available for Red Hat Enterprise Linux 4 Extras.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 Extras - i386, ia64, x86_64
+Red Hat Desktop version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux ES version 4 Extras - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 Extras - i386, ia64, x86_64
+
+3. Problem description:
+
+The BEA WebLogic JRockit 1.4.2_15 JRE and SDK contain BEA WebLogic JRockit
+Virtual Machine 1.4.2_15 and are certified for the Java 2 Platform,
+Standard Edition, v1.4.2. 
+
+A buffer overflow in the Java Runtime Environment image handling code was
+found. If an attacker is able to cause a server application to process a
+specially crafted image file, it may be possible to execute arbitrary code
+as the user running the Java Virtual Machine. (CVE-2007-2788,
+CVE-2007-2789, CVE-2007-3004)
+
+A denial of service flaw was discovered in the Java Applet Viewer. An
+untrusted Java applet could cause the Java Virtual Machine to become
+unresponsive. Please note that the BEA WebLogic JRockit 1.4.2_15 does not
+ship with a browser plug-in and therefore this issue could only be
+triggered by a user running the &quot;appletviewer&quot; application. (CVE-2007-3005) 
+
+A denial of service flaw was found in the way the JSSE component processed
+SSL/TLS handshake requests. A remote attacker able to connect to a JSSE
+enabled service could send a specially crafted handshake which would cause
+the Java Runtime Environment to stop responding to future requests.
+(CVE-2007-3698) 
+
+A flaw was found in the way the Java Runtime Environment processes font
+data. An applet viewed via the &quot;appletviewer&quot; application could elevate
+its privileges, allowing the applet to perform actions with the same
+permissions as the user running the &quot;appletviewer&quot; application. It may also
+be possible to crash a server application which processes untrusted font
+information from a third party. (CVE-2007-4381)
+
+All users of java-1.4.2-bea should upgrade to these updated packages, which
+contain the BEA WebLogic JRockit 1.4.2_15 release that resolves these
+issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+242595 - CVE-2007-3004 Integer overflow in IBM JDK's ICC profile parser
+249539 - CVE-2007-3698 Java Secure Socket Extension Does Not Correctly Process SSL/TLS Handshake Requests Resulting in a Denial of Service (DoS) Condition
+250725 - CVE-2007-2788 Integer overflow in the embedded ICC profile image parser in Sun Java Development Kit
+250729 - CVE-2007-2789  BMP image parser vulnerability
+250733 - CVE-2007-3005 Unspecified vulnerability in Sun JRE
+253488 - CVE-2007-4381 Vulnerability in the font parsing code
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+25596b8fe33e153758c88dc21e510130  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.i686.rpm
+
+ia64:
+f9ce3d2854c5fa08d187c9c65f21592e  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.ia64.rpm
+9a3612a0755f2e602b9aefba7bb26494  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.ia64.rpm
+0604fd1a920520ed1ec52c2ddcccda33  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.ia64.rpm
+
+x86_64:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+25596b8fe33e153758c88dc21e510130  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.i686.rpm
+
+x86_64:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+25596b8fe33e153758c88dc21e510130  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.i686.rpm
+
+ia64:
+f9ce3d2854c5fa08d187c9c65f21592e  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.ia64.rpm
+9a3612a0755f2e602b9aefba7bb26494  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.ia64.rpm
+0604fd1a920520ed1ec52c2ddcccda33  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.ia64.rpm
+
+x86_64:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+25596b8fe33e153758c88dc21e510130  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.i686.rpm
+
+ia64:
+f9ce3d2854c5fa08d187c9c65f21592e  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.ia64.rpm
+9a3612a0755f2e602b9aefba7bb26494  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.ia64.rpm
+0604fd1a920520ed1ec52c2ddcccda33  java-1.4.2-bea-jdbc-1.4.2.15-1jpp.2.el4.ia64.rpm
+
+x86_64:
+d8cbe20d5a32d32391592ba4704b020f  java-1.4.2-bea-1.4.2.15-1jpp.2.el4.i686.rpm
+464dc0cbbf0c6d8ddc2a5edcc65741d4  java-1.4.2-bea-devel-1.4.2.15-1jpp.2.el4.i686.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4381">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4381</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2788">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2788</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2789">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2789</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3004">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3004</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3005">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3005</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3698">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3698</a>
+<a  rel="nofollow" href="http://dev2dev.bea.com/pub/advisory/249">http://dev2dev.bea.com/pub/advisory/249</a>
+<a  rel="nofollow" href="http://dev2dev.bea.com/pub/advisory/248">http://dev2dev.bea.com/pub/advisory/248</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHX9VPXlSAg2UNWIIRAgoGAJ4zJMc0CwvMYisELf+WqwO3VrbkDgCeK/iO
+S8rn/LkoGJP/xFN2EGPHWNU=
+=xGPP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

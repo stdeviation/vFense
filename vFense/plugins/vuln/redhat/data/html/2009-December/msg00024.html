@@ -1,0 +1,218 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2009:1688&#45;01] Moderate: condor security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 Dec 2009 20:31:29 &#45;0500 -->
+<!--X-Message-Id: 200912220131.nBM1VOdc031261@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1688-01] Moderate: condor security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1688-01] Moderate: condor security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2009:1688-01] Moderate: condor security update</li>
+<li><em>Date</em>: Mon, 21 Dec 2009 20:31:24 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: condor security update
+Advisory ID:       RHSA-2009:1688-01
+Product:           Red Hat Enterprise MRG for RHEL-4
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1688.html">https://rhn.redhat.com/errata/RHSA-2009-1688.html</a>
+Issue date:        2009-12-21
+CVE Names:         CVE-2009-4133 
+=====================================================================
+
+1. Summary:
+
+Updated condor packages that fix one security issue are now available for
+Red Hat Enterprise MRG 1.2 for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat MRG Grid Execute Node for RHEL-4 AS - i386, x86_64
+Red Hat MRG Grid Execute Node for RHEL-4 ES - i386, x86_64
+Red Hat MRG Grid for RHEL-4 AS - i386, x86_64
+Red Hat MRG Grid for RHEL-4 ES - i386, x86_64
+
+3. Description:
+
+Condor is a specialized workload management system for compute-intensive
+jobs. It provides a job queuing mechanism, scheduling policy, priority
+scheme, and resource monitoring and management.
+
+A flaw was found in the way Condor managed jobs. This could allow a user
+that is authorized to submit jobs into Condor to queue a job as if it were
+submitted by a different local user, potentially leading to unauthorized
+access to that user's account. (CVE-2009-4133)
+
+Note: Condor will not run jobs as root; therefore, this flaw cannot lead to
+a compromise of the root user account.
+
+All Red Hat Enterprise MRG 1.2 users are advised to upgrade to these
+updated packages, which contain a backported patch to correct this issue.
+Condor must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+544371 - CVE-2009-4133 Condor: queue super user cannot drop privs
+
+6. Package List:
+
+Red Hat MRG Grid for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm</a>
+
+i386:
+condor-7.4.1-0.7.1.el4.i386.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.i386.rpm
+condor-kbdd-7.4.1-0.7.1.el4.i386.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.i386.rpm
+
+x86_64:
+condor-7.4.1-0.7.1.el4.x86_64.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.x86_64.rpm
+condor-kbdd-7.4.1-0.7.1.el4.x86_64.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.x86_64.rpm
+
+Red Hat MRG Grid Execute Node for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm</a>
+
+i386:
+condor-7.4.1-0.7.1.el4.i386.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.i386.rpm
+condor-kbdd-7.4.1-0.7.1.el4.i386.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.i386.rpm
+
+x86_64:
+condor-7.4.1-0.7.1.el4.x86_64.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.x86_64.rpm
+condor-kbdd-7.4.1-0.7.1.el4.x86_64.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.x86_64.rpm
+
+Red Hat MRG Grid for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm</a>
+
+i386:
+condor-7.4.1-0.7.1.el4.i386.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.i386.rpm
+condor-kbdd-7.4.1-0.7.1.el4.i386.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.i386.rpm
+
+x86_64:
+condor-7.4.1-0.7.1.el4.x86_64.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.x86_64.rpm
+condor-kbdd-7.4.1-0.7.1.el4.x86_64.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.x86_64.rpm
+
+Red Hat MRG Grid Execute Node for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.1-0.7.1.el4.src.rpm</a>
+
+i386:
+condor-7.4.1-0.7.1.el4.i386.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.i386.rpm
+condor-kbdd-7.4.1-0.7.1.el4.i386.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.i386.rpm
+
+x86_64:
+condor-7.4.1-0.7.1.el4.x86_64.rpm
+condor-debuginfo-7.4.1-0.7.1.el4.x86_64.rpm
+condor-kbdd-7.4.1-0.7.1.el4.x86_64.rpm
+condor-qmf-plugins-7.4.1-0.7.1.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4133.html">https://www.redhat.com/security/data/cve/CVE-2009-4133.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLMCFfXlSAg2UNWIIRAuwDAKCe2OOpYcfYIfTfh9uNfUEVyrTsqwCfVTQr
+WTzzlp7oRJS2O1/1OKdBGKI=
+=omZK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

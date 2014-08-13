@@ -1,0 +1,304 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1095&#45;01] Moderate: htdig security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Dec 2007 10:48:42 &#45;0500 -->
+<!--X-Message-Id: 200712031548.lB3FmfLP014899@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1095-01] Moderate: htdig security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1095-01] Moderate: htdig security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1095-01] Moderate: htdig security update</li>
+<li><em>Date</em>: Mon, 3 Dec 2007 10:48:41 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: htdig security update
+Advisory ID:       RHSA-2007:1095-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1095.html">https://rhn.redhat.com/errata/RHSA-2007-1095.html</a>
+Issue date:        2007-12-03
+Updated on:        2007-12-03
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-6110 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated htdig packages that resolve a security issue are now available for
+Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Problem description:
+
+The ht://Dig system is a complete World Wide Web indexing and searching
+system for a small domain or intranet.
+
+A cross-site scripting flaw was discovered in a htdig search page. An
+attacker could construct a carefully crafted URL, which once visited by an 
+unsuspecting user, could cause a user's Web browser to execute malicious
+script in the context of the visited htdig search Web page. (CVE-2007-6110)
+
+Users of htdig are advised to upgrade to these updated packages, which
+contain backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+399561 - CVE-2007-6110 htdig htsearch XSS vulnerability
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm</a>
+da98d8dfeea252f3970e81a7e120ac5c  htdig-3.2.0b6-4.el4_6.src.rpm
+
+i386:
+72213d098b97f44c998fb6e23fb9e457  htdig-3.2.0b6-4.el4_6.i386.rpm
+21f08bd8417523a71393ab0ebf59c732  htdig-debuginfo-3.2.0b6-4.el4_6.i386.rpm
+474e7f333c8d034c8694707695141645  htdig-web-3.2.0b6-4.el4_6.i386.rpm
+
+ia64:
+b04ec2235312dc8b3558c75d2afa92dc  htdig-3.2.0b6-4.el4_6.ia64.rpm
+e1a11c942291ab8b0e5b0715214767e6  htdig-debuginfo-3.2.0b6-4.el4_6.ia64.rpm
+17ce8f1c662a0afc393146f46aee53d9  htdig-web-3.2.0b6-4.el4_6.ia64.rpm
+
+ppc:
+869cb51f3cdb285524d670c709e2a09f  htdig-3.2.0b6-4.el4_6.ppc.rpm
+34ea57699ea0d740a7eb3fa83e71aa7d  htdig-debuginfo-3.2.0b6-4.el4_6.ppc.rpm
+455c3345b5fb1f485e7330e7e20463a3  htdig-web-3.2.0b6-4.el4_6.ppc.rpm
+
+s390:
+1985d5c661d5cd431fd0a8a7fcf31989  htdig-3.2.0b6-4.el4_6.s390.rpm
+19bd3238c6675402edcf2eac2faa861f  htdig-debuginfo-3.2.0b6-4.el4_6.s390.rpm
+7bdc5aa5361bd1bc423ffff3477024f8  htdig-web-3.2.0b6-4.el4_6.s390.rpm
+
+s390x:
+5e2b7d6dbe5e48e76c7e9435b24a10c4  htdig-3.2.0b6-4.el4_6.s390x.rpm
+01d8a507bc811d306c1bd0f63ff416e6  htdig-debuginfo-3.2.0b6-4.el4_6.s390x.rpm
+0e783d736547810277c5bb9854fd69ac  htdig-web-3.2.0b6-4.el4_6.s390x.rpm
+
+x86_64:
+8ac0056031b94ab4a7e70fff903ae276  htdig-3.2.0b6-4.el4_6.x86_64.rpm
+8e6606d37e29b5f664a8a34427bc9a31  htdig-debuginfo-3.2.0b6-4.el4_6.x86_64.rpm
+01fd44996ad52b0c4f007bf8d5e98220  htdig-web-3.2.0b6-4.el4_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm</a>
+da98d8dfeea252f3970e81a7e120ac5c  htdig-3.2.0b6-4.el4_6.src.rpm
+
+i386:
+72213d098b97f44c998fb6e23fb9e457  htdig-3.2.0b6-4.el4_6.i386.rpm
+21f08bd8417523a71393ab0ebf59c732  htdig-debuginfo-3.2.0b6-4.el4_6.i386.rpm
+474e7f333c8d034c8694707695141645  htdig-web-3.2.0b6-4.el4_6.i386.rpm
+
+x86_64:
+8ac0056031b94ab4a7e70fff903ae276  htdig-3.2.0b6-4.el4_6.x86_64.rpm
+8e6606d37e29b5f664a8a34427bc9a31  htdig-debuginfo-3.2.0b6-4.el4_6.x86_64.rpm
+01fd44996ad52b0c4f007bf8d5e98220  htdig-web-3.2.0b6-4.el4_6.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm</a>
+da98d8dfeea252f3970e81a7e120ac5c  htdig-3.2.0b6-4.el4_6.src.rpm
+
+i386:
+72213d098b97f44c998fb6e23fb9e457  htdig-3.2.0b6-4.el4_6.i386.rpm
+21f08bd8417523a71393ab0ebf59c732  htdig-debuginfo-3.2.0b6-4.el4_6.i386.rpm
+474e7f333c8d034c8694707695141645  htdig-web-3.2.0b6-4.el4_6.i386.rpm
+
+ia64:
+b04ec2235312dc8b3558c75d2afa92dc  htdig-3.2.0b6-4.el4_6.ia64.rpm
+e1a11c942291ab8b0e5b0715214767e6  htdig-debuginfo-3.2.0b6-4.el4_6.ia64.rpm
+17ce8f1c662a0afc393146f46aee53d9  htdig-web-3.2.0b6-4.el4_6.ia64.rpm
+
+x86_64:
+8ac0056031b94ab4a7e70fff903ae276  htdig-3.2.0b6-4.el4_6.x86_64.rpm
+8e6606d37e29b5f664a8a34427bc9a31  htdig-debuginfo-3.2.0b6-4.el4_6.x86_64.rpm
+01fd44996ad52b0c4f007bf8d5e98220  htdig-web-3.2.0b6-4.el4_6.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/htdig-3.2.0b6-4.el4_6.src.rpm</a>
+da98d8dfeea252f3970e81a7e120ac5c  htdig-3.2.0b6-4.el4_6.src.rpm
+
+i386:
+72213d098b97f44c998fb6e23fb9e457  htdig-3.2.0b6-4.el4_6.i386.rpm
+21f08bd8417523a71393ab0ebf59c732  htdig-debuginfo-3.2.0b6-4.el4_6.i386.rpm
+474e7f333c8d034c8694707695141645  htdig-web-3.2.0b6-4.el4_6.i386.rpm
+
+ia64:
+b04ec2235312dc8b3558c75d2afa92dc  htdig-3.2.0b6-4.el4_6.ia64.rpm
+e1a11c942291ab8b0e5b0715214767e6  htdig-debuginfo-3.2.0b6-4.el4_6.ia64.rpm
+17ce8f1c662a0afc393146f46aee53d9  htdig-web-3.2.0b6-4.el4_6.ia64.rpm
+
+x86_64:
+8ac0056031b94ab4a7e70fff903ae276  htdig-3.2.0b6-4.el4_6.x86_64.rpm
+8e6606d37e29b5f664a8a34427bc9a31  htdig-debuginfo-3.2.0b6-4.el4_6.x86_64.rpm
+01fd44996ad52b0c4f007bf8d5e98220  htdig-web-3.2.0b6-4.el4_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm</a>
+6fb7a2b9503cb113ee8e487ab2b8807f  htdig-3.2.0b6-9.0.1.el5_1.src.rpm
+
+i386:
+ac3f6f528f6cfb5f64201d3e49d8bbb4  htdig-3.2.0b6-9.0.1.el5_1.i386.rpm
+b47148da0ff0d487c130cb87d3560acf  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.i386.rpm
+
+x86_64:
+8eddaa8a12f404ce14ea4588ee4e4b3b  htdig-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+b3c8d3baf149903e0e8038bfb1c54f48  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm</a>
+6fb7a2b9503cb113ee8e487ab2b8807f  htdig-3.2.0b6-9.0.1.el5_1.src.rpm
+
+i386:
+b47148da0ff0d487c130cb87d3560acf  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.i386.rpm
+aefa60c107dfcc2d0c8d0b33c630ca20  htdig-web-3.2.0b6-9.0.1.el5_1.i386.rpm
+
+x86_64:
+b3c8d3baf149903e0e8038bfb1c54f48  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+96781f707fa53abab3c5d21a42dac088  htdig-web-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/htdig-3.2.0b6-9.0.1.el5_1.src.rpm</a>
+6fb7a2b9503cb113ee8e487ab2b8807f  htdig-3.2.0b6-9.0.1.el5_1.src.rpm
+
+i386:
+ac3f6f528f6cfb5f64201d3e49d8bbb4  htdig-3.2.0b6-9.0.1.el5_1.i386.rpm
+b47148da0ff0d487c130cb87d3560acf  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.i386.rpm
+aefa60c107dfcc2d0c8d0b33c630ca20  htdig-web-3.2.0b6-9.0.1.el5_1.i386.rpm
+
+ia64:
+f57e46687f0d15873845de89150adf91  htdig-3.2.0b6-9.0.1.el5_1.ia64.rpm
+b676295a0285e014d42f4c6b59efb447  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.ia64.rpm
+a9b7aca74782dbe539fb10f8e693f878  htdig-web-3.2.0b6-9.0.1.el5_1.ia64.rpm
+
+ppc:
+4f680df4472a686244522cdba9db032e  htdig-3.2.0b6-9.0.1.el5_1.ppc.rpm
+dec195e497ece003c8415010c0691e60  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.ppc.rpm
+1b7d0c503366d10bf6ab5a8f36a7fbab  htdig-web-3.2.0b6-9.0.1.el5_1.ppc.rpm
+
+s390x:
+4a2b460e0e83827631644c92d6b2f9cc  htdig-3.2.0b6-9.0.1.el5_1.s390x.rpm
+f6ea7f4f0c1a545fbeb3541626adb3e0  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.s390x.rpm
+0295ecf635676b1970e9df3cd1991b0a  htdig-web-3.2.0b6-9.0.1.el5_1.s390x.rpm
+
+x86_64:
+8eddaa8a12f404ce14ea4588ee4e4b3b  htdig-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+b3c8d3baf149903e0e8038bfb1c54f48  htdig-debuginfo-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+96781f707fa53abab3c5d21a42dac088  htdig-web-3.2.0b6-9.0.1.el5_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6110">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6110</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHVCVWXlSAg2UNWIIRAmz1AJwNEXI2eSRiueGcZ/HNSdt3d19GbgCfWHcH
+rFV5X0Nz1LWI7+/2j/GTpLI=
+=SeDT
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

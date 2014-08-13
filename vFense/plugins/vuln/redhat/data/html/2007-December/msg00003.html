@@ -1,0 +1,722 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1090&#45;01] Moderate: openoffice.org2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 5 Dec 2007 09:46:21 &#45;0500 -->
+<!--X-Message-Id: 200712051446.lB5EkKSZ002865@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1090-01] Moderate: openoffice.org2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1090-01] Moderate: openoffice.org2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1090-01] Moderate: openoffice.org2 security update</li>
+<li><em>Date</em>: Wed, 5 Dec 2007 09:46:20 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openoffice.org2 security update
+Advisory ID:       RHSA-2007:1090-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1090.html">https://rhn.redhat.com/errata/RHSA-2007-1090.html</a>
+Issue date:        2007-12-05
+Updated on:        2007-12-05
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-4575 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated openoffice.org2 packages that fix a security issue are now available
+for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ppc, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, x86_64
+
+3. Problem description:
+
+OpenOffice.org is an office productivity suite.
+HSQLDB is the default database engine shipped with OpenOffice.org 2.
+
+It was discovered that HSQLDB could allow the execution of arbitrary public
+static Java methods.  A carefully crafted odb file opened in OpenOffice.org
+Base could execute arbitrary commands with the permissions of the user
+running OpenOffice.org. (CVE-2007-4575)
+
+All users of OpenOffice.org are advised to upgrade to these updated
+packages, which contain a backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+299801 - CVE-2007-4575 OpenOffice.org-base allows Denial-of-Service and command injection
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm</a>
+728af6d41af113f6401351b833271754  openoffice.org2-2.0.4-5.7.0.3.0.src.rpm
+
+i386:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+ppc:
+6739deada4f3098870245b863c08bffc  openoffice.org2-base-2.0.4-5.7.0.3.0.ppc.rpm
+90e8c6880cb2059b294c24c06d83a41f  openoffice.org2-calc-2.0.4-5.7.0.3.0.ppc.rpm
+90d6896182b05341efd3bc6be93d1746  openoffice.org2-core-2.0.4-5.7.0.3.0.ppc.rpm
+59c1fc4bdbc5d9fa1f42a91067300719  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.ppc.rpm
+38f575822f7e139310d4f685a982cd0d  openoffice.org2-draw-2.0.4-5.7.0.3.0.ppc.rpm
+67079021eb0e078f9a09cbe43fab15b2  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.ppc.rpm
+2454088a1bb6e8d086c0f6cc1e2e034a  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.ppc.rpm
+3eff6cab8ce7f52a02121b3046abb1d7  openoffice.org2-impress-2.0.4-5.7.0.3.0.ppc.rpm
+3f025387c459ab68a2286f66fd4056b2  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.ppc.rpm
+9e71ee3544067f5ce4f813c58ef989ff  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.ppc.rpm
+0a1b77cf511adbc2d6030b7600229271  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.ppc.rpm
+012303e547893b36686c111a090d1bc7  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.ppc.rpm
+bbcb662cc15a0b8db5d97b91ed17dd99  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.ppc.rpm
+2b239dcfff76ff2453abb45d587a750f  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.ppc.rpm
+27339cb259189e8c096aeeea9f28ae7e  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.ppc.rpm
+b297af18acb098c50db94277a15eb4fc  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.ppc.rpm
+abac82ab07d24361736156252a31be89  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.ppc.rpm
+10b6eacdc859d797878e302b054aa613  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.ppc.rpm
+54fe190d6ab919398ea3c2f0bc9d3f53  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.ppc.rpm
+c439259c4504194b891af222ee0b7f32  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.ppc.rpm
+cd16b3581464a442dfb42eda6325fdf7  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.ppc.rpm
+da58b39bbe2df9864becce78d292f55b  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.ppc.rpm
+d6757f1f2faa03604e50b8c971126c33  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.ppc.rpm
+6b33ffba5c930c2def66eae943c46363  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.ppc.rpm
+366e9373561a4c5dc43537369e68e881  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.ppc.rpm
+655460c5bf2dcbf4bc2913781563a6e0  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.ppc.rpm
+ba767afc847d76b262c6ec1d6991e777  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.ppc.rpm
+25465ded8f099fb6f8c7fc7e063112e0  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.ppc.rpm
+d1c5cd3153383013e3df42b6141831e6  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.ppc.rpm
+d58c7e285ed969ce60146ca037e8930c  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.ppc.rpm
+6c3a4a1110c2b81c27ea2357cf980f78  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.ppc.rpm
+23410f71770945bb9521189d3ff6c5b2  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.ppc.rpm
+de178cc3a35c4bc09af07cb879a4663b  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.ppc.rpm
+3405e859eb0366bedb2143fcc00097c1  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.ppc.rpm
+0e987d155a528b1765045a8fd1381a58  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.ppc.rpm
+b594dc2649ae44a48574a4dc79c15fd8  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.ppc.rpm
+6a5b3c4e315ca9c4f2285942c50e1332  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.ppc.rpm
+6ddb6aceb0fed17240d52bc9e7ed85b5  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.ppc.rpm
+d5baa8be35d6a5736647e39623c1ca5a  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.ppc.rpm
+b1a41effe0483992f9a762a8dcadaba8  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.ppc.rpm
+221c281eca55e025a349b60f1cf3eac0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.ppc.rpm
+0a544abcf4c0b83b4de5360a65899702  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.ppc.rpm
+063b1ae77ae7ea849fea12faee56e3d5  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.ppc.rpm
+5d7de4d030e613951b5c7b28ce60e551  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.ppc.rpm
+fc4610c81ab59c541b2c7739ba6b04cf  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.ppc.rpm
+0ffb837086b58649a607db8e99e2c8ab  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.ppc.rpm
+b3dc181ab0299b8257a733dc3d00d65d  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.ppc.rpm
+2a8f49bf82d00bfc3e4b753758c2054f  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.ppc.rpm
+911475573dee35f4ee5456dc48e301e5  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.ppc.rpm
+085699d6bfa8913bcf432bd39ae1ef71  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.ppc.rpm
+afa200d8fa0148b3f22f5d43de063682  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.ppc.rpm
+3451b016d51f89ac2160681fab32a9cc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.ppc.rpm
+abf77abf2cad7d7734e80b4ad8c3d37e  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.ppc.rpm
+7f9cacaced157c51beff87c23eab89ab  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.ppc.rpm
+5e63f32621d40542cc37c0d1c68d893a  openoffice.org2-math-2.0.4-5.7.0.3.0.ppc.rpm
+72bbd308e999de9393cc1819d8f016f5  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.ppc.rpm
+a26beaf0f380d3b26b4b3f6eed4304dd  openoffice.org2-testtools-2.0.4-5.7.0.3.0.ppc.rpm
+18e9f1483daa7b5e5b5db7c1e79df50f  openoffice.org2-writer-2.0.4-5.7.0.3.0.ppc.rpm
+076ab801c08e3a138df56efa45ed5077  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.ppc.rpm
+
+x86_64:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm</a>
+728af6d41af113f6401351b833271754  openoffice.org2-2.0.4-5.7.0.3.0.src.rpm
+
+i386:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+x86_64:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm</a>
+728af6d41af113f6401351b833271754  openoffice.org2-2.0.4-5.7.0.3.0.src.rpm
+
+i386:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+x86_64:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/openoffice.org2-2.0.4-5.7.0.3.0.src.rpm</a>
+728af6d41af113f6401351b833271754  openoffice.org2-2.0.4-5.7.0.3.0.src.rpm
+
+i386:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+x86_64:
+d8d1ce7f9266d17c6986018332ae30a3  openoffice.org2-base-2.0.4-5.7.0.3.0.i386.rpm
+e3ae7d22e6ea1e2011462a9841a65abb  openoffice.org2-calc-2.0.4-5.7.0.3.0.i386.rpm
+1e7aadeb52fda6950c13e75f2cbf23d8  openoffice.org2-core-2.0.4-5.7.0.3.0.i386.rpm
+00e08a8851f4c0b079a281a491f20f6d  openoffice.org2-debuginfo-2.0.4-5.7.0.3.0.i386.rpm
+71c23318fd0eab3e2be5698ec4da8130  openoffice.org2-draw-2.0.4-5.7.0.3.0.i386.rpm
+ccffadb48b36d774ee85d1155aee1b8b  openoffice.org2-emailmerge-2.0.4-5.7.0.3.0.i386.rpm
+f51e49b252e9e4e055489afda67ec4fb  openoffice.org2-graphicfilter-2.0.4-5.7.0.3.0.i386.rpm
+f7721a2d0e6b25b5bc789b6872773443  openoffice.org2-impress-2.0.4-5.7.0.3.0.i386.rpm
+ec8cc03af6c5942472d66f597a7497b5  openoffice.org2-javafilter-2.0.4-5.7.0.3.0.i386.rpm
+749c051437fc04d22f933547219c1c21  openoffice.org2-langpack-af_ZA-2.0.4-5.7.0.3.0.i386.rpm
+2df2b2f66e21298ed9b5a7a136195af4  openoffice.org2-langpack-ar-2.0.4-5.7.0.3.0.i386.rpm
+0f96e8deb5857ea72b0a1c604172285b  openoffice.org2-langpack-bg_BG-2.0.4-5.7.0.3.0.i386.rpm
+1a89d2971af7e905c7830d4c0a88b6c4  openoffice.org2-langpack-bn-2.0.4-5.7.0.3.0.i386.rpm
+0bfa17d32bdc9d631eab404ea2981040  openoffice.org2-langpack-ca_ES-2.0.4-5.7.0.3.0.i386.rpm
+6009d13487a2c69fcb232351712e8fd6  openoffice.org2-langpack-cs_CZ-2.0.4-5.7.0.3.0.i386.rpm
+212aef354933a49638e3fa2ff30c7126  openoffice.org2-langpack-cy_GB-2.0.4-5.7.0.3.0.i386.rpm
+c5aa742c75f1aab0092f6ce9167b3550  openoffice.org2-langpack-da_DK-2.0.4-5.7.0.3.0.i386.rpm
+9075ff733b8ee2aff2c1b28bc668e63a  openoffice.org2-langpack-de-2.0.4-5.7.0.3.0.i386.rpm
+789f3ab731025925f42fb992dab59c16  openoffice.org2-langpack-el_GR-2.0.4-5.7.0.3.0.i386.rpm
+d6caa3505f8b45a8350953e8b870ee3e  openoffice.org2-langpack-es-2.0.4-5.7.0.3.0.i386.rpm
+7e2060816da1714f597c15c3c8169929  openoffice.org2-langpack-et_EE-2.0.4-5.7.0.3.0.i386.rpm
+2e0efab75a3e13a32b31bfe338ec627e  openoffice.org2-langpack-eu_ES-2.0.4-5.7.0.3.0.i386.rpm
+f542c1699aea52e019778e45b8a7572a  openoffice.org2-langpack-fi_FI-2.0.4-5.7.0.3.0.i386.rpm
+1f7128d12fbc6e5a6b02f8dc24dae6f1  openoffice.org2-langpack-fr-2.0.4-5.7.0.3.0.i386.rpm
+c9c9ad460f8059f467df422c780a481d  openoffice.org2-langpack-ga_IE-2.0.4-5.7.0.3.0.i386.rpm
+850f0aa5b23d80a0778e882623ff6927  openoffice.org2-langpack-gl_ES-2.0.4-5.7.0.3.0.i386.rpm
+243fd56bfa49c90c39475a0e645fba15  openoffice.org2-langpack-gu_IN-2.0.4-5.7.0.3.0.i386.rpm
+e28d59183ad1a8abc955bb27a26e0003  openoffice.org2-langpack-he_IL-2.0.4-5.7.0.3.0.i386.rpm
+d2df13d1f99394d7675dc217f2a806b5  openoffice.org2-langpack-hi_IN-2.0.4-5.7.0.3.0.i386.rpm
+049bbacac30cc53728c54bb84eb57d20  openoffice.org2-langpack-hr_HR-2.0.4-5.7.0.3.0.i386.rpm
+b60f5e7a127ccdc033e223e5bc23180d  openoffice.org2-langpack-hu_HU-2.0.4-5.7.0.3.0.i386.rpm
+2c63e610717793df25623661b8091000  openoffice.org2-langpack-it-2.0.4-5.7.0.3.0.i386.rpm
+c377707a3b37bcbd1319c9daeea79f6f  openoffice.org2-langpack-ja_JP-2.0.4-5.7.0.3.0.i386.rpm
+92b0bf0d3cb562233483f4fafe5e5750  openoffice.org2-langpack-ko_KR-2.0.4-5.7.0.3.0.i386.rpm
+a8394c8995083d25e2b832b8eece96cb  openoffice.org2-langpack-lt_LT-2.0.4-5.7.0.3.0.i386.rpm
+0479d52c798a10b653e066c3d3c9d43f  openoffice.org2-langpack-ms_MY-2.0.4-5.7.0.3.0.i386.rpm
+c9a2a61a238c8f24f0982f2e61337ec9  openoffice.org2-langpack-nb_NO-2.0.4-5.7.0.3.0.i386.rpm
+e806a7d220cbb80cd377eb3027d26140  openoffice.org2-langpack-nl-2.0.4-5.7.0.3.0.i386.rpm
+ed9a752215e77bdb728a27b515b1a564  openoffice.org2-langpack-nn_NO-2.0.4-5.7.0.3.0.i386.rpm
+6aa55f60f77f927e649db04b9b6098e3  openoffice.org2-langpack-pa_IN-2.0.4-5.7.0.3.0.i386.rpm
+2b5373b78634276e8cec75c6cc7936b0  openoffice.org2-langpack-pl_PL-2.0.4-5.7.0.3.0.i386.rpm
+a3ba04d3301575bb155da725bab3ff1a  openoffice.org2-langpack-pt_BR-2.0.4-5.7.0.3.0.i386.rpm
+46767536774b559cf8f3bc8ab4d8fdb0  openoffice.org2-langpack-pt_PT-2.0.4-5.7.0.3.0.i386.rpm
+7425db28bd57d5918533ebc450659253  openoffice.org2-langpack-ru-2.0.4-5.7.0.3.0.i386.rpm
+debf41af958f226da047789f76a8f606  openoffice.org2-langpack-sk_SK-2.0.4-5.7.0.3.0.i386.rpm
+2e62035c241e323b518a0c7fa80592ec  openoffice.org2-langpack-sl_SI-2.0.4-5.7.0.3.0.i386.rpm
+7df628298b73a0151564fc07724720a8  openoffice.org2-langpack-sr_CS-2.0.4-5.7.0.3.0.i386.rpm
+c6ca18894a7f5f0523f5212dc3368b2c  openoffice.org2-langpack-sv-2.0.4-5.7.0.3.0.i386.rpm
+4dbc48773d69df31ef410325cc62574b  openoffice.org2-langpack-ta_IN-2.0.4-5.7.0.3.0.i386.rpm
+cdc4a2e142802c039aac65671cbce0e3  openoffice.org2-langpack-th_TH-2.0.4-5.7.0.3.0.i386.rpm
+4bf2535e75df9572beca95f2b198e109  openoffice.org2-langpack-tr_TR-2.0.4-5.7.0.3.0.i386.rpm
+37f941cc9eae3192e238d804317e1acc  openoffice.org2-langpack-zh_CN-2.0.4-5.7.0.3.0.i386.rpm
+5a3dbc59e6543d789aa83d02a476153c  openoffice.org2-langpack-zh_TW-2.0.4-5.7.0.3.0.i386.rpm
+4cc0536a7a73e7e002fbce19d73c327d  openoffice.org2-langpack-zu_ZA-2.0.4-5.7.0.3.0.i386.rpm
+8eea316d038a14c5d549407b371bb273  openoffice.org2-math-2.0.4-5.7.0.3.0.i386.rpm
+95a3e3b35b235b7a5135032a13dca721  openoffice.org2-pyuno-2.0.4-5.7.0.3.0.i386.rpm
+5bfd22c379873608351a32c5e92e2adc  openoffice.org2-testtools-2.0.4-5.7.0.3.0.i386.rpm
+b223cdcf97ad219ebe64f823afd1cd3e  openoffice.org2-writer-2.0.4-5.7.0.3.0.i386.rpm
+d26db5f3217a212db7573fdd5c5501ce  openoffice.org2-xsltfilter-2.0.4-5.7.0.3.0.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4575">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4575</a>
+<a  rel="nofollow" href="http://www.openoffice.org/security/cves/CVE-2007-4575.html">http://www.openoffice.org/security/cves/CVE-2007-4575.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHVrmaXlSAg2UNWIIRAiHZAKCMK1r3b35JcG6Q5AlIeQFNOVZqbgCgnTZh
+ojNAJ56vek1VFTeJ9NTU3pU=
+=DXue
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

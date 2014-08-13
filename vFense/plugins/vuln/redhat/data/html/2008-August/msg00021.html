@@ -1,0 +1,481 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0835&#45;01] Important: openoffice.org security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Aug 2008 13:22:01 &#45;0400 -->
+<!--X-Message-Id: 200808271722.m7RHM1AE028511@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0835-01] Important: openoffice.org security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0835-01] Important: openoffice.org security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0835-01] Important: openoffice.org security update</li>
+<li><em>Date</em>: Wed, 27 Aug 2008 13:22:00 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openoffice.org security update
+Advisory ID:       RHSA-2008:0835-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0835.html">https://rhn.redhat.com/errata/RHSA-2008-0835.html</a>
+Issue date:        2008-08-27
+CVE Names:         CVE-2008-3282 
+=====================================================================
+
+1. Summary:
+
+Updated openoffice.org packages that fix a security issue are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+
+3. Description:
+
+OpenOffice.org is an office productivity suite that includes desktop
+applications, such as a word processor, spreadsheet, presentation manager,
+formula editor, and a drawing program.
+
+A numeric truncation error was found in the OpenOffice.org memory
+allocator. If a carefully crafted file was opened by a victim, an attacker
+could use this flaw to crash OpenOffice.org or, possibly, execute arbitrary
+code. (CVE-2008-3282)
+
+All users of openoffice.org are advised to upgrade to these updated
+packages, which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+458056 - CVE-2008-3282 openoffice.org: numeric truncation error in memory allocator (64bit)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm</a>
+
+i386:
+openoffice.org-base-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-calc-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-core-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-draw-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-emailmerge-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-graphicfilter-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-headless-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-impress-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-javafilter-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-af_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ar-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-as_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-bg_BG-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-bn-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ca_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-cs_CZ-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-cy_GB-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-da_DK-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-de-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-el_GR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-es-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-et_EE-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-eu_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-fi_FI-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-fr-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ga_IE-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-gl_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-gu_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-he_IL-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hi_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hr_HR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hu_HU-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-it-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ja_JP-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-kn_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ko_KR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-lt_LT-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ml_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-mr_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ms_MY-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nb_NO-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nl-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nn_NO-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nr_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nso_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-or_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pa_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pl_PL-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pt_BR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pt_PT-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ru-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sk_SK-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sl_SI-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sr_CS-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ss_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-st_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sv-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ta_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-te_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-th_TH-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-tn_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-tr_TR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ts_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ur-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ve_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-xh_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zh_CN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zh_TW-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zu_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-math-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-pyuno-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-testtools-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-writer-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-xsltfilter-2.3.0-6.5.2.el5_2.i386.rpm
+
+x86_64:
+openoffice.org-base-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-calc-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-core-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-draw-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-emailmerge-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-graphicfilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-headless-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-impress-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-javafilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-af_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ar-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-as_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-bg_BG-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-bn-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ca_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-cs_CZ-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-cy_GB-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-da_DK-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-de-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-el_GR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-es-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-et_EE-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-eu_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-fi_FI-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-fr-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ga_IE-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-gl_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-gu_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-he_IL-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hi_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hr_HR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hu_HU-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-it-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ja_JP-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-kn_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ko_KR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-lt_LT-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ml_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-mr_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ms_MY-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nb_NO-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nl-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nn_NO-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nr_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nso_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-or_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pa_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pl_PL-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pt_BR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pt_PT-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ru-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sk_SK-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sl_SI-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sr_CS-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ss_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-st_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sv-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ta_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-te_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-th_TH-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-tn_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-tr_TR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ts_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ur-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ve_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-xh_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zh_CN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zh_TW-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zu_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-math-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-pyuno-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-testtools-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-writer-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-xsltfilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm</a>
+
+i386:
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-sdk-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-sdk-doc-2.3.0-6.5.2.el5_2.i386.rpm
+
+x86_64:
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-sdk-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-sdk-doc-2.3.0-6.5.2.el5_2.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openoffice.org-2.3.0-6.5.2.el5_2.src.rpm</a>
+
+i386:
+openoffice.org-base-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-calc-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-core-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-draw-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-emailmerge-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-graphicfilter-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-impress-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-javafilter-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-af_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ar-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-as_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-bg_BG-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-bn-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ca_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-cs_CZ-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-cy_GB-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-da_DK-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-de-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-el_GR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-es-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-et_EE-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-eu_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-fi_FI-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-fr-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ga_IE-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-gl_ES-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-gu_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-he_IL-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hi_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hr_HR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-hu_HU-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-it-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ja_JP-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-kn_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ko_KR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-lt_LT-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ml_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-mr_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ms_MY-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nb_NO-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nl-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nn_NO-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nr_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-nso_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-or_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pa_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pl_PL-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pt_BR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-pt_PT-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ru-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sk_SK-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sl_SI-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sr_CS-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ss_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-st_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-sv-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ta_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-te_IN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-th_TH-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-tn_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-tr_TR-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ts_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ur-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-ve_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-xh_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zh_CN-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zh_TW-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-langpack-zu_ZA-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-math-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-pyuno-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-sdk-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-sdk-doc-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-testtools-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-writer-2.3.0-6.5.2.el5_2.i386.rpm
+openoffice.org-xsltfilter-2.3.0-6.5.2.el5_2.i386.rpm
+
+x86_64:
+openoffice.org-base-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-calc-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-core-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-debuginfo-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-draw-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-emailmerge-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-graphicfilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-impress-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-javafilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-af_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ar-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-as_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-bg_BG-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-bn-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ca_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-cs_CZ-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-cy_GB-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-da_DK-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-de-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-el_GR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-es-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-et_EE-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-eu_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-fi_FI-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-fr-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ga_IE-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-gl_ES-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-gu_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-he_IL-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hi_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hr_HR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-hu_HU-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-it-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ja_JP-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-kn_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ko_KR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-lt_LT-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ml_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-mr_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ms_MY-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nb_NO-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nl-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nn_NO-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nr_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-nso_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-or_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pa_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pl_PL-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pt_BR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-pt_PT-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ru-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sk_SK-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sl_SI-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sr_CS-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ss_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-st_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-sv-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ta_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-te_IN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-th_TH-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-tn_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-tr_TR-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ts_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ur-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-ve_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-xh_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zh_CN-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zh_TW-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-langpack-zu_ZA-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-math-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-pyuno-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-sdk-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-sdk-doc-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-testtools-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-writer-2.3.0-6.5.2.el5_2.x86_64.rpm
+openoffice.org-xsltfilter-2.3.0-6.5.2.el5_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3282">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3282</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD4DBQFItY0uXlSAg2UNWIIRAgWdAKC9FsMYuCAn5kV1iA4mRXujJB7EmACWMixg
+5Ei0vPCWteRAlU4LE4QFtA==
+=acq4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

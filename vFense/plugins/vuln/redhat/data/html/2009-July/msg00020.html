@@ -1,0 +1,326 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1177&#45;01] Moderate: python security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 27 Jul 2009 07:15:43 &#45;0400 -->
+<!--X-Message-Id: 200907271115.n6RBFgPF024882@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1177-01] Moderate: python security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1177-01] Moderate: python security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1177-01] Moderate: python security update</li>
+<li><em>Date</em>: Mon, 27 Jul 2009 07:15:42 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python security update
+Advisory ID:       RHSA-2009:1177-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1177.html">https://rhn.redhat.com/errata/RHSA-2009-1177.html</a>
+Issue date:        2009-07-27
+CVE Names:         CVE-2008-1679 CVE-2008-1721 CVE-2008-1887 
+                   CVE-2008-2315 CVE-2008-3142 CVE-2008-3143 
+                   CVE-2008-3144 CVE-2008-4864 CVE-2008-5031 
+=====================================================================
+
+1. Summary:
+
+Updated python packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Python is an interpreted, interactive, object-oriented programming
+language.
+
+When the assert() system call was disabled, an input sanitization flaw was
+revealed in the Python string object implementation that led to a buffer
+overflow. The missing check for negative size values meant the Python
+memory allocator could allocate less memory than expected. This could
+result in arbitrary code execution with the Python interpreter's
+privileges. (CVE-2008-1887)
+
+Multiple buffer and integer overflow flaws were found in the Python Unicode
+string processing and in the Python Unicode and string object
+implementations. An attacker could use these flaws to cause a denial of
+service (Python application crash). (CVE-2008-3142, CVE-2008-5031)
+
+Multiple integer overflow flaws were found in the Python imageop module. If
+a Python application used the imageop module to process untrusted images,
+it could cause the application to crash or, potentially, execute arbitrary
+code with the Python interpreter's privileges. (CVE-2008-1679,
+CVE-2008-4864)
+
+Multiple integer underflow and overflow flaws were found in the Python
+snprintf() wrapper implementation. An attacker could use these flaws to
+cause a denial of service (memory corruption). (CVE-2008-3144)
+
+Multiple integer overflow flaws were found in various Python modules. An
+attacker could use these flaws to cause a denial of service (Python
+application crash). (CVE-2008-2315, CVE-2008-3143)
+
+An integer signedness error, leading to a buffer overflow, was found
+in the Python zlib extension module. If a Python application requested
+the negative byte count be flushed for a decompression stream, it could
+cause the application to crash or, potentially, execute arbitrary code
+with the Python interpreter's privileges. (CVE-2008-1721)
+
+Red Hat would like to thank David Remahl of the Apple Product Security team
+for responsibly reporting the CVE-2008-1679 and CVE-2008-2315 issues.
+
+All Python users should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+441306 - CVE-2008-1679 python: imageop module integer overflows
+442005 - CVE-2008-1721 python: integer signedness error in the zlib extension module
+443810 - CVE-2008-1887 python: PyString_FromStringAndSize does not check for negative size values
+454990 - CVE-2008-3142 python: Multiple buffer overflows in unicode processing
+455008 - CVE-2008-2315 python: Multiple integer overflows in python core
+455013 - CVE-2008-3143 python: Multiple integer overflows discovered by Google
+455018 - CVE-2008-3144 python: Potential integer underflow and overflow in the PyOS_vsnprintf C API function
+469656 - CVE-2008-4864 python: imageop module multiple integer overflows
+470915 - CVE-2008-5031 python: stringobject, unicodeobject integer overflows
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm</a>
+
+i386:
+python-2.3.4-14.7.el4_8.2.i386.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.i386.rpm
+python-devel-2.3.4-14.7.el4_8.2.i386.rpm
+python-docs-2.3.4-14.7.el4_8.2.i386.rpm
+python-tools-2.3.4-14.7.el4_8.2.i386.rpm
+tkinter-2.3.4-14.7.el4_8.2.i386.rpm
+
+ia64:
+python-2.3.4-14.7.el4_8.2.ia64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.ia64.rpm
+python-devel-2.3.4-14.7.el4_8.2.ia64.rpm
+python-docs-2.3.4-14.7.el4_8.2.ia64.rpm
+python-tools-2.3.4-14.7.el4_8.2.ia64.rpm
+tkinter-2.3.4-14.7.el4_8.2.ia64.rpm
+
+ppc:
+python-2.3.4-14.7.el4_8.2.ppc.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.ppc.rpm
+python-devel-2.3.4-14.7.el4_8.2.ppc.rpm
+python-docs-2.3.4-14.7.el4_8.2.ppc.rpm
+python-tools-2.3.4-14.7.el4_8.2.ppc.rpm
+tkinter-2.3.4-14.7.el4_8.2.ppc.rpm
+
+s390:
+python-2.3.4-14.7.el4_8.2.s390.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.s390.rpm
+python-devel-2.3.4-14.7.el4_8.2.s390.rpm
+python-docs-2.3.4-14.7.el4_8.2.s390.rpm
+python-tools-2.3.4-14.7.el4_8.2.s390.rpm
+tkinter-2.3.4-14.7.el4_8.2.s390.rpm
+
+s390x:
+python-2.3.4-14.7.el4_8.2.s390x.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.s390x.rpm
+python-devel-2.3.4-14.7.el4_8.2.s390x.rpm
+python-docs-2.3.4-14.7.el4_8.2.s390x.rpm
+python-tools-2.3.4-14.7.el4_8.2.s390x.rpm
+tkinter-2.3.4-14.7.el4_8.2.s390x.rpm
+
+x86_64:
+python-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-devel-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-docs-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-tools-2.3.4-14.7.el4_8.2.x86_64.rpm
+tkinter-2.3.4-14.7.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm</a>
+
+i386:
+python-2.3.4-14.7.el4_8.2.i386.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.i386.rpm
+python-devel-2.3.4-14.7.el4_8.2.i386.rpm
+python-docs-2.3.4-14.7.el4_8.2.i386.rpm
+python-tools-2.3.4-14.7.el4_8.2.i386.rpm
+tkinter-2.3.4-14.7.el4_8.2.i386.rpm
+
+x86_64:
+python-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-devel-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-docs-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-tools-2.3.4-14.7.el4_8.2.x86_64.rpm
+tkinter-2.3.4-14.7.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm</a>
+
+i386:
+python-2.3.4-14.7.el4_8.2.i386.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.i386.rpm
+python-devel-2.3.4-14.7.el4_8.2.i386.rpm
+python-docs-2.3.4-14.7.el4_8.2.i386.rpm
+python-tools-2.3.4-14.7.el4_8.2.i386.rpm
+tkinter-2.3.4-14.7.el4_8.2.i386.rpm
+
+ia64:
+python-2.3.4-14.7.el4_8.2.ia64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.ia64.rpm
+python-devel-2.3.4-14.7.el4_8.2.ia64.rpm
+python-docs-2.3.4-14.7.el4_8.2.ia64.rpm
+python-tools-2.3.4-14.7.el4_8.2.ia64.rpm
+tkinter-2.3.4-14.7.el4_8.2.ia64.rpm
+
+x86_64:
+python-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-devel-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-docs-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-tools-2.3.4-14.7.el4_8.2.x86_64.rpm
+tkinter-2.3.4-14.7.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/python-2.3.4-14.7.el4_8.2.src.rpm</a>
+
+i386:
+python-2.3.4-14.7.el4_8.2.i386.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.i386.rpm
+python-devel-2.3.4-14.7.el4_8.2.i386.rpm
+python-docs-2.3.4-14.7.el4_8.2.i386.rpm
+python-tools-2.3.4-14.7.el4_8.2.i386.rpm
+tkinter-2.3.4-14.7.el4_8.2.i386.rpm
+
+ia64:
+python-2.3.4-14.7.el4_8.2.ia64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.ia64.rpm
+python-devel-2.3.4-14.7.el4_8.2.ia64.rpm
+python-docs-2.3.4-14.7.el4_8.2.ia64.rpm
+python-tools-2.3.4-14.7.el4_8.2.ia64.rpm
+tkinter-2.3.4-14.7.el4_8.2.ia64.rpm
+
+x86_64:
+python-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-debuginfo-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-devel-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-docs-2.3.4-14.7.el4_8.2.x86_64.rpm
+python-tools-2.3.4-14.7.el4_8.2.x86_64.rpm
+tkinter-2.3.4-14.7.el4_8.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1679">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1679</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1721">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1721</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1887">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1887</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2315">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2315</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3142">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3142</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3143">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3143</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3144">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3144</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4864">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4864</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5031">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5031</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKbYxQXlSAg2UNWIIRAm5iAKCOsespzDcQHy0owl12JEemOpRPxwCgm/Iw
+oPv/jBa+fQ/3pog/8tKEeXc=
+=feg9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

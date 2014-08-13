@@ -1,0 +1,142 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0193&#45;02] Important: lspp&#45;eal4&#45;config&#45;ibm and	capp&#45;lspp&#45;eal4&#45;config&#45;hp security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Apr 2008 10:27:26 &#45;0400 -->
+<!--X-Message-Id: 200804011427.m31ERPQ5008855@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0193-02] Important: lspp-eal4-config-ibm and	capp-lspp-eal4-c</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0193-02] Important: lspp-eal4-config-ibm and	capp-lspp-eal4-config-hp security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0193-02] Important: lspp-eal4-config-ibm and	capp-lspp-eal4-config-hp security update</li>
+<li><em>Date</em>: Tue, 1 Apr 2008 10:27:25 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: lspp-eal4-config-ibm and capp-lspp-eal4-config-hp security update
+Advisory ID:       RHSA-2008:0193-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0193.html">https://rhn.redhat.com/errata/RHSA-2008-0193.html</a>
+Issue date:        2008-04-01
+CVE Names:         CVE-2008-0884 
+=====================================================================
+
+1. Summary:
+
+Updated lspp-eal4-config-ibm and capp-lspp-eal4-config-hp packages that
+fix a security issue are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Description:
+
+The lspp-eal4-config-ibm and capp-lspp-eal4-config-hp packages contain
+utilities and documentation for configuring a machine for the Controlled
+Access Protection Profile, or the Labeled Security Protection Profile.
+
+It was discovered that use of the &quot;capp-lspp-config&quot; script results in the
+&quot;/etc/pam.d/system-auth&quot; file being set to world-writable. Authorized local
+users who have limited privileges could then exploit this to gain
+additional access, or to escalate their privileges. (CVE-2008-0884)
+
+This issue only affects users who have installed either of these packages
+from the Red Hat FTP site as their base system configuration kickstart
+script.
+
+New deployments using the lspp-eal4-config-ibm or capp-lspp-eal4-config-hp
+packages are advised to upgrade to these updated packages, which resolve
+this issue.
+
+For systems already deployed, the following command can be run as root to
+restore the permissions to a secure setting:
+
+chmod 0644 /etc/pam.d/system-auth
+
+3. Solution:
+
+This update is available via the Red Hat FTP site.  
+
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/eal/EAL4_RHEL5/IBM/RPMS/lspp-eal4-config-ibm-0.65-2.el5.noarch.rpm">ftp://ftp.redhat.com/pub/redhat/linux/eal/EAL4_RHEL5/IBM/RPMS/lspp-eal4-config-ibm-0.65-2.el5.noarch.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/eal/EAL4_RHEL5/HP/RPMS/capp-lspp-eal4-config-hp-0.65-2.el5.noarch.rpm">ftp://ftp.redhat.com/pub/redhat/linux/eal/EAL4_RHEL5/HP/RPMS/capp-lspp-eal4-config-hp-0.65-2.el5.noarch.rpm</a>
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+435442 - CVE-2008-0884 system-auth-ac is world-writable
+
+5. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0884">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0884</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH8kZFXlSAg2UNWIIRAhk8AJ96YmzPO8oVcWsXCmpZOM4KSIsoQQCfSEjv
+dFSW0Ib6HTU9LOAVdS/Q7Tk=
+=xphM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

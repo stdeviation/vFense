@@ -1,0 +1,250 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0524&#45;01] Low: Red Hat Network Satellite Server security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Jun 2008 11:34:13 &#45;0400 -->
+<!--X-Message-Id: 200806301534.m5UFYCv9028930@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0524-01] Low: Red Hat Network Satellite Server security	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0524-01] Low: Red Hat Network Satellite Server security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0524-01] Low: Red Hat Network Satellite Server security	update</li>
+<li><em>Date</em>: Mon, 30 Jun 2008 11:34:12 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Network Satellite Server security update
+Advisory ID:       RHSA-2008:0524-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0524.html">https://rhn.redhat.com/errata/RHSA-2008-0524.html</a>
+Issue date:        2008-06-30
+CVE Names:         CVE-2004-0687 CVE-2004-0688 CVE-2004-0885 
+                   CVE-2004-0914 CVE-2005-0605 CVE-2005-2090 
+                   CVE-2005-3510 CVE-2005-3964 CVE-2005-4838 
+                   CVE-2006-0254 CVE-2006-5752 CVE-2006-0898 
+                   CVE-2006-1329 CVE-2006-3835 CVE-2006-7195 
+                   CVE-2006-7196 CVE-2006-7197 CVE-2007-0243 
+                   CVE-2007-0450 CVE-2007-1349 CVE-2007-1355 
+                   CVE-2007-1358 CVE-2007-1860 CVE-2007-2435 
+                   CVE-2007-2449 CVE-2007-2450 CVE-2007-2788 
+                   CVE-2007-2789 CVE-2007-3304 CVE-2007-3382 
+                   CVE-2007-3385 CVE-2007-4465 CVE-2007-5000 
+                   CVE-2007-5461 CVE-2007-6306 CVE-2007-6388 
+                   CVE-2008-0128 
+=====================================================================
+
+1. Summary:
+
+Red Hat Network Satellite Server version 4.2.3 is now available. This
+update includes fixes for a number of security issues in Red Hat Network
+Satellite Server components.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.3 AS) - i386, noarch
+Red Hat Network Satellite Server v 4.2 (RHEL v.4 AS) - i386, noarch
+
+3. Description:
+
+This release corrects several security vulnerabilities in various
+components shipped as part of the Red Hat Network Satellite Server 4.2. In
+a typical operating environment, these components are not exposed to users
+of Satellite Server in a vulnerable manner. These security updates will
+reduce risk in unique Satellite Server environments.
+
+Multiple flaws were fixed in the Apache HTTPD server. These flaws could
+result in a cross-site scripting, denial-of-service, or information
+disclosure attacks. (CVE-2004-0885, CVE-2006-5752, CVE-2006-7197,
+CVE-2007-1860, CVE-2007-3304, CVE-2007-4465, CVE-2007-5000, CVE-2007-6388)
+
+A denial-of-service flaw was fixed in mod_perl. (CVE-2007-1349)
+
+A denial-of-service flaw was fixed in the jabberd server. (CVE-2006-1329)
+
+Multiple cross-site scripting flaws were fixed in the image map feature in
+the JFreeChart package. (CVE-2007-6306)
+
+Multiple flaws were fixed in the IBM Java 1.4.2 Runtime. (CVE-2007-0243,
+CVE-2007-2435, CVE-2007-2788, CVE-2007-2789)
+
+Multiple flaws were fixed in the OpenMotif package. (CVE-2004-0687,
+CVE-2004-0688, CVE-2004-0914, CVE-2005-3964, CVE-2005-0605)
+
+A flaw which could result in weak encryption was fixed in the
+perl-Crypt-CBC package. (CVE-2006-0898)
+
+Multiple flaws were fixed in the Tomcat package. (CVE-2008-0128,
+CVE-2007-5461, CVE-2007-3385, CVE-2007-3382, CVE-2007-1358, CVE-2007-1355,
+CVE-2007-2450, CVE-2007-2449, CVE-2007-0450, CVE-2006-7196, CVE-2006-7195,
+CVE-2006-3835, CVE-2006-0254, CVE-2005-2090, CVE-2005-4838, CVE-2005-3510)
+
+Users of Red Hat Network Satellite Server 4.2 are advised to upgrade to
+4.2.3, which resolves these issues.
+
+4. Solution:
+
+This update is available via Red Hat Network.  Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/satellite/Red_Hat_Network_Satellite-5.0.0/html/Installation_Guide/s1-maintenance-update.html">http://www.redhat.com/docs/manuals/satellite/Red_Hat_Network_Satellite-5.0.0/html/Installation_Guide/s1-maintenance-update.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+449337 - Bring various components of Satellite Server 4.2 up to date
+
+6. Package List:
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.3 AS):
+
+i386:
+jabberd-2.0s10-3.37.rhn.i386.rpm
+java-1.4.2-ibm-1.4.2.10-1jpp.2.el3.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.10-1jpp.2.el3.i386.rpm
+openmotif21-2.1.30-9.RHEL3.8.i386.rpm
+openmotif21-debuginfo-2.1.30-9.RHEL3.8.i386.rpm
+rhn-apache-1.3.27-36.rhn.rhel3.i386.rpm
+rhn-modjk-ap13-1.2.23-2rhn.rhel3.i386.rpm
+rhn-modperl-1.29-16.rhel3.i386.rpm
+rhn-modssl-2.8.12-8.rhn.10.rhel3.i386.rpm
+
+noarch:
+jfreechart-0.9.20-3.rhn.noarch.rpm
+perl-Crypt-CBC-2.24-1.el3.noarch.rpm
+tomcat5-5.0.30-0jpp_10rh.noarch.rpm
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.4 AS):
+
+i386:
+jabberd-2.0s10-3.38.rhn.i386.rpm
+java-1.4.2-ibm-1.4.2.10-1jpp.2.el4.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.10-1jpp.2.el4.i386.rpm
+openmotif21-2.1.30-11.RHEL4.6.i386.rpm
+openmotif21-debuginfo-2.1.30-11.RHEL4.6.i386.rpm
+rhn-apache-1.3.27-36.rhn.rhel4.i386.rpm
+rhn-modjk-ap13-1.2.23-2rhn.rhel4.i386.rpm
+rhn-modperl-1.29-16.rhel4.i386.rpm
+rhn-modssl-2.8.12-8.rhn.10.rhel4.i386.rpm
+
+noarch:
+jfreechart-0.9.20-3.rhn.noarch.rpm
+perl-Crypt-CBC-2.24-1.el4.noarch.rpm
+tomcat5-5.0.30-0jpp_10rh.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0687">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0687</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0688">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0688</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0885">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0885</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0914">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-0914</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-0605">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-0605</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2090">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2090</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3510">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3510</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3964">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3964</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4838">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-4838</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-0254">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-0254</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5752">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5752</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-0898">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-0898</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-1329">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-1329</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3835">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3835</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7195">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7195</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7196">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7196</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7197">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-7197</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0243">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0243</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0450">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0450</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1349">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1349</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1355">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1355</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1358">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1358</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1860">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-1860</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2435">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2435</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2449">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2449</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2450">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2450</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2788">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2788</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2789">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2789</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3304">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3304</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3382">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3382</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3385">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3385</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4465">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4465</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5000">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5000</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5461">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5461</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6306">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6306</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6388">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6388</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0128">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0128</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIaPzRXlSAg2UNWIIRAro2AKDCNywGTbJm/TTsw7HRleV35nBxdQCdEMPF
+J9pL2lcjPtF5azrdH75pdoc=
+=V4Y9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

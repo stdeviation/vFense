@@ -1,0 +1,190 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0485&#45;02] Low: compiz security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:31:52 &#45;0400 -->
+<!--X-Message-Id: 200805211431.m4LEVpkh030861@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0485-02] Low: compiz security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0485-02] Low: compiz security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0485-02] Low: compiz security update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:31:51 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: compiz security update
+Advisory ID:       RHSA-2008:0485-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0485.html">https://rhn.redhat.com/errata/RHSA-2008-0485.html</a>
+Issue date:        2008-05-20
+Updated on:        2008-05-21
+CVE Names:         CVE-2007-3920 
+=====================================================================
+
+1. Summary:
+
+Updated compiz packages that prevent Compiz from breaking screen saver
+grabs are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+
+3. Description:
+
+Compiz is an OpenGL-based window and compositing manager.
+
+Most screen savers create a top-level fullscreen window to cover the
+desktop, and grab the input with that window. Compiz has an option to
+un-redirect that window, but in some cases, this breaks the grab and
+compromises the locked screen. (CVE-2007-3920)
+
+Users of compiz are advised to upgrade to these updated packages, which
+remove this option to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+350271 - CVE-2007-3920 gnome-screensaver loses keyboard grab when running under compiz
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm</a>
+
+i386:
+compiz-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.i386.rpm
+
+x86_64:
+compiz-0.0.13-0.37.20060817git.el5.x86_64.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm</a>
+
+i386:
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.i386.rpm
+
+x86_64:
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.x86_64.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/compiz-0.0.13-0.37.20060817git.el5.src.rpm</a>
+
+i386:
+compiz-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.i386.rpm
+
+x86_64:
+compiz-0.0.13-0.37.20060817git.el5.x86_64.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-debuginfo-0.0.13-0.37.20060817git.el5.x86_64.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.i386.rpm
+compiz-devel-0.0.13-0.37.20060817git.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3920">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3920</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDJFXlSAg2UNWIIRAmhtAJ4+Qkry9zyKqInzYmOzksD0Td5ynwCcDqNz
+iwP0IqfWI74iK0MqC0VAY5g=
+=fZRQ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

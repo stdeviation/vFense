@@ -1,0 +1,333 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1601&#45;01] Critical: kdelibs security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Nov 2009 19:03:03 &#45;0500 -->
+<!--X-Message-Id: 200911250003.nAP032j6002776@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1601-01] Critical: kdelibs security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1601-01] Critical: kdelibs security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1601-01] Critical: kdelibs security update</li>
+<li><em>Date</em>: Tue, 24 Nov 2009 19:03:02 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: kdelibs security update
+Advisory ID:       RHSA-2009:1601-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1601.html">https://rhn.redhat.com/errata/RHSA-2009-1601.html</a>
+Issue date:        2009-11-24
+CVE Names:         CVE-2009-0689 
+=====================================================================
+
+1. Summary:
+
+Updated kdelibs packages that fix one security issue are now available for
+Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The kdelibs packages provide libraries for the K Desktop Environment (KDE).
+
+A buffer overflow flaw was found in the kdelibs string to floating point
+conversion routines. A web page containing malicious JavaScript could crash
+Konqueror or, potentially, execute arbitrary code with the privileges of
+the user running Konqueror. (CVE-2009-0689)
+
+Users should upgrade to these updated packages, which contain a backported
+patch to correct this issue. The desktop must be restarted (log out, then
+log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+539784 - CVE-2009-0689 kdelibs remote array overrun
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+ppc:
+kdelibs-3.3.1-17.el4_8.1.ppc.rpm
+kdelibs-3.3.1-17.el4_8.1.ppc64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.ppc.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.ppc64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.ppc.rpm
+
+s390:
+kdelibs-3.3.1-17.el4_8.1.s390.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.s390.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.s390.rpm
+
+s390x:
+kdelibs-3.3.1-17.el4_8.1.s390.rpm
+kdelibs-3.3.1-17.el4_8.1.s390x.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.s390.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.s390x.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.s390x.rpm
+
+x86_64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.i386.rpm
+
+x86_64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+x86_64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kdelibs-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+x86_64:
+kdelibs-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdelibs-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdelibs-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm</a>
+
+i386:
+kdelibs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+
+x86_64:
+kdelibs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm</a>
+
+i386:
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.i386.rpm
+
+x86_64:
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kdelibs-3.5.4-25.el5_4.1.src.rpm</a>
+
+i386:
+kdelibs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.i386.rpm
+
+ia64:
+kdelibs-3.5.4-25.el5_4.1.ia64.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.ia64.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.ia64.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.ia64.rpm
+
+ppc:
+kdelibs-3.5.4-25.el5_4.1.ppc.rpm
+kdelibs-3.5.4-25.el5_4.1.ppc64.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.ppc.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.ppc.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.ppc64.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.ppc.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.ppc64.rpm
+
+s390x:
+kdelibs-3.5.4-25.el5_4.1.s390.rpm
+kdelibs-3.5.4-25.el5_4.1.s390x.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.s390x.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.s390.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.s390x.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.s390.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.s390x.rpm
+
+x86_64:
+kdelibs-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-apidocs-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-debuginfo-3.5.4-25.el5_4.1.x86_64.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.i386.rpm
+kdelibs-devel-3.5.4-25.el5_4.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0689">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0689</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLDHQUXlSAg2UNWIIRApbsAKCkJt9H3OLAK7ijC4KYpKRdEtx5HQCgwlwV
+PCy3KpXsQxQkZHtJ0x0oViI=
+=KdlG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0945&#45;01] Important: flash&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 28 Oct 2008 10:42:50 &#45;0400 -->
+<!--X-Message-Id: 200810281442.m9SEgofh020701@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0945-01] Important: flash-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00016.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0945-01] Important: flash-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0945-01] Important: flash-plugin security update</li>
+<li><em>Date</em>: Tue, 28 Oct 2008 10:42:50 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: flash-plugin security update
+Advisory ID:       RHSA-2008:0945-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0945.html">https://rhn.redhat.com/errata/RHSA-2008-0945.html</a>
+Issue date:        2008-10-28
+CVE Names:         CVE-2007-4324 CVE-2007-6243 CVE-2008-3873 
+                   CVE-2008-4401 CVE-2008-4503 
+=====================================================================
+
+1. Summary:
+
+An updated Adobe Flash Player package that fixes several security issues is
+now available for Red Hat Enterprise Linux 5 Supplementary.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The flash-plugin package contains a Firefox-compatible Adobe Flash Player
+Web browser plug-in.
+
+A flaw was found in the way Adobe Flash Player wrote content to the
+clipboard. A malicious SWF file could populate the clipboard with a URL
+that could cause the user to mistakenly load an attacker-controlled URL.
+(CVE-2008-3873)
+
+A flaw was found which allowed Adobe Flash Player's ActionScript to
+initiate file uploads and downloads without user interaction.
+FileReference.browse and FileReference.download calls can now only be
+initiated via user interaction, such as mouse-clicks or key-presses on the
+keyboard. (CVE-2008-4401)
+
+A flaw was found in Adobe Flash Player's display of the Settings Manager
+content. A malicious SWF file could trick the user into unknowingly
+clicking a link or dialog. This could then give the malicious SWF file
+permission to access the local machine's camera or microphone.
+(CVE-2008-4503)
+
+Flaws were found in the way Flash Player restricted the interpretation and
+usage of cross-domain policy files.  A remote attacker could use Flash
+Player to conduct cross-domain and cross-site scripting attacks
+(CVE-2007-4324, CVE-2007-6243). This update provides enhanced fixes for
+these issues.
+
+Adobe Flash Player 10 also includes bug fixes and feature enhancements
+including:
+
+* improved stability on the Linux platform by fixing a race condition issue
+in sound output.
+
+* new support for custom filters and effects, native 3D transformation and
+animation, advanced audio processing, a new, more flexible text engine, and
+GPU hardware acceleration. 
+
+For more information on new features and enhancements, see the Adobe Flash
+Player site and the Adobe Labs Release Notes.
+
+Note: some users may have installed a 3rd-party component, libflashsupport,
+for older versions of Flash Player. Adobe Flash Player 10 no longer
+supports libflashsupport. Users are advised to remove libflashsupport if
+they have it installed.
+
+All users of Adobe Flash Player should upgrade to this updated package,
+which contains Flash Player version 10.0.12.36.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+252292 - CVE-2007-4324 Flash movie can determine whether a TCP port is open
+440664 - CVE-2007-6243 Flash Player cross-domain and cross-site scripting flaws
+465736 - CVE-2008-3873 flash: clipboard hijack attack
+466154 - CVE-2008-4401 flash-plugin: upload/download user interaction
+466344 - CVE-2008-4503 Adobe Flash Player clickjacking
+
+6. Package List:
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+flash-plugin-10.0.12.36-2.el5.i386.rpm
+
+x86_64:
+flash-plugin-10.0.12.36-2.el5.i386.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+flash-plugin-10.0.12.36-2.el5.i386.rpm
+
+x86_64:
+flash-plugin-10.0.12.36-2.el5.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4324">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4324</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6243">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6243</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3873">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3873</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4401">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4401</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4503">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4503</a>
+<a  rel="nofollow" href="http://adobe.com/products/flashplayer">http://adobe.com/products/flashplayer</a>
+<a  rel="nofollow" href="http://labs.adobe.com/technologies/flashplayer10/releasenotes.html">http://labs.adobe.com/technologies/flashplayer10/releasenotes.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJByTSXlSAg2UNWIIRAlItAJ9aqlQwNSicgNI0KgBR5fPmR4m0QgCeJ55O
+pa+gqJ3/Zs4KSEos+BKUnEw=
+=2xVI
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00016.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

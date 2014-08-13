@@ -1,0 +1,266 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0046&#45;01] Moderate: ntp security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 Jan 2009 04:49:52 &#45;0500 -->
+<!--X-Message-Id: 200901290949.n0T9ns9C020711@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0046-01] Moderate: ntp security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00021.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0046-01] Moderate: ntp security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0046-01] Moderate: ntp security update</li>
+<li><em>Date</em>: Thu, 29 Jan 2009 04:49:53 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ntp security update
+Advisory ID:       RHSA-2009:0046-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0046.html">https://rhn.redhat.com/errata/RHSA-2009-0046.html</a>
+Issue date:        2009-01-29
+CVE Names:         CVE-2009-0021 
+=====================================================================
+
+1. Summary:
+
+Updated ntp packages to correct a security issue are now available for Red
+Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Network Time Protocol (NTP) is used to synchronize a computer's time
+with a referenced time source.
+
+A flaw was discovered in the way the ntpd daemon checked the return value
+of the OpenSSL EVP_VerifyFinal function. On systems using NTPv4
+authentication, this could lead to an incorrect verification of
+cryptographic signatures, allowing time-spoofing attacks. (CVE-2009-0021)
+
+Note: This issue only affects systems that have enabled NTP authentication.
+By default, NTP authentication is not enabled.
+
+All ntp users are advised to upgrade to the updated packages, which contain
+a backported patch to resolve this issue. After installing the update, the
+ntpd daemon will restart automatically.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+476807 - CVE-2009-0021 ntp incorrectly checks for malformed signatures
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm</a>
+
+i386:
+ntp-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+
+ia64:
+ntp-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+
+ppc:
+ntp-4.2.0.a.20040617-8.el4_7.1.ppc.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.ppc.rpm
+
+s390:
+ntp-4.2.0.a.20040617-8.el4_7.1.s390.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.s390.rpm
+
+s390x:
+ntp-4.2.0.a.20040617-8.el4_7.1.s390x.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.s390x.rpm
+
+x86_64:
+ntp-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm</a>
+
+i386:
+ntp-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+
+x86_64:
+ntp-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm</a>
+
+i386:
+ntp-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+
+ia64:
+ntp-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+
+x86_64:
+ntp-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/ntp-4.2.0.a.20040617-8.el4_7.1.src.rpm</a>
+
+i386:
+ntp-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.i386.rpm
+
+ia64:
+ntp-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.ia64.rpm
+
+x86_64:
+ntp-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+ntp-debuginfo-4.2.0.a.20040617-8.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ntp-4.2.2p1-9.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ntp-4.2.2p1-9.el5_3.1.src.rpm</a>
+
+i386:
+ntp-4.2.2p1-9.el5_3.1.i386.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.i386.rpm
+
+x86_64:
+ntp-4.2.2p1-9.el5_3.1.x86_64.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ntp-4.2.2p1-9.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ntp-4.2.2p1-9.el5_3.1.src.rpm</a>
+
+i386:
+ntp-4.2.2p1-9.el5_3.1.i386.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.i386.rpm
+
+ia64:
+ntp-4.2.2p1-9.el5_3.1.ia64.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.ia64.rpm
+
+ppc:
+ntp-4.2.2p1-9.el5_3.1.ppc.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.ppc.rpm
+
+s390x:
+ntp-4.2.2p1-9.el5_3.1.s390x.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.s390x.rpm
+
+x86_64:
+ntp-4.2.2p1-9.el5_3.1.x86_64.rpm
+ntp-debuginfo-4.2.2p1-9.el5_3.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0021">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0021</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJgXumXlSAg2UNWIIRAtr1AJ94UAhnyto2JyiVTP/MVr2s8naqngCdEcid
+2gortoMBGP2wrCbIv79epJY=
+=dCyt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00021.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

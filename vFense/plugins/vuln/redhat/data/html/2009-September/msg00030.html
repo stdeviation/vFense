@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1465&#45;01] Important: kvm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 29 Sep 2009 12:17:30 &#45;0400 -->
+<!--X-Message-Id: 200909291617.n8TGHTDs004109@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1465-01] Important: kvm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1465-01] Important: kvm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1465-01] Important: kvm security and bug fix update</li>
+<li><em>Date</em>: Tue, 29 Sep 2009 12:17:29 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kvm security and bug fix update
+Advisory ID:       RHSA-2009:1465-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1465.html">https://rhn.redhat.com/errata/RHSA-2009-1465.html</a>
+Issue date:        2009-09-29
+CVE Names:         CVE-2009-3290 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix one security issue and several bugs are now
+available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built for
+the standard Red Hat Enterprise Linux kernel.
+
+The kvm_emulate_hypercall() implementation was missing a check for the
+Current Privilege Level (CPL). A local, unprivileged user in a virtual
+machine could use this flaw to cause a local denial of service or escalate
+their privileges within that virtual machine. (CVE-2009-3290)
+
+This update also fixes the following bugs:
+
+* non-maskable interrupts (NMI) were not supported on systems with AMD
+processors. As a consequence, Windows Server 2008 R2 guests running with
+more than one virtual CPU assigned on systems with AMD processors would
+hang at the Windows shut down screen when a restart was attempted. This
+update adds support for NMI filtering on systems with AMD processors,
+allowing clean restarts of Windows Server 2008 R2 guests running with
+multiple virtual CPUs. (BZ#520694)
+
+* significant performance issues for guests running 64-bit editions of
+Windows. This update improves performance for guests running 64-bit
+editions of Windows. (BZ#521793)
+
+* Windows guests may have experienced time drift. (BZ#521794)
+
+* removing the Red Hat VirtIO Ethernet Adapter from a guest running Windows
+Server 2008 R2 caused KVM to crash. With this update, device removal should
+not cause this issue. (BZ#524557)
+
+All KVM users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. Note: The procedure in the
+Solution section must be performed before this update takes effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+The following procedure must be performed before this update takes effect:
+
+1. Stop all KVM guest virtual machines.
+
+2. Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3. Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+520694 - NMI filtering for AMD (Windows 2008 R2 KVM guest can not restart when set it as multiple cpus)
+521793 - windows 64 bit does vmexit on each cr8 access.
+521794 - rtc-td-hack stopped working. Time drifts in windows
+524124 - CVE-2009-3290 kernel: KVM: x86: Disallow hypercalls for guest callers in rings &gt; 0
+524557 - QEMU crash (during virtio-net WHQL tests for Win2008 R2)
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-105.el5_4.7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-105.el5_4.7.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-105.el5_4.7.x86_64.rpm
+kvm-83-105.el5_4.7.x86_64.rpm
+kvm-debuginfo-83-105.el5_4.7.x86_64.rpm
+kvm-qemu-img-83-105.el5_4.7.x86_64.rpm
+kvm-tools-83-105.el5_4.7.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-105.el5_4.7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-105.el5_4.7.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-105.el5_4.7.x86_64.rpm
+kvm-83-105.el5_4.7.x86_64.rpm
+kvm-debuginfo-83-105.el5_4.7.x86_64.rpm
+kvm-qemu-img-83-105.el5_4.7.x86_64.rpm
+kvm-tools-83-105.el5_4.7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3290">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3290</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKwjL+XlSAg2UNWIIRAqNAAJ49kD0ZXnry24TTWuwcPryiP57fyQCdH8ti
+jVVIrtZL3kSy1/zfUBjWWd0=
+=D9md
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

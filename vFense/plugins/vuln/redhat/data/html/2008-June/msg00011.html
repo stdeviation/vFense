@@ -1,0 +1,288 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0512&#45;01] Important: XFree86 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Jun 2008 16:06:23 &#45;0400 -->
+<!--X-Message-Id: 200806112006.m5BK6M00019935@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0512-01] Important: XFree86 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0512-01] Important: XFree86 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0512-01] Important: XFree86 security update</li>
+<li><em>Date</em>: Wed, 11 Jun 2008 16:06:22 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: XFree86 security update
+Advisory ID:       RHSA-2008:0512-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0512.html">https://rhn.redhat.com/errata/RHSA-2008-0512.html</a>
+Issue date:        2008-06-11
+CVE Names:         CVE-2008-1377 CVE-2008-1379 CVE-2008-2360 
+=====================================================================
+
+1. Summary:
+
+Updated XFree86 packages that fix several security issues are now available
+for Red Hat Enterprise Linux 2.1.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1  - i386, ia64
+Red Hat Linux Advanced Workstation 2.1 - ia64
+Red Hat Enterprise Linux ES version 2.1 - i386
+Red Hat Enterprise Linux WS version 2.1 - i386
+
+3. Description:
+
+XFree86 is an implementation of the X Window System, which provides the
+core functionality for the Linux graphical desktop.
+
+An input validation flaw was discovered in X.org's Security and Record
+extensions. A malicious authorized client could exploit this issue to cause
+a denial of service (crash) or, potentially, execute arbitrary code with
+root privileges on the X.Org server. (CVE-2008-1377)
+
+An integer overflow flaw was found in X.org's Render extension. A malicious
+authorized client could exploit this issue to cause a denial of service
+(crash) or, potentially, execute arbitrary code with root privileges on the
+X.Org server. (CVE-2008-2360)
+
+An input validation flaw was discovered in X.org's MIT-SHM extension. A
+client connected to the X.org server could read arbitrary server memory.
+This could result in the sensitive data of other users of the X.org server
+being disclosed. (CVE-2008-1379)
+
+Users of XFree86 are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+445403 - CVE-2008-1377 X.org Record and Security extensions memory corruption
+445414 - CVE-2008-1379 X.org MIT-SHM extension arbitrary memory read
+448783 - CVE-2008-2360 X.org Render extension AllocateGlyph() heap buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1 :
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm">ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm</a>
+
+i386:
+XFree86-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-4.1.0-88.EL.i386.rpm
+XFree86-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-Xnest-4.1.0-88.EL.i386.rpm
+XFree86-Xvfb-4.1.0-88.EL.i386.rpm
+XFree86-cyrillic-fonts-4.1.0-88.EL.i386.rpm
+XFree86-devel-4.1.0-88.EL.i386.rpm
+XFree86-doc-4.1.0-88.EL.i386.rpm
+XFree86-libs-4.1.0-88.EL.i386.rpm
+XFree86-tools-4.1.0-88.EL.i386.rpm
+XFree86-twm-4.1.0-88.EL.i386.rpm
+XFree86-xdm-4.1.0-88.EL.i386.rpm
+XFree86-xf86cfg-4.1.0-88.EL.i386.rpm
+XFree86-xfs-4.1.0-88.EL.i386.rpm
+
+ia64:
+XFree86-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-4.1.0-88.EL.ia64.rpm
+XFree86-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-15-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-15-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-2-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-2-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-9-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-9-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-Xnest-4.1.0-88.EL.ia64.rpm
+XFree86-Xvfb-4.1.0-88.EL.ia64.rpm
+XFree86-cyrillic-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-devel-4.1.0-88.EL.ia64.rpm
+XFree86-doc-4.1.0-88.EL.ia64.rpm
+XFree86-libs-4.1.0-88.EL.ia64.rpm
+XFree86-tools-4.1.0-88.EL.ia64.rpm
+XFree86-twm-4.1.0-88.EL.ia64.rpm
+XFree86-xdm-4.1.0-88.EL.ia64.rpm
+XFree86-xfs-4.1.0-88.EL.ia64.rpm
+
+Red Hat Linux Advanced Workstation 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm">ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm</a>
+
+ia64:
+XFree86-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-4.1.0-88.EL.ia64.rpm
+XFree86-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-15-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-15-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-2-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-2-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-9-100dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-ISO8859-9-75dpi-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-Xnest-4.1.0-88.EL.ia64.rpm
+XFree86-Xvfb-4.1.0-88.EL.ia64.rpm
+XFree86-cyrillic-fonts-4.1.0-88.EL.ia64.rpm
+XFree86-devel-4.1.0-88.EL.ia64.rpm
+XFree86-doc-4.1.0-88.EL.ia64.rpm
+XFree86-libs-4.1.0-88.EL.ia64.rpm
+XFree86-tools-4.1.0-88.EL.ia64.rpm
+XFree86-twm-4.1.0-88.EL.ia64.rpm
+XFree86-xdm-4.1.0-88.EL.ia64.rpm
+XFree86-xfs-4.1.0-88.EL.ia64.rpm
+
+Red Hat Enterprise Linux ES version 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm">ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm</a>
+
+i386:
+XFree86-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-4.1.0-88.EL.i386.rpm
+XFree86-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-Xnest-4.1.0-88.EL.i386.rpm
+XFree86-Xvfb-4.1.0-88.EL.i386.rpm
+XFree86-cyrillic-fonts-4.1.0-88.EL.i386.rpm
+XFree86-devel-4.1.0-88.EL.i386.rpm
+XFree86-doc-4.1.0-88.EL.i386.rpm
+XFree86-libs-4.1.0-88.EL.i386.rpm
+XFree86-tools-4.1.0-88.EL.i386.rpm
+XFree86-twm-4.1.0-88.EL.i386.rpm
+XFree86-xdm-4.1.0-88.EL.i386.rpm
+XFree86-xf86cfg-4.1.0-88.EL.i386.rpm
+XFree86-xfs-4.1.0-88.EL.i386.rpm
+
+Red Hat Enterprise Linux WS version 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm">ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/XFree86-4.1.0-88.EL.src.rpm</a>
+
+i386:
+XFree86-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-4.1.0-88.EL.i386.rpm
+XFree86-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-15-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-2-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-100dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-ISO8859-9-75dpi-fonts-4.1.0-88.EL.i386.rpm
+XFree86-Xnest-4.1.0-88.EL.i386.rpm
+XFree86-Xvfb-4.1.0-88.EL.i386.rpm
+XFree86-cyrillic-fonts-4.1.0-88.EL.i386.rpm
+XFree86-devel-4.1.0-88.EL.i386.rpm
+XFree86-doc-4.1.0-88.EL.i386.rpm
+XFree86-libs-4.1.0-88.EL.i386.rpm
+XFree86-tools-4.1.0-88.EL.i386.rpm
+XFree86-twm-4.1.0-88.EL.i386.rpm
+XFree86-xdm-4.1.0-88.EL.i386.rpm
+XFree86-xf86cfg-4.1.0-88.EL.i386.rpm
+XFree86-xfs-4.1.0-88.EL.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1377">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1377</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1379">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1379</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2360">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2360</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIUDAmXlSAg2UNWIIRAo2AAKCS1+awAoswLIPtmfjln+wIOq+4+wCfeBiM
+KYAHfMpLWNzo5EsykwT7JUU=
+=KQnY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

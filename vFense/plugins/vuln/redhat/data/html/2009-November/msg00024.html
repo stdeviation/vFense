@@ -1,0 +1,175 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1617&#45;01] Low: tomcat security update for Red Hat Network	Satellite Server -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Nov 2009 10:42:47 &#45;0500 -->
+<!--X-Message-Id: 200911301542.nAUFglYZ025795@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1617-01] Low: tomcat security update for Red Hat Network	Sate</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1617-01] Low: tomcat security update for Red Hat Network	Satellite Server</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1617-01] Low: tomcat security update for Red Hat Network	Satellite Server</li>
+<li><em>Date</em>: Mon, 30 Nov 2009 10:42:47 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: tomcat security update for Red Hat Network Satellite Server
+Advisory ID:       RHSA-2009:1617-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1617.html">https://rhn.redhat.com/errata/RHSA-2009-1617.html</a>
+Issue date:        2009-11-30
+CVE Names:         CVE-2008-5515 CVE-2009-0033 CVE-2009-0783 
+=====================================================================
+
+1. Summary:
+
+An updated tomcat package that fixes several security issues is now
+available for Red Hat Network Satellite Server 5.1.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server 5.1 (RHEL v.4 AS) - noarch
+
+3. Description:
+
+Apache Tomcat is a servlet container for the Java Servlet and JavaServer
+Pages (JSP) technologies.
+
+This update corrects several security vulnerabilities in the Tomcat
+component shipped as part of Red Hat Network Satellite Server. In a typical
+operating environment, Tomcat is not exposed to users of Satellite Server
+in a vulnerable manner: By default, only Satellite Server applications are
+running on Tomcat. This update will reduce risk in unique Satellite Server
+environments.
+
+It was discovered that request dispatchers did not properly normalize user
+requests that have trailing query strings, allowing remote attackers to
+send specially-crafted requests that would cause an information leak.
+(CVE-2008-5515)
+
+A flaw was found in the way the Tomcat AJP (Apache JServ Protocol)
+connector processes AJP connections. An attacker could use this flaw to
+send specially-crafted requests that would cause a temporary denial of
+service. (CVE-2009-0033)
+
+It was discovered that web applications containing their own XML parsers
+could replace the XML parser Tomcat uses to parse configuration files. A
+malicious web application running on a Tomcat instance could read or,
+potentially, modify the configuration and XML-based data of other web
+applications deployed on the same Tomcat instance. (CVE-2009-0783)
+
+Users of Red Hat Network Satellite Server 5.1 are advised to upgrade to
+this updated tomcat package, which contains backported patches to resolve
+these issues. Tomcat must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+493381 - CVE-2009-0033 tomcat6 Denial-Of-Service with AJP connection
+504153 - CVE-2009-0783 tomcat XML parser information disclosure
+504753 - CVE-2008-5515 tomcat request dispatcher information disclosure vulnerability
+
+6. Package List:
+
+Red Hat Network Satellite Server 5.1 (RHEL v.4 AS):
+
+Source:
+tomcat5-5.0.30-0jpp_16rh.src.rpm
+
+noarch:
+tomcat5-5.0.30-0jpp_16rh.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5515">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5515</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0033">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0033</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0783">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0783</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-5.html">http://tomcat.apache.org/security-5.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLE+fnXlSAg2UNWIIRAqbZAKChVwjKsbqPC5EpI1tmF98LGOyAkACfQ6s3
+EcItTzFDJ0w0xkvcOaMeyq8=
+=F99S
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

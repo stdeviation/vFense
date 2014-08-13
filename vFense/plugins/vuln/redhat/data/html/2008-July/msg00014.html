@@ -1,0 +1,223 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0594&#45;01] Critical: java&#45;1.6.0&#45;sun security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 14 Jul 2008 11:32:27 &#45;0400 -->
+<!--X-Message-Id: 200807141532.m6EFWQTR002301@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0594-01] Critical: java-1.6.0-sun security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0594-01] Critical: java-1.6.0-sun security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0594-01] Critical: java-1.6.0-sun security update</li>
+<li><em>Date</em>: Mon, 14 Jul 2008 11:32:26 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.6.0-sun security update
+Advisory ID:       RHSA-2008:0594-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0594.html">https://rhn.redhat.com/errata/RHSA-2008-0594.html</a>
+Issue date:        2008-07-14
+CVE Names:         CVE-2008-3103 CVE-2008-3104 CVE-2008-3105 
+                   CVE-2008-3106 CVE-2008-3107 CVE-2008-3109 
+                   CVE-2008-3110 CVE-2008-3112 CVE-2008-3114 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-sun packages that correct several security issues are
+now available for Red Hat Enterprise Linux 4 Extras and 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The Java Runtime Environment (JRE) contains the software and tools that
+users need to run applets and applications written using the Java
+programming language. 
+
+A vulnerability was found in the Java Management Extensions (JMX)
+management agent, when local monitoring is enabled. This allowed remote
+attackers to perform illegal operations. (CVE-2008-3103)
+
+Multiple vulnerabilities with unsigned applets were reported. A remote
+attacker could misuse an unsigned applet to connect to localhost services
+running on the host running the applet. (CVE-2008-3104)
+
+Several vulnerabilities in the Java API for XML Web Services (JAX-WS)
+client and service implementation were found. A remote attacker who caused
+malicious XML to be processed by a trusted or untrusted application was
+able access URLs or cause a denial of service. (CVE-2008-3105, CVE-2008-3106)
+
+A JRE vulnerability could be triggered by an untrusted application or
+applet. A remote attacker could grant an untrusted applet or application
+extended privileges such as being able to read and write local files, or
+execute local programs. (CVE-2008-3107)
+
+Several vulnerabilities within the JRE scripting support were reported. A
+remote attacker could grant an untrusted applet extended privileges such as
+reading and writing local files, executing local programs, or querying the
+sensitive data of other applets. (CVE-2008-3109, CVE-2008-3110)
+
+A vulnerability in Java Web Start was found. A remote attacker was able to
+create arbitrary files with the permissions of the user running the
+untrusted Java Web Start application. (CVE-2008-3112)
+
+Another vulnerability in Java Web Start when processing untrusted
+applications was reported. An attacker was able to acquire sensitive
+information, such as the cache location. (CVE-2008-3114)
+
+Users of java-1.6.0-sun should upgrade to these updated packages, which
+correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+452649 - CVE-2008-3105 CVE-2008-3106 OpenJDK JAX-WS unauthorized URL access (6542088)
+452658 - CVE-2008-3107 JDK untrusted applet/application privilege escalation (6661918)
+452659 - CVE-2008-3103 OpenJDK JMX allows illegal operations with local monitoring (6332953)
+454601 - CVE-2008-3104 Java RE allows Same Origin Policy to be Bypassed (6687932)
+454603 - CVE-2008-3109 CVE-2008-3110 Security Vulnerabilities in the Java Runtime Environment Scripting Language Support (6529568, 6529579)
+454606 - CVE-2008-3112 Java Web Start, arbitrary file creation (6703909)
+454608 - CVE-2008-3114 Java Web Start, untrusted application may determine Cache Location  (6704074)
+
+6. Package List:
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+java-1.6.0-sun-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-demo-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-devel-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-src-1.6.0.7-1jpp.1.el5.i586.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-src-1.6.0.7-1jpp.1.el5.x86_64.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+java-1.6.0-sun-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-demo-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-devel-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-src-1.6.0.7-1jpp.1.el5.i586.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.7-1jpp.1.el5.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.7-1jpp.1.el5.i586.rpm
+java-1.6.0-sun-src-1.6.0.7-1jpp.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3103">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3103</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3104">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3104</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3105">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3105</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3106">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3106</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3107">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3107</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3109">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3109</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3110">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3110</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3112">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3112</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3114">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3114</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIe3GCXlSAg2UNWIIRArt1AJ45wdIc73WX8WmHSdNW6xXu8BbuVACfYLR6
+OKHPr6bal50QVb1whF6263o=
+=tpsU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

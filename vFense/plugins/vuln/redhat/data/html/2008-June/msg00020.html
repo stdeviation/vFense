@@ -1,0 +1,339 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0508&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 25 Jun 2008 11:19:48 &#45;0400 -->
+<!--X-Message-Id: 200806251519.m5PFJkYw007887@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0508-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0508-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0508-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 25 Jun 2008 11:19:46 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0508-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0508.html">https://rhn.redhat.com/errata/RHSA-2008-0508.html</a>
+Issue date:        2008-06-25
+CVE Names:         CVE-2008-0598 CVE-2008-1367 CVE-2008-2365 
+                   CVE-2008-2729 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and a bug are now
+available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* A security flaw was found in the Linux kernel memory copy routines, when
+running on certain AMD64 systems. If an unsuccessful attempt to copy kernel
+memory from source to destination memory locations occurred, the copy
+routines did not zero the content at the destination memory location. This
+could allow a local unprivileged user to view potentially sensitive data.
+(CVE-2008-2729, Important)
+
+* Alexey Dobriyan discovered a race condition in the Linux kernel
+process-tracing system call, ptrace. A local unprivileged user could
+use this flaw to cause a denial of service (kernel hang).
+(CVE-2008-2365, Important)
+
+* Tavis Ormandy discovered a deficiency in the Linux kernel 32-bit and
+64-bit emulation. This could allow a local unprivileged user to prepare and
+run a specially crafted binary, which would use this deficiency to leak
+uninitialized and potentially sensitive data. (CVE-2008-0598, Important)
+
+* It was discovered that the Linux kernel handled string operations in the
+opposite way to the GNU Compiler Collection (GCC). This could allow a local
+unprivileged user to cause memory corruption. (CVE-2008-1367, Low)
+
+As well, these updated packages fix the following bug:
+
+* On systems with a large number of CPUs (more than 16), multiple
+applications calling the &quot;times()&quot; system call may have caused a system
+hang.
+
+Red Hat Enterprise Linux 4 users are advised to upgrade to these updated
+packages, which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+433938 - CVE-2008-0598 kernel: linux x86_64 ia32 emulation leaks uninitialized data
+437312 - CVE-2008-1367 Kernel doesn't clear DF for signal handlers
+449101 - [4.7] System goes unresponsive if times() syscall is called concurrently on many cpus
+449359 - CVE-2008-2365 kernel: ptrace: Crash on PTRACE_{ATTACH,DETACH} race
+451271 - CVE-2008-2729 kernel: [x86_64]  The string instruction version didn't zero the output on exception.
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-67.0.20.EL.i686.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.i686.rpm
+kernel-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.ia64.rpm
+kernel-devel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-67.0.20.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-67.0.20.EL.ppc64.rpm
+kernel-2.6.9-67.0.20.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-67.0.20.EL.ppc64.rpm
+kernel-devel-2.6.9-67.0.20.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-67.0.20.EL.s390.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.s390.rpm
+kernel-devel-2.6.9-67.0.20.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-67.0.20.EL.s390x.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.s390x.rpm
+kernel-devel-2.6.9-67.0.20.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-67.0.20.EL.i686.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.i686.rpm
+kernel-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.i686.rpm
+
+noarch:
+kernel-doc-2.6.9-67.0.20.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-67.0.20.EL.i686.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.i686.rpm
+kernel-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.ia64.rpm
+kernel-devel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-67.0.20.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-67.0.20.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-67.0.20.EL.i686.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.i686.rpm
+kernel-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-2.6.9-67.0.20.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-2.6.9-67.0.20.EL.i686.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-2.6.9-67.0.20.EL.i686.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.ia64.rpm
+kernel-devel-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-67.0.20.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-2.6.9-67.0.20.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-67.0.20.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1367">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1367</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2365">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2365</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2729">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2729</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIYmHsXlSAg2UNWIIRAqgFAJ99yj522cnmgB1O2Gmod2OtKwcdOACeMOXQ
+wx+oqa3/HlRvUCW/Y/nqM+8=
+=jD9e
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

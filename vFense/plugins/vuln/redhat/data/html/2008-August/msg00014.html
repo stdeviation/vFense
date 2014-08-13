@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0815&#45;01] Moderate: yum&#45;rhn&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Aug 2008 09:14:55 &#45;0400 -->
+<!--X-Message-Id: 200808141314.m7EDEsX9029310@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0815-01] Moderate: yum-rhn-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0815-01] Moderate: yum-rhn-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0815-01] Moderate: yum-rhn-plugin security update</li>
+<li><em>Date</em>: Thu, 14 Aug 2008 09:14:54 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: yum-rhn-plugin security update
+Advisory ID:       RHSA-2008:0815-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0815.html">https://rhn.redhat.com/errata/RHSA-2008-0815.html</a>
+Issue date:        2008-08-14
+CVE Names:         CVE-2008-3270 
+=====================================================================
+
+1. Summary:
+
+Updated yum-rhn-plugin packages that fix a security issue are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - noarch
+Red Hat Enterprise Linux (v. 5 server) - noarch
+
+3. Description:
+
+The yum-rhn-plugin provides support for yum to securely access a Red Hat
+Network (RHN) server for software updates.
+
+It was discovered that yum-rhn-plugin did not verify the SSL certificate
+for all communication with a Red Hat Network server. An attacker able to
+redirect the network communication between a victim and an RHN server could
+use this flaw to provide malicious repository metadata. This metadata could
+be used to block the victim from receiving specific security updates.
+(CVE-2008-3270)
+
+This flaw did not allow an attacker to install malicious packages. Package
+signatures were verified and only packages signed with a trusted Red Hat
+GPG key were installed.
+
+Red Hat would like to thank Justin Samuel for discussing various package
+update mechanism flaws which led to our discovery of this issue.
+
+Users of yum-rhn-plugin are advised to upgrade to this updated packages,
+which resolves this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+457113 - CVE-2008-3270 yum-rhn-plugin: does not verify SSL certificate for all communication with RHN server
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/yum-rhn-plugin-0.5.3-12.el5_2.9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/yum-rhn-plugin-0.5.3-12.el5_2.9.src.rpm</a>
+
+noarch:
+yum-rhn-plugin-0.5.3-12.el5_2.9.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/yum-rhn-plugin-0.5.3-12.el5_2.9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/yum-rhn-plugin-0.5.3-12.el5_2.9.src.rpm</a>
+
+noarch:
+yum-rhn-plugin-0.5.3-12.el5_2.9.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3270">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3270</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIpC+/XlSAg2UNWIIRAoUYAKCGobj2QZPsan8y923FKa6Xj09s6QCguzg5
+r9vMKJPOIeTB54ICxsJwrIM=
+=dy9t
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

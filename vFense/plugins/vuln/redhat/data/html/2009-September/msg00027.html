@@ -1,0 +1,360 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1461&#45;01] Important: Red Hat Application Stack v2.4	security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Sep 2009 17:51:21 &#45;0400 -->
+<!--X-Message-Id: 200909232151.n8NLpKCc028848@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1461-01] Important: Red Hat Application Stack v2.4	security a</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1461-01] Important: Red Hat Application Stack v2.4	security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1461-01] Important: Red Hat Application Stack v2.4	security and enhancement update</li>
+<li><em>Date</em>: Wed, 23 Sep 2009 17:51:20 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Application Stack v2.4 security and enhancement update
+Advisory ID:       RHSA-2009:1461-01
+Product:           Red Hat Application Stack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1461.html">https://rhn.redhat.com/errata/RHSA-2009-1461.html</a>
+Issue date:        2009-09-23
+CVE Names:         CVE-2008-4456 CVE-2009-2446 CVE-2009-2687 
+                   CVE-2009-3094 CVE-2009-3095 CVE-2009-3229 
+                   CVE-2009-3230 CVE-2009-3231 
+=====================================================================
+
+1. Summary:
+
+Red Hat Application Stack v2.4 is now available. This update fixes several
+security issues and adds various enhancements.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5) - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Application Stack v2.4 is an integrated open source application
+stack, that includes Red Hat Enterprise Linux 5 and JBoss Enterprise
+Application Platform (EAP). JBoss EAP is provided through the JBoss EAP
+channels on the Red Hat Network.
+
+PostgreSQL was updated to version 8.2.14, fixing the following security
+issues:
+
+A flaw was found in the way PostgreSQL handles LDAP-based authentication.
+If PostgreSQL was configured to use LDAP authentication and the LDAP server
+was configured to allow anonymous binds, anyone able to connect to a given
+database could use this flaw to log in as any database user, including a
+PostgreSQL superuser, without supplying a password. (CVE-2009-3231)
+
+It was discovered that the upstream patch for CVE-2007-6600 included in the
+Red Hat Security Advisory RHSA-2008:0040 did not include protection against
+misuse of the RESET ROLE and RESET SESSION AUTHORIZATION commands. An
+authenticated user could use this flaw to install malicious code that would
+later execute with superuser privileges. (CVE-2009-3230)
+
+A flaw was found in the way PostgreSQL handles external plug-ins. This flaw
+could allow remote, authenticated users without superuser privileges to
+crash the back-end server by using the LOAD command on libraries in
+&quot;/var/lib/pgsql/plugins/&quot; that have already been loaded, causing a
+temporary denial of service during crash recovery. (CVE-2009-3229)
+
+MySQL was updated to version 5.0.84, fixing the following security issues:
+
+An insufficient HTML entities quoting flaw was found in the mysql command
+line client's HTML output mode. If an attacker was able to inject arbitrary
+HTML tags into data stored in a MySQL database, which was later retrieved
+using the mysql command line client and its HTML output mode, they could
+perform a cross-site scripting (XSS) attack against victims viewing the
+HTML output in a web browser. (CVE-2008-4456)
+
+Multiple format string flaws were found in the way the MySQL server logs
+user commands when creating and deleting databases. A remote, authenticated
+attacker with permissions to CREATE and DROP databases could use these
+flaws to formulate a specifically-crafted SQL command that would cause a
+temporary denial of service (open connections to mysqld are terminated).
+(CVE-2009-2446)
+
+Note: To exploit the CVE-2009-2446 flaws, the general query log (the mysqld
+&quot;--log&quot; command line option or the &quot;log&quot; option in &quot;/etc/my.cnf&quot;) must be
+enabled. This logging is not enabled by default.
+
+PHP was updated to version 5.2.10, fixing the following security issue:
+
+An insufficient input validation flaw was discovered in the PHP
+exif_read_data() function, used to read Exchangeable image file format
+(Exif) metadata from images. An attacker could create a specially-crafted
+image that could cause the PHP interpreter to crash or disclose portions of
+its memory while reading the Exif metadata from the image. (CVE-2009-2687)
+
+Apache httpd has been updated with backported patches to correct the
+following security issues:
+
+A NULL pointer dereference flaw was found in the Apache mod_proxy_ftp
+module. A malicious FTP server to which requests are being proxied could
+use this flaw to crash an httpd child process via a malformed reply to the
+EPSV or PASV commands, resulting in a limited denial of service.
+(CVE-2009-3094)
+
+A second flaw was found in the Apache mod_proxy_ftp module. In a reverse
+proxy configuration, a remote attacker could use this flaw to bypass
+intended access restrictions by creating a carefully-crafted HTTP
+Authorization header, allowing the attacker to send arbitrary commands to
+the FTP server. (CVE-2009-3095)
+
+Also, the following packages have been updated:
+
+* postgresql-jdbc to 8.2.510
+* php-pear to 1.8.1
+* perl-DBI to 1.609
+* perl-DBD-MySQL to 4.012
+
+All users should upgrade to these updated packages, which resolve these
+issues. Users must restart the individual services, including postgresql,
+mysqld, and httpd, for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+466518 - CVE-2008-4456 mysql: mysql command line client XSS flaw
+506896 - CVE-2009-2687 php: exif_read_data crash on corrupted JPEG files
+511020 - CVE-2009-2446 MySQL: Format string vulnerability by manipulation with database instances (crash)
+521619 - CVE-2009-3094 httpd: NULL pointer defer in mod_proxy_ftp caused by crafted EPSV and PASV reply
+522084 - CVE-2009-3231 postgresql: LDAP authentication bypass when anonymous LDAP bind are allowed
+522085 - CVE-2009-3230 postgresql: SQL privilege escalation, incomplete fix for CVE-2007-6600
+522092 - CVE-2009-3229 postgresql: authenticated user server DoS via plugin re-LOAD-ing
+522209 - CVE-2009-3095 httpd: mod_proxy_ftp FTP command injection via Authorization HTTP header
+
+6. Package List:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.13-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.13-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-5.0.84-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-5.0.84-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.012-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.012-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBI-1.609-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBI-1.609-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.10-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.10-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-pear-1.8.1-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-pear-1.8.1-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.14-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.14-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.510-1jpp.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.510-1jpp.el5s2.src.rpm</a>
+
+i386:
+httpd-2.2.13-2.el5s2.i386.rpm
+httpd-debuginfo-2.2.13-2.el5s2.i386.rpm
+httpd-devel-2.2.13-2.el5s2.i386.rpm
+httpd-manual-2.2.13-2.el5s2.i386.rpm
+mod_ssl-2.2.13-2.el5s2.i386.rpm
+mysql-5.0.84-2.el5s2.i386.rpm
+mysql-bench-5.0.84-2.el5s2.i386.rpm
+mysql-cluster-5.0.84-2.el5s2.i386.rpm
+mysql-debuginfo-5.0.84-2.el5s2.i386.rpm
+mysql-devel-5.0.84-2.el5s2.i386.rpm
+mysql-libs-5.0.84-2.el5s2.i386.rpm
+mysql-server-5.0.84-2.el5s2.i386.rpm
+mysql-test-5.0.84-2.el5s2.i386.rpm
+perl-DBD-MySQL-4.012-1.el5s2.i386.rpm
+perl-DBD-MySQL-debuginfo-4.012-1.el5s2.i386.rpm
+perl-DBI-1.609-1.el5s2.i386.rpm
+perl-DBI-debuginfo-1.609-1.el5s2.i386.rpm
+php-5.2.10-1.el5s2.i386.rpm
+php-bcmath-5.2.10-1.el5s2.i386.rpm
+php-cli-5.2.10-1.el5s2.i386.rpm
+php-common-5.2.10-1.el5s2.i386.rpm
+php-dba-5.2.10-1.el5s2.i386.rpm
+php-debuginfo-5.2.10-1.el5s2.i386.rpm
+php-devel-5.2.10-1.el5s2.i386.rpm
+php-gd-5.2.10-1.el5s2.i386.rpm
+php-imap-5.2.10-1.el5s2.i386.rpm
+php-ldap-5.2.10-1.el5s2.i386.rpm
+php-mbstring-5.2.10-1.el5s2.i386.rpm
+php-mysql-5.2.10-1.el5s2.i386.rpm
+php-ncurses-5.2.10-1.el5s2.i386.rpm
+php-odbc-5.2.10-1.el5s2.i386.rpm
+php-pdo-5.2.10-1.el5s2.i386.rpm
+php-pgsql-5.2.10-1.el5s2.i386.rpm
+php-snmp-5.2.10-1.el5s2.i386.rpm
+php-soap-5.2.10-1.el5s2.i386.rpm
+php-xml-5.2.10-1.el5s2.i386.rpm
+php-xmlrpc-5.2.10-1.el5s2.i386.rpm
+postgresql-8.2.14-1.el5s2.i386.rpm
+postgresql-contrib-8.2.14-1.el5s2.i386.rpm
+postgresql-debuginfo-8.2.14-1.el5s2.i386.rpm
+postgresql-devel-8.2.14-1.el5s2.i386.rpm
+postgresql-docs-8.2.14-1.el5s2.i386.rpm
+postgresql-jdbc-8.2.510-1jpp.el5s2.i386.rpm
+postgresql-jdbc-debuginfo-8.2.510-1jpp.el5s2.i386.rpm
+postgresql-libs-8.2.14-1.el5s2.i386.rpm
+postgresql-plperl-8.2.14-1.el5s2.i386.rpm
+postgresql-plpython-8.2.14-1.el5s2.i386.rpm
+postgresql-pltcl-8.2.14-1.el5s2.i386.rpm
+postgresql-python-8.2.14-1.el5s2.i386.rpm
+postgresql-server-8.2.14-1.el5s2.i386.rpm
+postgresql-tcl-8.2.14-1.el5s2.i386.rpm
+postgresql-test-8.2.14-1.el5s2.i386.rpm
+
+noarch:
+php-pear-1.8.1-2.el5s2.noarch.rpm
+
+x86_64:
+httpd-2.2.13-2.el5s2.x86_64.rpm
+httpd-debuginfo-2.2.13-2.el5s2.i386.rpm
+httpd-debuginfo-2.2.13-2.el5s2.x86_64.rpm
+httpd-devel-2.2.13-2.el5s2.i386.rpm
+httpd-devel-2.2.13-2.el5s2.x86_64.rpm
+httpd-manual-2.2.13-2.el5s2.x86_64.rpm
+mod_ssl-2.2.13-2.el5s2.x86_64.rpm
+mysql-5.0.84-2.el5s2.i386.rpm
+mysql-5.0.84-2.el5s2.x86_64.rpm
+mysql-bench-5.0.84-2.el5s2.x86_64.rpm
+mysql-cluster-5.0.84-2.el5s2.x86_64.rpm
+mysql-debuginfo-5.0.84-2.el5s2.i386.rpm
+mysql-debuginfo-5.0.84-2.el5s2.x86_64.rpm
+mysql-devel-5.0.84-2.el5s2.i386.rpm
+mysql-devel-5.0.84-2.el5s2.x86_64.rpm
+mysql-libs-5.0.84-2.el5s2.i386.rpm
+mysql-libs-5.0.84-2.el5s2.x86_64.rpm
+mysql-server-5.0.84-2.el5s2.x86_64.rpm
+mysql-test-5.0.84-2.el5s2.x86_64.rpm
+perl-DBD-MySQL-4.012-1.el5s2.x86_64.rpm
+perl-DBD-MySQL-debuginfo-4.012-1.el5s2.x86_64.rpm
+perl-DBI-1.609-1.el5s2.x86_64.rpm
+perl-DBI-debuginfo-1.609-1.el5s2.x86_64.rpm
+php-5.2.10-1.el5s2.x86_64.rpm
+php-bcmath-5.2.10-1.el5s2.x86_64.rpm
+php-cli-5.2.10-1.el5s2.x86_64.rpm
+php-common-5.2.10-1.el5s2.x86_64.rpm
+php-dba-5.2.10-1.el5s2.x86_64.rpm
+php-debuginfo-5.2.10-1.el5s2.x86_64.rpm
+php-devel-5.2.10-1.el5s2.x86_64.rpm
+php-gd-5.2.10-1.el5s2.x86_64.rpm
+php-imap-5.2.10-1.el5s2.x86_64.rpm
+php-ldap-5.2.10-1.el5s2.x86_64.rpm
+php-mbstring-5.2.10-1.el5s2.x86_64.rpm
+php-mysql-5.2.10-1.el5s2.x86_64.rpm
+php-ncurses-5.2.10-1.el5s2.x86_64.rpm
+php-odbc-5.2.10-1.el5s2.x86_64.rpm
+php-pdo-5.2.10-1.el5s2.x86_64.rpm
+php-pgsql-5.2.10-1.el5s2.x86_64.rpm
+php-snmp-5.2.10-1.el5s2.x86_64.rpm
+php-soap-5.2.10-1.el5s2.x86_64.rpm
+php-xml-5.2.10-1.el5s2.x86_64.rpm
+php-xmlrpc-5.2.10-1.el5s2.x86_64.rpm
+postgresql-8.2.14-1.el5s2.x86_64.rpm
+postgresql-contrib-8.2.14-1.el5s2.x86_64.rpm
+postgresql-debuginfo-8.2.14-1.el5s2.i386.rpm
+postgresql-debuginfo-8.2.14-1.el5s2.x86_64.rpm
+postgresql-devel-8.2.14-1.el5s2.i386.rpm
+postgresql-devel-8.2.14-1.el5s2.x86_64.rpm
+postgresql-docs-8.2.14-1.el5s2.x86_64.rpm
+postgresql-jdbc-8.2.510-1jpp.el5s2.x86_64.rpm
+postgresql-jdbc-debuginfo-8.2.510-1jpp.el5s2.x86_64.rpm
+postgresql-libs-8.2.14-1.el5s2.i386.rpm
+postgresql-libs-8.2.14-1.el5s2.x86_64.rpm
+postgresql-plperl-8.2.14-1.el5s2.x86_64.rpm
+postgresql-plpython-8.2.14-1.el5s2.x86_64.rpm
+postgresql-pltcl-8.2.14-1.el5s2.x86_64.rpm
+postgresql-python-8.2.14-1.el5s2.x86_64.rpm
+postgresql-server-8.2.14-1.el5s2.x86_64.rpm
+postgresql-tcl-8.2.14-1.el5s2.x86_64.rpm
+postgresql-test-8.2.14-1.el5s2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4456">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4456</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2446">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2446</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2687">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2687</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3094">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3094</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3095">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3095</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3229">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3229</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3230">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3230</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3231">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3231</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKupg9XlSAg2UNWIIRAgcCAJ9zN2IdEV695/K9vdqLfujl8HQXfgCgnju5
+cbqFD4b56PqnVC0IXfdnA+E=
+=vy7A
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1438&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Sep 2009 04:34:26 &#45;0400 -->
+<!--X-Message-Id: 200909150834.n8F8YPfw010353@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1438-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1438-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1438-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 15 Sep 2009 04:34:24 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1438-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1438.html">https://rhn.redhat.com/errata/RHSA-2009-1438.html</a>
+Issue date:        2009-09-15
+CVE Names:         CVE-2009-1883 CVE-2009-1895 CVE-2009-2847 
+                   CVE-2009-2848 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and several bugs
+are now available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* the ADDR_COMPAT_LAYOUT and MMAP_PAGE_ZERO flags were not cleared when a
+setuid or setgid program was executed. A local, unprivileged user could use
+this flaw to bypass the mmap_min_addr protection mechanism and perform a
+NULL pointer dereference attack, or bypass the Address Space Layout
+Randomization (ASLR) security feature. (CVE-2009-1895, Important)
+
+* it was discovered that, when executing a new process, the clear_child_tid
+pointer in the Linux kernel is not cleared. If this pointer points to a
+writable portion of the memory of the new program, the kernel could corrupt
+four bytes of memory, possibly leading to a local denial of service or
+privilege escalation. (CVE-2009-2848, Important)
+
+* Solar Designer reported a missing capability check in the z90crypt driver
+in the Linux kernel. This missing check could allow a local user with an
+effective user ID (euid) of 0 to bypass intended capability restrictions.
+(CVE-2009-1883, Moderate)
+
+* a flaw was found in the way the do_sigaltstack() function in the Linux
+kernel copies the stack_t structure to user-space. On 64-bit machines, this
+flaw could lead to a four-byte information leak. (CVE-2009-2847, Moderate)
+
+This update also fixes the following bugs:
+
+* the gcc flag &quot;-fno-delete-null-pointer-checks&quot; was added to the kernel
+build options. This prevents gcc from optimizing out NULL pointer checks
+after the first use of a pointer. NULL pointer bugs are often exploited by
+attackers. Keeping these checks is a safety measure. (BZ#517964)
+
+* the Emulex LPFC driver has been updated to version 8.0.16.47, which
+fixes a memory leak that caused memory allocation failures and system
+hangs. (BZ#513192)
+
+* an error in the MPT Fusion driver makefile caused CSMI ioctls to not
+work with Serial Attached SCSI devices. (BZ#516184)
+
+* this update adds the mmap_min_addr tunable and restriction checks to help
+prevent unprivileged users from creating new memory mappings below the
+minimum address. This can help prevent the exploitation of NULL pointer
+deference bugs. Note that mmap_min_addr is set to zero (disabled) by
+default for backwards compatibility. (BZ#517904)
+
+* time-outs resulted in I/O errors being logged to &quot;/var/log/messages&quot; when
+running &quot;mt erase&quot; on tape drives using certain LSI MegaRAID SAS adapters,
+preventing the command from completing. The megaraid_sas driver's timeout
+value is now set to the OS layer value. (BZ#517965)
+
+* a locking issue caused the qla2xxx ioctl module to hang after
+encountering errors. This locking issue has been corrected. This ioctl
+module is used by the QLogic SAN management tools, such as SANsurfer and
+scli. (BZ#519428)
+
+* when a RAID 1 array that uses the mptscsi driver and the LSI 1030
+controller became degraded, the whole array was detected as being offline,
+which could cause kernel panics at boot or data loss. (BZ#517295)
+
+* on 32-bit architectures, if a file was held open and frequently written
+for more than 25 days, it was possible that the kernel would stop flushing
+those writes to storage. (BZ#515255)
+
+* a memory allocation bug in ib_mthca prevented the driver from loading if
+it was loaded with large values for the &quot;num_mpt=&quot; and &quot;num_mtt=&quot; options.
+(BZ#518707)
+
+* with this update, get_random_int() is more random and no longer uses a
+common seed value, reducing the possibility of predicting the values
+returned. (BZ#519692)
+
+* a bug in __ptrace_unlink() caused it to create deadlocked and unkillable
+processes. (BZ#519446)
+
+* previously, multiple threads using the fcntl() F_SETLK command to
+synchronize file access caused a deadlock in posix_locks_deadlock(). This
+could cause a system hang. (BZ#519429)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+505983 - CVE-2009-1883 kernel: missing capability check in z90crypt
+511171 - CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+513192 - [Emulex 4.9 bug] DMA zone exhaustion from lpfc driver memory leak
+515255 - NFS problems on RHEL 4 where logs show different lengths
+515392 - CVE-2009-2847 kernel: information leak in sigaltstack
+515423 - CVE-2009-2848 kernel: execve: must clear current-&amp;gt;clear_child_tid
+516184 - MPT driver CC_CSMI_SAS_GET_CNTLR_CONFIG IOCTL fails [rhel-4.8.z]
+517295 - Missing mptscsi RAID1 disk causes kernel panic when rebooted before array rebuild. [rhel-4.8.z]
+517904 - kernel: security: implement mmap_min_addr infrastructure [rhel-4.8.z]
+517964 - kernel: build with -fno-delete-null-pointer-checks [rhel-4.8.z]
+517965 - MegaRAID SAS 1078 tape I/O errors when using mt erase [rhel-4.8.z]
+518707 - num_mtt settings of 2097152 fails in RHEL with infiniband HCA [rhel-4.8.z]
+519428 - [NetApp 4.8 bug] Issues with &quot;qioctlmod&quot; module on RHEL4.8 hosts with QLogic FC inbox drivers [rhel-4.8.z]
+519429 - [RHEL 4] Lookups due to infinite loops in posix_locks_deadlock [rhel-4.8.z]
+519446 - kernel: ptrace: don't use REMOVE_LINKS/SET_LINKS for reparenting [rhel-4.9] [rhel-4.8.z]
+519692 - kernel: random: make get_random_int() more random [rhel-4.9] [rhel-4.8.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-89.0.11.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-89.0.11.EL.s390.rpm
+kernel-2.6.9-89.0.11.EL.s390.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.s390.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.s390.rpm
+kernel-devel-2.6.9-89.0.11.EL.s390.rpm
+kernel-devel-2.6.9-89.0.11.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-89.0.11.EL.s390x.rpm
+kernel-2.6.9-89.0.11.EL.s390x.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.s390x.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.s390x.rpm
+kernel-devel-2.6.9-89.0.11.EL.s390x.rpm
+kernel-devel-2.6.9-89.0.11.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-89.0.11.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+kernel-doc-2.6.9-89.0.11.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-89.0.11.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1883">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1883</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKr1F/XlSAg2UNWIIRAs6hAJ992ihzbQycIC8xIMGuarbZCw4eMQCgvXtg
+76/lV6z1mNiKZ38TNElVe6M=
+=cIu4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

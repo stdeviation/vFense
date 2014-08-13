@@ -1,0 +1,237 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0525&#45;01] Moderate: Red Hat Network Satellite Server	Solaris client security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Jun 2008 11:37:17 &#45;0400 -->
+<!--X-Message-Id: 200806301537.m5UFbHlI029826@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0525-01] Moderate: Red Hat Network Satellite Server	Solaris c</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00023.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0525-01] Moderate: Red Hat Network Satellite Server	Solaris client security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0525-01] Moderate: Red Hat Network Satellite Server	Solaris client security update</li>
+<li><em>Date</em>: Mon, 30 Jun 2008 11:37:17 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Network Satellite Server Solaris client security update
+Advisory ID:       RHSA-2008:0525-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0525.html">https://rhn.redhat.com/errata/RHSA-2008-0525.html</a>
+Issue date:        2008-06-30
+CVE Names:         CVE-2005-2096 CVE-2005-1849 CVE-2006-4343 
+                   CVE-2006-4339 CVE-2006-3738 CVE-2006-2940 
+                   CVE-2006-2937 CVE-2005-2969 CVE-2007-4965 
+                   CVE-2007-2052 CVE-2006-4980 CVE-2006-1542 
+=====================================================================
+
+1. Summary:
+
+Red Hat Network Satellite Server version 4.2.3 is now available. This
+update includes fixes for a number of security issues in Red Hat Network
+Satellite Server Solaris client components.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.3 AS) - noarch
+Red Hat Network Satellite Server v 4.2 (RHEL v.4 AS) - noarch
+
+3. Description:
+
+This release corrects several security vulnerabilities in various
+components shipped as part of the Red Hat Network Satellite Server Solaris
+client. In a typical operating environment, these components are not used
+by the Satellite Server in a vulnerable manner. These security updates will
+reduce risk should these components be used by other applications.
+
+Several flaws in Zlib was discovered. An attacker could create a
+carefully-crafted compressed stream that would cause an application to
+crash if the stream is opened by a user. (CVE-2005-2096).  An attacker
+could create a carefully crafted compressed stream that would cause an
+application to crash if the stream is opened by a user. (CVE-2005-1849)
+
+A buffer overflow was discovered in the OpenSSL SSL_get_shared_ciphers()
+utility function. An attacker could send a list of ciphers to an
+application that used this function and overrun a buffer (CVE-2006-3738).
+
+A flaw in the SSLv2 client code was discovered. If a client application
+used OpenSSL to create an SSLv2 connection to a malicious server, that
+server could cause the client to crash. (CVE-2006-4343)
+
+An attack on OpenSSL PKCS #1 v1.5 signatures was discovered. Where an RSA
+key with exponent 3 is used it may be possible for an attacker to forge a
+PKCS #1 v1.5 signature that would be incorrectly verified by
+implementations that do not check for excess data in the RSA exponentiation
+result of the signature. This issue affected applications that use OpenSSL
+to verify X.509 certificates as well as other uses of PKCS #1 v1.5.
+(CVE-2006-4339)
+
+OpenSSL contained a software work-around for a bug in SSL handling in
+Microsoft Internet Explorer version 3.0.2. It is enabled in most servers
+that use OpenSSL to provide support for SSL and TLS. This work-around could
+allow an attacker, acting as a &quot;man in the middle&quot; to force an SSL
+connection to use SSL 2.0 rather than a stronger protocol, such as SSL 3.0
+or TLS 1.0. (CVE-2005-2969)
+
+During OpenSSL parsing of certain invalid ASN.1 structures an error
+condition was mishandled. This can result in an infinite loop which
+consumed system memory (CVE-2006-2937). 
+
+Certain public key types can take disproportionate amounts of time to
+process in OpenSSL, leading to a denial of service. (CVE-2006-2940)
+
+A flaw was discovered in the way that the Python repr() function handled
+UTF-32/UCS-4 strings. If an application written in Python used the repr()
+function on untrusted data, this could lead to a denial of service or
+possibly allow the execution of arbitrary code with the privileges of the
+Python application. (CVE-2006-4980)
+
+A flaw was discovered in the strxfrm() function of Python's locale module.
+Strings generated by this function were not properly NULL-terminated. This
+may possibly cause disclosure of data stored in the memory of a Python
+application using this function. (CVE-2007-2052)
+
+Multiple integer overflow flaws were discovered in Python's imageop module.
+If an application written in Python used the imageop module to process
+untrusted images, it could cause the application to crash, enter an
+infinite loop, or possibly execute arbitrary code with the privileges of
+the Python interpreter. (CVE-2007-4965)
+
+A stack-based buffer overflow was discovered in the Python interpreter,
+which could allow a local user to gain privileges by running a script with
+a long name from the current working directory. (CVE-2006-1542)
+
+Users of Red Hat Network Satellite Server should upgrade to these updated
+packages, which contain backported patches to correct these issues. 
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use the Red
+Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+235093 - CVE-2007-2052 python off-by-one locale.strxfrm() (possible memory disclosure)
+295971 - CVE-2007-4965 python imageop module heap corruption
+430640 - CVE-2006-1542 python buffer overflow
+430641 - CVE-2006-4980 python repr unicode buffer overflow
+430649 - CVE-2005-1849 zlib DoS
+430650 - CVE-2005-2096 zlib DoS
+430651 - CVE-2006-4343 openssl sslv2 client code
+430652 - CVE-2006-3738 openssl get_shared_ciphers overflow
+430654 - CVE-2006-2940 openssl public key DoS
+430655 - CVE-2006-2937 openssl ASN.1 DoS
+430659 - CVE-2006-4339 openssl signature forgery
+430660 - CVE-2005-2969 openssl mitm downgrade attack
+
+6. Package List:
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.3 AS):
+
+noarch:
+rhn-solaris-bootstrap-5.0.2-3.noarch.rpm
+rhn_solaris_bootstrap_5_0_2_3-1-0.noarch.rpm
+
+Red Hat Network Satellite Server v 4.2 (RHEL v.4 AS):
+
+noarch:
+rhn-solaris-bootstrap-5.0.2-3.noarch.rpm
+rhn_solaris_bootstrap_5_0_2_3-1-0.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2096">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2096</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-1849">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-1849</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4343">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4343</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4339">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4339</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3738">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3738</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-2940">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-2940</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-2937">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-2937</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2969">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2969</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4965">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4965</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2052">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2052</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4980">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4980</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-1542">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-1542</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIaP2eXlSAg2UNWIIRAqT5AJ4t8TJPtktpr5YRCaKqZdPxlLEl1QCgo3Ts
+nXiYWYaJ8pdu+T6S7mBYb1g=
+=3Jzb
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00023.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

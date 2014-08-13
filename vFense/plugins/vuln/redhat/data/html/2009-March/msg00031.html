@@ -1,0 +1,251 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0360&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 26 Mar 2009 20:20:11 &#45;0400 -->
+<!--X-Message-Id: 200903270020.n2R0KGDJ026330@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0360-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0360-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0360-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Thu, 26 Mar 2009 20:20:10 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2009:0360-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0360.html">https://rhn.redhat.com/errata/RHSA-2009-0360.html</a>
+Issue date:        2009-03-26
+CVE Names:         CVE-2009-0031 CVE-2009-0269 CVE-2009-0322 
+                   CVE-2009-0675 CVE-2009-0676 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix several security issues and several
+bugs are now available for Red Hat Enterprise MRG 1.1.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages address the following security issues:
+
+* a memory leak exists in keyctl handling. A local, unprivileged user could
+use this flaw to deplete kernel memory, eventually leading to a denial of
+service. (CVE-2009-0031, Important)
+
+* an off-by-one underflow flaw was found in the eCryptfs subsystem. This
+could potentially cause a denial of service when the readlink() function
+returned an error. (CVE-2009-0269, Moderate)
+
+* a deficiency was found in the Remote BIOS Update (RBU) driver for Dell
+systems. This could allow a local, unprivileged user to cause a denial of
+service by reading zero bytes from the image_type or packet_size files in
+&quot;/sys/devices/platform/dell_rbu/&quot;. (CVE-2009-0322, Moderate)
+
+* an inverted logic flaw was found in the SysKonnect FDDI PCI adapter
+driver, allowing driver statistics to be reset only when the CAP_NET_ADMIN
+capability was absent (local, unprivileged users could reset driver
+statistics). (CVE-2009-0675, Moderate)
+
+* the sock_getsockopt() function in the Linux kernel did not properly
+initialize a data structure that can be directly returned to user-space
+when the getsockopt() function is called with SO_BSDCOMPAT optname set.
+This flaw could possibly lead to memory disclosure.
+(CVE-2009-0676, Moderate)
+
+These updated packages also address numerous bugs, including the following:
+
+* the select() and poll() functions were converted to use high resolution
+timers (hrtimer). Since the change, the system call pselect7() started
+presenting an incorrect behavior when the specified timeout was NULL.
+Instead of blocking until an event happened (infinite timeout) it was
+treated as a no timeout (zero seconds). This update fixes the problem.
+(BZ#487382) 
+
+* NFS is a network file system sharing technology commonly used on Linux
+systems. A bug exists in the Linux kernel implementation of NFS. When two
+(or more) clients have the same file open as it is being written to, a
+fault condition can arise triggering a system crash. This update resolves
+this bug. (BZ#486645)
+
+* a bug affected IBM BladeCenter LS21 machines with the High Precision
+Event Timer (HPET) enabled in the BIOS. In these machines, the HPET_T0_CFG
+register booted with level-triggered interrupts (HPET_TN_LEVEL) enabled.
+This resulted in a boot-time hang during the delay calibration. This kernel
+resolves the issue by disabling HPET_TN_LEVEL when setting up periodic
+mode. (BZ#485428)
+
+* Time Stamp Counter (TSC) is the preferred time source for MRG Realtime
+systems, although some TSC models do not comply with the requirements of a
+Realtime system. This kernel updates the tests carried out during boot time
+to check the TSC. (BZ#480244)
+
+* under certain conditions netlink_broadcast may call yield() on behalf of
+a high priority kernel thread. This can lead to a system deadlock. The
+issue has been resolved. (BZ#463207)
+
+Other changes included with this update are noted in the Red Hat Enterprise
+MRG Release Notes, available at the location noted in the References
+section below.
+
+All Red Hat Enterprise MRG users should install this update which addresses
+these vulnerabilities and fixes these bugs. For this update to take effect,
+the system must be rebooted.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+480592 - CVE-2009-0031 kernel: local denial of service in keyctl_join_session_keyring
+481604 - CVE-2009-0269 kernel: ecryptfs readlink flaw
+482866 - CVE-2009-0322 kernel: dell_rbu local oops
+485428 - IBM LS20/LS21 blades fail to boot RT kernel when HPET enabled in BIOS
+486305 - CVE-2009-0676 kernel: memory disclosure in SO_BSDCOMPAT gsopt
+486534 - CVE-2009-0675 kernel: skfp_ioctl inverted logic flaw
+486645 - [NFS] Bug in shared page handling over NFS
+487382 - pselect with timeout=NULL triggers a warning at kernel/hrtimer.c:439 hrtimer_reprogram()
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-108.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-108.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-108.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-108.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-108.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-108.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-108.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0031">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0031</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0269">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0269</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0322">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0322</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0675">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0675</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0676</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJzBuvXlSAg2UNWIIRAjfUAJ9tfGpcaG4DbtnT1ypYw/srXjcVgwCeIf6J
+yQjB0pG4fxbZdI2kU4IxoPY=
+=bqJP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

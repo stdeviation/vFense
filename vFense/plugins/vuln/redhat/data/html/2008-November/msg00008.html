@@ -1,0 +1,528 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0978&#45;01] Critical: firefox security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 12 Nov 2008 21:50:04 &#45;0500 -->
+<!--X-Message-Id: 200811130250.mAD2o4Zv024867@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0978-01] Critical: firefox security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0978-01] Critical: firefox security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0978-01] Critical: firefox security update</li>
+<li><em>Date</em>: Wed, 12 Nov 2008 21:50:04 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: firefox security update
+Advisory ID:       RHSA-2008:0978-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0978.html">https://rhn.redhat.com/errata/RHSA-2008-0978.html</a>
+Issue date:        2008-11-12
+CVE Names:         CVE-2008-0017 CVE-2008-5014 CVE-2008-5015 
+                   CVE-2008-5016 CVE-2008-5017 CVE-2008-5018 
+                   CVE-2008-5019 CVE-2008-5021 CVE-2008-5022 
+                   CVE-2008-5023 CVE-2008-5024 
+=====================================================================
+
+1. Summary:
+
+An updated firefox package that fixes various security issues is now
+available for Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Mozilla Firefox is an open source Web browser.
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Firefox to crash or,
+potentially, execute arbitrary code as the user running Firefox.
+(CVE-2008-0017, CVE-2008-5014, CVE-2008-5016, CVE-2008-5017,
+CVE-2008-5018, CVE-2008-5019, CVE-2008-5021)
+
+Several flaws were found in the way malformed content was processed. A web
+site containing specially-crafted content could potentially trick a Firefox
+user into surrendering sensitive information. (CVE-2008-5022,
+CVE-2008-5023, CVE-2008-5024)
+
+A flaw was found in the way Firefox opened &quot;file:&quot; URIs. If a file: URI was
+loaded in the same tab as a chrome or privileged &quot;about:&quot; page, the file:
+URI could execute arbitrary code with the permissions of the user running
+Firefox. (CVE-2008-5015)
+
+For technical details regarding these flaws, please see the Mozilla
+security advisories for Firefox 3.0.4. You can find a link to the Mozilla
+advisories in the References section.
+
+All firefox users should upgrade to these updated packages, which contain
+backported patches that correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+454283 - firefox-2.0-getstartpage.patch breaks extensions which set homepage
+470873 - CVE-2008-5014 Mozilla crash and remote code execution via __proto__ tampering
+470876 - CVE-2008-5015 Mozilla file: URIs inherit chrome privileges
+470881 - CVE-2008-5016 Mozilla crash with evidence of memory corruption
+470883 - CVE-2008-5017 Mozilla crash with evidence of memory corruption
+470884 - CVE-2008-5018 Mozilla crash with evidence of memory corruption
+470889 - CVE-2008-5019 Mozilla XSS via session restore
+470892 - CVE-2008-0017 Mozilla buffer overflow in http-index-format parser
+470894 - CVE-2008-5021 Mozilla crash and remote code execution in nsFrameManager
+470895 - CVE-2008-5022 Mozilla nsXMLHttpRequest::NotifyEventListeners() same-origin violation
+470898 - CVE-2008-5023 Mozilla -moz-binding property bypasses security checks on codebase principals
+470902 - CVE-2008-5024 Mozilla parsing error in E4X default namespace
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm</a>
+
+i386:
+firefox-3.0.4-1.el4.i386.rpm
+firefox-debuginfo-3.0.4-1.el4.i386.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-debuginfo-3.12.1.1-3.el4.i386.rpm
+nss-devel-3.12.1.1-3.el4.i386.rpm
+
+ia64:
+firefox-3.0.4-1.el4.ia64.rpm
+firefox-debuginfo-3.0.4-1.el4.ia64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.ia64.rpm
+nss-debuginfo-3.12.1.1-3.el4.ia64.rpm
+nss-devel-3.12.1.1-3.el4.ia64.rpm
+
+ppc:
+firefox-3.0.4-1.el4.ppc.rpm
+firefox-debuginfo-3.0.4-1.el4.ppc.rpm
+nss-3.12.1.1-3.el4.ppc.rpm
+nss-3.12.1.1-3.el4.ppc64.rpm
+nss-debuginfo-3.12.1.1-3.el4.ppc.rpm
+nss-debuginfo-3.12.1.1-3.el4.ppc64.rpm
+nss-devel-3.12.1.1-3.el4.ppc.rpm
+
+s390:
+firefox-3.0.4-1.el4.s390.rpm
+firefox-debuginfo-3.0.4-1.el4.s390.rpm
+nss-3.12.1.1-3.el4.s390.rpm
+nss-debuginfo-3.12.1.1-3.el4.s390.rpm
+nss-devel-3.12.1.1-3.el4.s390.rpm
+
+s390x:
+firefox-3.0.4-1.el4.s390x.rpm
+firefox-debuginfo-3.0.4-1.el4.s390x.rpm
+nss-3.12.1.1-3.el4.s390.rpm
+nss-3.12.1.1-3.el4.s390x.rpm
+nss-debuginfo-3.12.1.1-3.el4.s390x.rpm
+nss-devel-3.12.1.1-3.el4.s390x.rpm
+
+x86_64:
+firefox-3.0.4-1.el4.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el4.x86_64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el4.x86_64.rpm
+nss-devel-3.12.1.1-3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm</a>
+
+i386:
+firefox-3.0.4-1.el4.i386.rpm
+firefox-debuginfo-3.0.4-1.el4.i386.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-debuginfo-3.12.1.1-3.el4.i386.rpm
+nss-devel-3.12.1.1-3.el4.i386.rpm
+
+x86_64:
+firefox-3.0.4-1.el4.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el4.x86_64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el4.x86_64.rpm
+nss-devel-3.12.1.1-3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm</a>
+
+i386:
+firefox-3.0.4-1.el4.i386.rpm
+firefox-debuginfo-3.0.4-1.el4.i386.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-debuginfo-3.12.1.1-3.el4.i386.rpm
+nss-devel-3.12.1.1-3.el4.i386.rpm
+
+ia64:
+firefox-3.0.4-1.el4.ia64.rpm
+firefox-debuginfo-3.0.4-1.el4.ia64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.ia64.rpm
+nss-debuginfo-3.12.1.1-3.el4.ia64.rpm
+nss-devel-3.12.1.1-3.el4.ia64.rpm
+
+x86_64:
+firefox-3.0.4-1.el4.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el4.x86_64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el4.x86_64.rpm
+nss-devel-3.12.1.1-3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.0.4-1.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nss-3.12.1.1-3.el4.src.rpm</a>
+
+i386:
+firefox-3.0.4-1.el4.i386.rpm
+firefox-debuginfo-3.0.4-1.el4.i386.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-debuginfo-3.12.1.1-3.el4.i386.rpm
+nss-devel-3.12.1.1-3.el4.i386.rpm
+
+ia64:
+firefox-3.0.4-1.el4.ia64.rpm
+firefox-debuginfo-3.0.4-1.el4.ia64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.ia64.rpm
+nss-debuginfo-3.12.1.1-3.el4.ia64.rpm
+nss-devel-3.12.1.1-3.el4.ia64.rpm
+
+x86_64:
+firefox-3.0.4-1.el4.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el4.x86_64.rpm
+nss-3.12.1.1-3.el4.i386.rpm
+nss-3.12.1.1-3.el4.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el4.x86_64.rpm
+nss-devel-3.12.1.1-3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-3.0.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-3.0.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/yelp-2.16.0-22.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/yelp-2.16.0-22.el5.src.rpm</a>
+
+i386:
+devhelp-0.12-20.el5.i386.rpm
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+firefox-3.0.4-1.el5.i386.rpm
+firefox-debuginfo-3.0.4-1.el5.i386.rpm
+nss-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-tools-3.12.1.1-3.el5.i386.rpm
+xulrunner-1.9.0.4-1.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+yelp-2.16.0-22.el5.i386.rpm
+yelp-debuginfo-2.16.0-22.el5.i386.rpm
+
+x86_64:
+devhelp-0.12-20.el5.i386.rpm
+devhelp-0.12-20.el5.x86_64.rpm
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+devhelp-debuginfo-0.12-20.el5.x86_64.rpm
+firefox-3.0.4-1.el5.i386.rpm
+firefox-3.0.4-1.el5.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el5.i386.rpm
+firefox-debuginfo-3.0.4-1.el5.x86_64.rpm
+nss-3.12.1.1-3.el5.i386.rpm
+nss-3.12.1.1-3.el5.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.x86_64.rpm
+nss-tools-3.12.1.1-3.el5.x86_64.rpm
+xulrunner-1.9.0.4-1.el5.i386.rpm
+xulrunner-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.x86_64.rpm
+yelp-2.16.0-22.el5.x86_64.rpm
+yelp-debuginfo-2.16.0-22.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm</a>
+
+i386:
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+devhelp-devel-0.12-20.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-devel-3.12.1.1-3.el5.i386.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.i386.rpm
+
+x86_64:
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+devhelp-debuginfo-0.12-20.el5.x86_64.rpm
+devhelp-devel-0.12-20.el5.i386.rpm
+devhelp-devel-0.12-20.el5.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.x86_64.rpm
+nss-devel-3.12.1.1-3.el5.i386.rpm
+nss-devel-3.12.1.1-3.el5.x86_64.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.i386.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.x86_64.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-devel-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/devhelp-0.12-20.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-3.0.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-3.0.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.1.1-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-1.9.0.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/yelp-2.16.0-22.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/yelp-2.16.0-22.el5.src.rpm</a>
+
+i386:
+devhelp-0.12-20.el5.i386.rpm
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+devhelp-devel-0.12-20.el5.i386.rpm
+firefox-3.0.4-1.el5.i386.rpm
+firefox-debuginfo-3.0.4-1.el5.i386.rpm
+nss-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-devel-3.12.1.1-3.el5.i386.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.i386.rpm
+nss-tools-3.12.1.1-3.el5.i386.rpm
+xulrunner-1.9.0.4-1.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.i386.rpm
+yelp-2.16.0-22.el5.i386.rpm
+yelp-debuginfo-2.16.0-22.el5.i386.rpm
+
+ia64:
+devhelp-0.12-20.el5.ia64.rpm
+devhelp-debuginfo-0.12-20.el5.ia64.rpm
+devhelp-devel-0.12-20.el5.ia64.rpm
+firefox-3.0.4-1.el5.ia64.rpm
+firefox-debuginfo-3.0.4-1.el5.ia64.rpm
+nss-3.12.1.1-3.el5.i386.rpm
+nss-3.12.1.1-3.el5.ia64.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.ia64.rpm
+nss-devel-3.12.1.1-3.el5.ia64.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.ia64.rpm
+nss-tools-3.12.1.1-3.el5.ia64.rpm
+xulrunner-1.9.0.4-1.el5.ia64.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.ia64.rpm
+xulrunner-devel-1.9.0.4-1.el5.ia64.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.ia64.rpm
+yelp-2.16.0-22.el5.ia64.rpm
+yelp-debuginfo-2.16.0-22.el5.ia64.rpm
+
+ppc:
+devhelp-0.12-20.el5.ppc.rpm
+devhelp-debuginfo-0.12-20.el5.ppc.rpm
+devhelp-devel-0.12-20.el5.ppc.rpm
+firefox-3.0.4-1.el5.ppc.rpm
+firefox-debuginfo-3.0.4-1.el5.ppc.rpm
+nss-3.12.1.1-3.el5.ppc.rpm
+nss-3.12.1.1-3.el5.ppc64.rpm
+nss-debuginfo-3.12.1.1-3.el5.ppc.rpm
+nss-debuginfo-3.12.1.1-3.el5.ppc64.rpm
+nss-devel-3.12.1.1-3.el5.ppc.rpm
+nss-devel-3.12.1.1-3.el5.ppc64.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.ppc.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.ppc64.rpm
+nss-tools-3.12.1.1-3.el5.ppc.rpm
+xulrunner-1.9.0.4-1.el5.ppc.rpm
+xulrunner-1.9.0.4-1.el5.ppc64.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.ppc.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.ppc64.rpm
+xulrunner-devel-1.9.0.4-1.el5.ppc.rpm
+xulrunner-devel-1.9.0.4-1.el5.ppc64.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.ppc.rpm
+yelp-2.16.0-22.el5.ppc.rpm
+yelp-debuginfo-2.16.0-22.el5.ppc.rpm
+
+s390x:
+devhelp-0.12-20.el5.s390.rpm
+devhelp-0.12-20.el5.s390x.rpm
+devhelp-debuginfo-0.12-20.el5.s390.rpm
+devhelp-debuginfo-0.12-20.el5.s390x.rpm
+devhelp-devel-0.12-20.el5.s390.rpm
+devhelp-devel-0.12-20.el5.s390x.rpm
+firefox-3.0.4-1.el5.s390.rpm
+firefox-3.0.4-1.el5.s390x.rpm
+firefox-debuginfo-3.0.4-1.el5.s390.rpm
+firefox-debuginfo-3.0.4-1.el5.s390x.rpm
+nss-3.12.1.1-3.el5.s390.rpm
+nss-3.12.1.1-3.el5.s390x.rpm
+nss-debuginfo-3.12.1.1-3.el5.s390.rpm
+nss-debuginfo-3.12.1.1-3.el5.s390x.rpm
+nss-devel-3.12.1.1-3.el5.s390.rpm
+nss-devel-3.12.1.1-3.el5.s390x.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.s390.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.s390x.rpm
+nss-tools-3.12.1.1-3.el5.s390x.rpm
+xulrunner-1.9.0.4-1.el5.s390.rpm
+xulrunner-1.9.0.4-1.el5.s390x.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.s390.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.s390x.rpm
+xulrunner-devel-1.9.0.4-1.el5.s390.rpm
+xulrunner-devel-1.9.0.4-1.el5.s390x.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.s390x.rpm
+yelp-2.16.0-22.el5.s390x.rpm
+yelp-debuginfo-2.16.0-22.el5.s390x.rpm
+
+x86_64:
+devhelp-0.12-20.el5.i386.rpm
+devhelp-0.12-20.el5.x86_64.rpm
+devhelp-debuginfo-0.12-20.el5.i386.rpm
+devhelp-debuginfo-0.12-20.el5.x86_64.rpm
+devhelp-devel-0.12-20.el5.i386.rpm
+devhelp-devel-0.12-20.el5.x86_64.rpm
+firefox-3.0.4-1.el5.i386.rpm
+firefox-3.0.4-1.el5.x86_64.rpm
+firefox-debuginfo-3.0.4-1.el5.i386.rpm
+firefox-debuginfo-3.0.4-1.el5.x86_64.rpm
+nss-3.12.1.1-3.el5.i386.rpm
+nss-3.12.1.1-3.el5.x86_64.rpm
+nss-debuginfo-3.12.1.1-3.el5.i386.rpm
+nss-debuginfo-3.12.1.1-3.el5.x86_64.rpm
+nss-devel-3.12.1.1-3.el5.i386.rpm
+nss-devel-3.12.1.1-3.el5.x86_64.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.i386.rpm
+nss-pkcs11-devel-3.12.1.1-3.el5.x86_64.rpm
+nss-tools-3.12.1.1-3.el5.x86_64.rpm
+xulrunner-1.9.0.4-1.el5.i386.rpm
+xulrunner-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.i386.rpm
+xulrunner-debuginfo-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-devel-1.9.0.4-1.el5.i386.rpm
+xulrunner-devel-1.9.0.4-1.el5.x86_64.rpm
+xulrunner-devel-unstable-1.9.0.4-1.el5.x86_64.rpm
+yelp-2.16.0-22.el5.x86_64.rpm
+yelp-debuginfo-2.16.0-22.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0017">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0017</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5014">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5014</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5015">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5015</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5016">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5016</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5017">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5017</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5018">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5018</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5019">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5019</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5021">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5021</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5022">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5022</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5023">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5023</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5024">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5024</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/known-vulnerabilities/firefox30.html#firefox3.0.4">http://www.mozilla.org/security/known-vulnerabilities/firefox30.html#firefox3.0.4</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJG5U2XlSAg2UNWIIRAocUAJ9AdR+nytI5kXo2YQVAN54jOBlNZwCghHzq
+8sZ5VWaM+vik90Q9UYiEZsE=
+=kYqN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

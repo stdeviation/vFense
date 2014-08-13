@@ -1,0 +1,250 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0192&#45;01] Moderate: cups security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Apr 2008 10:13:59 &#45;0400 -->
+<!--X-Message-Id: 200804011413.m31EDwYh006202@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0192-01] Moderate: cups security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0192-01] Moderate: cups security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0192-01] Moderate: cups security update</li>
+<li><em>Date</em>: Tue, 1 Apr 2008 10:13:53 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: cups security update
+Advisory ID:       RHSA-2008:0192-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0192.html">https://rhn.redhat.com/errata/RHSA-2008-0192.html</a>
+Issue date:        2008-04-01
+CVE Names:         CVE-2008-0047 CVE-2008-0053 CVE-2008-1373 
+=====================================================================
+
+1. Summary:
+
+Updated cups packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Common UNIX Printing System (CUPS) provides a portable printing layer
+for UNIX(R) operating systems.
+
+A heap buffer overflow flaw was found in a CUPS administration interface
+CGI script. A local attacker able to connect to the IPP port (TCP port 631)
+could send a malicious request causing the script to crash or, potentially,
+execute arbitrary code as the &quot;lp&quot; user. Please note: the default CUPS
+configuration in Red Hat Enterprise Linux 5 does not allow remote
+connections to the IPP TCP port. (CVE-2008-0047)
+
+Red Hat would like to thank &quot;regenrecht&quot; for reporting this issue.
+
+This issue did not affect the versions of CUPS as shipped with Red Hat
+Enterprise Linux 3 or 4.
+
+Two overflows were discovered in the HP-GL/2-to-PostScript filter. An
+attacker could create a malicious HP-GL/2 file that could possibly execute
+arbitrary code as the &quot;lp&quot; user if the file is printed. (CVE-2008-0053)
+
+A buffer overflow flaw was discovered in the GIF decoding routines used by
+CUPS image converting filters &quot;imagetops&quot; and &quot;imagetoraster&quot;. An attacker
+could create a malicious GIF file that could possibly execute arbitrary
+code as the &quot;lp&quot; user if the file was printed. (CVE-2008-1373)
+
+All cups users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+436153 - CVE-2008-0047 cups: heap based buffer overflow in cgiCompileSearch()
+438117 - CVE-2008-0053 cups: buffer overflows in HP-GL/2 filter
+438303 - CVE-2008-1373 cups: overflow in gif image filter
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm</a>
+
+i386:
+cups-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-libs-1.2.4-11.14.el5_1.6.i386.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.i386.rpm
+
+x86_64:
+cups-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-libs-1.2.4-11.14.el5_1.6.i386.rpm
+cups-libs-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm</a>
+
+i386:
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-devel-1.2.4-11.14.el5_1.6.i386.rpm
+
+x86_64:
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-devel-1.2.4-11.14.el5_1.6.i386.rpm
+cups-devel-1.2.4-11.14.el5_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.2.4-11.14.el5_1.6.src.rpm</a>
+
+i386:
+cups-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-devel-1.2.4-11.14.el5_1.6.i386.rpm
+cups-libs-1.2.4-11.14.el5_1.6.i386.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.i386.rpm
+
+ia64:
+cups-1.2.4-11.14.el5_1.6.ia64.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.ia64.rpm
+cups-devel-1.2.4-11.14.el5_1.6.ia64.rpm
+cups-libs-1.2.4-11.14.el5_1.6.i386.rpm
+cups-libs-1.2.4-11.14.el5_1.6.ia64.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.ia64.rpm
+
+ppc:
+cups-1.2.4-11.14.el5_1.6.ppc.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.ppc.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.ppc64.rpm
+cups-devel-1.2.4-11.14.el5_1.6.ppc.rpm
+cups-devel-1.2.4-11.14.el5_1.6.ppc64.rpm
+cups-libs-1.2.4-11.14.el5_1.6.ppc.rpm
+cups-libs-1.2.4-11.14.el5_1.6.ppc64.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.ppc.rpm
+
+s390x:
+cups-1.2.4-11.14.el5_1.6.s390x.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.s390.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.s390x.rpm
+cups-devel-1.2.4-11.14.el5_1.6.s390.rpm
+cups-devel-1.2.4-11.14.el5_1.6.s390x.rpm
+cups-libs-1.2.4-11.14.el5_1.6.s390.rpm
+cups-libs-1.2.4-11.14.el5_1.6.s390x.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.s390x.rpm
+
+x86_64:
+cups-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.i386.rpm
+cups-debuginfo-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-devel-1.2.4-11.14.el5_1.6.i386.rpm
+cups-devel-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-libs-1.2.4-11.14.el5_1.6.i386.rpm
+cups-libs-1.2.4-11.14.el5_1.6.x86_64.rpm
+cups-lpd-1.2.4-11.14.el5_1.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0047">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0047</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0053">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0053</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1373">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1373</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH8kMSXlSAg2UNWIIRAr/jAKCUq0MUvNRjvMfgXbM/3Fv8Jvy8cwCgjPnn
+QBHQj9XKMSuxQyHgxr1EBk4=
+=JMg9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

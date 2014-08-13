@@ -1,0 +1,315 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1180&#45;01] Important: bind security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 29 Jul 2009 20:11:44 &#45;0400 -->
+<!--X-Message-Id: 200907300011.n6U0Biac002587@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1180-01] Important: bind security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1180-01] Important: bind security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1180-01] Important: bind security and bug fix update</li>
+<li><em>Date</em>: Wed, 29 Jul 2009 20:11:44 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bind security and bug fix update
+Advisory ID:       RHSA-2009:1180-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1180.html">https://rhn.redhat.com/errata/RHSA-2009-1180.html</a>
+Issue date:        2009-07-29
+CVE Names:         CVE-2009-0696 
+=====================================================================
+
+1. Summary:
+
+Updated bind packages that fix a security issue and a bug are now available
+for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+A flaw was found in the way BIND handles dynamic update message packets
+containing the &quot;ANY&quot; record type. A remote attacker could use this flaw to
+send a specially-crafted dynamic update packet that could cause named to
+exit with an assertion failure. (CVE-2009-0696)
+
+Note: even if named is not configured for dynamic updates, receiving such
+a specially-crafted dynamic update packet could still cause named to exit
+unexpectedly.
+
+This update also fixes the following bug:
+
+* when running on a system receiving a large number of (greater than 4,000)
+DNS requests per second, the named DNS nameserver became unresponsive, and
+the named service had to be restarted in order for it to continue serving
+requests. This was caused by a deadlock occurring between two threads that
+led to the inability of named to continue to service requests. This
+deadlock has been resolved with these updated packages so that named no
+longer becomes unresponsive under heavy load. (BZ#512668)
+
+All BIND users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues. After installing the
+update, the BIND daemon (named) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+512668 - bind gets hung with 4000 accesses / sec
+514292 - CVE-2009-0696 bind: DoS (assertion failure) via nsupdate packets
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm</a>
+
+i386:
+bind-9.2.4-30.el4_8.4.i386.rpm
+bind-chroot-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-devel-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-utils-9.2.4-30.el4_8.4.i386.rpm
+
+ia64:
+bind-9.2.4-30.el4_8.4.ia64.rpm
+bind-chroot-9.2.4-30.el4_8.4.ia64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.ia64.rpm
+bind-devel-9.2.4-30.el4_8.4.ia64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.ia64.rpm
+bind-utils-9.2.4-30.el4_8.4.ia64.rpm
+
+ppc:
+bind-9.2.4-30.el4_8.4.ppc.rpm
+bind-chroot-9.2.4-30.el4_8.4.ppc.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.ppc.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.ppc64.rpm
+bind-devel-9.2.4-30.el4_8.4.ppc.rpm
+bind-libs-9.2.4-30.el4_8.4.ppc.rpm
+bind-libs-9.2.4-30.el4_8.4.ppc64.rpm
+bind-utils-9.2.4-30.el4_8.4.ppc.rpm
+
+s390:
+bind-9.2.4-30.el4_8.4.s390.rpm
+bind-chroot-9.2.4-30.el4_8.4.s390.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.s390.rpm
+bind-devel-9.2.4-30.el4_8.4.s390.rpm
+bind-libs-9.2.4-30.el4_8.4.s390.rpm
+bind-utils-9.2.4-30.el4_8.4.s390.rpm
+
+s390x:
+bind-9.2.4-30.el4_8.4.s390x.rpm
+bind-chroot-9.2.4-30.el4_8.4.s390x.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.s390.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.s390x.rpm
+bind-devel-9.2.4-30.el4_8.4.s390x.rpm
+bind-libs-9.2.4-30.el4_8.4.s390.rpm
+bind-libs-9.2.4-30.el4_8.4.s390x.rpm
+bind-utils-9.2.4-30.el4_8.4.s390x.rpm
+
+x86_64:
+bind-9.2.4-30.el4_8.4.x86_64.rpm
+bind-chroot-9.2.4-30.el4_8.4.x86_64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.x86_64.rpm
+bind-devel-9.2.4-30.el4_8.4.x86_64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.x86_64.rpm
+bind-utils-9.2.4-30.el4_8.4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm</a>
+
+i386:
+bind-9.2.4-30.el4_8.4.i386.rpm
+bind-chroot-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-devel-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-utils-9.2.4-30.el4_8.4.i386.rpm
+
+x86_64:
+bind-9.2.4-30.el4_8.4.x86_64.rpm
+bind-chroot-9.2.4-30.el4_8.4.x86_64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.x86_64.rpm
+bind-devel-9.2.4-30.el4_8.4.x86_64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.x86_64.rpm
+bind-utils-9.2.4-30.el4_8.4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm</a>
+
+i386:
+bind-9.2.4-30.el4_8.4.i386.rpm
+bind-chroot-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-devel-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-utils-9.2.4-30.el4_8.4.i386.rpm
+
+ia64:
+bind-9.2.4-30.el4_8.4.ia64.rpm
+bind-chroot-9.2.4-30.el4_8.4.ia64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.ia64.rpm
+bind-devel-9.2.4-30.el4_8.4.ia64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.ia64.rpm
+bind-utils-9.2.4-30.el4_8.4.ia64.rpm
+
+x86_64:
+bind-9.2.4-30.el4_8.4.x86_64.rpm
+bind-chroot-9.2.4-30.el4_8.4.x86_64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.x86_64.rpm
+bind-devel-9.2.4-30.el4_8.4.x86_64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.x86_64.rpm
+bind-utils-9.2.4-30.el4_8.4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/bind-9.2.4-30.el4_8.4.src.rpm</a>
+
+i386:
+bind-9.2.4-30.el4_8.4.i386.rpm
+bind-chroot-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-devel-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-utils-9.2.4-30.el4_8.4.i386.rpm
+
+ia64:
+bind-9.2.4-30.el4_8.4.ia64.rpm
+bind-chroot-9.2.4-30.el4_8.4.ia64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.ia64.rpm
+bind-devel-9.2.4-30.el4_8.4.ia64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.ia64.rpm
+bind-utils-9.2.4-30.el4_8.4.ia64.rpm
+
+x86_64:
+bind-9.2.4-30.el4_8.4.x86_64.rpm
+bind-chroot-9.2.4-30.el4_8.4.x86_64.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.i386.rpm
+bind-debuginfo-9.2.4-30.el4_8.4.x86_64.rpm
+bind-devel-9.2.4-30.el4_8.4.x86_64.rpm
+bind-libs-9.2.4-30.el4_8.4.i386.rpm
+bind-libs-9.2.4-30.el4_8.4.x86_64.rpm
+bind-utils-9.2.4-30.el4_8.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0696">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0696</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://www.isc.org/node/474">https://www.isc.org/node/474</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKcOU3XlSAg2UNWIIRAkgtAJ4muSVcescu8SeZRZCvJvlhp6b4/gCfTVK+
+AezcSXwu8x5EQ1guGePfdnQ=
+=fKaB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

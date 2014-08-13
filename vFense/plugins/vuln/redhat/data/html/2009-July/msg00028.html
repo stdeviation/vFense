@@ -1,0 +1,183 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1188&#45;01] Critical: flash&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 31 Jul 2009 10:22:39 &#45;0400 -->
+<!--X-Message-Id: 200907311422.n6VEMcIv015002@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1188-01] Critical: flash-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00027.html">Date Prev</a>][<a href="msg00029.html">Date Next</a>] &nbsp; [<a href="msg00027.html">Thread Prev</a>][<a href="msg00029.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1188-01] Critical: flash-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1188-01] Critical: flash-plugin security update</li>
+<li><em>Date</em>: Fri, 31 Jul 2009 10:22:38 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: flash-plugin security update
+Advisory ID:       RHSA-2009:1188-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1188.html">https://rhn.redhat.com/errata/RHSA-2009-1188.html</a>
+Issue date:        2009-07-31
+CVE Names:         CVE-2009-1862 CVE-2009-1863 CVE-2009-1864 
+                   CVE-2009-1865 CVE-2009-1866 CVE-2009-1867 
+                   CVE-2009-1868 CVE-2009-1869 CVE-2009-1870 
+=====================================================================
+
+1. Summary:
+
+An updated Adobe Flash Player package that fixes multiple security issues
+is now available for Red Hat Enterprise Linux 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The flash-plugin package contains a Mozilla Firefox compatible Adobe Flash
+Player web browser plug-in.
+
+Multiple security flaws were found in the way Flash Player displayed
+certain SWF content. An attacker could use these flaws to create a
+specially-crafted SWF file that would cause flash-plugin to crash or,
+possibly, execute arbitrary code when the victim loaded a page containing
+the specially-crafted SWF content. (CVE-2009-1862, CVE-2009-1863,
+CVE-2009-1864, CVE-2009-1865, CVE-2009-1866, CVE-2009-1868, CVE-2009-1869)
+
+A clickjacking flaw was discovered in Flash Player. A specially-crafted
+SWF file could trick a user into unintentionally or mistakenly clicking a
+link or a dialog. (CVE-2009-1867)
+
+A flaw was found in the Flash Player local sandbox. A specially-crafted
+SWF file could cause information disclosure when it was saved to the hard
+drive. (CVE-2009-1870)
+
+All users of Adobe Flash Player should install this updated package, which
+upgrades Flash Player to version 10.0.32.18.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+513362 - CVE-2009-1862 acroread, flash-plugin: Remote code execution vulnerability via malicious SWF (Shockwave Flash) content
+514874 - flash-plugin: multiple code execution flaws (APSB09-10)
+514877 - flash-plugin: multiple information disclosure flaws (APSB09-10)
+
+6. Package List:
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+flash-plugin-10.0.32.18-2.el5.i386.rpm
+
+x86_64:
+flash-plugin-10.0.32.18-2.el5.i386.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+flash-plugin-10.0.32.18-2.el5.i386.rpm
+
+x86_64:
+flash-plugin-10.0.32.18-2.el5.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1862">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1862</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1863">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1863</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1864">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1864</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1865">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1865</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1866">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1866</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1867">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1867</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1868">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1868</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1869">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1869</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1870">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1870</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.adobe.com/support/security/bulletins/apsb09-10.html">http://www.adobe.com/support/security/bulletins/apsb09-10.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKcv4OXlSAg2UNWIIRAuFaAKDCqgHA1X6OefSZeF9nmGxvzCgf8ACgjVi0
+xpZtMOkfkm+AiPdFr9DWxRM=
+=5ej0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00027.html">Date Prev</a>][<a href="msg00029.html">Date Next</a>] &nbsp; [<a href="msg00027.html">Thread Prev</a>][<a href="msg00029.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

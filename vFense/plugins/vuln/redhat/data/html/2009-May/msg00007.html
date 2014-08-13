@@ -1,0 +1,270 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0955&#45;01] Moderate: nfs&#45;utils security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 18 May 2009 16:56:08 &#45;0400 -->
+<!--X-Message-Id: 200905182056.n4IKu8v0009554@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0955-01] Moderate: nfs-utils security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0955-01] Moderate: nfs-utils security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0955-01] Moderate: nfs-utils security and bug fix update</li>
+<li><em>Date</em>: Mon, 18 May 2009 16:56:08 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: nfs-utils security and bug fix update
+Advisory ID:       RHSA-2009:0955-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0955.html">https://rhn.redhat.com/errata/RHSA-2009-0955.html</a>
+Issue date:        2009-05-18
+CVE Names:         CVE-2008-1376 
+=====================================================================
+
+1. Summary:
+
+An updated nfs-utils package that fixes a security issue and multiple bugs
+is now available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The nfs-utils package provides a daemon for the kernel NFS server and
+related tools, which provides a much higher level of performance than the
+traditional Linux NFS server used by most users.
+
+A flaw was found in the nfs-utils package provided by RHBA-2008:0742. The
+nfs-utils package was missing TCP wrappers support, which could result in
+an administrator believing they had access restrictions enabled when they
+did not. (CVE-2008-1376)
+
+This update also includes the following bug fixes:
+
+* the &quot;nfsstat&quot; command now displays correct statistics. In previous
+versions, performing more than 2^31 RPC calls could cause the &quot;nfsstat&quot;
+command to incorrectly display the number of calls as &quot;negative&quot;. This was
+because &quot;nfsstat&quot; printed statistics from /proc/net/rpc/* files as signed
+integers; with this version of nfs-utils, &quot;nfsstat&quot; now reads and prints
+these statistics as unsigned integers. (BZ#404831)
+
+* imapd upcalls now support zero-length reads and perform extra bounds
+checking in gssd and svcgssd. This fixes a bug in previous versions that
+could cause the rpc.imapd daemon to hang when communicating with the
+kernel, which would halt any ID translation services. (BZ#448710)
+
+* tcp_wrappers supported in nfs-utils now allows proper application of
+hosts access rules defined in /etc/hosts.allow and /etc/hosts.deny. (BZ#494585)
+
+* the nfs init script did not check whether SECURE_NFS was set to &quot;yes&quot;
+before starting, stopping, or querying rpc.svcgssd. On systems where
+SECURE_NFS was not set to &quot;yes&quot;, the nfs init script could not start the
+rpc.svcgssd daemon at the &quot;service nfs start&quot; command because the rpcsvcssd
+init script would check the status of SECURE_NFS before starting the
+daemon. However, at the &quot;service nfs stop&quot; or &quot;service nfs restart&quot;
+commands, nfs init script would attempt to stop rpc.svcgssd and then report
+a failure because the daemon was not running in the first place. These
+error messages may have misled end-users into believing that there was a
+genuine problem with their NFS configuration. This version of nfs-utils
+contains a fix backported from Red Hat Enterprise Linux 5. nfs-utils now
+checks the status of SECURE_NFS before the nfs init script attempts to
+start, query or stop rpc.svcgssd and therefore, the irrelevant error
+messages seen previously will not appear. (BZ#470423)
+
+* the nfs init script is now fully compliant with Linux Standard Base Core
+specifications. This update fixes a bug that prevented &quot;/etc/init.d/nfs
+start&quot; from exiting properly if NFS was already running. (BZ#474570)
+
+* /var/lib/nfs/statd/sm is now created with the proper user and group
+whenever rpc.statd is called. In previous versions, some thread stack
+conditions could incorrectly prevent rpc.statd from creating the
+/var/lib/nfs/statd/sm file, which could cause &quot;service nfslock start&quot; to
+fail. (BZ#479376)
+
+All users of nfs-utils should upgrade to this updated package, which
+resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+404831 - &quot;nfsstat -s&quot; shows negative value
+440114 - CVE-2008-1376 nfs-utils: missing tcp_wrappers support
+461043 - lockd not using settings in sysconfig/nfs
+474570 - Incorrect exit codes from nfs init script
+479376 - statd fails to create SM_DIR
+494585 - libwrap - Nor ip, nor hostname work,, only when used ALL expression in hosts.deny access is denied
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm</a>
+
+i386:
+nfs-utils-1.0.6-93.EL4.i386.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.i386.rpm
+
+ia64:
+nfs-utils-1.0.6-93.EL4.ia64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.ia64.rpm
+
+ppc:
+nfs-utils-1.0.6-93.EL4.ppc.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.ppc.rpm
+
+s390:
+nfs-utils-1.0.6-93.EL4.s390.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.s390.rpm
+
+s390x:
+nfs-utils-1.0.6-93.EL4.s390x.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.s390x.rpm
+
+x86_64:
+nfs-utils-1.0.6-93.EL4.x86_64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm</a>
+
+i386:
+nfs-utils-1.0.6-93.EL4.i386.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.i386.rpm
+
+x86_64:
+nfs-utils-1.0.6-93.EL4.x86_64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm</a>
+
+i386:
+nfs-utils-1.0.6-93.EL4.i386.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.i386.rpm
+
+ia64:
+nfs-utils-1.0.6-93.EL4.ia64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.ia64.rpm
+
+x86_64:
+nfs-utils-1.0.6-93.EL4.x86_64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nfs-utils-1.0.6-93.EL4.src.rpm</a>
+
+i386:
+nfs-utils-1.0.6-93.EL4.i386.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.i386.rpm
+
+ia64:
+nfs-utils-1.0.6-93.EL4.ia64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.ia64.rpm
+
+x86_64:
+nfs-utils-1.0.6-93.EL4.x86_64.rpm
+nfs-utils-debuginfo-1.0.6-93.EL4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1376">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1376</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKEctBXlSAg2UNWIIRAsR1AJ4wUOWxw0PS6hihuAi2H96J7C2HfACeJ1jA
+lz+TNNde+iGuzAq0l8CMiw0=
+=0CBE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

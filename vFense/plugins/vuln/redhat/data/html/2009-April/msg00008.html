@@ -1,0 +1,285 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0411&#45;01] Moderate: device&#45;mapper&#45;multipath security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Apr 2009 15:10:41 &#45;0400 -->
+<!--X-Message-Id: 200904071910.n37JAirG005348@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0411-01] Moderate: device-mapper-multipath security	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0411-01] Moderate: device-mapper-multipath security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0411-01] Moderate: device-mapper-multipath security	update</li>
+<li><em>Date</em>: Tue, 7 Apr 2009 15:10:39 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: device-mapper-multipath security update
+Advisory ID:       RHSA-2009:0411-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0411.html">https://rhn.redhat.com/errata/RHSA-2009-0411.html</a>
+Issue date:        2009-04-07
+CVE Names:         CVE-2009-0115 
+=====================================================================
+
+1. Summary:
+
+Updated device-mapper-multipath packages that fix a security issue are now
+available for Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The device-mapper multipath packages provide tools to manage multipath
+devices by issuing instructions to the device-mapper multipath kernel
+module, and by managing the creation and removal of partitions for
+device-mapper devices.
+
+It was discovered that the multipathd daemon set incorrect permissions on
+the socket used to communicate with command line clients. An unprivileged,
+local user could use this flaw to send commands to multipathd, resulting in
+access disruptions to storage devices accessible via multiple paths and,
+possibly, file system corruption on these devices. (CVE-2009-0115)
+
+Users of device-mapper-multipath are advised to upgrade to these updated
+packages, which contain a backported patch to resolve this issue. The
+multipathd service must be restarted for the changes to take effect.
+
+Important: the version of the multipathd daemon in Red Hat Enterprise Linux
+5 has a known issue which may cause a machine to become unresponsive when
+the multipathd service is stopped. This issue is tracked in the Bugzilla
+bug #494582; a link is provided in the References section of this erratum.
+Until this issue is resolved, we recommend restarting the multipathd
+service by issuing the following commands in sequence:
+
+	# killall -KILL multipathd
+
+	# service multipathd restart
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+493330 - CVE-2009-0115 device-mapper-multipath: insecure permissions on multipathd.sock
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.5-31.el4_7.1.i386.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.i386.rpm
+
+ia64:
+device-mapper-multipath-0.4.5-31.el4_7.1.ia64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.ia64.rpm
+
+ppc:
+device-mapper-multipath-0.4.5-31.el4_7.1.ppc.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.ppc.rpm
+
+s390:
+device-mapper-multipath-0.4.5-31.el4_7.1.s390.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.s390.rpm
+
+s390x:
+device-mapper-multipath-0.4.5-31.el4_7.1.s390x.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.s390x.rpm
+
+x86_64:
+device-mapper-multipath-0.4.5-31.el4_7.1.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.5-31.el4_7.1.i386.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.i386.rpm
+
+x86_64:
+device-mapper-multipath-0.4.5-31.el4_7.1.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.5-31.el4_7.1.i386.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.i386.rpm
+
+ia64:
+device-mapper-multipath-0.4.5-31.el4_7.1.ia64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.ia64.rpm
+
+x86_64:
+device-mapper-multipath-0.4.5-31.el4_7.1.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/device-mapper-multipath-0.4.5-31.el4_7.1.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.5-31.el4_7.1.i386.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.i386.rpm
+
+ia64:
+device-mapper-multipath-0.4.5-31.el4_7.1.ia64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.ia64.rpm
+
+x86_64:
+device-mapper-multipath-0.4.5-31.el4_7.1.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.5-31.el4_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/device-mapper-multipath-0.4.7-23.el5_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/device-mapper-multipath-0.4.7-23.el5_3.2.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.7-23.el5_3.2.i386.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.i386.rpm
+kpartx-0.4.7-23.el5_3.2.i386.rpm
+
+x86_64:
+device-mapper-multipath-0.4.7-23.el5_3.2.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.x86_64.rpm
+kpartx-0.4.7-23.el5_3.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/device-mapper-multipath-0.4.7-23.el5_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/device-mapper-multipath-0.4.7-23.el5_3.2.src.rpm</a>
+
+i386:
+device-mapper-multipath-0.4.7-23.el5_3.2.i386.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.i386.rpm
+kpartx-0.4.7-23.el5_3.2.i386.rpm
+
+ia64:
+device-mapper-multipath-0.4.7-23.el5_3.2.ia64.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.ia64.rpm
+kpartx-0.4.7-23.el5_3.2.ia64.rpm
+
+ppc:
+device-mapper-multipath-0.4.7-23.el5_3.2.ppc.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.ppc.rpm
+kpartx-0.4.7-23.el5_3.2.ppc.rpm
+
+s390x:
+device-mapper-multipath-0.4.7-23.el5_3.2.s390x.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.s390x.rpm
+kpartx-0.4.7-23.el5_3.2.s390x.rpm
+
+x86_64:
+device-mapper-multipath-0.4.7-23.el5_3.2.x86_64.rpm
+device-mapper-multipath-debuginfo-0.4.7-23.el5_3.2.x86_64.rpm
+kpartx-0.4.7-23.el5_3.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0115">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0115</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://bugzilla.redhat.com/show_bug.cgi?id=494582">https://bugzilla.redhat.com/show_bug.cgi?id=494582</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJ26TjXlSAg2UNWIIRAnW7AJ4tUnBrI4MY67KDkm1s/8otbCkBIgCeIG5L
+k0Qd+xIu8PF3oLGHw61yKbE=
+=AdN9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

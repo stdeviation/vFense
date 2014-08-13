@@ -1,0 +1,293 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1289&#45;02] Moderate: mysql security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Sep 2009 03:56:59 &#45;0400 -->
+<!--X-Message-Id: 200909020756.n827uw33020242@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1289-02] Moderate: mysql security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1289-02] Moderate: mysql security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1289-02] Moderate: mysql security and bug fix update</li>
+<li><em>Date</em>: Wed, 2 Sep 2009 03:56:57 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mysql security and bug fix update
+Advisory ID:       RHSA-2009:1289-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1289.html">https://rhn.redhat.com/errata/RHSA-2009-1289.html</a>
+Issue date:        2009-09-02
+CVE Names:         CVE-2008-2079 CVE-2008-3963 CVE-2008-4456 
+                   CVE-2009-2446 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix various security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+MySQL did not correctly check directories used as arguments for the DATA
+DIRECTORY and INDEX DIRECTORY directives. Using this flaw, an authenticated
+attacker could elevate their access privileges to tables created by other
+database users. Note: This attack does not work on existing tables. An
+attacker can only elevate their access to another user's tables as the
+tables are created. As well, the names of these created tables need to be
+predicted correctly for this attack to succeed. (CVE-2008-2079)
+
+A flaw was found in the way MySQL handles an empty bit-string literal. A
+remote, authenticated attacker could crash the MySQL server daemon (mysqld)
+if they used an empty bit-string literal in an SQL statement. This issue
+only caused a temporary denial of service, as the MySQL daemon was
+automatically restarted after the crash. (CVE-2008-3963)
+
+An insufficient HTML entities quoting flaw was found in the mysql command
+line client's HTML output mode. If an attacker was able to inject arbitrary
+HTML tags into data stored in a MySQL database, which was later retrieved
+using the mysql command line client and its HTML output mode, they could
+perform a cross-site scripting (XSS) attack against victims viewing the
+HTML output in a web browser. (CVE-2008-4456)
+
+Multiple format string flaws were found in the way the MySQL server logs
+user commands when creating and deleting databases. A remote, authenticated
+attacker with permissions to CREATE and DROP databases could use these
+flaws to formulate a specifically-crafted SQL command that would cause a
+temporary denial of service (open connections to mysqld are terminated).
+(CVE-2009-2446)
+
+Note: To exploit the CVE-2009-2446 flaws, the general query log (the mysqld
+&quot;--log&quot; command line option or the &quot;log&quot; option in &quot;/etc/my.cnf&quot;) must be
+enabled. This logging is not enabled by default.
+
+This update also fixes multiple bugs. Details regarding these bugs can be
+found in the Red Hat Enterprise Linux 5.4 Technical Notes. You can find a
+link to the Technical Notes in the References section of this errata.
+
+Note: These updated packages upgrade MySQL to version 5.0.77 to incorporate
+numerous upstream bug fixes. Details of these changes are found in the
+following MySQL Release Notes:
+<a  rel="nofollow" href="http://dev.mysql.com/doc/refman/5.0/en/news-5-0-77.html">http://dev.mysql.com/doc/refman/5.0/en/news-5-0-77.html</a>
+
+All MySQL users are advised to upgrade to these updated packages, which
+resolve these issues. After installing this update, the MySQL server
+daemon (mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+435494 - Timeout error starting MySQL when using non-default socket file value (fix provided)
+445222 - CVE-2008-2079 mysql: privilege escalation via DATA/INDEX DIRECTORY directives
+448534 - upgrade to RHEL5.2 - breaks mysql replication between MasterDB and Slave
+450178 - Somewhat dubious code in mysqld init.d script
+452824 - mysql-server crash permanently
+453156 - DATE function used in WHERE clause - broken
+455619 - tmpdir variable not honored for internally created temporary tables
+457218 - 'Explicit or implicit commit' error/server crash with concurrent transactions
+462071 - CVE-2008-3963 MySQL: Using an empty binary value leads to server crash
+462534 - SQL Config files should not be read more than once
+466518 - CVE-2008-4456 mysql: mysql command line client XSS flaw
+470036 - Got query result when using ORDER BY ASC, but    empty result when using DESC
+476896 - CVE-2008-3963 MySQL: Using an empty binary value leads to server crash
+511020 - CVE-2009-2446 MySQL: Format string vulnerability by manipulation with database instances (crash)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm</a>
+
+i386:
+mysql-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+
+x86_64:
+mysql-5.0.77-3.el5.i386.rpm
+mysql-5.0.77-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm</a>
+
+i386:
+mysql-bench-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-devel-5.0.77-3.el5.i386.rpm
+mysql-server-5.0.77-3.el5.i386.rpm
+mysql-test-5.0.77-3.el5.i386.rpm
+
+x86_64:
+mysql-bench-5.0.77-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.x86_64.rpm
+mysql-devel-5.0.77-3.el5.i386.rpm
+mysql-devel-5.0.77-3.el5.x86_64.rpm
+mysql-server-5.0.77-3.el5.x86_64.rpm
+mysql-test-5.0.77-3.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.77-3.el5.src.rpm</a>
+
+i386:
+mysql-5.0.77-3.el5.i386.rpm
+mysql-bench-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-devel-5.0.77-3.el5.i386.rpm
+mysql-server-5.0.77-3.el5.i386.rpm
+mysql-test-5.0.77-3.el5.i386.rpm
+
+ia64:
+mysql-5.0.77-3.el5.i386.rpm
+mysql-5.0.77-3.el5.ia64.rpm
+mysql-bench-5.0.77-3.el5.ia64.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.ia64.rpm
+mysql-devel-5.0.77-3.el5.ia64.rpm
+mysql-server-5.0.77-3.el5.ia64.rpm
+mysql-test-5.0.77-3.el5.ia64.rpm
+
+ppc:
+mysql-5.0.77-3.el5.ppc.rpm
+mysql-5.0.77-3.el5.ppc64.rpm
+mysql-bench-5.0.77-3.el5.ppc.rpm
+mysql-debuginfo-5.0.77-3.el5.ppc.rpm
+mysql-debuginfo-5.0.77-3.el5.ppc64.rpm
+mysql-devel-5.0.77-3.el5.ppc.rpm
+mysql-devel-5.0.77-3.el5.ppc64.rpm
+mysql-server-5.0.77-3.el5.ppc.rpm
+mysql-server-5.0.77-3.el5.ppc64.rpm
+mysql-test-5.0.77-3.el5.ppc.rpm
+
+s390x:
+mysql-5.0.77-3.el5.s390.rpm
+mysql-5.0.77-3.el5.s390x.rpm
+mysql-bench-5.0.77-3.el5.s390x.rpm
+mysql-debuginfo-5.0.77-3.el5.s390.rpm
+mysql-debuginfo-5.0.77-3.el5.s390x.rpm
+mysql-devel-5.0.77-3.el5.s390.rpm
+mysql-devel-5.0.77-3.el5.s390x.rpm
+mysql-server-5.0.77-3.el5.s390x.rpm
+mysql-test-5.0.77-3.el5.s390x.rpm
+
+x86_64:
+mysql-5.0.77-3.el5.i386.rpm
+mysql-5.0.77-3.el5.x86_64.rpm
+mysql-bench-5.0.77-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.77-3.el5.i386.rpm
+mysql-debuginfo-5.0.77-3.el5.x86_64.rpm
+mysql-devel-5.0.77-3.el5.i386.rpm
+mysql-devel-5.0.77-3.el5.x86_64.rpm
+mysql-server-5.0.77-3.el5.x86_64.rpm
+mysql-test-5.0.77-3.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3963">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3963</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4456">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4456</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2446">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2446</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5.4/html/Technical_Notes/mysql.html">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5.4/html/Technical_Notes/mysql.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKniUnXlSAg2UNWIIRAgHTAJ4nWXhZtNNdx7brfVOXYpCHYV41GACgj4Oc
+wet7FvGJwfZ7S/QaKZqUIEE=
+=2TRT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

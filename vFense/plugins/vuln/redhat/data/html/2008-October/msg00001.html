@@ -1,0 +1,235 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0892&#45;01] Important: xen security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 1 Oct 2008 13:36:42 &#45;0400 -->
+<!--X-Message-Id: 200810011736.m91Hagtj015673@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0892-01] Important: xen security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0892-01] Important: xen security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0892-01] Important: xen security and bug fix update</li>
+<li><em>Date</em>: Wed, 1 Oct 2008 13:36:42 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xen security and bug fix update
+Advisory ID:       RHSA-2008:0892-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0892.html">https://rhn.redhat.com/errata/RHSA-2008-0892.html</a>
+Issue date:        2008-10-01
+CVE Names:         CVE-2008-1945 CVE-2008-1952 
+=====================================================================
+
+1. Summary:
+
+Updated xen packages that resolve a couple of security issues and fix a bug
+are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+
+3. Description:
+
+The xen packages contain tools for managing the virtual machine monitor in
+Red Hat Virtualization.
+
+It was discovered that the hypervisor's para-virtualized framebuffer (PVFB)
+backend failed to validate the frontend's framebuffer description properly.
+This could allow a privileged user in the unprivileged domain (DomU) to
+cause a denial of service, or, possibly, elevate privileges to the
+privileged domain (Dom0). (CVE-2008-1952)
+
+A flaw was found in the QEMU block format auto-detection, when running
+fully-virtualized guests and using Qemu images written on removable media
+(USB storage, 3.5&quot; disks). Privileged users of such fully-virtualized
+guests (DomU), with a raw-formatted disk image, were able to write a header
+to that disk image describing another format. This could allow such guests
+to read arbitrary files in their hypervisor's host (Dom0). (CVE-2008-1945)
+
+Additionally, the following bug is addressed in this update:
+
+* The qcow-create command terminated when invoked due to glibc bounds
+checking on the realpath() function.
+
+Users of xen are advised to upgrade to these updated packages, which
+resolve these security issues and fix this bug.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+445844 - CVE-2008-1945 qemu/kvm/xen: add image format options for USB storage and removable media
+447759 - CVE-2008-1952 qemu/xen/kvm: ioemu: Fix PVFB backend to limit frame buffer size
+454651 - xen: buffer overflow detected: qcow-create terminated
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-libs-3.0.3-64.el5_2.3.i386.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.x86_64.rpm
+xen-libs-3.0.3-64.el5_2.3.i386.rpm
+xen-libs-3.0.3-64.el5_2.3.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm</a>
+
+i386:
+xen-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-devel-3.0.3-64.el5_2.3.i386.rpm
+
+x86_64:
+xen-3.0.3-64.el5_2.3.x86_64.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.x86_64.rpm
+xen-devel-3.0.3-64.el5_2.3.i386.rpm
+xen-devel-3.0.3-64.el5_2.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-libs-3.0.3-64.el5_2.3.i386.rpm
+
+ia64:
+xen-debuginfo-3.0.3-64.el5_2.3.ia64.rpm
+xen-libs-3.0.3-64.el5_2.3.ia64.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.x86_64.rpm
+xen-libs-3.0.3-64.el5_2.3.i386.rpm
+xen-libs-3.0.3-64.el5_2.3.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-64.el5_2.3.src.rpm</a>
+
+i386:
+xen-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-devel-3.0.3-64.el5_2.3.i386.rpm
+
+ia64:
+xen-3.0.3-64.el5_2.3.ia64.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.ia64.rpm
+xen-devel-3.0.3-64.el5_2.3.ia64.rpm
+
+x86_64:
+xen-3.0.3-64.el5_2.3.x86_64.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.i386.rpm
+xen-debuginfo-3.0.3-64.el5_2.3.x86_64.rpm
+xen-devel-3.0.3-64.el5_2.3.i386.rpm
+xen-devel-3.0.3-64.el5_2.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1945">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1945</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1952">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1952</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFI47TgXlSAg2UNWIIRAg5UAJsEUr1+pUjbl3/08UPFnMIPdf/n9QCfQ9sd
+kDIU9Rw1GPKzUDcb5jyYkbU=
+=+rKB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

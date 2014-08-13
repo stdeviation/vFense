@@ -1,0 +1,252 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1339&#45;02] Low: rgmanager security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Sep 2009 03:46:38 &#45;0400 -->
+<!--X-Message-Id: 200909020746.n827kaOc001464@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1339-02] Low: rgmanager security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1339-02] Low: rgmanager security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1339-02] Low: rgmanager security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 2 Sep 2009 03:46:36 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: rgmanager security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1339-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1339.html">https://rhn.redhat.com/errata/RHSA-2009-1339.html</a>
+Issue date:        2009-09-02
+CVE Names:         CVE-2008-6552 
+=====================================================================
+
+1. Summary:
+
+An updated rgmanager package that fixes multiple security issues, various
+bugs, and adds enhancements is now available for Red Hat Enterprise Linux
+5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Clustering (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The rgmanager package contains the Red Hat Resource Group Manager, which
+provides high availability for critical server applications in the event of
+system downtime.
+
+Multiple insecure temporary file use flaws were discovered in rgmanager and
+various resource scripts run by rgmanager. A local attacker could use these
+flaws to overwrite an arbitrary file writable by the rgmanager process
+(i.e. user root) with the output of rgmanager or a resource agent via a
+symbolic link attack. (CVE-2008-6552)
+
+This update also fixes the following bugs:
+
+* clulog now accepts '-' as the first character in messages.
+
+* if expire_time is 0, max_restarts is no longer ignored.
+
+* the SAP resource agents included in the rgmanager package shipped with
+Red Hat Enterprise Linux 5.3 were outdated. This update includes the most
+recent SAP resource agents and, consequently, improves SAP failover
+support.
+
+* empty PID files no longer cause resource start failures.
+
+* recovery policy of type 'restart' now works properly when using a
+resource based on ra-skelet.sh.
+
+* samba.sh has been updated to kill the PID listed in the proper PID file.
+
+* handling of the '-F' option has been improved to fix issues causing
+rgmanager to crash if no members of a restricted failover domain were
+online.
+
+* the number of simultaneous status checks can now be limited to prevent
+load spikes.
+
+* forking and cloning during status checks has been optimized to reduce
+load spikes.
+
+* rg_test no longer hangs when run with large cluster configuration files.
+
+* when rgmanager is used with a restricted failover domain it will no
+longer occasionally segfault when some nodes are offline during a failover
+event.
+
+* virtual machine guests no longer restart after a cluster.conf update.
+
+* nfsclient.sh no longer leaves temporary files after running.
+
+* extra checks from the Oracle agents have been removed.
+
+* vm.sh now uses libvirt.
+
+* users can now define an explicit service processing order when
+central_processing is enabled.
+
+* virtual machine guests can no longer start on 2 nodes at the same time.
+
+* in some cases a successfully migrated virtual machine guest could restart
+when the cluster.conf file was updated.
+
+* incorrect reporting of a service being started when it was not started
+has been addressed.
+
+As well, this update adds the following enhancements:
+
+* a startup_wait option has been added to the MySQL resource agent.
+
+* services can now be prioritized.
+
+* rgmanager now checks to see if it has been killed by the OOM killer and
+if so, reboots the node.
+
+Users of rgmanager are advised to upgrade to this updated package, which
+resolves these issues and adds these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+250718 - fs.sh inefficient scripting leads to load peaks and disk saturation
+412911 - Convert all XM management calls to either lib virt or virsh
+449394 - Recovery policy of type restart doesn't work with a service using a resource based on ra-skelet.sh
+468691 - Virtual Services guest can start on 2 nodes at same time
+470917 - The oracledb.sh script checks in strange intervals(10s, 5m, 4.5m)
+471066 - rgmanager oracledb.sh resource agent does not properly check for all db startup failures.
+471226 - oracledb.sh script kills ALL oracle instances when failing over
+471431 - second ocf_log message doesn't make it to /var/log/messages
+474444 - Zero-length pid files cause resource start failures
+475826 - Update support for SAP resource agents (rgmanager)
+481058 - MySQL Service Startup Timeout after Crash
+482858 - Cluster Event Script needs Updates to include Group Exclusive
+483093 - rgmanager: samba.sh tries to kill the wrong pid file
+486349 - nfsclient.sh leaves temporary files /tmp/nfsclient-status-cache-$$
+486717 - clusvcadm -e &amp;lt;service&amp;gt; -F handling bugs
+488714 - Enabling (according to failover domain rules) a frozen service results in a unusable failed+frozen service
+489785 - /usr/share/cluster/apache.sh does not handle a valid /etc/httpd/conf/httpd.conf configuration correctly
+490449 - domU's restart after cluster.conf update
+490455 - rg_test hangs when running against cluster
+492828 - RFE: priorities for services/virtual machines
+494977 - segfault in check_rdomain_crash() during failover
+505340 - VM migration and subsequent cluster.conf update can cause the VM restart
+514044 - vm.sh does will fail resource if &quot;no state&quot; is detected
+519436 - CVE-2008-6552 cman, gfs2-utils, rgmanager: multiple insecure temporary file use issues
+
+6. Package List:
+
+RHEL Clustering (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rgmanager-2.0.52-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rgmanager-2.0.52-1.el5.src.rpm</a>
+
+i386:
+rgmanager-2.0.52-1.el5.i386.rpm
+rgmanager-debuginfo-2.0.52-1.el5.i386.rpm
+
+ia64:
+rgmanager-2.0.52-1.el5.ia64.rpm
+rgmanager-debuginfo-2.0.52-1.el5.ia64.rpm
+
+ppc:
+rgmanager-2.0.52-1.el5.ppc.rpm
+rgmanager-debuginfo-2.0.52-1.el5.ppc.rpm
+
+x86_64:
+rgmanager-2.0.52-1.el5.x86_64.rpm
+rgmanager-debuginfo-2.0.52-1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKniLIXlSAg2UNWIIRAlb4AJwIkJJHbOXlvjwOcbwjt70V0asv/wCeNBm+
+xcb6vJWVqnC+4Fu+Rc5pXaw=
+=ohX8
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0585&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 Aug 2008 16:23:57 &#45;0400 -->
+<!--X-Message-Id: 200808262023.m7QKNuHw006115@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0585-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0585-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0585-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 26 Aug 2008 16:23:56 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0585-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0585.html">https://rhn.redhat.com/errata/RHSA-2008-0585.html</a>
+Issue date:        2008-08-26
+CVE Names:         CVE-2007-5966 CVE-2007-6282 CVE-2007-6712 
+                   CVE-2008-1615 CVE-2008-2136 CVE-2008-2148 
+                   CVE-2008-2372 CVE-2008-2729 CVE-2008-2826 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and several bugs
+are now available for Red Hat Enterprise MRG 1.0.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* the possibility of a timeout value overflow was found in the Linux kernel
+high-resolution timers functionality, hrtimer. This could allow a local
+unprivileged user to execute arbitrary code, or cause a denial of service
+(kernel panic). (CVE-2007-5966, Important)
+
+* the possibility of a kernel crash was found in the Linux kernel IPsec
+protocol implementation, due to improper handling of fragmented ESP
+packets. When an attacker controlling an intermediate router fragmented
+these packets into very small pieces, it would cause a kernel crash on the
+receiving node during packet reassembly. (CVE-2007-6282, Important)
+
+* on 64-bit architectures, the possibility of a timer-expiration value
+overflow was found in the Linux kernel high-resolution timers
+functionality, hrtimer. This could allow a local unprivileged user to set
+up a large interval value, forcing the timer expiry value to become
+negative, causing a denial of service (kernel hang). 
+(CVE-2007-6712, Important)
+
+* on AMD64 architectures, the possibility of a kernel crash was discovered
+by testing the Linux kernel process-trace ability. This could allow a local
+unprivileged user to cause a denial of service (kernel crash).
+(CVE-2008-1615, Important)
+
+* a possible kernel memory leak was found in the Linux kernel Simple
+Internet Transition (SIT) INET6 implementation. This could allow a local
+unprivileged user to cause a denial of service. (CVE-2008-2136, Important)
+
+* a flaw was found in the Linux kernel utimensat system call. File
+permissions were not checked when UTIME_NOW and UTIME_OMIT combinations
+were used. This could allow a local unprivileged user to modify file times
+of arbitrary files, possibly leading to a denial of service.
+(CVE-2008-2148, Important)
+
+* a security flaw was found in the Linux kernel memory copy routines, when
+running on certain AMD64 architectures. If an unsuccessful attempt to copy
+kernel memory from source to destination memory locations occurred, the
+copy routines did not zero the content at the destination memory location.
+This could allow a local unprivileged user to view potentially sensitive
+data. (CVE-2008-2729, Important)
+
+* Gabriel Campana discovered a possible integer overflow flaw in the Linux 
+kernel Stream Control Transmission Protocol (SCTP) implementation. This
+deficiency could lead to privilege escalation. (CVE-2008-2826, Important)
+
+* a deficiency was found in the Linux kernel virtual memory implementation.
+This could allow a local unprivileged user to make a large number of calls
+to the get_user_pages function, possibly causing a denial of service.
+(CVE-2008-2372, Low)
+
+Also, these updated packages fix the following bugs:
+
+* gdb set orig_rax to 0x00000000ffffffff, which is recognized by the
+upstream kernel as &quot;-1&quot;, but not by the Red Hat Enterprise MRG kernel.
+
+* if the POSIX timer was programmed to fire immediately, the timer's
+signal was sometimes not delivered (timer does not fire).
+
+* rwlock caused crashes and application hangs.
+
+* running oprofile caused system panics.
+
+* threads releasing a mutex may have received an EPERM error.
+
+* booting the RT kernel with the &quot;nmi_watchdog=2&quot; kernel option caused a
+kernel panic, and an &quot;Unable to handle kernel paging request&quot; error.
+
+* &quot;echo 0 &gt; /sys/devices/system/cpu/cpu1/online&quot; caused crashes.
+
+* a crash on a JTC machine.
+
+* added a new &quot;FUTEX_WAIT_BITSET&quot; system call, identical to FUTEX_WAIT,
+that accepts absolute time as a timeout.
+
+Red Hat Enterprise MRG 1.0 users are advised to upgrade to these updated
+packages, which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+404291 - CVE-2007-6282 IPSec ESP kernel panics
+429290 - provide a futex syscall command similiar to FUTEX_WAIT with takes absolute timeout
+431430 - CVE-2008-1615 kernel: ptrace: Unprivileged crash on x86_64 %cs corruption
+439999 - CVE-2007-6712 kernel: infinite loop in highres timers (kernel hang)
+446031 - CVE-2008-2136 kernel: sit memory leak
+446060 - kernel: sched_fair.c simplify sched_slice()
+446397 - java testcase hangs on 2.6.24.7-52ibmrt2.3 kernel
+446777 - pthread_mutex_unlock returns EPERM due to earlier EFAULT from futex lock
+449676 - Turning a CPU offline causes panic
+451271 - CVE-2008-2729 kernel: [x86_64]  The string instruction version didn't zero the output on exception.
+452478 - CVE-2008-2826 kernel: sctp: sctp_getsockopt_local_addrs_old() potential overflow
+452666 - CVE-2008-2372 kernel: Reinstate ZERO_PAGE optimization in 'get_user_pages()' and fix XIP
+452692 - crash with  2.6.24.7-65.el5rt
+452693 - POSIX timer set to fire immediately does not fire
+452974 - [24][FOCUS] plist_add/del crash with 2.6.24.7-65ibmrt2.4 kernel
+453135 - CVE-2007-5966 Non-root can trigger cpu_idle soft lockup (tickless kernel only)
+453677 - nmi_watchdog=2 crashes the RT kernel on boot up
+454913 - [Realtime][Kernel] LTP test failure in sched_rr_get_interval02 testcase
+455275 - CVE-2008-2148 kernel: fix permission checking in sys_utimensat
+455747 - Oops when running oprofile
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG-RHEL5/SRPMS/kernel-rt-2.6.24.7-74.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG-RHEL5/SRPMS/kernel-rt-2.6.24.7-74.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-74.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-74.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-74.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-74.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-74.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5966">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5966</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6282">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6282</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6712">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6712</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1615">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1615</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2136">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2136</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2148">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2148</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2372">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2372</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2729">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2729</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2826">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2826</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD4DBQFItGZbXlSAg2UNWIIRAtItAJ9AAQwwAD6x2JcydWHuRx/mUj7rzQCYjy+w
+gLRpblvLnYaY3nTIDePYRQ==
+=arLE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

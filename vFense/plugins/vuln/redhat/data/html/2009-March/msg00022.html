@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0336&#45;01] Moderate: glib2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Mar 2009 08:06:56 &#45;0400 -->
+<!--X-Message-Id: 200903241206.n2OC6xmM022151@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0336-01] Moderate: glib2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0336-01] Moderate: glib2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0336-01] Moderate: glib2 security update</li>
+<li><em>Date</em>: Tue, 24 Mar 2009 08:06:55 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glib2 security update
+Advisory ID:       RHSA-2009:0336-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0336.html">https://rhn.redhat.com/errata/RHSA-2009-0336.html</a>
+Issue date:        2009-03-24
+CVE Names:         CVE-2008-4316 
+=====================================================================
+
+1. Summary:
+
+Updated glib2 packages that fix several security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+GLib is the low-level core library that forms the basis for projects such
+as GTK+ and GNOME. It provides data structure handling for C, portability
+wrappers, and interfaces for such runtime functionality as an event loop,
+threads, dynamic loading, and an object system.
+
+Diego Pettenò discovered multiple integer overflows causing heap-based
+buffer overflows in GLib's Base64 encoding and decoding functions. An
+attacker could use these flaws to crash an application using GLib's Base64
+functions to encode or decode large, untrusted inputs, or, possibly,
+execute arbitrary code as the user running the application. (CVE-2008-4316)
+
+Note: No application shipped with Red Hat Enterprise Linux 5 uses the
+affected functions. Third-party applications may, however, be affected.
+
+All users of glib2 should upgrade to these updated packages, which contain
+backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+474770 - CVE-2008-4316 glib2: integer overflows in the base64 handling functions (oCERT-2008-015)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm</a>
+
+i386:
+glib2-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+
+x86_64:
+glib2-2.12.3-4.el5_3.1.i386.rpm
+glib2-2.12.3-4.el5_3.1.x86_64.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm</a>
+
+i386:
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-devel-2.12.3-4.el5_3.1.i386.rpm
+
+x86_64:
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.x86_64.rpm
+glib2-devel-2.12.3-4.el5_3.1.i386.rpm
+glib2-devel-2.12.3-4.el5_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glib2-2.12.3-4.el5_3.1.src.rpm</a>
+
+i386:
+glib2-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-devel-2.12.3-4.el5_3.1.i386.rpm
+
+ia64:
+glib2-2.12.3-4.el5_3.1.i386.rpm
+glib2-2.12.3-4.el5_3.1.ia64.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.ia64.rpm
+glib2-devel-2.12.3-4.el5_3.1.ia64.rpm
+
+ppc:
+glib2-2.12.3-4.el5_3.1.ppc.rpm
+glib2-2.12.3-4.el5_3.1.ppc64.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.ppc.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.ppc64.rpm
+glib2-devel-2.12.3-4.el5_3.1.ppc.rpm
+glib2-devel-2.12.3-4.el5_3.1.ppc64.rpm
+
+s390x:
+glib2-2.12.3-4.el5_3.1.s390.rpm
+glib2-2.12.3-4.el5_3.1.s390x.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.s390.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.s390x.rpm
+glib2-devel-2.12.3-4.el5_3.1.s390.rpm
+glib2-devel-2.12.3-4.el5_3.1.s390x.rpm
+
+x86_64:
+glib2-2.12.3-4.el5_3.1.i386.rpm
+glib2-2.12.3-4.el5_3.1.x86_64.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.i386.rpm
+glib2-debuginfo-2.12.3-4.el5_3.1.x86_64.rpm
+glib2-devel-2.12.3-4.el5_3.1.i386.rpm
+glib2-devel-2.12.3-4.el5_3.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4316">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4316</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJyMzUXlSAg2UNWIIRAhwEAKCcBg1Yb/0OPq4XOjv0pM+VWtRABgCggPu5
+tbW+6D2xP1JxuJsOKfrQorw=
+=k3YS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

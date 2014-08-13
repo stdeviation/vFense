@@ -1,0 +1,353 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0649&#45;01] Moderate: libxslt security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 31 Jul 2008 11:59:33 &#45;0400 -->
+<!--X-Message-Id: 200807311559.m6VFxWSq032245@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0649-01] Moderate: libxslt security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0649-01] Moderate: libxslt security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0649-01] Moderate: libxslt security update</li>
+<li><em>Date</em>: Thu, 31 Jul 2008 11:59:32 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libxslt security update
+Advisory ID:       RHSA-2008:0649-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0649.html">https://rhn.redhat.com/errata/RHSA-2008-0649.html</a>
+Issue date:        2008-07-31
+CVE Names:         CVE-2008-2935 
+=====================================================================
+
+1. Summary:
+
+Updated libxslt packages that fix a security issue are now available for
+Red Hat Enterprise Linux 4 and Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+libxslt is a library for transforming XML files into other XML files using
+the standard XSLT stylesheet transformation mechanism.
+
+A heap buffer overflow flaw was discovered in the RC4 libxslt library
+extension. An attacker could create a malicious XSL file that would cause a
+crash, or, possibly, execute arbitrary code with the privileges of the
+application using the libxslt library to perform XSL transformations on
+untrusted XSL style sheets. (CVE-2008-2935)
+
+Red Hat would like to thank Chris Evans for reporting this vulnerability.
+
+All libxslt users are advised to upgrade to these updated packages, which
+contain a backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+455848 - CVE-2008-2935 libxslt: buffer overflow in libexslt RC4 encryption/decryption functions
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm</a>
+
+i386:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-devel-1.1.11-1.el4_7.2.i386.rpm
+libxslt-python-1.1.11-1.el4_7.2.i386.rpm
+
+ia64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-python-1.1.11-1.el4_7.2.ia64.rpm
+
+ppc:
+libxslt-1.1.11-1.el4_7.2.ppc.rpm
+libxslt-1.1.11-1.el4_7.2.ppc64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.ppc.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.ppc64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.ppc.rpm
+libxslt-python-1.1.11-1.el4_7.2.ppc.rpm
+
+s390:
+libxslt-1.1.11-1.el4_7.2.s390.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.s390.rpm
+libxslt-devel-1.1.11-1.el4_7.2.s390.rpm
+libxslt-python-1.1.11-1.el4_7.2.s390.rpm
+
+s390x:
+libxslt-1.1.11-1.el4_7.2.s390.rpm
+libxslt-1.1.11-1.el4_7.2.s390x.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.s390.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.s390x.rpm
+libxslt-devel-1.1.11-1.el4_7.2.s390x.rpm
+libxslt-python-1.1.11-1.el4_7.2.s390x.rpm
+
+x86_64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-python-1.1.11-1.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm</a>
+
+i386:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-devel-1.1.11-1.el4_7.2.i386.rpm
+libxslt-python-1.1.11-1.el4_7.2.i386.rpm
+
+x86_64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-python-1.1.11-1.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm</a>
+
+i386:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-devel-1.1.11-1.el4_7.2.i386.rpm
+libxslt-python-1.1.11-1.el4_7.2.i386.rpm
+
+ia64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-python-1.1.11-1.el4_7.2.ia64.rpm
+
+x86_64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-python-1.1.11-1.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/libxslt-1.1.11-1.el4_7.2.src.rpm</a>
+
+i386:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-devel-1.1.11-1.el4_7.2.i386.rpm
+libxslt-python-1.1.11-1.el4_7.2.i386.rpm
+
+ia64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.ia64.rpm
+libxslt-python-1.1.11-1.el4_7.2.ia64.rpm
+
+x86_64:
+libxslt-1.1.11-1.el4_7.2.i386.rpm
+libxslt-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.i386.rpm
+libxslt-debuginfo-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-devel-1.1.11-1.el4_7.2.x86_64.rpm
+libxslt-python-1.1.11-1.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm</a>
+
+i386:
+libxslt-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-python-1.1.17-2.el5_2.2.i386.rpm
+
+x86_64:
+libxslt-1.1.17-2.el5_2.2.i386.rpm
+libxslt-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-python-1.1.17-2.el5_2.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm</a>
+
+i386:
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-devel-1.1.17-2.el5_2.2.i386.rpm
+
+x86_64:
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-devel-1.1.17-2.el5_2.2.i386.rpm
+libxslt-devel-1.1.17-2.el5_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxslt-1.1.17-2.el5_2.2.src.rpm</a>
+
+i386:
+libxslt-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-devel-1.1.17-2.el5_2.2.i386.rpm
+libxslt-python-1.1.17-2.el5_2.2.i386.rpm
+
+ia64:
+libxslt-1.1.17-2.el5_2.2.i386.rpm
+libxslt-1.1.17-2.el5_2.2.ia64.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.ia64.rpm
+libxslt-devel-1.1.17-2.el5_2.2.ia64.rpm
+libxslt-python-1.1.17-2.el5_2.2.ia64.rpm
+
+ppc:
+libxslt-1.1.17-2.el5_2.2.ppc.rpm
+libxslt-1.1.17-2.el5_2.2.ppc64.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.ppc.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.ppc64.rpm
+libxslt-devel-1.1.17-2.el5_2.2.ppc.rpm
+libxslt-devel-1.1.17-2.el5_2.2.ppc64.rpm
+libxslt-python-1.1.17-2.el5_2.2.ppc.rpm
+
+s390x:
+libxslt-1.1.17-2.el5_2.2.s390.rpm
+libxslt-1.1.17-2.el5_2.2.s390x.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.s390.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.s390x.rpm
+libxslt-devel-1.1.17-2.el5_2.2.s390.rpm
+libxslt-devel-1.1.17-2.el5_2.2.s390x.rpm
+libxslt-python-1.1.17-2.el5_2.2.s390x.rpm
+
+x86_64:
+libxslt-1.1.17-2.el5_2.2.i386.rpm
+libxslt-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.i386.rpm
+libxslt-debuginfo-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-devel-1.1.17-2.el5_2.2.i386.rpm
+libxslt-devel-1.1.17-2.el5_2.2.x86_64.rpm
+libxslt-python-1.1.17-2.el5_2.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2935">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2935</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIkeFYXlSAg2UNWIIRAgnwAJ98WMzD2JTmUS5k1CvOgKmJtNcbDgCfWZIt
+rKZkc9HrSSFRqgu7RyDLWFc=
+=RWsJ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

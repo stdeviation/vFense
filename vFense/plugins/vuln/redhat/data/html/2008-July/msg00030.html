@@ -1,0 +1,501 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0665&#45;01] Moderate: Updated kernel packages for Red Hat	Enterprise Linux 4.7 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Jul 2008 13:31:06 &#45;0400 -->
+<!--X-Message-Id: 200807241731.m6OHV5AK022781@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0665-01] Moderate: Updated kernel packages for Red Hat	Enterp</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0665-01] Moderate: Updated kernel packages for Red Hat	Enterprise Linux 4.7</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0665-01] Moderate: Updated kernel packages for Red Hat	Enterprise Linux 4.7</li>
+<li><em>Date</em>: Thu, 24 Jul 2008 13:31:05 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Updated kernel packages for Red Hat Enterprise Linux 4.7
+Advisory ID:       RHSA-2008:0665-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0665.html">https://rhn.redhat.com/errata/RHSA-2008-0665.html</a>
+Issue date:        2008-07-24
+Keywords:          nahant kernel update
+Obsoletes:         RHBA-2007:0791
+CVE Names:         CVE-2006-4145 CVE-2008-2812 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages are now available as part of ongoing support and
+maintenance of Red Hat Enterprise Linux 4. This is the seventh regular
+update.
+
+This update has been rated as having moderate security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Kernel Feature Support: 
+* iostat displays I/O performance for partitions
+* I/O task accounting added to getrusage(), allowing comprehensive core
+statistics
+* page cache pages count added to show_mem() output
+* tux O_ATOMICLOOKUP flag removed from the open() system call: replaced
+with O_CLOEXEC
+* the kernel now exports process limit information to /proc/[PID]/limits
+* implement udp_poll() to reduce likelihood of false positives returned
+from select()
+* the TCP_RTO_MIN parameter can now be configured to a maximum of 3000
+milliseconds. This is configured using &quot;ip route&quot;
+* update CIFS to version 1.50
+
+Added Features:
+* nfs.enable_ino64 boot command line parameter: enable and disable 32-bit
+inode numbers when using NFS
+* tick &quot;divider&quot; kernel boot parameter: reduce CPU overhead, and increase
+efficiency at the cost of lowering timing accuracy
+* /proc/sys/vm/nfs-writeback-lowmem-only tunable parameter: resolve NFS
+read performance
+* /proc/sys/vm/write-mapped tunable option, allowing the option of faster
+NFS reads
+* support for Large Receive Offload as a networking module
+* core dump masking, allowing a core dump process to skip the shared memory
+segments of a process
+
+Virtualization:
+* para-virtualized network and block device drivers, to increase
+fully-virtualized guest performance
+* support for more than three VNIF numbers per guest domain
+
+Platform Support:
+* AMD ATI SB800 SATA controller, AMD ATI SB600 and SB700 40-pin IDE cable
+* 64-bit DMA support on AMD ATI SB700
+* PCI device IDs to support Intel ICH10
+* /dev/msr[0-n] device files
+* powernow-k8 as a module
+* SLB shadow buffer support for IBM POWER6 systems
+* support for CPU frequencies greater than 32-bit on IBM POWER5, IBM POWER6
+* floating point load and store handler for IBM POWER6
+
+Added Drivers and Updates:
+* ixgbe 1.1.18, for the Intel 82598 10GB ethernet controller
+* bnx2x 1.40.22, for network adapters on the Broadcom 5710 chipset
+* dm-hp-sw 1.0.0, for HP Active/Standby
+* zfcp version and bug fixes
+* qdio to fix FCP/SCSI write I/O expiring on LPARs
+* cio bug fixes
+* eHEA latest upstream, and netdump and netconsole support
+* ipr driver support for dual SAS RAID controllers
+* correct CPU cache info and SATA support for Intel Tolapai
+* i5000_edac support for Intel 5000 chipsets
+* i3000_edac support for Intel 3000 and 3010 chipsets
+* add i2c_piix4 module on 64-bit systems to support AMD ATI SB600, 700
+and 800
+* i2c-i801 support for Intel Tolapai
+* qla4xxx: 5.01.01-d2 to 5.01.02-d4-rhel4.7-00
+* qla2xxx: 8.01.07-d4 to 8.01.07-d4-rhel4.7-02
+* cciss: 2.6.16 to 2.6.20
+* mptfusion: 3.02.99.00rh to 3.12.19.00rh
+* lpfc:0: 8.0.16.34 to 8.0.16.40
+* megaraid_sas: 00.00.03.13 to 00.00.03.18-rh1
+* stex: 3.0.0.1 to  3.6.0101.2
+* arcmsr: 1.20.00.13 to 1.20.00.15.rh4u7
+* aacraid: 1.1-5[2441] to 1.1.5[2455]
+
+Miscellaneous Updates:
+* OFED 1.3 support
+* wacom driver to add support for Cintiq 20WSX, Wacom Intuos3 12x19, 12x12
+and 4x6 tablets
+* sata_svw driver to support Broadcom HT-1100 chipsets
+* libata to un-blacklist Hitachi drives to enable NCQ
+* ide driver allows command line option to disable ide drivers
+* psmouse support for cortps protocol
+
+These updated packages fix the following security issues:
+
+* NULL pointer access due to missing checks for terminal validity.
+(CVE-2008-2812, Moderate)
+
+* a security flaw was found in the Linux kernel Universal Disk Format file
+system. (CVE-2006-4145, Low)
+
+For further details, refer to the latest Red Hat Enterprise Linux 4.7
+release notes: redhat.com/docs/manuals/enterprise
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+151085 - mount are not interruptible
+166038 - ext2online can't resize: No space left on device
+171712 - A NFS export mounted using version 4 and TCP shows up as UDP in /proc/mounts
+179201 - pvmove causes kernel panic
+183119 - Assertion failure in journal_next_log_block
+185202 - Kernel build requires &quot;High Memory Support&quot;
+186606 - Incorrect suggestion on when to install largesmp kernel
+194585 - mdadm --grow -n 2 (old: 3) fails on particular raid1 devices
+195685 - RFE: Add dm-hp-sw to kernel to allow use of active/passive sans with dm multipathing
+204309 - kernel retries portmap query indefinitely when statd is down
+205966 - Firewall - Premature ip_conntrack timer expiry on 3+ ack or window size advertisements - (hanging tomcat threads problem)
+206113 - [PATCH][RHEL4U4] Fix estimate-mistake (e820-memory-hole and numnodes) of available_memory in x86_64
+212321 - [PATCH][RHEL4U4] Backported udp_poll() function (Fix the problem that select() returns in RHEL4 though select() must not return essentially when kernel receives broken UDP packet(s))
+212922 - /sbin/service iptables stop hangs on modprobe -r ipt_state
+219639 - Crash dump fails on IA64 with block_order set to 10
+227610 - READDIR on a NFSv4 directory containing a referral returns -EIO for entire directory
+233234 - Missing definition for mutex_destroy in linux/kernel.h
+247446 - RHEL4-U5: &quot;cdrom open failed&quot; message in /var/log/messages on every reboot
+247879 - dm-mirror: spinlock in write_callback has the potential for deadlock
+248488 - Backport divider= option from RHEL5 U1 to RHEL4
+248787 - [RHEL4 U4] NFS server, rpciod was stuck in a infinite loop,
+248954 - Oracle ASM DBWR process goes into 100% CPU spin when using hugepages on ia64
+249727 - xenbus has use-after-free in drivers/xen/xenbus/xenbus_xs.c
+250381 - xenbus suspend_mutex remains locked after transaction failure
+250842 - oopses when multicasting with connection oriented socket
+251560 - [Promise 4.7 feat] Update stex driver to version 3.6.0101.2
+252222 - ipv6 device reference counting error in net/ipv6/anycast.c
+252287 - AMD/ATI SB600/700/800 use same SMBus controller devID
+252400 - RHEL4 U5: ia64 machine hang when DB starts using rac/nfs/hugepages
+252939 - Long Delay before OOMKill launches
+253592 - [RHEL 4.5] forcedeth: pull latest upstream updates
+270661 - need a way to disable ide drivers
+278961 - epoll_wait(..., -100) results in printk
+280431 - ip_tables reference count will underflow occasionally
+287741 - PCI: hotplug: acpiphp: avoid acpiphp &quot;cannot get bridge info&quot; PCI hotplug failure
+299901 - We need SB800 SATA Controller supported in RHEL4.7
+300861 - sb600 system generates ATA errors during initscripts
+306911 - CVE-2006-4145 UDF truncating issue
+309081 - i386 compressed diskdump header contains incorrect panic cpu
+311431 - kernel BUG at mm/rmap.c:479 during suspend/resume testing
+311881 - ptrace: i386 debugger + x86_64 kernel + threaded (i386) inferior = error
+335361 - RHEL 4.7: SB700 contains two IDE channels
+337671 - [RHEL4] Patch pata_jmicron to support new controller
+351911 - RHEL4.6:  AD1984 HDAudio does not work on AMD Trevally Board(RS690 + SB700)
+354371 - readdir on nfs4 passing non-posix errors to userspace
+355141 - pull upstream patches for smbfs
+359651 - [PATCH] nfsv4 fails to update content of files when open for write
+359671 - RHEL4: Hald causes system deadlock on ia64
+360311 - kernel dm: panic on shrinking device size
+361931 - [Stratus 4.7 bug] iounmap may sleep while holding vmlist_lock, causing a deadlock.
+364361 - NFS: Fix directory caching problem - with test case and patch.
+377351 - kernel dm: bd_mount_sem counter corruption
+377371 - kernel dm crypt: oops on device removal
+377611 - Marvell NIC using skge driver loses promiscuous mode on rewiring
+381221 - Assertion failure in journal_start() at fs/jbd/transaction.c:274: 'handle-&amp;gt;h_transaction-&amp;gt;t_journal == journal'
+393501 - execve returning EFBIG when running 4 GB executable
+396081 - Since &quot;Patch2037: linux-2.6.9-vm-balance.patch&quot; my NFS performance is poorly
+402581 - Deadlock while performing nfs operations.
+414131 - Checksum offloading and IP connection tracking don't play well together
+424541 - Please build SMBus driver i2c-piix4 as a module in RHEL4.7
+424871 - Implement netif_release_rx_bufs for copying receiver
+425721 - [QLogic 4.7 bug][3/5] qla4xxx - Targets not seen on first port (5.01.02-d2 --&amp;gt; 5.01.02-d3)
+426031 - rapid block device plug / unplug leads to kernel crash and/or soft lockup
+426301 - FEAT: RHEL 4.7 Intel Tolapai cpucache patch
+426411 - [QLogic 4.7 Bug][5/5] qla2xxx - avoid delay for loop ready when loop dead
+426647 - ptrace: PTRACE_SINGLESTEP,signal steps on the 2nd instr.
+427204 - RHEL4, make tcp_input_metrics() get minimum RTO via tcp_rto_min()
+427544 - Update CIFS to 1.50cRH for 4.7
+427799 - [RHEL-4] RFE: Add EDAC driver for Intel 3000/3010 chipsets
+428801 - [Areca 4.7 feat] Update the arcmsr driver to 1.20.00.15.RH
+428934 - Can not send redirect packet when jiffiess wraparound
+428964 - RHEL4.7: HDMI Audio support for AMD ATI chipsets
+429103 - Allocations on resume path can cause deadlock due to attempting to swap
+429930 - Fake ARP dropped after migration leading to loss of network connectivity
+430313 - [QLogic 4.7 bug][4/5] qla4xxx - Race condition fixes w/ constant qla3xxx ifup/ifdown (5.01.02-d3 --&amp;gt; 5.01.02-d4)
+430494 - [NetApp-S 4.7 bug] LUN removal status is not updated on the host without a driver reload
+430946 - nfs server sending short packets on nfsv2 UDP readdir replies
+431081 - [RHEL4.6]: Under load, an i386 PV guest on i386 HV will hang during save/restore
+433249 - [EMC 4.7 bug] nfs_access_cache_shrinker() race with umount
+433524 - oProfile Driver Module Patch for Family10h
+435000 - ptrace: ERESTARTSYS from calling a function from a debugger
+435351 - [RHEL4.7]: PV kernel can OOPs during live migrate
+435787 - RHEL4.7: USB stress test failure on AMD SBX00
+437423 - Add Xen disk and network paravirtualized drivers to bare-metal kernel
+437865 - [RHEL 4.6] bonding 802.3ad does not work
+438027 - RHEL4.6 Diskdump performance regression (mptfusion)
+438115 - Add invocation of weak-modules on kernel install/remove
+438688 - 68.25 Kernel rpm installation/uninstallation errors out
+438723 - 32bit NFS server returns -EIO for readdirplus request when backing file system has 32bit inodes
+438834 - cluster mirrors should not be attempted when cmirror modules are not loaded
+438975 - gettimeofday is not monotonically increasing
+439109 - [Broadcom 4.7 bug] HT1000 chip based systems getting blacklisted for msi
+439539 - RHEL4 kernel ignores extended cpu model field
+439540 - oprofile fix to support Penryn-based processors
+439926 - do not limit locked memory when RLIMIT_MEMLOCK is RLIM_INFINITY
+441445 - [QLogic 4.7 feat] Update qla2xxx - qla84xx variant support.
+442124 - bonding: incorrect backport creates possible incorrect interface flags
+442298 - Memory corruption due to VNIF increase
+442538 - kernel panic in gnttab_map when booting RHEL4 x86_64 FV xen guest
+442789 - oops in cifs module while trying to stop a thread (kthread_stop) during filesystem mount
+443052 - kernel failed to boot and dropped to xmon
+443053 - cciss driver crash
+443825 - ls shows two /proc/[pid]/limits files for every process
+444473 - Fake ARP dropped after migration leading to loss of network connectivity
+447315 - parted error: Can't open /dev/xvda while probing disks during installation
+448641 - [QLogic 4.7 bug] qla2xxx - Update firmware for 4, 8 Gb/S adapters
+448934 - Patch for bug 435280 introduces possibility of dead lock
+449381 - System hangs when using /proc/sys/vm/drop_caches under heavy load on large system.
+450094 - Patch for bug 360281 &quot;Odd behaviour in mmap&quot; introduces regression
+450645 - [QLogic 4.7 bug] qla2xxx- several fixes: ioctl module and slab corruption (8.02.09-d0-rhel4.7-04)
+450918 - vmware - Console graphic problem when mouse is moved
+453419 - CVE-2008-2812 kernel: NULL ptr dereference in multiple network drivers due to missing checks in tty code
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.EL.i686.rpm
+kernel-devel-2.6.9-78.EL.i686.rpm
+kernel-hugemem-2.6.9-78.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.EL.i686.rpm
+kernel-smp-2.6.9-78.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.EL.i686.rpm
+kernel-xenU-2.6.9-78.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.EL.ia64.rpm
+kernel-devel-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-78.EL.ppc64.rpm
+kernel-2.6.9-78.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-78.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-78.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-78.EL.ppc64.rpm
+kernel-devel-2.6.9-78.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-78.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-78.EL.s390.rpm
+kernel-debuginfo-2.6.9-78.EL.s390.rpm
+kernel-devel-2.6.9-78.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-78.EL.s390x.rpm
+kernel-debuginfo-2.6.9-78.EL.s390x.rpm
+kernel-devel-2.6.9-78.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-78.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.EL.x86_64.rpm
+kernel-devel-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-smp-2.6.9-78.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.EL.i686.rpm
+kernel-devel-2.6.9-78.EL.i686.rpm
+kernel-hugemem-2.6.9-78.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.EL.i686.rpm
+kernel-smp-2.6.9-78.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.EL.i686.rpm
+kernel-xenU-2.6.9-78.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.EL.i686.rpm
+
+noarch:
+kernel-doc-2.6.9-78.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.EL.x86_64.rpm
+kernel-devel-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-smp-2.6.9-78.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.EL.i686.rpm
+kernel-devel-2.6.9-78.EL.i686.rpm
+kernel-hugemem-2.6.9-78.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.EL.i686.rpm
+kernel-smp-2.6.9-78.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.EL.i686.rpm
+kernel-xenU-2.6.9-78.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.EL.ia64.rpm
+kernel-devel-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.EL.x86_64.rpm
+kernel-devel-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-smp-2.6.9-78.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-78.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.EL.i686.rpm
+kernel-devel-2.6.9-78.EL.i686.rpm
+kernel-hugemem-2.6.9-78.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.EL.i686.rpm
+kernel-smp-2.6.9-78.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.EL.i686.rpm
+kernel-xenU-2.6.9-78.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.EL.ia64.rpm
+kernel-devel-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.EL.x86_64.rpm
+kernel-devel-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-smp-2.6.9-78.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4145">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4145</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2812">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2812</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIiLxWXlSAg2UNWIIRAnNBAJ0WWy92sgjJAWZJuyjV7OSTphc2ggCff5sN
+5QK08QIEy/sIB9OUn0HerV8=
+=pTNA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

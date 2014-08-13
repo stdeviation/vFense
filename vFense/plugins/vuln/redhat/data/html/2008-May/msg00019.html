@@ -1,0 +1,233 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0297&#45;02] Low: dovecot security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:29:55 &#45;0400 -->
+<!--X-Message-Id: 200805211429.m4LETqcn030149@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0297-02] Low: dovecot security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0297-02] Low: dovecot security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0297-02] Low: dovecot security and bug fix update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:29:52 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: dovecot security and bug fix update
+Advisory ID:       RHSA-2008:0297-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0297.html">https://rhn.redhat.com/errata/RHSA-2008-0297.html</a>
+Issue date:        2008-05-20
+Updated on:        2008-05-21
+CVE Names:         CVE-2007-2231 CVE-2007-4211 CVE-2007-6598 
+                   CVE-2008-1199 
+=====================================================================
+
+1. Summary:
+
+An updated dovecot package that fixes several security issues and various
+bugs is now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Dovecot is an IMAP server for Linux and UNIX-like systems, primarily
+written with security in mind.
+
+A flaw was discovered in the way Dovecot handled the &quot;mail_extra_groups&quot;
+option. An authenticated attacker with local shell access could leverage
+this flaw to read, modify, or delete other users mail that is stored on
+the mail server. (CVE-2008-1199)
+
+This issue did not affect the default Red Hat Enterprise Linux 5 Dovecot
+configuration. This update adds two new configuration options --
+&quot;mail_privileged_group&quot; and &quot;mail_access_groups&quot; -- to minimize the usage
+of additional privileges.
+
+A directory traversal flaw was discovered in Dovecot's zlib plug-in. An
+authenticated user could use this flaw to view other compressed mailboxes
+with the permissions of the Dovecot process. (CVE-2007-2231)
+
+A flaw was found in the Dovecot ACL plug-in. User with only insert
+permissions for a mailbox could use the &quot;COPY&quot; and &quot;APPEND&quot; commands to set
+additional message flags. (CVE-2007-4211)
+
+A flaw was found in a way Dovecot cached LDAP query results in certain
+configurations. This could possibly allow authenticated users to log in as
+a different user who has the same password. (CVE-2007-6598)
+
+As well, this updated package fixes the following bugs:
+
+* configuring &quot;userdb&quot; and &quot;passdb&quot; to use LDAP caused Dovecot to hang. A
+segmentation fault may have occurred. In this updated package, using an
+LDAP backend for &quot;userdb&quot; and &quot;passdb&quot; no longer causes Dovecot to hang.
+
+* the Dovecot &quot;login_process_size&quot; limit was configured for 32-bit systems.
+On 64-bit systems, when Dovecot was configured to use either IMAP or POP3,
+the log in processes crashed with out-of-memory errors. Errors such as the
+following were logged:
+
+pop3-login: pop3-login: error while loading shared libraries:
+libsepol.so.1: failed to map segment from shared object: Cannot allocate
+memory
+
+In this updated package, the &quot;login_process_size&quot; limit is correctly
+configured on 64-bit systems, which resolves this issue.
+
+Note: this updated package upgrades dovecot to version 1.0.7. For
+further details, refer to the Dovecot changelog:
+<a  rel="nofollow" href="http://koji.fedoraproject.org/koji/buildinfo?buildID=23397">http://koji.fedoraproject.org/koji/buildinfo?buildID=23397</a>
+
+Users of dovecot are advised to upgrade to this updated package, which
+resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+238439 - CVE-2007-2231 Directory traversal in dovecot with zlib plugin
+245249 - Dovecot hangs while using ldap backend.
+251007 - CVE-2007-4211 Dovecot possible privilege ascalation in ACL plugin
+253363 - Dovecot pop3-login/imap-login crash with OOM error
+331441 - Please consider upgrading Dovecot to 1.0rc23 at least
+380401 - tracker bug for 1.0.7 rebase
+427575 - CVE-2007-6598: dovecot LDAP+auth cache user login mixup
+436927 - CVE-2008-1199 dovecot: insecure mail_extra_groups option
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dovecot-1.0.7-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dovecot-1.0.7-2.el5.src.rpm</a>
+
+i386:
+dovecot-1.0.7-2.el5.i386.rpm
+dovecot-debuginfo-1.0.7-2.el5.i386.rpm
+
+x86_64:
+dovecot-1.0.7-2.el5.x86_64.rpm
+dovecot-debuginfo-1.0.7-2.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dovecot-1.0.7-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dovecot-1.0.7-2.el5.src.rpm</a>
+
+i386:
+dovecot-1.0.7-2.el5.i386.rpm
+dovecot-debuginfo-1.0.7-2.el5.i386.rpm
+
+ia64:
+dovecot-1.0.7-2.el5.ia64.rpm
+dovecot-debuginfo-1.0.7-2.el5.ia64.rpm
+
+ppc:
+dovecot-1.0.7-2.el5.ppc.rpm
+dovecot-debuginfo-1.0.7-2.el5.ppc.rpm
+
+s390x:
+dovecot-1.0.7-2.el5.s390x.rpm
+dovecot-debuginfo-1.0.7-2.el5.s390x.rpm
+
+x86_64:
+dovecot-1.0.7-2.el5.x86_64.rpm
+dovecot-debuginfo-1.0.7-2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2231">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2231</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4211">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4211</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6598">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6598</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1199">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1199</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDGqXlSAg2UNWIIRAsOeAJwKM3PYlb29LhOkcBx0olvLEhVqFgCeNBkT
+tjyub6/ivPbuDLqT6Y06D/Y=
+=peHK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

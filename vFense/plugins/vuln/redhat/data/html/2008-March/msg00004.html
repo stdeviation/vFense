@@ -1,0 +1,309 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0186&#45;01] Critical: java&#45;1.5.0&#45;sun security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 6 Mar 2008 17:17:44 &#45;0500 -->
+<!--X-Message-Id: 200803062217.m26MHhFQ013885@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0186-01] Critical: java-1.5.0-sun security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0186-01] Critical: java-1.5.0-sun security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0186-01] Critical: java-1.5.0-sun security update</li>
+<li><em>Date</em>: Thu, 6 Mar 2008 17:17:43 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.5.0-sun security update
+Advisory ID:       RHSA-2008:0186-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0186.html">https://rhn.redhat.com/errata/RHSA-2008-0186.html</a>
+Issue date:        2008-03-06
+CVE Names:         CVE-2008-1185 CVE-2008-1186 CVE-2008-1187 
+                   CVE-2008-1188 CVE-2008-1189 CVE-2008-1190 
+                   CVE-2008-1191 CVE-2008-1192 CVE-2008-1193 
+                   CVE-2008-1194 CVE-2008-1195 CVE-2008-1196 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.5.0-sun packages that correct several security issues are
+now available for Red Hat Enterprise Linux 4 Extras and 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 Extras - i386, x86_64
+Red Hat Desktop version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux ES version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux WS version 4 Extras - i386, x86_64
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The Java Runtime Environment (JRE) contains the software and tools
+that users need to run applets and applications written using the Java
+programming language. 
+
+Flaws in the JRE allowed an untrusted application or applet to elevate its
+privileges. This could be exploited by a remote attacker to access local
+files or execute local applications accessible to the user running the JRE
+(CVE-2008-1185, CVE-2008-1186)
+
+A flaw was found in the Java XSLT processing classes. An untrusted
+application or applet could cause a denial of service, or execute arbitrary
+code with the permissions of the user running the JRE. (CVE-2008-1187)
+
+Several buffer overflow flaws were found in Java Web Start (JWS). An
+untrusted JNLP application could access local files or execute local
+applications accessible to the user running the JRE.
+(CVE-2008-1188, CVE-2008-1189, CVE-2008-1190, CVE-2008-1191, CVE-2008-1196)
+
+A flaw was found in the Java Plug-in. A remote attacker could bypass the
+same origin policy, executing arbitrary code with the permissions of the
+user running the JRE. (CVE-2008-1192)
+
+A flaw was found in the JRE image parsing libraries. An untrusted
+application or applet could cause a denial of service, or possible execute
+arbitrary code with the permissions of the user running the JRE.
+(CVE-2008-1193)
+
+A flaw was found in the JRE color management library.  An untrusted
+application or applet could trigger a denial of service (JVM crash).
+(CVE-2008-1194)
+
+The JRE allowed untrusted JavaScript code to create local network
+connections by the use of Java APIs.  A remote attacker could use these
+flaws to acesss local network services. (CVE-2008-1195)
+
+This update also fixes an issue where the Java Plug-in is not available for
+browser use after successful installation.
+
+Users of java-1.5.0-sun should upgrade to these updated packages, which
+correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+436029 - CVE-2008-1185 Untrusted applet and application privilege escalation (CVE-2008-1186)
+436030 - CVE-2008-1187 Untrusted applet and application XSLT processing privilege escalation
+436293 - CVE-2008-1188 Buffer overflow security vulnerabilities in Java Web Start (CVE-2008-1189, CVE-2008-1190, CVE-2008-1191)
+436295 - CVE-2008-1192 Java Plugin same-origin-policy bypass
+436296 - CVE-2008-1193 JRE image parsing library allows privilege escalation (CVE-2008-1194)
+436299 - CVE-2008-1195 Java-API calls in untrusted Javascript allow network privilege escalation
+436302 - CVE-2008-1196 Buffer overflow security vulnerabilities in Java Web Start
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.x86_64.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el4.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el4.x86_64.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el4.x86_64.rpm
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el5.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el5.x86_64.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el5.i586.rpm
+
+x86_64:
+java-1.5.0-sun-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-demo-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-devel-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-jdbc-1.5.0.15-1jpp.2.el5.x86_64.rpm
+java-1.5.0-sun-plugin-1.5.0.15-1jpp.2.el5.i586.rpm
+java-1.5.0-sun-src-1.5.0.15-1jpp.2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1185">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1185</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1186">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1186</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1187">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1187</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1188">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1188</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1189">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1189</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1190">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1190</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1191">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1191</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1192">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1192</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1193">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1193</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1194">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1194</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1195">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1195</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1196">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1196</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233321-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233321-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233322-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233322-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233323-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233323-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233324-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233324-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233325-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233325-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233326-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233326-1</a>
+<a  rel="nofollow" href="http://sunsolve.sun.com/search/document.do?assetkey=1-66-233327-1">http://sunsolve.sun.com/search/document.do?assetkey=1-66-233327-1</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH0G1iXlSAg2UNWIIRArwHAJwLIgvOCdFcRob44hpjM+xU+uvjdgCgs/PV
+U+kabpUaLdZrjIzvODKWZAc=
+=OV6B
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

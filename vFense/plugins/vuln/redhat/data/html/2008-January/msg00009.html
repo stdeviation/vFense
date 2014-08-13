@@ -1,0 +1,258 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0008&#45;01] Moderate: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Jan 2008 04:39:38 &#45;0500 -->
+<!--X-Message-Id: 200801150939.m0F9dbfU019013@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0008-01] Moderate: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0008-01] Moderate: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0008-01] Moderate: httpd security update</li>
+<li><em>Date</em>: Tue, 15 Jan 2008 04:39:37 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security update
+Advisory ID:       RHSA-2008:0008-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0008.html">https://rhn.redhat.com/errata/RHSA-2008-0008.html</a>
+Issue date:        2008-01-15
+CVE Names:         CVE-2007-4465 CVE-2007-5000 CVE-2007-6388 
+                   CVE-2007-6421 CVE-2007-6422 CVE-2008-0005 
+=====================================================================
+
+1. Summary:
+
+Updated Apache httpd packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular Web server.
+
+A flaw was found in the mod_imagemap module. On sites where mod_imagemap
+was enabled and an imagemap file was publicly available, a cross-site
+scripting attack was possible. (CVE-2007-5000)
+
+A flaw was found in the mod_autoindex module. On sites where directory
+listings are used, and the &quot;AddDefaultCharset&quot; directive has been removed
+from the configuration, a cross-site scripting attack might have been
+possible against Web browsers which do not correctly derive the response
+character set following the rules in RFC 2616. (CVE-2007-4465)
+
+A flaw was found in the mod_status module. On sites where mod_status was
+enabled and the status pages were publicly available, a cross-site
+scripting attack was possible. (CVE-2007-6388)
+
+A flaw was found in the mod_proxy_balancer module. On sites where
+mod_proxy_balancer was enabled, a cross-site scripting attack against an
+authorized user was possible. (CVE-2007-6421)
+
+A flaw was found in the mod_proxy_balancer module. On sites where
+mod_proxy_balancer was enabled, an authorized user could send a carefully
+crafted request that would cause the Apache child process handling that
+request to crash. This could lead to a denial of service if using a
+threaded Multi-Processing Module. (CVE-2007-6422) 
+
+A flaw was found in the mod_proxy_ftp module. On sites where mod_proxy_ftp
+was enabled and a forward proxy was configured, a cross-site scripting
+attack was possible against Web browsers which do not correctly derive the
+response character set following the rules in RFC 2616. (CVE-2008-0005)
+
+Users of Apache httpd should upgrade to these updated packages, which
+contain backported patches to resolve these issues. Users should restart
+httpd after installing this update.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+289511 - CVE-2007-4465 mod_autoindex XSS
+419931 - CVE-2007-5000 mod_imagemap XSS
+427228 - CVE-2007-6388 apache mod_status cross-site scripting
+427229 - CVE-2007-6421 httpd mod_proxy_balancer cross-site scripting
+427230 - CVE-2007-6422 httpd mod_proxy_balancer crash
+427739 - CVE-2008-0005 mod_proxy_ftp XSS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm</a>
+
+i386:
+httpd-2.2.3-11.el5_1.3.i386.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.i386.rpm
+mod_ssl-2.2.3-11.el5_1.3.i386.rpm
+
+x86_64:
+httpd-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.x86_64.rpm
+mod_ssl-2.2.3-11.el5_1.3.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm</a>
+
+i386:
+httpd-debuginfo-2.2.3-11.el5_1.3.i386.rpm
+httpd-devel-2.2.3-11.el5_1.3.i386.rpm
+httpd-manual-2.2.3-11.el5_1.3.i386.rpm
+
+x86_64:
+httpd-debuginfo-2.2.3-11.el5_1.3.i386.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-devel-2.2.3-11.el5_1.3.i386.rpm
+httpd-devel-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-manual-2.2.3-11.el5_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-11.el5_1.3.src.rpm</a>
+
+i386:
+httpd-2.2.3-11.el5_1.3.i386.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.i386.rpm
+httpd-devel-2.2.3-11.el5_1.3.i386.rpm
+httpd-manual-2.2.3-11.el5_1.3.i386.rpm
+mod_ssl-2.2.3-11.el5_1.3.i386.rpm
+
+ia64:
+httpd-2.2.3-11.el5_1.3.ia64.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.ia64.rpm
+httpd-devel-2.2.3-11.el5_1.3.ia64.rpm
+httpd-manual-2.2.3-11.el5_1.3.ia64.rpm
+mod_ssl-2.2.3-11.el5_1.3.ia64.rpm
+
+ppc:
+httpd-2.2.3-11.el5_1.3.ppc.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.ppc.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.ppc64.rpm
+httpd-devel-2.2.3-11.el5_1.3.ppc.rpm
+httpd-devel-2.2.3-11.el5_1.3.ppc64.rpm
+httpd-manual-2.2.3-11.el5_1.3.ppc.rpm
+mod_ssl-2.2.3-11.el5_1.3.ppc.rpm
+
+s390x:
+httpd-2.2.3-11.el5_1.3.s390x.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.s390.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.s390x.rpm
+httpd-devel-2.2.3-11.el5_1.3.s390.rpm
+httpd-devel-2.2.3-11.el5_1.3.s390x.rpm
+httpd-manual-2.2.3-11.el5_1.3.s390x.rpm
+mod_ssl-2.2.3-11.el5_1.3.s390x.rpm
+
+x86_64:
+httpd-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.i386.rpm
+httpd-debuginfo-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-devel-2.2.3-11.el5_1.3.i386.rpm
+httpd-devel-2.2.3-11.el5_1.3.x86_64.rpm
+httpd-manual-2.2.3-11.el5_1.3.x86_64.rpm
+mod_ssl-2.2.3-11.el5_1.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4465">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4465</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5000">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5000</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6388">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6388</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6421">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6421</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6422">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6422</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0005">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0005</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHjH9QXlSAg2UNWIIRAup2AKCQZbTcXjbAwNNkdLETMMHU0Xie+gCffxCx
+5gj8X5pq55bntO796SHHFTg=
+=nZWz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

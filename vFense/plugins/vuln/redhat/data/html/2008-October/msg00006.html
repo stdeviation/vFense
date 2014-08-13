@@ -1,0 +1,301 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0857&#45;02] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Oct 2008 15:47:59 &#45;0400 -->
+<!--X-Message-Id: 200810071947.m97JlxGf007659@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0857-02] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0857-02] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0857-02] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 7 Oct 2008 15:47:59 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0857-02
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0857.html">https://rhn.redhat.com/errata/RHSA-2008-0857.html</a>
+Issue date:        2008-10-07
+CVE Names:         CVE-2008-3534 CVE-2008-3535 CVE-2008-3275 
+                   CVE-2008-3276 CVE-2008-3915 CVE-2008-3792 
+                   CVE-2008-3526 CVE-2008-3272  
+                   CVE-2008-4113 CVE-2008-4445 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and several bugs
+are now available for Red Hat Enterprise MRG 1.0.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+A possible integer overflow was found in the Linux kernel Stream Control
+Transmission Protocol (SCTP) implementation. This could allow an attacker
+to cause a denial of service. (CVE-2008-3526, Important)
+
+A deficiency was found in the Linux kernel Stream Control Transmission
+Protocol (SCTP) Authentication Extension implementation. All the SCTP-AUTH
+socket options could cause a kernel panic if the API was used when the
+extension is disabled. (CVE-2008-3792, Important)
+
+Missing boundary checks were reported in the Linux kernel SCTP
+implementation. This could, potentially, cause information disclosure via a
+specially crafted SCTP_HMAC_IDENT IOCTL request. (CVE-2008-4113,
+CVE-2008-4445, Important)
+
+Tobias Klein reported a missing check in the Linux kernel's Open Sound
+System (OSS) implementation. This deficiency could lead to a possible
+information leak. (CVE-2008-3272, Moderate)
+
+A deficiency was found in the Linux kernel virtual filesystem (VFS)
+implementation. This could allow a local unprivileged user to make a series
+of file creations within deleted directories, possibly causing a denial of
+service. (CVE-2008-3275, Moderate)
+
+A flaw was found in the Linux kernel Network File System daemon (nfsd) when
+NFSv4 was enabled. Remote attackers could use this to cause a denial of
+service via a buffer overflow. (CVE-2008-3915, Moderate)
+
+A possible integer overflow was discovered in the Linux kernel Datagram
+Congestion Control Protocol (DCCP) implementation. This could allow a
+remote attacker to cause a denial of service on a victim's machine.
+(CVE-2008-3276, Low)
+
+A deficiency was found in the Linux kernel tmpfs implementation. This could
+allow a local unprivileged user to make a certain sequence of file
+operations, possibly causing a denial of service. (CVE-2008-3534, Low)
+
+An off-by-one error was found in the iov_iter_advance function. This could
+allow a local unprivileged user to cause a denial of service as
+demonstrated by a testcase from the Linux Test Project. (CVE-2008-3535,
+Low)
+
+These updated packages also fix the following bugs:
+
+* fixed a warning in the openib code.
+
+* increased MAX_STACK_TRACE_ENTRIES on the debug kernel variant.
+
+* enqueue deprioritized RT tasks to head of prio array.
+
+* use timer_pending() to test ipv6 FIB timers.
+
+* added a lower-bound check for the length field in PPPOE headers.
+
+* pppoe: unshare skb to avoid possible data loss.
+
+* using growisofs could cause oops due to the lack of proper sanity checks.
+
+* random seed improvement.
+
+* enabled the &quot;Panic on Oops&quot; feature.
+
+* fixed a portability issue in parse_pmtmr() due to variable type.
+
+* fixed sanity check in cifs/asn1.c.
+
+* fixed a bug introduced by a previous fix, related to the inode code.
+
+* added better sanity checks to dlm code.
+
+* dynamic ftrace enhancements. The daemon is no longer used.
+
+* fixed a format string bug in cpufreq.
+
+* avoid a potential kernel stack overflow in binfmt_misc.c
+
+* fixed the long boot-up time when CONFIG_PROVE_LOCKING is enabled.
+
+* use a better random seed for NAT port randomization.
+
+* a compat_semaphore was being handled as a regular semaphore due to
+casting (qla2xxx driver).
+
+All users of Red Hat Enterprise MRG should upgrade to these new packages,
+which address these vulnerabilities and fix these bugs.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+447942 - openib broken in 2.6.24.7-55.el5rt
+448574 - [MRG] Hit BUG: MAX_STACK_TRACE_ENTRIES too low! when booting kernel-rt-debug-2.6.24.4-32ibmrt2.2
+454270 - SCHED_FIFO spec violation
+457012 - ipv6: use timer pending to fix bridge reference count problem [mrg-1]
+457014 - pppoe: Check packet length on all receive paths [mrg-1]
+457019 - pppoe: Unshare skb before anything else [mrg-1]
+457027 - ide-cd: fix oops when using growisofs [mrg-1]
+457507 - CVE-2008-3534 kernel: tmpfs: fix kernel BUG in shmem_delete_inode
+457703 - CVE-2008-3535 kernel: fix off-by-one error in iov_iter_advance()
+457858 - CVE-2008-3275 Linux kernel local filesystem DoS
+457995 - CVE-2008-3272 kernel snd_seq_oss_synth_make_info leak
+458016 - kernel: random32: seeding improvement [mrg-1]
+458104 - kernel should panic on oops
+458340 - parse_pmtmr() receives a (possible) ulong then stores that in a u32 [mrg-1]
+458350 - fs/cifs/asn1.c:403: warning: comparison is always false due to limited range of data type
+458487 - [Realtime][Kernel] kernel BUG at fs/inode.c:262!
+458755 - kernel: dlm: fix possible use-after-free [mrg-1]
+458756 - kernel: dlm: check for null in device_write [mrg-1]
+458758 - kernel: dlm: dlm/user.c input validation fixes [mrg-1]
+459141 - Add ftrace boot time nop replacement
+459226 - CVE-2008-3276 Linux kernel dccp_setsockopt_change() integer overflow
+459459 - kernel: cpufreq: fix format string bug [mrg-1]
+459462 - kernel: binfmt_misc.c: avoid potential kernel stack overflow [mrg-1]
+459478 - [FOCUS] Long boot time and strange Hardware Clock message
+459942 - kernel: nf_nat: use secure_ipv4_port_ephemeral() for NAT port randomization [mrg-1]
+459955 - CVE-2008-3792 kernel: sctp: fix potential panics in the SCTP-AUTH API
+460093 - CVE-2008-3526 Linux kernel sctp_setsockopt_auth_key() integer overflow
+460455 - [FOCUS][24] R2:SAN:Hang triggered by filesystem testing on SAN
+461101 - CVE-2008-3915 kernel: nfsd: fix buffer overrun decoding NFSv4 acl
+462599 - CVE-2008-4445 kernel: sctp: fix random memory dereference with SCTP_HMAC_IDENT option
+464514 - CVE-2008-4113 kernel: sctp_getsockopt_hmac_ident information disclosure
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-81.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-81.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-81.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-81.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-81.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-81.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-81.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3534">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3534</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3535">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3535</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3276">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3276</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3915">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3915</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3792">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3792</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3526">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3526</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3272">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3272</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=">http://cve.mitre.org/cgi-bin/cvename.cgi?name=</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4113</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4445">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4445</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFI67zsXlSAg2UNWIIRArwgAJ4lCPgncis6Iz9lo618mEGPrEXfrwCeLHjQ
+HzHjqfCtibtl4Wj+JCKdJ7g=
+=T4zi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
