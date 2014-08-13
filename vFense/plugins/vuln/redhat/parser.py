@@ -112,6 +112,8 @@ def get_html_content(hlink, force=False):
                 msg_file = open(msg_location, 'wb')
                 msg_file.write(content)
                 msg_file.close()
+        else:
+            content = open(msg_location, 'rb').read()
     else:
         request = requests.get(hlink)
         if request.ok:
@@ -251,27 +253,14 @@ def get_rh_data(content):
         >>>
 
     """
-
-    #smry = re.search('1\.\s+Summary:\n\n(\w.*)\n\n.*2.', data, re.DOTALL)
-    #if smry:
-    #    summary = decoder(smry.group(1))
     redhat = Redhat()
     description_search  = (
-        re.search('Description:\n\n(\w.*)\n\n.*\s+Solution', content, re.DOTALL)
+        re.search('(Problem description|Description):\n\n(\w.*)\n\n.*\s+Solution', content, re.DOTALL)
     )
     if description_search:
-        redhat.details = decoder(description_search.group(1))
-
-    #sol = (re.search('Solution:\n\n(\w.*)\n\n.*\.\s+Bugs fixed', data, re.DOTALL))
-    #if sol:
-    #    solutions=decoder(sol.group(1))
-    #bug_fixed=re.search('5\.\s+Bugs fixed:\n\n(\w.*)\n\n.*6\.\s+Package List', data, re.DOTALL).group(1)
+        redhat.details = decoder(description_search.group(2))
 
     redhat.apps = get_apps_info(content)
-
-    #ref = (re.search('References:\n\n(\w.*)\n\n.*\.\s+Contact', data, re.DOTALL))
-    #if ref:
-    #    references=ref.group(1)
 
     vulnerability_id_search = re.search(r'Advisory\sID:.*', content)
     if vulnerability_id_search:
@@ -279,15 +268,10 @@ def get_rh_data(content):
             vulnerability_id_search.group().split(':', 1)[1].strip()
         )
 
-    #product = None
-    #prod=(re.search(r"Product:\s.*", data))
-    #if prod:
-    #   product=prod.group().split(':',1)[1].strip()
-
     advisory_url_search = re.search(r"Advisory\sURL:\s.*", content)
     if advisory_url_search:
         redhat.support_url = (
-            advisory_url_search.group().split(':',1)[1].strip()
+            BeautifulSoup(advisory_url_search.group()).find('a').text
         )
 
     date_posted_search = re.search(r"Issue\sdate:\s.*", content)
@@ -299,7 +283,7 @@ def get_rh_data(content):
 
     redhat.cve_ids = get_rh_cve_ids(content)
 
-    return(redhat.to_dict_db())
+    return(redhat)
 
 def insert_data_to_db(thread):
     """
@@ -317,7 +301,7 @@ def insert_data_to_db(thread):
         >>> insert = insert_data_to_db(thread=thread)
 
     """
-    cve_updates = []
+    vulnerabilities = []
     msg_links = get_msg_links_by_thread(thread)
     if msg_links:
         date = thread.split('/')[-2]
@@ -326,11 +310,11 @@ def insert_data_to_db(thread):
         for link in msg_links:
             content = get_html_content(link)
             if content:
-                cve_data = get_rh_data(content)
-                if cve_data:
-                    cve_updates.append(cve_data)
+                redhat = get_rh_data(content)
+                if redhat.vulnerability_id:
+                    vulnerabilities.append(redhat.to_dict_db())
 
-        insert=insert_bulletin_data(bulletin_data=cve_updates)
+        insert=insert_bulletin_data(bulletin_data=vulnerabilities)
         return(insert)
 
 
