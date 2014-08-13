@@ -14,7 +14,7 @@ from vFense.plugins.vuln.cve._constants import (
     CVEDataDir, NVDFeeds, CVEStrings, CVECategories
 )
 
-from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
+from vFense.plugins.vuln.cve._db import insert_cve_data
 from vFense.plugins.vuln.cve.downloader import start_nvd_xml_download
 from vFense.utils.common import date_parser, timestamp_verifier
 
@@ -212,7 +212,7 @@ def parse_cve_and_udpatedb(
                 cve = parser.get_entry_info(entry)
 
             if entry.tag == NVDFeeds.DESC and event == 'start':
-                cve.descriptions, cve.categories = (
+                cve.descriptions, cve.vulnerability_categories = (
                     parser.get_descriptions(entry)
                 )
 
