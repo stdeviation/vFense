@@ -4,6 +4,7 @@ import logging
 import urllib
 
 from vFense import VFENSE_LOGGING_CONFIG
+from vFense.supported_platforms import REDHAT_DISTROS
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime
@@ -697,11 +698,7 @@ def get_vulnerability_info_for_app(app):
         Dictionary
     """
 
-    vuln_data = {}
-    vuln_info = {}
-    vuln_data[AppsKey.CveIds] = []
-    vuln_data[AppsKey.VulnerabilityId] = ""
-    vuln_data[AppsKey.VulnerabilityCategories] = []
+    vuln_data = Apps()
 
     if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
         vuln_info = ms.get_vuln_ids(app.kb)
@@ -710,6 +707,17 @@ def get_vulnerability_info_for_app(app):
             re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
             and app.name and app.version
          ):
+        vuln_info = (
+            usn.get_vuln_ids(
+                app.name, app.version, app.os_string
+            )
+        )
+
+    elif (
+            re.search('|'.join(REDHAT_DISTROS), app.os_string, re.IGNORECASE)
+            and app.name and app.version
+         ):
+
         vuln_info = (
             usn.get_vuln_ids(
                 app.name, app.version, app.os_string
