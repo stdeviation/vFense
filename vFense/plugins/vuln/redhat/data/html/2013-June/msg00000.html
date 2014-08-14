@@ -1,0 +1,191 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0791&#45;01] Moderate: qemu&#45;kvm&#45;rhev security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Jun 2013 13:45:53 &#45;0400 -->
+<!--X-Message-Id: 201306031745.r53Hjq5G028030@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0791-01] Moderate: qemu-kvm-rhev security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0791-01] Moderate: qemu-kvm-rhev security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0791-01] Moderate: qemu-kvm-rhev security and bug fix	update</li>
+<li><em>Date</em>: Mon, 3 Jun 2013 17:45:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: qemu-kvm-rhev security and bug fix update
+Advisory ID:       RHSA-2013:0791-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0791.html">https://rhn.redhat.com/errata/RHSA-2013-0791.html</a>
+Issue date:        2013-06-03
+CVE Names:         CVE-2013-2007 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm-rhev packages that fix one security issue and two bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Agents (vdsm) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm-rhev packages form the
+user-space component for running virtual machines using KVM.
+
+It was found that QEMU Guest Agent (the &quot;qemu-ga&quot; service) created
+certain files with world-writable permissions when run in daemon mode
+(the default mode). An unprivileged guest user could use this flaw to
+consume all free space on the partition containing the qemu-ga log file, or
+modify the contents of the log. When a UNIX domain socket transport was
+explicitly configured to be used (not the default), an unprivileged guest
+user could potentially use this flaw to escalate their privileges in the
+guest. This update requires manual action. Refer below for details.
+(CVE-2013-2007)
+
+This update does not change the permissions of the existing log file or
+the UNIX domain socket. For these to be changed, stop the qemu-ga service,
+and then manually remove all &quot;group&quot; and &quot;other&quot; permissions on the
+affected files, or remove the files.
+
+Note that after installing this update, files created by the
+guest-file-open QEMU Monitor Protocol (QMP) command will still continue to
+be created with world-writable permissions for backwards compatibility.
+
+This issue was discovered by Laszlo Ersek of Red Hat.
+
+This update also fixes the following bugs:
+
+* Previously, due to integer overflow in code calculations, the qemu-kvm
+utility was reporting incorrect memory size on QMP events when using the
+virtio balloon driver with more than 4 GB of memory. This update fixes the
+overflow in the code and qemu-kvm works as expected in the described
+scenario. (BZ#958750)
+
+* When the set_link flag is set to &quot;off&quot; to change the status of a network
+card, the status is changed to &quot;down&quot; on the respective guest. Previously,
+with certain network cards, when such a guest was restarted, the status of
+the network card was unexpectedly reset to &quot;up&quot;, even though the network
+was unavailable. A patch has been provided to address this bug and the link
+status change is now preserved across restarts for all network cards.
+(BZ#927591)
+
+All users of qemu-kvm-rhev are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues. After
+installing this update, shut down all running virtual machines. Once all
+virtual machines have shut down, start them again for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+956082 - CVE-2013-2007 qemu: guest agent creates files with insecure permissions in deamon mode
+
+6. Package List:
+
+RHEV Agents (vdsm):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/qemu-kvm-rhev-0.12.1.2-2.355.el6_4.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/qemu-kvm-rhev-0.12.1.2-2.355.el6_4.5.src.rpm</a>
+
+x86_64:
+qemu-img-rhev-0.12.1.2-2.355.el6_4.5.x86_64.rpm
+qemu-kvm-rhev-0.12.1.2-2.355.el6_4.5.x86_64.rpm
+qemu-kvm-rhev-debuginfo-0.12.1.2-2.355.el6_4.5.x86_64.rpm
+qemu-kvm-rhev-tools-0.12.1.2-2.355.el6_4.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2007.html">https://www.redhat.com/security/data/cve/CVE-2013-2007.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRrNYjXlSAg2UNWIIRAmraAJ40A55n7eMvI+KL/uMuUzVfLQ3jpwCeO2Ic
+VxaN7/HBxxHnZeRfeF1bgNY=
+=fJEd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

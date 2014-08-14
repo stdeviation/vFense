@@ -1,0 +1,311 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0038&#45;01] Important: Red Hat Enterprise Virtualization	Manager 3.3.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 21 Jan 2014 12:43:13 &#45;0500 -->
+<!--X-Message-Id: 201401211743.s0LHhBQn004824@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0038-01] Important: Red Hat Enterprise Virtualization	Manager</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0038-01] Important: Red Hat Enterprise Virtualization	Manager 3.3.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0038-01] Important: Red Hat Enterprise Virtualization	Manager 3.3.0 update</li>
+<li><em>Date</em>: Tue, 21 Jan 2014 17:43:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Virtualization Manager 3.3.0 update
+Advisory ID:       RHSA-2014:0038-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0038.html">https://rhn.redhat.com/errata/RHSA-2014-0038.html</a>
+Issue date:        2014-01-21
+CVE Names:         CVE-2013-6434 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 3.3 is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.3 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+A flaw was found in the way Red Hat Enterprise Virtualization Manager
+relayed SPICE connection information to remote-viewer when a native SPICE
+client invocation method was used. As a result, remote-viewer attempted an
+insecure connection first and only switched to a secure connection when
+requested by the SPICE server. An attacker able to intercept the SPICE
+connection could use this flaw to conduct man-in-the-middle attacks.
+(CVE-2013-6434)
+
+Red Hat would like to thank Michael Samuel of Amcom for reporting this
+issue.
+
+This update also fixes several bugs and adds various enhancements.
+Documentation for these changes will be available shortly from the
+Technical Notes document linked to in the References section. 
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which resolve these issues and add these 
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+787578 - PRD33 - RFE: add support for multiple monitors on QXL device (single device with more RAM)
+825801 - PRD33 - [webadmin] RFE: Improve bonding logic
+829672 - [RFE] RESTAPI: vm/template Import candidates should have /disks sub-collection
+835543 - PRD33 - RFE: Allow to edit file (nfs/posix/local) domain connections (incl. advanced options)
+838456 - PRD33 - [RFE] Localization of landing / welcome / splash page
+838527 - [rhevm] unable to start ovirt-engine if service crash and pid is left
+853739 - [RFE] RESTAPI: On action api returns parameters in response body instead of actual action result
+859727 - [RFE] There is no way to distinguish between user and group in search
+863211 - PRD33 - predictable host timeouts for ha/fencing (backend - vdsNotResponding takes too long before fence host)
+867642 - PRD33 - add spm priority to host general subtab
+872719 - PRD33 - [RFE] Add support for adding and managing external tasks
+873795 - PRD33 - Default time zone in New VM dialog
+879904 - engine: engine fails to connect to DB and cannot be started with NPE
+880773 - [RFE] [rhevm-upgrade] during upgrade rhev-guest-tools-iso is not updated to latest version and remains with old version
+885135 - [RFE] provide a more informative message in event when a VM started in Paused Mode
+886840 - [RFE] RSDL :  Add the option to set custom ticket to a VM
+889271 - PRD33 - [RFE] RHEV should log and keep track of the versions installed and upgraded
+890568 - PRD33 - [RFE] Branding as external package
+891056 - PRD33 - [RFE] Normalized ovirtmgmt Initialization - provision mgmt network post bootstrap
+892642 - Disk permission don't disappear after disk is deleted(is shown as 'null(Disk)').
+902353 - PRD33 - Web Admin: There is no way to define VM default host using RunOnce [RFE]
+907491 - [Admin Portal] improve/fix grid/tab content loading animation
+908327 - Trying to import a template again after a previously failed import attempt results in 'Error while executing action: Cannot copy Template. The Storage Domain already contains the target disk(s)'
+908656 - PRD33 - [RFE] Add VDSM hook for hotplug disk
+908835 - [RFE] [Admin Portal] Copying a quota drops consumers and permissions
+909270 - [RFE] [User Portal] RDP console opened from User Portal does not pass clipboard
+909930 - PRD33 - Add 'Create Snapshot' as an action on a VM
+912076 - PRD33 - Implement a plug-in scheduler implementation that  interfaces to external scheduler via scheduling API and SDK
+912258 - [RFE] [Admin Portal] &quot;No $objects to display&quot; text missing in some sub-tabs
+915778 - [RFE][RHEVM] [webadmin] Network Interfaces statistics are not shown for VM unless VNIC is selected
+915904 - [RFE] Improve performance for General sub-tabs
+916832 - [RFE] Allow to set VncKeyboardLayout via REST API per VM
+916866 - PRD33 - Allow to set VncKeyboardLayout in GUI
+917586 - [RFE] Use /etc/ovirt-engine/engine.conf for local configuration instead of /etc/sysconfig/ovirt-engine
+918890 - PRD33 - Allow non plugin automatic invocation of RDP session (basic - no cd, disconnect reason, etc.)
+920694 - engine: deactivating the master domain and concurrently putting all hosts in maintenance leaves hosts non-op upon activation
+921544 - PRD33 - LUNs 'In Use' field is confusing
+922475 - PRD33 - [RFE] Backup and Restore API for Independent Software Vendors
+922504 - PRD33 - ovirt-engine-backend: Distinguish between regular and force removal of data center events
+922609 - Cannot edit description field of running VMs - Need to stop and restart the guest for a new description to be effected.
+926928 - [RFE] RHEVM-API: Add /applications sub-collection under vm
+947977 - PRD33 - [RFE] Support a watchdog VM device in the engine
+948481 - use logrotate instead of proprietary solution to handle log rotation
+948744 - Some java exceptions are not logged to the log file
+949281 - Hibernate VM was started for a VM that has already Hibernate VM run for.
+949484 - Underscores in tag names break tags
+950768 - Windows XP guest fails to start when enabling native USB support.
+952107 - Under certain circumstances live storage migration failure leaves images split among old and new storage as well as tasks running in database
+952297 - PRD33 - ovirt-engine service re-work
+953614 - Automatic logout does not always happen as per UserSessionTimeOutInterval value
+953989 - PRD33 - Events main tab / sub-tabs Must Support the UI Plug-in Model
+955498 - Desktop VM from RHEV 3.0 does not have any sound device after importing to RHEV 3.1
+957703 - engine: can't live migrate vm's disk after a failure because image already exists in the target
+957729 - [RFE] Expose VM Limit config values to rhevm-config
+959879 - [REST-API] Update of power management by sending entire host representation is ignored
+960931 - PRD33 - RFE: live snapshot with cpu/memory/disk status
+961645 - PRD33 - [RHEVM-RHS] Bootstrapping should set iptables rules, allowing gluster process on RHS Nodes
+962162 - PRD33 - [RFE] [host-deploy] support ssh public key authentication
+962177 - [rhevm-dwh] - ETL Reports error when a Single Host in setup is Non-Responsive (&quot;ETL service sampling has encountered an error&quot;)
+965179 - [RFE] Add delete-this-file feature support to the engine
+966003 - Changing vmpool's quota is ignored.
+966192 - PRD33 - AuditLogDirector.log(*) methods should also update engine.log
+966198 - PRD33 - Add new column to audit_log SQL table for stack trace
+966980 - backup.sh return code always 0 even on error
+967268 - boot order has been changed after unexpected reboot
+967278 - PRD33 - [RFE] Foreman as host provider
+967327 - PRD33 - Add support for OpenLDAP as domain provider
+967328 - PRD33 - add soft fencing over SSH (restart VDSM) as a preliminary step before fencing a None-Responsive host
+967353 - PRD33 - force Apache proxy on upgrade and clean install
+967516 - PRD33 - Tech Preview - Add support for Neutron based networks
+967541 - PRD33 - custom properties per vnic / device
+967572 - PRD33 - mom integration - balloon to try and get memory up to guaranteed memory
+967573 - PRD33 - alert on VMs not respecting balloon
+967574 - PRD33 - engine monitoring/balancing VMs not getting guaranteed memory
+967604 - engine: AutoRecovery of host fails and host is set as NonOperational when export domain continues to be reported with error code 358
+967987 - Provide additional logging at JndiAction level that would show credentials chosen for manage-domains authentication
+968178 - [RHEVM-RHS] Should check for gluster capabilities when moving host from virt to gluster cluster
+968499 - PRD33 - upgrade gwt framework to 2.5
+970046 - PRD33 - gluster - Supporting RHS hooks through RHEV-M
+970195 - webadmin portal only reports VMs in &quot;Up&quot; status in the &quot;Load&quot; column
+970948 - PRD33 - Quota support
+971237 - RHEVM slow due to stored procedure getdisksvmguid() consuming most CPU
+971346 - Rhevm-setup misguides user with regards to steps for rhevm-reports upgrade
+971695 - webadmin: Events main tab: When applying an Events search filter (which results in few items) by hitting &quot;Enter&quot; - duplicate entries are shown.
+972455 - PRD33 - Select SPM as default host for new storage dialog
+973383 - Upgrade from RHEV-M 3.1 to 3.2 failed with 'GroupsError: No Groups Available in any repository'
+974066 - PRD33 - externalize vm level configuration values to a property file
+974148 - RHEV-M AD authentication does not work if one of the DCs is defunct.
+974982 - make rhevm-config to set TZ
+975097 - PRD33 - glance import/export templates and raw floating disks
+976671 - Recreate trust store when upgrading
+977322 - rest-api: Missing node &lt;snapshot_states&gt; in /api/capabilities
+977689 - After enable concurrent option under host power management fencing begin failed
+978268 - Unable to put a host into maintenance because VMs previously managed by vdsm are running on the host
+979763 - [engine-setup] setup fails when selinux is disabled
+980486 - Attaching a network to a host's nic inherits the host nic's IP to the new network
+980926 - Upgrade from 3.2.0-11.30 to 3.2.0-11.37 fails during 'Preparing CA' stage.
+982050 - VM UUID is not shown prominently in Web UI
+982527 - Disk entries remain in database after deleting the datacenter
+982636 - Cloning VM from snapshot of another VM results in corruption of original VM
+983120 - PRD33 - Provide MoTD on logon screen
+983295 - Unable to bypass FQDN requirement for rhevm-setup
+985635 - Changing email address for event notification results in error &quot;User is already subscribed to this event with the same Notification method&quot;
+986700 - [user portal] RHEVM slow due to stored procedure getdisksvmguid() consuming most CPU
+986979 - It is not possible to assign any network to an cluster in WebAdmin portal.
+987783 - Live Storage Migration attempted on an unplugged disk of a running VM (instead of a simple cold move)
+988259 - [Admin Portal] Cannot update VM properties - Field timeZone can not be updated when status is Up
+989041 - Unable to detach VMs from a pool if pool contains more than 100 VMs
+993123 - REST-API doesn't return statistics for VLAN tagged interfaces
+994218 - Rhev-m admin GUI logs actions done by &lt;UNKNOWN&gt; in the Events tab
+994463 - Failed attached Export Storage Domain - Could not obtain lock
+995501 - [host-deploy] block concurrent installation for same host
+996816 - Unable to create a windows 2012 ( 64bit ) VM with 32GB memory
+999812 - RestAPI URI template style query  for 'users' and 'disks' resources do not work.
+1000789 - Failed to create VM from template without any image disks
+1002401 - [RFE] backup/restore: support restoring to different database location
+1002664 - Failures to remove images from an import domain result in imported images on data domains being marked as illegal.
+1003117 - Make UseSecureConnectionWithServers config option availabe via rhevm-config
+1004066 - Host: Exit message: internal error No more available PCI addresses
+1005256 - When deleting snapshots created for Live Storage Migration, RHEV removes the source disk rather than the snapshot
+1006659 - prestarted VMs in a pool do not use sysprep file
+1012798 - [RFE] [webadmin] pin left pane to dialog window in New logical network dialog
+1013860 - &quot;Resources&quot; tab on the Power User Portal unable to display all virtual machine disks
+1015148 - [RFE] Ability to see additional detail on Storage summary in the RHEV-M environment
+1015638 - VmPoolMonitor throws a NullPointerException while starting a guest that in turn remains down with its images locked.
+1018201 - CPU pinning option is not available for the VMs running on &quot;Local on Host&quot; type DataCenter.
+1021326 - Max Memory Over Commitment's units should use percentage and not &quot;MB&quot;
+1023131 - DestroyVDSCommand called after CancelMigrateVDSCommand failure when attempting to cancel multiple live migrations at a time
+1023952 - [RFE] [RHEVM][webadmin] vNIC profile screens are missing features
+1028966 - require openjdk version which solves the memory leak in RHEV-M: service ovirt-engine gets OOM killed after few days of uptime
+1029106 - getallfromvmtemplates stored in procedure execution takes long time making VM creation take long time when having more than 80 templates
+1029177 - taskcleaner.sh '-l' option does not produce logfile
+1032807 - TryBackToAllSnapshotsOfVm threw NullPointerException during snapshot-preview because of random disk attached to VM
+1037894 - rhevm-manage-domains fails to update ldapServers entries when using action=edit
+1039839 - CVE-2013-6434 rhev: remote-viewer spice tls-stripping issue
+
+6. Package List:
+
+RHEV-M 3.3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.3.0-0.45.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.3.0-0.45.el6ev.src.rpm</a>
+
+noarch:
+rhevm-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-backend-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-dbscripts-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-lib-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-restapi-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-setup-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-tools-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-userportal-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.3.0-0.45.el6ev.noarch.rpm
+rhevm-websocket-proxy-3.3.0-0.45.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6434.html">https://www.redhat.com/security/data/cve/CVE-2013-6434.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.3/html/Technical_Notes/chap-RHSA-20140038_-_rhevm.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.3/html/Technical_Notes/chap-RHSA-20140038_-_rhevm.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS3rGCXlSAg2UNWIIRAsxHAKCEp/vpH2VAe8BbfOxzeFMTdYBmfgCgvs35
+Xjv/Ou6YWLD6+l66AjiIJkc=
+=smJ/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

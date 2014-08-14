@@ -1,0 +1,394 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1590&#45;01] Moderate: libtiff security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Dec 2012 17:49:11 &#45;0500 -->
+<!--X-Message-Id: 201212182249.qBIMn5tX001102@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1590-01] Moderate: libtiff security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1590-01] Moderate: libtiff security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1590-01] Moderate: libtiff security update</li>
+<li><em>Date</em>: Tue, 18 Dec 2012 22:49:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libtiff security update
+Advisory ID:       RHSA-2012:1590-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1590.html">https://rhn.redhat.com/errata/RHSA-2012-1590.html</a>
+Issue date:        2012-12-18
+CVE Names:         CVE-2012-3401 CVE-2012-4447 CVE-2012-4564 
+                   CVE-2012-5581 
+=====================================================================
+
+1. Summary:
+
+Updated libtiff packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The libtiff packages contain a library of functions for manipulating Tagged
+Image File Format (TIFF) files.
+
+A heap-based buffer overflow flaw was found in the way libtiff processed
+certain TIFF images using the Pixar Log Format encoding. An attacker could
+create a specially-crafted TIFF file that, when opened, could cause an
+application using libtiff to crash or, possibly, execute arbitrary code
+with the privileges of the user running the application. (CVE-2012-4447)
+
+A stack-based buffer overflow flaw was found in the way libtiff handled
+DOTRANGE tags. An attacker could use this flaw to create a
+specially-crafted TIFF file that, when opened, would cause an application
+linked against libtiff to crash or, possibly, execute arbitrary code.
+(CVE-2012-5581)
+
+A heap-based buffer overflow flaw was found in the tiff2pdf tool. An
+attacker could use this flaw to create a specially-crafted TIFF file that
+would cause tiff2pdf to crash or, possibly, execute arbitrary code.
+(CVE-2012-3401)
+
+A missing return value check flaw, leading to a heap-based buffer overflow,
+was found in the ppm2tiff tool. An attacker could use this flaw to create a
+specially-crafted PPM (Portable Pixel Map) file that would cause ppm2tiff
+to crash or, possibly, execute arbitrary code. (CVE-2012-4564)
+
+The CVE-2012-5581, CVE-2012-3401, and CVE-2012-4564 issues were discovered
+by Huzaifa Sidhpurwala of the Red Hat Security Response Team.
+
+All libtiff users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. All running applications linked
+against libtiff must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+837577 - CVE-2012-3401 libtiff (tiff2pdf): Heap-based buffer overflow due to improper initialization of T2P context struct pointer
+860198 - CVE-2012-4447 libtiff: Heap-buffer overflow when processing a TIFF image with PixarLog Compression
+867235 - CVE-2012-5581 libtiff: Stack-based buffer overflow when reading a tiled tiff file
+871700 - CVE-2012-4564 libtiff: Missing return value check in ppm2tiff leading to heap-buffer overflow when reading a tiff file
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm</a>
+
+i386:
+libtiff-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+
+x86_64:
+libtiff-3.8.2-18.el5_8.i386.rpm
+libtiff-3.8.2-18.el5_8.x86_64.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm</a>
+
+i386:
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-devel-3.8.2-18.el5_8.i386.rpm
+
+x86_64:
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.x86_64.rpm
+libtiff-devel-3.8.2-18.el5_8.i386.rpm
+libtiff-devel-3.8.2-18.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libtiff-3.8.2-18.el5_8.src.rpm</a>
+
+i386:
+libtiff-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-devel-3.8.2-18.el5_8.i386.rpm
+
+ia64:
+libtiff-3.8.2-18.el5_8.i386.rpm
+libtiff-3.8.2-18.el5_8.ia64.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.ia64.rpm
+libtiff-devel-3.8.2-18.el5_8.ia64.rpm
+
+ppc:
+libtiff-3.8.2-18.el5_8.ppc.rpm
+libtiff-3.8.2-18.el5_8.ppc64.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.ppc.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.ppc64.rpm
+libtiff-devel-3.8.2-18.el5_8.ppc.rpm
+libtiff-devel-3.8.2-18.el5_8.ppc64.rpm
+
+s390x:
+libtiff-3.8.2-18.el5_8.s390.rpm
+libtiff-3.8.2-18.el5_8.s390x.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.s390.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.s390x.rpm
+libtiff-devel-3.8.2-18.el5_8.s390.rpm
+libtiff-devel-3.8.2-18.el5_8.s390x.rpm
+
+x86_64:
+libtiff-3.8.2-18.el5_8.i386.rpm
+libtiff-3.8.2-18.el5_8.x86_64.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.i386.rpm
+libtiff-debuginfo-3.8.2-18.el5_8.x86_64.rpm
+libtiff-devel-3.8.2-18.el5_8.i386.rpm
+libtiff-devel-3.8.2-18.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+
+x86_64:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-3.9.4-9.el6_3.x86_64.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+libtiff-static-3.9.4-9.el6_3.i686.rpm
+
+x86_64:
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.x86_64.rpm
+libtiff-static-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+x86_64:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-3.9.4-9.el6_3.x86_64.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+x86_64:
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.x86_64.rpm
+libtiff-static-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+
+ppc64:
+libtiff-3.9.4-9.el6_3.ppc.rpm
+libtiff-3.9.4-9.el6_3.ppc64.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.ppc.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.ppc64.rpm
+libtiff-devel-3.9.4-9.el6_3.ppc.rpm
+libtiff-devel-3.9.4-9.el6_3.ppc64.rpm
+
+s390x:
+libtiff-3.9.4-9.el6_3.s390.rpm
+libtiff-3.9.4-9.el6_3.s390x.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.s390.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.s390x.rpm
+libtiff-devel-3.9.4-9.el6_3.s390.rpm
+libtiff-devel-3.9.4-9.el6_3.s390x.rpm
+
+x86_64:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-3.9.4-9.el6_3.x86_64.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-static-3.9.4-9.el6_3.i686.rpm
+
+ppc64:
+libtiff-debuginfo-3.9.4-9.el6_3.ppc64.rpm
+libtiff-static-3.9.4-9.el6_3.ppc64.rpm
+
+s390x:
+libtiff-debuginfo-3.9.4-9.el6_3.s390x.rpm
+libtiff-static-3.9.4-9.el6_3.s390x.rpm
+
+x86_64:
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-static-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+
+x86_64:
+libtiff-3.9.4-9.el6_3.i686.rpm
+libtiff-3.9.4-9.el6_3.x86_64.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-devel-3.9.4-9.el6_3.i686.rpm
+libtiff-devel-3.9.4-9.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libtiff-3.9.4-9.el6_3.src.rpm</a>
+
+i386:
+libtiff-debuginfo-3.9.4-9.el6_3.i686.rpm
+libtiff-static-3.9.4-9.el6_3.i686.rpm
+
+x86_64:
+libtiff-debuginfo-3.9.4-9.el6_3.x86_64.rpm
+libtiff-static-3.9.4-9.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3401.html">https://www.redhat.com/security/data/cve/CVE-2012-3401.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4447.html">https://www.redhat.com/security/data/cve/CVE-2012-4447.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4564.html">https://www.redhat.com/security/data/cve/CVE-2012-4564.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5581.html">https://www.redhat.com/security/data/cve/CVE-2012-5581.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ0PLPXlSAg2UNWIIRAqlxAKCAyfu1n/eaTX9YteNPw6a2jok9BwCbBQx8
+qApdyw1voAfN8IRgfWVLfCU=
+=qpbO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

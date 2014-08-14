@@ -1,0 +1,340 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1450&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 22 Oct 2013 13:44:40 &#45;0400 -->
+<!--X-Message-Id: 201310221744.r9MHibRn003292@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1450-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1450-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1450-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 22 Oct 2013 17:44:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2013:1450-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1450.html">https://rhn.redhat.com/errata/RHSA-2013-1450.html</a>
+Issue date:        2013-10-22
+CVE Names:         CVE-2013-2224 CVE-2013-2852 CVE-2013-4299 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix three security issues and several bugs are
+now available for Red Hat Enterprise Linux 6.3 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Compute Node EUS (v. 6.3) - noarch, x86_64
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.3)	 - x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.3) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* It was found that the fix for CVE-2012-3552 released via RHSA-2012:1540
+introduced an invalid free flaw in the Linux kernel's TCP/IP protocol suite
+implementation. A local, unprivileged user could use this flaw to corrupt
+kernel memory via crafted sendmsg() calls, allowing them to cause a denial
+of service or, potentially, escalate their privileges on the
+system. (CVE-2013-2224, Important)
+
+* An information leak flaw was found in the way Linux kernel's device
+mapper subsystem, under certain conditions, interpreted data written to
+snapshot block devices. An attacker could use this flaw to read data from
+disk blocks in free space, which are normally inaccessible. (CVE-2013-4299,
+Moderate)
+
+* A format string flaw was found in the b43_do_request_fw() function in the
+Linux kernel's b43 driver implementation. A local user who is able to
+specify the &quot;fwpostfix&quot; b43 module parameter could use this flaw to cause a
+denial of service or, potentially, escalate their privileges.
+(CVE-2013-2852, Low)
+
+Red Hat would like to thank Fujitsu for reporting CVE-2013-4299, and Kees
+Cook for reporting CVE-2013-2852.
+
+This update also fixes the following bugs:
+
+* An insufficiently designed calculation in the CPU accelerator could cause
+an arithmetic overflow in the set_cyc2ns_scale() function if the system
+uptime exceeded 208 days prior to using kexec to boot into a new
+kernel. This overflow led to a kernel panic on the systems using the Time
+Stamp Counter (TSC) clock source, primarily the systems using Intel Xeon E5
+processors that do not reset TSC on soft power cycles. A patch has been
+applied to modify the calculation so that this arithmetic overflow and
+kernel panic can no longer occur under these circumstances. (BZ#1004185)
+
+* A race condition in the abort task and SPP device task management path of
+the isci driver could, under certain circumstances, cause the driver to
+fail cleaning up timed-out I/O requests that were pending on an SAS disk
+device. As a consequence, the kernel removed such a device from the
+system. A patch applied to the isci driver fixes this problem by sending
+the task management function request to the SAS drive anytime the abort
+function is entered and the task has not completed. The driver now cleans
+up timed-out I/O requests as expected in this situation. (BZ#1007467)
+
+* A kernel panic could occur during path failover on systems using multiple
+iSCSI, FC or SRP paths to connect an iSCSI initiator and an iSCSI
+target. This happened because a race condition in the SCSI driver allowed
+removing a SCSI device from the system before processing its run queue,
+which led to a NULL pointer dereference. The SCSI driver has been modified
+and the race is now avoided by holding a reference to a SCSI device run
+queue while it is active. (BZ#1008507)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+969518 - CVE-2013-2852 kernel: b43: format string leaking into error msgs
+979936 - CVE-2013-2224 kernel: net: IP_REPOPTS invalid free
+1004233 - CVE-2013-4299 kernel: dm: dm-snapshot data leak
+
+6. Package List:
+
+Red Hat Enterprise Linux Compute Node EUS (v. 6.3):
+
+Source:
+kernel-2.6.32-279.37.2.el6.src.rpm
+
+noarch:
+kernel-doc-2.6.32-279.37.2.el6.noarch.rpm
+kernel-firmware-2.6.32-279.37.2.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-devel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-headers-2.6.32-279.37.2.el6.x86_64.rpm
+perf-2.6.32-279.37.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.3)	:
+
+Source:
+kernel-2.6.32-279.37.2.el6.src.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.37.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.3):
+
+Source:
+kernel-2.6.32-279.37.2.el6.src.rpm
+
+i386:
+kernel-2.6.32-279.37.2.el6.i686.rpm
+kernel-debug-2.6.32-279.37.2.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+kernel-debug-devel-2.6.32-279.37.2.el6.i686.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-279.37.2.el6.i686.rpm
+kernel-devel-2.6.32-279.37.2.el6.i686.rpm
+kernel-headers-2.6.32-279.37.2.el6.i686.rpm
+perf-2.6.32-279.37.2.el6.i686.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-279.37.2.el6.noarch.rpm
+kernel-firmware-2.6.32-279.37.2.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debug-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-devel-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-headers-2.6.32-279.37.2.el6.ppc64.rpm
+perf-2.6.32-279.37.2.el6.ppc64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debug-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debug-devel-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-279.37.2.el6.s390x.rpm
+kernel-devel-2.6.32-279.37.2.el6.s390x.rpm
+kernel-headers-2.6.32-279.37.2.el6.s390x.rpm
+kernel-kdump-2.6.32-279.37.2.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-279.37.2.el6.s390x.rpm
+perf-2.6.32-279.37.2.el6.s390x.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-devel-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-headers-2.6.32-279.37.2.el6.x86_64.rpm
+perf-2.6.32-279.37.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3):
+
+Source:
+kernel-2.6.32-279.37.2.el6.src.rpm
+
+i386:
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-279.37.2.el6.i686.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+python-perf-2.6.32-279.37.2.el6.i686.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-279.37.2.el6.ppc64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+python-perf-2.6.32-279.37.2.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-279.37.2.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+python-perf-2.6.32-279.37.2.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.37.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-2.6.32-279.37.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.37.2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2224.html">https://www.redhat.com/security/data/cve/CVE-2013-2224.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2852.html">https://www.redhat.com/security/data/cve/CVE-2013-2852.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4299.html">https://www.redhat.com/security/data/cve/CVE-2013-4299.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSZrlrXlSAg2UNWIIRAs0GAKCFMseO7vV8bC8+xOLvyYYFyBEDogCgw/NT
+mJr9jzxDPWpAb+zZOXi8SZk=
+=e6kg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

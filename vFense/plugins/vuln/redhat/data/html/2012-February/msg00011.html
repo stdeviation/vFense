@@ -1,0 +1,212 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0091&#45;01] Important: JBoss Enterprise Portal Platform 4.3	CP07 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 2 Feb 2012 17:53:06 &#45;0500 -->
+<!--X-Message-Id: 201202022253.q12Mr056012513@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0091-01] Important: JBoss Enterprise Portal Platform 4.3	CP07</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0091-01] Important: JBoss Enterprise Portal Platform 4.3	CP07 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0091-01] Important: JBoss Enterprise Portal Platform 4.3	CP07 update</li>
+<li><em>Date</em>: Thu, 2 Feb 2012 22:53:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Portal Platform 4.3 CP07 update
+Advisory ID:       RHSA-2012:0091-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0091.html">https://rhn.redhat.com/errata/RHSA-2012-0091.html</a>
+Issue date:        2012-02-02
+CVE Names:         CVE-2011-1184 CVE-2011-1484 CVE-2011-2526 
+                   CVE-2011-4085 CVE-2011-4858 CVE-2011-5062 
+                   CVE-2011-5063 CVE-2011-5064 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Portal Platform 4.3 CP07, which fixes multiple security
+issues and various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise Portal Platform is the open source implementation of the
+Java EE suite of services and Portal services running atop JBoss Enterprise
+Application Platform. It comprises a set of offerings for enterprise
+customers who are looking for pre-configured profiles of JBoss Enterprise
+Middleware components that have been tested and certified together to
+provide an integrated experience.
+
+This JBoss Enterprise Portal Platform 4.3 CP07 release serves as a
+replacement for JBoss Enterprise Portal Platform 4.3 CP06. Refer to the
+JBoss Enterprise Portal Platform 4.3 CP07 Release Notes, available shortly
+from docs.redhat.com, for information on the most significant bug fixes
+included in this release.
+
+The following security fixes are also included:
+
+JBoss Seam 2 did not properly block access to JBoss Expression Language
+(EL) constructs in page exception handling, allowing arbitrary Java methods
+to be executed. A remote attacker could use this flaw to execute arbitrary
+code via a specially-crafted URL provided to certain applications based on
+the JBoss Seam 2 framework. Note: A properly configured and enabled Java
+Security Manager would prevent exploitation of this flaw. (CVE-2011-1484)
+
+Note: If you have created custom applications that are packaged with a copy
+of the JBoss Seam 2 library, those applications must be rebuilt with the
+updated jboss-seam.jar file provided by this update.
+
+It was found that the Java hashCode() method implementation was
+susceptible to predictable hash collisions. A remote attacker could use
+this flaw to cause JBoss Web to use an excessive amount of CPU time by
+sending an HTTP request with a large number of parameters whose names map
+to the same hash value. This update introduces a limit on the number of
+parameters and headers processed per request to mitigate this issue. The
+default limit is 512 for parameters and 128 for headers. These defaults
+can be changed by setting the
+org.apache.tomcat.util.http.Parameters.MAX_COUNT and
+org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties in
+&quot;server/$PROFILE/deploy/properties-service.xml&quot;. (CVE-2011-4858)
+
+Multiple flaws were found in the way JBoss Web handled HTTP DIGEST
+authentication. These flaws weakened the JBoss Web HTTP DIGEST
+authentication implementation, subjecting it to some of the weaknesses of
+HTTP BASIC authentication, for example, allowing remote attackers to
+perform session replay attacks. (CVE-2011-1184, CVE-2011-5062,
+CVE-2011-5063, CVE-2011-5064)
+
+The invoker servlets, deployed by default via httpha-invoker, only
+performed access control on the HTTP GET and POST methods, allowing remote
+attackers to make unauthenticated requests by using different HTTP methods.
+Due to the second layer of authentication provided by a security
+interceptor, this issue is not exploitable on default installations unless
+an administrator has misconfigured the security interceptor or disabled it.
+(CVE-2011-4085)
+
+A flaw was found in the way JBoss Web handled sendfile request attributes
+when using the HTTP APR (Apache Portable Runtime) or NIO (Non-Blocking I/O)
+connector. A malicious web application running on a JBoss Web instance
+could use this flaw to bypass security manager restrictions and gain access
+to files it would otherwise be unable to access, or possibly terminate the
+Java Virtual Machine (JVM). (CVE-2011-2526)
+
+Red Hat would like to thank Martin Kouba from IT SYSTEMS a.s. for reporting
+CVE-2011-1484; oCERT for reporting CVE-2011-4858; and the Apache Tomcat
+project for reporting CVE-2011-2526. oCERT acknowledges Julian Wälde and
+Alexander Klink as the original reporters of CVE-2011-4858.
+
+Warning: Before applying this update, back up all applications deployed on
+JBoss Enterprise Portal Platform, along with all customized configuration
+files.
+
+All users of JBoss Enterprise Portal Platform 4.3 CP06 as provided from the
+Red Hat Customer Portal are advised to upgrade to JBoss Enterprise Portal
+Platform 4.3 CP07.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+The JBoss server process must be restarted for this update to take effect.
+Note that if you have created custom applications that are packaged with a
+copy of the JBoss Seam 2 library, those applications must be rebuilt with
+the updated jboss-seam.jar file provided by this update.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+692421 - CVE-2011-1484 JBoss Seam privilege escalation caused by EL interpolation in FacesMessages
+720948 - CVE-2011-2526 tomcat: security manager restrictions bypass
+741401 - CVE-2011-1184 CVE-2011-5062 CVE-2011-5063 CVE-2011-5064 tomcat: Multiple weaknesses in HTTP DIGEST authentication
+750422 - CVE-2011-4085 Invoker servlets authentication bypass (HTTP verb tampering)
+750521 - CVE-2011-4858 tomcat: hash table collisions CPU usage DoS (oCERT-2011-003)
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1184.html">https://www.redhat.com/security/data/cve/CVE-2011-1184.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1484.html">https://www.redhat.com/security/data/cve/CVE-2011-1484.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2526.html">https://www.redhat.com/security/data/cve/CVE-2011-2526.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4085.html">https://www.redhat.com/security/data/cve/CVE-2011-4085.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4858.html">https://www.redhat.com/security/data/cve/CVE-2011-4858.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5062.html">https://www.redhat.com/security/data/cve/CVE-2011-5062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5063.html">https://www.redhat.com/security/data/cve/CVE-2011-5063.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5064.html">https://www.redhat.com/security/data/cve/CVE-2011-5064.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=jbportal&amp;version=4.3+CP07">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=jbportal&amp;version=4.3+CP07</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/index.html">https://docs.redhat.com/docs/en-US/index.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPKxPBXlSAg2UNWIIRAhb4AJ9Ks5/uus0s8PacXmno8u4QexJjkgCfap76
+nuOq8z4B/1ANHDcKjdHi/Go=
+=H33V
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

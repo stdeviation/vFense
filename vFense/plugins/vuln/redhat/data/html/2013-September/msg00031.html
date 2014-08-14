@@ -1,0 +1,336 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1272&#45;01] Important: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Sep 2013 14:13:39 &#45;0400 -->
+<!--X-Message-Id: 201309191813.r8JIDcGx027835@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1272-01] Important: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1272-01] Important: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1272-01] Important: libvirt security and bug fix update</li>
+<li><em>Date</em>: Thu, 19 Sep 2013 18:13:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libvirt security and bug fix update
+Advisory ID:       RHSA-2013:1272-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1272.html">https://rhn.redhat.com/errata/RHSA-2013-1272.html</a>
+Issue date:        2013-09-19
+CVE Names:         CVE-2013-4296 CVE-2013-4311 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In
+addition, libvirt provides tools for remote management of virtualized
+systems.
+
+libvirt invokes the PolicyKit pkcheck utility to handle authorization. A
+race condition was found in the way libvirt used this utility, allowing a
+local user to bypass intended PolicyKit authorizations or execute arbitrary
+commands with root privileges. (CVE-2013-4311)
+
+Note: With this update, libvirt has been rebuilt to communicate with
+PolicyKit via a different API that is not vulnerable to the race condition.
+The polkit RHSA-2013:1270 advisory must also be installed to fix the
+CVE-2013-4311 issue.
+
+An invalid free flaw was found in libvirtd's
+remoteDispatchDomainMemoryStats function. An attacker able to establish a
+read-only connection to libvirtd could use this flaw to crash libvirtd.
+(CVE-2013-4296)
+
+The CVE-2013-4296 issue was discovered by Daniel P. Berrange of Red Hat.
+
+This update also fixes the following bugs:
+
+* Prior to this update, the libvirtd daemon leaked memory in the
+virCgroupMoveTask() function. A fix has been provided which prevents
+libvirtd from incorrect management of memory allocations. (BZ#984556)
+
+* Previously, the libvirtd daemon was accessing one byte before the array
+in the virCgroupGetValueStr() function. This bug has been fixed and
+libvirtd now stays within the array bounds. (BZ#984561)
+
+* When migrating, libvirtd leaked the migration URI (Uniform Resource
+Identifier) on destination. A patch has been provided to fix this bug and
+the migration URI is now freed correctly. (BZ#984578)
+
+* Updating a network interface using virDomainUpdateDeviceFlags API failed
+when a boot order was set for that interface. The update failed even if the
+boot order was set in the provided device XML. The
+virDomainUpdateDeviceFlags API has been fixed to correctly parse the boot
+order specification from the provided device XML and updating network
+interfaces with boot orders now works as expected. (BZ#1003934)
+
+Users of libvirt are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, libvirtd will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+984556 - libvirtd leaks memory in virCgroupMoveTask
+984561 - valgrind shows an off-by-one error in virCgroupGetValueStr
+984578 - libvirtd leaks URI on destination when migrating
+1003934 - vmUpdateDevice fails when nic has boot order set
+1005332 - CVE-2013-4311 libvirt: insecure calling of polkit
+1006173 - CVE-2013-4296 libvirt: invalid free in remoteDispatchDomainMemoryStats
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-python-0.10.2-18.el6_4.14.i686.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-python-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+i386:
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+x86_64:
+libvirt-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-python-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-python-0.10.2-18.el6_4.14.i686.rpm
+
+ppc64:
+libvirt-0.10.2-18.el6_4.14.ppc64.rpm
+libvirt-client-0.10.2-18.el6_4.14.ppc.rpm
+libvirt-client-0.10.2-18.el6_4.14.ppc64.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.ppc.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.ppc64.rpm
+libvirt-devel-0.10.2-18.el6_4.14.ppc.rpm
+libvirt-devel-0.10.2-18.el6_4.14.ppc64.rpm
+libvirt-python-0.10.2-18.el6_4.14.ppc64.rpm
+
+s390x:
+libvirt-0.10.2-18.el6_4.14.s390x.rpm
+libvirt-client-0.10.2-18.el6_4.14.s390.rpm
+libvirt-client-0.10.2-18.el6_4.14.s390x.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.s390.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.s390x.rpm
+libvirt-devel-0.10.2-18.el6_4.14.s390.rpm
+libvirt-devel-0.10.2-18.el6_4.14.s390x.rpm
+libvirt-python-0.10.2-18.el6_4.14.s390x.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-python-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-python-0.10.2-18.el6_4.14.i686.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-client-0.10.2-18.el6_4.14.i686.rpm
+libvirt-client-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-devel-0.10.2-18.el6_4.14.i686.rpm
+libvirt-devel-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-python-0.10.2-18.el6_4.14.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6_4.14.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6_4.14.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6_4.14.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4296.html">https://www.redhat.com/security/data/cve/CVE-2013-4296.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4311.html">https://www.redhat.com/security/data/cve/CVE-2013-4311.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1270.html">https://rhn.redhat.com/errata/RHSA-2013-1270.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSOz66XlSAg2UNWIIRAn1XAJ4stD4OB/NhiDIwVNz9oUOt7r1KRgCdFL66
+LMB3IdDpFCkQd1sysAvom8M=
+=0DLY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0153&#45;02] Moderate: thunderbird security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 17 Mar 2010 11:33:27 &#45;0400 -->
+<!--X-Message-Id: 201003171533.o2HFXLqN029253@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0153-02] Moderate: thunderbird security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0153-02] Moderate: thunderbird security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0153-02] Moderate: thunderbird security update</li>
+<li><em>Date</em>: Wed, 17 Mar 2010 11:33:21 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: thunderbird security update
+Advisory ID:       RHSA-2010:0153-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0153.html">https://rhn.redhat.com/errata/RHSA-2010-0153.html</a>
+Issue date:        2010-03-17
+CVE Names:         CVE-2009-0689 CVE-2009-1571 CVE-2009-2462 
+                   CVE-2009-2463 CVE-2009-2466 CVE-2009-2470 
+                   CVE-2009-3072 CVE-2009-3075 CVE-2009-3076 
+                   CVE-2009-3077 CVE-2009-3274 CVE-2009-3376 
+                   CVE-2009-3380 CVE-2009-3979 CVE-2010-0159 
+=====================================================================
+
+1. Summary:
+
+An updated thunderbird package that fixes several security issues is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Mozilla Thunderbird is a standalone mail and newsgroup client.
+
+Several flaws were found in the processing of malformed HTML mail content.
+An HTML mail message containing malicious content could cause Thunderbird
+to crash or, potentially, execute arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2009-2462, CVE-2009-2463, CVE-2009-2466,
+CVE-2009-3072, CVE-2009-3075, CVE-2009-3380, CVE-2009-3979, CVE-2010-0159)
+
+A use-after-free flaw was found in Thunderbird. An attacker could use this
+flaw to crash Thunderbird or, potentially, execute arbitrary code with the
+privileges of the user running Thunderbird. (CVE-2009-3077)
+
+A heap-based buffer overflow flaw was found in the Thunderbird string to
+floating point conversion routines. An HTML mail message containing
+malicious JavaScript could crash Thunderbird or, potentially, execute
+arbitrary code with the privileges of the user running Thunderbird.
+(CVE-2009-0689)
+
+A use-after-free flaw was found in Thunderbird. Under low memory
+conditions, viewing an HTML mail message containing malicious content could
+result in Thunderbird executing arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2009-1571)
+
+A flaw was found in the way Thunderbird created temporary file names for
+downloaded files. If a local attacker knows the name of a file Thunderbird
+is going to download, they can replace the contents of that file with
+arbitrary contents. (CVE-2009-3274)
+
+A flaw was found in the way Thunderbird displayed a right-to-left override
+character when downloading a file. In these cases, the name displayed in
+the title bar differed from the name displayed in the dialog body. An
+attacker could use this flaw to trick a user into downloading a file that
+has a file name or extension that is different from what the user expected.
+(CVE-2009-3376)
+
+A flaw was found in the way Thunderbird processed SOCKS5 proxy replies. A
+malicious SOCKS5 server could send a specially-crafted reply that would
+cause Thunderbird to crash. (CVE-2009-2470)
+
+Descriptions in the dialogs when adding and removing PKCS #11 modules were
+not informative. An attacker able to trick a user into installing a
+malicious PKCS #11 module could use this flaw to install their own
+Certificate Authority certificates on a user's machine, making it possible
+to trick the user into believing they are viewing trusted content or,
+potentially, execute arbitrary code with the privileges of the user running
+Thunderbird. (CVE-2009-3076)
+
+All Thunderbird users should upgrade to this updated package, which
+resolves these issues. All running instances of Thunderbird must be
+restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+512128 - CVE-2009-2462 Mozilla Browser engine crashes
+512131 - CVE-2009-2463 Mozilla Base64 decoding crash
+512136 - CVE-2009-2466 Mozilla JavaScript engine crashes
+512145 - CVE-2009-2470 Mozilla data corruption with SOCKS5 reply
+521688 - CVE-2009-3072 Firefox 3.5.3 3.0.14 browser engine crashes
+521691 - CVE-2009-3075 Firefox 3.5.2 3.0.14 JavaScript engine crashes
+521692 - CVE-2009-3076 Firefox 3.0.14 Insufficient warning for PKCS11 module installation and removal
+521693 - CVE-2009-3077 Firefox 3.5.3 3.0.14 TreeColumns dangling pointer vulnerability
+524815 - CVE-2009-3274 Firefox: Predictable /tmp pathname use
+530162 - CVE-2009-0689 (rejected CVE-2009-1563) Firefox heap buffer overflow in string to number conversion
+530168 - CVE-2009-3376 Firefox download filename spoofing with RTL override
+530567 - CVE-2009-3380 Firefox crashes with evidence of memory corruption
+546694 - CVE-2009-3979 Mozilla crash with evidence of memory corruption
+566047 - CVE-2010-0159 Mozilla crashes with evidence of memory corruption (MFSA 2010-01)
+566050 - CVE-2009-1571 Mozilla incorrectly frees used memory (MFSA 2010-03)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-2.0.0.24-2.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-2.0.0.24-2.el5_4.src.rpm</a>
+
+i386:
+thunderbird-2.0.0.24-2.el5_4.i386.rpm
+thunderbird-debuginfo-2.0.0.24-2.el5_4.i386.rpm
+
+x86_64:
+thunderbird-2.0.0.24-2.el5_4.x86_64.rpm
+thunderbird-debuginfo-2.0.0.24-2.el5_4.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-2.0.0.24-2.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-2.0.0.24-2.el5_4.src.rpm</a>
+
+i386:
+thunderbird-2.0.0.24-2.el5_4.i386.rpm
+thunderbird-debuginfo-2.0.0.24-2.el5_4.i386.rpm
+
+x86_64:
+thunderbird-2.0.0.24-2.el5_4.x86_64.rpm
+thunderbird-debuginfo-2.0.0.24-2.el5_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0689.html">https://www.redhat.com/security/data/cve/CVE-2009-0689.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1571.html">https://www.redhat.com/security/data/cve/CVE-2009-1571.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2462.html">https://www.redhat.com/security/data/cve/CVE-2009-2462.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2463.html">https://www.redhat.com/security/data/cve/CVE-2009-2463.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2466.html">https://www.redhat.com/security/data/cve/CVE-2009-2466.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2470.html">https://www.redhat.com/security/data/cve/CVE-2009-2470.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3072.html">https://www.redhat.com/security/data/cve/CVE-2009-3072.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3075.html">https://www.redhat.com/security/data/cve/CVE-2009-3075.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3076.html">https://www.redhat.com/security/data/cve/CVE-2009-3076.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3077.html">https://www.redhat.com/security/data/cve/CVE-2009-3077.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3274.html">https://www.redhat.com/security/data/cve/CVE-2009-3274.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3376.html">https://www.redhat.com/security/data/cve/CVE-2009-3376.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3380.html">https://www.redhat.com/security/data/cve/CVE-2009-3380.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3979.html">https://www.redhat.com/security/data/cve/CVE-2009-3979.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0159.html">https://www.redhat.com/security/data/cve/CVE-2010-0159.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLoPX3XlSAg2UNWIIRAgKJAJ92yAEo/8kT1mkxcNJvi3lFMsA2nwCgrbqa
+J7f6yEvoEpbL7bD1j5KezeU=
+=uF/4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

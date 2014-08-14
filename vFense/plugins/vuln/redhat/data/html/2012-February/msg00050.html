@@ -1,0 +1,282 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0306&#45;03] Low: krb5 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:54:17 &#45;0500 -->
+<!--X-Message-Id: 201202210454.q1L4sAtU009453@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0306-03] Low: krb5 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00049.html">Date Prev</a>][<a href="msg00051.html">Date Next</a>] &nbsp; [<a href="msg00049.html">Thread Prev</a>][<a href="msg00051.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00050">Thread Index</A>]
+[<A HREF="date.html#00050">Date Index</A>]
+[<A HREF="author.html#00050">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0306-03] Low: krb5 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0306-03] Low: krb5 security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:54:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: krb5 security and bug fix update
+Advisory ID:       RHSA-2012:0306-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0306.html">https://rhn.redhat.com/errata/RHSA-2012-0306.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-1526 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix one security issue and various bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Kerberos is a network authentication system which allows clients and
+servers to authenticate to each other using symmetric encryption and a
+trusted third-party, the Key Distribution Center (KDC).
+
+It was found that ftpd, a Kerberos-aware FTP server, did not properly drop
+privileges. On Red Hat Enterprise Linux 5, the ftpd daemon did not check
+for the potential failure of the effective group ID change system call. If
+the group ID change failed, a remote FTP user could use this flaw to gain
+unauthorized read or write access to files that are owned by the root
+group. (CVE-2011-1526)
+
+Red Hat would like to thank the MIT Kerberos project for reporting this
+issue. Upstream acknowledges Tim Zingelman as the original reporter.
+
+This update also fixes the following bugs:
+
+* Due to a mistake in the Kerberos libraries, a client could fail to
+contact a Key Distribution Center (KDC) or terminate unexpectedly if the
+client had already more than 1024 file descriptors in use. This update
+backports modifications to the Kerberos libraries and the libraries use
+the poll() function instead of the select() function, as poll() does not
+have this limitation. (BZ#701444)
+
+* The KDC failed to release memory when processing a TGS (ticket-granting
+server) request from a client if the client request included an
+authenticator with a subkey. As a result, the KDC consumed an excessive
+amount of memory. With this update, the code releasing the memory has been
+added and the problem no longer occurs. (BZ#708516)
+
+* Under certain circumstances, if services requiring Kerberos
+authentication sent two authentication requests to the authenticating
+server, the second authentication request was flagged as a replay attack.
+As a result, the second authentication attempt was denied. This update
+applies an upstream patch that fixes this bug. (BZ#713500)
+
+* Previously, if Kerberos credentials had expired, the klist command could
+terminate unexpectedly with a segmentation fault when invoked with the -s
+option. This happened when klist encountered and failed to process an entry
+with no realm name while scanning the credential cache. With this update,
+the underlying code has been modified and the command handles such entries
+correctly. (BZ#729067)
+
+* Due to a regression, multi-line FTP macros terminated prematurely with a
+segmentation fault. This occurred because the previously-added patch failed
+to properly support multi-line macros. This update restores the support for
+multi-line macros and the problem no longer occurs. (BZ#735363, BZ#736132)
+
+All users of krb5 are advised to upgrade to these updated packages, which
+resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+701444 - Fix libkrb5 to work when &gt; 1024 file descriptors are in use
+708516 - memory leak during kdc TGS request
+711419 - CVE-2011-1526 krb5, krb5-appl: ftpd incorrect group privilege dropping (MITKRB5-SA-2011-005)
+729067 - klist -s segfaults with expired credentials
+750823 - Newly introduced defect into krb5
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-libs-1.6.1-70.el5.i386.rpm
+krb5-workstation-1.6.1-70.el5.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-debuginfo-1.6.1-70.el5.x86_64.rpm
+krb5-libs-1.6.1-70.el5.i386.rpm
+krb5-libs-1.6.1-70.el5.x86_64.rpm
+krb5-workstation-1.6.1-70.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-devel-1.6.1-70.el5.i386.rpm
+krb5-server-1.6.1-70.el5.i386.rpm
+krb5-server-ldap-1.6.1-70.el5.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-debuginfo-1.6.1-70.el5.x86_64.rpm
+krb5-devel-1.6.1-70.el5.i386.rpm
+krb5-devel-1.6.1-70.el5.x86_64.rpm
+krb5-server-1.6.1-70.el5.x86_64.rpm
+krb5-server-ldap-1.6.1-70.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-70.el5.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-devel-1.6.1-70.el5.i386.rpm
+krb5-libs-1.6.1-70.el5.i386.rpm
+krb5-server-1.6.1-70.el5.i386.rpm
+krb5-server-ldap-1.6.1-70.el5.i386.rpm
+krb5-workstation-1.6.1-70.el5.i386.rpm
+
+ia64:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-debuginfo-1.6.1-70.el5.ia64.rpm
+krb5-devel-1.6.1-70.el5.ia64.rpm
+krb5-libs-1.6.1-70.el5.i386.rpm
+krb5-libs-1.6.1-70.el5.ia64.rpm
+krb5-server-1.6.1-70.el5.ia64.rpm
+krb5-server-ldap-1.6.1-70.el5.ia64.rpm
+krb5-workstation-1.6.1-70.el5.ia64.rpm
+
+ppc:
+krb5-debuginfo-1.6.1-70.el5.ppc.rpm
+krb5-debuginfo-1.6.1-70.el5.ppc64.rpm
+krb5-devel-1.6.1-70.el5.ppc.rpm
+krb5-devel-1.6.1-70.el5.ppc64.rpm
+krb5-libs-1.6.1-70.el5.ppc.rpm
+krb5-libs-1.6.1-70.el5.ppc64.rpm
+krb5-server-1.6.1-70.el5.ppc.rpm
+krb5-server-ldap-1.6.1-70.el5.ppc.rpm
+krb5-workstation-1.6.1-70.el5.ppc.rpm
+
+s390x:
+krb5-debuginfo-1.6.1-70.el5.s390.rpm
+krb5-debuginfo-1.6.1-70.el5.s390x.rpm
+krb5-devel-1.6.1-70.el5.s390.rpm
+krb5-devel-1.6.1-70.el5.s390x.rpm
+krb5-libs-1.6.1-70.el5.s390.rpm
+krb5-libs-1.6.1-70.el5.s390x.rpm
+krb5-server-1.6.1-70.el5.s390x.rpm
+krb5-server-ldap-1.6.1-70.el5.s390x.rpm
+krb5-workstation-1.6.1-70.el5.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-70.el5.i386.rpm
+krb5-debuginfo-1.6.1-70.el5.x86_64.rpm
+krb5-devel-1.6.1-70.el5.i386.rpm
+krb5-devel-1.6.1-70.el5.x86_64.rpm
+krb5-libs-1.6.1-70.el5.i386.rpm
+krb5-libs-1.6.1-70.el5.x86_64.rpm
+krb5-server-1.6.1-70.el5.x86_64.rpm
+krb5-server-ldap-1.6.1-70.el5.x86_64.rpm
+krb5-workstation-1.6.1-70.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1526.html">https://www.redhat.com/security/data/cve/CVE-2011-1526.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-005.txt">http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-005.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyNqXlSAg2UNWIIRAp5dAKDA7lUaUiUGF//stQQ4uVUoI9ovlgCdFfCs
+odSE4hVfYjWSJazvR3Zb0jc=
+=s8Va
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00049.html">Date Prev</a>][<a href="msg00051.html">Date Next</a>] &nbsp; [<a href="msg00049.html">Thread Prev</a>][<a href="msg00051.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00050">Thread Index</A>]
+[<A HREF="date.html#00050">Date Index</A>]
+[<A HREF="author.html#00050">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

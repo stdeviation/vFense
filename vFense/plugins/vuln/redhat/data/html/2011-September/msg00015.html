@@ -1,0 +1,180 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1292&#45;01] Important: jakarta&#45;commons&#45;daemon&#45;jsvc security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Sep 2011 15:04:02 &#45;0400 -->
+<!--X-Message-Id: 201109141903.p8EJ3v5F009586@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1292-01] Important: jakarta-commons-daemon-jsvc security	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1292-01] Important: jakarta-commons-daemon-jsvc security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1292-01] Important: jakarta-commons-daemon-jsvc security	update</li>
+<li><em>Date</em>: Wed, 14 Sep 2011 19:03:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jakarta-commons-daemon-jsvc security update
+Advisory ID:       RHSA-2011:1292-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1292.html">https://rhn.redhat.com/errata/RHSA-2011-1292.html</a>
+Issue date:        2011-09-14
+CVE Names:         CVE-2011-2729 
+=====================================================================
+
+1. Summary:
+
+An updated jakarta-commons-daemon-jsvc package that fixes one security
+issue is now available for JBoss Enterprise Web Server 1.0 for Red Hat
+Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS - i386, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES - i386, x86_64
+
+3. Description:
+
+The jakarta-commons-daemon-jsvc package includes jsvc, a service wrapper
+that allows Java applications to be run as daemons.
+
+It was found that jsvc did not correctly drop capabilities after starting
+an application. If an administrator used jsvc to run an application, and
+also used the &quot;-user&quot; option to specify a user for it to run as, the
+application correctly ran as that user but did not drop its increased
+capabilities, allowing it access to all files and directories accessible to
+the root user. (CVE-2011-2729)
+
+Note: This flaw does not affect Red Hat Enterprise Linux 5 and 6, as the
+jakarta-commons-daemon-jsvc packages for those products are not built with
+capabilities support.
+
+Users of JBoss Enterprise Web Server 1.0 for Red Hat Enterprise Linux 4
+should upgrade to this updated package, which contains backported patches
+to correct this issue. If jsvc is started, it must be restarted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+730400 - CVE-2011-2729 jakarta-commons-daemon: jsvc does not drop capabilities allowing access to files and directories owned by the superuser
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS:
+
+Source:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.src.rpm
+
+i386:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.i386.rpm
+jakarta-commons-daemon-jsvc-debuginfo-1.0.5-1.5.patch01.ep5.el4.i386.rpm
+
+x86_64:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.x86_64.rpm
+jakarta-commons-daemon-jsvc-debuginfo-1.0.5-1.5.patch01.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES:
+
+Source:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.src.rpm
+
+i386:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.i386.rpm
+jakarta-commons-daemon-jsvc-debuginfo-1.0.5-1.5.patch01.ep5.el4.i386.rpm
+
+x86_64:
+jakarta-commons-daemon-jsvc-1.0.5-1.5.patch01.ep5.el4.x86_64.rpm
+jakarta-commons-daemon-jsvc-debuginfo-1.0.5-1.5.patch01.ep5.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2729.html">https://www.redhat.com/security/data/cve/CVE-2011-2729.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOcPqHXlSAg2UNWIIRAvseAJ4kTOgnNXJ0VPqM+7sCj2rbOhj6aQCggrpD
+OuNpZ6rFo+37Z/OZQcvJsAo=
+=Y3o2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

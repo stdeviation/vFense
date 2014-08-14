@@ -1,0 +1,161 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0940&#45;01] Important: JBoss Enterprise SOA Platform 4.2 and	4.3 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 1 Dec 2010 19:03:07 &#45;0500 -->
+<!--X-Message-Id: 201012020003.oB20313s012906@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0940-01] Important: JBoss Enterprise SOA Platform 4.2 and	4.3</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0940-01] Important: JBoss Enterprise SOA Platform 4.2 and	4.3 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0940-01] Important: JBoss Enterprise SOA Platform 4.2 and	4.3 security update</li>
+<li><em>Date</em>: Wed, 1 Dec 2010 17:03:01 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise SOA Platform 4.2 and 4.3 security update
+Advisory ID:       RHSA-2010:0940-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0940.html">https://rhn.redhat.com/errata/RHSA-2010-0940.html</a>
+Issue date:        2010-12-01
+CVE Names:         CVE-2010-3708 
+=====================================================================
+
+1. Summary:
+
+A patch for JBoss Enterprise SOA Platform 4.2 and 4.3 that fixes one
+security issue is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Enterprise SOA Platform is the next-generation ESB and business
+process automation infrastructure. JBoss Enterprise SOA Platform allows IT
+to leverage existing (MoM and EAI), modern (SOA and BPM-Rules), and future
+(EDA and CEP) integration methodologies to dramatically improve business
+process execution speed and quality.
+
+An input sanitization flaw was found in the way JBoss Drools implemented
+certain rule base serialization. If a remote attacker supplied
+specially-crafted input to a JBoss Seam based application that accepts
+serialized input, it could lead to arbitrary code execution with the
+privileges of the JBoss server process. (CVE-2010-3708)
+
+All users of JBoss Enterprise SOA Platform 4.2 and 4.3 as provided from the
+Red Hat Customer Portal are advised to apply this patch. Refer to the
+Solution section of this erratum for update instructions.
+
+3. Solution:
+
+A patch to correct CVE-2010-3708 for JBoss Enterprise SOA Platform 4.2 and
+4.3 is available from the Red Hat Customer Portal. To download and apply
+this patch:
+
+1) Backup your existing JBoss Enterprise SOA Platform installation
+(including its databases, applications, configuration files, and so on).
+
+2) Log into the Customer Portal: <a  rel="nofollow" href="https://access.redhat.com/login">https://access.redhat.com/login</a>
+
+3) Navigate to
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html</a>
+
+4) On the left-hand side menu, under &quot;JBoss Enterprise Platforms&quot; click
+&quot;SOA Platform&quot;. Then, using the &quot;Version:&quot; drop down menu, select the SOA
+Platform version you are using, such as &quot;4.2.0.GA_CP05&quot; or &quot;4.3.0.GA_CP04&quot;.
+
+5) From either the &quot;Security Advisories&quot; links, click &quot;SOA Standalone
+4.3.0.GA_CP04 CVE-2010-3708 Patch&quot; or &quot;SOA Platform 4.3.0.GA_CP04
+CVE-2010-3708 Patch&quot; in the &quot;Download File&quot; column. The &quot;Software Details&quot;
+page is displayed, where you can download the patch.
+
+6) After downloading the patch, ensure you backed up your existing
+installation as per step 1, and then follow the manual installation steps
+on the &quot;Software Details&quot; page (where you downloaded the patch file from).
+Note that it is recommended to halt the JBoss Enterprise SOA Platform
+server by stopping the JBoss Application Server process before applying the
+patch, and then after applying the patch, restart the JBoss Enterprise SOA
+Platform server by starting the JBoss Application Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+633859 - CVE-2010-3708 JBoss drools deserialization remote code execution
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3708.html">https://www.redhat.com/security/data/cve/CVE-2010-3708.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM9uIoXlSAg2UNWIIRAsiZAJ0eu1wtgSgmyjVQ+UJd7tOxNzldUQCguZ6g
+gIdwyUJvMR5T/EnVQuDEFz4=
+=KNEO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

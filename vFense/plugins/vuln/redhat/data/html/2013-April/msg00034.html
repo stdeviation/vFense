@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0769&#45;01] Low: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 24 Apr 2013 14:01:34 &#45;0400 -->
+<!--X-Message-Id: 201304241801.r3OI1Y3N006466@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0769-01] Low: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0769-01] Low: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0769-01] Low: glibc security and bug fix update</li>
+<li><em>Date</em>: Wed, 24 Apr 2013 18:01:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: glibc security and bug fix update
+Advisory ID:       RHSA-2013:0769-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0769.html">https://rhn.redhat.com/errata/RHSA-2013-0769.html</a>
+Issue date:        2013-04-24
+CVE Names:         CVE-2013-0242 CVE-2013-1914 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues and two bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The glibc packages provide the standard C libraries (libc), POSIX thread
+libraries (libpthread), standard math libraries (libm), and the Name Server
+Caching Daemon (nscd) used by multiple programs on the system. Without
+these libraries, the Linux system cannot function correctly.
+
+It was found that getaddrinfo() did not limit the amount of stack memory
+used during name resolution. An attacker able to make an application
+resolve an attacker-controlled hostname or IP address could possibly cause
+the application to exhaust all stack memory and crash. (CVE-2013-1914)
+
+A flaw was found in the regular expression matching routines that process
+multibyte character input. If an application utilized the glibc regular
+expression matching mechanism, an attacker could provide specially-crafted
+input that, when processed, would cause the application to crash.
+(CVE-2013-0242)
+
+This update also fixes the following bugs:
+
+* The improvements RHSA-2012:1207 made to the accuracy of floating point
+functions in the math library caused performance regressions for those
+functions. The performance regressions were analyzed and a fix was applied
+that retains the current accuracy but reduces the performance penalty to
+acceptable levels. Refer to Red Hat Knowledge solution 229993, linked
+to in the References, for further information. (BZ#950535)
+
+* It was possible that a memory location freed by the localization code
+could be accessed immediately after, resulting in a crash. The fix ensures
+that the application does not crash by avoiding the invalid memory access.
+(BZ#951493)
+
+Users of glibc are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+905874 - CVE-2013-0242 glibc: Buffer overrun (DoS) in regexp matcher by processing multibyte characters
+947882 - CVE-2013-1914 glibc: Stack (frame) overflow in getaddrinfo() when processing entry mapping to long list of address structures
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-107.el5_9.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-107.el5_9.4.src.rpm</a>
+
+i386:
+glibc-2.5-107.el5_9.4.i386.rpm
+glibc-2.5-107.el5_9.4.i686.rpm
+glibc-common-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i686.rpm
+glibc-debuginfo-common-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.i386.rpm
+glibc-headers-2.5-107.el5_9.4.i386.rpm
+glibc-utils-2.5-107.el5_9.4.i386.rpm
+nscd-2.5-107.el5_9.4.i386.rpm
+
+x86_64:
+glibc-2.5-107.el5_9.4.i686.rpm
+glibc-2.5-107.el5_9.4.x86_64.rpm
+glibc-common-2.5-107.el5_9.4.x86_64.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i686.rpm
+glibc-debuginfo-2.5-107.el5_9.4.x86_64.rpm
+glibc-debuginfo-common-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.x86_64.rpm
+glibc-headers-2.5-107.el5_9.4.x86_64.rpm
+glibc-utils-2.5-107.el5_9.4.x86_64.rpm
+nscd-2.5-107.el5_9.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-107.el5_9.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-107.el5_9.4.src.rpm</a>
+
+i386:
+glibc-2.5-107.el5_9.4.i386.rpm
+glibc-2.5-107.el5_9.4.i686.rpm
+glibc-common-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i686.rpm
+glibc-debuginfo-common-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.i386.rpm
+glibc-headers-2.5-107.el5_9.4.i386.rpm
+glibc-utils-2.5-107.el5_9.4.i386.rpm
+nscd-2.5-107.el5_9.4.i386.rpm
+
+ia64:
+glibc-2.5-107.el5_9.4.i686.rpm
+glibc-2.5-107.el5_9.4.ia64.rpm
+glibc-common-2.5-107.el5_9.4.ia64.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i686.rpm
+glibc-debuginfo-2.5-107.el5_9.4.ia64.rpm
+glibc-devel-2.5-107.el5_9.4.ia64.rpm
+glibc-headers-2.5-107.el5_9.4.ia64.rpm
+glibc-utils-2.5-107.el5_9.4.ia64.rpm
+nscd-2.5-107.el5_9.4.ia64.rpm
+
+ppc:
+glibc-2.5-107.el5_9.4.ppc.rpm
+glibc-2.5-107.el5_9.4.ppc64.rpm
+glibc-common-2.5-107.el5_9.4.ppc.rpm
+glibc-debuginfo-2.5-107.el5_9.4.ppc.rpm
+glibc-debuginfo-2.5-107.el5_9.4.ppc64.rpm
+glibc-devel-2.5-107.el5_9.4.ppc.rpm
+glibc-devel-2.5-107.el5_9.4.ppc64.rpm
+glibc-headers-2.5-107.el5_9.4.ppc.rpm
+glibc-utils-2.5-107.el5_9.4.ppc.rpm
+nscd-2.5-107.el5_9.4.ppc.rpm
+
+s390x:
+glibc-2.5-107.el5_9.4.s390.rpm
+glibc-2.5-107.el5_9.4.s390x.rpm
+glibc-common-2.5-107.el5_9.4.s390x.rpm
+glibc-debuginfo-2.5-107.el5_9.4.s390.rpm
+glibc-debuginfo-2.5-107.el5_9.4.s390x.rpm
+glibc-devel-2.5-107.el5_9.4.s390.rpm
+glibc-devel-2.5-107.el5_9.4.s390x.rpm
+glibc-headers-2.5-107.el5_9.4.s390x.rpm
+glibc-utils-2.5-107.el5_9.4.s390x.rpm
+nscd-2.5-107.el5_9.4.s390x.rpm
+
+x86_64:
+glibc-2.5-107.el5_9.4.i686.rpm
+glibc-2.5-107.el5_9.4.x86_64.rpm
+glibc-common-2.5-107.el5_9.4.x86_64.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i386.rpm
+glibc-debuginfo-2.5-107.el5_9.4.i686.rpm
+glibc-debuginfo-2.5-107.el5_9.4.x86_64.rpm
+glibc-debuginfo-common-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.i386.rpm
+glibc-devel-2.5-107.el5_9.4.x86_64.rpm
+glibc-headers-2.5-107.el5_9.4.x86_64.rpm
+glibc-utils-2.5-107.el5_9.4.x86_64.rpm
+nscd-2.5-107.el5_9.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0242.html">https://www.redhat.com/security/data/cve/CVE-2013-0242.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1914.html">https://www.redhat.com/security/data/cve/CVE-2013-1914.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1207.html">https://rhn.redhat.com/errata/RHSA-2012-1207.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/solutions/229993">https://access.redhat.com/site/solutions/229993</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFReB3RXlSAg2UNWIIRAozdAKC3eJpjSPmb7XwK9WN7xPAq7FHFIgCfVbCd
+NfQDoIkDFsK56XVzHbj328k=
+=6KUp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

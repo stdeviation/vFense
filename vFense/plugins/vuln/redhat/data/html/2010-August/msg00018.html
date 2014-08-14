@@ -1,0 +1,297 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0631&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 17 Aug 2010 12:05:14 &#45;0400 -->
+<!--X-Message-Id: 201008171605.o7HG58e3023068@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0631-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0631-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0631-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Tue, 17 Aug 2010 10:05:08 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2010:0631-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0631.html">https://rhn.redhat.com/errata/RHSA-2010-0631.html</a>
+Issue date:        2010-08-17
+CVE Names:         CVE-2008-7256 CVE-2009-4138 CVE-2010-1083 
+                   CVE-2010-1084 CVE-2010-1086 CVE-2010-1087 
+                   CVE-2010-1088 CVE-2010-1162 CVE-2010-1173 
+                   CVE-2010-1437 CVE-2010-1643 CVE-2010-2240 
+                   CVE-2010-2248 CVE-2010-2521 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and several
+bugs are now available for Red Hat Enterprise MRG 1.2.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+These packages contain the Linux kernel, the core of any Linux operating
+system.
+
+Security fixes:
+
+* unsafe sprintf() use in the Bluetooth implementation. Creating a large
+number of Bluetooth L2CAP, SCO, or RFCOMM sockets could result in arbitrary
+memory pages being overwritten, allowing a local, unprivileged user to
+cause a denial of service or escalate their privileges. (CVE-2010-1084,
+Important)
+
+* a flaw in the Unidirectional Lightweight Encapsulation implementation,
+allowing a remote attacker to send a specially-crafted ISO MPEG-2 Transport
+Stream frame to a target system, resulting in a denial of service.
+(CVE-2010-1086, Important)
+
+* NULL pointer dereference in nfs_wb_page_cancel(), allowing a local user
+on a system that has an NFS-mounted file system to cause a denial of
+service or escalate their privileges on that system. (CVE-2010-1087,
+Important)
+
+* flaw in sctp_process_unk_param(), allowing a remote attacker to send a
+specially-crafted SCTP packet to an SCTP listening port on a target system,
+causing a denial of service. (CVE-2010-1173, Important)
+
+* race condition between finding a keyring by name and destroying a freed
+keyring in the key management facility, allowing a local, unprivileged
+user to cause a denial of service or escalate their privileges.
+(CVE-2010-1437, Important)
+
+* systems using the kernel NFS server to export a shared memory file system
+and that have the sysctl overcommit_memory variable set to never overcommit
+(a value of 2; by default, it is set to 0), may experience a NULL pointer
+dereference, allowing a local, unprivileged user to cause a denial of
+service or escalate their privileges. (CVE-2008-7256, CVE-2010-1643,
+Important)
+
+* when an application has a stack overflow, the stack could silently
+overwrite another memory mapped area instead of a segmentation fault
+occurring, which could lead to local privilege escalation on 64-bit
+systems. This issue is fixed with an implementation of a stack guard
+feature. (CVE-2010-2240, Important)
+
+* flaw in CIFSSMBWrite() could allow a remote attacker to send a
+specially-crafted SMB response packet to a target CIFS client, resulting in
+a denial of service. (CVE-2010-2248, Important)
+
+* buffer overflow flaws in the kernel's implementation of the server-side
+XDR for NFSv4 could allow an attacker on the local network to send a
+specially-crafted large compound request to the NFSv4 server, possibly
+resulting in a denial of service or code execution. (CVE-2010-2521,
+Important)
+
+* NULL pointer dereference in the firewire-ohci driver used for OHCI
+compliant IEEE 1394 controllers could allow a local, unprivileged user with
+access to /dev/fw* files to issue certain IOCTL calls, causing a denial of
+service or privilege escalation. The FireWire modules are blacklisted by
+default. If enabled, only root has access to the files noted above by
+default. (CVE-2009-4138, Moderate)
+
+* flaw in the link_path_walk() function. Using the file descriptor
+returned by open() with the O_NOFOLLOW flag on a subordinate NFS-mounted
+file system, could result in a NULL pointer dereference, causing a denial
+of service or privilege escalation. (CVE-2010-1088, Moderate)
+
+* memory leak in release_one_tty() could allow a local, unprivileged user
+to cause a denial of service. (CVE-2010-1162, Moderate)
+
+* information leak in the USB implementation. Certain USB errors could
+result in an uninitialized kernel buffer being sent to user-space. An
+attacker with physical access to a target system could use this flaw to
+cause an information leak. (CVE-2010-1083, Low)
+
+Red Hat would like to thank Neil Brown for reporting CVE-2010-1084; Ang Way
+Chuang for reporting CVE-2010-1086; Jukka Taimisto and Olli Jarva of
+Codenomicon Ltd, Nokia Siemens Networks, and Wind River on behalf of their
+customer, for responsibly reporting CVE-2010-1173; the X.Org security team
+for reporting CVE-2010-2240, with upstream acknowledging Rafal Wojtczuk as
+the original reporter; and Marcus Meissner for reporting CVE-2010-1083.
+
+4. Solution:
+
+Users should upgrade to these updated packages, which contain
+backported patches to correct these issues and fix the bugs noted in
+the Kernel Security Update document, linked to in the References. The
+system must be rebooted for this update to take effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+547236 - CVE-2009-4138 kernel: firewire: ohci: handle receive packets with a data length of zero
+555671 - MRG -146/-147 kernels have older broadcom drivers compared with RHEL5.4
+562075 - kernel: vfs: add MNT_NOFOLLOW flag to umount(2) [mrg-1]
+566624 - CVE-2010-1083 kernel: information leak via userspace USB interface
+567184 - CVE-2010-1087 kernel: NFS: Fix an Oops when truncating a file
+567813 - CVE-2010-1088 kernel: fix LOOKUP_FOLLOW on automount &quot;symlinks&quot;
+569237 - CVE-2010-1086 kernel: dvb-core: DoS bug in ULE decapsulation code
+576018 - CVE-2010-1084 kernel: bluetooth: potential bad memory access with sysfs files
+582076 - CVE-2010-1162 kernel: tty: release_one_tty() forgets to put pids
+584645 - CVE-2010-1173 kernel: sctp: crash due to malformed SCTPChunkInit packet
+585094 - CVE-2010-1437 kernel: keyrings: find_keyring_by_name() can gain the freed keyring
+594630 - kernel: security: testing the wrong variable in create_by_name() [mrg-1]
+595970 - CVE-2008-7256 CVE-2010-1643 kernel: nfsd: fix vm overcommit crash
+601210 - Fusion MPT misc device (ioctl) driver  too verbose in message/fusion/mptctl.c::mptctl_ioctl()
+606611 - CVE-2010-2240 kernel: mm: keep a guard page below a grow-down stack segment
+608583 - CVE-2010-2248 kernel: cifs: Fix a kernel BUG with remote OS/2 server
+612028 - CVE-2010-2521 kernel: nfsd4: bug in read_buf
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-161.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-161.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-161.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-161.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-161.el5rt.noarch.rpm
+kernel-rt-firmware-2.6.24.7-161.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-161.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-161.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-7256.html">https://www.redhat.com/security/data/cve/CVE-2008-7256.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4138.html">https://www.redhat.com/security/data/cve/CVE-2009-4138.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1083.html">https://www.redhat.com/security/data/cve/CVE-2010-1083.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1084.html">https://www.redhat.com/security/data/cve/CVE-2010-1084.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1086.html">https://www.redhat.com/security/data/cve/CVE-2010-1086.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1087.html">https://www.redhat.com/security/data/cve/CVE-2010-1087.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1088.html">https://www.redhat.com/security/data/cve/CVE-2010-1088.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1162.html">https://www.redhat.com/security/data/cve/CVE-2010-1162.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1173.html">https://www.redhat.com/security/data/cve/CVE-2010-1173.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1437.html">https://www.redhat.com/security/data/cve/CVE-2010-1437.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1643.html">https://www.redhat.com/security/data/cve/CVE-2010-1643.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2240.html">https://www.redhat.com/security/data/cve/CVE-2010-2240.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2248.html">https://www.redhat.com/security/data/cve/CVE-2010-2248.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2521.html">https://www.redhat.com/security/data/cve/CVE-2010-2521.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/errata/RHSA-2010-0631/Kernel_Security_Update/index.html">http://www.redhat.com/docs/en-US/errata/RHSA-2010-0631/Kernel_Security_Update/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-31052">https://access.redhat.com/kb/docs/DOC-31052</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMarMbXlSAg2UNWIIRAggfAKC0sYKQtjtDN+1Ejjuu2IUS8EMR/gCdGxFj
+Jkg8YiOC+2sBVv8FQuZDo+k=
+=w/rL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0301&#45;03] Low: ImageMagick security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 21 Feb 2012 00:01:47 &#45;0500 -->
+<!--X-Message-Id: 201202210501.q1L51e38012122@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0301-03] Low: ImageMagick security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0301-03] Low: ImageMagick security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0301-03] Low: ImageMagick security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 05:01:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: ImageMagick security and bug fix update
+Advisory ID:       RHSA-2012:0301-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0301.html">https://rhn.redhat.com/errata/RHSA-2012-0301.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2010-4167 
+=====================================================================
+
+1. Summary:
+
+Updated ImageMagick packages that fix one security issue and multiple bugs
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+ImageMagick is an image display and manipulation tool for the X Window
+System that can read and write multiple image formats.
+
+It was found that ImageMagick utilities tried to load ImageMagick
+configuration files from the current working directory. If a user ran an
+ImageMagick utility in an attacker-controlled directory containing a
+specially-crafted ImageMagick configuration file, it could cause the
+utility to execute arbitrary code. (CVE-2010-4167)
+
+This update also fixes the following bugs:
+
+* Previously, the &quot;identify -verbose&quot; command failed with an assertion if
+there was no image information available. An upstream patch has been
+applied, so that GetImageOption() is now called correctly. Now, the
+&quot;identify -verbose&quot; command works correctly even if no image information is
+available. (BZ#502626)
+
+* Previously, an incorrect use of the semaphore data type led to a
+deadlock. As a consequence, the ImageMagick utility could become
+unresponsive when converting JPEG files to PDF (Portable Document Format)
+files. A patch has been applied to address the deadlock issue, and JPEG
+files can now be properly converted to PDF files. (BZ#530592)
+
+* Previously, running the &quot;convert&quot; command with the &quot;-color&quot; option failed
+with a memory allocation error. The source code has been modified to fix
+problems with memory allocation. Now, using the &quot;convert&quot; command with the
+&quot;-color&quot; option works correctly. (BZ#616538)
+
+* Previously, ImageMagick could become unresponsive when using the
+&quot;display&quot; command on damaged GIF files. The source code has been revised to
+prevent the issue. ImageMagick now produces an error message in the
+described scenario. A file selector is now opened so the user can choose
+another image to display. (BZ#693989)
+
+* Prior to this update, the &quot;convert&quot; command did not handle rotated PDF
+files correctly. As a consequence, the output was rendered as a portrait
+with the content being cropped. With this update, the PDF render geometry
+is modified, and the output produced by the &quot;convert&quot; command is properly
+rendered as a landscape. (BZ#694922)
+
+All users of ImageMagick are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. All running
+instances of ImageMagick must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+580535 - Using &quot;-page&quot; option in ImageMagick's &quot;convert&quot; set bogus page size in PostScript
+652860 - CVE-2010-4167 ImageMagick: configuration files read from $CWD may allow arbitrary code execution
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm</a>
+
+i386:
+ImageMagick-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-perl-6.2.8.0-12.el5.i386.rpm
+
+x86_64:
+ImageMagick-6.2.8.0-12.el5.i386.rpm
+ImageMagick-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-c++-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-perl-6.2.8.0-12.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm</a>
+
+i386:
+ImageMagick-c++-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-devel-6.2.8.0-12.el5.i386.rpm
+
+x86_64:
+ImageMagick-c++-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-devel-6.2.8.0-12.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ImageMagick-6.2.8.0-12.el5.src.rpm</a>
+
+i386:
+ImageMagick-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-perl-6.2.8.0-12.el5.i386.rpm
+
+ia64:
+ImageMagick-6.2.8.0-12.el5.ia64.rpm
+ImageMagick-c++-6.2.8.0-12.el5.ia64.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.ia64.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.ia64.rpm
+ImageMagick-devel-6.2.8.0-12.el5.ia64.rpm
+ImageMagick-perl-6.2.8.0-12.el5.ia64.rpm
+
+ppc:
+ImageMagick-6.2.8.0-12.el5.ppc.rpm
+ImageMagick-6.2.8.0-12.el5.ppc64.rpm
+ImageMagick-c++-6.2.8.0-12.el5.ppc.rpm
+ImageMagick-c++-6.2.8.0-12.el5.ppc64.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.ppc.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.ppc64.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.ppc.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.ppc64.rpm
+ImageMagick-devel-6.2.8.0-12.el5.ppc.rpm
+ImageMagick-devel-6.2.8.0-12.el5.ppc64.rpm
+ImageMagick-perl-6.2.8.0-12.el5.ppc.rpm
+
+s390x:
+ImageMagick-6.2.8.0-12.el5.s390.rpm
+ImageMagick-6.2.8.0-12.el5.s390x.rpm
+ImageMagick-c++-6.2.8.0-12.el5.s390.rpm
+ImageMagick-c++-6.2.8.0-12.el5.s390x.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.s390.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.s390x.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.s390.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.s390x.rpm
+ImageMagick-devel-6.2.8.0-12.el5.s390.rpm
+ImageMagick-devel-6.2.8.0-12.el5.s390x.rpm
+ImageMagick-perl-6.2.8.0-12.el5.s390x.rpm
+
+x86_64:
+ImageMagick-6.2.8.0-12.el5.i386.rpm
+ImageMagick-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-c++-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-c++-devel-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.i386.rpm
+ImageMagick-debuginfo-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-devel-6.2.8.0-12.el5.i386.rpm
+ImageMagick-devel-6.2.8.0-12.el5.x86_64.rpm
+ImageMagick-perl-6.2.8.0-12.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4167.html">https://www.redhat.com/security/data/cve/CVE-2010-4167.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyUvXlSAg2UNWIIRAn6yAJ9m6aDVE39cwPtzbME8/CVZ32X1NwCfS8Ig
+EGMPF79JWJQMG+dJRLWFXS4=
+=QwXY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0671&#45;01] Moderate: openstack&#45;packstack security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Mar 2013 14:33:15 &#45;0400 -->
+<!--X-Message-Id: 201303211833.r2LIXEUu000913@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0671-01] Moderate: openstack-packstack security and bug	fix u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0671-01] Moderate: openstack-packstack security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0671-01] Moderate: openstack-packstack security and bug	fix update</li>
+<li><em>Date</em>: Thu, 21 Mar 2013 18:33:14 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-packstack security and bug fix update
+Advisory ID:       RHSA-2013:0671-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0671.html">https://rhn.redhat.com/errata/RHSA-2013-0671.html</a>
+Issue date:        2013-03-21
+CVE Names:         CVE-2013-1815 
+=====================================================================
+
+1. Summary:
+
+An updated openstack-packstack package that fixes one security issue and
+several bugs is now available for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+PackStack is a command line utility that uses Puppet modules to support
+rapid deployment of OpenStack on existing servers over an SSH connection.
+PackStack is suitable for deploying both single node proof of concept
+installations and more complex multi-node installations.
+
+It was found that PackStack did not handle the answer file securely. In
+some environments, such as those using a non-default umask, a local
+attacker could possibly modify the answer file if PackStack was run in an
+attacker controlled directory, or attempted to create the answer file in
+&quot;/tmp/&quot;, allowing the attacker to modify systems being deployed using
+OpenStack. Note: After applying this update, PackStack will create the
+answer file in the user's home directory by default. It will no longer
+create it in the current working directory or the &quot;/tmp/&quot; directory by
+default. (CVE-2013-1815)
+
+The CVE-2013-1815 issue was discovered by Derek Higgins of the Red Hat
+OpenStack team.
+
+This update also fixes several bugs in the openstack-packstack package.
+
+All users of openstack-packstack are advised to upgrade to this updated
+package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+865347 - RFE: Hypervisor installer should change host's IO scheduler to deadline for improved performance
+886603 - Openstack Installer: packstack should handle both IP addresses and hostnames for all parameters available in its answer file.
+888725 - packstack puppet recipes should set authtoken parameters in *.conf not paste.ini
+892247 - Provide --all-in-one parameter to Packstack
+893107 - Openstack-packstack:  The installation log file is available at &lt;/path&gt; - is empty, ( when not using '--debug=true') .
+894733 - packstack: keystonerc_admin file generation: assumes '/root' exists, stores keystonerc_admin file with too much permissions
+896618 - RFE: Use full/explanatory service names in user prompts.
+903502 - packstack munges my RHN password
+903545 - take /usr/share/*dist.conf into account when writing /etc/*conf
+903813 - Configure Horizon to use HTTPS by default.
+905081 - glance endpoint url contains version which brakes new-enough python-glanceclient
+905368 - Support for RHN Hosted and Satellite
+905842 - NTP configuration fails if ntpd service is running in the machine already
+908695 - openstack-packstack: Installation failed on iptables Command Error 'Resource temporarily unavailable'.
+908771 - Have consistent conventions for variables (passwords)
+908837 - RHEL version not supported. RHEL &gt;6.4 required is not true. True is RHEL &gt;= 6.4 is required.
+908838 - RHEL version not supported. RHEL &gt;6.4 required is not true. Reported when connection problem happened.
+908846 - answer file options values doesn't allow white-spaces
+908900 - CONFIG_SWIFT_STORAGE_HOSTS format handling is badly parsed
+910089 - Packstack doesn't make sure the private interface is up
+910210 - packstack needs to add option to subscribe to rh beta rpm's
+911626 - double first typo in answfile
+912006 - Openstack Installer: packstack error while trying to validate NTP server
+912702 - Remove symlink to qemu-kvm from qemu-system-x86_64 created for VM on VM installs
+912745 - INFO_KEYSTONERC hardcoded to /root/ location.
+912768 - Packstack needs to add nagios to monitor hosts
+915382 - Prompt for NTP should highlight way to provide list (comma separated)
+917904 - CVE-2013-1815 OpenStack packstack: answerfile creation permissions issue
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2012.2.3-0.1.dev454.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2012.2.3-0.1.dev454.el6ost.src.rpm</a>
+
+noarch:
+openstack-packstack-2012.2.3-0.1.dev454.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1815.html">https://www.redhat.com/security/data/cve/CVE-2013-1815.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRS1JZXlSAg2UNWIIRAh0DAJ9IE0vX11+D1fF6TyuQxFC6pe2TkACggEGV
+YCXGwwcuE4rXH/4RWlnNBLE=
+=rUZ2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

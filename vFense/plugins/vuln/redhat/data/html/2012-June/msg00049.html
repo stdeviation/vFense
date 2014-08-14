@@ -1,0 +1,172 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1028&#45;01] Important: JBoss Enterprise BRMS Platform 5.3.0	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jun 2012 21:29:43 &#45;0400 -->
+<!--X-Message-Id: 201206220129.q5M1TaXp008938@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1028-01] Important: JBoss Enterprise BRMS Platform 5.3.0	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1028-01] Important: JBoss Enterprise BRMS Platform 5.3.0	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1028-01] Important: JBoss Enterprise BRMS Platform 5.3.0	update</li>
+<li><em>Date</em>: Fri, 22 Jun 2012 01:29:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise BRMS Platform 5.3.0 update
+Advisory ID:       RHSA-2012:1028-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1028.html">https://rhn.redhat.com/errata/RHSA-2012-1028.html</a>
+Issue date:        2012-06-22
+CVE Names:         CVE-2011-4085 CVE-2011-4605 CVE-2012-2377 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise BRMS Platform 5.3.0, which fixes multiple security issues,
+various bugs, and adds enhancements is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise BRMS Platform is a business rules management system for
+the management, storage, creation, modification, and deployment of JBoss
+Rules. The Java Naming and Directory Interface (JNDI) Java API allows Java
+software clients to locate objects or services in an application server.
+
+This release of JBoss Enterprise BRMS Platform 5.3.0 serves as a
+replacement for JBoss Enterprise BRMS Platform 5.2.0. It includes various
+bug fixes and enhancements which are detailed in the JBoss Enterprise BRMS
+Platform 5.3.0 Release Notes. The Release Notes will be available shortly
+from <a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/index.html">https://docs.redhat.com/docs/en-US/index.html</a>
+
+The following security issues are also fixed with this release:
+
+It was found that the JBoss JNDI service allowed unauthenticated, remote
+write access by default. The JNDI and HA-JNDI services, and the
+HAJNDIFactory invoker servlet were all affected. A remote attacker able to
+access the JNDI service (port 1099), HA-JNDI service (port 1100), or the
+HAJNDIFactory invoker servlet on a JBoss server could use this flaw to add,
+delete, and modify items in the JNDI tree. This could have various,
+application-specific impacts. (CVE-2011-4605)
+
+It was found that the invoker servlets, deployed by default via
+httpha-invoker, only performed access control on the HTTP GET and POST
+methods, allowing remote attackers to make unauthenticated requests by
+using different HTTP methods. Due to the second layer of authentication
+provided by a security interceptor, this issue is not exploitable on
+default installations unless an administrator has misconfigured the
+security interceptor or disabled it. (CVE-2011-4085)
+
+When a JGroups channel is started, the JGroups diagnostics service would be
+enabled by default with no authentication. This service is exposed via IP
+multicast. An attacker on an adjacent network could exploit this flaw to
+read diagnostics information. (CVE-2012-2377)
+
+Red Hat would like to thank Christian Schlüter (VIADA) for reporting
+CVE-2011-4605.
+
+Warning: Before applying the update, back up your existing JBoss Enterprise
+BRMS Platform installation (including its databases, applications,
+configuration files, and so on).
+
+All users of JBoss Enterprise BRMS Platform 5.2.0 as provided from the Red
+Hat Customer Portal are advised to upgrade to JBoss Enterprise BRMS
+Platform 5.3.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise BRMS Platform installation (including its
+databases, applications, configuration files, and so on).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+750422 - CVE-2011-4085 Invoker servlets authentication bypass (HTTP verb tampering)
+766469 - CVE-2011-4605 JNDI: unauthenticated remote write access is permitted by default
+823392 - CVE-2012-2377 JGroups diagnostics service enabled by default with no authentication when a JGroups channel is started
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4085.html">https://www.redhat.com/security/data/cve/CVE-2011-4085.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4605.html">https://www.redhat.com/security/data/cve/CVE-2011-4605.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2377.html">https://www.redhat.com/security/data/cve/CVE-2012-2377.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/index.html">https://docs.redhat.com/docs/en-US/index.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP48ppXlSAg2UNWIIRAuvfAJkBEt7BGoBnd0xBiy8+LLUIEP1kmgCgoZ4P
+KdN4iIuXKzcJeDfIPCIULtw=
+=D4Vt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

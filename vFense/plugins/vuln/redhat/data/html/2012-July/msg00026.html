@@ -1,0 +1,231 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1116&#45;01] Moderate: perl&#45;DBD&#45;Pg security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 25 Jul 2012 13:02:58 &#45;0400 -->
+<!--X-Message-Id: 201207251702.q6PH2qNV010063@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1116-01] Moderate: perl-DBD-Pg security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1116-01] Moderate: perl-DBD-Pg security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1116-01] Moderate: perl-DBD-Pg security update</li>
+<li><em>Date</em>: Wed, 25 Jul 2012 17:02:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: perl-DBD-Pg security update
+Advisory ID:       RHSA-2012:1116-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1116.html">https://rhn.redhat.com/errata/RHSA-2012-1116.html</a>
+Issue date:        2012-07-25
+CVE Names:         CVE-2012-1151 
+=====================================================================
+
+1. Summary:
+
+An updated perl-DBD-Pg package that fixes two security issues is now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Perl DBI is a database access Application Programming Interface (API) for
+the Perl language. perl-DBD-Pg allows Perl applications to access
+PostgreSQL database servers.
+
+Two format string flaws were found in perl-DBD-Pg. A specially-crafted
+database warning or error message from a server could cause an application
+using perl-DBD-Pg to crash or, potentially, execute arbitrary code with the
+privileges of the user running the application. (CVE-2012-1151)
+
+All users of perl-DBD-Pg are advised to upgrade to this updated package,
+which contains a backported patch to fix these issues. Applications using
+perl-DBD-Pg must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+801733 - CVE-2012-1151 perl-DBD-Pg: Format string flaws by turning db notices into Perl warnings and by preparing DBD statement
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/perl-DBD-Pg-1.49-4.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/perl-DBD-Pg-1.49-4.el5_8.src.rpm</a>
+
+i386:
+perl-DBD-Pg-1.49-4.el5_8.i386.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.i386.rpm
+
+x86_64:
+perl-DBD-Pg-1.49-4.el5_8.x86_64.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/perl-DBD-Pg-1.49-4.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/perl-DBD-Pg-1.49-4.el5_8.src.rpm</a>
+
+i386:
+perl-DBD-Pg-1.49-4.el5_8.i386.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.i386.rpm
+
+ia64:
+perl-DBD-Pg-1.49-4.el5_8.ia64.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.ia64.rpm
+
+ppc:
+perl-DBD-Pg-1.49-4.el5_8.ppc.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.ppc.rpm
+
+s390x:
+perl-DBD-Pg-1.49-4.el5_8.s390x.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.s390x.rpm
+
+x86_64:
+perl-DBD-Pg-1.49-4.el5_8.x86_64.rpm
+perl-DBD-Pg-debuginfo-1.49-4.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm</a>
+
+x86_64:
+perl-DBD-Pg-2.15.1-4.el6_3.x86_64.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm</a>
+
+i386:
+perl-DBD-Pg-2.15.1-4.el6_3.i686.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.i686.rpm
+
+ppc64:
+perl-DBD-Pg-2.15.1-4.el6_3.ppc64.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.ppc64.rpm
+
+s390x:
+perl-DBD-Pg-2.15.1-4.el6_3.s390x.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.s390x.rpm
+
+x86_64:
+perl-DBD-Pg-2.15.1-4.el6_3.x86_64.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perl-DBD-Pg-2.15.1-4.el6_3.src.rpm</a>
+
+i386:
+perl-DBD-Pg-2.15.1-4.el6_3.i686.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.i686.rpm
+
+x86_64:
+perl-DBD-Pg-2.15.1-4.el6_3.x86_64.rpm
+perl-DBD-Pg-debuginfo-2.15.1-4.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1151.html">https://www.redhat.com/security/data/cve/CVE-2012-1151.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQECalXlSAg2UNWIIRAg5oAJ9Axt76xnJodfYOujBTqPjLjeOKeACglhKk
+xcNjSdCZiKspR58fJAdc7XU=
+=KmOi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

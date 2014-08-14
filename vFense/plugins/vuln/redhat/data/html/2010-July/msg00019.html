@@ -1,0 +1,179 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0564&#45;01] Important: jboss&#45;seam2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 Jul 2010 09:11:58 &#45;0400 -->
+<!--X-Message-Id: 201007271311.o6RDBqcr032546@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0564-01] Important: jboss-seam2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0564-01] Important: jboss-seam2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0564-01] Important: jboss-seam2 security update</li>
+<li><em>Date</em>: Tue, 27 Jul 2010 09:11:52 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jboss-seam2 security update
+Advisory ID:       RHSA-2010:0564-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0564.html">https://rhn.redhat.com/errata/RHSA-2010-0564.html</a>
+Issue date:        2010-07-27
+CVE Names:         CVE-2010-1871 
+=====================================================================
+
+1. Summary:
+
+Updated jboss-seam2 packages that fix one security issue are now available
+for JBoss Enterprise Application Platform 4.3 for Red Hat Enterprise Linux
+4 and 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 AS - noarch
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 ES - noarch
+JBoss Enterprise Application Platform 4.3.0 for RHEL 5 Server - noarch
+
+3. Description:
+
+The JBoss Seam Framework is an application framework for building web
+applications in Java.
+
+An input sanitization flaw was found in the way JBoss Seam processed
+certain parametrized JBoss Expression Language (EL) expressions. If a
+remote attacker could trick an authenticated JBoss Seam user into visiting
+a specially-crafted web page, it could lead to arbitrary code execution.
+(CVE-2010-1871)
+
+Red Hat would like to thank Meder Kydyraliev of the Google Security Team
+for responsibly reporting this issue.
+
+Users of jboss-seam2 should upgrade to these updated packages, which
+contain a backported patch to correct this issue. The JBoss server process
+must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+615956 - CVE-2010-1871 JBoss Seam / Seam2: Improper sanitization of parametrized JBoss EL expressions (ACE)
+
+6. Package List:
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 AS:
+
+Source:
+jboss-seam2-2.0.2.FP-1.ep1.24.el4.src.rpm
+
+noarch:
+jboss-seam2-2.0.2.FP-1.ep1.24.el4.noarch.rpm
+jboss-seam2-docs-2.0.2.FP-1.ep1.24.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 ES:
+
+Source:
+jboss-seam2-2.0.2.FP-1.ep1.24.el4.src.rpm
+
+noarch:
+jboss-seam2-2.0.2.FP-1.ep1.24.el4.noarch.rpm
+jboss-seam2-docs-2.0.2.FP-1.ep1.24.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 5 Server:
+
+Source:
+jboss-seam2-2.0.2.FP-1.ep1.24.el5.src.rpm
+
+noarch:
+jboss-seam2-2.0.2.FP-1.ep1.24.el5.noarch.rpm
+jboss-seam2-docs-2.0.2.FP-1.ep1.24.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1871.html">https://www.redhat.com/security/data/cve/CVE-2010-1871.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMTtrLXlSAg2UNWIIRAlYFAKCgAixBLGuI/k1w7c/VJN+iHfSrDQCfbKZq
+dr+FvyhSBfD5QAQY8xdHrMQ=
+=oEqH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

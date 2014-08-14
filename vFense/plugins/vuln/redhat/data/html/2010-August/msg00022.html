@@ -1,0 +1,170 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0613&#45;01] Moderate: Red Hat Enterprise Virtualization	Manager security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Aug 2010 18:13:07 &#45;0400 -->
+<!--X-Message-Id: 201008192213.o7JMD1it019080@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0613-01] Moderate: Red Hat Enterprise Virtualization	Manager </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0613-01] Moderate: Red Hat Enterprise Virtualization	Manager security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0613-01] Moderate: Red Hat Enterprise Virtualization	Manager security update</li>
+<li><em>Date</em>: Thu, 19 Aug 2010 16:13:01 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise Virtualization Manager security update
+Advisory ID:       RHSA-2010:0613-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0613.html">https://rhn.redhat.com/errata/RHSA-2010-0613.html</a>
+Issue date:        2010-08-19
+CVE Names:         CVE-2009-3552 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 2.2.2 is now available for Red
+Hat Enterprise Virtualization.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+It was found that the SSL certificate was not verified when using the
+client-side Red Hat Enterprise Virtualization Manager interface (a Windows
+Presentation Foundation (WPF) XAML browser application) to connect to the
+Red Hat Enterprise Virtualization Manager. An attacker on the local network
+could use this flaw to conduct a man-in-the-middle attack, tricking the
+user into thinking they are viewing the Red Hat Enterprise Virtualization
+Manager when the content is actually attacker-controlled, or modifying
+actions a user requested Red Hat Enterprise Virtualization Manager to
+perform. (CVE-2009-3552)
+
+Note: As part of the fix for CVE-2009-3552, this update changes the way the
+client-side Red Hat Enterprise Virtualization Manager interface
+communicates with the Red Hat Enterprise Virtualization Manager. After
+installing this update, the following steps must be performed when using
+HTTPS (that is, browsing to &quot;<a  rel="nofollow" href="https://localhost/RHEVmanager&quot">https://localhost/RHEVmanager&quot</a>; or using the
+new &quot;RHEVManager SSL&quot; shortcut):
+
+1) If you have previously browsed to the administrator portal using HTTP,
+you must remove the &quot;RHEVManager/&quot; cookie from Internet Explorer. After
+removing this cookie, restart Internet Explorer.
+
+2) Navigate to &quot;<a  rel="nofollow" href="https://localhost/RHEVmanager&quot">https://localhost/RHEVmanager&quot</a>;. You will be prompted to
+install the Red Hat Enterprise Virtualization Manager CA (Certificate
+Authority) certificate. Once installed, restart Internet Explorer.
+
+It is recommended that you use the &quot;<a  rel="nofollow" href="https://&quot">https://&quot</a>; link or the &quot;RHEVManager SSL&quot;
+shortcut to connect to the administrator portal, and no longer use the
+&quot;<a  rel="nofollow" href="http://&quot">http://&quot</a>; link.
+
+This updated Red Hat Enterprise Virtualization Manager package also fixes
+several bugs. Documentation for these bug fixes will be available shortly
+from
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Ser">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Ser</a>
+vers/2.2/html/Technical_Notes/index.html
+
+All Red Hat Enterprise Virtualization Manager users are advised to install
+this updated package, which corrects this issue and fixes the bugs noted
+in the Technical Notes document, linked to in the References.
+
+3. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+528890 - CVE-2009-3552 RHEV-M VDC - GUI: Man in the middle attack possible on the GUI to Backend SSL connection
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3552.html">https://www.redhat.com/security/data/cve/CVE-2009-3552.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMbawiXlSAg2UNWIIRAtREAKCxzXV5gAuoyYG6tWrzwFT/WW9lYQCgmHxz
+XVwuY/HfnBUYqlVbbpHJ9VU=
+=3n2Z
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

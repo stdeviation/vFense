@@ -1,0 +1,263 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0161&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Mar 2010 11:57:40 &#45;0400 -->
+<!--X-Message-Id: 201003231557.o2NFvYin001591@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0161-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0161-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0161-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Tue, 23 Mar 2010 11:57:34 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2010:0161-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0161.html">https://rhn.redhat.com/errata/RHSA-2010-0161.html</a>
+Issue date:        2010-03-23
+CVE Names:         CVE-2009-4141 CVE-2010-0003 CVE-2010-0007 
+                   CVE-2010-0291 CVE-2010-0410 CVE-2010-0415 
+                   CVE-2010-0437 CVE-2010-0622 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and several
+bugs are now available for Red Hat Enterprise MRG 1.2.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* a deficiency was found in the fasync_helper() implementation. This could
+allow a local, unprivileged user to leverage a use-after-free of locked,
+asynchronous file descriptors to cause a denial of service or privilege
+escalation. (CVE-2009-4141, Important)
+
+* multiple flaws were found in the mmap and mremap implementations. A
+local, unprivileged user could use these flaws to cause a local denial of
+service or escalate their privileges. (CVE-2010-0291, Important)
+
+* a missing boundary check was found in the do_move_pages() function in the
+memory migration functionality. A local user could use this flaw to cause a
+local denial of service or an information leak. (CVE-2010-0415, Important)
+
+* a NULL pointer dereference flaw was found in the ip6_dst_lookup_tail()
+function. An attacker on the local network could trigger this flaw by
+sending IPv6 traffic to a target system, leading to a system crash (kernel
+OOPS) if dst-&gt;neighbour is NULL on the target system when receiving an IPv6
+packet. (CVE-2010-0437, Important)
+
+* a NULL pointer dereference flaw was found in the Fast Userspace Mutexes
+(futexes) implementation. The unlock code path did not check if the futex
+value associated with pi_state-&gt;owner had been modified. A local user could
+use this flaw to modify the futex value, possibly leading to a denial of
+service or privilege escalation when the pi_state-&gt;owner pointer is
+dereferenced. (CVE-2010-0622, Important)
+
+* an information leak was found in the print_fatal_signal() implementation.
+When &quot;/proc/sys/kernel/print-fatal-signals&quot; is set to 1 (the default value
+is 0), memory that is reachable by the kernel could be leaked to
+user-space. This issue could also result in a system crash. Note that this
+flaw only affected the i386 architecture. (CVE-2010-0003, Moderate)
+
+* a flaw was found in the kernel connector implementation. A local,
+unprivileged user could trigger this flaw by sending an arbitrary amount of
+notification requests using specially-crafted netlink messages, resulting
+in a denial of service. (CVE-2010-0410, Moderate)
+
+* missing capability checks were found in the ebtables implementation, used
+for creating an Ethernet bridge firewall. This could allow a local,
+unprivileged user to bypass intended capability restrictions and modify
+ebtables rules. (CVE-2010-0007, Low)
+
+This update also fixes the following bugs:
+
+* references were missing for two LSI MegaRAID SAS controllers already
+supported by the kernel, preventing systems using these controllers from
+booting. (BZ#554664)
+
+* a typo in the fix for CVE-2009-2691 resulted in gdb being unable to read
+core files created by gcore. (BZ#554965) 
+
+* values for certain pointers used by the kernel, which should be
+undereferencable, could potentially be abused when a kernel OOPS occurs.
+Values that are harder to dereference are now used. (BZ#555227)
+
+* this update redesigns the locking scheme of the TTY process group
+(tty-&gt;pgrp) structure, due to race conditions introduced when tty-&gt;pgrp
+started using struct pid instead of pid_t. (BZ#559101)
+
+* the way the NFS kernel server used iget() and the way in which it kept
+its cache of inode information, could have led to (mainly on busy file
+servers) inconsistencies between the local file system and the file system
+being served to clients. (BZ#561275)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+547906 - CVE-2009-4141 kernel: create_elf_tables can leave urandom in a bad state
+554578 - CVE-2010-0003 kernel: infoleak if print-fatal-signals=1
+554664 - MRG current has a very old megaraid_sas driver
+554965 - gcore tool produces unusable corefile with MRG kernel
+555238 - CVE-2010-0007 kernel: netfilter: ebtables: enforce CAP_NET_ADMIN
+556703 - CVE-2010-0291 kernel: untangle the do_mremap()
+561275 - kernel: serious ugliness in iget() uses by nfsd [mrg-1]
+561682 - CVE-2010-0410 kernel: OOM/crash in drivers/connector
+562582 - CVE-2010-0415 kernel: sys_move_pages infoleak
+563091 - CVE-2010-0622 kernel: futex: Handle user space corruption gracefully
+563781 - CVE-2010-0437 kernel: ipv6: fix ip6_dst_lookup_tail() NULL pointer dereference
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-149.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-149.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-149.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-149.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-149.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-149.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-149.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4141.html">https://www.redhat.com/security/data/cve/CVE-2009-4141.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0003.html">https://www.redhat.com/security/data/cve/CVE-2010-0003.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0007.html">https://www.redhat.com/security/data/cve/CVE-2010-0007.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0291.html">https://www.redhat.com/security/data/cve/CVE-2010-0291.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0410.html">https://www.redhat.com/security/data/cve/CVE-2010-0410.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0415.html">https://www.redhat.com/security/data/cve/CVE-2010-0415.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0437.html">https://www.redhat.com/security/data/cve/CVE-2010-0437.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0622.html">https://www.redhat.com/security/data/cve/CVE-2010-0622.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLqOTAXlSAg2UNWIIRAqEnAJ9PcReXgHmM9+pdfygigHVGsggt8gCfdSbS
+RjCs09nuCAhBEYXbEidE+/s=
+=opcK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

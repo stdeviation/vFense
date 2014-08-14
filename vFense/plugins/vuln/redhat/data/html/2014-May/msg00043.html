@@ -1,0 +1,230 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0578&#45;01] Moderate: openstack&#45;nova security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 May 2014 17:20:51 &#45;0400 -->
+<!--X-Message-Id: 201405292120.s4TLKoDj005106@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0578-01] Moderate: openstack-nova security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0578-01] Moderate: openstack-nova security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0578-01] Moderate: openstack-nova security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 29 May 2014 21:20:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-nova security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0578-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0578.html">https://rhn.redhat.com/errata/RHSA-2014-0578.html</a>
+Issue date:        2014-05-29
+CVE Names:         CVE-2014-0134 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix one security issue, several bugs,
+and add one enhancement are now available for Red Hat Enterprise Linux
+OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+OpenStack Compute (nova) launches and schedules large networks of virtual
+machines, creating a redundant and scalable cloud computing platform.
+Compute provides the software, control panels, and APIs required to
+orchestrate a cloud, including running virtual machine instances, managing
+networks, and controlling access through users and projects.
+
+It was found that overwriting the disk inside of an instance with a
+malicious image, and then switching the instance to rescue mode, could
+potentially allow an authenticated user to access arbitrary files on the
+compute host depending on the file permissions and SELinux constraints of
+those files. Only setups that used libvirt to spawn instances and which had
+the use of cow images disabled (&quot;use_cow_images = False&quot; in nova
+configuration) were affected. (CVE-2014-0134)
+
+Red Hat would like to thank the OpenStack Project for reporting this issue.
+Upstream acknowledges Stanislaw Pitucha from Hewlett Packard as the
+original reporter.
+
+Bug fixes:
+
+* The Compute libguestfs did not perform tear down correctly in certain
+cases, such as when attempting to perform SSH key injection when no SSH
+keys were specified. As a result, libguestfs qemu instances would remain
+running, even after the Compute instance with which they were associated
+was destroyed. This has been fixed and now tear down of libguestfs occurs
+correctly. (BZ#1022627)
+
+* Qpid's driver reconnection delay is not configurable. This and the fact
+that the hard-coded delay was quite high became a blocker issue from an HA
+perspective. Making this value configurable is not possible for this
+version, so the hard-coded delay was changed. The new delay cap is 5
+seconds. (BZ#1060772)
+
+* Nova was creating a temporary VMware snapshot during a nova snapshot, but
+not deleting it on completion. Thus VMware guests could end up with a large
+number of unnecessary snapshots. The temporary VMware snapshot is now
+deleted on completion of the nova snapshot operation. (BZ#1069429)
+
+* The Nova vmware driver was not passing the iscsi server location to the
+instance, hence it was not possible to add a cinder iscsi disk to a VMware
+instance. The nova vmware driver now correctly passes the iscsi server
+location to the instance and it is possible to add a cinder iscsi disk to a
+VMware instance. (BZ#1069432)
+
+* The nova VMware driver was assigning VNC ports in a way which could cause
+collisions between guests. There was a small chance that 2 instances could
+be created with the same VNC port. If both instances ran on the same ESX
+host, only one of their consoles would be available. However, that console
+would be presented when requested for both instances. This has been fixed
+so that the nova VMware driver now allocates VNC ports which are unique to
+a vcenter, and a user of one instance will not be presented with the
+console of another. (BZ#1077017)
+
+Enhancement:
+
+* When troubleshooting production systems it is desirable to be able to
+trace all data base queries, web REST calls, messaging service RPC calls,
+and libvirt API calls associated with invocation of a user command or
+background job. Hence, the ability has been added to obtain a debug dump of
+the system state for an OpenStack service based process. For example, upon
+sending SIGUSR1, a dump of all native threads, green threads, live
+configuration, and any other relevant info is triggered. (BZ#1071469)
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which correct these issues and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1022627 - stale qemu processes left running in nova due to incorrect libguestfs cleanup
+1060772 - nova qpid reconnection delay must be more accurate
+1069429 - VMware: delete vm snapshot after nova snapshot
+1069432 - VMware: iscsi target discovery fails while attaching volumes
+1071469 - [RFE][nova]: Provide for a live debug dump of system state
+1077017 - VMware: fix the VNC port allocation
+1078002 - CVE-2014-0134 openstack-nova: Nova host data leak to vm instance in rescue mode
+1081001 - Need to allow disabling of bandwidth polling periodic task
+1085005 - openstack-nova: several instances are able to be configure the same bootable volume
+1089070 - Depend on sufficiently new version of libvirt
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.2.3-7.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.2.3-7.el6ost.src.rpm</a>
+
+noarch:
+openstack-nova-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-api-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-cells-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-cert-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-common-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-compute-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-conductor-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-console-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-doc-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-network-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-novncproxy-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-objectstore-2013.2.3-7.el6ost.noarch.rpm
+openstack-nova-scheduler-2013.2.3-7.el6ost.noarch.rpm
+python-nova-2013.2.3-7.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0134.html">https://www.redhat.com/security/data/cve/CVE-2014-0134.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTh6RLXlSAg2UNWIIRAm4nAJ9b4HvQQXmtoemEQSSG5fuFdELeJgCeP8es
+t+L8ZpyOpnqSsAIGpqXpfs4=
+=nfdv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

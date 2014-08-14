@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0233&#45;01] Important: openstack&#45;packstack security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Mar 2014 14:34:28 &#45;0500 -->
+<!--X-Message-Id: 201403041934.s24JYPUk009700@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0233-01] Important: openstack-packstack security and bug	fix </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0233-01] Important: openstack-packstack security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0233-01] Important: openstack-packstack security and bug	fix update</li>
+<li><em>Date</em>: Tue, 4 Mar 2014 19:34:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-packstack security and bug fix update
+Advisory ID:       RHSA-2014:0233-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0233.html">https://rhn.redhat.com/errata/RHSA-2014-0233.html</a>
+Issue date:        2014-03-04
+CVE Names:         CVE-2014-0071 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-packstack packages that fix one security issue and
+multiple bugs are now available for Red Hat Enterprise Linux OpenStack
+Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 4 - noarch
+
+3. Description:
+
+PackStack is a command-line utility that uses Puppet modules to support
+rapid deployment of OpenStack on existing servers over an SSH connection.
+PackStack is suitable for deploying both single node proof-of-concept
+installations and more complex multi-node installations.
+
+It was found that PackStack did not correctly install the rules defined in
+the default security groups when deployed on OpenStack Networking
+(neutron), allowing network connections to be made to systems that should
+not have been accessible. (CVE-2014-0071)
+
+This update also fixes the following bugs:
+
+* Previously, swift's object versioning was disabled by default. With this
+update, this feature is now enabled in the default configuration file
+('allow_versions &quot;true&quot;' in /etc/swift/container-server.conf). (BZ#967308)
+
+* Previously, it was not possible to run neutron with Open vSwitch using
+Virtual Extensible LAN (VXLAN). This update adds support for VXLAN in
+neutron. (BZ#1021778)
+
+* PackStack failed to complete the deployment of OpenStack due to the
+MongoDB service (mongod) being terminated by systemd. This was because
+mongod, when first started, exceeded the timeout value set by systemd.
+With this update, mongod uses small files when it is initially started, and
+no longer exceeds systemd's timeout value. (BZ#1036207)
+
+* Previously, services for OpenStack Compute and other OpenStack components
+ran in debug mode by default. With this update, the CONFIG_DEBUG_MODE
+configuration parameter has been added. When this parameter is set to 'y',
+all OpenStack services will run in debug mode. By default, debug mode is
+disabled. (BZ#1048041)
+
+Note: Currently, PackStack does not support deployment of the ML2 Neutron
+plug-in. The ML2 plug-in can be used in manual configurations, or by
+deploying initially with the Open vSwitch plug-in using PackStack and
+converting the installation to use ML2. This method is described at
+<a  rel="nofollow" href="http://openstack.redhat.com/Modular_Layer_2_%28ML2%29_Plugin">http://openstack.redhat.com/Modular_Layer_2_%28ML2%29_Plugin</a>. The progress
+on fixing this bug can be followed in Red Hat Bugzilla bug 1017144.
+
+All openstack-packstack users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+967308 - allow swift object versioning by default
+1021778 - Packstack should support VXLAN
+1029671 - Keystone SQL Backend does not remove expired tokens
+1034538 - Packstack puppet module firewall for Quickstack: newer version needed to support resilient iptables rules
+1036207 - packstack requires 2 runs to install ceilometer
+1042529 - Change qpid puppet module default for max_connections to be UINT16_MAX
+1048041 - openstack-packstack install defaults to debug=true in nova
+1048705 - packstack fails when qpid ssl enabled
+1054498 - Horizon SSL is disabled by Nagios configuration via packstack
+1064163 - CVE-2014-0071 OpenStack PackStack: Neutron Security Groups fail to block network traffic
+1069215 - Packstack failed to configure Neutron to work with OVS and GRE
+
+6. Package List:
+
+OpenStack 4:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2013.2.1-0.25.dev987.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2013.2.1-0.25.dev987.el6ost.src.rpm</a>
+
+noarch:
+openstack-packstack-2013.2.1-0.25.dev987.el6ost.noarch.rpm
+packstack-modules-puppet-2013.2.1-0.25.dev987.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0071.html">https://www.redhat.com/security/data/cve/CVE-2014-0071.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTFiqfXlSAg2UNWIIRAuFNAJ9HB0xj64h4YV34bi+ZG4PSuomFKACgj6+r
+gREcy3YDyn24JfOxuMzzXpQ=
+=QDun
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

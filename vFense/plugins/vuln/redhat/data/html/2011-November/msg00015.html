@@ -1,0 +1,447 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1458&#45;01] Important: bind security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 17 Nov 2011 14:52:56 &#45;0500 -->
+<!--X-Message-Id: 201111171952.pAHJqoB3019641@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1458-01] Important: bind security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1458-01] Important: bind security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1458-01] Important: bind security update</li>
+<li><em>Date</em>: Thu, 17 Nov 2011 19:52:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bind security update
+Advisory ID:       RHSA-2011:1458-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1458.html">https://rhn.redhat.com/errata/RHSA-2011-1458.html</a>
+Issue date:        2011-11-17
+CVE Names:         CVE-2011-4313 
+=====================================================================
+
+1. Summary:
+
+Updated bind packages that fix one security issue are now available for Red
+Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+A flaw was discovered in the way BIND handled certain DNS queries, which
+caused it to cache an invalid record. A remote attacker could use this
+flaw to send repeated queries for this invalid record, causing the
+resolvers to exit unexpectedly due to a failed assertion. (CVE-2011-4313)
+
+Users of bind are advised to upgrade to these updated packages, which
+resolve this issue. After installing the update, the BIND daemon (named)
+will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+754398 - CVE-2011-4313 bind: Remote denial of service against recursive servers via logging negative cache entry
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm</a>
+
+i386:
+bind-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.i386.rpm
+
+x86_64:
+bind-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm</a>
+
+i386:
+bind-chroot-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.i386.rpm
+
+x86_64:
+bind-chroot-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.x86_64.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.6-16.P1.el5_7.1.src.rpm</a>
+
+i386:
+bind-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-chroot-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.i386.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.i386.rpm
+
+ia64:
+bind-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-chroot-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.ia64.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.ia64.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.ia64.rpm
+
+ppc:
+bind-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-chroot-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.ppc64.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.ppc64.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.ppc64.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.ppc64.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.ppc.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.ppc.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.ppc.rpm
+
+s390x:
+bind-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-chroot-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.s390.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.s390.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.s390.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.s390.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.s390x.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.s390x.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.s390x.rpm
+
+x86_64:
+bind-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-chroot-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-debuginfo-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-devel-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libbind-devel-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.i386.rpm
+bind-libs-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-sdb-9.3.6-16.P1.el5_7.1.x86_64.rpm
+bind-utils-9.3.6-16.P1.el5_7.1.x86_64.rpm
+caching-nameserver-9.3.6-16.P1.el5_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.i686.rpm
+
+x86_64:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.i686.rpm
+
+x86_64:
+bind-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+x86_64:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+x86_64:
+bind-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.i686.rpm
+
+ppc64:
+bind-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.ppc.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.ppc.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.ppc64.rpm
+
+s390x:
+bind-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.s390.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.s390.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.s390x.rpm
+
+x86_64:
+bind-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.i686.rpm
+
+ppc64:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.ppc.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.ppc.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.ppc64.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.ppc64.rpm
+
+s390x:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.s390.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.s390.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.s390x.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.s390x.rpm
+
+x86_64:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.i686.rpm
+
+x86_64:
+bind-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-chroot-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-libs-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-utils-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-9.7.3-2.el6_1.P3.3.src.rpm</a>
+
+i386:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.i686.rpm
+
+x86_64:
+bind-debuginfo-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-debuginfo-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.i686.rpm
+bind-devel-9.7.3-2.el6_1.P3.3.x86_64.rpm
+bind-sdb-9.7.3-2.el6_1.P3.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4313.html">https://www.redhat.com/security/data/cve/CVE-2011-4313.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://www.isc.org/software/bind/advisories/cve-2011-4313">https://www.isc.org/software/bind/advisories/cve-2011-4313</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOxWXzXlSAg2UNWIIRAiYpAKCNJW09yqXmjh+8LIUX3pkbnVQjTwCfT/A/
+q6QAq2j+rJ97Om7DRvwA3ys=
+=bKEk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

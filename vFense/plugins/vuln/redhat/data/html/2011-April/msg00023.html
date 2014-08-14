@@ -1,0 +1,277 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0464&#45;01] Moderate: kdelibs security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Apr 2011 13:02:56 &#45;0400 -->
+<!--X-Message-Id: 201104211702.p3LH2oEM016404@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0464-01] Moderate: kdelibs security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0464-01] Moderate: kdelibs security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0464-01] Moderate: kdelibs security update</li>
+<li><em>Date</em>: Thu, 21 Apr 2011 13:02:50 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kdelibs security update
+Advisory ID:       RHSA-2011:0464-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0464.html">https://rhn.redhat.com/errata/RHSA-2011-0464.html</a>
+Issue date:        2011-04-21
+CVE Names:         CVE-2011-1094 CVE-2011-1168 
+=====================================================================
+
+1. Summary:
+
+Updated kdelibs packages that fix two security issues are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The kdelibs packages provide libraries for the K Desktop Environment (KDE).
+
+A cross-site scripting (XSS) flaw was found in the way KHTML, the HTML
+layout engine used by KDE applications such as the Konqueror web browser,
+displayed certain error pages. A remote attacker could use this flaw to
+perform a cross-site scripting attack against victims by tricking them into
+visiting a specially-crafted URL. (CVE-2011-1168)
+
+A flaw was found in the way kdelibs checked the user specified hostname
+against the name in the server's SSL certificate. A man-in-the-middle
+attacker could use this flaw to trick an application using kdelibs into
+mistakenly accepting a certificate as if it was valid for the host, if that
+certificate was issued for an IP address to which the user specified
+hostname was resolved to. (CVE-2011-1094)
+
+Note: As part of the fix for CVE-2011-1094, this update also introduces
+stricter handling for wildcards used in servers' SSL certificates.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The desktop must be restarted (log out,
+then log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+632114 - CVE-2011-1094 kdelibs: SSL certificate for IP address accepted as valid for hosts that resolve to the IP
+695398 - CVE-2011-1168 kdelibs: partially universal XSS in Konqueror error pages
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm</a>
+
+i386:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-common-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+
+x86_64:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-common-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm</a>
+
+i386:
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+
+noarch:
+kdelibs-apidocs-4.3.4-11.el6_0.2.noarch.rpm
+
+x86_64:
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm</a>
+
+noarch:
+kdelibs-apidocs-4.3.4-11.el6_0.2.noarch.rpm
+
+x86_64:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-common-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm</a>
+
+i386:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-common-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+
+noarch:
+kdelibs-apidocs-4.3.4-11.el6_0.2.noarch.rpm
+
+ppc64:
+kdelibs-4.3.4-11.el6_0.2.ppc.rpm
+kdelibs-4.3.4-11.el6_0.2.ppc64.rpm
+kdelibs-common-4.3.4-11.el6_0.2.ppc64.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.ppc.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.ppc64.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.ppc.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.ppc64.rpm
+
+s390x:
+kdelibs-4.3.4-11.el6_0.2.s390.rpm
+kdelibs-4.3.4-11.el6_0.2.s390x.rpm
+kdelibs-common-4.3.4-11.el6_0.2.s390x.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.s390.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.s390x.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.s390.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.s390x.rpm
+
+x86_64:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-common-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kdelibs-4.3.4-11.el6_0.2.src.rpm</a>
+
+i386:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-common-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+
+noarch:
+kdelibs-apidocs-4.3.4-11.el6_0.2.noarch.rpm
+
+x86_64:
+kdelibs-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-common-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-debuginfo-4.3.4-11.el6_0.2.x86_64.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.i686.rpm
+kdelibs-devel-4.3.4-11.el6_0.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1094.html">https://www.redhat.com/security/data/cve/CVE-2011-1094.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1168.html">https://www.redhat.com/security/data/cve/CVE-2011-1168.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &amp;lt;secalert redhat com&amp;gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNsGMJXlSAg2UNWIIRAqRnAKCK+XCUdZEiMLrtrj8iKjv2jeLxAgCgh0Ud
+EJVwX7KtmkvXF3kXHSHeeho=
+=IesW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

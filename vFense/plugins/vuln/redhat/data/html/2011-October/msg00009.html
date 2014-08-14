@@ -1,0 +1,303 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1378&#45;01] Moderate: postgresql84 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 17 Oct 2011 18:01:37 &#45;0400 -->
+<!--X-Message-Id: 201110172201.p9HM1Vko015688@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1378-01] Moderate: postgresql84 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1378-01] Moderate: postgresql84 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1378-01] Moderate: postgresql84 security update</li>
+<li><em>Date</em>: Mon, 17 Oct 2011 22:01:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: postgresql84 security update
+Advisory ID:       RHSA-2011:1378-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1378.html">https://rhn.redhat.com/errata/RHSA-2011-1378.html</a>
+Issue date:        2011-10-17
+CVE Names:         CVE-2011-2483 
+=====================================================================
+
+1. Summary:
+
+Updated postgresql84 packages that fix one security issue are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+PostgreSQL is an advanced object-relational database management system
+(DBMS).
+
+A signedness issue was found in the way the crypt() function in the
+PostgreSQL pgcrypto module handled 8-bit characters in passwords when using
+Blowfish hashing. Up to three characters immediately preceding a non-ASCII
+character (one with the high bit set) had no effect on the hash result,
+thus shortening the effective password length. This made brute-force
+guessing more efficient as several different passwords were hashed to the
+same value. (CVE-2011-2483)
+
+Note: Due to the CVE-2011-2483 fix, after installing this update some users
+may not be able to log in to applications that store user passwords, hashed
+with Blowfish using the PostgreSQL crypt() function, in a back-end
+PostgreSQL database. Unsafe processing can be re-enabled for specific
+passwords (allowing affected users to log in) by changing their hash prefix
+to &quot;$2x$&quot;.
+
+These updated postgresql84 packages upgrade PostgreSQL to version 8.4.9.
+Refer to the PostgreSQL Release Notes for a full list of changes:
+
+<a  rel="nofollow" href="http://www.postgresql.org/docs/8.4/static/release.html">http://www.postgresql.org/docs/8.4/static/release.html</a>
+
+All PostgreSQL users are advised to upgrade to these updated packages,
+which correct this issue. If the postgresql service is running, it will be
+automatically restarted after installing this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+715025 - CVE-2011-2483 crypt_blowfish: 8-bit character mishandling allows different password pairs to produce the same hash
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm</a>
+
+i386:
+postgresql84-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-python-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.i386.rpm
+
+x86_64:
+postgresql84-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-python-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm</a>
+
+i386:
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-server-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-test-8.4.9-1.el5_7.1.i386.rpm
+
+x86_64:
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-server-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-test-8.4.9-1.el5_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql84-8.4.9-1.el5_7.1.src.rpm</a>
+
+i386:
+postgresql84-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-python-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-server-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-test-8.4.9-1.el5_7.1.i386.rpm
+
+ia64:
+postgresql84-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-python-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-server-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.ia64.rpm
+postgresql84-test-8.4.9-1.el5_7.1.ia64.rpm
+
+ppc:
+postgresql84-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-8.4.9-1.el5_7.1.ppc64.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.ppc64.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.ppc64.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.ppc64.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-python-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-server-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.ppc.rpm
+postgresql84-test-8.4.9-1.el5_7.1.ppc.rpm
+
+s390x:
+postgresql84-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.s390.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.s390.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.s390.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-python-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-server-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.s390x.rpm
+postgresql84-test-8.4.9-1.el5_7.1.s390x.rpm
+
+x86_64:
+postgresql84-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-contrib-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-debuginfo-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-devel-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-docs-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.i386.rpm
+postgresql84-libs-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-plperl-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-plpython-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-pltcl-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-python-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-server-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-tcl-8.4.9-1.el5_7.1.x86_64.rpm
+postgresql84-test-8.4.9-1.el5_7.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2483.html">https://www.redhat.com/security/data/cve/CVE-2011-2483.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.postgresql.org/docs/8.4/static/release.html">http://www.postgresql.org/docs/8.4/static/release.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOnKWqXlSAg2UNWIIRAgpHAKCcGVVvUt0E7lIs9y8ItcT2IhZ25QCfXSMk
+fcTb/Ih6EZT/agl3cysEJeo=
+=sSd3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

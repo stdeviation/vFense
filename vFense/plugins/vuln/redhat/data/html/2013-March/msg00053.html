@@ -1,0 +1,311 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0656&#45;01] Moderate: krb5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 18 Mar 2013 14:09:22 &#45;0400 -->
+<!--X-Message-Id: 201303181809.r2II9LwA003510@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0656-01] Moderate: krb5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0656-01] Moderate: krb5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0656-01] Moderate: krb5 security update</li>
+<li><em>Date</em>: Mon, 18 Mar 2013 18:09:21 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: krb5 security update
+Advisory ID:       RHSA-2013:0656-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0656.html">https://rhn.redhat.com/errata/RHSA-2013-0656.html</a>
+Issue date:        2013-03-18
+CVE Names:         CVE-2012-1016 CVE-2013-1415 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix two security issues are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Kerberos is a network authentication system which allows clients and
+servers to authenticate to each other using symmetric encryption and a
+trusted third-party, the Key Distribution Center (KDC).
+
+When a client attempts to use PKINIT to obtain credentials from the KDC,
+the client can specify, using an issuer and serial number, which of the
+KDC's possibly-many certificates the client has in its possession, as a
+hint to the KDC that it should use the corresponding key to sign its
+response. If that specification was malformed, the KDC could attempt to
+dereference a NULL pointer and crash. (CVE-2013-1415)
+
+When a client attempts to use PKINIT to obtain credentials from the KDC,
+the client will typically format its request to conform to the
+specification published in RFC 4556. For interoperability reasons, clients
+and servers also provide support for an older, draft version of that
+specification. If a client formatted its request to conform to this older
+version of the specification, with a non-default key agreement option, it
+could cause the KDC to attempt to dereference a NULL pointer and crash.
+(CVE-2012-1016)
+
+All krb5 users should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, the krb5kdc daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+914749 - CVE-2013-1415 krb5: PKINIT null pointer deref leads to DoS  (pkinit_check_kdc_pkid())
+917840 - CVE-2012-1016 krb5: PKINIT null pointer deref leads to DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.i686.rpm
+krb5-workstation-1.10.3-10.el6_4.1.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-workstation-1.10.3-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-workstation-1.10.3-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-workstation-1.10.3-10.el6_4.1.i686.rpm
+
+ppc64:
+krb5-debuginfo-1.10.3-10.el6_4.1.ppc.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-devel-1.10.3-10.el6_4.1.ppc.rpm
+krb5-devel-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-libs-1.10.3-10.el6_4.1.ppc.rpm
+krb5-libs-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-server-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.ppc.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.ppc64.rpm
+krb5-workstation-1.10.3-10.el6_4.1.ppc64.rpm
+
+s390x:
+krb5-debuginfo-1.10.3-10.el6_4.1.s390.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.s390x.rpm
+krb5-devel-1.10.3-10.el6_4.1.s390.rpm
+krb5-devel-1.10.3-10.el6_4.1.s390x.rpm
+krb5-libs-1.10.3-10.el6_4.1.s390.rpm
+krb5-libs-1.10.3-10.el6_4.1.s390x.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.s390x.rpm
+krb5-server-1.10.3-10.el6_4.1.s390x.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.s390.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.s390x.rpm
+krb5-workstation-1.10.3-10.el6_4.1.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-workstation-1.10.3-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/krb5-1.10.3-10.el6_4.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-workstation-1.10.3-10.el6_4.1.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-10.el6_4.1.i686.rpm
+krb5-debuginfo-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-devel-1.10.3-10.el6_4.1.i686.rpm
+krb5-devel-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-libs-1.10.3-10.el6_4.1.i686.rpm
+krb5-libs-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.i686.rpm
+krb5-server-ldap-1.10.3-10.el6_4.1.x86_64.rpm
+krb5-workstation-1.10.3-10.el6_4.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1016.html">https://www.redhat.com/security/data/cve/CVE-2012-1016.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1415.html">https://www.redhat.com/security/data/cve/CVE-2013-1415.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://tools.ietf.org/html/rfc4556">http://tools.ietf.org/html/rfc4556</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRR1g9XlSAg2UNWIIRAibEAKCEYZ5I/HIGOCUzaUjggFJJJHJcDQCfWEc4
+klXheDQWzN0lGXWDN8o7g5E=
+=+g6V
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

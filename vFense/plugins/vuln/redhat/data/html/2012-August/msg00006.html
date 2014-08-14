@@ -1,0 +1,221 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1149&#45;01] Moderate: sudo security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Aug 2012 14:25:31 &#45;0400 -->
+<!--X-Message-Id: 201208071825.q77IPQU2029316@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1149-01] Moderate: sudo security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1149-01] Moderate: sudo security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1149-01] Moderate: sudo security and bug fix update</li>
+<li><em>Date</em>: Tue, 7 Aug 2012 18:25:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: sudo security and bug fix update
+Advisory ID:       RHSA-2012:1149-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1149.html">https://rhn.redhat.com/errata/RHSA-2012-1149.html</a>
+Issue date:        2012-08-07
+CVE Names:         CVE-2012-3440 
+=====================================================================
+
+1. Summary:
+
+An updated sudo package that fixes one security issue and several bugs is
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The sudo (superuser do) utility allows system administrators to give
+certain users the ability to run commands as root.
+
+An insecure temporary file use flaw was found in the sudo package's
+post-uninstall script. A local attacker could possibly use this flaw to
+overwrite an arbitrary file via a symbolic link attack, or modify the
+contents of the &quot;/etc/nsswitch.conf&quot; file during the upgrade or removal of
+the sudo package. (CVE-2012-3440)
+
+This update also fixes the following bugs:
+
+* Previously, sudo escaped non-alphanumeric characters in commands using
+&quot;sudo -s&quot; or &quot;sudo -&quot; at the wrong place and interfered with the
+authorization process. Some valid commands were not permitted. Now,
+non-alphanumeric characters escape immediately before the command is
+executed and no longer interfere with the authorization process.
+(BZ#844418)
+
+* Prior to this update, the sudo utility could, under certain
+circumstances, fail to receive the SIGCHLD signal when it was executed
+from a process that blocked the SIGCHLD signal. As a consequence, sudo
+could become suspended and fail to exit. This update modifies the signal
+process mask so that sudo can exit and sends the correct output.
+(BZ#844419)
+
+* The sudo update RHSA-2012:0309 introduced a regression that caused the
+Security-Enhanced Linux (SELinux) context of the &quot;/etc/nsswitch.conf&quot; file
+to change during the installation or upgrade of the sudo package. This
+could cause various services confined by SELinux to no longer be permitted
+to access the file. In reported cases, this issue prevented PostgreSQL and
+Postfix from starting. (BZ#842759)
+
+* Updating the sudo package resulted in the &quot;sudoers&quot; line in
+&quot;/etc/nsswitch.conf&quot; being removed. This update corrects the bug in the
+sudo package's post-uninstall script that caused this issue. (BZ#844420)
+
+* Prior to this update, a race condition bug existed in sudo. When a
+program was executed with sudo, the program could possibly exit
+successfully before sudo started waiting for it. In this situation, the
+program would be left in a zombie state and sudo would wait for it
+endlessly, expecting it to still be running. (BZ#844978)
+
+All users of sudo are advised to upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+842759 - selinux blocks postgresql startup
+844420 - sudo 1.7.2p1-14.el5_8 removed sudoers line from nsswitch.conf
+844442 - CVE-2012-3440 sudo: insecure temporary file use in RPM %postun script
+844978 - Sudo has racecondition leaving sudo with its zombie child running forever
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sudo-1.7.2p1-14.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sudo-1.7.2p1-14.el5_8.2.src.rpm</a>
+
+i386:
+sudo-1.7.2p1-14.el5_8.2.i386.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.i386.rpm
+
+x86_64:
+sudo-1.7.2p1-14.el5_8.2.x86_64.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sudo-1.7.2p1-14.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sudo-1.7.2p1-14.el5_8.2.src.rpm</a>
+
+i386:
+sudo-1.7.2p1-14.el5_8.2.i386.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.i386.rpm
+
+ia64:
+sudo-1.7.2p1-14.el5_8.2.ia64.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.ia64.rpm
+
+ppc:
+sudo-1.7.2p1-14.el5_8.2.ppc.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.ppc.rpm
+
+s390x:
+sudo-1.7.2p1-14.el5_8.2.s390x.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.s390x.rpm
+
+x86_64:
+sudo-1.7.2p1-14.el5_8.2.x86_64.rpm
+sudo-debuginfo-1.7.2p1-14.el5_8.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3440.html">https://www.redhat.com/security/data/cve/CVE-2012-3440.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0309.html">https://rhn.redhat.com/errata/RHSA-2012-0309.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQIV18XlSAg2UNWIIRArUrAJ0bm2PNKgJGSC2Yk3Dpab/NJwAL8gCcC2lm
+N31JTQuqRSRZhGCgiXKUwyg=
+=rPWG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

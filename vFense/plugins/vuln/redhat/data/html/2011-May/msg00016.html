@@ -1,0 +1,344 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0554&#45;01] Moderate: python security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 May 2011 08:18:34 &#45;0400 -->
+<!--X-Message-Id: 201105191218.p4JCISml020500@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0554-01] Moderate: python security, bug fix,	and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0554-01] Moderate: python security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0554-01] Moderate: python security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 19 May 2011 12:18:28 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0554-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0554.html">https://rhn.redhat.com/errata/RHSA-2011-0554.html</a>
+Issue date:        2011-05-19
+CVE Names:         CVE-2010-3493 CVE-2011-1015 CVE-2011-1521 
+=====================================================================
+
+1. Summary:
+
+Updated python packages that fix three security issues, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Python is an interpreted, interactive, object-oriented programming
+language.
+
+A flaw was found in the Python urllib and urllib2 libraries where they
+would not differentiate between different target URLs when handling
+automatic redirects. This caused Python applications using these modules to
+follow any new URL that they understood, including the &quot;file://&quot; URL type.
+This could allow a remote server to force a local Python application to
+read a local file instead of the remote one, possibly exposing local files
+that were not meant to be exposed. (CVE-2011-1521)
+
+A race condition was found in the way the Python smtpd module handled new
+connections. A remote user could use this flaw to cause a Python script
+using the smtpd module to terminate. (CVE-2010-3493)
+
+An information disclosure flaw was found in the way the Python
+CGIHTTPServer module processed certain HTTP GET requests. A remote attacker
+could use a specially-crafted request to obtain the CGI script's source
+code. (CVE-2011-1015)
+
+This erratum also upgrades Python to upstream version 2.6.6, and includes a
+number of bug fixes and enhancements. Documentation for these bug fixes
+and enhancements is available from the Technical Notes document, linked to
+in the References section.
+
+All users of Python are advised to upgrade to these updated packages, which
+correct these issues, and fix the bugs and add the enhancements noted in
+the Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+603073 - python &gt;&gt;&gt; help() &gt;&gt;&gt; modules command traceback when used without DISPLAY
+614680 - Try to print repr() when a fatal garbage collection assertion fails
+625393 - adjust test_commands unit test to the updated output of the ls command
+625395 - include the tests/data directory in the python-test rpm
+626756 - test_dbm fails on ppc64 &amp; s390x
+627301 - Rebase python from 2.6.5 to 2.6.6 in RHEL 6.1
+632200 - CVE-2010-3493 Python: SMTP proxy RFC 2821 module DoS (uncaught exception) (Issue #9129)
+634944 - rpmlint errors and warnings
+639392 - Generating python backtrace with &quot;py-bt&quot; fails with a traceback
+649274 - Infinite recursion in urllib2 on basicauth failure
+650588 - subprocess fails in select when descriptors are large (rhel6)
+669847 - urllib2's AbstractBasicAuthHandler is limited to 6 requests
+680094 - CVE-2011-1015 python (CGIHTTPServer): CGI script source code disclosure
+684991 - python update causes rhythmbox to crash
+690315 - python occasionally fails to build on machines with more than one core
+690560 - CVE-2011-1521 python (urllib, urllib2): Improper management of ftp:// and file:// URL schemes (Issue #11662)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+i386:
+python-2.6.6-20.el6.i686.rpm
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-libs-2.6.6-20.el6.i686.rpm
+tkinter-2.6.6-20.el6.i686.rpm
+
+x86_64:
+python-2.6.6-20.el6.x86_64.rpm
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-libs-2.6.6-20.el6.x86_64.rpm
+tkinter-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-devel-2.6.6-20.el6.i686.rpm
+python-test-2.6.6-20.el6.i686.rpm
+python-tools-2.6.6-20.el6.i686.rpm
+
+x86_64:
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-devel-2.6.6-20.el6.x86_64.rpm
+python-test-2.6.6-20.el6.x86_64.rpm
+python-tools-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+x86_64:
+python-2.6.6-20.el6.x86_64.rpm
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-libs-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+x86_64:
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-devel-2.6.6-20.el6.x86_64.rpm
+python-test-2.6.6-20.el6.x86_64.rpm
+python-tools-2.6.6-20.el6.x86_64.rpm
+tkinter-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-docs-2.6.6-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-docs-2.6.6-2.el6.src.rpm</a>
+
+i386:
+python-2.6.6-20.el6.i686.rpm
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-devel-2.6.6-20.el6.i686.rpm
+python-libs-2.6.6-20.el6.i686.rpm
+tkinter-2.6.6-20.el6.i686.rpm
+
+noarch:
+python-docs-2.6.6-2.el6.noarch.rpm
+
+ppc64:
+python-2.6.6-20.el6.ppc64.rpm
+python-debuginfo-2.6.6-20.el6.ppc64.rpm
+python-devel-2.6.6-20.el6.ppc64.rpm
+python-libs-2.6.6-20.el6.ppc64.rpm
+tkinter-2.6.6-20.el6.ppc64.rpm
+
+s390x:
+python-2.6.6-20.el6.s390x.rpm
+python-debuginfo-2.6.6-20.el6.s390x.rpm
+python-devel-2.6.6-20.el6.s390x.rpm
+python-libs-2.6.6-20.el6.s390x.rpm
+
+x86_64:
+python-2.6.6-20.el6.x86_64.rpm
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-devel-2.6.6-20.el6.x86_64.rpm
+python-libs-2.6.6-20.el6.x86_64.rpm
+tkinter-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-test-2.6.6-20.el6.i686.rpm
+python-tools-2.6.6-20.el6.i686.rpm
+
+ppc64:
+python-debuginfo-2.6.6-20.el6.ppc64.rpm
+python-test-2.6.6-20.el6.ppc64.rpm
+python-tools-2.6.6-20.el6.ppc64.rpm
+
+s390x:
+python-debuginfo-2.6.6-20.el6.s390x.rpm
+python-test-2.6.6-20.el6.s390x.rpm
+python-tools-2.6.6-20.el6.s390x.rpm
+tkinter-2.6.6-20.el6.s390x.rpm
+
+x86_64:
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-test-2.6.6-20.el6.x86_64.rpm
+python-tools-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-docs-2.6.6-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-docs-2.6.6-2.el6.src.rpm</a>
+
+i386:
+python-2.6.6-20.el6.i686.rpm
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-devel-2.6.6-20.el6.i686.rpm
+python-libs-2.6.6-20.el6.i686.rpm
+tkinter-2.6.6-20.el6.i686.rpm
+
+noarch:
+python-docs-2.6.6-2.el6.noarch.rpm
+
+x86_64:
+python-2.6.6-20.el6.x86_64.rpm
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-devel-2.6.6-20.el6.x86_64.rpm
+python-libs-2.6.6-20.el6.x86_64.rpm
+tkinter-2.6.6-20.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-20.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-20.el6.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-20.el6.i686.rpm
+python-test-2.6.6-20.el6.i686.rpm
+python-tools-2.6.6-20.el6.i686.rpm
+
+x86_64:
+python-debuginfo-2.6.6-20.el6.x86_64.rpm
+python-test-2.6.6-20.el6.x86_64.rpm
+python-tools-2.6.6-20.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3493.html">https://www.redhat.com/security/data/cve/CVE-2010-3493.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1015.html">https://www.redhat.com/security/data/cve/CVE-2011-1015.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1521.html">https://www.redhat.com/security/data/cve/CVE-2011-1521.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/python.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/python.html</a>
+<a  rel="nofollow" href="http://www.python.org/download/releases/2.6.6/NEWS.txt">http://www.python.org/download/releases/2.6.6/NEWS.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN1Qo8XlSAg2UNWIIRAiqyAJ9QP+xc6uNVsrvVNOqgs0XgxNn01wCff30f
+qbgNNQreEAiLlPKT2e2qSDY=
+=WT99
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

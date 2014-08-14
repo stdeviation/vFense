@@ -1,0 +1,263 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1294&#45;01] Important: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Sep 2011 15:09:48 &#45;0400 -->
+<!--X-Message-Id: 201109141909.p8EJ9gYY022376@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1294-01] Important: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1294-01] Important: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1294-01] Important: httpd security update</li>
+<li><em>Date</em>: Wed, 14 Sep 2011 19:09:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: httpd security update
+Advisory ID:       RHSA-2011:1294-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1294.html">https://rhn.redhat.com/errata/RHSA-2011-1294.html</a>
+Issue date:        2011-09-14
+CVE Names:         CVE-2011-3192 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.3 Long Life, 5.6 Extended Update Support, and
+6.0 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux (v. 5.3.LL server) - i386, ia64, x86_64
+Red Hat Enterprise Linux Server (v. 6.0.z) - i386, noarch, ppc64, s390x, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular web server.
+
+A flaw was found in the way the Apache HTTP Server handled Range HTTP
+headers. A remote attacker could use this flaw to cause httpd to use an
+excessive amount of memory and CPU time via HTTP requests with a
+specially-crafted Range header. (CVE-2011-3192)
+
+All httpd users should upgrade to these updated packages, which contain a
+backported patch to correct this issue. After installing the updated
+packages, the httpd daemon must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+732928 - CVE-2011-3192 httpd: multiple ranges DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux (v. 5.3.LL server):
+
+Source:
+httpd-2.2.3-22.el5_3.3.src.rpm
+
+i386:
+httpd-2.2.3-22.el5_3.3.i386.rpm
+httpd-debuginfo-2.2.3-22.el5_3.3.i386.rpm
+httpd-devel-2.2.3-22.el5_3.3.i386.rpm
+httpd-manual-2.2.3-22.el5_3.3.i386.rpm
+mod_ssl-2.2.3-22.el5_3.3.i386.rpm
+
+ia64:
+httpd-2.2.3-22.el5_3.3.ia64.rpm
+httpd-debuginfo-2.2.3-22.el5_3.3.ia64.rpm
+httpd-devel-2.2.3-22.el5_3.3.ia64.rpm
+httpd-manual-2.2.3-22.el5_3.3.ia64.rpm
+mod_ssl-2.2.3-22.el5_3.3.ia64.rpm
+
+x86_64:
+httpd-2.2.3-22.el5_3.3.x86_64.rpm
+httpd-debuginfo-2.2.3-22.el5_3.3.i386.rpm
+httpd-debuginfo-2.2.3-22.el5_3.3.x86_64.rpm
+httpd-devel-2.2.3-22.el5_3.3.i386.rpm
+httpd-devel-2.2.3-22.el5_3.3.x86_64.rpm
+httpd-manual-2.2.3-22.el5_3.3.x86_64.rpm
+mod_ssl-2.2.3-22.el5_3.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+httpd-2.2.3-45.el5_6.2.src.rpm
+
+i386:
+httpd-2.2.3-45.el5_6.2.i386.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.i386.rpm
+httpd-devel-2.2.3-45.el5_6.2.i386.rpm
+httpd-manual-2.2.3-45.el5_6.2.i386.rpm
+mod_ssl-2.2.3-45.el5_6.2.i386.rpm
+
+ia64:
+httpd-2.2.3-45.el5_6.2.ia64.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.ia64.rpm
+httpd-devel-2.2.3-45.el5_6.2.ia64.rpm
+httpd-manual-2.2.3-45.el5_6.2.ia64.rpm
+mod_ssl-2.2.3-45.el5_6.2.ia64.rpm
+
+ppc:
+httpd-2.2.3-45.el5_6.2.ppc.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.ppc.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.ppc64.rpm
+httpd-devel-2.2.3-45.el5_6.2.ppc.rpm
+httpd-devel-2.2.3-45.el5_6.2.ppc64.rpm
+httpd-manual-2.2.3-45.el5_6.2.ppc.rpm
+mod_ssl-2.2.3-45.el5_6.2.ppc.rpm
+
+s390x:
+httpd-2.2.3-45.el5_6.2.s390x.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.s390.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.s390x.rpm
+httpd-devel-2.2.3-45.el5_6.2.s390.rpm
+httpd-devel-2.2.3-45.el5_6.2.s390x.rpm
+httpd-manual-2.2.3-45.el5_6.2.s390x.rpm
+mod_ssl-2.2.3-45.el5_6.2.s390x.rpm
+
+x86_64:
+httpd-2.2.3-45.el5_6.2.x86_64.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.i386.rpm
+httpd-debuginfo-2.2.3-45.el5_6.2.x86_64.rpm
+httpd-devel-2.2.3-45.el5_6.2.i386.rpm
+httpd-devel-2.2.3-45.el5_6.2.x86_64.rpm
+httpd-manual-2.2.3-45.el5_6.2.x86_64.rpm
+mod_ssl-2.2.3-45.el5_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6.0.z):
+
+Source:
+httpd-2.2.15-5.el6_0.1.src.rpm
+
+i386:
+httpd-2.2.15-5.el6_0.1.i686.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.i686.rpm
+httpd-devel-2.2.15-5.el6_0.1.i686.rpm
+httpd-tools-2.2.15-5.el6_0.1.i686.rpm
+mod_ssl-2.2.15-5.el6_0.1.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-5.el6_0.1.noarch.rpm
+
+ppc64:
+httpd-2.2.15-5.el6_0.1.ppc64.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.ppc.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.ppc64.rpm
+httpd-devel-2.2.15-5.el6_0.1.ppc.rpm
+httpd-devel-2.2.15-5.el6_0.1.ppc64.rpm
+httpd-tools-2.2.15-5.el6_0.1.ppc64.rpm
+mod_ssl-2.2.15-5.el6_0.1.ppc64.rpm
+
+s390x:
+httpd-2.2.15-5.el6_0.1.s390x.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.s390.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.s390x.rpm
+httpd-devel-2.2.15-5.el6_0.1.s390.rpm
+httpd-devel-2.2.15-5.el6_0.1.s390x.rpm
+httpd-tools-2.2.15-5.el6_0.1.s390x.rpm
+mod_ssl-2.2.15-5.el6_0.1.s390x.rpm
+
+x86_64:
+httpd-2.2.15-5.el6_0.1.x86_64.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.i686.rpm
+httpd-debuginfo-2.2.15-5.el6_0.1.x86_64.rpm
+httpd-devel-2.2.15-5.el6_0.1.i686.rpm
+httpd-devel-2.2.15-5.el6_0.1.x86_64.rpm
+httpd-tools-2.2.15-5.el6_0.1.x86_64.rpm
+mod_ssl-2.2.15-5.el6_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3192.html">https://www.redhat.com/security/data/cve/CVE-2011-3192.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOcPvoXlSAg2UNWIIRAmGBAJwI2Fw6a21y6sQIufKOTMSqJsa8iwCghpOw
+pVtt5SPsKbyHm0L/nXt0ZQM=
+=shA7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

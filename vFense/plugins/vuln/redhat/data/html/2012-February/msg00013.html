@@ -1,0 +1,201 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0094&#45;01] Important: freetype security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 2 Feb 2012 17:54:01 &#45;0500 -->
+<!--X-Message-Id: 201202022253.q12MrtrS026157@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0094-01] Important: freetype security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0094-01] Important: freetype security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0094-01] Important: freetype security update</li>
+<li><em>Date</em>: Thu, 2 Feb 2012 22:53:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: freetype security update
+Advisory ID:       RHSA-2012:0094-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0094.html">https://rhn.redhat.com/errata/RHSA-2012-0094.html</a>
+Issue date:        2012-02-02
+CVE Names:         CVE-2011-3256 CVE-2011-3439 
+=====================================================================
+
+1. Summary:
+
+Updated freetype packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5.6 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS)
+base scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux EUS (v. 5.6 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+FreeType is a free, high-quality, portable font engine that can open and
+manage font files. It also loads, hints, and renders individual glyphs
+efficiently.
+
+Multiple input validation flaws were found in the way FreeType processed
+bitmap font files. If a specially-crafted font file was loaded by an
+application linked against FreeType, it could cause the application to
+crash or, potentially, execute arbitrary code with the privileges of the
+user running the application. (CVE-2011-3256)
+
+Multiple input validation flaws were found in the way FreeType processed
+CID-keyed fonts. If a specially-crafted font file was loaded by an
+application linked against FreeType, it could cause the application to
+crash or, potentially, execute arbitrary code with the privileges of the
+user running the application. (CVE-2011-3439)
+
+Users are advised to upgrade to these updated packages, which contain
+backported patches to correct these issues. The X server must be restarted
+(log out, then log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+746226 - CVE-2011-3256 FreeType FT_Bitmap_New integer overflow to buffer overflow, FreeType TT_Vary_Get_Glyph_Deltas improper input validation
+753799 - CVE-2011-3439 freetype: Multiple security flaws when loading CID-keyed Type 1 fonts
+
+6. Package List:
+
+Red Hat Enterprise Linux EUS (v. 5.6 server):
+
+Source:
+freetype-2.2.1-28.el5_6.1.src.rpm
+
+i386:
+freetype-2.2.1-28.el5_6.1.i386.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.i386.rpm
+freetype-demos-2.2.1-28.el5_6.1.i386.rpm
+freetype-devel-2.2.1-28.el5_6.1.i386.rpm
+
+ia64:
+freetype-2.2.1-28.el5_6.1.i386.rpm
+freetype-2.2.1-28.el5_6.1.ia64.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.i386.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.ia64.rpm
+freetype-demos-2.2.1-28.el5_6.1.ia64.rpm
+freetype-devel-2.2.1-28.el5_6.1.ia64.rpm
+
+ppc:
+freetype-2.2.1-28.el5_6.1.ppc.rpm
+freetype-2.2.1-28.el5_6.1.ppc64.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.ppc.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.ppc64.rpm
+freetype-demos-2.2.1-28.el5_6.1.ppc.rpm
+freetype-devel-2.2.1-28.el5_6.1.ppc.rpm
+freetype-devel-2.2.1-28.el5_6.1.ppc64.rpm
+
+s390x:
+freetype-2.2.1-28.el5_6.1.s390.rpm
+freetype-2.2.1-28.el5_6.1.s390x.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.s390.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.s390x.rpm
+freetype-demos-2.2.1-28.el5_6.1.s390x.rpm
+freetype-devel-2.2.1-28.el5_6.1.s390.rpm
+freetype-devel-2.2.1-28.el5_6.1.s390x.rpm
+
+x86_64:
+freetype-2.2.1-28.el5_6.1.i386.rpm
+freetype-2.2.1-28.el5_6.1.x86_64.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.i386.rpm
+freetype-debuginfo-2.2.1-28.el5_6.1.x86_64.rpm
+freetype-demos-2.2.1-28.el5_6.1.x86_64.rpm
+freetype-devel-2.2.1-28.el5_6.1.i386.rpm
+freetype-devel-2.2.1-28.el5_6.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3256.html">https://www.redhat.com/security/data/cve/CVE-2011-3256.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3439.html">https://www.redhat.com/security/data/cve/CVE-2011-3439.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPKxP2XlSAg2UNWIIRAjurAJwKoNnO3kO/eCYy/Ik2qr5FFglEwgCfeGfz
+wuUKAtusuteQw1anUlEZSTI=
+=Z2Z4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

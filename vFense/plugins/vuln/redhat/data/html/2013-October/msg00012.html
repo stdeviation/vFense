@@ -1,0 +1,147 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1430&#45;01] Important: commons&#45;fileupload security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Oct 2013 14:45:25 &#45;0400 -->
+<!--X-Message-Id: 201310151845.r9FIjOrU012546@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1430-01] Important: commons-fileupload security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1430-01] Important: commons-fileupload security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1430-01] Important: commons-fileupload security update</li>
+<li><em>Date</em>: Tue, 15 Oct 2013 18:45:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: commons-fileupload security update
+Advisory ID:       RHSA-2013:1430-01
+Product:           Red Hat JBoss Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1430.html">https://rhn.redhat.com/errata/RHSA-2013-1430.html</a>
+Issue date:        2013-10-15
+CVE Names:         CVE-2013-2186 
+=====================================================================
+
+1. Summary:
+
+An update for the commons-fileupload component that fixes one security
+issue is now available from the Red Hat Customer Portal for Red Hat JBoss
+BRMS 5.3.1; and Red Hat JBoss Portal 4.3 CP07, 5.2.2 and 6.0.0.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+The Apache Commons FileUpload component can be used to add a file upload
+capability to your applications.
+
+A flaw was found in the way the DiskFileItem class handled NULL characters
+in file names. A remote attacker able to supply a serialized instance of
+the DiskFileItem class, which will be deserialized on a server, could use
+this flaw to write arbitrary content to any location on the server that is
+accessible to the user running the application server process.
+(CVE-2013-2186)
+
+All users of the affected products as provided from the Red Hat Customer
+Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains download links (you must
+log in to download the update). Before applying this update, back up your
+existing Red Hat JBoss BRMS installation (including all applications and
+configuration files). For Red Hat JBoss Portal, back up all deployed
+applications, along with all customized configuration files, and any
+databases and database settings.
+
+Note that it is recommended to halt the JBoss Enterprise BRMS Platform
+server and the Red Hat JBoss Portal server by stopping the JBoss
+Application Server process before installing this update, and then after
+installing the update, restart the JBoss Enterprise BRMS Platform server by
+starting the JBoss Application Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+974814 - CVE-2013-2186 Apache commons-fileupload: Arbitrary file upload via deserialization
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2186.html">https://www.redhat.com/security/data/cve/CVE-2013-2186.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=securityPatches&amp;version=5.3.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=securityPatches&amp;version=5.3.1</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=4.3+CP07">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=4.3+CP07</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=5.2.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=5.2.2</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=6.0.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=6.0.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSXY05XlSAg2UNWIIRAiV6AJ934QSdXR2n+lrv/9jvDObOCJlPyQCgkmfJ
+q8bgH5300e6/plUck3j5dj4=
+=hPDg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

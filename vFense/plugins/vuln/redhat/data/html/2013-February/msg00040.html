@@ -1,0 +1,546 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0276&#45;02] Moderate: libvirt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:19:55 &#45;0500 -->
+<!--X-Message-Id: 201302210619.r1L6Jrma016401@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0276-02] Moderate: libvirt security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0276-02] Moderate: libvirt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0276-02] Moderate: libvirt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:08:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0276-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0276.html">https://rhn.redhat.com/errata/RHSA-2013-0276.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-3411 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix one security issue, multiple bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In
+addition, libvirt provides tools for remote management of virtualized
+systems.
+
+It was discovered that libvirt made certain invalid assumptions about
+dnsmasq's command line options when setting up DNS masquerading for virtual
+machines, resulting in dnsmasq incorrectly processing network packets from
+network interfaces that were intended to be prohibited. This update
+includes the changes necessary to call dnsmasq with a new command line
+option, which was introduced to dnsmasq via RHSA-2013:0277. (CVE-2012-3411)
+
+In order for libvirt to be able to make use of the new command line option
+(--bind-dynamic), updated dnsmasq packages need to be installed. Refer to
+RHSA-2013:0277 for additional information.
+
+These updated libvirt packages include numerous bug fixes and enhancements.
+Space precludes documenting all of these changes in this advisory. Users
+are directed to the Red Hat Enterprise Linux 6.4 Technical Notes, linked
+to in the References, for information on the most significant of these
+changes.
+
+All users of libvirt are advised to upgrade to these updated packages,
+which fix these issues and add these enhancements. After installing the
+updated packages, libvirtd must be restarted (&quot;service libvirtd restart&quot;)
+for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+695394 - default migration speed is too low for guests with heavy IO
+713922 - virsh man page refers to unspecified &quot;documentation&quot;
+724893 - RFE: better message when start the guest which CPU comprises flags that host doesn't support
+770285 - cpu-compare fails inside virtualized hosts
+770795 - blkioParameters doesn't work
+770830 - --config doesn't work correctly for blkiotune option --device-weight
+771424 - RFE: Resident Set Size (RSS) limits on qemu guests
+772290 - RFE: Configurable VNC start port or ability to exclude use of specific ports
+787906 - [python binding] migrateGetMaxSpeed did not work right with parameters
+789327 - [RFE] Resume VM from s3 as a response for monitor/keyboard/mouse action
+798467 - libvirt doesn't validate a manually specified MAC address for a KVM guest
+799986 - libvirtd should explicitly check for existance of configured sanlock directory before trying to register lockspace
+801772 - RFE: Use scsi-hd, scsi-cd instead of scsi-disk
+803577 - virsh attach-disk should detect disk source file type when sourcetype is not specified
+804601 - Controllers do not support virsh attach/detach-device --persistent
+805071 - RFE : Dynamically change the host network/bridge that is attached to a vNIC
+805243 - [RFE] add some mechanism to pre-populate credentials for libvirt connections
+805361 - RFE: privnet should work well with lxc
+807545 - the programming continue to run when executing virsh snapshot-list with --roots and --from mutually exclusive options
+807907 - Tunnelled migration sometimes report error when do scalability test
+807996 - libvirtd may hang during tunneled migration
+810799 - virsh list and &quot;--managed-save &quot; flag can't list the domains with managed save state
+813191 - virt-xml-validate fail for pool, nodedev and capabilities
+813735 - Non detection of qemu TCG mode support within a RHEL VM
+813819 - Unable to disable sending keep-alive messages
+815644 - There is no executable permission on default pool.
+816448 - inaccurate display for status of stopped libvirt-guests service
+816503 - [RFE] Ability to configure sound pass-through to appear as MIC as opposed to line-in
+816609 - [libvirt] python bindings have inconsistent handling of float-&gt;int conversion
+817219 - Don't allow to define multiple pools with the same target
+817239 - dominfo outputs incorrectly for memory unit
+817244 - Issues about virsh -h usage
+818467 - Improve libvirt debug capability
+818996 - [rfe] allow to disable usb &amp; vga altogether
+819401 - [LXC] virsh dominfo can't get a correct VCPU number
+820173 - Libvirtd fails to initialize sanlock driver
+821665 - unclear error message: qemu should report 'lsi' is not supported
+822068 - libvirtd will crash when hotplug attah-disk to guest
+822340 - There are some typos when virsh connect source guest server with ssh PermitRootLogin disabled
+822373 - libvirtd will crash when tight loop of hotplug/unplug PCI device to guest without managed=yes
+823362 - vol-create-as should fail when allocate a malformed size image
+823765 - libvirt should raise an error when set network with special/invalid MAC address
+823850 - find-storage-pool-sources/ find-storage-pool-sources-as can't return XML describing of netfs/iscsi pool
+823857 - guest can't start with unable to set security context error if guests are unconfined
+824253 - manpage: document limitations on identifying domains with numeric names
+825068 - Start a guest with assigned usb device which is used by another guest will reset the label
+825108 - unexpected result from virt-pki-validate
+825600 - spice client could not disconnect after update graphics with connected='disconnect'
+825699 - Can't start pool with uuid and other commands with uuid issue
+825820 - Libvirt is missing important hooks
+827234 - potential to deadlock libvirt on EPIPE
+827380 - Minimum value for nodesuspend time duration need be given in virsh manual or help
+827519 - &quot;Unable to determine device index for network device&quot; when attaching new network device to a guest that already has a netdev of type='hostdev'
+828023 - [libvirt] Setting numa parameters causes guest xml error
+828640 - valgrind defects some use-after-free errors - virsh console
+828676 - virt-xml-validate validate fails when xml contains kernel/initrd/cmdline elements
+828729 - CPU topology parsing bug on special NUMA platform
+829107 - valgrind defects some use-after-free errors - virsh change-media
+829246 - virsh detach-disk will be failed with special image name
+829562 - virsh attach-disk --cache  does not work
+830051 - [Doc] virsh doc has error/omission on device commands and nodedev commands
+830057 - man doc of vol-create-as format is lack of qed and vmdk
+831044 - #libvirtd error messages should be fixed
+831049 - Update libvirtd manpage to describe how --timeout works &amp; its usage limitations
+831099 - add the ability to set a wwn for SCSI disks
+831149 - virt-manager causes iowait, due to rewriting XML files repeatable
+832004 - vncdisplay can't output default ip address for the vnc display
+832081 - Fix keepalive issues in libvirt
+832156 - RFE: Support customizable actions when sanlock leases are lost
+832302 - libvirt shouldn't delete an existing unregistered volume in vol-create
+832309 - [Doc]Problems about manual and help of virsh desc command
+832329 - [Doc]Problems about help of virsh domiftune command
+832372 - [Doc]Problems about manual and help of virsh dompmsuspend command
+833327 - [Doc]The abbreviation of domain name-id-uuid arguments are inconsistent in manual
+833674 - Deactivate memory balloon with type of none get wrong error info
+834365 - Improve error message when trying to change VM's processor count to 0
+834927 - virConnectDomainEventRegisterAny won't register the same callback for the same event but for different domains
+835782 - when create the netfs pool, virsh pool-create-as do not remount the target dir which is mounted for another device firstly.
+836135 - spice migration: prevent race with libvirt
+837466 - virsh report error when quit virsh connection
+837470 - libvirtd crash when  virsh find-storage-pool-sources
+837485 - can not start vdsmd service after update the libvirt packages
+837542 - [regression]can't undefine guest after guest saved.
+837544 - snapshot-list return core dumped
+837761 - [Doc] Inaccurate description about force option in change-media help
+837884 - per-machine-type CPU models for safe migration
+839537 - Error occurs when given hard_limit in memtune more than current swap_hard_limit
+839557 - [Doc]Need to explain in manual that the output memory of memtune command may be rounded
+839661 - libvirt: support QMP event for S4
+839930 - There is no message if debug level number is out of scope when run a virsh command with -d option
+842208 - &quot;Segmentation fault&quot; when use virsh command with vdsm installed
+842272 - include-passwd option can't worked when using domdisplay.
+842557 - libvirt doesn't check ABI compatibility of watchdog and channel fully
+842966 - [snapshot] snapshot-info report unknow procedure error even snapshot-info works well
+842979 - [Regression] lxc domain fail to start due to not exist cgroup dir
+843324 - snapshot-edit will report error message but return 0  when do not update xml
+843372 - disk-only snapshot create external file even if snapshot command failed
+843560 - Add live migration support for USB
+843716 - The libvirtd deamon was killed abnormally  when i destroy a domain which was  in creating process
+844266 - Fail to modify the domain xml with saved file
+844408 - after failed hotplug qemu keeps the file descriptor open
+845448 - [blockcopy]sometimes Ctrl+C can't terminate blockcopy when use --wait with other options
+845460 - exit console will crash libvirtd
+845468 - snapshot-list  --descendants --from  will core dumped
+845521 - Plug memory leak after escaping sequence for console
+845523 - Use after free when escaping sequence for console
+845635 - Return a specific error when qemu-ga is missing or unusable during a live snapshot (quiesce)
+845893 - Double close of FD when failing to connect to a remote hypervisor
+845958 - libvirt domain event handler can not catch domain pmsuspend and get error when pmwakeup
+845966 - libvirt pmsuspend to disk will crash libvirtd
+845968 - numatune command can't handle nodeset with '^' for excluding a node
+846265 - virsh blkdeviotune fail
+846629 - Failed to run cpu-stats when cpuacct.usage_percpu is too large
+846639 - Should forbid suspend&amp;resume operate when guest in pmsuspend status.
+848648 - [Doc] Add annotation about how to enable stack traces in log messages
+851391 - Throw out &quot;DBus support&quot; error in libvirtd.log when restart libvirtd
+851395 - xml parse error occur after upgrade to the newest package
+851397 - can not start guest in rhevm
+851423 - virsh segmentation fault when using find-storage-pool-sources
+851452 - unexpected result of virsh save when stop libvirtd
+851491 - Libvirtd crash when set &quot;security_default_confined = 0&quot; in qemu.conf
+851959 - cpuset can be set in two places.
+851963 - Guest will be undefined if remove channel content
+851981 - The migration with macvtap network was denied by the target when i set &quot;setenforce 1&quot; in the target
+852260 - AFFECT_CURRENT flag does not work well in set_scheduler_parameters when domain is shutoff
+852383 - libvirtd dead when start a domain with openvswitch interface
+852592 - libvirtd will be crashed when run vcpupin more than once
+852668 - libvirt got security label parse error with xml
+852675 - [Graphical framebuffer] update device with connected parameter &quot;fail&quot;, guest's xml changed
+852984 - virsh start command will be hung with openvswitch network interface
+853002 - [qemu-ga]shutdown guest by qemu-guest-agent will successful but report error
+853043 - guest can't start with unable to set security context error if guests are unconfined
+853342 - [doc]There are some typos in CPU Tuning part of the formatdomain.html
+853567 - Request for taking fix for PF shutdown in 802.1Qbh
+853821 - virsh reboot with 'agent' shutdown mode will hang
+853925 - [configuration][doc] set security_driver in qemu.conf
+853930 - It is failed to start guest when the number of vcpu is different between &lt;vcpu&gt; and &lt;cputune/&gt;
+854133 - libvirt should check the range of emulator_period and emulator_quota when set them with --config
+854135 - The libvirt domain event handler can't catch the disconnecting information when disconnected the guest
+855218 - Problems on CPU tuning
+855237 - [libvirt] Add a new boot parameter to set the delay time before rebooting
+855783 - improve error message for secret-get-value
+856247 - full RHEL 6.4 block-copy support
+856489 - Modify target type of channel element from 'virtio' to 'guestfwd' will cause libvirtd crash
+856528 - List option --state-shutoff should filter guest properly
+856864 - Do live migration from rhel6.1.z release version to rhel6.4 newest version and back will get &quot;error Unknown controller type 'usb'&quot;
+856950 - Deadlock on libvirt when playing with hotplug and add/remove vm
+856951 - The value of label is wrong with static dac model in xml
+857013 - Failed to run cpu-stats after vcpu hotplug
+857341 - fail to start lxc domain
+857367 - destroy default virtual network throw error in libvirtd.log
+858204 - The libvirt augeas lens can't parse a libvirtd.conf file where host_uuid is present
+859320 - libvirt auth.conf make virsh cmd Segmentation fault (core dumped)
+859331 - Create new guest fail with usermode
+859712 - [libvirt] Deadlock in libvirt after storage is blocked
+860519 - security: support for names on DAC labels
+860907 - It reported an error when checked the schedinfo of the lxc guest
+860971 - There should be a comma between &quot;kvmclock&quot; and &quot;kvm_pv_eoi&quot;  in qemu-kvm cmd generated by libvirt
+861564 - fail to start lxc os container
+863059 - Unable to migrate guest: internal error missing hostuuid element in migration data
+863115 - libvirt calls 'qemu-kvm -help' too often
+864097 - Cannot start domains with custom CPU model
+864122 - virtualport parameter profileid in a &lt;network&gt; or &lt;portgroup&gt; causes failure to initialize guest interface
+864336 - [LXC] destroy domain will hang after restart libvirtd
+864384 - virsh list get error msg when connect ESXi5.0 server
+865670 - Warning messages &quot;Found untested VI API major/minor version 5.1&quot; show when connect to esx5.1 server
+866288 - libvirtd crashes when both &lt;boot dev='...'/&gt; and &lt;boot order='...'/&gt; are used in one domain XML
+866364 - libvirtd crash when edit a net with some operation
+866369 - libvirt: terminating vm on signal 15 when hibernate fails on ENOSPACE
+866388 - libvirt: no event is sent to vdsm in case vm is terminated on signal 15 after hibernate failure
+866508 - Fail to import libvirt python module due to 'undefined symbol: libssh2_agent_free'
+866524 - use-after-free on virsh node-memory-tune
+866999 - CPU topology is missing in capabilities XML when libvirt fails to detect host CPU model
+867246 - [LXC] A running guest will be stopped after restarting libvirtd service
+867372 - Can not change affinity of domain process with &quot;cpuset &quot;of &lt;vcpu&gt; element.
+867412 - libvirt fails to clear async job when p2p migration fails early
+867724 - Libvirt sometimes fails to wait on spice to migrate
+867764 - default machine type is detected incorrectly
+868389 - virsh net-update to do a live add of a static host to a network that previously had no static hosts, reports success, but doesn't take effect until network is restarted.
+868483 - multiple default portgroups erroneously allowed in network definitions
+868692 - Libvirt: Double dash in VM causes it to disappear - bad parsing of XML
+869096 - Vcpuinfo don't return numa's CPU Affinity properly on mutiple numa node's machine
+869100 - poor error message for virsh snapshot-list --roots --current
+869508 - the option --flags of virsh nodesuspend command should be removed
+869557 - Can't add more than 256 logical networks
+870099 - virsh emulatorpin still can work when vcpu placement is &quot;auto&quot;.
+870273 - coding errors in virsh man page
+871055 - libvirt should support both upstream and RHEL drive-mirror
+871201 - If libvirt is restarted after updating dnsmasq or radvd packages, a subsequent &quot;virsh net-destroy&quot; will fail to kill the dnsmasq/radvd processes
+871312 - emulatorpin affinity isn't the same as Cpus_allowed_list of emulator ' thread when cpuset is specified
+872104 - wrong description of net-update option(config, live and current)
+872656 - virNodeGetMemoryParameters is broken on older kernels
+873134 - setting current memory equal to max will end with domain start as current &gt; max
+873537 - virsh save will crash libvirtd sometimes
+873538 - [Regression] Define domain failed in ESX5.1
+873792 - libvirt: cancel migration is sent but migration continues
+873934 - Failed to run Coverity on libvirt RHEL source rpm
+874050 - virsh nodeinfo can't get the right info on AMD Bulldozer cpu
+874171 - virsh should make external checkpoint creation easy
+874330 - First autostarted guest has always id 1
+874549 - libvirt_lxc segfaults when staring lxc through openstack
+874702 - CVE-2012-3411 libvirt needs to use new dnsmasq option to avoid open DNS proxy
+874860 - libvirt fails to start if storage pool contains image with missing backing file
+876415 - virDomainGetVcpuPinInfo might fail to show right CPU affinity setting
+876816 - libvirt should allow disk-only (external) snapshots of offline VMs
+876817 - virsh should make it easier to filter snapshots by type
+876828 - the qcow2 disk's major:minor number still exists in guest's devices.list after hot-unplug
+876868 - virsh save guest with an no-exist xml should show error msg
+877095 - libvirt doesn't clean up open files for device assignment
+877303 - virsh snapshot-edit prints garbage with wrong parameters
+878376 - Coverity scan founds some resource leaks and USE_AFTER_FREE
+878400 - virsh pool-destroy should fail with error info when pool is in using
+878779 - domdisplay with --include-password can't display VNC passwor
+878862 - NULL pointer usage when starting guest with broken image chain
+879130 - there is not error message when create external checkpoint with --memspec= (NULL)
+879132 - create external checkpoint sometimes will crash libvirtd
+879360 - Libvirt leaks libvirt_lxc processes on container shutdown
+879473 - net-update may cause libvirtd crash when modify portgroup
+879780 - vol-clone failed to clone LVM volumes
+880064 - [LXC] libvirt_lxc segfaults when staring lxc guest
+880919 - Libvirtd crashed while saving the guest to a nonexistent directory
+881480 - virDomainUpdateDeviceFlags fails when interface type is 'network'
+882915 - virsh doesn't report error if updated data argument for command &quot;schedinfo&quot; is invalid
+883832 - Cannot start VMs after upgrade from 6.3 to libvirt-0.10.2-10
+884650 - Add support for qemu-kvm's BALLOON_CHANGE event to avoid using monitor in virDomainGetXMLDesc
+885081 - Invalid job handling while restarting CPUs when creating external snapshot
+885727 - Libvirt won't parse dnsmasq capabilities when debug logs are enabled
+885838 - improper errors logged when changing the bridge device used by a domain &lt;interface type='bridge'&gt;
+886821 - libvirt-launched dnsmasq listens on localhost when it shouldn't
+886933 - High disk usage when both libvirt and virt-manager are opened
+887187 - [Doc] There are some typos in libvirt manual and formatdomain.html
+888426 - block-copy pivot fails complaining that job is not active
+889319 - support for IFLA_EXT_MASK and RTEXT_FILTER_VF needs to be added to lib
+889407 - snapshot --redefine disk snapshot may cause libvirtd crash
+891653 - Cgroups memory limit are causing the virt to be terminated unexpectedly
+894085 - libvirt: vm pauses after live storage migration
+896403 - delete snapshot which name contain '/' lead to libvirtd crash
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-python-0.10.2-18.el6.i686.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6.x86_64.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-python-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+i386:
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+x86_64:
+libvirt-0.10.2-18.el6.x86_64.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-python-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-python-0.10.2-18.el6.i686.rpm
+
+ppc64:
+libvirt-0.10.2-18.el6.ppc64.rpm
+libvirt-client-0.10.2-18.el6.ppc.rpm
+libvirt-client-0.10.2-18.el6.ppc64.rpm
+libvirt-debuginfo-0.10.2-18.el6.ppc.rpm
+libvirt-debuginfo-0.10.2-18.el6.ppc64.rpm
+libvirt-devel-0.10.2-18.el6.ppc.rpm
+libvirt-devel-0.10.2-18.el6.ppc64.rpm
+libvirt-python-0.10.2-18.el6.ppc64.rpm
+
+s390x:
+libvirt-0.10.2-18.el6.s390x.rpm
+libvirt-client-0.10.2-18.el6.s390.rpm
+libvirt-client-0.10.2-18.el6.s390x.rpm
+libvirt-debuginfo-0.10.2-18.el6.s390.rpm
+libvirt-debuginfo-0.10.2-18.el6.s390x.rpm
+libvirt-devel-0.10.2-18.el6.s390.rpm
+libvirt-devel-0.10.2-18.el6.s390x.rpm
+libvirt-python-0.10.2-18.el6.s390x.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6.x86_64.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.x86_64.rpm
+libvirt-python-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+i386:
+libvirt-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-python-0.10.2-18.el6.i686.rpm
+
+x86_64:
+libvirt-0.10.2-18.el6.x86_64.rpm
+libvirt-client-0.10.2-18.el6.i686.rpm
+libvirt-client-0.10.2-18.el6.x86_64.rpm
+libvirt-debuginfo-0.10.2-18.el6.i686.rpm
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-devel-0.10.2-18.el6.i686.rpm
+libvirt-devel-0.10.2-18.el6.x86_64.rpm
+libvirt-python-0.10.2-18.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-18.el6.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-18.el6.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-18.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3411.html">https://www.redhat.com/security/data/cve/CVE-2012-3411.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/libvirt.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/libvirt.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJbx3XlSAg2UNWIIRAiKTAJ9FKkHPiWI/K6yREHNG7bQG1nqUJwCgkG/z
+K90kHXbEIuBWXIfbDMTJ1Ng=
+=MDgg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

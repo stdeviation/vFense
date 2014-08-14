@@ -1,0 +1,411 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0025&#45;01] Low: gcc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Jan 2011 06:25:03 &#45;0500 -->
+<!--X-Message-Id: 201101131124.p0DBOv1W018465@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0025-01] Low: gcc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0025-01] Low: gcc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0025-01] Low: gcc security and bug fix update</li>
+<li><em>Date</em>: Thu, 13 Jan 2011 11:24:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: gcc security and bug fix update
+Advisory ID:       RHSA-2011:0025-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0025.html">https://rhn.redhat.com/errata/RHSA-2011-0025.html</a>
+Issue date:        2011-01-13
+CVE Names:         CVE-2010-0831 CVE-2010-2322 
+=====================================================================
+
+1. Summary:
+
+Updated gcc packages that fix two security issues and several compiler bugs
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The gcc packages include C, C++, Java, Fortran, Objective C, and Ada 95 GNU
+compilers, along with related support libraries. The libgcj package
+provides fastjar, an archive tool for Java Archive (JAR) files.
+
+Two directory traversal flaws were found in the way fastjar extracted JAR
+archive files. If a local, unsuspecting user extracted a specially-crafted
+JAR file, it could cause fastjar to overwrite arbitrary files writable by
+the user running fastjar. (CVE-2010-0831, CVE-2010-2322)
+
+This update also fixes the following bugs:
+
+* The option -print-multi-os-directory in the gcc --help output is not in
+the gcc(1) man page. This update applies an upstream patch to amend this.
+(BZ#529659)
+
+* An internal assertion in the compiler tried to check that a C++ static
+data member is external which resulted in errors. This was because when the
+compiler optimizes C++ anonymous namespaces the declarations were no longer
+marked external as everything on anonymous namespaces is local to the
+current translation. This update corrects the assertion to resolve this
+issue. (BZ#503565, BZ#508735, BZ#582682)
+
+* Attempting to compile certain .cpp files could have resulted in an
+internal compiler error. This update resolves this issue. (BZ#527510)
+
+* PrintServiceLookup.lookupPrintServices with an appropriate DocFlavor
+failed to return a list of printers under gcj. This update includes a
+backported patch to correct this bug in the printer lookup service.
+(BZ#578382)
+
+* GCC would not build against xulrunner-devel-1.9.2. This update removes
+gcjwebplugin from the GCC RPM. (BZ#596097)
+
+* When a SystemTap generated kernel module was compiled, gcc reported an
+internal compiler error and gets a segmentation fault. This update applies
+a patch that, instead of crashing, assumes it can point to anything.
+(BZ#605803)
+
+* There was a performance issue with libstdc++ regarding all objects
+derived from or using std::streambuf because of lock contention between
+threads. This patch ensures reload uses the same value from _S_global for
+the comparison, _M_add_reference () and _M_impl member of the class.
+(BZ#635708)
+
+All gcc users should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+503565 - libtorrent-rasterbar won't compile, internal compiler error: in make_rtl_for_nonlocal_decl
+508735 - internal gcc error
+527510 - Internal compiler error from gcc
+529659 - Option -print-multi-os-directory is not described in man page gcc(1)
+578382 - PrintServiceLookup.lookupPrintServices(DocFlavor.SERVICE_FORMATTED.PAGEABLE, null)   in a simple test java program fails to list printers when run with gcj - Any conventional JRE seems to work that I have tested
+582682 - internal compiler error: in make_rtl_for_nonlocal_decl
+594497 - CVE-2010-0831 CVE-2010-2322 fastjar: directory traversal vulnerabilities
+596097 - gcc doesn't build against xulrunner-devel-1.9.2
+605803 - gcc gets an internal compiler error when compiling a kernel module
+635708 - Huge performance problem with libstdc++ and multithread applications
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm</a>
+
+i386:
+cpp-4.1.2-50.el5.i386.rpm
+gcc-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+libgcc-4.1.2-50.el5.i386.rpm
+libgcj-4.1.2-50.el5.i386.rpm
+libgfortran-4.1.2-50.el5.i386.rpm
+libgnat-4.1.2-50.el5.i386.rpm
+libmudflap-4.1.2-50.el5.i386.rpm
+libobjc-4.1.2-50.el5.i386.rpm
+libstdc++-4.1.2-50.el5.i386.rpm
+
+x86_64:
+cpp-4.1.2-50.el5.x86_64.rpm
+gcc-4.1.2-50.el5.x86_64.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.x86_64.rpm
+libgcc-4.1.2-50.el5.i386.rpm
+libgcc-4.1.2-50.el5.x86_64.rpm
+libgcj-4.1.2-50.el5.i386.rpm
+libgcj-4.1.2-50.el5.x86_64.rpm
+libgfortran-4.1.2-50.el5.i386.rpm
+libgfortran-4.1.2-50.el5.x86_64.rpm
+libgnat-4.1.2-50.el5.i386.rpm
+libgnat-4.1.2-50.el5.x86_64.rpm
+libmudflap-4.1.2-50.el5.i386.rpm
+libmudflap-4.1.2-50.el5.x86_64.rpm
+libobjc-4.1.2-50.el5.i386.rpm
+libobjc-4.1.2-50.el5.x86_64.rpm
+libstdc++-4.1.2-50.el5.i386.rpm
+libstdc++-4.1.2-50.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm</a>
+
+i386:
+gcc-c++-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-gfortran-4.1.2-50.el5.i386.rpm
+gcc-gnat-4.1.2-50.el5.i386.rpm
+gcc-java-4.1.2-50.el5.i386.rpm
+gcc-objc++-4.1.2-50.el5.i386.rpm
+gcc-objc-4.1.2-50.el5.i386.rpm
+libgcj-devel-4.1.2-50.el5.i386.rpm
+libgcj-src-4.1.2-50.el5.i386.rpm
+libmudflap-devel-4.1.2-50.el5.i386.rpm
+libstdc++-devel-4.1.2-50.el5.i386.rpm
+
+x86_64:
+gcc-c++-4.1.2-50.el5.x86_64.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.x86_64.rpm
+gcc-gfortran-4.1.2-50.el5.x86_64.rpm
+gcc-gnat-4.1.2-50.el5.x86_64.rpm
+gcc-java-4.1.2-50.el5.x86_64.rpm
+gcc-objc++-4.1.2-50.el5.x86_64.rpm
+gcc-objc-4.1.2-50.el5.x86_64.rpm
+libgcj-devel-4.1.2-50.el5.i386.rpm
+libgcj-devel-4.1.2-50.el5.x86_64.rpm
+libgcj-src-4.1.2-50.el5.x86_64.rpm
+libmudflap-devel-4.1.2-50.el5.i386.rpm
+libmudflap-devel-4.1.2-50.el5.x86_64.rpm
+libstdc++-devel-4.1.2-50.el5.i386.rpm
+libstdc++-devel-4.1.2-50.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gcc-4.1.2-50.el5.src.rpm</a>
+
+i386:
+cpp-4.1.2-50.el5.i386.rpm
+gcc-4.1.2-50.el5.i386.rpm
+gcc-c++-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-gfortran-4.1.2-50.el5.i386.rpm
+gcc-gnat-4.1.2-50.el5.i386.rpm
+gcc-java-4.1.2-50.el5.i386.rpm
+gcc-objc++-4.1.2-50.el5.i386.rpm
+gcc-objc-4.1.2-50.el5.i386.rpm
+libgcc-4.1.2-50.el5.i386.rpm
+libgcj-4.1.2-50.el5.i386.rpm
+libgcj-devel-4.1.2-50.el5.i386.rpm
+libgcj-src-4.1.2-50.el5.i386.rpm
+libgfortran-4.1.2-50.el5.i386.rpm
+libgnat-4.1.2-50.el5.i386.rpm
+libmudflap-4.1.2-50.el5.i386.rpm
+libmudflap-devel-4.1.2-50.el5.i386.rpm
+libobjc-4.1.2-50.el5.i386.rpm
+libstdc++-4.1.2-50.el5.i386.rpm
+libstdc++-devel-4.1.2-50.el5.i386.rpm
+
+ia64:
+cpp-4.1.2-50.el5.ia64.rpm
+gcc-4.1.2-50.el5.ia64.rpm
+gcc-c++-4.1.2-50.el5.ia64.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.ia64.rpm
+gcc-gfortran-4.1.2-50.el5.ia64.rpm
+gcc-gnat-4.1.2-50.el5.ia64.rpm
+gcc-java-4.1.2-50.el5.ia64.rpm
+gcc-objc++-4.1.2-50.el5.ia64.rpm
+gcc-objc-4.1.2-50.el5.ia64.rpm
+libgcc-4.1.2-50.el5.i386.rpm
+libgcc-4.1.2-50.el5.ia64.rpm
+libgcj-4.1.2-50.el5.ia64.rpm
+libgcj-devel-4.1.2-50.el5.ia64.rpm
+libgcj-src-4.1.2-50.el5.ia64.rpm
+libgfortran-4.1.2-50.el5.ia64.rpm
+libgnat-4.1.2-50.el5.i386.rpm
+libgnat-4.1.2-50.el5.ia64.rpm
+libmudflap-4.1.2-50.el5.ia64.rpm
+libmudflap-devel-4.1.2-50.el5.ia64.rpm
+libobjc-4.1.2-50.el5.i386.rpm
+libobjc-4.1.2-50.el5.ia64.rpm
+libstdc++-4.1.2-50.el5.i386.rpm
+libstdc++-4.1.2-50.el5.ia64.rpm
+libstdc++-devel-4.1.2-50.el5.ia64.rpm
+
+ppc:
+cpp-4.1.2-50.el5.ppc.rpm
+gcc-4.1.2-50.el5.ppc.rpm
+gcc-c++-4.1.2-50.el5.ppc.rpm
+gcc-debuginfo-4.1.2-50.el5.ppc.rpm
+gcc-debuginfo-4.1.2-50.el5.ppc64.rpm
+gcc-gfortran-4.1.2-50.el5.ppc.rpm
+gcc-java-4.1.2-50.el5.ppc.rpm
+gcc-objc++-4.1.2-50.el5.ppc.rpm
+gcc-objc-4.1.2-50.el5.ppc.rpm
+libgcc-4.1.2-50.el5.ppc.rpm
+libgcc-4.1.2-50.el5.ppc64.rpm
+libgcj-4.1.2-50.el5.ppc.rpm
+libgcj-4.1.2-50.el5.ppc64.rpm
+libgcj-devel-4.1.2-50.el5.ppc.rpm
+libgcj-devel-4.1.2-50.el5.ppc64.rpm
+libgcj-src-4.1.2-50.el5.ppc.rpm
+libgfortran-4.1.2-50.el5.ppc.rpm
+libgfortran-4.1.2-50.el5.ppc64.rpm
+libmudflap-4.1.2-50.el5.ppc.rpm
+libmudflap-4.1.2-50.el5.ppc64.rpm
+libmudflap-devel-4.1.2-50.el5.ppc.rpm
+libmudflap-devel-4.1.2-50.el5.ppc64.rpm
+libobjc-4.1.2-50.el5.ppc.rpm
+libobjc-4.1.2-50.el5.ppc64.rpm
+libstdc++-4.1.2-50.el5.ppc.rpm
+libstdc++-4.1.2-50.el5.ppc64.rpm
+libstdc++-devel-4.1.2-50.el5.ppc.rpm
+libstdc++-devel-4.1.2-50.el5.ppc64.rpm
+
+s390x:
+cpp-4.1.2-50.el5.s390x.rpm
+gcc-4.1.2-50.el5.s390x.rpm
+gcc-c++-4.1.2-50.el5.s390x.rpm
+gcc-debuginfo-4.1.2-50.el5.s390.rpm
+gcc-debuginfo-4.1.2-50.el5.s390x.rpm
+gcc-gfortran-4.1.2-50.el5.s390x.rpm
+gcc-java-4.1.2-50.el5.s390x.rpm
+gcc-objc++-4.1.2-50.el5.s390x.rpm
+gcc-objc-4.1.2-50.el5.s390x.rpm
+libgcc-4.1.2-50.el5.s390.rpm
+libgcc-4.1.2-50.el5.s390x.rpm
+libgcj-4.1.2-50.el5.s390.rpm
+libgcj-4.1.2-50.el5.s390x.rpm
+libgcj-devel-4.1.2-50.el5.s390.rpm
+libgcj-devel-4.1.2-50.el5.s390x.rpm
+libgcj-src-4.1.2-50.el5.s390x.rpm
+libgfortran-4.1.2-50.el5.s390.rpm
+libgfortran-4.1.2-50.el5.s390x.rpm
+libmudflap-4.1.2-50.el5.s390.rpm
+libmudflap-4.1.2-50.el5.s390x.rpm
+libmudflap-devel-4.1.2-50.el5.s390.rpm
+libmudflap-devel-4.1.2-50.el5.s390x.rpm
+libobjc-4.1.2-50.el5.s390.rpm
+libobjc-4.1.2-50.el5.s390x.rpm
+libstdc++-4.1.2-50.el5.s390.rpm
+libstdc++-4.1.2-50.el5.s390x.rpm
+libstdc++-devel-4.1.2-50.el5.s390.rpm
+libstdc++-devel-4.1.2-50.el5.s390x.rpm
+
+x86_64:
+cpp-4.1.2-50.el5.x86_64.rpm
+gcc-4.1.2-50.el5.x86_64.rpm
+gcc-c++-4.1.2-50.el5.x86_64.rpm
+gcc-debuginfo-4.1.2-50.el5.i386.rpm
+gcc-debuginfo-4.1.2-50.el5.x86_64.rpm
+gcc-gfortran-4.1.2-50.el5.x86_64.rpm
+gcc-gnat-4.1.2-50.el5.x86_64.rpm
+gcc-java-4.1.2-50.el5.x86_64.rpm
+gcc-objc++-4.1.2-50.el5.x86_64.rpm
+gcc-objc-4.1.2-50.el5.x86_64.rpm
+libgcc-4.1.2-50.el5.i386.rpm
+libgcc-4.1.2-50.el5.x86_64.rpm
+libgcj-4.1.2-50.el5.i386.rpm
+libgcj-4.1.2-50.el5.x86_64.rpm
+libgcj-devel-4.1.2-50.el5.i386.rpm
+libgcj-devel-4.1.2-50.el5.x86_64.rpm
+libgcj-src-4.1.2-50.el5.x86_64.rpm
+libgfortran-4.1.2-50.el5.i386.rpm
+libgfortran-4.1.2-50.el5.x86_64.rpm
+libgnat-4.1.2-50.el5.i386.rpm
+libgnat-4.1.2-50.el5.x86_64.rpm
+libmudflap-4.1.2-50.el5.i386.rpm
+libmudflap-4.1.2-50.el5.x86_64.rpm
+libmudflap-devel-4.1.2-50.el5.i386.rpm
+libmudflap-devel-4.1.2-50.el5.x86_64.rpm
+libobjc-4.1.2-50.el5.i386.rpm
+libobjc-4.1.2-50.el5.x86_64.rpm
+libstdc++-4.1.2-50.el5.i386.rpm
+libstdc++-4.1.2-50.el5.x86_64.rpm
+libstdc++-devel-4.1.2-50.el5.i386.rpm
+libstdc++-devel-4.1.2-50.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0831.html">https://www.redhat.com/security/data/cve/CVE-2010-0831.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2322.html">https://www.redhat.com/security/data/cve/CVE-2010-2322.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNLuECXlSAg2UNWIIRAuMeAKCqukEJPNB03goL4dQwWAoraCwLbACfYuzW
+KG8veFn1SuGfbJ5DIKqj7+I=
+=3oBt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

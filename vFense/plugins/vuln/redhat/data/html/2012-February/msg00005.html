@@ -1,0 +1,524 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0079&#45;01] Critical: firefox security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 31 Jan 2012 20:16:06 &#45;0500 -->
+<!--X-Message-Id: 201202010116.q111Fxs5012927@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0079-01] Critical: firefox security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0079-01] Critical: firefox security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0079-01] Critical: firefox security update</li>
+<li><em>Date</em>: Wed, 1 Feb 2012 01:15:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: firefox security update
+Advisory ID:       RHSA-2012:0079-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0079.html">https://rhn.redhat.com/errata/RHSA-2012-0079.html</a>
+Issue date:        2012-01-31
+CVE Names:         CVE-2011-3659 CVE-2011-3670 CVE-2012-0442 
+                   CVE-2012-0444 CVE-2012-0449 
+=====================================================================
+
+1. Summary:
+
+Updated firefox packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Mozilla Firefox is an open source web browser. XULRunner provides the XUL
+Runtime environment for Mozilla Firefox.
+
+A use-after-free flaw was found in the way Firefox removed nsDOMAttribute
+child nodes. In certain circumstances, due to the premature notification
+of AttributeChildRemoved, a malicious script could possibly use this flaw
+to cause Firefox to crash or, potentially, execute arbitrary code with the
+privileges of the user running Firefox. (CVE-2011-3659)
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Firefox to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+Firefox. (CVE-2012-0442)
+
+A flaw was found in the way Firefox parsed Ogg Vorbis media files. A web
+page containing a malicious Ogg Vorbis media file could cause Firefox to
+crash or, potentially, execute arbitrary code with the privileges of the
+user running Firefox. (CVE-2012-0444)
+
+A flaw was found in the way Firefox parsed certain Scalable Vector Graphics
+(SVG) image files that contained eXtensible Style Sheet Language
+Transformations (XSLT). A web page containing a malicious SVG image file
+could cause Firefox to crash or, potentially, execute arbitrary code with
+the privileges of the user running Firefox. (CVE-2012-0449)
+
+The same-origin policy in Firefox treated <a  rel="nofollow" href="http://example.com">http://example.com</a> and
+<a  rel="nofollow" href="http://[example.com">http://[example.com</a>] as interchangeable. A malicious script could possibly
+use this flaw to gain access to sensitive information (such as a client's
+IP and user e-mail address, or httpOnly cookies) that may be included in
+HTTP proxy error replies, generated in response to invalid URLs using
+square brackets. (CVE-2011-3670)
+
+For technical details regarding these flaws, refer to the Mozilla security
+advisories for Firefox 3.6.26. You can find a link to the Mozilla
+advisories in the References section of this erratum.
+
+All Firefox users should upgrade to these updated packages, which contain
+Firefox version 3.6.26, which corrects these issues. After installing the
+update, Firefox must be restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+785085 - CVE-2012-0442 Mozilla: memory safety hazards in 10.0/1.9.2.26 (MFSA 2012-01)
+785464 - CVE-2011-3670 Mozilla: Same-origin bypass using IPv6-like hostname syntax (MFSA 2012-02)
+785966 - CVE-2012-0449 Mozilla: Crash when rendering SVG+XSLT (MFSA 2012-08)
+786026 - CVE-2012-0444 Firefox: Ogg Vorbis Decoding Memory Corruption (MFSA 2012-07)
+786258 - CVE-2011-3659 Mozilla: child nodes from nsDOMAttribute still accessible after removal of nodes (MFSA 2012-04)
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm</a>
+
+i386:
+firefox-3.6.26-2.el4.i386.rpm
+firefox-debuginfo-3.6.26-2.el4.i386.rpm
+
+ia64:
+firefox-3.6.26-2.el4.ia64.rpm
+firefox-debuginfo-3.6.26-2.el4.ia64.rpm
+
+ppc:
+firefox-3.6.26-2.el4.ppc.rpm
+firefox-debuginfo-3.6.26-2.el4.ppc.rpm
+
+s390:
+firefox-3.6.26-2.el4.s390.rpm
+firefox-debuginfo-3.6.26-2.el4.s390.rpm
+
+s390x:
+firefox-3.6.26-2.el4.s390x.rpm
+firefox-debuginfo-3.6.26-2.el4.s390x.rpm
+
+x86_64:
+firefox-3.6.26-2.el4.x86_64.rpm
+firefox-debuginfo-3.6.26-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm</a>
+
+i386:
+firefox-3.6.26-2.el4.i386.rpm
+firefox-debuginfo-3.6.26-2.el4.i386.rpm
+
+x86_64:
+firefox-3.6.26-2.el4.x86_64.rpm
+firefox-debuginfo-3.6.26-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm</a>
+
+i386:
+firefox-3.6.26-2.el4.i386.rpm
+firefox-debuginfo-3.6.26-2.el4.i386.rpm
+
+ia64:
+firefox-3.6.26-2.el4.ia64.rpm
+firefox-debuginfo-3.6.26-2.el4.ia64.rpm
+
+x86_64:
+firefox-3.6.26-2.el4.x86_64.rpm
+firefox-debuginfo-3.6.26-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.6.26-2.el4.src.rpm</a>
+
+i386:
+firefox-3.6.26-2.el4.i386.rpm
+firefox-debuginfo-3.6.26-2.el4.i386.rpm
+
+ia64:
+firefox-3.6.26-2.el4.ia64.rpm
+firefox-debuginfo-3.6.26-2.el4.ia64.rpm
+
+x86_64:
+firefox-3.6.26-2.el4.x86_64.rpm
+firefox-debuginfo-3.6.26-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-3.6.26-1.el5_7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-3.6.26-1.el5_7.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm</a>
+
+i386:
+firefox-3.6.26-1.el5_7.i386.rpm
+firefox-debuginfo-3.6.26-1.el5_7.i386.rpm
+xulrunner-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+
+x86_64:
+firefox-3.6.26-1.el5_7.i386.rpm
+firefox-3.6.26-1.el5_7.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el5_7.i386.rpm
+firefox-debuginfo-3.6.26-1.el5_7.x86_64.rpm
+xulrunner-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-1.9.2.26-1.el5_7.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.i386.rpm
+
+x86_64:
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-3.6.26-1.el5_7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-3.6.26-1.el5_7.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el5_7.src.rpm</a>
+
+i386:
+firefox-3.6.26-1.el5_7.i386.rpm
+firefox-debuginfo-3.6.26-1.el5_7.i386.rpm
+xulrunner-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.i386.rpm
+
+ia64:
+firefox-3.6.26-1.el5_7.ia64.rpm
+firefox-debuginfo-3.6.26-1.el5_7.ia64.rpm
+xulrunner-1.9.2.26-1.el5_7.ia64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.ia64.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.ia64.rpm
+
+ppc:
+firefox-3.6.26-1.el5_7.ppc.rpm
+firefox-debuginfo-3.6.26-1.el5_7.ppc.rpm
+xulrunner-1.9.2.26-1.el5_7.ppc.rpm
+xulrunner-1.9.2.26-1.el5_7.ppc64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.ppc.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.ppc64.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.ppc.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.ppc64.rpm
+
+s390x:
+firefox-3.6.26-1.el5_7.s390.rpm
+firefox-3.6.26-1.el5_7.s390x.rpm
+firefox-debuginfo-3.6.26-1.el5_7.s390.rpm
+firefox-debuginfo-3.6.26-1.el5_7.s390x.rpm
+xulrunner-1.9.2.26-1.el5_7.s390.rpm
+xulrunner-1.9.2.26-1.el5_7.s390x.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.s390.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.s390x.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.s390.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.s390x.rpm
+
+x86_64:
+firefox-3.6.26-1.el5_7.i386.rpm
+firefox-3.6.26-1.el5_7.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el5_7.i386.rpm
+firefox-debuginfo-3.6.26-1.el5_7.x86_64.rpm
+xulrunner-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-1.9.2.26-1.el5_7.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-debuginfo-1.9.2.26-1.el5_7.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.i386.rpm
+xulrunner-devel-1.9.2.26-1.el5_7.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+
+x86_64:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-3.6.26-1.el6_2.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.x86_64.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+
+x86_64:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+x86_64:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-3.6.26-1.el6_2.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.x86_64.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+
+ppc64:
+firefox-3.6.26-1.el6_2.ppc.rpm
+firefox-3.6.26-1.el6_2.ppc64.rpm
+firefox-debuginfo-3.6.26-1.el6_2.ppc.rpm
+firefox-debuginfo-3.6.26-1.el6_2.ppc64.rpm
+xulrunner-1.9.2.26-1.el6_2.ppc.rpm
+xulrunner-1.9.2.26-1.el6_2.ppc64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.ppc.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.ppc64.rpm
+
+s390x:
+firefox-3.6.26-1.el6_2.s390.rpm
+firefox-3.6.26-1.el6_2.s390x.rpm
+firefox-debuginfo-3.6.26-1.el6_2.s390.rpm
+firefox-debuginfo-3.6.26-1.el6_2.s390x.rpm
+xulrunner-1.9.2.26-1.el6_2.s390.rpm
+xulrunner-1.9.2.26-1.el6_2.s390x.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.s390.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.s390x.rpm
+
+x86_64:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-3.6.26-1.el6_2.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.x86_64.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+
+ppc64:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.ppc.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.ppc64.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.ppc.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.ppc64.rpm
+
+s390x:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.s390.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.s390x.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.s390.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.s390x.rpm
+
+x86_64:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/firefox-3.6.26-1.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+
+x86_64:
+firefox-3.6.26-1.el6_2.i686.rpm
+firefox-3.6.26-1.el6_2.x86_64.rpm
+firefox-debuginfo-3.6.26-1.el6_2.i686.rpm
+firefox-debuginfo-3.6.26-1.el6_2.x86_64.rpm
+xulrunner-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-1.9.2.26-1.el6_2.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+
+x86_64:
+xulrunner-debuginfo-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-debuginfo-1.9.2.26-1.el6_2.x86_64.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.i686.rpm
+xulrunner-devel-1.9.2.26-1.el6_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3659.html">https://www.redhat.com/security/data/cve/CVE-2011-3659.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3670.html">https://www.redhat.com/security/data/cve/CVE-2011-3670.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0442.html">https://www.redhat.com/security/data/cve/CVE-2012-0442.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0444.html">https://www.redhat.com/security/data/cve/CVE-2012-0444.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0449.html">https://www.redhat.com/security/data/cve/CVE-2012-0449.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/known-vulnerabilities/firefox36.html#firefox3.6.26">http://www.mozilla.org/security/known-vulnerabilities/firefox36.html#firefox3.6.26</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPKJI4XlSAg2UNWIIRAu86AJ90vRQABz4iAP8lTwpgWhitoNBuVgCeP4u+
+iCHNxUGgZ8ljJAn819lOK5I=
+=W7UK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

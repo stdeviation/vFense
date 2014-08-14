@@ -1,0 +1,175 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1041&#45;01] Critical: Red Hat JBoss Web Framework Kit 2.3.0	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Jul 2013 21:25:08 &#45;0400 -->
+<!--X-Message-Id: 201307110125.r6B1P2dZ018662@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1041-01] Critical: Red Hat JBoss Web Framework Kit 2.3.0	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1041-01] Critical: Red Hat JBoss Web Framework Kit 2.3.0	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1041-01] Critical: Red Hat JBoss Web Framework Kit 2.3.0	update</li>
+<li><em>Date</em>: Thu, 11 Jul 2013 01:25:01 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: Red Hat JBoss Web Framework Kit 2.3.0 update
+Advisory ID:       RHSA-2013:1041-01
+Product:           Red Hat JBoss Web Framework Kit
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1041.html">https://rhn.redhat.com/errata/RHSA-2013-1041.html</a>
+Issue date:        2013-07-10
+CVE Names:         CVE-2013-2165 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Web Framework Kit 2.3.0, which fixes one security issue,
+various bugs, and adds enhancements, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+Red Hat JBoss Web Framework Kit combines popular open source web frameworks
+into a single solution for Java applications.
+
+This release serves as a replacement for Red Hat JBoss Web Framework Kit
+2.2.0, and includes bug fixes and enhancements. Refer to the 2.3.0
+Release Notes for information on the most significant of these changes,
+available shortly from <a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+This release also fixes the following security issue:
+
+A flaw was found in the way RichFaces ResourceBuilderImpl handled
+deserialization. A remote attacker could use this flaw to trigger the
+execution of the deserialization methods in any serializable class deployed
+on the server. This could lead to a variety of security impacts depending
+on the deserialization logic of these classes. (CVE-2013-2165)
+
+The fix for this issue introduces a whitelist to limit classes that can be
+deserialized by RichFaces.
+
+If you require to whitelist a class that is not already listed, for
+example, a custom class, you can achieve this by following one of these
+methods:
+
+Method 1: Implementing the SerializableResource interface.
+In RichFaces 3, this is defined at
+org.ajax4jsf.resource.SerializableResource and in RichFaces 4/5, at
+org.richfaces.resource.SerializableResource.
+
+Method 2: Adding the class to the resource-serialization.properties file
+(a default properties file is provided once this update is applied).
+To do this you can extend the framework provided properties file that is
+available under org.ajax4jsf.resource in RichFaces 3 and
+org.richfaces.resource in RichFaces 4/5. The modified properties file has
+to be copied into the classpath of your deployment under the
+version-specific packages.
+
+Where possible, it is recommended that Method 1 be followed.
+
+Red Hat would like to thank Takeshi Terada (Mitsui Bussan Secure
+Directions, Inc.) for reporting this issue.
+
+Warning: Before applying this update, back up your existing installation of
+Red Hat JBoss Enterprise Application Platform or Red Hat JBoss Web Server,
+and applications deployed to it.
+
+All users of Red Hat JBoss Web Framework Kit 2.2.0 as provided from the Red
+Hat Customer Portal are advised to upgrade to Red Hat JBoss Web Framework
+Kit 2.3.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing installation of Red Hat JBoss Enterprise Application Platform or
+Red Hat JBoss Web Server, and applications deployed to it.
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+973570 - CVE-2013-2165 JBoss RichFaces: Remote code execution due to insecure deserialization
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2165.html">https://www.redhat.com/security/data/cve/CVE-2013-2165.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR3gldXlSAg2UNWIIRAi2sAKCLBq5XRA6iugyDFso8BPSVVP1/NgCfc5Nm
+o1ezvGVgBpqWB0tAdv41+rc=
+=qHkU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

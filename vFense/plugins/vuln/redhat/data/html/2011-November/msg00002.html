@@ -1,0 +1,300 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1422&#45;01] Moderate: openswan security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Nov 2011 18:31:33 &#45;0400 -->
+<!--X-Message-Id: 201111022231.pA2MVRFI031240@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1422-01] Moderate: openswan security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1422-01] Moderate: openswan security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1422-01] Moderate: openswan security update</li>
+<li><em>Date</em>: Wed, 2 Nov 2011 22:31:27 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openswan security update
+Advisory ID:       RHSA-2011:1422-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1422.html">https://rhn.redhat.com/errata/RHSA-2011-1422.html</a>
+Issue date:        2011-11-02
+CVE Names:         CVE-2011-4073 
+=====================================================================
+
+1. Summary:
+
+Updated openswan packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Openswan is a free implementation of Internet Protocol Security (IPsec)
+and Internet Key Exchange (IKE). IPsec uses strong cryptography to provide
+both authentication and encryption services. These services allow you to
+build secure tunnels through untrusted networks.
+
+A use-after-free flaw was found in the way Openswan's pluto IKE daemon used
+cryptographic helpers. A remote, authenticated attacker could send a
+specially-crafted IKE packet that would crash the pluto daemon. This issue
+only affected SMP (symmetric multiprocessing) systems that have the
+cryptographic helpers enabled. The helpers are disabled by default on Red
+Hat Enterprise Linux 5, but enabled by default on Red Hat Enterprise Linux
+6. (CVE-2011-4073)
+
+Red Hat would like to thank the Openswan project for reporting this issue.
+Upstream acknowledges Petar Tsankov, Mohammad Torabi Dashti and David Basin
+of the information security group at ETH Zurich as the original reporters.
+
+All users of openswan are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue. After installing
+this update, the ipsec service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+748961 - CVE-2011-4073 openswan: use-after-free vulnerability leads to DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openswan-2.6.21-5.el5_7.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openswan-2.6.21-5.el5_7.6.src.rpm</a>
+
+i386:
+openswan-2.6.21-5.el5_7.6.i386.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.i386.rpm
+openswan-doc-2.6.21-5.el5_7.6.i386.rpm
+
+x86_64:
+openswan-2.6.21-5.el5_7.6.x86_64.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.x86_64.rpm
+openswan-doc-2.6.21-5.el5_7.6.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openswan-2.6.21-5.el5_7.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openswan-2.6.21-5.el5_7.6.src.rpm</a>
+
+i386:
+openswan-2.6.21-5.el5_7.6.i386.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.i386.rpm
+openswan-doc-2.6.21-5.el5_7.6.i386.rpm
+
+ia64:
+openswan-2.6.21-5.el5_7.6.ia64.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.ia64.rpm
+openswan-doc-2.6.21-5.el5_7.6.ia64.rpm
+
+ppc:
+openswan-2.6.21-5.el5_7.6.ppc.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.ppc.rpm
+openswan-doc-2.6.21-5.el5_7.6.ppc.rpm
+
+s390x:
+openswan-2.6.21-5.el5_7.6.s390x.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.s390x.rpm
+openswan-doc-2.6.21-5.el5_7.6.s390x.rpm
+
+x86_64:
+openswan-2.6.21-5.el5_7.6.x86_64.rpm
+openswan-debuginfo-2.6.21-5.el5_7.6.x86_64.rpm
+openswan-doc-2.6.21-5.el5_7.6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-2.6.32-4.el6_1.4.i686.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+
+x86_64:
+openswan-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+openswan-doc-2.6.32-4.el6_1.4.i686.rpm
+
+x86_64:
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-doc-2.6.32-4.el6_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-2.6.32-4.el6_1.4.i686.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+
+ppc64:
+openswan-2.6.32-4.el6_1.4.ppc64.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.ppc64.rpm
+
+s390x:
+openswan-2.6.32-4.el6_1.4.s390x.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.s390x.rpm
+
+x86_64:
+openswan-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+openswan-doc-2.6.32-4.el6_1.4.i686.rpm
+
+ppc64:
+openswan-debuginfo-2.6.32-4.el6_1.4.ppc64.rpm
+openswan-doc-2.6.32-4.el6_1.4.ppc64.rpm
+
+s390x:
+openswan-debuginfo-2.6.32-4.el6_1.4.s390x.rpm
+openswan-doc-2.6.32-4.el6_1.4.s390x.rpm
+
+x86_64:
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-doc-2.6.32-4.el6_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-2.6.32-4.el6_1.4.i686.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+
+x86_64:
+openswan-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openswan-2.6.32-4.el6_1.4.src.rpm</a>
+
+i386:
+openswan-debuginfo-2.6.32-4.el6_1.4.i686.rpm
+openswan-doc-2.6.32-4.el6_1.4.i686.rpm
+
+x86_64:
+openswan-debuginfo-2.6.32-4.el6_1.4.x86_64.rpm
+openswan-doc-2.6.32-4.el6_1.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4073.html">https://www.redhat.com/security/data/cve/CVE-2011-4073.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOscSkXlSAg2UNWIIRAk+MAKCAnXN7x9EfSpbysZGf8txPzXDRswCfXl3R
+yJlAbwI4reBvE/Jb/DTRKq8=
+=4o9v
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

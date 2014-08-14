@@ -1,0 +1,423 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1241&#45;01] Moderate: ecryptfs&#45;utils security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 31 Aug 2011 16:32:39 &#45;0400 -->
+<!--X-Message-Id: 201108312032.p7VKWWqI031544@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1241-01] Moderate: ecryptfs-utils security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1241-01] Moderate: ecryptfs-utils security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1241-01] Moderate: ecryptfs-utils security update</li>
+<li><em>Date</em>: Wed, 31 Aug 2011 20:32:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ecryptfs-utils security update
+Advisory ID:       RHSA-2011:1241-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1241.html">https://rhn.redhat.com/errata/RHSA-2011-1241.html</a>
+Issue date:        2011-08-31
+CVE Names:         CVE-2011-1831 CVE-2011-1832 CVE-2011-1834 
+                   CVE-2011-1835 CVE-2011-1837 CVE-2011-3145 
+=====================================================================
+
+1. Summary:
+
+Updated ecryptfs-utils packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+eCryptfs is a stacked, cryptographic file system. It is transparent to the
+underlying file system and provides per-file granularity. eCryptfs is
+released as a Technology Preview for Red Hat Enterprise Linux 5 and 6.
+
+The setuid mount.ecryptfs_private utility allows users to mount an eCryptfs
+file system. This utility can only be run by users in the &quot;ecryptfs&quot; group.
+
+A race condition flaw was found in the way mount.ecryptfs_private checked
+the permissions of a requested mount point when mounting an encrypted file
+system. A local attacker could possibly use this flaw to escalate their
+privileges by mounting over an arbitrary directory. (CVE-2011-1831)
+
+A race condition flaw in umount.ecryptfs_private could allow a local
+attacker to unmount an arbitrary file system. (CVE-2011-1832)
+
+It was found that mount.ecryptfs_private did not handle certain errors
+correctly when updating the mtab (mounted file systems table) file,
+allowing a local attacker to corrupt the mtab file and possibly unmount an
+arbitrary file system. (CVE-2011-1834)
+
+An insecure temporary file use flaw was found in the ecryptfs-setup-private
+script. A local attacker could use this script to insert their own key that
+will subsequently be used by a new user, possibly giving the attacker
+access to the user's encrypted data if existing file permissions allow
+access. (CVE-2011-1835)
+
+A race condition flaw in mount.ecryptfs_private could allow a local
+attacker to overwrite arbitrary files. (CVE-2011-1837)
+
+A race condition flaw in the way temporary files were accessed in
+mount.ecryptfs_private could allow a malicious, local user to make
+arbitrary modifications to the mtab file. (CVE-2011-3145)
+
+A race condition flaw was found in the way mount.ecryptfs_private checked
+the permissions of the directory to mount. A local attacker could use this
+flaw to mount (and then access) a directory they would otherwise not have
+access to. Note: The fix for this issue is incomplete until a kernel-space
+change is made. Future Red Hat Enterprise Linux 5 and 6 kernel updates
+will correct this issue. (CVE-2011-1833)
+
+Red Hat would like to thank the Ubuntu Security Team for reporting these
+issues. The Ubuntu Security Team acknowledges Vasiliy Kulikov of Openwall
+and Dan Rosenberg as the original reporters of CVE-2011-1831,
+CVE-2011-1832, and CVE-2011-1833; Dan Rosenberg and Marc Deslauriers as the
+original reporters of CVE-2011-1834; Marc Deslauriers as the original
+reporter of CVE-2011-1835; and Vasiliy Kulikov of Openwall as the original
+reporter of CVE-2011-1837.
+
+Users of ecryptfs-utils are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+729465 - CVE-2011-1831 CVE-2011-1832 CVE-2011-1834 CVE-2011-1835 CVE-2011-1837 ecryptfs: multiple flaws to mount/umount arbitrary locations and possibly disclose confidential information
+732607 - CVE-2011-3145 ecryptfs-utils: incorrect mtab group ownership
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm</a>
+
+i386:
+ecryptfs-utils-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.i386.rpm
+
+x86_64:
+ecryptfs-utils-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm</a>
+
+i386:
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.i386.rpm
+
+x86_64:
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ecryptfs-utils-75-5.el5_7.2.src.rpm</a>
+
+i386:
+ecryptfs-utils-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.i386.rpm
+
+ia64:
+ecryptfs-utils-75-5.el5_7.2.ia64.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.ia64.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.ia64.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.ia64.rpm
+
+ppc:
+ecryptfs-utils-75-5.el5_7.2.ppc.rpm
+ecryptfs-utils-75-5.el5_7.2.ppc64.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.ppc.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.ppc64.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.ppc.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.ppc64.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.ppc.rpm
+
+s390x:
+ecryptfs-utils-75-5.el5_7.2.s390.rpm
+ecryptfs-utils-75-5.el5_7.2.s390x.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.s390.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.s390x.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.s390.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.s390x.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.s390x.rpm
+
+x86_64:
+ecryptfs-utils-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-debuginfo-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.i386.rpm
+ecryptfs-utils-devel-75-5.el5_7.2.x86_64.rpm
+ecryptfs-utils-gui-75-5.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+
+x86_64:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-python-82-6.el6_1.3.i686.rpm
+
+x86_64:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-python-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+x86_64:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+x86_64:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-python-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+
+ppc64:
+ecryptfs-utils-82-6.el6_1.3.ppc.rpm
+ecryptfs-utils-82-6.el6_1.3.ppc64.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.ppc.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.ppc64.rpm
+
+s390x:
+ecryptfs-utils-82-6.el6_1.3.s390.rpm
+ecryptfs-utils-82-6.el6_1.3.s390x.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.s390.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.s390x.rpm
+
+x86_64:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-python-82-6.el6_1.3.i686.rpm
+
+ppc64:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.ppc.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.ppc64.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.ppc.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.ppc64.rpm
+ecryptfs-utils-python-82-6.el6_1.3.ppc64.rpm
+
+s390x:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.s390.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.s390x.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.s390.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.s390x.rpm
+ecryptfs-utils-python-82-6.el6_1.3.s390x.rpm
+
+x86_64:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-python-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+
+x86_64:
+ecryptfs-utils-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ecryptfs-utils-82-6.el6_1.3.src.rpm</a>
+
+i386:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-python-82-6.el6_1.3.i686.rpm
+
+x86_64:
+ecryptfs-utils-debuginfo-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-debuginfo-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.i686.rpm
+ecryptfs-utils-devel-82-6.el6_1.3.x86_64.rpm
+ecryptfs-utils-python-82-6.el6_1.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1831.html">https://www.redhat.com/security/data/cve/CVE-2011-1831.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1832.html">https://www.redhat.com/security/data/cve/CVE-2011-1832.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1834.html">https://www.redhat.com/security/data/cve/CVE-2011-1834.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1835.html">https://www.redhat.com/security/data/cve/CVE-2011-1835.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1837.html">https://www.redhat.com/security/data/cve/CVE-2011-1837.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3145.html">https://www.redhat.com/security/data/cve/CVE-2011-3145.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOXppQXlSAg2UNWIIRArFZAJ0e3ysnei/aGyLQ4iAblas8cDoHSACdE4eY
+uCcETaxbdGWj+5HyqbGSUv4=
+=n79D
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

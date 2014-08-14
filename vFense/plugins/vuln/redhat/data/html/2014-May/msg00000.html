@@ -1,0 +1,160 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0460&#45;01] Important: openshift&#45;origin&#45;broker&#45;util security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 1 May 2014 16:34:11 &#45;0400 -->
+<!--X-Message-Id: 201405012034.s41KYBBF020163@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0460-01] Important: openshift-origin-broker-util security	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0460-01] Important: openshift-origin-broker-util security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0460-01] Important: openshift-origin-broker-util security	update</li>
+<li><em>Date</em>: Thu, 1 May 2014 20:34:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openshift-origin-broker-util security update
+Advisory ID:       RHSA-2014:0460-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0460.html">https://rhn.redhat.com/errata/RHSA-2014-0460.html</a>
+Issue date:        2014-05-01
+CVE Names:         CVE-2014-0164 
+=====================================================================
+
+1. Summary:
+
+An updated openshift-origin-broker-util package that fixes one security
+issue is now available for Red Hat OpenShift Enterprise 2.0.5.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHOSE Infrastructure 2.0 - noarch
+
+3. Description:
+
+The openshift-origin-broker-util package provides utility scripts for the
+OpenShift Broker service, which manages all user logins, DNS name
+resolution, application states, and general orchestration of the
+applications.
+
+It was discovered that the mcollective client.cfg configuration file was
+world-readable by default. A malicious, local user on a host with the
+OpenShift Broker installed could read sensitive information regarding the
+mcollective installation, including mcollective authentication credentials.
+A malicious user able to obtain said credentials would potentially have
+full control over all OpenShift nodes managed via mcollective.
+(CVE-2014-0164)
+
+This issue was discovered by Jeremy Choi of the Red Hat Quality
+Engineering Group.
+
+All openshift-origin-broker-util users are advised to upgrade to this
+updated package, which corrects this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1083847 - CVE-2014-0164 mcollective: world readable client config
+
+6. Package List:
+
+RHOSE Infrastructure 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-util-1.17.6.6-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-util-1.17.6.6-1.el6op.src.rpm</a>
+
+noarch:
+openshift-origin-broker-util-1.17.6.6-1.el6op.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0164.html">https://www.redhat.com/security/data/cve/CVE-2014-0164.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTYq+UXlSAg2UNWIIRAgMgAJwLX5OqzCfTz3fwp7MCi/fjg208ogCgtRQ2
+AhZpSD9TgRE9H93CzwFRZEQ=
+=eJ6S
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

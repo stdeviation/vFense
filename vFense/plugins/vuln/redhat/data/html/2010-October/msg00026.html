@@ -1,0 +1,248 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0787&#45;01] Important: glibc security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Oct 2010 19:31:10 &#45;0400 -->
+<!--X-Message-Id: 201010202331.o9KNV45E010819@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0787-01] Important: glibc security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0787-01] Important: glibc security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0787-01] Important: glibc security update</li>
+<li><em>Date</em>: Wed, 20 Oct 2010 17:31:04 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: glibc security update
+Advisory ID:       RHSA-2010:0787-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0787.html">https://rhn.redhat.com/errata/RHSA-2010-0787.html</a>
+Issue date:        2010-10-20
+CVE Names:         CVE-2010-3847 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The glibc packages contain the standard C libraries used by multiple
+programs on the system. These packages contain the standard C and the
+standard math libraries. Without these two libraries, a Linux system cannot
+function properly.
+
+It was discovered that the glibc dynamic linker/loader did not handle the
+$ORIGIN dynamic string token set in the LD_AUDIT environment variable
+securely. A local attacker with write access to a file system containing
+setuid or setgid binaries could use this flaw to escalate their privileges.
+(CVE-2010-3847)
+
+Red Hat would like to thank Tavis Ormandy for reporting this issue.
+
+All users should upgrade to these updated packages, which contain a
+backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+643306 - CVE-2010-3847 glibc: ld.so insecure handling of $ORIGIN in LD_AUDIT for setuid/setgid programs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-49.el5_5.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-49.el5_5.6.src.rpm</a>
+
+i386:
+glibc-2.5-49.el5_5.6.i386.rpm
+glibc-2.5-49.el5_5.6.i686.rpm
+glibc-common-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i686.rpm
+glibc-debuginfo-common-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.i386.rpm
+glibc-headers-2.5-49.el5_5.6.i386.rpm
+glibc-utils-2.5-49.el5_5.6.i386.rpm
+nscd-2.5-49.el5_5.6.i386.rpm
+
+x86_64:
+glibc-2.5-49.el5_5.6.i686.rpm
+glibc-2.5-49.el5_5.6.x86_64.rpm
+glibc-common-2.5-49.el5_5.6.x86_64.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i686.rpm
+glibc-debuginfo-2.5-49.el5_5.6.x86_64.rpm
+glibc-debuginfo-common-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.x86_64.rpm
+glibc-headers-2.5-49.el5_5.6.x86_64.rpm
+glibc-utils-2.5-49.el5_5.6.x86_64.rpm
+nscd-2.5-49.el5_5.6.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-49.el5_5.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-49.el5_5.6.src.rpm</a>
+
+i386:
+glibc-2.5-49.el5_5.6.i386.rpm
+glibc-2.5-49.el5_5.6.i686.rpm
+glibc-common-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i686.rpm
+glibc-debuginfo-common-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.i386.rpm
+glibc-headers-2.5-49.el5_5.6.i386.rpm
+glibc-utils-2.5-49.el5_5.6.i386.rpm
+nscd-2.5-49.el5_5.6.i386.rpm
+
+ia64:
+glibc-2.5-49.el5_5.6.i686.rpm
+glibc-2.5-49.el5_5.6.ia64.rpm
+glibc-common-2.5-49.el5_5.6.ia64.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i686.rpm
+glibc-debuginfo-2.5-49.el5_5.6.ia64.rpm
+glibc-debuginfo-common-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.ia64.rpm
+glibc-headers-2.5-49.el5_5.6.ia64.rpm
+glibc-utils-2.5-49.el5_5.6.ia64.rpm
+nscd-2.5-49.el5_5.6.ia64.rpm
+
+ppc:
+glibc-2.5-49.el5_5.6.ppc.rpm
+glibc-2.5-49.el5_5.6.ppc64.rpm
+glibc-common-2.5-49.el5_5.6.ppc.rpm
+glibc-debuginfo-2.5-49.el5_5.6.ppc.rpm
+glibc-debuginfo-2.5-49.el5_5.6.ppc64.rpm
+glibc-devel-2.5-49.el5_5.6.ppc.rpm
+glibc-devel-2.5-49.el5_5.6.ppc64.rpm
+glibc-headers-2.5-49.el5_5.6.ppc.rpm
+glibc-utils-2.5-49.el5_5.6.ppc.rpm
+nscd-2.5-49.el5_5.6.ppc.rpm
+
+s390x:
+glibc-2.5-49.el5_5.6.s390.rpm
+glibc-2.5-49.el5_5.6.s390x.rpm
+glibc-common-2.5-49.el5_5.6.s390x.rpm
+glibc-debuginfo-2.5-49.el5_5.6.s390.rpm
+glibc-debuginfo-2.5-49.el5_5.6.s390x.rpm
+glibc-devel-2.5-49.el5_5.6.s390.rpm
+glibc-devel-2.5-49.el5_5.6.s390x.rpm
+glibc-headers-2.5-49.el5_5.6.s390x.rpm
+glibc-utils-2.5-49.el5_5.6.s390x.rpm
+nscd-2.5-49.el5_5.6.s390x.rpm
+
+x86_64:
+glibc-2.5-49.el5_5.6.i686.rpm
+glibc-2.5-49.el5_5.6.x86_64.rpm
+glibc-common-2.5-49.el5_5.6.x86_64.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i386.rpm
+glibc-debuginfo-2.5-49.el5_5.6.i686.rpm
+glibc-debuginfo-2.5-49.el5_5.6.x86_64.rpm
+glibc-debuginfo-common-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.i386.rpm
+glibc-devel-2.5-49.el5_5.6.x86_64.rpm
+glibc-headers-2.5-49.el5_5.6.x86_64.rpm
+glibc-utils-2.5-49.el5_5.6.x86_64.rpm
+nscd-2.5-49.el5_5.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3847.html">https://www.redhat.com/security/data/cve/CVE-2010-3847.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMv3uSXlSAg2UNWIIRAmI9AJ44IJRBJW+fPulMdAWx0b8Ss6OeTgCdGhi7
+LTAnaUtraxS2nd8UnXSUFhc=
+=ccj+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

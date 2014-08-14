@@ -1,0 +1,199 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1209&#45;01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.1.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 4 Sep 2013 15:06:08 &#45;0400 -->
+<!--X-Message-Id: 201309041906.r84J67cj029528@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1209-01] Moderate: Red Hat JBoss Enterprise Application	Platf</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1209-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.1.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1209-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.1.1 update</li>
+<li><em>Date</em>: Wed, 4 Sep 2013 19:06:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Enterprise Application Platform 6.1.1 update
+Advisory ID:       RHSA-2013:1209-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1209.html">https://rhn.redhat.com/errata/RHSA-2013-1209.html</a>
+Issue date:        2013-09-04
+CVE Names:         CVE-2012-3499 CVE-2012-4558 CVE-2013-1862 
+                   CVE-2013-1896 CVE-2013-1921 CVE-2013-2172 
+                   CVE-2013-4112 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Enterprise Application Platform 6.1.1, which fixes multiple
+security issues, various bugs, and adds enhancements, is now available
+from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+This release serves as a replacement for Red Hat JBoss Enterprise
+Application Platform 6.1.0, and includes bug fixes and enhancements. Refer
+to the 6.1.1 Release Notes for information on the most significant of these
+changes, available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+Security fixes:
+
+Cross-site scripting (XSS) flaws were found in the mod_info, mod_status,
+mod_imagemap, mod_ldap, and mod_proxy_ftp modules. An attacker could
+possibly use these flaws to perform XSS attacks if they were able to make
+the victim's browser generate an HTTP request with a specially-crafted Host
+header. (CVE-2012-3499)
+
+Cross-site scripting (XSS) flaws were found in the mod_proxy_balancer
+module's manager web interface. If a remote attacker could trick a user,
+who was logged into the manager web interface, into visiting a
+specially-crafted URL, it would lead to arbitrary web script execution in
+the context of the user's manager interface session. (CVE-2012-4558)
+
+A flaw was found in the way the mod_dav module handled merge requests. An
+attacker could use this flaw to send a crafted merge request that contains
+URIs that are not configured for DAV, causing the httpd child process to
+crash. (CVE-2013-1896)
+
+A flaw was found in the way Apache Santuario XML Security for Java
+validated XML signatures. Santuario allowed a signature to specify an
+arbitrary canonicalization algorithm, which would be applied to the
+SignedInfo XML fragment. A remote attacker could exploit this to spoof an
+XML signature via a specially-crafted XML signature block. (CVE-2013-2172)
+
+It was found that mod_rewrite did not filter terminal escape sequences from
+its log file. If mod_rewrite was configured with the RewriteLog directive,
+a remote attacker could use specially-crafted HTTP requests to inject
+terminal escape sequences into the mod_rewrite log file. If a victim viewed
+the log file with a terminal emulator, it could result in arbitrary command
+execution with the privileges of that user. (CVE-2013-1862)
+
+The data file used by PicketBox Vault to store encrypted passwords contains
+a copy of its own admin key. The file is encrypted using only this admin
+key, not the corresponding JKS key. A local attacker with permission to
+read the vault data file could read the admin key from the file, and use it
+to decrypt the file and read the stored passwords in clear text.
+(CVE-2013-1921)
+
+A flaw was found in JGroup's DiagnosticsHandler that allowed an attacker on
+an adjacent network to reuse the credentials from a previous successful
+authentication. This could be exploited to read diagnostic information
+(information disclosure) and attain limited remote code execution.
+(CVE-2013-4112)
+
+Warning: Before applying this update, back up your existing Red Hat JBoss
+Enterprise Application Platform installation and deployed applications.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.1.0 as
+provided from the Red Hat Customer Portal are advised to upgrade to Red Hat
+JBoss Enterprise Application Platform 6.1.1.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing Red Hat JBoss Enterprise Application Platform installation and
+deployed applications.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+915883 - CVE-2012-3499 httpd: multiple XSS flaws due to unescaped hostnames
+915884 - CVE-2012-4558 httpd: XSS flaw in mod_proxy_balancer manager interface
+948106 - CVE-2013-1921 JBoss PicketBox: Insecure storage of masked passwords
+953729 - CVE-2013-1862 httpd: mod_rewrite allows terminal escape sequences to be written to the log file
+983489 - CVE-2013-4112 JGroups: Authentication via cached credentials
+983549 - CVE-2013-1896 httpd: mod_dav DoS (httpd child process crash) via a URI MERGE request with source URI not handled by mod_dav
+999263 - CVE-2013-2172 Apache Santuario XML Security for Java: XML signature spoofing
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3499.html">https://www.redhat.com/security/data/cve/CVE-2012-3499.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4558.html">https://www.redhat.com/security/data/cve/CVE-2012-4558.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1862.html">https://www.redhat.com/security/data/cve/CVE-2013-1862.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1896.html">https://www.redhat.com/security/data/cve/CVE-2013-1896.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1921.html">https://www.redhat.com/security/data/cve/CVE-2013-1921.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2172.html">https://www.redhat.com/security/data/cve/CVE-2013-2172.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4112.html">https://www.redhat.com/security/data/cve/CVE-2013-4112.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSJ4R6XlSAg2UNWIIRAhYtAJ0RXdbFai6zNiyRa2BvRghzgCsrowCgtekD
+W7lNrwKbXkwkuPGJyDVORa4=
+=81rq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

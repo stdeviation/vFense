@@ -1,0 +1,231 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0050&#45;01] Important: qemu&#45;kvm security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 23 Jan 2012 15:21:45 &#45;0500 -->
+<!--X-Message-Id: 201201232021.q0NKLeTH003843@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0050-01] Important: qemu-kvm security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0050-01] Important: qemu-kvm security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0050-01] Important: qemu-kvm security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Mon, 23 Jan 2012 20:21:40 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: qemu-kvm security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0050-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0050.html">https://rhn.redhat.com/errata/RHSA-2012-0050.html</a>
+Issue date:        2012-01-23
+CVE Names:         CVE-2012-0029 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm packages that fix one security issue, one bug, and add
+one enhancement are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. qemu-kvm is the user-space component
+for running virtual machines using KVM.
+
+A heap overflow flaw was found in the way QEMU-KVM emulated the e1000
+network interface card. A privileged guest user in a virtual machine whose
+network interface is configured to use the e1000 emulated driver could use
+this flaw to crash the host or, possibly, escalate their privileges on the
+host. (CVE-2012-0029)
+
+Red Hat would like to thank Nicolae Mogoreanu for reporting this issue.
+
+This update also fixes the following bug:
+
+* qemu-kvm has a &quot;scsi&quot; option, to be used, for example, with the
+&quot;-device&quot; option: &quot;-device virtio-blk-pci,drive=[drive name],scsi=off&quot;.
+Previously, however, it only masked the feature bit, and did not reject
+SCSI commands if a malicious guest ignored the feature bit and issued a
+request. This update corrects this issue. The &quot;scsi=off&quot; option can be
+used to mitigate the virtualization aspect of CVE-2011-4127 before the
+RHSA-2011:1849 kernel update is installed on the host.
+
+This mitigation is only required if you do not have the RHSA-2011:1849
+kernel update installed on the host and you are using raw format virtio
+disks backed by a partition or LVM volume.
+
+If you run guests by invoking /usr/libexec/qemu-kvm directly, use the
+&quot;-global virtio-blk-pci.scsi=off&quot; option to apply the mitigation. If you
+are using libvirt, as recommended by Red Hat, and have the RHBA-2012:0013
+libvirt update installed, no manual action is required: guests will
+automatically use &quot;scsi=off&quot;. (BZ#767721)
+
+Note: After installing the RHSA-2011:1849 kernel update, SCSI requests
+issued by guests via the SG_IO IOCTL will not be passed to the underlying
+block device when using raw format virtio disks backed by a partition or
+LVM volume, even if &quot;scsi=on&quot; is used.
+
+As well, this update adds the following enhancement:
+
+* Prior to this update, qemu-kvm was not built with RELRO or PIE support.
+qemu-kvm is now built with full RELRO and PIE support as a security
+enhancement. (BZ#767906)
+
+All users of qemu-kvm should upgrade to these updated packages, which
+correct these issues and add this enhancement. After installing this
+update, shut down all running virtual machines. Once all virtual machines
+have shut down, start them again for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+772075 - CVE-2012-0029 qemu-kvm: e1000: process_tx_desc legacy mode packets heap overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm</a>
+
+x86_64:
+qemu-img-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm</a>
+
+x86_64:
+qemu-img-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm</a>
+
+x86_64:
+qemu-img-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qemu-kvm-0.12.1.2-2.209.el6_2.4.src.rpm</a>
+
+x86_64:
+qemu-img-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.209.el6_2.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0029.html">https://www.redhat.com/security/data/cve/CVE-2012-0029.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-67874">https://access.redhat.com/kb/docs/DOC-67874</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1849.html">https://rhn.redhat.com/errata/RHSA-2011-1849.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-0013.html">https://rhn.redhat.com/errata/RHBA-2012-0013.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPHcFDXlSAg2UNWIIRAo+dAKDAAxQmxTfz5QrmEBRHDKrSExCWiQCfcQpj
+SKfoX2IxYRw+sCY36M4sdJ0=
+=3lTM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

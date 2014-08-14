@@ -1,0 +1,187 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0500&#45;01] Important: struts security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 May 2014 15:10:44 &#45;0400 -->
+<!--X-Message-Id: 201405141910.s4EJAhu6014951@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0500-01] Important: struts security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0500-01] Important: struts security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:0500-01] Important: struts security update</li>
+<li><em>Date</em>: Wed, 14 May 2014 19:10:43 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: struts security update
+Advisory ID:       RHSA-2014:0500-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0500.html">https://rhn.redhat.com/errata/RHSA-2014-0500.html</a>
+Issue date:        2014-05-14
+CVE Names:         CVE-2014-0114 
+=====================================================================
+
+1. Summary:
+
+Updated struts packages that fix one security issue are now available for
+Red Hat Network Satellite 5.4 and 5.5, and Red Hat Satellite 5.6.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Satellite 5.4 (RHEL v.6) - noarch
+Red Hat Satellite 5.5 (RHEL v.6) - noarch
+Red Hat Satellite 5.6 (RHEL v.6) - noarch
+
+3. Description:
+
+Red Hat Satellite is a systems management tool for Linux-based
+infrastructures. It allows for provisioning, monitoring, and remote
+management of multiple Linux deployments with a single, centralized tool.
+
+Apache Struts is a framework for building web applications with Java.
+
+It was found that the Struts 1 ActionForm object allowed access to the
+'class' parameter, which is directly mapped to the getClass() method. A
+remote attacker could use this flaw to manipulate the ClassLoader used by
+an application server running Struts 1. This could lead to remote code
+execution under certain conditions. (CVE-2014-0114)
+
+All Satellite users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. For this update to take
+effect, the tomcat6 service must be restarted (&quot;service tomcat6 restart&quot;).
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1091938 - CVE-2014-0114 Apache Struts 1: Class Loader manipulation via request parameters
+
+6. Package List:
+
+Red Hat Satellite 5.4 (RHEL v.6):
+
+Source:
+struts-1.3.10-6.ep5.el6.src.rpm
+
+noarch:
+struts-1.3.10-6.ep5.el6.noarch.rpm
+struts-core-1.3.10-6.ep5.el6.noarch.rpm
+struts-extras-1.3.10-6.ep5.el6.noarch.rpm
+struts-taglib-1.3.10-6.ep5.el6.noarch.rpm
+struts-tiles-1.3.10-6.ep5.el6.noarch.rpm
+
+Red Hat Satellite 5.5 (RHEL v.6):
+
+Source:
+struts-1.3.10-6.ep5.el6.src.rpm
+
+noarch:
+struts-1.3.10-6.ep5.el6.noarch.rpm
+struts-core-1.3.10-6.ep5.el6.noarch.rpm
+struts-extras-1.3.10-6.ep5.el6.noarch.rpm
+struts-taglib-1.3.10-6.ep5.el6.noarch.rpm
+struts-tiles-1.3.10-6.ep5.el6.noarch.rpm
+
+Red Hat Satellite 5.6 (RHEL v.6):
+
+Source:
+struts-1.3.10-6.ep5.el6.src.rpm
+
+noarch:
+struts-1.3.10-6.ep5.el6.noarch.rpm
+struts-core-1.3.10-6.ep5.el6.noarch.rpm
+struts-extras-1.3.10-6.ep5.el6.noarch.rpm
+struts-taglib-1.3.10-6.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0114.html">https://www.redhat.com/security/data/cve/CVE-2014-0114.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTc7+TXlSAg2UNWIIRAmptAJ9n47yYBOA5OA5jE3gLpsRx20tKagCfWNc8
+M3/iYEVhVrBlugdrBQzYI+U=
+=k5DC
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

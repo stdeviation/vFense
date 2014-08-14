@@ -1,0 +1,188 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1076&#45;01] Important: rhev&#45;hypervisor6 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Jul 2013 14:29:17 &#45;0400 -->
+<!--X-Message-Id: 201307161829.r6GITHa1000750@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1076-01] Important: rhev-hypervisor6 security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1076-01] Important: rhev-hypervisor6 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1076-01] Important: rhev-hypervisor6 security and bug fix	update</li>
+<li><em>Date</em>: Tue, 16 Jul 2013 18:29:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security and bug fix update
+Advisory ID:       RHSA-2013:1076-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1076.html">https://rhn.redhat.com/errata/RHSA-2013-1076.html</a>
+Issue date:        2013-07-16
+CVE Names:         CVE-2013-2116 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes one security issue and
+various bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+It was discovered that the fix for the CVE-2013-1619 issue released via
+RHSA-2013:0636 introduced a regression in the way GnuTLS decrypted TLS/SSL
+encrypted records when CBC-mode cipher suites were used. A remote attacker
+could possibly use this flaw to crash a server or client application that
+uses GnuTLS. (CVE-2013-2116)
+
+This updated package provides updated components that include fixes for
+various security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2013-2174 (curl issue)
+
+CVE-2012-6548, CVE-2013-0914, CVE-2013-1848, CVE-2013-2128, CVE-2013-2634,
+CVE-2013-2635, CVE-2013-2852, CVE-2013-3222, CVE-2013-3224, CVE-2013-3225,
+and CVE-2013-3301 (kernel issues)
+
+CVE-2002-2443 (krb5 issue)
+
+CVE-2013-1950 (libtirpc issue)
+
+Upgrade Note: If you upgrade the Red Hat Enterprise Virtualization
+Hypervisor through the 3.2 Manager administration portal, the Host may
+appear with the status of &quot;Install Failed&quot;. If this happens, place the host
+into maintenance mode, then activate it again to get the host back to an
+&quot;Up&quot; state. 
+
+This update also contains the fixes from the following errata:
+
+* ovirt-node: RHBA-2013:1077
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization
+environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+966754 - CVE-2013-2116 gnutls: out of bounds read in _gnutls_ciphertext2compressed (GNUTLS-SA-2013-2)
+980489 - rhev-hypervisor 6.4 Update 4 release
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.4-20130709.0.el6_4.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2116.html">https://www.redhat.com/security/data/cve/CVE-2013-2116.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0636.html">https://rhn.redhat.com/errata/RHSA-2013-0636.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-1077.html">https://rhn.redhat.com/errata/RHBA-2013-1077.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR5ZDmXlSAg2UNWIIRAtzxAKCa0maEe+qCStXzcu9mZa9cnu99/QCfWROG
+3wbyhOBcNA4lYa7C+QKM6Zo=
+=XQgR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

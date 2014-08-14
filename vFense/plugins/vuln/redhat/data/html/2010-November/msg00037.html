@@ -1,0 +1,431 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0922&#45;01] Important: Red Hat Enterprise MRG Messaging and	Grid security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Nov 2010 13:42:06 &#45;0500 -->
+<!--X-Message-Id: 201011301842.oAUIfxv9008821@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0922-01] Important: Red Hat Enterprise MRG Messaging and	Grid</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0922-01] Important: Red Hat Enterprise MRG Messaging and	Grid security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0922-01] Important: Red Hat Enterprise MRG Messaging and	Grid security update</li>
+<li><em>Date</em>: Tue, 30 Nov 2010 11:41:59 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise MRG Messaging and Grid security update
+Advisory ID:       RHSA-2010:0922-01
+Product:           Red Hat Enterprise MRG for RHEL-4
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0922.html">https://rhn.redhat.com/errata/RHSA-2010-0922.html</a>
+Issue date:        2010-11-30
+CVE Names:         CVE-2010-4179 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Enterprise MRG Messaging and Grid packages that fix one
+security issue and several bugs are now available for Red Hat Enterprise
+Linux 4.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat MRG Grid Execute Node for RHEL-4 AS - i386, x86_64
+Red Hat MRG Grid Execute Node for RHEL-4 ES - i386, x86_64
+Red Hat MRG Grid for RHEL-4 AS - i386, x86_64
+Red Hat MRG Grid for RHEL-4 ES - i386, x86_64
+Red Hat MRG Messaging Base for RHEL-4 AS - i386, noarch, x86_64
+Red Hat MRG Messaging Base for RHEL-4 ES - i386, noarch, x86_64
+Red Hat MRG Messaging for RHEL-4 AS - i386, noarch, x86_64
+Red Hat MRG Messaging for RHEL-4 ES - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime and Grid) is a real-time IT
+infrastructure for enterprise computing. MRG Messaging implements the
+Advanced Message Queuing Protocol (AMQP) standard, adding persistence
+options, kernel optimizations, and operating system services.
+
+The Management Console Installation Guide for Red Hat Enterprise MRG 1.3
+instructed administrators to configure Condor to allow the MRG Management
+Console (cumin) to submit jobs on behalf of a user. This configuration
+facilitated a trust relationship between cumin and the Condor QMF plug-ins;
+however, there was inadequate access control on the trusted channel,
+allowing anyone able to publish to a broker to submit jobs to run as any
+other user (except root, as Condor does not run jobs as root).
+(CVE-2010-4179)
+
+These updated packages also include multiple bug fixes. Users are directed
+to the Red Hat Enterprise MRG 1.3 Technical Notes for information on these
+changes:
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_N">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_N</a>
+otes/RHSA-2010-0922.html
+
+All Red Hat Enterprise MRG users are advised to upgrade to these updated
+packages, which correct this issue and the issues noted in the Red Hat
+Enterprise MRG 1.3 Technical Notes. After installing the updated packages,
+Condor must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+652087 - mrg-el4 - Incorrect handling of datatypes for numeric queue constraints
+652088 - mrg-el4 - Incorrect detection of data types in address parameters - C++ client
+652090 - mrg-el4 - QMF: console.py fails to pass v2-style events up to console
+652091 - mrg-el4 - The C++ address parser throws an exception and leaks memory if it parses an empty list
+652092 - mrg-el4 - rejected messages are not dequeued
+652093 - mrg-el4 - hello_world example does not allow connection options to be set
+653471 - mrg-el4 - Acknowledged messages are not confirmed
+654422 - mrg-el4 - Need mechanism to limit access to QMF Agent methods
+654856 - CVE-2010-4179 schedd plugin: enable QUEUE_ALL_USERS_TRUSTED for Submit/Hold/Release/Remove ops
+
+6. Package List:
+
+Red Hat MRG Grid for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm</a>
+
+i386:
+condor-7.4.4-0.17.el4.i386.rpm
+condor-debuginfo-7.4.4-0.17.el4.i386.rpm
+condor-kbdd-7.4.4-0.17.el4.i386.rpm
+condor-qmf-7.4.4-0.17.el4.i386.rpm
+
+x86_64:
+condor-7.4.4-0.17.el4.x86_64.rpm
+condor-debuginfo-7.4.4-0.17.el4.x86_64.rpm
+condor-kbdd-7.4.4-0.17.el4.x86_64.rpm
+condor-qmf-7.4.4-0.17.el4.x86_64.rpm
+
+Red Hat MRG Grid Execute Node for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm</a>
+
+i386:
+condor-7.4.4-0.17.el4.i386.rpm
+condor-debuginfo-7.4.4-0.17.el4.i386.rpm
+condor-kbdd-7.4.4-0.17.el4.i386.rpm
+condor-qmf-7.4.4-0.17.el4.i386.rpm
+
+x86_64:
+condor-7.4.4-0.17.el4.x86_64.rpm
+condor-debuginfo-7.4.4-0.17.el4.x86_64.rpm
+condor-kbdd-7.4.4-0.17.el4.x86_64.rpm
+condor-qmf-7.4.4-0.17.el4.x86_64.rpm
+
+Red Hat MRG Messaging for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm</a>
+
+i386:
+qmf-0.7.946106-22.el4.i386.rpm
+qmf-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.i386.rpm
+rh-qpid-cpp-tests-0.7.946106-22.el4.i386.rpm
+sesame-0.7.4297-4.el4.i386.rpm
+sesame-debuginfo-0.7.4297-4.el4.i386.rpm
+
+noarch:
+python-qmf-0.7.946106-14.el4.noarch.rpm
+qpid-java-client-0.7.946106-12.el4.noarch.rpm
+qpid-java-common-0.7.946106-12.el4.noarch.rpm
+qpid-java-example-0.7.946106-12.el4.noarch.rpm
+
+x86_64:
+qmf-0.7.946106-22.el4.x86_64.rpm
+qmf-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.x86_64.rpm
+rh-qpid-cpp-tests-0.7.946106-22.el4.x86_64.rpm
+sesame-0.7.4297-4.el4.x86_64.rpm
+sesame-debuginfo-0.7.4297-4.el4.x86_64.rpm
+
+Red Hat MRG Messaging Base for RHEL-4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm</a>
+
+i386:
+qmf-0.7.946106-22.el4.i386.rpm
+qmf-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.i386.rpm
+sesame-0.7.4297-4.el4.i386.rpm
+sesame-debuginfo-0.7.4297-4.el4.i386.rpm
+
+noarch:
+python-qmf-0.7.946106-14.el4.noarch.rpm
+qpid-java-client-0.7.946106-12.el4.noarch.rpm
+qpid-java-common-0.7.946106-12.el4.noarch.rpm
+qpid-java-example-0.7.946106-12.el4.noarch.rpm
+
+x86_64:
+qmf-0.7.946106-22.el4.x86_64.rpm
+qmf-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.x86_64.rpm
+sesame-0.7.4297-4.el4.x86_64.rpm
+sesame-debuginfo-0.7.4297-4.el4.x86_64.rpm
+
+Red Hat MRG Grid for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm</a>
+
+i386:
+condor-7.4.4-0.17.el4.i386.rpm
+condor-debuginfo-7.4.4-0.17.el4.i386.rpm
+condor-kbdd-7.4.4-0.17.el4.i386.rpm
+condor-qmf-7.4.4-0.17.el4.i386.rpm
+
+x86_64:
+condor-7.4.4-0.17.el4.x86_64.rpm
+condor-debuginfo-7.4.4-0.17.el4.x86_64.rpm
+condor-kbdd-7.4.4-0.17.el4.x86_64.rpm
+condor-qmf-7.4.4-0.17.el4.x86_64.rpm
+
+Red Hat MRG Grid Execute Node for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/condor-7.4.4-0.17.el4.src.rpm</a>
+
+i386:
+condor-7.4.4-0.17.el4.i386.rpm
+condor-debuginfo-7.4.4-0.17.el4.i386.rpm
+condor-kbdd-7.4.4-0.17.el4.i386.rpm
+condor-qmf-7.4.4-0.17.el4.i386.rpm
+
+x86_64:
+condor-7.4.4-0.17.el4.x86_64.rpm
+condor-debuginfo-7.4.4-0.17.el4.x86_64.rpm
+condor-kbdd-7.4.4-0.17.el4.x86_64.rpm
+condor-qmf-7.4.4-0.17.el4.x86_64.rpm
+
+Red Hat MRG Messaging for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm</a>
+
+i386:
+qmf-0.7.946106-22.el4.i386.rpm
+qmf-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.i386.rpm
+rh-qpid-cpp-tests-0.7.946106-22.el4.i386.rpm
+sesame-0.7.4297-4.el4.i386.rpm
+sesame-debuginfo-0.7.4297-4.el4.i386.rpm
+
+noarch:
+python-qmf-0.7.946106-14.el4.noarch.rpm
+qpid-java-client-0.7.946106-12.el4.noarch.rpm
+qpid-java-common-0.7.946106-12.el4.noarch.rpm
+qpid-java-example-0.7.946106-12.el4.noarch.rpm
+
+x86_64:
+qmf-0.7.946106-22.el4.x86_64.rpm
+qmf-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.x86_64.rpm
+rh-qpid-cpp-tests-0.7.946106-22.el4.x86_64.rpm
+sesame-0.7.4297-4.el4.x86_64.rpm
+sesame-debuginfo-0.7.4297-4.el4.x86_64.rpm
+
+Red Hat MRG Messaging Base for RHEL-4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/python-qmf-0.7.946106-14.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-22.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/qpid-java-0.7.946106-12.el4.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHEMRG/SRPMS/sesame-0.7.4297-4.el4.src.rpm</a>
+
+i386:
+qmf-0.7.946106-22.el4.i386.rpm
+qmf-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.i386.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.i386.rpm
+sesame-0.7.4297-4.el4.i386.rpm
+sesame-debuginfo-0.7.4297-4.el4.i386.rpm
+
+noarch:
+python-qmf-0.7.946106-14.el4.noarch.rpm
+qpid-java-client-0.7.946106-12.el4.noarch.rpm
+qpid-java-common-0.7.946106-12.el4.noarch.rpm
+qpid-java-example-0.7.946106-12.el4.noarch.rpm
+
+x86_64:
+qmf-0.7.946106-22.el4.x86_64.rpm
+qmf-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-store-0.7.946106-22.el4.x86_64.rpm
+qpid-cpp-server-xml-0.7.946106-22.el4.x86_64.rpm
+sesame-0.7.4297-4.el4.x86_64.rpm
+sesame-debuginfo-0.7.4297-4.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4179.html">https://www.redhat.com/security/data/cve/CVE-2010-4179.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_Notes/RHSA-2010-0922.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_Notes/RHSA-2010-0922.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM9UVPXlSAg2UNWIIRAuIUAKCHA6pZs2uCoZGaBKpuaDacmxyqsQCbBcAZ
+IfsOIBSvM4whe+KJ/M6uGak=
+=wmR7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

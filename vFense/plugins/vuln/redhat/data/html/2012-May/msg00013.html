@@ -1,0 +1,499 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0678&#45;01] Moderate: postgresql and postgresql84 security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 May 2012 13:18:39 &#45;0400 -->
+<!--X-Message-Id: 201205211718.q4LHIW7V015695@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0678-01] Moderate: postgresql and postgresql84 security	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0678-01] Moderate: postgresql and postgresql84 security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0678-01] Moderate: postgresql and postgresql84 security	update</li>
+<li><em>Date</em>: Mon, 21 May 2012 17:18:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: postgresql and postgresql84 security update
+Advisory ID:       RHSA-2012:0678-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0678.html">https://rhn.redhat.com/errata/RHSA-2012-0678.html</a>
+Issue date:        2012-05-21
+CVE Names:         CVE-2012-0866 CVE-2012-0867 CVE-2012-0868 
+=====================================================================
+
+1. Summary:
+
+Updated postgresql84 and postgresql packages that fix three security issues
+are now available for Red Hat Enterprise Linux 5 and 6 respectively.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+PostgreSQL is an advanced object-relational database management system
+(DBMS).
+
+The pg_dump utility inserted object names literally into comments in the
+SQL script it produces. An unprivileged database user could create an
+object whose name includes a newline followed by an SQL command. This SQL
+command might then be executed by a privileged user during later restore of
+the backup dump, allowing privilege escalation. (CVE-2012-0868)
+
+When configured to do SSL certificate verification, PostgreSQL only checked
+the first 31 characters of the certificate's Common Name field. Depending
+on the configuration, this could allow an attacker to impersonate a server
+or a client using a certificate from a trusted Certificate Authority issued
+for a different name. (CVE-2012-0867)
+
+CREATE TRIGGER did not do a permissions check on the trigger function to
+be called. This could possibly allow an authenticated database user to
+call a privileged trigger function on data of their choosing.
+(CVE-2012-0866)
+
+These updated packages upgrade PostgreSQL to version 8.4.11, which fixes
+these issues as well as several data-corruption issues and lesser
+non-security issues. Refer to the PostgreSQL Release Notes for a full list
+of changes:
+
+<a  rel="nofollow" href="http://www.postgresql.org/docs/8.4/static/release.html">http://www.postgresql.org/docs/8.4/static/release.html</a>
+
+All PostgreSQL users are advised to upgrade to these updated packages,
+which correct these issues. If the postgresql service is running, it will
+be automatically restarted after installing this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+797222 - CVE-2012-0866 postgresql: Absent permission checks on trigger function to be called when creating a trigger
+797915 - CVE-2012-0867 postgresql: MITM due improper x509_v3 CN validation during certificate verification
+797917 - CVE-2012-0868 postgresql: SQL injection due unsanitized newline characters in object names
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm</a>
+
+i386:
+postgresql84-8.4.11-1.el5_8.i386.rpm
+postgresql84-contrib-8.4.11-1.el5_8.i386.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-docs-8.4.11-1.el5_8.i386.rpm
+postgresql84-libs-8.4.11-1.el5_8.i386.rpm
+postgresql84-python-8.4.11-1.el5_8.i386.rpm
+postgresql84-tcl-8.4.11-1.el5_8.i386.rpm
+
+x86_64:
+postgresql84-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-contrib-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-docs-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-libs-8.4.11-1.el5_8.i386.rpm
+postgresql84-libs-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-python-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-tcl-8.4.11-1.el5_8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm</a>
+
+i386:
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-devel-8.4.11-1.el5_8.i386.rpm
+postgresql84-plperl-8.4.11-1.el5_8.i386.rpm
+postgresql84-plpython-8.4.11-1.el5_8.i386.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.i386.rpm
+postgresql84-server-8.4.11-1.el5_8.i386.rpm
+postgresql84-test-8.4.11-1.el5_8.i386.rpm
+
+x86_64:
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-devel-8.4.11-1.el5_8.i386.rpm
+postgresql84-devel-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-plperl-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-plpython-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-server-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-test-8.4.11-1.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql84-8.4.11-1.el5_8.src.rpm</a>
+
+i386:
+postgresql84-8.4.11-1.el5_8.i386.rpm
+postgresql84-contrib-8.4.11-1.el5_8.i386.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-devel-8.4.11-1.el5_8.i386.rpm
+postgresql84-docs-8.4.11-1.el5_8.i386.rpm
+postgresql84-libs-8.4.11-1.el5_8.i386.rpm
+postgresql84-plperl-8.4.11-1.el5_8.i386.rpm
+postgresql84-plpython-8.4.11-1.el5_8.i386.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.i386.rpm
+postgresql84-python-8.4.11-1.el5_8.i386.rpm
+postgresql84-server-8.4.11-1.el5_8.i386.rpm
+postgresql84-tcl-8.4.11-1.el5_8.i386.rpm
+postgresql84-test-8.4.11-1.el5_8.i386.rpm
+
+ia64:
+postgresql84-8.4.11-1.el5_8.ia64.rpm
+postgresql84-contrib-8.4.11-1.el5_8.ia64.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.ia64.rpm
+postgresql84-devel-8.4.11-1.el5_8.ia64.rpm
+postgresql84-docs-8.4.11-1.el5_8.ia64.rpm
+postgresql84-libs-8.4.11-1.el5_8.ia64.rpm
+postgresql84-plperl-8.4.11-1.el5_8.ia64.rpm
+postgresql84-plpython-8.4.11-1.el5_8.ia64.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.ia64.rpm
+postgresql84-python-8.4.11-1.el5_8.ia64.rpm
+postgresql84-server-8.4.11-1.el5_8.ia64.rpm
+postgresql84-tcl-8.4.11-1.el5_8.ia64.rpm
+postgresql84-test-8.4.11-1.el5_8.ia64.rpm
+
+ppc:
+postgresql84-8.4.11-1.el5_8.ppc.rpm
+postgresql84-8.4.11-1.el5_8.ppc64.rpm
+postgresql84-contrib-8.4.11-1.el5_8.ppc.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.ppc.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.ppc64.rpm
+postgresql84-devel-8.4.11-1.el5_8.ppc.rpm
+postgresql84-devel-8.4.11-1.el5_8.ppc64.rpm
+postgresql84-docs-8.4.11-1.el5_8.ppc.rpm
+postgresql84-libs-8.4.11-1.el5_8.ppc.rpm
+postgresql84-libs-8.4.11-1.el5_8.ppc64.rpm
+postgresql84-plperl-8.4.11-1.el5_8.ppc.rpm
+postgresql84-plpython-8.4.11-1.el5_8.ppc.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.ppc.rpm
+postgresql84-python-8.4.11-1.el5_8.ppc.rpm
+postgresql84-server-8.4.11-1.el5_8.ppc.rpm
+postgresql84-tcl-8.4.11-1.el5_8.ppc.rpm
+postgresql84-test-8.4.11-1.el5_8.ppc.rpm
+
+s390x:
+postgresql84-8.4.11-1.el5_8.s390x.rpm
+postgresql84-contrib-8.4.11-1.el5_8.s390x.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.s390.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.s390x.rpm
+postgresql84-devel-8.4.11-1.el5_8.s390.rpm
+postgresql84-devel-8.4.11-1.el5_8.s390x.rpm
+postgresql84-docs-8.4.11-1.el5_8.s390x.rpm
+postgresql84-libs-8.4.11-1.el5_8.s390.rpm
+postgresql84-libs-8.4.11-1.el5_8.s390x.rpm
+postgresql84-plperl-8.4.11-1.el5_8.s390x.rpm
+postgresql84-plpython-8.4.11-1.el5_8.s390x.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.s390x.rpm
+postgresql84-python-8.4.11-1.el5_8.s390x.rpm
+postgresql84-server-8.4.11-1.el5_8.s390x.rpm
+postgresql84-tcl-8.4.11-1.el5_8.s390x.rpm
+postgresql84-test-8.4.11-1.el5_8.s390x.rpm
+
+x86_64:
+postgresql84-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-contrib-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.i386.rpm
+postgresql84-debuginfo-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-devel-8.4.11-1.el5_8.i386.rpm
+postgresql84-devel-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-docs-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-libs-8.4.11-1.el5_8.i386.rpm
+postgresql84-libs-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-plperl-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-plpython-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-pltcl-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-python-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-server-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-tcl-8.4.11-1.el5_8.x86_64.rpm
+postgresql84-test-8.4.11-1.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+i386:
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+
+x86_64:
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+i386:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-contrib-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-docs-8.4.11-1.el6_2.i686.rpm
+postgresql-plperl-8.4.11-1.el6_2.i686.rpm
+postgresql-plpython-8.4.11-1.el6_2.i686.rpm
+postgresql-pltcl-8.4.11-1.el6_2.i686.rpm
+postgresql-server-8.4.11-1.el6_2.i686.rpm
+postgresql-test-8.4.11-1.el6_2.i686.rpm
+
+x86_64:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-8.4.11-1.el6_2.x86_64.rpm
+postgresql-contrib-8.4.11-1.el6_2.x86_64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.x86_64.rpm
+postgresql-docs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plperl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plpython-8.4.11-1.el6_2.x86_64.rpm
+postgresql-pltcl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-server-8.4.11-1.el6_2.x86_64.rpm
+postgresql-test-8.4.11-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+x86_64:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-8.4.11-1.el6_2.x86_64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+x86_64:
+postgresql-contrib-8.4.11-1.el6_2.x86_64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.x86_64.rpm
+postgresql-docs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plperl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plpython-8.4.11-1.el6_2.x86_64.rpm
+postgresql-pltcl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-server-8.4.11-1.el6_2.x86_64.rpm
+postgresql-test-8.4.11-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+i386:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-contrib-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-docs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-plperl-8.4.11-1.el6_2.i686.rpm
+postgresql-plpython-8.4.11-1.el6_2.i686.rpm
+postgresql-pltcl-8.4.11-1.el6_2.i686.rpm
+postgresql-server-8.4.11-1.el6_2.i686.rpm
+postgresql-test-8.4.11-1.el6_2.i686.rpm
+
+ppc64:
+postgresql-8.4.11-1.el6_2.ppc.rpm
+postgresql-8.4.11-1.el6_2.ppc64.rpm
+postgresql-contrib-8.4.11-1.el6_2.ppc64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.ppc.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.ppc64.rpm
+postgresql-devel-8.4.11-1.el6_2.ppc.rpm
+postgresql-devel-8.4.11-1.el6_2.ppc64.rpm
+postgresql-docs-8.4.11-1.el6_2.ppc64.rpm
+postgresql-libs-8.4.11-1.el6_2.ppc.rpm
+postgresql-libs-8.4.11-1.el6_2.ppc64.rpm
+postgresql-plperl-8.4.11-1.el6_2.ppc64.rpm
+postgresql-plpython-8.4.11-1.el6_2.ppc64.rpm
+postgresql-pltcl-8.4.11-1.el6_2.ppc64.rpm
+postgresql-server-8.4.11-1.el6_2.ppc64.rpm
+postgresql-test-8.4.11-1.el6_2.ppc64.rpm
+
+s390x:
+postgresql-8.4.11-1.el6_2.s390.rpm
+postgresql-8.4.11-1.el6_2.s390x.rpm
+postgresql-contrib-8.4.11-1.el6_2.s390x.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.s390.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.s390x.rpm
+postgresql-devel-8.4.11-1.el6_2.s390.rpm
+postgresql-devel-8.4.11-1.el6_2.s390x.rpm
+postgresql-docs-8.4.11-1.el6_2.s390x.rpm
+postgresql-libs-8.4.11-1.el6_2.s390.rpm
+postgresql-libs-8.4.11-1.el6_2.s390x.rpm
+postgresql-plperl-8.4.11-1.el6_2.s390x.rpm
+postgresql-plpython-8.4.11-1.el6_2.s390x.rpm
+postgresql-pltcl-8.4.11-1.el6_2.s390x.rpm
+postgresql-server-8.4.11-1.el6_2.s390x.rpm
+postgresql-test-8.4.11-1.el6_2.s390x.rpm
+
+x86_64:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-8.4.11-1.el6_2.x86_64.rpm
+postgresql-contrib-8.4.11-1.el6_2.x86_64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.x86_64.rpm
+postgresql-docs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plperl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plpython-8.4.11-1.el6_2.x86_64.rpm
+postgresql-pltcl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-server-8.4.11-1.el6_2.x86_64.rpm
+postgresql-test-8.4.11-1.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/postgresql-8.4.11-1.el6_2.src.rpm</a>
+
+i386:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-contrib-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-docs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-plperl-8.4.11-1.el6_2.i686.rpm
+postgresql-plpython-8.4.11-1.el6_2.i686.rpm
+postgresql-pltcl-8.4.11-1.el6_2.i686.rpm
+postgresql-server-8.4.11-1.el6_2.i686.rpm
+postgresql-test-8.4.11-1.el6_2.i686.rpm
+
+x86_64:
+postgresql-8.4.11-1.el6_2.i686.rpm
+postgresql-8.4.11-1.el6_2.x86_64.rpm
+postgresql-contrib-8.4.11-1.el6_2.x86_64.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.i686.rpm
+postgresql-debuginfo-8.4.11-1.el6_2.x86_64.rpm
+postgresql-devel-8.4.11-1.el6_2.i686.rpm
+postgresql-devel-8.4.11-1.el6_2.x86_64.rpm
+postgresql-docs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-libs-8.4.11-1.el6_2.i686.rpm
+postgresql-libs-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plperl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-plpython-8.4.11-1.el6_2.x86_64.rpm
+postgresql-pltcl-8.4.11-1.el6_2.x86_64.rpm
+postgresql-server-8.4.11-1.el6_2.x86_64.rpm
+postgresql-test-8.4.11-1.el6_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0866.html">https://www.redhat.com/security/data/cve/CVE-2012-0866.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0867.html">https://www.redhat.com/security/data/cve/CVE-2012-0867.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0868.html">https://www.redhat.com/security/data/cve/CVE-2012-0868.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.postgresql.org/docs/8.4/static/release.html">http://www.postgresql.org/docs/8.4/static/release.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPunjSXlSAg2UNWIIRAmb/AKCnR2N/B5PAUpJtcLDlOwYt/dpoYwCfUIfS
+jmibiuaCmz/h8j4YnlZMVRA=
+=voJG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

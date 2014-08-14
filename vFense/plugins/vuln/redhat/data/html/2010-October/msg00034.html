@@ -1,0 +1,243 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0811&#45;01] Important: cups security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Oct 2010 22:21:17 &#45;0400 -->
+<!--X-Message-Id: 201010290221.o9T2LBD8015451@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0811-01] Important: cups security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0811-01] Important: cups security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0811-01] Important: cups security update</li>
+<li><em>Date</em>: Thu, 28 Oct 2010 20:21:11 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: cups security update
+Advisory ID:       RHSA-2010:0811-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0811.html">https://rhn.redhat.com/errata/RHSA-2010-0811.html</a>
+Issue date:        2010-10-28
+CVE Names:         CVE-2010-2431 CVE-2010-2941 
+=====================================================================
+
+1. Summary:
+
+Updated cups packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Common UNIX Printing System (CUPS) provides a portable printing layer
+for UNIX operating systems.
+
+A use-after-free flaw was found in the way the CUPS server parsed Internet
+Printing Protocol (IPP) packets. A malicious user able to send IPP requests
+to the CUPS server could use this flaw to crash the CUPS server or,
+potentially, execute arbitrary code with the privileges of the CUPS server.
+(CVE-2010-2941)
+
+A possible privilege escalation flaw was found in CUPS. An unprivileged
+process running as the &quot;lp&quot; user (such as a compromised external filter
+program spawned by the CUPS server) could trick the CUPS server into
+overwriting arbitrary files as the root user. (CVE-2010-2431)
+
+Red Hat would like to thank Emmanuel Bouillon of NATO C3 Agency for
+reporting the CVE-2010-2941 issue.
+
+Users of cups are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the cupsd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+605397 - CVE-2010-2431 cups: latent privilege escalation vulnerability
+624438 - CVE-2010-2941 cups: cupsd memory corruption vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm</a>
+
+i386:
+cups-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-libs-1.3.7-18.el5_5.8.i386.rpm
+cups-lpd-1.3.7-18.el5_5.8.i386.rpm
+
+x86_64:
+cups-1.3.7-18.el5_5.8.x86_64.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.x86_64.rpm
+cups-libs-1.3.7-18.el5_5.8.i386.rpm
+cups-libs-1.3.7-18.el5_5.8.x86_64.rpm
+cups-lpd-1.3.7-18.el5_5.8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm</a>
+
+i386:
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-devel-1.3.7-18.el5_5.8.i386.rpm
+
+x86_64:
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.x86_64.rpm
+cups-devel-1.3.7-18.el5_5.8.i386.rpm
+cups-devel-1.3.7-18.el5_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.3.7-18.el5_5.8.src.rpm</a>
+
+i386:
+cups-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-devel-1.3.7-18.el5_5.8.i386.rpm
+cups-libs-1.3.7-18.el5_5.8.i386.rpm
+cups-lpd-1.3.7-18.el5_5.8.i386.rpm
+
+ia64:
+cups-1.3.7-18.el5_5.8.ia64.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.ia64.rpm
+cups-devel-1.3.7-18.el5_5.8.ia64.rpm
+cups-libs-1.3.7-18.el5_5.8.i386.rpm
+cups-libs-1.3.7-18.el5_5.8.ia64.rpm
+cups-lpd-1.3.7-18.el5_5.8.ia64.rpm
+
+ppc:
+cups-1.3.7-18.el5_5.8.ppc.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.ppc.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.ppc64.rpm
+cups-devel-1.3.7-18.el5_5.8.ppc.rpm
+cups-devel-1.3.7-18.el5_5.8.ppc64.rpm
+cups-libs-1.3.7-18.el5_5.8.ppc.rpm
+cups-libs-1.3.7-18.el5_5.8.ppc64.rpm
+cups-lpd-1.3.7-18.el5_5.8.ppc.rpm
+
+s390x:
+cups-1.3.7-18.el5_5.8.s390x.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.s390.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.s390x.rpm
+cups-devel-1.3.7-18.el5_5.8.s390.rpm
+cups-devel-1.3.7-18.el5_5.8.s390x.rpm
+cups-libs-1.3.7-18.el5_5.8.s390.rpm
+cups-libs-1.3.7-18.el5_5.8.s390x.rpm
+cups-lpd-1.3.7-18.el5_5.8.s390x.rpm
+
+x86_64:
+cups-1.3.7-18.el5_5.8.x86_64.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.i386.rpm
+cups-debuginfo-1.3.7-18.el5_5.8.x86_64.rpm
+cups-devel-1.3.7-18.el5_5.8.i386.rpm
+cups-devel-1.3.7-18.el5_5.8.x86_64.rpm
+cups-libs-1.3.7-18.el5_5.8.i386.rpm
+cups-libs-1.3.7-18.el5_5.8.x86_64.rpm
+cups-lpd-1.3.7-18.el5_5.8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2431.html">https://www.redhat.com/security/data/cve/CVE-2010-2431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2941.html">https://www.redhat.com/security/data/cve/CVE-2010-2941.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMyi99XlSAg2UNWIIRAqnDAJwLX9UceMEIUpFP8srwaTCGPGgOUgCfe8Kc
+XLNcaBXtyQTWGMaYio2uVXY=
+=JDnN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1284&#45;01] Critical: ruby193&#45;puppet security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Sep 2013 14:17:35 &#45;0400 -->
+<!--X-Message-Id: 201309241817.r8OIHY1Q023663@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1284-01] Critical: ruby193-puppet security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1284-01] Critical: ruby193-puppet security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1284-01] Critical: ruby193-puppet security update</li>
+<li><em>Date</em>: Tue, 24 Sep 2013 18:17:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: ruby193-puppet security update
+Advisory ID:       RHSA-2013:1284-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1284.html">https://rhn.redhat.com/errata/RHSA-2013-1284.html</a>
+Issue date:        2013-09-24
+CVE Names:         CVE-2013-3567 CVE-2013-4761 CVE-2013-4956 
+=====================================================================
+
+1. Summary:
+
+Updated ruby193-puppet packages that fix three security issues are now
+available for Red Hat OpenStack 3.0.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch
+
+3. Description:
+
+Puppet allows provisioning, patching, and configuration of clients to be
+managed and automated.
+
+A flaw was found in the way Puppet handled YAML content during
+Representational State Transfer (REST) API calls. An attacker could
+construct a request containing a crafted YAML payload that would cause the
+Puppet master to execute arbitrary code. (CVE-2013-3567)
+
+It was found that resource_type requests could be used to cause the Puppet
+master to load and run Ruby files from anywhere on the file system. In
+non-default configurations, a local user on the Puppet master server could
+use this flaw to have arbitrary Ruby code executed with the privileges of
+the Puppet master. (CVE-2013-4761)
+
+It was found that Puppet Module Tool (that is, running &quot;puppet module&quot;
+commands from the command line) applied incorrect permissions to installed
+modules. If a malicious, local user had write access to the Puppet module
+directory, they could use this flaw to modify the modules and therefore
+execute arbitrary code with the privileges of the Puppet master.
+(CVE-2013-4956)
+
+Red Hat would like to thank Puppet Labs for reporting these issues.
+Upstream acknowledges Ben Murphy as the original reporter of CVE-2013-3567.
+
+These ruby193-puppet packages are used by Foreman, which provides
+facilities for rapidly deploying Red Hat OpenStack 3.0. In this use case,
+Puppet master is used and exposed to these issues. Note that Foreman is
+provided as a Technology Preview. For more information on the scope and
+nature of support for items marked as Technology Preview, refer to
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+Users of Red Hat OpenStack 3.0 are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+974649 - CVE-2013-3567 puppet: remote code execution on master from unauthenticated clients
+996855 - CVE-2013-4956 Puppet: Local Privilege Escalation/Arbitrary Code Execution
+996856 - CVE-2013-4761 Puppet: resource_type service code execution
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-puppet-3.1.1-11.1.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-puppet-3.1.1-11.1.el6ost.src.rpm</a>
+
+noarch:
+ruby193-puppet-3.1.1-11.1.el6ost.noarch.rpm
+ruby193-puppet-server-3.1.1-11.1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3567.html">https://www.redhat.com/security/data/cve/CVE-2013-3567.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4761.html">https://www.redhat.com/security/data/cve/CVE-2013-4761.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4956.html">https://www.redhat.com/security/data/cve/CVE-2013-4956.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://puppetlabs.com/security/cve/cve-2013-3567">http://puppetlabs.com/security/cve/cve-2013-3567</a>
+<a  rel="nofollow" href="http://puppetlabs.com/security/cve/cve-2013-4761">http://puppetlabs.com/security/cve/cve-2013-4761</a>
+<a  rel="nofollow" href="http://puppetlabs.com/security/cve/cve-2013-4956">http://puppetlabs.com/security/cve/cve-2013-4956</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSQdcyXlSAg2UNWIIRAsm1AJ4kDgxzr7vYeSK0Y63WpHq3NPQGgQCeISx9
+XEHYmRExEVYQFoNArdYhNHA=
+=vYab
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

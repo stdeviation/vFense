@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0002&#45;01] Moderate: PyXML security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Jan 2010 13:29:41 &#45;0500 -->
+<!--X-Message-Id: 201001041829.o04ITZMK003994@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0002-01] Moderate: PyXML security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0002-01] Moderate: PyXML security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0002-01] Moderate: PyXML security update</li>
+<li><em>Date</em>: Mon, 4 Jan 2010 13:29:35 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: PyXML security update
+Advisory ID:       RHSA-2010:0002-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0002.html">https://rhn.redhat.com/errata/RHSA-2010-0002.html</a>
+Issue date:        2010-01-04
+CVE Names:         CVE-2009-3720 
+=====================================================================
+
+1. Summary:
+
+An updated PyXML package that fixes one security issue is now available for
+Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+PyXML provides XML libraries for Python. The distribution contains a
+validating XML parser, an implementation of the SAX and DOM programming
+interfaces, and an interface to the Expat parser.
+
+A buffer over-read flaw was found in the way PyXML's Expat parser handled
+malformed UTF-8 sequences when processing XML files. A specially-crafted
+XML file could cause Python applications using PyXML's Expat parser to
+crash while parsing the file. (CVE-2009-3720)
+
+This update makes PyXML use the system Expat library rather than its own
+internal copy; therefore, users must install the RHSA-2009:1625 expat
+update together with this PyXML update to resolve the CVE-2009-3720 issue.
+
+All PyXML users should upgrade to this updated package, which changes PyXML
+to use the system Expat library. After installing this update along with
+RHSA-2009:1625, applications using the PyXML library must be restarted for
+the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+531697 - CVE-2009-3720 expat: buffer over-read and crash on XML with malformed UTF-8 sequences
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm</a>
+
+i386:
+PyXML-0.8.3-6.el4_8.2.i386.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.i386.rpm
+
+ia64:
+PyXML-0.8.3-6.el4_8.2.ia64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.ia64.rpm
+
+ppc:
+PyXML-0.8.3-6.el4_8.2.ppc.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.ppc.rpm
+
+s390:
+PyXML-0.8.3-6.el4_8.2.s390.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.s390.rpm
+
+s390x:
+PyXML-0.8.3-6.el4_8.2.s390x.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.s390x.rpm
+
+x86_64:
+PyXML-0.8.3-6.el4_8.2.x86_64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm</a>
+
+i386:
+PyXML-0.8.3-6.el4_8.2.i386.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.i386.rpm
+
+x86_64:
+PyXML-0.8.3-6.el4_8.2.x86_64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm</a>
+
+i386:
+PyXML-0.8.3-6.el4_8.2.i386.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.i386.rpm
+
+ia64:
+PyXML-0.8.3-6.el4_8.2.ia64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.ia64.rpm
+
+x86_64:
+PyXML-0.8.3-6.el4_8.2.x86_64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/PyXML-0.8.3-6.el4_8.2.src.rpm</a>
+
+i386:
+PyXML-0.8.3-6.el4_8.2.i386.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.i386.rpm
+
+ia64:
+PyXML-0.8.3-6.el4_8.2.ia64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.ia64.rpm
+
+x86_64:
+PyXML-0.8.3-6.el4_8.2.x86_64.rpm
+PyXML-debuginfo-0.8.3-6.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/PyXML-0.8.4-4.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/PyXML-0.8.4-4.el5_4.2.src.rpm</a>
+
+i386:
+PyXML-0.8.4-4.el5_4.2.i386.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.i386.rpm
+
+x86_64:
+PyXML-0.8.4-4.el5_4.2.x86_64.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/PyXML-0.8.4-4.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/PyXML-0.8.4-4.el5_4.2.src.rpm</a>
+
+i386:
+PyXML-0.8.4-4.el5_4.2.i386.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.i386.rpm
+
+ia64:
+PyXML-0.8.4-4.el5_4.2.ia64.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.ia64.rpm
+
+ppc:
+PyXML-0.8.4-4.el5_4.2.ppc.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.ppc.rpm
+
+s390x:
+PyXML-0.8.4-4.el5_4.2.s390x.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.s390x.rpm
+
+x86_64:
+PyXML-0.8.4-4.el5_4.2.x86_64.rpm
+PyXML-debuginfo-0.8.4-4.el5_4.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3720.html">https://www.redhat.com/security/data/cve/CVE-2009-3720.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLQjNnXlSAg2UNWIIRAsXDAKCJra0JZ2LPP2vHWGiTquZV58jJ+wCgghmh
+5vZjM+pHqLtOtlkhgjtFaBw=
+=Un20
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0449&#45;01] Moderate: rhn&#45;client&#45;tools security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Jun 2010 14:58:29 &#45;0400 -->
+<!--X-Message-Id: 201006011858.o51IwNQC028988@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0449-01] Moderate: rhn-client-tools security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0449-01] Moderate: rhn-client-tools security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0449-01] Moderate: rhn-client-tools security update</li>
+<li><em>Date</em>: Tue, 1 Jun 2010 12:58:23 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhn-client-tools security update
+Advisory ID:       RHSA-2010:0449-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0449.html">https://rhn.redhat.com/errata/RHSA-2010-0449.html</a>
+Issue date:        2010-06-01
+CVE Names:         CVE-2010-1439 
+=====================================================================
+
+1. Summary:
+
+Updated rhn-client-tools packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - noarch
+Red Hat Enterprise Linux Desktop (v. 5 client) - noarch
+
+3. Description:
+
+Red Hat Network Client Tools provide programs and libraries that allow your
+system to receive software updates from the Red Hat Network (RHN).
+
+It was discovered that rhn-client-tools set insecure permissions on the
+loginAuth.pkl file, used to store session credentials for authenticating
+connections to Red Hat Network servers. A local, unprivileged user could
+use these credentials to download packages from the Red Hat Network. They
+could also manipulate package or action lists associated with the system's
+profile. (CVE-2010-1439)
+
+Users of rhn-client-tools are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+585386 - CVE-2010-1439 rhn-client-tools: authorized information disclosure
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rhn-client-tools-0.4.20-33.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rhn-client-tools-0.4.20-33.el5_5.2.src.rpm</a>
+
+noarch:
+rhn-check-0.4.20-33.el5_5.2.noarch.rpm
+rhn-client-tools-0.4.20-33.el5_5.2.noarch.rpm
+rhn-setup-0.4.20-33.el5_5.2.noarch.rpm
+rhn-setup-gnome-0.4.20-33.el5_5.2.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rhn-client-tools-0.4.20-33.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rhn-client-tools-0.4.20-33.el5_5.2.src.rpm</a>
+
+noarch:
+rhn-check-0.4.20-33.el5_5.2.noarch.rpm
+rhn-client-tools-0.4.20-33.el5_5.2.noarch.rpm
+rhn-setup-0.4.20-33.el5_5.2.noarch.rpm
+rhn-setup-gnome-0.4.20-33.el5_5.2.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1439.html">https://www.redhat.com/security/data/cve/CVE-2010-1439.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMBVgnXlSAg2UNWIIRAoW7AKCbO8acpkoOLi5b494hvH8NVXOvVQCgkMns
+CgWbdTxtQ7GOjibKcOeeRrQ=
+=UnCV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

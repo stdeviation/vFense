@@ -1,0 +1,266 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1132&#45;01] Important: icedtea&#45;web security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 31 Jul 2012 16:27:17 &#45;0400 -->
+<!--X-Message-Id: 201207312027.q6VKRC1L031777@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1132-01] Important: icedtea-web security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00032.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1132-01] Important: icedtea-web security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1132-01] Important: icedtea-web security update</li>
+<li><em>Date</em>: Tue, 31 Jul 2012 20:27:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: icedtea-web security update
+Advisory ID:       RHSA-2012:1132-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1132.html">https://rhn.redhat.com/errata/RHSA-2012-1132.html</a>
+Issue date:        2012-07-31
+CVE Names:         CVE-2012-3422 CVE-2012-3423 
+=====================================================================
+
+1. Summary:
+
+Updated icedtea-web packages that fix two security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The IcedTea-Web project provides a Java web browser plug-in and an
+implementation of Java Web Start, which is based on the Netx project. It
+also contains a configuration tool for managing deployment settings for the
+plug-in and Web Start implementations.
+
+An uninitialized pointer use flaw was found in the IcedTea-Web plug-in.
+Visiting a malicious web page could possibly cause a web browser using the
+IcedTea-Web plug-in to crash, disclose a portion of its memory, or execute
+arbitrary code. (CVE-2012-3422)
+
+It was discovered that the IcedTea-Web plug-in incorrectly assumed all
+strings received from the browser were NUL terminated. When using the
+plug-in with a web browser that does not NUL terminate strings, visiting a
+web page containing a Java applet could possibly cause the browser to
+crash, disclose a portion of its memory, or execute arbitrary code.
+(CVE-2012-3423)
+
+Red Hat would like to thank Chamal De Silva for reporting the CVE-2012-3422
+issue.
+
+This erratum also upgrades IcedTea-Web to version 1.2.1. Refer to the NEWS
+file, linked to in the References, for further information.
+
+All IcedTea-Web users should upgrade to these updated packages, which
+resolve these issues. Web browsers using the IcedTea-Web browser plug-in
+must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+840592 - CVE-2012-3422 icedtea-web: getvalueforurl uninitialized instance pointer
+841345 - CVE-2012-3423 icedtea-web: incorrect handling of not 0-terminated strings
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-1.2.1-1.el6_3.i686.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+x86_64:
+icedtea-web-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+x86_64:
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-1.2.1-1.el6_3.i686.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-1.2.1-1.el6_3.i686.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/icedtea-web-1.2.1-1.el6_3.src.rpm</a>
+
+i386:
+icedtea-web-debuginfo-1.2.1-1.el6_3.i686.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.i686.rpm
+
+x86_64:
+icedtea-web-debuginfo-1.2.1-1.el6_3.x86_64.rpm
+icedtea-web-javadoc-1.2.1-1.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3422.html">https://www.redhat.com/security/data/cve/CVE-2012-3422.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3423.html">https://www.redhat.com/security/data/cve/CVE-2012-3423.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://icedtea.classpath.org/hg/release/icedtea-web-1.2/file/icedtea-web-1.2.1/NEWS">http://icedtea.classpath.org/hg/release/icedtea-web-1.2/file/icedtea-web-1.2.1/NEWS</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQGD+FXlSAg2UNWIIRAk5vAJ0Xi9h0qrKSpZ5hR4AAsKIZZDYYswCfeGgv
++ViLwaW2WfMsNySDZHdkWsM=
+=2Tub
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00032.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

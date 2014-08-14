@@ -1,0 +1,194 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0764&#45;01] Critical: rubygem&#45;openshift&#45;origin&#45;node security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 18 Jun 2014 16:33:12 &#45;0400 -->
+<!--X-Message-Id: 201406182033.s5IKXCQj009137@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0764-01] Critical: rubygem-openshift-origin-node security	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0764-01] Critical: rubygem-openshift-origin-node security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0764-01] Critical: rubygem-openshift-origin-node security	update</li>
+<li><em>Date</em>: Wed, 18 Jun 2014 20:33:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: rubygem-openshift-origin-node security update
+Advisory ID:       RHSA-2014:0764-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0764.html">https://rhn.redhat.com/errata/RHSA-2014-0764.html</a>
+Issue date:        2014-06-18
+CVE Names:         CVE-2014-3496 
+=====================================================================
+
+1. Summary:
+
+An updated rubygem-openshift-origin-node package that fixes one security
+issue and several bugs is now available for Red Hat OpenShift Enterprise 
+2.1.1.
+
+The Red Hat Security Response Team has rated this update as having Critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHOSE Node 2.1 - noarch
+
+3. Description:
+
+The rubygem-openshift-origin-node package provides basic OpenShift node
+functionality.
+
+A command injection flaw was found in rubygem-openshift-origin-node.
+A remote, authenticated user permitted to install cartridges via the web
+interface could use this flaw to execute arbitrary code with root
+privileges on the Red Hat OpenShift Enterprise node server. (CVE-2014-3496)
+
+This issue was discovered by Jeremy Choi of the Red Hat HSS Pen-test Team.
+
+The rubygem-openshift-origin-node package has been upgraded to version
+1.23.9.11. Additionally, the rubygem-openshift-origin-container-selinux
+package has been upgraded to version 0.8.1.2, as needed by the updated
+rubygem-openshift-origin-node package.
+
+This update also fixes the following bugs:
+
+* The syslog_logger.rb implementation on nodes made incorrect use of the 
+Ruby Syslog library. Raw log message input was handled as a Syslog format 
+string, causing failures for many application operations. This bug fix 
+updates the implementation to correctly handle raw log message input, and 
+the failures no longer occur. (BZ#1096900)
+
+* Under certain conditions, it was possible for the MCollective agent on 
+nodes to fail to fully initialize while checking the status of a cartridge.
+This resulted in sporadic failures of rhc cartridge status. This bug fix 
+ensures that the agent is always fully initialized. (BZ#1102399)
+
+* Developers encountered syntax errors when connecting to a gear using the
+'rhc ssh' command if the gear was hosted on a node with quotas disabled.
+This was due to the command trying to report quota information but being
+given an empty string because quotas were disabled. This bug fix updates
+the handling for reporting on quotas when there is no information to
+report, and the syntax errors no longer occur. (BZ#1107801)
+
+* If a file containing invalid special characters was placed in an
+application's ~/.env/user_vars directory, subsequent interactions with the
+application using SSH or Git were refused. This was due to problems with
+the node component handling the invalid characters. This bug fix updates
+the node component to handle problematic files in ~/.env/user_vars; as a
+result, interactions with the application using SSH or Git succeed as
+normal. (BZ#1096833)
+
+All rubygem-openshift-origin-node users are advised to upgrade to this
+updated package, which contains a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1096833 - Errors in user_vars/* files block ssh access, git access
+1096900 - Log messages are being interpolated by syslog_logger.rb, causing random app operation failures
+1102399 - [new relic] undefined method `run_in_container_context' for nil:NilClass on INT nodes
+1107801 - rhcsh quota check prints error messages on login if quotas are disabled
+1110470 - CVE-2014-3496 OpenShift Origin: Command execution as root via downloadable cartridge source-url
+
+6. Package List:
+
+RHOSE Node 2.1:
+
+Source:
+rubygem-openshift-origin-container-selinux-0.8.1.2-1.el6op.src.rpm
+rubygem-openshift-origin-node-1.23.9.11-1.el6op.src.rpm
+
+noarch:
+rubygem-openshift-origin-container-selinux-0.8.1.2-1.el6op.noarch.rpm
+rubygem-openshift-origin-node-1.23.9.11-1.el6op.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3496.html">https://www.redhat.com/security/data/cve/CVE-2014-3496.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTofeAXlSAg2UNWIIRAriZAJ4mZ3qg6qWZjMAhunHL7E5SNmoS9gCfYffL
+dc4bjzElecUvOSnGDKog1tU=
+=AozI
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1022&#45;01] Important: jbossas security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 12:08:11 &#45;0400 -->
+<!--X-Message-Id: 201206201608.q5KG86Nl007551@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1022-01] Important: jbossas security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1022-01] Important: jbossas security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1022-01] Important: jbossas security update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 16:08:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jbossas security update
+Advisory ID:       RHSA-2012:1022-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1022.html">https://rhn.redhat.com/errata/RHSA-2012-1022.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2011-4605 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Application Platform 5.1.2 that fixes one
+security issue is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Application Server is the base package for JBoss Enterprise
+Application Platform, providing the core server components. The Java Naming
+and Directory Interface (JNDI) Java API allows Java software clients to
+locate objects or services in an application server.
+
+It was found that the JBoss JNDI service allowed unauthenticated, remote
+write access by default. The JNDI and HA-JNDI services, and the
+HAJNDIFactory invoker servlet were all affected. A remote attacker able to
+access the JNDI service (port 1099), HA-JNDI service (port 1100), or the
+HAJNDIFactory invoker servlet on a JBoss server could use this flaw to add,
+delete, and modify items in the JNDI tree. This could have various,
+application-specific impacts. (CVE-2011-4605)
+
+Red Hat would like to thank Christian Schlüter (VIADA) for reporting this
+issue.
+
+Warning: Before applying this update, back up your JBoss Enterprise
+Application Platform's &quot;jboss-as/server/[PROFILE]/deploy/&quot; directory, along
+with all other customized configuration files.
+
+All users of JBoss Enterprise Application Platform 5.1.2 as provided from
+the Red Hat Customer Portal are advised to install this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Application Platform installation (including all
+applications and configuration files).
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+766469 - CVE-2011-4605 JNDI: unauthenticated remote write access is permitted by default
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4605.html">https://www.redhat.com/security/data/cve/CVE-2011-4605.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.1.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.1.2</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4fVTXlSAg2UNWIIRAl6lAJ9E6Oxmkziquhq4WyyMiEbMGGdlGQCgh4Iw
+oepdCh2zZ/5kpREUwKC33Ws=
+=CKm8
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

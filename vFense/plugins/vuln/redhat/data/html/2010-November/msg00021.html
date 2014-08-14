@@ -1,0 +1,262 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0873&#45;02] Critical: java&#45;1.5.0&#45;ibm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Nov 2010 14:42:37 &#45;0500 -->
+<!--X-Message-Id: 201011101942.oAAJgV7T018219@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0873-02] Critical: java-1.5.0-ibm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0873-02] Critical: java-1.5.0-ibm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0873-02] Critical: java-1.5.0-ibm security update</li>
+<li><em>Date</em>: Wed, 10 Nov 2010 12:42:31 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.5.0-ibm security update
+Advisory ID:       RHSA-2010:0873-02
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0873.html">https://rhn.redhat.com/errata/RHSA-2010-0873.html</a>
+Issue date:        2010-11-10
+CVE Names:         CVE-2010-1321 CVE-2010-3541 CVE-2010-3548 
+                   CVE-2010-3549 CVE-2010-3550 CVE-2010-3551 
+                   CVE-2010-3556 CVE-2010-3559 CVE-2010-3562 
+                   CVE-2010-3565 CVE-2010-3566 CVE-2010-3568 
+                   CVE-2010-3569 CVE-2010-3572 CVE-2010-3573 
+                   CVE-2010-3574 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.5.0-ibm packages that fix several security issues are now
+available for Red Hat Enterprise Linux 6 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Supplementary (v. 6) - x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+The IBM 1.5.0 Java release includes the IBM Java 2 Runtime Environment and
+the IBM Java 2 Software Development Kit.
+
+This update fixes several vulnerabilities in the IBM Java 2 Runtime
+Environment and the IBM Java 2 Software Development Kit. Detailed
+vulnerability descriptions are linked from the IBM &quot;Security alerts&quot; page,
+listed in the References section. (CVE-2010-1321, CVE-2010-3541,
+CVE-2010-3548, CVE-2010-3549, CVE-2010-3550, CVE-2010-3551, CVE-2010-3556,
+CVE-2010-3559, CVE-2010-3562, CVE-2010-3565, CVE-2010-3566, CVE-2010-3568,
+CVE-2010-3569, CVE-2010-3572, CVE-2010-3573, CVE-2010-3574)
+
+All users of java-1.5.0-ibm are advised to upgrade to these updated
+packages, containing the IBM 1.5.0 SR12-FP2 Java release. All running
+instances of IBM Java must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+582466 - CVE-2010-1321 krb5: null pointer dereference in GSS-API library leads to DoS (MITKRB5-SA-2010-005)
+639876 - CVE-2010-3568 OpenJDK Deserialization Race condition (6559775)
+639897 - CVE-2010-3562 OpenJDK IndexColorModel double-free (6925710)
+639909 - CVE-2010-3548 OpenJDK DNS server IP address information leak (6957564)
+639920 - CVE-2010-3565 OpenJDK JPEG writeImage remote code execution (6963023)
+639922 - CVE-2010-3566 OpenJDK ICC Profile remote code execution (6963489)
+639925 - CVE-2010-3569 OpenJDK Serialization inconsistencies (6966692)
+642180 - CVE-2010-3549 OpenJDK HttpURLConnection request splitting (6952017)
+642187 - CVE-2010-3551 OpenJDK local network address disclosure (6952603)
+642202 - CVE-2010-3541 CVE-2010-3573 OpenJDK HttpURLConnection allows arbitrary request headers (6961084,6980004)
+642215 - CVE-2010-3574 OpenJDK HttpURLConnection incomplete TRACE permission check (6981426)
+642559 - CVE-2010-3550 JDK unspecified vulnerability in Java Web Start component
+642576 - CVE-2010-3556 JDK unspecified vulnerability in 2D component
+642606 - CVE-2010-3559 JDK unspecified vulnerability in Sound component
+642611 - CVE-2010-3572 JDK unspecified vulnerability in Sound component
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+i386:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.i686.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Supplementary (v. 6):
+
+x86_64:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+i386:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.i686.rpm
+
+ppc64:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.ppc64.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.ppc64.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.ppc.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.ppc64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.ppc64.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.ppc64.rpm
+
+s390x:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.s390x.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.s390x.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.s390.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.s390x.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.s390x.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+i386:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.i686.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.i686.rpm
+java-1.5.0-ibm-devel-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.12.2-1jpp.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1321.html">https://www.redhat.com/security/data/cve/CVE-2010-1321.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3541.html">https://www.redhat.com/security/data/cve/CVE-2010-3541.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3548.html">https://www.redhat.com/security/data/cve/CVE-2010-3548.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3549.html">https://www.redhat.com/security/data/cve/CVE-2010-3549.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3550.html">https://www.redhat.com/security/data/cve/CVE-2010-3550.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3551.html">https://www.redhat.com/security/data/cve/CVE-2010-3551.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3556.html">https://www.redhat.com/security/data/cve/CVE-2010-3556.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3559.html">https://www.redhat.com/security/data/cve/CVE-2010-3559.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3562.html">https://www.redhat.com/security/data/cve/CVE-2010-3562.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3565.html">https://www.redhat.com/security/data/cve/CVE-2010-3565.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3566.html">https://www.redhat.com/security/data/cve/CVE-2010-3566.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3568.html">https://www.redhat.com/security/data/cve/CVE-2010-3568.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3569.html">https://www.redhat.com/security/data/cve/CVE-2010-3569.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3572.html">https://www.redhat.com/security/data/cve/CVE-2010-3572.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3573.html">https://www.redhat.com/security/data/cve/CVE-2010-3573.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3574.html">https://www.redhat.com/security/data/cve/CVE-2010-3574.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.ibm.com/developerworks/java/jdk/alerts/">http://www.ibm.com/developerworks/java/jdk/alerts/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM2vV9XlSAg2UNWIIRArj3AKCsSCD5lL6OKsu8lPPsDz0AGOcnEQCgiWfH
+nvJqFreqDIh0kzC3gdgztmg=
+=/Xkv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1189&#45;01] Important: kernel security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Aug 2011 10:48:25 &#45;0400 -->
+<!--X-Message-Id: 201108231448.p7NEmI9U017784@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1189-01] Important: kernel security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1189-01] Important: kernel security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1189-01] Important: kernel security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 23 Aug 2011 14:48:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1189-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1189.html">https://rhn.redhat.com/errata/RHSA-2011-1189.html</a>
+Issue date:        2011-08-23
+CVE Names:         CVE-2011-1182 CVE-2011-1576 CVE-2011-1593 
+                   CVE-2011-1776 CVE-2011-1898 CVE-2011-2183 
+                   CVE-2011-2213 CVE-2011-2491 CVE-2011-2492 
+                   CVE-2011-2495 CVE-2011-2497 CVE-2011-2517 
+                   CVE-2011-2689 CVE-2011-2695 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues, various bugs, and
+add two enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+Security issues:
+
+* Using PCI passthrough without interrupt remapping support allowed KVM
+guests to generate MSI interrupts and thus potentially inject traps. A
+privileged guest user could use this flaw to crash the host or possibly
+escalate their privileges on the host. The fix for this issue can prevent
+PCI passthrough working and guests starting. Refer to Red Hat Bugzilla bug
+715555 for details. (CVE-2011-1898, Important)
+
+* Flaw in the client-side NLM implementation could allow a local,
+unprivileged user to cause a denial of service. (CVE-2011-2491, Important)
+
+* Integer underflow in the Bluetooth implementation could allow a remote
+attacker to cause a denial of service or escalate their privileges by
+sending a specially-crafted request to a target system via Bluetooth.
+(CVE-2011-2497, Important)
+
+* Buffer overflows in the netlink-based wireless configuration interface
+implementation could allow a local user, who has the CAP_NET_ADMIN
+capability, to cause a denial of service or escalate their privileges on
+systems that have an active wireless interface. (CVE-2011-2517, Important)
+
+* Flaw in the way the maximum file offset was handled for ext4 file systems
+could allow a local, unprivileged user to cause a denial of service.
+(CVE-2011-2695, Important)
+
+* Flaw allowed napi_reuse_skb() to be called on VLAN packets. An attacker
+on the local network could use this flaw to send crafted packets to a
+target, possibly causing a denial of service. (CVE-2011-1576, Moderate)
+
+* Integer signedness error in next_pidmap() could allow a local,
+unprivileged user to cause a denial of service. (CVE-2011-1593, Moderate)
+
+* Race condition in the memory merging support (KSM) could allow a local,
+unprivileged user to cause a denial of service. KSM is off by default, but
+on systems running VDSM, or on KVM hosts, it is likely turned on by the
+ksm/ksmtuned services. (CVE-2011-2183, Moderate)
+
+* Flaw in inet_diag_bc_audit() could allow a local, unprivileged user to
+cause a denial of service. (CVE-2011-2213, Moderate)
+
+* Flaw in the way space was allocated in the Global File System 2 (GFS2)
+implementation. If the file system was almost full, and a local,
+unprivileged user made an fallocate() request, it could result in a denial
+of service. Setting quotas to prevent users from using all available disk
+space would prevent exploitation of this flaw. (CVE-2011-2689, Moderate)
+
+* Local, unprivileged users could send signals via the sigqueueinfo system
+call, with si_code set to SI_TKILL and with spoofed process and user IDs,
+to other processes. This flaw does not allow existing permission checks to
+be bypassed; signals can only be sent if your privileges allow you to
+already do so. (CVE-2011-1182, Low)
+
+* Heap overflow in the EFI GUID Partition Table (GPT) implementation could
+allow a local attacker to cause a denial of service by mounting a disk
+containing crafted partition tables. (CVE-2011-1776, Low)
+
+* Structure padding in two structures in the Bluetooth implementation was
+not initialized properly before being copied to user-space, possibly
+allowing local, unprivileged users to leak kernel stack memory to
+user-space. (CVE-2011-2492, Low)
+
+* /proc/[PID]/io is world-readable by default. Previously, these files
+could be read without any further restrictions. A local, unprivileged user
+could read these files, belonging to other, possibly privileged processes
+to gather confidential information, such as the length of a password used
+in a process. (CVE-2011-2495, Low)
+
+Red Hat would like to thank Vasily Averin for reporting CVE-2011-2491; Dan
+Rosenberg for reporting CVE-2011-2497 and CVE-2011-2213; Ryan Sweat for
+reporting CVE-2011-1576; Robert Swiecki for reporting CVE-2011-1593; Andrea
+Righi for reporting CVE-2011-2183; Julien Tinnes of the Google Security
+Team for reporting CVE-2011-1182; Timo Warns for reporting CVE-2011-1776;
+Marek Kroemeke and Filip Palian for reporting CVE-2011-2492; and Vasiliy
+Kulikov of Openwall for reporting CVE-2011-2495.
+
+4. Solution:
+
+Refer to the Technical Notes, available shortly from the link in the
+References, for bug fix and enhancement details.
+
+Users should upgrade to these updated packages, which contain
+backported patches to correct these issues, and fix the bugs and add
+the enhancements noted in the Technical Notes. The system must be
+rebooted for this update to take effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+690028 - CVE-2011-1182 kernel signal spoofing issue
+695173 - CVE-2011-1576 kernel: net: Fix memory leak/corruption on VLAN GRO_DROP
+697822 - CVE-2011-1593 kernel: proc: signedness issue in next_pidmap()
+703019 - CVE-2011-2492 kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
+703026 - CVE-2011-1776 kernel: validate size of EFI GUID partition entries
+709393 - CVE-2011-2491 kernel: rpc task leak after flock()ing  NFS share
+710338 - CVE-2011-2183 kernel: ksm: race between ksmd and exiting task
+713827 - Parallel port issue in RHEL 6.0 server
+714536 - CVE-2011-2213 kernel: inet_diag: insufficient validation
+714982 - GFS2: Update to rhel6.1 broke dovecot writing to a gfs2 filesystem
+715555 - CVE-2011-1898 virt: VT-d (PCI passthrough) MSI trap injection
+716539 - bump domain memory limits [6.1.z]
+716805 - CVE-2011-2497 kernel: bluetooth: buffer overflow in l2cap config request
+716825 - CVE-2011-2495 kernel: /proc/PID/io infoleak
+718152 - CVE-2011-2517 kernel: nl80211: missing check for valid SSID size in scan operations
+720861 - CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
+722557 - CVE-2011-2695 kernel: ext4: kernel panic when writing data to the last block of sparse file
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.12.1.el6.i686.rpm
+kernel-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-headers-2.6.32-131.12.1.el6.i686.rpm
+perf-2.6.32-131.12.1.el6.i686.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.12.1.el6.noarch.rpm
+kernel-firmware-2.6.32-131.12.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-headers-2.6.32-131.12.1.el6.x86_64.rpm
+perf-2.6.32-131.12.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-131.12.1.el6.noarch.rpm
+kernel-firmware-2.6.32-131.12.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-headers-2.6.32-131.12.1.el6.x86_64.rpm
+perf-2.6.32-131.12.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.12.1.el6.i686.rpm
+kernel-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-headers-2.6.32-131.12.1.el6.i686.rpm
+perf-2.6.32-131.12.1.el6.i686.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.12.1.el6.noarch.rpm
+kernel-firmware-2.6.32-131.12.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-debug-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-devel-2.6.32-131.12.1.el6.ppc64.rpm
+kernel-headers-2.6.32-131.12.1.el6.ppc64.rpm
+perf-2.6.32-131.12.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-131.12.1.el6.s390x.rpm
+kernel-debug-2.6.32-131.12.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-131.12.1.el6.s390x.rpm
+kernel-devel-2.6.32-131.12.1.el6.s390x.rpm
+kernel-headers-2.6.32-131.12.1.el6.s390x.rpm
+kernel-kdump-2.6.32-131.12.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-131.12.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-131.12.1.el6.s390x.rpm
+perf-2.6.32-131.12.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-headers-2.6.32-131.12.1.el6.x86_64.rpm
+perf-2.6.32-131.12.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-131.12.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.12.1.el6.i686.rpm
+kernel-devel-2.6.32-131.12.1.el6.i686.rpm
+kernel-headers-2.6.32-131.12.1.el6.i686.rpm
+perf-2.6.32-131.12.1.el6.i686.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.12.1.el6.noarch.rpm
+kernel-firmware-2.6.32-131.12.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-devel-2.6.32-131.12.1.el6.x86_64.rpm
+kernel-headers-2.6.32-131.12.1.el6.x86_64.rpm
+perf-2.6.32-131.12.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.12.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1182.html">https://www.redhat.com/security/data/cve/CVE-2011-1182.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1576.html">https://www.redhat.com/security/data/cve/CVE-2011-1576.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1593.html">https://www.redhat.com/security/data/cve/CVE-2011-1593.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1776.html">https://www.redhat.com/security/data/cve/CVE-2011-1776.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1898.html">https://www.redhat.com/security/data/cve/CVE-2011-1898.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2183.html">https://www.redhat.com/security/data/cve/CVE-2011-2183.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2213.html">https://www.redhat.com/security/data/cve/CVE-2011-2213.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2491.html">https://www.redhat.com/security/data/cve/CVE-2011-2491.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2492.html">https://www.redhat.com/security/data/cve/CVE-2011-2492.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2495.html">https://www.redhat.com/security/data/cve/CVE-2011-2495.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2497.html">https://www.redhat.com/security/data/cve/CVE-2011-2497.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2517.html">https://www.redhat.com/security/data/cve/CVE-2011-2517.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2689.html">https://www.redhat.com/security/data/cve/CVE-2011-2689.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2695.html">https://www.redhat.com/security/data/cve/CVE-2011-2695.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/kernel.html#RHSA-2011-1189">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/kernel.html#RHSA-2011-1189</a>
+<a  rel="nofollow" href="https://bugzilla.redhat.com/show_bug.cgi?id=715555">https://bugzilla.redhat.com/show_bug.cgi?id=715555</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOU72NXlSAg2UNWIIRAvuvAJ0XW+pjVB73eYV6dyMHJAKRZqTyygCeIAtM
++72YbSFubpSk5fCdBrnH5XY=
+=wVAB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

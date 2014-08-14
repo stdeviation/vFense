@@ -1,0 +1,161 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1134&#45;01] Moderate: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 5 Aug 2013 12:21:32 &#45;0400 -->
+<!--X-Message-Id: 201308051621.r75GLV30015399@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1134-01] Moderate: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1134-01] Moderate: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1134-01] Moderate: httpd security update</li>
+<li><em>Date</em>: Mon, 5 Aug 2013 16:21:30 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security update
+Advisory ID:       RHSA-2013:1134-01
+Product:           Red Hat JBoss Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1134.html">https://rhn.redhat.com/errata/RHSA-2013-1134.html</a>
+Issue date:        2013-08-05
+CVE Names:         CVE-2013-1862 CVE-2013-1896 
+=====================================================================
+
+1. Summary:
+
+An update for the Apache HTTP Server component of Red Hat JBoss Web Server
+2.0.1 that fixes two security issues is now available from the Red Hat
+Customer Portal for Red Hat Enterprise Linux 5 and 6, Solaris, and
+Microsoft Windows.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Web Server is a fully integrated and certified set of
+components for hosting Java web applications. It is comprised of the Apache
+HTTP Server, the Apache Tomcat Servlet container, Apache Tomcat Connector
+(mod_jk), JBoss HTTP Connector (mod_cluster), Hibernate, and the Tomcat
+Native library.
+
+A flaw was found in the way the mod_dav module of the Apache HTTP Server
+handled merge requests. An attacker could use this flaw to send a crafted
+merge request that contains URIs that are not configured for DAV, causing
+the httpd child process to crash. (CVE-2013-1896)
+
+It was found that mod_rewrite did not filter terminal escape sequences from
+its log file. If mod_rewrite was configured with the RewriteLog directive,
+a remote attacker could use specially-crafted HTTP requests to inject
+terminal escape sequences into the mod_rewrite log file. If a victim viewed
+the log file with a terminal emulator, it could result in arbitrary command
+execution with the privileges of that user. (CVE-2013-1862)
+
+Note: CVE-2013-1862 affects mod_rewrite. In the process of testing this
+patch, it was found that enabling mod_rewrite on 64-bit versions of Windows
+Server 2008 and Windows Server 2008 R2 running Red Hat JBoss Web Server
+2.0.1 could cause an httpd thread to crash, and the httpd process to
+restart. This bug is present in the GA release of Red Hat JBoss Web Server
+2.0.1, and is not a regression introduced by this patch. This bug may be
+resolved in a future update to JBoss Web Server 2.
+
+Warning: Before applying the update, back up your existing Red Hat JBoss
+Web Server installation (including all applications and configuration
+files).
+
+All users of Red Hat JBoss Web Server 2.0.1 as provided from the Red Hat
+Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing Red Hat JBoss Web Server installation (including all applications
+and configuration files).
+
+The Apache HTTP Server must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+953729 - CVE-2013-1862 httpd: mod_rewrite allows terminal escape sequences to be written to the log file
+983549 - CVE-2013-1896 httpd: mod_dav DoS (httpd child process crash) via a URI MERGE request with source URI not handled by mod_dav
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1862.html">https://www.redhat.com/security/data/cve/CVE-2013-1862.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1896.html">https://www.redhat.com/security/data/cve/CVE-2013-1896.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=webserver&amp;downloadType=securityPatches&amp;version=2.0.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=webserver&amp;downloadType=securityPatches&amp;version=2.0.1</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR/9D3XlSAg2UNWIIRAj9VAKCZ/9xHqfUpEYR5bk/DKG2t+Q5nYACeLRyd
+saDTOXUt102n6Ag8GJepTag=
+=0rne
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

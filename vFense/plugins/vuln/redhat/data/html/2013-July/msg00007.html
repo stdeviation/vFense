@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1029&#45;01] Important: Fuse MQ Enterprise 7.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 9 Jul 2013 14:03:09 &#45;0400 -->
+<!--X-Message-Id: 201307091803.r69I38YB029310@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1029-01] Important: Fuse MQ Enterprise 7.1.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1029-01] Important: Fuse MQ Enterprise 7.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1029-01] Important: Fuse MQ Enterprise 7.1.0 update</li>
+<li><em>Date</em>: Tue, 9 Jul 2013 18:03:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Fuse MQ Enterprise 7.1.0 update
+Advisory ID:       RHSA-2013:1029-01
+Product:           Fuse Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1029.html">https://rhn.redhat.com/errata/RHSA-2013-1029.html</a>
+Issue date:        2013-07-09
+CVE Names:         CVE-2012-6092 CVE-2012-6551 CVE-2013-1879 
+                   CVE-2013-1880 CVE-2013-2035 CVE-2013-3060 
+=====================================================================
+
+1. Summary:
+
+Fuse MQ Enterprise 7.1.0 roll up patch 1, which fixes multiple security
+issues and various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Fuse MQ Enterprise, based on Apache ActiveMQ, is a standards compliant
+messaging system that is tailored for use in mission critical applications.
+
+This release of Fuse MQ Enterprise 7.1.0 roll up patch 1 is an update to
+Fuse MQ Enterprise 7.1.0 and includes bug fixes. Refer to the readme file
+included with the patch files for information about the bug fixes.
+
+The following security issues are also fixed with this release:
+
+It was found that, by default, the Apache ActiveMQ web console did not
+require authentication. A remote attacker could use this flaw to modify the
+state of the Apache ActiveMQ environment, obtain sensitive information, or
+cause a denial of service. (CVE-2013-3060)
+
+Multiple cross-site scripting (XSS) flaws were found in the Apache ActiveMQ
+demo web applications. A remote attacker could use these flaws to inject
+arbitrary web script or HTML on pages displayed by the demo web
+applications. (CVE-2012-6092)
+
+It was found that a sample Apache ActiveMQ application was deployed by
+default. A remote attacker could use this flaw to send the sample
+application requests, allowing them to consume all available broker
+resources. (CVE-2012-6551)
+
+A stored cross-site scripting (XSS) flaw was found in the way Apache
+ActiveMQ handled cron jobs. A remote attacker could use this flaw to
+perform an XSS attack against users viewing the scheduled.jsp page.
+(CVE-2013-1879)
+
+A reflected cross-site scripting (XSS) flaw was found in the
+portfolioPublish servlet of the Apache ActiveMQ demo web applications. A
+remote attacker could use this flaw to inject arbitrary web script or
+HTML. (CVE-2013-1880)
+
+Note: All of the above flaws only affected the distribution of Apache
+ActiveMQ included in the extras directory of the Fuse MQ Enterprise
+distribution. The Fuse MQ Enterprise product itself was not affected by any
+of the above flaws.
+
+The HawtJNI Library class wrote native libraries to a predictable file name
+in /tmp/ when the native libraries were bundled in a JAR file, and no
+custom library path was specified. A local attacker could overwrite these
+native libraries with malicious versions during the window between when
+HawtJNI writes them and when they are executed. (CVE-2013-2035)
+
+The CVE-2013-2035 issue was discovered by Florian Weimer of the Red Hat
+Product Security Team.
+
+All users of Fuse MQ Enterprise 7.1.0 as provided from the Red Hat Customer
+Portal are advised to upgrade to Fuse MQ Enterprise 7.1.0 roll up patch 1.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+924446 - CVE-2013-1879 ActiveMQ: XSS vulnerability in scheduled.jsp
+924447 - CVE-2013-1880 ActiveMQ: XSS vulnerability in portfolioPublish demo application
+955906 - CVE-2012-6092 activemq: Multiple XSS flaws in web demos
+955907 - CVE-2012-6551 activemq: DoS by resource consumption via HTTP requests to sample webapp
+955908 - CVE-2013-3060 activemq: Unauthenticated access to web console
+958618 - CVE-2013-2035 HawtJNI: predictable temporary file name leading to local arbitrary code execution
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6092.html">https://www.redhat.com/security/data/cve/CVE-2012-6092.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6551.html">https://www.redhat.com/security/data/cve/CVE-2012-6551.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1879.html">https://www.redhat.com/security/data/cve/CVE-2013-1879.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1880.html">https://www.redhat.com/security/data/cve/CVE-2013-1880.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2035.html">https://www.redhat.com/security/data/cve/CVE-2013-2035.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3060.html">https://www.redhat.com/security/data/cve/CVE-2013-3060.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.mq.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.mq.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR3FAxXlSAg2UNWIIRAk3GAKCl5lKq02FkTzjEMpo3tJ8Xoy8IzgCgv6WI
+O2Lf3I1h038va3APHQ765yQ=
+=qG+d
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

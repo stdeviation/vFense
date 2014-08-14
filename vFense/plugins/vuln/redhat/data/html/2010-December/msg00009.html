@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0945&#45;01] Moderate: quagga security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 6 Dec 2010 14:24:04 &#45;0500 -->
+<!--X-Message-Id: 201012061923.oB6JNx0x026027@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0945-01] Moderate: quagga security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0945-01] Moderate: quagga security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0945-01] Moderate: quagga security update</li>
+<li><em>Date</em>: Mon, 6 Dec 2010 12:23:58 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: quagga security update
+Advisory ID:       RHSA-2010:0945-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0945.html">https://rhn.redhat.com/errata/RHSA-2010-0945.html</a>
+Issue date:        2010-12-06
+CVE Names:         CVE-2010-2948 CVE-2010-2949 
+=====================================================================
+
+1. Summary:
+
+Updated quagga packages that fix two security issues are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Quagga is a TCP/IP based routing software suite. The Quagga bgpd daemon
+implements the BGP (Border Gateway Protocol) routing protocol.
+
+A stack-based buffer overflow flaw was found in the way the Quagga bgpd
+daemon processed certain BGP Route Refresh (RR) messages. A configured BGP
+peer could send a specially-crafted BGP message, causing bgpd on a target
+system to crash or, possibly, execute arbitrary code with the privileges of
+the user running bgpd. (CVE-2010-2948)
+
+Note: On Red Hat Enterprise Linux 6 it is not possible to exploit
+CVE-2010-2948 to run arbitrary code as the overflow is blocked by
+FORTIFY_SOURCE.
+
+A NULL pointer dereference flaw was found in the way the Quagga bgpd daemon
+parsed the paths of autonomous systems (AS). A configured BGP peer could
+crash bgpd on a target system via a specially-crafted BGP message.
+(CVE-2010-2949)
+
+Users of quagga should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, the bgpd daemon must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+626783 - CVE-2010-2948 Quagga (bgpd): Stack buffer overflow by processing certain Route-Refresh messages
+626795 - CVE-2010-2949 Quagga (bgpd): DoS (crash) while processing certain BGP update AS path messages
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm</a>
+
+i386:
+quagga-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+
+ppc64:
+quagga-0.99.15-5.el6_0.1.ppc64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.ppc64.rpm
+
+s390x:
+quagga-0.99.15-5.el6_0.1.s390x.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.s390x.rpm
+
+x86_64:
+quagga-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm</a>
+
+i386:
+quagga-contrib-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+quagga-devel-0.99.15-5.el6_0.1.i686.rpm
+
+ppc64:
+quagga-contrib-0.99.15-5.el6_0.1.ppc64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.ppc.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.ppc64.rpm
+quagga-devel-0.99.15-5.el6_0.1.ppc.rpm
+quagga-devel-0.99.15-5.el6_0.1.ppc64.rpm
+
+s390x:
+quagga-contrib-0.99.15-5.el6_0.1.s390x.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.s390.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.s390x.rpm
+quagga-devel-0.99.15-5.el6_0.1.s390.rpm
+quagga-devel-0.99.15-5.el6_0.1.s390x.rpm
+
+x86_64:
+quagga-contrib-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-devel-0.99.15-5.el6_0.1.i686.rpm
+quagga-devel-0.99.15-5.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm</a>
+
+i386:
+quagga-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+
+x86_64:
+quagga-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/quagga-0.99.15-5.el6_0.1.src.rpm</a>
+
+i386:
+quagga-contrib-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+quagga-devel-0.99.15-5.el6_0.1.i686.rpm
+
+x86_64:
+quagga-contrib-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.i686.rpm
+quagga-debuginfo-0.99.15-5.el6_0.1.x86_64.rpm
+quagga-devel-0.99.15-5.el6_0.1.i686.rpm
+quagga-devel-0.99.15-5.el6_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2948.html">https://www.redhat.com/security/data/cve/CVE-2010-2948.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2949.html">https://www.redhat.com/security/data/cve/CVE-2010-2949.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM/TgsXlSAg2UNWIIRAiy6AJ9aveL52mFJ4o+/pDS25NLZZMHaJACeNc9l
+2KkGH/3JyLf/xQl8za3X/oc=
+=4KTX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

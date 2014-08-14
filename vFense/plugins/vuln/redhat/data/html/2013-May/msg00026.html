@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0856&#45;01] Important: pki&#45;tps security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 May 2013 15:10:48 &#45;0400 -->
+<!--X-Message-Id: 201305221910.r4MJAlqA007445@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0856-01] Important: pki-tps security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0856-01] Important: pki-tps security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:0856-01] Important: pki-tps security update</li>
+<li><em>Date</em>: Wed, 22 May 2013 19:10:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: pki-tps security update
+Advisory ID:       RHSA-2013:0856-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0856.html">https://rhn.redhat.com/errata/RHSA-2013-0856.html</a>
+Issue date:        2013-05-22
+CVE Names:         CVE-2013-1885 CVE-2013-1886 
+=====================================================================
+
+1. Summary:
+
+An updated pki-tps package that fixes two security issues is now available
+for Red Hat Certificate System 8.1.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 8 - i386, x86_64
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments. The Token
+Processing System (TPS) is a PKI subsystem that acts as a Registration
+Authority (RA) for authenticating and processing enrollment requests, PIN
+reset requests, and formatting requests from the Enterprise Security
+Client.
+
+A format string flaw was found in the TPS subsystem. An authenticated
+Certificate System user could use this flaw to crash the Apache HTTP Server
+child process, possibly interrupting the processing of other users'
+requests, or possibly execute arbitrary code with pkiuser privileges.
+(CVE-2013-1886)
+
+A cross-site scripting flaw was discovered in the TPS subsystem. An
+attacker could use this flaw to perform a cross-site scripting (XSS) attack
+against victims using Certificate System's web interface. (CVE-2013-1885)
+
+All users of Red Hat Certificate System are advised to upgrade to this
+updated package, which corrects these issues. After installing this update,
+all Red Hat Certificate System subsystems must be restarted (&quot;/etc/init.d
+/[instance-name] restart&quot;) for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+923039 - CVE-2013-1885 Certificate System: pki-tps XSS flaw
+924870 - CVE-2013-1886 Certificate System: pki-tps format string injection
+
+6. Package List:
+
+Red Hat Certificate System 8:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-tps-8.1.3-5.el5pki.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-tps-8.1.3-5.el5pki.src.rpm</a>
+
+i386:
+pki-tps-8.1.3-5.el5pki.i386.rpm
+
+x86_64:
+pki-tps-8.1.3-5.el5pki.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1885.html">https://www.redhat.com/security/data/cve/CVE-2013-1885.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1886.html">https://www.redhat.com/security/data/cve/CVE-2013-1886.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRnRghXlSAg2UNWIIRAjUoAJ4/AzBCT92yqW1p1jls09vQWMkPwwCgltkn
+Y/qp941m82Gx9S+3Ypzu+14=
+=faIE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

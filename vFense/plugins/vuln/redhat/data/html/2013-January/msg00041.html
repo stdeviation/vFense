@@ -1,0 +1,282 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0188&#45;01] Important: ipa security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Jan 2013 16:51:51 &#45;0500 -->
+<!--X-Message-Id: 201301232151.r0NLponH001002@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0188-01] Important: ipa security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0188-01] Important: ipa security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0188-01] Important: ipa security update</li>
+<li><em>Date</em>: Wed, 23 Jan 2013 21:51:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: ipa security update
+Advisory ID:       RHSA-2013:0188-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0188.html">https://rhn.redhat.com/errata/RHSA-2013-0188.html</a>
+Issue date:        2013-01-23
+CVE Names:         CVE-2012-5484 
+=====================================================================
+
+1. Summary:
+
+Updated ipa packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Red Hat Identity Management is a centralized authentication, identity
+management and authorization solution for both traditional and cloud-based
+enterprise environments.
+
+A weakness was found in the way IPA clients communicated with IPA servers
+when initially attempting to join IPA domains. As there was no secure way
+to provide the IPA server's Certificate Authority (CA) certificate to the
+client during a join, the IPA client enrollment process was susceptible to
+man-in-the-middle attacks. This flaw could allow an attacker to obtain
+access to the IPA server using the credentials provided by an IPA client,
+including administrative access to the entire domain if the join was
+performed using an administrator's credentials. (CVE-2012-5484)
+
+Note: This weakness was only exposed during the initial client join to the
+realm, because the IPA client did not yet have the CA certificate of the
+server. Once an IPA client has joined the realm and has obtained the CA
+certificate of the IPA server, all further communication is secure. If a
+client were using the OTP (one-time password) method to join to the realm,
+an attacker could only obtain unprivileged access to the server (enough to
+only join the realm).
+
+Red Hat would like to thank Petr Menšík for reporting this issue.
+
+This update must be installed on both the IPA client and IPA server. When
+this update has been applied to the client but not the server,
+ipa-client-install, in unattended mode, will fail if you do not have the
+correct CA certificate locally, noting that you must use the &quot;--force&quot;
+option to insecurely obtain the certificate. In interactive mode, the
+certificate will try to be obtained securely from LDAP. If this fails, you
+will be prompted to insecurely download the certificate via HTTP. In the
+same situation when using OTP, LDAP will not be queried and you will be
+prompted to insecurely download the certificate via HTTP.
+
+Users of ipa are advised to upgrade to these updated packages, which
+correct this issue. After installing the update, changes in LDAP are
+handled by ipa-ldap-updater automatically and are effective immediately.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+876307 - CVE-2012-5484 ipa: weakness when initiating join from IPA client can potentially compromise IPA domain
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+i386:
+ipa-client-2.2.0-17.el6_3.1.i686.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.i686.rpm
+ipa-python-2.2.0-17.el6_3.1.i686.rpm
+
+x86_64:
+ipa-client-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-python-2.2.0-17.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+i386:
+ipa-admintools-2.2.0-17.el6_3.1.i686.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.i686.rpm
+
+x86_64:
+ipa-admintools-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+x86_64:
+ipa-client-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-python-2.2.0-17.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+x86_64:
+ipa-admintools-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+i386:
+ipa-admintools-2.2.0-17.el6_3.1.i686.rpm
+ipa-client-2.2.0-17.el6_3.1.i686.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.i686.rpm
+ipa-python-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.i686.rpm
+
+ppc64:
+ipa-admintools-2.2.0-17.el6_3.1.ppc64.rpm
+ipa-client-2.2.0-17.el6_3.1.ppc64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.ppc64.rpm
+ipa-python-2.2.0-17.el6_3.1.ppc64.rpm
+
+s390x:
+ipa-admintools-2.2.0-17.el6_3.1.s390x.rpm
+ipa-client-2.2.0-17.el6_3.1.s390x.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.s390x.rpm
+ipa-python-2.2.0-17.el6_3.1.s390x.rpm
+
+x86_64:
+ipa-admintools-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-client-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-python-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-2.2.0-17.el6_3.1.src.rpm</a>
+
+i386:
+ipa-admintools-2.2.0-17.el6_3.1.i686.rpm
+ipa-client-2.2.0-17.el6_3.1.i686.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.i686.rpm
+ipa-python-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-2.2.0-17.el6_3.1.i686.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.i686.rpm
+
+x86_64:
+ipa-admintools-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-client-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-debuginfo-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-python-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-2.2.0-17.el6_3.1.x86_64.rpm
+ipa-server-selinux-2.2.0-17.el6_3.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5484.html">https://www.redhat.com/security/data/cve/CVE-2012-5484.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRAFtoXlSAg2UNWIIRAhb6AKC8pKI8sFczd4SAk0l4m/+XV8OQSwCeMU9S
+5ISYbcazBwT6wNNRKn07Mh4=
+=Fnq3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

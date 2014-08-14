@@ -1,0 +1,206 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1013&#45;01] Moderate: Red Hat JBoss Web Server 2.0.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Jul 2013 13:14:43 &#45;0400 -->
+<!--X-Message-Id: 201307031714.r63HEgHD011815@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1013-01] Moderate: Red Hat JBoss Web Server 2.0.1 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1013-01] Moderate: Red Hat JBoss Web Server 2.0.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1013-01] Moderate: Red Hat JBoss Web Server 2.0.1 update</li>
+<li><em>Date</em>: Wed, 3 Jul 2013 17:14:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Web Server 2.0.1 update
+Advisory ID:       RHSA-2013:1013-01
+Product:           Red Hat JBoss Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1013.html">https://rhn.redhat.com/errata/RHSA-2013-1013.html</a>
+Issue date:        2013-07-03
+CVE Names:         CVE-2012-3499 CVE-2012-3544 CVE-2012-4558 
+                   CVE-2013-0166 CVE-2013-0169 CVE-2013-2067 
+                   CVE-2013-2071 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Web Server 2.0.1, which fixes multiple security issues and
+several bugs, is now available from the Red Hat Customer Portal for Red Hat
+Enterprise Linux 5 and 6, Solaris, and Microsoft Windows.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Web Server is a fully integrated and certified set of
+components for hosting Java web applications. It is comprised of the Apache
+HTTP Server, the Apache Tomcat Servlet container, Apache Tomcat Connector
+(mod_jk), JBoss HTTP Connector (mod_cluster), Hibernate, and the Tomcat
+Native library.
+
+This release serves as a replacement for Red Hat JBoss Web Server 2.0.0,
+and includes several bug fixes. Refer to the Red Hat JBoss Web Server 2.0.1
+Release Notes for information on the most significant of these changes,
+available shortly from <a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+The following security issues are also fixed with this release:
+
+Cross-site scripting (XSS) flaws were found in the Apache HTTP Server
+mod_proxy_balancer module's manager web interface. If a remote attacker
+could trick a user, who was logged into the manager web interface, into
+visiting a specially-crafted URL, it would lead to arbitrary web script
+execution in the context of the user's manager interface session.
+(CVE-2012-4558)
+
+Cross-site scripting (XSS) flaws were found in the Apache HTTP Server
+mod_info, mod_status, mod_imagemap, mod_ldap, and mod_proxy_ftp modules. An
+attacker could possibly use these flaws to perform XSS attacks if they were
+able to make the victim's browser generate an HTTP request with a
+specially-crafted Host header. (CVE-2012-3499)
+
+A NULL pointer dereference flaw was found in the OCSP response verification
+in OpenSSL. A malicious OCSP server could use this flaw to crash
+applications performing OCSP verification by sending a specially-crafted
+response. (CVE-2013-0166)
+
+It was discovered that OpenSSL leaked timing information when decrypting
+TLS/SSL and DTLS protocol encrypted records when CBC-mode cipher suites
+were used. A remote attacker could possibly use this flaw to retrieve plain
+text from the encrypted packets by using a TLS/SSL or DTLS server as a
+padding oracle. (CVE-2013-0169)
+
+Note: CVE-2013-0166 and CVE-2013-0169 were only corrected in the packages
+for Solaris and Windows. Updates for Red Hat Enterprise Linux can be
+downloaded from the Red Hat Network.
+
+A session fixation flaw was found in the Tomcat FormAuthenticator module.
+During a narrow window of time, if a remote attacker sent requests while a
+user was logging in, it could possibly result in the attacker's requests
+being processed as if they were sent by the user. (CVE-2013-2067)
+
+A denial of service flaw was found in the way the Tomcat chunked transfer
+encoding input filter processed CRLF sequences. A remote attacker could
+use this flaw to send an excessively long request, consuming network
+bandwidth, CPU, and memory on the Tomcat server. Chunked transfer encoding
+is enabled by default. (CVE-2012-3544)
+
+A flaw was found in the way the Tomcat 7 asynchronous context
+implementation performed request management in certain circumstances. If an
+application used AsyncListeners and threw RuntimeExceptions, Tomcat could
+send a reply that contains information from a different user's request,
+possibly leading to the disclosure of sensitive information. This issue
+only affected Tomcat 7. (CVE-2013-2071)
+
+Warning: Before applying the update, back up your existing Red Hat JBoss
+Web Server installation (including all applications and configuration
+files).
+
+All users of Red Hat JBoss Web Server 2.0.0 as provided from the Red Hat
+Customer Portal are advised to upgrade to Red Hat JBoss Web Server 2.0.1,
+which corrects these issues.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing Red Hat JBoss Web Server installation (including all applications
+and configuration files).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+907589 - CVE-2013-0169 SSL/TLS: CBC padding timing attack (lucky-13)
+908052 - CVE-2013-0166 openssl: DoS due to improper handling of OCSP response verification
+915883 - CVE-2012-3499 httpd: multiple XSS flaws due to unescaped hostnames
+915884 - CVE-2012-4558 httpd: XSS flaw in mod_proxy_balancer manager interface
+961779 - CVE-2013-2067 tomcat: Session fixation in form authenticator
+961783 - CVE-2012-3544 tomcat: Limited DoS in chunked transfer encoding input filter
+961803 - CVE-2013-2071 tomcat: Information disclosure in asynchronous context when using AsyncListeners that threw RuntimeExceptions
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3499.html">https://www.redhat.com/security/data/cve/CVE-2012-3499.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3544.html">https://www.redhat.com/security/data/cve/CVE-2012-3544.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4558.html">https://www.redhat.com/security/data/cve/CVE-2012-4558.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0166.html">https://www.redhat.com/security/data/cve/CVE-2013-0166.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0169.html">https://www.redhat.com/security/data/cve/CVE-2013-0169.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2067.html">https://www.redhat.com/security/data/cve/CVE-2013-2067.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2071.html">https://www.redhat.com/security/data/cve/CVE-2013-2071.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=webserver&amp;version=2.0.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=webserver&amp;version=2.0.1</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Web_Server/2/html-single/Installation_Guide/index.html">https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Web_Server/2/html-single/Installation_Guide/index.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR1FvaXlSAg2UNWIIRAuRHAJwPeq1bbpVCriOQYzzsB9/oKfZANACfXGnX
+PT1zTAO0MYY7uRnj/x6ul3s=
+=PZWq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

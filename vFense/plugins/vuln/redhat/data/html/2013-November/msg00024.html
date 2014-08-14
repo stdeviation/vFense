@@ -1,0 +1,322 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1591&#45;02] Low: openssh security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:28:41 &#45;0500 -->
+<!--X-Message-Id: 201311210428.rAL4Sc6k032763@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1591-02] Low: openssh security, bug fix,	and enhancement upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1591-02] Low: openssh security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1591-02] Low: openssh security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:32:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openssh security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1591-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1591.html">https://rhn.redhat.com/errata/RHSA-2013-1591.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2010-5107 
+=====================================================================
+
+1. Summary:
+
+Updated openssh packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+OpenSSH is OpenBSD's Secure Shell (SSH) protocol implementation.
+These packages include the core files necessary for the OpenSSH client
+and server.
+
+The default OpenSSH configuration made it easy for remote attackers to
+exhaust unauthorized connection slots and prevent other users from being
+able to log in to a system. This flaw has been addressed by enabling random
+early connection drops by setting MaxStartups to 10:30:100 by default.
+For more information, refer to the sshd_config(5) man page. (CVE-2010-5107)
+
+These updated openssh packages include numerous bug fixes and enhancements.
+Space precludes documenting all of these changes in this advisory.
+Users are directed to the Red Hat Enterprise Linux 6.5 Technical Notes,
+linked to in the References, for information on the most significant of
+these changes.
+
+All openssh users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+908707 - CVE-2010-5107 openssh: Prevent connection slot exhaustion attacks
+974096 - Kerberos ticket forwarding does not work if /tmp is polyinstantiated
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-94.el6.i686.rpm
+openssh-askpass-5.3p1-94.el6.i686.rpm
+openssh-clients-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-server-5.3p1-94.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-94.el6.x86_64.rpm
+openssh-askpass-5.3p1-94.el6.x86_64.rpm
+openssh-clients-5.3p1-94.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-server-5.3p1-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-ldap-5.3p1-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-ldap-5.3p1-94.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+x86_64:
+openssh-5.3p1-94.el6.x86_64.rpm
+openssh-clients-5.3p1-94.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-server-5.3p1-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+x86_64:
+openssh-askpass-5.3p1-94.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-ldap-5.3p1-94.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-94.el6.i686.rpm
+openssh-askpass-5.3p1-94.el6.i686.rpm
+openssh-clients-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-server-5.3p1-94.el6.i686.rpm
+
+ppc64:
+openssh-5.3p1-94.el6.ppc64.rpm
+openssh-askpass-5.3p1-94.el6.ppc64.rpm
+openssh-clients-5.3p1-94.el6.ppc64.rpm
+openssh-debuginfo-5.3p1-94.el6.ppc64.rpm
+openssh-server-5.3p1-94.el6.ppc64.rpm
+
+s390x:
+openssh-5.3p1-94.el6.s390x.rpm
+openssh-askpass-5.3p1-94.el6.s390x.rpm
+openssh-clients-5.3p1-94.el6.s390x.rpm
+openssh-debuginfo-5.3p1-94.el6.s390x.rpm
+openssh-server-5.3p1-94.el6.s390x.rpm
+
+x86_64:
+openssh-5.3p1-94.el6.x86_64.rpm
+openssh-askpass-5.3p1-94.el6.x86_64.rpm
+openssh-clients-5.3p1-94.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-server-5.3p1-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-ldap-5.3p1-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+
+ppc64:
+openssh-debuginfo-5.3p1-94.el6.ppc.rpm
+openssh-debuginfo-5.3p1-94.el6.ppc64.rpm
+openssh-ldap-5.3p1-94.el6.ppc64.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.ppc.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.ppc64.rpm
+
+s390x:
+openssh-debuginfo-5.3p1-94.el6.s390.rpm
+openssh-debuginfo-5.3p1-94.el6.s390x.rpm
+openssh-ldap-5.3p1-94.el6.s390x.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.s390.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.s390x.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-ldap-5.3p1-94.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-94.el6.i686.rpm
+openssh-askpass-5.3p1-94.el6.i686.rpm
+openssh-clients-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-server-5.3p1-94.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-94.el6.x86_64.rpm
+openssh-askpass-5.3p1-94.el6.x86_64.rpm
+openssh-clients-5.3p1-94.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-server-5.3p1-94.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-94.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-ldap-5.3p1-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-94.el6.i686.rpm
+openssh-debuginfo-5.3p1-94.el6.x86_64.rpm
+openssh-ldap-5.3p1-94.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-94.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-5107.html">https://www.redhat.com/security/data/cve/CVE-2010-5107.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/openssh.html#RHSA-2013-1591">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/openssh.html#RHSA-2013-1591</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjYvjXlSAg2UNWIIRAuU/AJ4wr1i9ZSphULSlLu3xmWuaGMBl5ACfUWHK
+MEHMZ48whd4ndP5GYfbR0nE=
+=62cY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

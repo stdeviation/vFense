@@ -1,0 +1,206 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1052&#45;01] Moderate: mod_cluster security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 3 Jul 2012 05:52:14 &#45;0400 -->
+<!--X-Message-Id: 201207030952.q639q76g009176@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1052-01] Moderate: mod_cluster security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1052-01] Moderate: mod_cluster security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1052-01] Moderate: mod_cluster security update</li>
+<li><em>Date</em>: Tue, 3 Jul 2012 09:52:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mod_cluster security update
+Advisory ID:       RHSA-2012:1052-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1052.html">https://rhn.redhat.com/errata/RHSA-2012-1052.html</a>
+Issue date:        2012-07-03
+CVE Names:         CVE-2012-1154 
+=====================================================================
+
+1. Summary:
+
+Updated mod_cluster packages that fix one security issue are now available
+for JBoss Enterprise Application Platform 5.1.2 for Red Hat
+Enterprise Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform 5 for RHEL 4 AS - noarch
+JBoss Enterprise Application Platform 5 for RHEL 4 ES - noarch
+JBoss Enterprise Application Platform 5 for RHEL 5 Server - noarch
+JBoss Enterprise Application Platform 5 for RHEL 6 Server - noarch
+
+3. Description:
+
+mod_cluster is an Apache HTTP Server (httpd) based load balancer that
+forwards requests from httpd to application server nodes. It can use the
+AJP, HTTP, or HTTPS protocols for communication with application server
+nodes.
+
+The JBoss Enterprise Application Platform 5.1.2 release (RHSA-2011:1800,
+RHSA-2011:1799, RHSA-2011:1798) introduced a regression, causing
+mod_cluster to register and expose the root context of a server by default,
+even when &quot;ROOT&quot; was in the &quot;excludedContexts&quot; list in the mod_cluster
+configuration. If an application was deployed on the root context, a remote
+attacker could use this flaw to bypass intended access restrictions and
+gain access to that application. (CVE-2012-1154)
+
+Warning: Before applying this update, back up your JBoss Enterprise
+Application Platform's &quot;server/[PROFILE]/deploy/&quot; directory, along with all
+other customized configuration files.
+
+Users of JBoss Enterprise Application Platform 5.1.2 on Red Hat Enterprise
+Linux 4, 5, and 6 should upgrade to these updated packages, which correct
+this issue. The JBoss server process must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+802200 - CVE-2012-1154 mod_cluster registers and exposes the root context of a server by default, despite ROOT being in the excluded-contexts list
+
+6. Package List:
+
+JBoss Enterprise Application Platform 5 for RHEL 4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.GA_CP02_patch01.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.GA_CP02_patch01.ep5.el4.src.rpm</a>
+
+noarch:
+mod_cluster-demo-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-jbossas-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-tomcat6-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.GA_CP02_patch01.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.GA_CP02_patch01.ep5.el4.src.rpm</a>
+
+noarch:
+mod_cluster-demo-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-jbossas-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+mod_cluster-tomcat6-1.0.10-4.GA_CP02_patch01.ep5.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.1.GA_CP02_patch01.ep5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.1.GA_CP02_patch01.ep5.el5.src.rpm</a>
+
+noarch:
+mod_cluster-demo-1.0.10-4.1.GA_CP02_patch01.ep5.el5.noarch.rpm
+mod_cluster-jbossas-1.0.10-4.1.GA_CP02_patch01.ep5.el5.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-4.1.GA_CP02_patch01.ep5.el5.noarch.rpm
+mod_cluster-tomcat6-1.0.10-4.1.GA_CP02_patch01.ep5.el5.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.1.GA_CP02_patch01.ep5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/mod_cluster-1.0.10-4.1.GA_CP02_patch01.ep5.el6.src.rpm</a>
+
+noarch:
+mod_cluster-demo-1.0.10-4.1.GA_CP02_patch01.ep5.el6.noarch.rpm
+mod_cluster-jbossas-1.0.10-4.1.GA_CP02_patch01.ep5.el6.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-4.1.GA_CP02_patch01.ep5.el6.noarch.rpm
+mod_cluster-tomcat6-1.0.10-4.1.GA_CP02_patch01.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1154.html">https://www.redhat.com/security/data/cve/CVE-2012-1154.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1800.html">https://rhn.redhat.com/errata/RHSA-2011-1800.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1799.html">https://rhn.redhat.com/errata/RHSA-2011-1799.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1798.html">https://rhn.redhat.com/errata/RHSA-2011-1798.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP8sCRXlSAg2UNWIIRAhRUAJ4+JKXITPaY5iOIYRcbZypcA+zmjgCggqJ7
+z6KjGsyTe+df+qa90u9ByvA=
+=ZxRn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

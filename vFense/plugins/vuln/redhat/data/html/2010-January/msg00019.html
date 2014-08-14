@@ -1,0 +1,257 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0041&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jan 2010 09:18:42 &#45;0500 -->
+<!--X-Message-Id: 201001211418.o0LEIavw013559@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0041-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00018.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0041-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0041-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Jan 2010 09:18:36 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2010:0041-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0041.html">https://rhn.redhat.com/errata/RHSA-2010-0041.html</a>
+Issue date:        2010-01-21
+CVE Names:         CVE-2009-3080 CVE-2009-4021 CVE-2009-4536 
+                   CVE-2009-4537 CVE-2009-4538 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and several
+bugs are now available for Red Hat Enterprise MRG 1.2.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* an array index error was found in the gdth driver in the Linux kernel. A
+local user could send a specially-crafted IOCTL request that would cause a
+denial of service or, possibly, privilege escalation. (CVE-2009-3080,
+Important)
+
+* a flaw was found in the FUSE implementation in the Linux kernel. When a
+system is low on memory, fuse_put_request() could dereference an invalid
+pointer, possibly leading to a local denial of service or privilege
+escalation. (CVE-2009-4021, Important)
+
+* a flaw was found in each of the following Intel PRO/1000 Linux drivers in
+the Linux kernel: e1000 and e1000e. A remote attacker using packets larger
+than the MTU could bypass the existing fragment check, resulting in
+partial, invalid frames being passed to the network stack. These flaws
+could also possibly be used to trigger a remote denial of service.
+(CVE-2009-4536, CVE-2009-4538, Important)
+
+* a flaw was found in the Realtek r8169 Ethernet driver in the Linux
+kernel. Receiving overly-long frames with a certain revision of the network
+cards supported by this driver could possibly result in a remote denial of
+service. (CVE-2009-4537, Important)
+
+This update also fixes the following bugs:
+
+* the &quot;function tracer&quot; from ftrace could eventually present problems when
+a module was unloaded during a tracing session. Some of the related call
+site entries for that module were not removed from ftrace's internal lists
+and could lead to confusing &quot;oops&quot; error messages. The call site entries
+are now removed correctly, and the errors no longer occur. (BZ#537472)
+
+* when using the kernel in tickless (or NOHZ) mode, time was not
+accumulated one tick at a time. This created latencies when the accumulated
+interval grew large. Time is now accumulated logarithmically and latencies
+related to tickless mode no longer occur. (BZ#538370)
+
+* running the &quot;cset set&quot; command was resulting in unsafe access to a
+structure that could be concurrently changed. This was eventually causing
+the kernel to crash. The operations were repositioned so that they no
+longer add locks, to minimize performance penalties. (BZ#541080)
+
+* the function used to calculate system load called different functions to
+count the tasks in running and interpretable states. On systems with a
+large number of CPUs, this could result in several TLB and cache misses.
+These functions have now been combined, and the problem has been
+significantly reduced. (BZ#552860)
+
+* when legacy PCI bus checks occurred, an off-by-one error would present.
+Scanning 255 PCI buses is now allowed as 0xff is a valid bus, and the error
+no longer occurs. (BZ#552874)
+
+* on systems with 8 or more CPUs, an unnecessary anon_vma lock acquisition
+in vma_adjust() was causing a decrease in throughput. Code from the
+upstream kernel was backported, and the throughput decrease no longer
+exists. (BZ#552876)
+
+* the scheduler function double_lock_balance() favors logically lower CPUs.
+This could cause logically higher CPUs to be starved if run queues were
+under a lot of pressure, resulting in latencies. The algorithm has been
+adjusted so that it is fairer, and logically higher CPUs no longer risk
+being starved. (BZ#552877)
+
+These updated packages also include other bug fixes. Users are directed to
+the Red Hat Enterprise MRG 1.2 Release Notes for information on those
+fixes, available shortly from:
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+537472 - ftrace function tracer triggers integrity check failure
+538734 - CVE-2009-4021 kernel: fuse: prevent fuse_put_request on invalid pointer
+539414 - CVE-2009-3080 kernel: gdth: Prevent negative offsets in ioctl
+541080 - MRG Kernel  crashes when we run &quot;cset set&quot; command, but the crash is random.
+550907 - CVE-2009-4537 kernel: r8169 issue reported at 26c3
+551214 - CVE-2009-4538 kernel: e1000e frame fragment issue
+552126 - CVE-2009-4536 kernel: e1000 issue reported at 26c3
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-146.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-146.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-146.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-146.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-146.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-146.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-146.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3080.html">https://www.redhat.com/security/data/cve/CVE-2009-3080.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4021.html">https://www.redhat.com/security/data/cve/CVE-2009-4021.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4536.html">https://www.redhat.com/security/data/cve/CVE-2009-4536.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4537.html">https://www.redhat.com/security/data/cve/CVE-2009-4537.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4538.html">https://www.redhat.com/security/data/cve/CVE-2009-4538.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLWGGVXlSAg2UNWIIRAuKlAKCrKCUDQ3BIaeumzkFhWB8h+ORSAgCcCgb6
+TYIyTlxPCjpZX4kQ8UVADOE=
+=+xaZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00018.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

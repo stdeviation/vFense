@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0306&#45;01] Important: samba3x security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Mar 2011 17:48:01 &#45;0500 -->
+<!--X-Message-Id: 201103012247.p21MluPp002755@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0306-01] Important: samba3x security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0306-01] Important: samba3x security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0306-01] Important: samba3x security update</li>
+<li><em>Date</em>: Tue, 1 Mar 2011 15:47:55 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: samba3x security update
+Advisory ID:       RHSA-2011:0306-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0306.html">https://rhn.redhat.com/errata/RHSA-2011-0306.html</a>
+Issue date:        2011-03-01
+CVE Names:         CVE-2011-0719 
+=====================================================================
+
+1. Summary:
+
+Updated samba3x packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Samba is a suite of programs used by machines to share files, printers, and
+other information.
+
+A flaw was found in the way Samba handled file descriptors. If an attacker
+were able to open a large number of file descriptors on the Samba server,
+they could flip certain stack bits to &quot;1&quot; values, resulting in the Samba
+server (smbd) crashing. (CVE-2011-0719)
+
+Red Hat would like to thank the Samba team for reporting this issue.
+
+Users of Samba are advised to upgrade to these updated packages, which
+contain a backported patch to resolve this issue. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+678328 - CVE-2011-0719 Samba unsafe fd_set usage
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm</a>
+
+i386:
+samba3x-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.i386.rpm
+
+x86_64:
+samba3x-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm</a>
+
+i386:
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.i386.rpm
+
+x86_64:
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba3x-3.5.4-0.70.el5_6.1.src.rpm</a>
+
+i386:
+samba3x-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.i386.rpm
+
+ia64:
+samba3x-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.ia64.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.ia64.rpm
+
+ppc:
+samba3x-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.ppc64.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.ppc64.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.ppc.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.ppc64.rpm
+
+s390x:
+samba3x-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.s390.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.s390.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.s390x.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.s390.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.s390x.rpm
+
+x86_64:
+samba3x-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-client-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-common-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-debuginfo-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-doc-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-domainjoin-gui-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-swat-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-3.5.4-0.70.el5_6.1.x86_64.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.i386.rpm
+samba3x-winbind-devel-3.5.4-0.70.el5_6.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0719.html">https://www.redhat.com/security/data/cve/CVE-2011-0719.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNbXdzXlSAg2UNWIIRAjFqAJ4sKPuHnPK5ybMWmiqyEfnLd3olfQCeMWYg
+CtcUGG3U9J8kiJh+Zvl0eos=
+=dsew
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

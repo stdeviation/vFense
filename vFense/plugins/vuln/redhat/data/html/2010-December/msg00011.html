@@ -1,0 +1,313 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0958&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 8 Dec 2010 14:56:56 &#45;0500 -->
+<!--X-Message-Id: 201012081956.oB8Juo4N030949@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0958-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0958-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0958-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Wed, 8 Dec 2010 12:56:50 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2010:0958-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0958.html">https://rhn.redhat.com/errata/RHSA-2010-0958.html</a>
+Issue date:        2010-12-08
+CVE Names:         CVE-2010-2962 CVE-2010-3432 CVE-2010-3442 
+                   CVE-2010-3705 CVE-2010-3858 CVE-2010-3861 
+                   CVE-2010-3874 CVE-2010-3876 CVE-2010-3880 
+                   CVE-2010-4072 CVE-2010-4073 CVE-2010-4074 
+                   CVE-2010-4075 CVE-2010-4077 CVE-2010-4079 
+                   CVE-2010-4080 CVE-2010-4082 CVE-2010-4083 
+                   CVE-2010-4157 CVE-2010-4158 CVE-2010-4169 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and three bugs
+are now available for Red Hat Enterprise MRG 1.3.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Security fixes:
+
+* Missing sanity checks in the Intel i915 driver in the Linux kernel could
+allow a local, unprivileged user to escalate their privileges.
+(CVE-2010-2962, Important)
+
+* A flaw in sctp_packet_config() in the Linux kernel's Stream Control
+Transmission Protocol (SCTP) implementation could allow a remote attacker
+to cause a denial of service. (CVE-2010-3432, Important)
+
+* A missing integer overflow check in snd_ctl_new() in the Linux kernel's
+sound subsystem could allow a local, unprivileged user on a 32-bit system
+to cause a denial of service or escalate their privileges. (CVE-2010-3442,
+Important)
+
+* A flaw in sctp_auth_asoc_get_hmac() in the Linux kernel's SCTP
+implementation. When iterating through the hmac_ids array, it did not reset
+the last id element if it was out of range. This could allow a remote
+attacker to cause a denial of service. (CVE-2010-3705, Important)
+
+* Missing sanity checks in setup_arg_pages() in the Linux kernel. When
+making the size of the argument and environment area on the stack very
+large, it could trigger a BUG_ON(), resulting in a local denial of service.
+(CVE-2010-3858, Moderate)
+
+* A flaw in ethtool_get_rxnfc() in the Linux kernel's ethtool IOCTL
+handler. When it is called with a large info.rule_cnt, it could allow a
+local user to cause an information leak. (CVE-2010-3861, Moderate)
+
+* A flaw in bcm_connect() in the Linux kernel's Controller Area Network
+(CAN) Broadcast Manager. On 64-bit systems, writing the socket address may
+overflow the procname character array. (CVE-2010-3874, Moderate)
+
+* A flaw in inet_csk_diag_dump() in the Linux kernel's module for
+monitoring the sockets of INET transport protocols. By sending a netlink
+message with certain bytecode, a local, unprivileged user could cause a
+denial of service. (CVE-2010-3880, Moderate)
+
+* Missing sanity checks in gdth_ioctl_alloc() in the gdth driver in the
+Linux kernel, could allow a local user with access to &quot;/dev/gdth&quot; on a
+64-bit system to cause a denial of service or escalate their privileges.
+(CVE-2010-4157, Moderate)
+
+* A use-after-free flaw in the mprotect() system call could allow a local,
+unprivileged user to cause a local denial of service. (CVE-2010-4169,
+Moderate)
+
+* Missing initialization flaws in the Linux kernel could lead to
+information leaks. (CVE-2010-3876, CVE-2010-4072, CVE-2010-4073,
+CVE-2010-4074, CVE-2010-4075, CVE-2010-4077, CVE-2010-4079, CVE-2010-4080,
+CVE-2010-4082, CVE-2010-4083, CVE-2010-4158, Low)
+
+Red Hat would like to thank Kees Cook for reporting CVE-2010-2962,
+CVE-2010-3861, and CVE-2010-4072; Dan Rosenberg for reporting
+CVE-2010-3442, CVE-2010-3705, CVE-2010-3874, CVE-2010-4073, CVE-2010-4074,
+CVE-2010-4075, CVE-2010-4077, CVE-2010-4079, CVE-2010-4080, CVE-2010-4082,
+CVE-2010-4083, and CVE-2010-4158; Brad Spengler for reporting
+CVE-2010-3858; Nelson Elhage for reporting CVE-2010-3880; and Vasiliy
+Kulikov for reporting CVE-2010-3876.
+
+Bug fixes:
+
+* A vulnerability in the 32-bit compatibility code for the VIDIOCSMICROCODE
+IOCTL in the Video4Linux implementation. It does not affect Red Hat
+Enterprise MRG, but as a preventive measure, this update removes the code.
+Red Hat would like to thank Kees Cook for reporting this vulnerability.
+(BZ#642469)
+
+* The kernel-rt spec file was missing the crypto, drm, generated, and trace
+header directories when generating the kernel-rt-devel package, resulting
+in out-of-tree modules failing to build. (BZ#608784)
+
+* On computers without a supported Performance Monitoring Unit, a crash
+would occur when running the &quot;perf top&quot; command, and occasionally other
+perf commands. perf software events are now marked as IRQ safe to avoid
+this crash. (BZ#647434)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+608784 - cannot build third-party modules based upon 2.6.33.5-rt* packages
+637675 - CVE-2010-3432 kernel: sctp: do not reset the packet during sctp_packet_config
+637688 - CVE-2010-2962 kernel: arbitrary kernel memory write via i915 GEM ioctl
+638478 - CVE-2010-3442 kernel: prevent heap corruption in snd_ctl_new()
+640036 - CVE-2010-3705 kernel: sctp memory corruption in HMAC handling
+642469 - CVE-2010-2963 kernel: v4l: VIDIOCSMICROCODE arbitrary write [mrg-1.3]
+645222 - CVE-2010-3858 kernel: setup_arg_pages: diagnose excessive argument size
+646725 - CVE-2010-3861 kernel: heap contents leak from ETHTOOL_GRXCLSRLALL
+647434 - perf: Mark software events as irqsafe
+648656 - CVE-2010-4072 kernel: ipc/shm.c: reading uninitialized stack memory
+648658 - CVE-2010-4073 kernel: ipc/compat*.c: reading uninitialized stack memory
+648659 - CVE-2010-4074 kernel: drivers/usb/serial/mos*.c: reading uninitialized stack memory
+648660 - CVE-2010-4075 kernel: drivers/serial/serial_core.c: reading uninitialized stack memory
+648663 - CVE-2010-4077 kernel: drivers/char/nozomi.c: reading uninitialized stack memory
+648666 - CVE-2010-4079 kernel: drivers/video/ivtv/ivtvfb.c: reading uninitialized stack memory
+648669 - CVE-2010-4080 kernel: drivers/sound/pci/rme9652/hdsp.c: reading uninitialized stack memory
+648671 - CVE-2010-4082 kernel: drivers/video/via/ioctl.c: reading uninitialized stack memory
+648673 - CVE-2010-4083 kernel: ipc/sem.c: reading uninitialized stack memory
+649695 - CVE-2010-3874 kernel: CAN info leak/minor heap overflow
+649715 - CVE-2010-3876 kernel: net/packet/af_packet.c: reading uninitialized stack memory
+651147 - CVE-2010-4157 kernel: gdth: integer overflow in ioc_general()
+651264 - CVE-2010-3880 kernel: logic error in INET_DIAG bytecode auditing
+651671 - CVE-2010-4169 kernel: perf bug
+651698 - CVE-2010-4158 kernel: socket filters infoleak
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.7-rt29.47.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.7-rt29.47.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-debug-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-devel-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-trace-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.7-rt29.47.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.33.7-rt29.47.el5rt.i686.rpm
+perf-2.6.33.7-rt29.47.el5rt.i686.rpm
+perf-debuginfo-2.6.33.7-rt29.47.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.33.7-rt29.47.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+perf-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+perf-debuginfo-2.6.33.7-rt29.47.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2962.html">https://www.redhat.com/security/data/cve/CVE-2010-2962.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3432.html">https://www.redhat.com/security/data/cve/CVE-2010-3432.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3442.html">https://www.redhat.com/security/data/cve/CVE-2010-3442.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3705.html">https://www.redhat.com/security/data/cve/CVE-2010-3705.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3858.html">https://www.redhat.com/security/data/cve/CVE-2010-3858.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3861.html">https://www.redhat.com/security/data/cve/CVE-2010-3861.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3874.html">https://www.redhat.com/security/data/cve/CVE-2010-3874.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3876.html">https://www.redhat.com/security/data/cve/CVE-2010-3876.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3880.html">https://www.redhat.com/security/data/cve/CVE-2010-3880.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4072.html">https://www.redhat.com/security/data/cve/CVE-2010-4072.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4073.html">https://www.redhat.com/security/data/cve/CVE-2010-4073.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4074.html">https://www.redhat.com/security/data/cve/CVE-2010-4074.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4075.html">https://www.redhat.com/security/data/cve/CVE-2010-4075.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4077.html">https://www.redhat.com/security/data/cve/CVE-2010-4077.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4079.html">https://www.redhat.com/security/data/cve/CVE-2010-4079.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4080.html">https://www.redhat.com/security/data/cve/CVE-2010-4080.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4082.html">https://www.redhat.com/security/data/cve/CVE-2010-4082.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4083.html">https://www.redhat.com/security/data/cve/CVE-2010-4083.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4157.html">https://www.redhat.com/security/data/cve/CVE-2010-4157.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4158.html">https://www.redhat.com/security/data/cve/CVE-2010-4158.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4169.html">https://www.redhat.com/security/data/cve/CVE-2010-4169.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM/+LlXlSAg2UNWIIRAn8PAJ4xFBVdWI5Eh9ZBCaBs2vpEQpLU0wCfdg3g
+a0MdrCyeuuzqS7ocPAJ4oLE=
+=MLpI
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

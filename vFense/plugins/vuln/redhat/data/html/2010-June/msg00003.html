@@ -1,0 +1,397 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0457&#45;01] Moderate: perl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 7 Jun 2010 12:24:27 &#45;0400 -->
+<!--X-Message-Id: 201006071624.o57GOL9Q002148@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0457-01] Moderate: perl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0457-01] Moderate: perl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0457-01] Moderate: perl security update</li>
+<li><em>Date</em>: Mon, 7 Jun 2010 10:24:20 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: perl security update
+Advisory ID:       RHSA-2010:0457-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0457.html">https://rhn.redhat.com/errata/RHSA-2010-0457.html</a>
+Issue date:        2010-06-07
+CVE Names:         CVE-2010-1168 CVE-2010-1447 
+=====================================================================
+
+1. Summary:
+
+Updated perl packages that fix two security issues are now available for
+Red Hat Enterprise Linux 3 and 4.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Perl is a high-level programming language commonly used for system
+administration utilities and web programming. The Safe extension module
+allows users to compile and execute Perl code in restricted compartments.
+
+The Safe module did not properly restrict the code of implicitly called
+methods (such as DESTROY and AUTOLOAD) on implicitly blessed objects
+returned as a result of unsafe code evaluation. These methods could have
+been executed unrestricted by Safe when such objects were accessed or
+destroyed. A specially-crafted Perl script executed inside of a Safe
+compartment could use this flaw to bypass intended Safe module
+restrictions. (CVE-2010-1168)
+
+The Safe module did not properly restrict code compiled in a Safe
+compartment and executed out of the compartment via a subroutine reference
+returned as a result of unsafe code evaluation. A specially-crafted Perl
+script executed inside of a Safe compartment could use this flaw to bypass
+intended Safe module restrictions, if the returned subroutine reference was
+called from outside of the compartment. (CVE-2010-1447)
+
+Red Hat would like to thank Tim Bunce for responsibly reporting the
+CVE-2010-1168 and CVE-2010-1447 issues. Upstream acknowledges Nick Cleaton
+as the original reporter of CVE-2010-1168, and Tim Bunce and Rafaël
+Garcia-Suarez as the original reporters of CVE-2010-1447.
+
+These packages upgrade the Safe extension module to version 2.27. Refer to
+the Safe module's Changes file, linked to in the References, for a full
+list of changes.
+
+Users of perl are advised to upgrade to these updated packages, which
+correct these issues. All applications using the Safe extension module must
+be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+576508 - CVE-2010-1168 perl Safe: Intended restriction bypass via object references
+588269 - CVE-2010-1447 perl: Safe restriction bypass when reference to subroutine in compartment is called from outside
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm</a>
+
+i386:
+perl-5.8.0-101.EL3.i386.rpm
+perl-CGI-2.89-101.EL3.i386.rpm
+perl-CPAN-1.61-101.EL3.i386.rpm
+perl-DB_File-1.806-101.EL3.i386.rpm
+perl-debuginfo-5.8.0-101.EL3.i386.rpm
+perl-suidperl-5.8.0-101.EL3.i386.rpm
+
+ia64:
+perl-5.8.0-101.EL3.ia64.rpm
+perl-CGI-2.89-101.EL3.ia64.rpm
+perl-CPAN-1.61-101.EL3.ia64.rpm
+perl-DB_File-1.806-101.EL3.ia64.rpm
+perl-debuginfo-5.8.0-101.EL3.ia64.rpm
+perl-suidperl-5.8.0-101.EL3.ia64.rpm
+
+ppc:
+perl-5.8.0-101.EL3.ppc.rpm
+perl-CGI-2.89-101.EL3.ppc.rpm
+perl-CPAN-1.61-101.EL3.ppc.rpm
+perl-DB_File-1.806-101.EL3.ppc.rpm
+perl-debuginfo-5.8.0-101.EL3.ppc.rpm
+perl-suidperl-5.8.0-101.EL3.ppc.rpm
+
+s390:
+perl-5.8.0-101.EL3.s390.rpm
+perl-CGI-2.89-101.EL3.s390.rpm
+perl-CPAN-1.61-101.EL3.s390.rpm
+perl-DB_File-1.806-101.EL3.s390.rpm
+perl-debuginfo-5.8.0-101.EL3.s390.rpm
+perl-suidperl-5.8.0-101.EL3.s390.rpm
+
+s390x:
+perl-5.8.0-101.EL3.s390x.rpm
+perl-CGI-2.89-101.EL3.s390x.rpm
+perl-CPAN-1.61-101.EL3.s390x.rpm
+perl-DB_File-1.806-101.EL3.s390x.rpm
+perl-debuginfo-5.8.0-101.EL3.s390x.rpm
+perl-suidperl-5.8.0-101.EL3.s390x.rpm
+
+x86_64:
+perl-5.8.0-101.EL3.x86_64.rpm
+perl-CGI-2.89-101.EL3.x86_64.rpm
+perl-CPAN-1.61-101.EL3.x86_64.rpm
+perl-DB_File-1.806-101.EL3.x86_64.rpm
+perl-debuginfo-5.8.0-101.EL3.x86_64.rpm
+perl-suidperl-5.8.0-101.EL3.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm</a>
+
+i386:
+perl-5.8.0-101.EL3.i386.rpm
+perl-CGI-2.89-101.EL3.i386.rpm
+perl-CPAN-1.61-101.EL3.i386.rpm
+perl-DB_File-1.806-101.EL3.i386.rpm
+perl-debuginfo-5.8.0-101.EL3.i386.rpm
+perl-suidperl-5.8.0-101.EL3.i386.rpm
+
+x86_64:
+perl-5.8.0-101.EL3.x86_64.rpm
+perl-CGI-2.89-101.EL3.x86_64.rpm
+perl-CPAN-1.61-101.EL3.x86_64.rpm
+perl-DB_File-1.806-101.EL3.x86_64.rpm
+perl-debuginfo-5.8.0-101.EL3.x86_64.rpm
+perl-suidperl-5.8.0-101.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm</a>
+
+i386:
+perl-5.8.0-101.EL3.i386.rpm
+perl-CGI-2.89-101.EL3.i386.rpm
+perl-CPAN-1.61-101.EL3.i386.rpm
+perl-DB_File-1.806-101.EL3.i386.rpm
+perl-debuginfo-5.8.0-101.EL3.i386.rpm
+perl-suidperl-5.8.0-101.EL3.i386.rpm
+
+ia64:
+perl-5.8.0-101.EL3.ia64.rpm
+perl-CGI-2.89-101.EL3.ia64.rpm
+perl-CPAN-1.61-101.EL3.ia64.rpm
+perl-DB_File-1.806-101.EL3.ia64.rpm
+perl-debuginfo-5.8.0-101.EL3.ia64.rpm
+perl-suidperl-5.8.0-101.EL3.ia64.rpm
+
+x86_64:
+perl-5.8.0-101.EL3.x86_64.rpm
+perl-CGI-2.89-101.EL3.x86_64.rpm
+perl-CPAN-1.61-101.EL3.x86_64.rpm
+perl-DB_File-1.806-101.EL3.x86_64.rpm
+perl-debuginfo-5.8.0-101.EL3.x86_64.rpm
+perl-suidperl-5.8.0-101.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/perl-5.8.0-101.EL3.src.rpm</a>
+
+i386:
+perl-5.8.0-101.EL3.i386.rpm
+perl-CGI-2.89-101.EL3.i386.rpm
+perl-CPAN-1.61-101.EL3.i386.rpm
+perl-DB_File-1.806-101.EL3.i386.rpm
+perl-debuginfo-5.8.0-101.EL3.i386.rpm
+perl-suidperl-5.8.0-101.EL3.i386.rpm
+
+ia64:
+perl-5.8.0-101.EL3.ia64.rpm
+perl-CGI-2.89-101.EL3.ia64.rpm
+perl-CPAN-1.61-101.EL3.ia64.rpm
+perl-DB_File-1.806-101.EL3.ia64.rpm
+perl-debuginfo-5.8.0-101.EL3.ia64.rpm
+perl-suidperl-5.8.0-101.EL3.ia64.rpm
+
+x86_64:
+perl-5.8.0-101.EL3.x86_64.rpm
+perl-CGI-2.89-101.EL3.x86_64.rpm
+perl-CPAN-1.61-101.EL3.x86_64.rpm
+perl-DB_File-1.806-101.EL3.x86_64.rpm
+perl-debuginfo-5.8.0-101.EL3.x86_64.rpm
+perl-suidperl-5.8.0-101.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm</a>
+
+i386:
+perl-5.8.5-53.el4.i386.rpm
+perl-debuginfo-5.8.5-53.el4.i386.rpm
+perl-suidperl-5.8.5-53.el4.i386.rpm
+
+ia64:
+perl-5.8.5-53.el4.ia64.rpm
+perl-debuginfo-5.8.5-53.el4.ia64.rpm
+perl-suidperl-5.8.5-53.el4.ia64.rpm
+
+ppc:
+perl-5.8.5-53.el4.ppc.rpm
+perl-debuginfo-5.8.5-53.el4.ppc.rpm
+perl-suidperl-5.8.5-53.el4.ppc.rpm
+
+s390:
+perl-5.8.5-53.el4.s390.rpm
+perl-debuginfo-5.8.5-53.el4.s390.rpm
+perl-suidperl-5.8.5-53.el4.s390.rpm
+
+s390x:
+perl-5.8.5-53.el4.s390x.rpm
+perl-debuginfo-5.8.5-53.el4.s390x.rpm
+perl-suidperl-5.8.5-53.el4.s390x.rpm
+
+x86_64:
+perl-5.8.5-53.el4.x86_64.rpm
+perl-debuginfo-5.8.5-53.el4.x86_64.rpm
+perl-suidperl-5.8.5-53.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm</a>
+
+i386:
+perl-5.8.5-53.el4.i386.rpm
+perl-debuginfo-5.8.5-53.el4.i386.rpm
+perl-suidperl-5.8.5-53.el4.i386.rpm
+
+x86_64:
+perl-5.8.5-53.el4.x86_64.rpm
+perl-debuginfo-5.8.5-53.el4.x86_64.rpm
+perl-suidperl-5.8.5-53.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm</a>
+
+i386:
+perl-5.8.5-53.el4.i386.rpm
+perl-debuginfo-5.8.5-53.el4.i386.rpm
+perl-suidperl-5.8.5-53.el4.i386.rpm
+
+ia64:
+perl-5.8.5-53.el4.ia64.rpm
+perl-debuginfo-5.8.5-53.el4.ia64.rpm
+perl-suidperl-5.8.5-53.el4.ia64.rpm
+
+x86_64:
+perl-5.8.5-53.el4.x86_64.rpm
+perl-debuginfo-5.8.5-53.el4.x86_64.rpm
+perl-suidperl-5.8.5-53.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/perl-5.8.5-53.el4.src.rpm</a>
+
+i386:
+perl-5.8.5-53.el4.i386.rpm
+perl-debuginfo-5.8.5-53.el4.i386.rpm
+perl-suidperl-5.8.5-53.el4.i386.rpm
+
+ia64:
+perl-5.8.5-53.el4.ia64.rpm
+perl-debuginfo-5.8.5-53.el4.ia64.rpm
+perl-suidperl-5.8.5-53.el4.ia64.rpm
+
+x86_64:
+perl-5.8.5-53.el4.x86_64.rpm
+perl-debuginfo-5.8.5-53.el4.x86_64.rpm
+perl-suidperl-5.8.5-53.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1168.html">https://www.redhat.com/security/data/cve/CVE-2010-1168.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1447.html">https://www.redhat.com/security/data/cve/CVE-2010-1447.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://cpansearch.perl.org/src/RGARCIA/Safe-2.27/Changes">http://cpansearch.perl.org/src/RGARCIA/Safe-2.27/Changes</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMDR0fXlSAg2UNWIIRAvK6AKCgxDoULNrU8auS+klo7gFwKsOokwCbB0WU
+xWE80BKK9xiiMZ5E+GidQok=
+=SsIi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

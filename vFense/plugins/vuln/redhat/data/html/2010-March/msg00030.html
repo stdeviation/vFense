@@ -1,0 +1,267 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0181&#45;05] Low: brltty security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 12:58:52 &#45;0400 -->
+<!--X-Message-Id: 201003301658.o2UGwkHm005303@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0181-05] Low: brltty security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0181-05] Low: brltty security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0181-05] Low: brltty security and bug fix update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 12:58:46 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: brltty security and bug fix update
+Advisory ID:       RHSA-2010:0181-05
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0181.html">https://rhn.redhat.com/errata/RHSA-2010-0181.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2008-3279 
+=====================================================================
+
+1. Summary:
+
+Updated brltty packages that fix one security issue and several bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+brltty (Braille TTY) is a background process (daemon) which provides access
+to the Linux console (when in text mode) for a blind person using a
+refreshable braille display. It drives the braille display, and provides
+complete screen review functionality.
+
+It was discovered that a brltty library had an insecure relative RPATH
+(runtime library search path) set in the ELF (Executable and Linking
+Format) header. A local user able to convince another user to run an
+application using brltty in an attacker-controlled directory, could run
+arbitrary code with the privileges of the victim. (CVE-2008-3279)
+
+These updated packages also provide fixes for the following bugs:
+
+* the brltty configuration file is documented in the brltty manual page,
+but there is no separate manual page for the /etc/brltty.conf configuration
+file: running &quot;man brltty.conf&quot; returned &quot;No manual entry for brltty.conf&quot;
+rather than opening the brltty manual entry. This update adds brltty.conf.5
+as an alias to the brltty manual page. Consequently, running &quot;man
+brltty.conf&quot; now opens the manual entry documenting the brltty.conf
+specification. (BZ#530554)
+
+* previously, the brltty-pm.conf configuration file was installed in the
+/etc/brltty/ directory. This file, which configures Papenmeier Braille
+Terminals for use with Red Hat Enterprise Linux, is optional. As well, it
+did not come with a corresponding manual page. With this update, the file
+has been moved to /usr/share/doc/brltty-3.7.2/BrailleDrivers/Papenmeier/.
+This directory also includes a README document that explains the file's
+purpose and format. (BZ#530554)
+
+* during the brltty packages installation, the message
+
+Creating screen inspection device /dev/vcsa...done.
+
+was presented at the console. This was inadequate, especially during the
+initial install of the system. These updated packages do not send any
+message to the console during installation. (BZ#529163)
+
+* although brltty contains ELF objects, the brltty-debuginfo package was
+empty. With this update, the -debuginfo package contains valid debugging
+information as expected. (BZ#500545)
+
+* the MAX_NR_CONSOLES definition was acquired by brltty by #including
+linux/tty.h in Programs/api_client.c. MAX_NR_CONSOLES has since moved to
+linux/vt.h but the #include in api_client.c was not updated. Consequently,
+brltty could not be built from the source RPM against the Red Hat
+Enterprise Linux 5 kernel. This update corrects the #include in
+api_client.c to linux/vt.h and brltty now builds from source as expected.
+(BZ#456247)
+
+All brltty users are advised to upgrade to these updated packages, which
+resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+456247 - brltty doesn't build with kernel 2.6.18-92.1.1
+457942 - CVE-2008-3279 brltty: insecure relative RPATH
+500545 - brltty-debuginfo is empty
+529163 - Creating screen inspection device /dev/vcsa...done.
+530554 - Missing man-pages
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm</a>
+
+i386:
+brlapi-0.4.1-4.el5.i386.rpm
+brltty-3.7.2-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+
+x86_64:
+brlapi-0.4.1-4.el5.i386.rpm
+brlapi-0.4.1-4.el5.x86_64.rpm
+brltty-3.7.2-4.el5.x86_64.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm</a>
+
+i386:
+brlapi-devel-0.4.1-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+
+x86_64:
+brlapi-devel-0.4.1-4.el5.i386.rpm
+brlapi-devel-0.4.1-4.el5.x86_64.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/brltty-3.7.2-4.el5.src.rpm</a>
+
+i386:
+brlapi-0.4.1-4.el5.i386.rpm
+brlapi-devel-0.4.1-4.el5.i386.rpm
+brltty-3.7.2-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+
+ia64:
+brlapi-0.4.1-4.el5.ia64.rpm
+brlapi-devel-0.4.1-4.el5.ia64.rpm
+brltty-3.7.2-4.el5.ia64.rpm
+brltty-debuginfo-3.7.2-4.el5.ia64.rpm
+
+ppc:
+brlapi-0.4.1-4.el5.ppc.rpm
+brlapi-0.4.1-4.el5.ppc64.rpm
+brlapi-devel-0.4.1-4.el5.ppc.rpm
+brlapi-devel-0.4.1-4.el5.ppc64.rpm
+brltty-3.7.2-4.el5.ppc.rpm
+brltty-debuginfo-3.7.2-4.el5.ppc.rpm
+brltty-debuginfo-3.7.2-4.el5.ppc64.rpm
+
+s390x:
+brlapi-0.4.1-4.el5.s390.rpm
+brlapi-0.4.1-4.el5.s390x.rpm
+brlapi-devel-0.4.1-4.el5.s390.rpm
+brlapi-devel-0.4.1-4.el5.s390x.rpm
+brltty-3.7.2-4.el5.s390x.rpm
+brltty-debuginfo-3.7.2-4.el5.s390.rpm
+brltty-debuginfo-3.7.2-4.el5.s390x.rpm
+
+x86_64:
+brlapi-0.4.1-4.el5.i386.rpm
+brlapi-0.4.1-4.el5.x86_64.rpm
+brlapi-devel-0.4.1-4.el5.i386.rpm
+brlapi-devel-0.4.1-4.el5.x86_64.rpm
+brltty-3.7.2-4.el5.x86_64.rpm
+brltty-debuginfo-3.7.2-4.el5.i386.rpm
+brltty-debuginfo-3.7.2-4.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-3279.html">https://www.redhat.com/security/data/cve/CVE-2008-3279.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsi26XlSAg2UNWIIRAmTIAJ9+7Ft9t8BpwRIScVebgfWmwI2cHACdFre1
+7+vEYGXYuFRuAmJY0uVkt34=
+=gKBp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

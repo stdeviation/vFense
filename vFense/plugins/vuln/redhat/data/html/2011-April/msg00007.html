@@ -1,0 +1,380 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0421&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 7 Apr 2011 23:01:37 &#45;0400 -->
+<!--X-Message-Id: 201104080301.p3831VIV022242@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0421-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0421-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0421-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Thu, 7 Apr 2011 21:01:31 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2011:0421-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0421.html">https://rhn.redhat.com/errata/RHSA-2011-0421.html</a>
+Issue date:        2011-04-07
+CVE Names:         CVE-2010-3296 CVE-2010-4346 CVE-2010-4526 
+                   CVE-2010-4648 CVE-2010-4655 CVE-2010-4656 
+                   CVE-2011-0521 CVE-2011-0695 CVE-2011-0710 
+                   CVE-2011-0716 CVE-2011-1478 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A flaw was found in the sctp_icmp_proto_unreachable() function in the
+Linux kernel's Stream Control Transmission Protocol (SCTP) implementation.
+A remote attacker could use this flaw to cause a denial of service.
+(CVE-2010-4526, Important)
+
+* A missing boundary check was found in the dvb_ca_ioctl() function in the
+Linux kernel's av7110 module. On systems that use old DVB cards that
+require the av7110 module, a local, unprivileged user could use this flaw
+to cause a denial of service or escalate their privileges. (CVE-2011-0521,
+Important)
+
+* A race condition was found in the way the Linux kernel's InfiniBand
+implementation set up new connections. This could allow a remote user to
+cause a denial of service. (CVE-2011-0695, Important)
+
+* A heap overflow flaw in the iowarrior_write() function could allow a
+user with access to an IO-Warrior USB device, that supports more than 8
+bytes per report, to cause a denial of service or escalate their
+privileges. (CVE-2010-4656, Moderate)
+
+* A flaw was found in the way the Linux Ethernet bridge implementation
+handled certain IGMP (Internet Group Management Protocol) packets. A local,
+unprivileged user on a system that has a network interface in an Ethernet
+bridge could use this flaw to crash that system. (CVE-2011-0716, Moderate)
+
+* A NULL pointer dereference flaw was found in the Generic Receive Offload
+(GRO) functionality in the Linux kernel's networking implementation. If
+both GRO and promiscuous mode were enabled on an interface in a virtual LAN
+(VLAN), it could result in a denial of service when a malformed VLAN frame
+is received on that interface. (CVE-2011-1478, Moderate)
+
+* A missing initialization flaw in the Linux kernel could lead to an
+information leak. (CVE-2010-3296, Low)
+
+* A missing security check in the Linux kernel's implementation of the
+install_special_mapping() function could allow a local, unprivileged user
+to bypass the mmap_min_addr protection mechanism. (CVE-2010-4346, Low)
+
+* A logic error in the orinoco_ioctl_set_auth() function in the Linux
+kernel's ORiNOCO wireless extensions support implementation could render
+TKIP countermeasures ineffective when it is enabled, as it enabled the card
+instead of shutting it down. (CVE-2010-4648, Low)
+
+* A missing initialization flaw was found in the ethtool_get_regs()
+function in the Linux kernel's ethtool IOCTL handler. A local user who has
+the CAP_NET_ADMIN capability could use this flaw to cause an information
+leak. (CVE-2010-4655, Low)
+
+* An information leak was found in the Linux kernel's task_show_regs()
+implementation. On IBM S/390 systems, a local, unprivileged user could use
+this flaw to read /proc/[PID]/status files, allowing them to discover
+the CPU register values of processes. (CVE-2011-0710, Low)
+
+Red Hat would like to thank Jens Kuehnel for reporting CVE-2011-0695; Kees
+Cook for reporting CVE-2010-4656 and CVE-2010-4655; Dan Rosenberg for
+reporting CVE-2010-3296; and Tavis Ormandy for reporting CVE-2010-4346.
+
+This update also fixes several bugs. Documentation for these bug fixes will
+be available shortly from the Technical Notes document linked to in the
+References section.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues, and fix the bugs noted in the Technical
+Notes. The system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+633149 - CVE-2010-3296 kernel: drivers/net/cxgb3/cxgb3_main.c reading uninitialized stack memory
+653648 - CVE-2011-0695 kernel: panic in ib_cm:cm_work_handler
+662189 - CVE-2010-4346 kernel: install_special_mapping skips security_file_mmap check
+664914 - CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
+667907 - CVE-2010-4648 kernel: orinoco: fix TKIP countermeasure behaviour
+672398 - CVE-2011-0521 kernel: av7110 negative array offset
+672420 - CVE-2010-4656 kernel: iowarrior usb device heap overflow
+672428 - CVE-2010-4655 kernel: heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+677850 - CVE-2011-0710 kernel: s390 task_show_regs infoleak
+678169 - CVE-2011-0716 kernel: deficiency in processing igmp host membership reports in br_multicast
+678558 - virtio_console driver never returns from selecting for write when the queue is full [rhel-6.0.z]
+678559 - Disallow 0-sized writes to virtio ports to go through to host (leading to VM crash) [rhel-6.0.z]
+678562 - writing to a virtio serial port while no one is listening on the host side hangs the guest [rhel-6.0.z]
+680080 - Start multi RHEL5.5 64 bit guests triggers rtl8169_interrupt hang [rhel-6.0.z]
+683442 - backport set_iounmap_nonlazy() to speedup reading of /proc/vmcore [rhel-6.0.z]
+683445 - Backport upstream cacheing fix for optimizing reads from /proc/vmcore [rhel-6.0.z]
+683781 - kvm: guest stale memory after migration [rhel-6.0.z]
+683783 - guest kernel panic when boot with nmi_watchdog=1 [rhel-6.0.z]
+683822 - kernel: restrict unprivileged access to kernel syslog [rhel-6.1] [rhel-6.0.z]
+684267 - kernel: missing CONFIG_STRICT_DEVMEM=y in S390x [rhel-6.0.z]
+684268 - virtio_net: missing schedule on oom [rhel-6.0.z]
+691270 - CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-71.24.1.el6.i686.rpm
+kernel-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-headers-2.6.32-71.24.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-71.24.1.el6.noarch.rpm
+kernel-firmware-2.6.32-71.24.1.el6.noarch.rpm
+perf-2.6.32-71.24.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-headers-2.6.32-71.24.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-71.24.1.el6.noarch.rpm
+kernel-firmware-2.6.32-71.24.1.el6.noarch.rpm
+perf-2.6.32-71.24.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-headers-2.6.32-71.24.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-71.24.1.el6.i686.rpm
+kernel-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-headers-2.6.32-71.24.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-71.24.1.el6.noarch.rpm
+kernel-firmware-2.6.32-71.24.1.el6.noarch.rpm
+perf-2.6.32-71.24.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-debug-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-devel-2.6.32-71.24.1.el6.ppc64.rpm
+kernel-headers-2.6.32-71.24.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-71.24.1.el6.s390x.rpm
+kernel-debug-2.6.32-71.24.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-71.24.1.el6.s390x.rpm
+kernel-devel-2.6.32-71.24.1.el6.s390x.rpm
+kernel-headers-2.6.32-71.24.1.el6.s390x.rpm
+kernel-kdump-2.6.32-71.24.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-71.24.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-71.24.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-headers-2.6.32-71.24.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-71.24.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-71.24.1.el6.i686.rpm
+kernel-devel-2.6.32-71.24.1.el6.i686.rpm
+kernel-headers-2.6.32-71.24.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-71.24.1.el6.noarch.rpm
+kernel-firmware-2.6.32-71.24.1.el6.noarch.rpm
+perf-2.6.32-71.24.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-devel-2.6.32-71.24.1.el6.x86_64.rpm
+kernel-headers-2.6.32-71.24.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3296.html">https://www.redhat.com/security/data/cve/CVE-2010-3296.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4346.html">https://www.redhat.com/security/data/cve/CVE-2010-4346.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4526.html">https://www.redhat.com/security/data/cve/CVE-2010-4526.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4648.html">https://www.redhat.com/security/data/cve/CVE-2010-4648.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4655.html">https://www.redhat.com/security/data/cve/CVE-2010-4655.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4656.html">https://www.redhat.com/security/data/cve/CVE-2010-4656.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0521.html">https://www.redhat.com/security/data/cve/CVE-2011-0521.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0695.html">https://www.redhat.com/security/data/cve/CVE-2011-0695.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0710.html">https://www.redhat.com/security/data/cve/CVE-2011-0710.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0716.html">https://www.redhat.com/security/data/cve/CVE-2011-0716.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1478.html">https://www.redhat.com/security/data/cve/CVE-2011-1478.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Technical_Notes/ape.html#RHSA-2011-0421">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Technical_Notes/ape.html#RHSA-2011-0421</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNnnnmXlSAg2UNWIIRAokpAJ47T5eKfpAoUk690nWwJe4hja5HKACfccAt
+3GRPKwf17XCubve3Nh9UxFU=
+=2lM4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

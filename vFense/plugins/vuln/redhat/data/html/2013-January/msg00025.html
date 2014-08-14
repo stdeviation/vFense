@@ -1,0 +1,236 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0150&#45;01] Critical: acroread security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 9 Jan 2013 21:01:45 &#45;0500 -->
+<!--X-Message-Id: 201301100201.r0A21fCI031900@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0150-01] Critical: acroread security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0150-01] Critical: acroread security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0150-01] Critical: acroread security update</li>
+<li><em>Date</em>: Thu, 10 Jan 2013 01:51:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: acroread security update
+Advisory ID:       RHSA-2013:0150-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0150.html">https://rhn.redhat.com/errata/RHSA-2013-0150.html</a>
+Issue date:        2013-01-10
+CVE Names:         CVE-2012-1530 CVE-2013-0601 CVE-2013-0602 
+                   CVE-2013-0603 CVE-2013-0604 CVE-2013-0605 
+                   CVE-2013-0606 CVE-2013-0607 CVE-2013-0608 
+                   CVE-2013-0609 CVE-2013-0610 CVE-2013-0611 
+                   CVE-2013-0612 CVE-2013-0613 CVE-2013-0614 
+                   CVE-2013-0615 CVE-2013-0616 CVE-2013-0617 
+                   CVE-2013-0618 CVE-2013-0619 CVE-2013-0620 
+                   CVE-2013-0621 CVE-2013-0623 CVE-2013-0626 
+=====================================================================
+
+1. Summary:
+
+Updated acroread packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5 and 6 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5) - i386, x86_64
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 5) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+Adobe Reader allows users to view and print documents in Portable Document
+Format (PDF).
+
+This update fixes several security flaws in Adobe Reader. These flaws are
+detailed in the Adobe Security bulletin APSB13-02, listed in the References
+section. A specially-crafted PDF file could cause Adobe Reader to crash or,
+potentially, execute arbitrary code as the user running Adobe Reader when
+opened. (CVE-2012-1530, CVE-2013-0601, CVE-2013-0602, CVE-2013-0603,
+CVE-2013-0604, CVE-2013-0605, CVE-2013-0606, CVE-2013-0607, CVE-2013-0608,
+CVE-2013-0609, CVE-2013-0610, CVE-2013-0611, CVE-2013-0612, CVE-2013-0613,
+CVE-2013-0614, CVE-2013-0615, CVE-2013-0616, CVE-2013-0617, CVE-2013-0618,
+CVE-2013-0619, CVE-2013-0620, CVE-2013-0621, CVE-2013-0623, CVE-2013-0626)
+
+All Adobe Reader users should install these updated packages. They contain
+Adobe Reader version 9.5.3, which is not vulnerable to these issues. All
+running instances of Adobe Reader must be restarted for the update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+893235 - acroread: multiple code execution flaws (APSB13-02)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5):
+
+i386:
+acroread-9.5.3-1.el5_9.i386.rpm
+acroread-plugin-9.5.3-1.el5_9.i386.rpm
+
+x86_64:
+acroread-9.5.3-1.el5_9.i386.rpm
+acroread-plugin-9.5.3-1.el5_9.i386.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 5):
+
+i386:
+acroread-9.5.3-1.el5_9.i386.rpm
+acroread-plugin-9.5.3-1.el5_9.i386.rpm
+
+x86_64:
+acroread-9.5.3-1.el5_9.i386.rpm
+acroread-plugin-9.5.3-1.el5_9.i386.rpm
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+i386:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+x86_64:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+i386:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+x86_64:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+i386:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+x86_64:
+acroread-9.5.3-1.el6_3.i686.rpm
+acroread-plugin-9.5.3-1.el6_3.i686.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1530.html">https://www.redhat.com/security/data/cve/CVE-2012-1530.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0601.html">https://www.redhat.com/security/data/cve/CVE-2013-0601.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0602.html">https://www.redhat.com/security/data/cve/CVE-2013-0602.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0603.html">https://www.redhat.com/security/data/cve/CVE-2013-0603.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0604.html">https://www.redhat.com/security/data/cve/CVE-2013-0604.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0605.html">https://www.redhat.com/security/data/cve/CVE-2013-0605.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0606.html">https://www.redhat.com/security/data/cve/CVE-2013-0606.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0607.html">https://www.redhat.com/security/data/cve/CVE-2013-0607.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0608.html">https://www.redhat.com/security/data/cve/CVE-2013-0608.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0609.html">https://www.redhat.com/security/data/cve/CVE-2013-0609.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0610.html">https://www.redhat.com/security/data/cve/CVE-2013-0610.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0611.html">https://www.redhat.com/security/data/cve/CVE-2013-0611.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0612.html">https://www.redhat.com/security/data/cve/CVE-2013-0612.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0613.html">https://www.redhat.com/security/data/cve/CVE-2013-0613.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0614.html">https://www.redhat.com/security/data/cve/CVE-2013-0614.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0615.html">https://www.redhat.com/security/data/cve/CVE-2013-0615.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0616.html">https://www.redhat.com/security/data/cve/CVE-2013-0616.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0617.html">https://www.redhat.com/security/data/cve/CVE-2013-0617.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0618.html">https://www.redhat.com/security/data/cve/CVE-2013-0618.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0619.html">https://www.redhat.com/security/data/cve/CVE-2013-0619.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0620.html">https://www.redhat.com/security/data/cve/CVE-2013-0620.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0621.html">https://www.redhat.com/security/data/cve/CVE-2013-0621.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0623.html">https://www.redhat.com/security/data/cve/CVE-2013-0623.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0626.html">https://www.redhat.com/security/data/cve/CVE-2013-0626.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.adobe.com/support/security/bulletins/apsb13-02.html">http://www.adobe.com/support/security/bulletins/apsb13-02.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ7iD5XlSAg2UNWIIRAri3AJ4/o8LBO3LqI/BP87Mby22fsMHsjQCfc5Lu
+Et8kiY85fmBej1hBVrHH43w=
+=v+Oo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

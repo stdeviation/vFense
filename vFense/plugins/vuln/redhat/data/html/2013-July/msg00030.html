@@ -1,0 +1,166 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1101&#45;01] Important: virtio&#45;win security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 22 Jul 2013 13:39:16 &#45;0400 -->
+<!--X-Message-Id: 201307221739.r6MHdFjS017010@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1101-01] Important: virtio-win security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1101-01] Important: virtio-win security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1101-01] Important: virtio-win security update</li>
+<li><em>Date</em>: Mon, 22 Jul 2013 17:39:15 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: virtio-win security update
+Advisory ID:       RHSA-2013:1101-01
+Product:           Red Hat Enterprise Linux Supplementary
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1101.html">https://rhn.redhat.com/errata/RHSA-2013-1101.html</a>
+Issue date:        2013-07-22
+CVE Names:         CVE-2013-2231 
+=====================================================================
+
+1. Summary:
+
+An updated virtio-win package that fixes one security issue is now
+available for Red Hat Enterprise Linux 6 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - noarch
+Red Hat Enterprise Linux Server Supplementary (v. 6) - noarch
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - noarch
+
+3. Description:
+
+The virtio-win package provides paravirtualized network drivers for most
+Microsoft Windows operating systems. Paravirtualized drivers are
+virtualization-aware drivers used by fully virtualized guests running on
+Red Hat Enterprise Linux.
+
+An unquoted search path flaw was found in the way the QEMU Guest Agent
+service installation was performed on Windows. Depending on the permissions
+of the directories in the unquoted search path, a local, unprivileged user
+could use this flaw to have a binary of their choosing executed with SYSTEM
+privileges. (CVE-2013-2231)
+
+This issue was discovered by Lev Veyde of Red Hat.
+
+Users of virtio-win are advised to upgrade to this updated package, which
+corrects this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+980757 - CVE-2013-2231 qemu: qemu-ga win32 service unquoted search path
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+noarch:
+virtio-win-1.6.5-6.el6_4.noarch.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+noarch:
+virtio-win-1.6.5-6.el6_4.noarch.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+noarch:
+virtio-win-1.6.5-6.el6_4.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2231.html">https://www.redhat.com/security/data/cve/CVE-2013-2231.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR7W4iXlSAg2UNWIIRAh0wAKCTuDc09I4UMqC++i2Rsd+t3XxISQCgrlLb
+LrIe4+0sMHmVo7Pn4BCsH+Q=
+=HgDR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

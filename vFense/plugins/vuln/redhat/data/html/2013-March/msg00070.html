@@ -1,0 +1,708 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0685&#45;01] Moderate: perl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 Mar 2013 15:30:54 &#45;0400 -->
+<!--X-Message-Id: 201303261930.r2QJUrgo006153@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0685-01] Moderate: perl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00069.html">Date Prev</a>][<a href="msg00071.html">Date Next</a>] &nbsp; [<a href="msg00069.html">Thread Prev</a>][<a href="msg00071.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00070">Thread Index</A>]
+[<A HREF="date.html#00070">Date Index</A>]
+[<A HREF="author.html#00070">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0685-01] Moderate: perl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0685-01] Moderate: perl security update</li>
+<li><em>Date</em>: Tue, 26 Mar 2013 19:30:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: perl security update
+Advisory ID:       RHSA-2013:0685-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0685.html">https://rhn.redhat.com/errata/RHSA-2013-0685.html</a>
+Issue date:        2013-03-26
+CVE Names:         CVE-2012-5195 CVE-2012-5526 CVE-2012-6329 
+                   CVE-2013-1667 
+=====================================================================
+
+1. Summary:
+
+Updated perl packages that fix multiple security issues now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+moderate security impact. Common Vulnerability Scoring System (CVSS)
+base scores, which give detailed severity ratings, are available for
+each vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Perl is a high-level programming language commonly used for system
+administration utilities and web programming.
+
+A heap overflow flaw was found in Perl. If a Perl application allowed
+user input to control the count argument of the string repeat operator, an
+attacker could cause the application to crash or, potentially, execute
+arbitrary code with the privileges of the user running the application.
+(CVE-2012-5195)
+
+A denial of service flaw was found in the way Perl's rehashing code
+implementation, responsible for recalculation of hash keys and
+redistribution of hash content, handled certain input. If an attacker
+supplied specially-crafted input to be used as hash keys by a Perl
+application, it could cause excessive memory consumption. (CVE-2013-1667)
+
+It was found that the Perl CGI module, used to handle Common Gateway
+Interface requests and responses, incorrectly sanitized the values for
+Set-Cookie and P3P headers. If a Perl application using the CGI module
+reused cookies values and accepted untrusted input from web browsers, a
+remote attacker could use this flaw to alter member items of the cookie or
+add new items. (CVE-2012-5526)
+
+It was found that the Perl Locale::Maketext module, used to localize Perl
+applications, did not properly handle backslashes or fully-qualified method
+names. An attacker could possibly use this flaw to execute arbitrary Perl
+code with the privileges of a Perl application that uses untrusted
+Locale::Maketext templates. (CVE-2012-6329)
+
+Red Hat would like to thank the Perl project for reporting CVE-2012-5195
+and CVE-2013-1667. Upstream acknowledges Tim Brown as the original
+reporter of CVE-2012-5195 and Yves Orton as the original reporter of
+CVE-2013-1667.
+
+All Perl users should upgrade to these updated packages, which contain
+backported patches to correct these issues. All running Perl programs
+must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+862413 - CVE-2012-5195 perl: heap buffer overrun flaw may lead to arbitrary code execution
+877015 - CVE-2012-5526 perl-CGI: Newline injection due to improper CRLF escaping in Set-Cookie and P3P headers
+884354 - CVE-2012-6329 perl: possible arbitrary code execution via Locale::Maketext
+912276 - CVE-2013-1667 perl: DoS in rehashing code
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/perl-5.8.8-40.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/perl-5.8.8-40.el5_9.src.rpm</a>
+
+i386:
+perl-5.8.8-40.el5_9.i386.rpm
+perl-debuginfo-5.8.8-40.el5_9.i386.rpm
+perl-suidperl-5.8.8-40.el5_9.i386.rpm
+
+x86_64:
+perl-5.8.8-40.el5_9.i386.rpm
+perl-5.8.8-40.el5_9.x86_64.rpm
+perl-debuginfo-5.8.8-40.el5_9.i386.rpm
+perl-debuginfo-5.8.8-40.el5_9.x86_64.rpm
+perl-suidperl-5.8.8-40.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/perl-5.8.8-40.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/perl-5.8.8-40.el5_9.src.rpm</a>
+
+i386:
+perl-5.8.8-40.el5_9.i386.rpm
+perl-debuginfo-5.8.8-40.el5_9.i386.rpm
+perl-suidperl-5.8.8-40.el5_9.i386.rpm
+
+ia64:
+perl-5.8.8-40.el5_9.ia64.rpm
+perl-debuginfo-5.8.8-40.el5_9.ia64.rpm
+perl-suidperl-5.8.8-40.el5_9.ia64.rpm
+
+ppc:
+perl-5.8.8-40.el5_9.ppc.rpm
+perl-debuginfo-5.8.8-40.el5_9.ppc.rpm
+perl-suidperl-5.8.8-40.el5_9.ppc.rpm
+
+s390x:
+perl-5.8.8-40.el5_9.s390x.rpm
+perl-debuginfo-5.8.8-40.el5_9.s390x.rpm
+perl-suidperl-5.8.8-40.el5_9.s390x.rpm
+
+x86_64:
+perl-5.8.8-40.el5_9.x86_64.rpm
+perl-debuginfo-5.8.8-40.el5_9.x86_64.rpm
+perl-suidperl-5.8.8-40.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm</a>
+
+i386:
+perl-5.10.1-130.el6_4.i686.rpm
+perl-Archive-Extract-0.38-130.el6_4.i686.rpm
+perl-Archive-Tar-1.58-130.el6_4.i686.rpm
+perl-CGI-3.51-130.el6_4.i686.rpm
+perl-CPAN-1.9402-130.el6_4.i686.rpm
+perl-CPANPLUS-0.88-130.el6_4.i686.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.i686.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.i686.rpm
+perl-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-Digest-SHA-5.47-130.el6_4.i686.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.i686.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.i686.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.i686.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.i686.rpm
+perl-File-Fetch-0.26-130.el6_4.i686.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-IO-Zlib-1.09-130.el6_4.i686.rpm
+perl-IPC-Cmd-0.56-130.el6_4.i686.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.i686.rpm
+perl-Log-Message-0.02-130.el6_4.i686.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.i686.rpm
+perl-Module-Build-0.3500-130.el6_4.i686.rpm
+perl-Module-CoreList-2.18-130.el6_4.i686.rpm
+perl-Module-Load-0.16-130.el6_4.i686.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.i686.rpm
+perl-Module-Loaded-0.02-130.el6_4.i686.rpm
+perl-Module-Pluggable-3.90-130.el6_4.i686.rpm
+perl-Object-Accessor-0.34-130.el6_4.i686.rpm
+perl-Package-Constants-0.02-130.el6_4.i686.rpm
+perl-Params-Check-0.26-130.el6_4.i686.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.i686.rpm
+perl-Pod-Escapes-1.04-130.el6_4.i686.rpm
+perl-Pod-Simple-3.13-130.el6_4.i686.rpm
+perl-Term-UI-0.20-130.el6_4.i686.rpm
+perl-Test-Harness-3.17-130.el6_4.i686.rpm
+perl-Test-Simple-0.92-130.el6_4.i686.rpm
+perl-Time-HiRes-1.9721-130.el6_4.i686.rpm
+perl-Time-Piece-1.15-130.el6_4.i686.rpm
+perl-core-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-parent-0.221-130.el6_4.i686.rpm
+perl-suidperl-5.10.1-130.el6_4.i686.rpm
+perl-version-0.77-130.el6_4.i686.rpm
+
+x86_64:
+perl-5.10.1-130.el6_4.x86_64.rpm
+perl-Archive-Extract-0.38-130.el6_4.x86_64.rpm
+perl-Archive-Tar-1.58-130.el6_4.x86_64.rpm
+perl-CGI-3.51-130.el6_4.x86_64.rpm
+perl-CPAN-1.9402-130.el6_4.x86_64.rpm
+perl-CPANPLUS-0.88-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Digest-SHA-5.47-130.el6_4.x86_64.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.x86_64.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.x86_64.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.x86_64.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.x86_64.rpm
+perl-File-Fetch-0.26-130.el6_4.x86_64.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-IO-Zlib-1.09-130.el6_4.x86_64.rpm
+perl-IPC-Cmd-0.56-130.el6_4.x86_64.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.x86_64.rpm
+perl-Log-Message-0.02-130.el6_4.x86_64.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.x86_64.rpm
+perl-Module-Build-0.3500-130.el6_4.x86_64.rpm
+perl-Module-CoreList-2.18-130.el6_4.x86_64.rpm
+perl-Module-Load-0.16-130.el6_4.x86_64.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.x86_64.rpm
+perl-Module-Loaded-0.02-130.el6_4.x86_64.rpm
+perl-Module-Pluggable-3.90-130.el6_4.x86_64.rpm
+perl-Object-Accessor-0.34-130.el6_4.x86_64.rpm
+perl-Package-Constants-0.02-130.el6_4.x86_64.rpm
+perl-Params-Check-0.26-130.el6_4.x86_64.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.x86_64.rpm
+perl-Pod-Escapes-1.04-130.el6_4.x86_64.rpm
+perl-Pod-Simple-3.13-130.el6_4.x86_64.rpm
+perl-Term-UI-0.20-130.el6_4.x86_64.rpm
+perl-Test-Harness-3.17-130.el6_4.x86_64.rpm
+perl-Test-Simple-0.92-130.el6_4.x86_64.rpm
+perl-Time-HiRes-1.9721-130.el6_4.x86_64.rpm
+perl-Time-Piece-1.15-130.el6_4.x86_64.rpm
+perl-core-5.10.1-130.el6_4.x86_64.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.x86_64.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.x86_64.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.x86_64.rpm
+perl-parent-0.221-130.el6_4.x86_64.rpm
+perl-suidperl-5.10.1-130.el6_4.x86_64.rpm
+perl-version-0.77-130.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm</a>
+
+x86_64:
+perl-5.10.1-130.el6_4.x86_64.rpm
+perl-Archive-Extract-0.38-130.el6_4.x86_64.rpm
+perl-Archive-Tar-1.58-130.el6_4.x86_64.rpm
+perl-CGI-3.51-130.el6_4.x86_64.rpm
+perl-CPAN-1.9402-130.el6_4.x86_64.rpm
+perl-CPANPLUS-0.88-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Digest-SHA-5.47-130.el6_4.x86_64.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.x86_64.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.x86_64.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.x86_64.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.x86_64.rpm
+perl-File-Fetch-0.26-130.el6_4.x86_64.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-IO-Zlib-1.09-130.el6_4.x86_64.rpm
+perl-IPC-Cmd-0.56-130.el6_4.x86_64.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.x86_64.rpm
+perl-Log-Message-0.02-130.el6_4.x86_64.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.x86_64.rpm
+perl-Module-Build-0.3500-130.el6_4.x86_64.rpm
+perl-Module-CoreList-2.18-130.el6_4.x86_64.rpm
+perl-Module-Load-0.16-130.el6_4.x86_64.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.x86_64.rpm
+perl-Module-Loaded-0.02-130.el6_4.x86_64.rpm
+perl-Module-Pluggable-3.90-130.el6_4.x86_64.rpm
+perl-Object-Accessor-0.34-130.el6_4.x86_64.rpm
+perl-Package-Constants-0.02-130.el6_4.x86_64.rpm
+perl-Params-Check-0.26-130.el6_4.x86_64.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.x86_64.rpm
+perl-Pod-Escapes-1.04-130.el6_4.x86_64.rpm
+perl-Pod-Simple-3.13-130.el6_4.x86_64.rpm
+perl-Term-UI-0.20-130.el6_4.x86_64.rpm
+perl-Test-Harness-3.17-130.el6_4.x86_64.rpm
+perl-Test-Simple-0.92-130.el6_4.x86_64.rpm
+perl-Time-HiRes-1.9721-130.el6_4.x86_64.rpm
+perl-Time-Piece-1.15-130.el6_4.x86_64.rpm
+perl-core-5.10.1-130.el6_4.x86_64.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.x86_64.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.x86_64.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.x86_64.rpm
+perl-parent-0.221-130.el6_4.x86_64.rpm
+perl-suidperl-5.10.1-130.el6_4.x86_64.rpm
+perl-version-0.77-130.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm</a>
+
+i386:
+perl-5.10.1-130.el6_4.i686.rpm
+perl-Archive-Extract-0.38-130.el6_4.i686.rpm
+perl-Archive-Tar-1.58-130.el6_4.i686.rpm
+perl-CGI-3.51-130.el6_4.i686.rpm
+perl-CPAN-1.9402-130.el6_4.i686.rpm
+perl-CPANPLUS-0.88-130.el6_4.i686.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.i686.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.i686.rpm
+perl-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-Digest-SHA-5.47-130.el6_4.i686.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.i686.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.i686.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.i686.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.i686.rpm
+perl-File-Fetch-0.26-130.el6_4.i686.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-IO-Zlib-1.09-130.el6_4.i686.rpm
+perl-IPC-Cmd-0.56-130.el6_4.i686.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.i686.rpm
+perl-Log-Message-0.02-130.el6_4.i686.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.i686.rpm
+perl-Module-Build-0.3500-130.el6_4.i686.rpm
+perl-Module-CoreList-2.18-130.el6_4.i686.rpm
+perl-Module-Load-0.16-130.el6_4.i686.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.i686.rpm
+perl-Module-Loaded-0.02-130.el6_4.i686.rpm
+perl-Module-Pluggable-3.90-130.el6_4.i686.rpm
+perl-Object-Accessor-0.34-130.el6_4.i686.rpm
+perl-Package-Constants-0.02-130.el6_4.i686.rpm
+perl-Params-Check-0.26-130.el6_4.i686.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.i686.rpm
+perl-Pod-Escapes-1.04-130.el6_4.i686.rpm
+perl-Pod-Simple-3.13-130.el6_4.i686.rpm
+perl-Term-UI-0.20-130.el6_4.i686.rpm
+perl-Test-Harness-3.17-130.el6_4.i686.rpm
+perl-Test-Simple-0.92-130.el6_4.i686.rpm
+perl-Time-HiRes-1.9721-130.el6_4.i686.rpm
+perl-Time-Piece-1.15-130.el6_4.i686.rpm
+perl-core-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-parent-0.221-130.el6_4.i686.rpm
+perl-suidperl-5.10.1-130.el6_4.i686.rpm
+perl-version-0.77-130.el6_4.i686.rpm
+
+ppc64:
+perl-5.10.1-130.el6_4.ppc64.rpm
+perl-Archive-Extract-0.38-130.el6_4.ppc64.rpm
+perl-Archive-Tar-1.58-130.el6_4.ppc64.rpm
+perl-CGI-3.51-130.el6_4.ppc64.rpm
+perl-CPAN-1.9402-130.el6_4.ppc64.rpm
+perl-CPANPLUS-0.88-130.el6_4.ppc64.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.ppc64.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.ppc64.rpm
+perl-Compress-Zlib-2.020-130.el6_4.ppc64.rpm
+perl-Digest-SHA-5.47-130.el6_4.ppc64.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.ppc64.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.ppc64.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.ppc64.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.ppc64.rpm
+perl-File-Fetch-0.26-130.el6_4.ppc64.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.ppc64.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.ppc64.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.ppc64.rpm
+perl-IO-Zlib-1.09-130.el6_4.ppc64.rpm
+perl-IPC-Cmd-0.56-130.el6_4.ppc64.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.ppc64.rpm
+perl-Log-Message-0.02-130.el6_4.ppc64.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.ppc64.rpm
+perl-Module-Build-0.3500-130.el6_4.ppc64.rpm
+perl-Module-CoreList-2.18-130.el6_4.ppc64.rpm
+perl-Module-Load-0.16-130.el6_4.ppc64.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.ppc64.rpm
+perl-Module-Loaded-0.02-130.el6_4.ppc64.rpm
+perl-Module-Pluggable-3.90-130.el6_4.ppc64.rpm
+perl-Object-Accessor-0.34-130.el6_4.ppc64.rpm
+perl-Package-Constants-0.02-130.el6_4.ppc64.rpm
+perl-Params-Check-0.26-130.el6_4.ppc64.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.ppc64.rpm
+perl-Pod-Escapes-1.04-130.el6_4.ppc64.rpm
+perl-Pod-Simple-3.13-130.el6_4.ppc64.rpm
+perl-Term-UI-0.20-130.el6_4.ppc64.rpm
+perl-Test-Harness-3.17-130.el6_4.ppc64.rpm
+perl-Test-Simple-0.92-130.el6_4.ppc64.rpm
+perl-Time-HiRes-1.9721-130.el6_4.ppc64.rpm
+perl-Time-Piece-1.15-130.el6_4.ppc64.rpm
+perl-core-5.10.1-130.el6_4.ppc64.rpm
+perl-debuginfo-5.10.1-130.el6_4.ppc.rpm
+perl-debuginfo-5.10.1-130.el6_4.ppc64.rpm
+perl-devel-5.10.1-130.el6_4.ppc.rpm
+perl-devel-5.10.1-130.el6_4.ppc64.rpm
+perl-libs-5.10.1-130.el6_4.ppc.rpm
+perl-libs-5.10.1-130.el6_4.ppc64.rpm
+perl-parent-0.221-130.el6_4.ppc64.rpm
+perl-suidperl-5.10.1-130.el6_4.ppc64.rpm
+perl-version-0.77-130.el6_4.ppc64.rpm
+
+s390x:
+perl-5.10.1-130.el6_4.s390x.rpm
+perl-Archive-Extract-0.38-130.el6_4.s390x.rpm
+perl-Archive-Tar-1.58-130.el6_4.s390x.rpm
+perl-CGI-3.51-130.el6_4.s390x.rpm
+perl-CPAN-1.9402-130.el6_4.s390x.rpm
+perl-CPANPLUS-0.88-130.el6_4.s390x.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.s390x.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.s390x.rpm
+perl-Compress-Zlib-2.020-130.el6_4.s390x.rpm
+perl-Digest-SHA-5.47-130.el6_4.s390x.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.s390x.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.s390x.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.s390x.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.s390x.rpm
+perl-File-Fetch-0.26-130.el6_4.s390x.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.s390x.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.s390x.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.s390x.rpm
+perl-IO-Zlib-1.09-130.el6_4.s390x.rpm
+perl-IPC-Cmd-0.56-130.el6_4.s390x.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.s390x.rpm
+perl-Log-Message-0.02-130.el6_4.s390x.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.s390x.rpm
+perl-Module-Build-0.3500-130.el6_4.s390x.rpm
+perl-Module-CoreList-2.18-130.el6_4.s390x.rpm
+perl-Module-Load-0.16-130.el6_4.s390x.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.s390x.rpm
+perl-Module-Loaded-0.02-130.el6_4.s390x.rpm
+perl-Module-Pluggable-3.90-130.el6_4.s390x.rpm
+perl-Object-Accessor-0.34-130.el6_4.s390x.rpm
+perl-Package-Constants-0.02-130.el6_4.s390x.rpm
+perl-Params-Check-0.26-130.el6_4.s390x.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.s390x.rpm
+perl-Pod-Escapes-1.04-130.el6_4.s390x.rpm
+perl-Pod-Simple-3.13-130.el6_4.s390x.rpm
+perl-Term-UI-0.20-130.el6_4.s390x.rpm
+perl-Test-Harness-3.17-130.el6_4.s390x.rpm
+perl-Test-Simple-0.92-130.el6_4.s390x.rpm
+perl-Time-HiRes-1.9721-130.el6_4.s390x.rpm
+perl-Time-Piece-1.15-130.el6_4.s390x.rpm
+perl-core-5.10.1-130.el6_4.s390x.rpm
+perl-debuginfo-5.10.1-130.el6_4.s390.rpm
+perl-debuginfo-5.10.1-130.el6_4.s390x.rpm
+perl-devel-5.10.1-130.el6_4.s390.rpm
+perl-devel-5.10.1-130.el6_4.s390x.rpm
+perl-libs-5.10.1-130.el6_4.s390.rpm
+perl-libs-5.10.1-130.el6_4.s390x.rpm
+perl-parent-0.221-130.el6_4.s390x.rpm
+perl-suidperl-5.10.1-130.el6_4.s390x.rpm
+perl-version-0.77-130.el6_4.s390x.rpm
+
+x86_64:
+perl-5.10.1-130.el6_4.x86_64.rpm
+perl-Archive-Extract-0.38-130.el6_4.x86_64.rpm
+perl-Archive-Tar-1.58-130.el6_4.x86_64.rpm
+perl-CGI-3.51-130.el6_4.x86_64.rpm
+perl-CPAN-1.9402-130.el6_4.x86_64.rpm
+perl-CPANPLUS-0.88-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Digest-SHA-5.47-130.el6_4.x86_64.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.x86_64.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.x86_64.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.x86_64.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.x86_64.rpm
+perl-File-Fetch-0.26-130.el6_4.x86_64.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-IO-Zlib-1.09-130.el6_4.x86_64.rpm
+perl-IPC-Cmd-0.56-130.el6_4.x86_64.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.x86_64.rpm
+perl-Log-Message-0.02-130.el6_4.x86_64.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.x86_64.rpm
+perl-Module-Build-0.3500-130.el6_4.x86_64.rpm
+perl-Module-CoreList-2.18-130.el6_4.x86_64.rpm
+perl-Module-Load-0.16-130.el6_4.x86_64.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.x86_64.rpm
+perl-Module-Loaded-0.02-130.el6_4.x86_64.rpm
+perl-Module-Pluggable-3.90-130.el6_4.x86_64.rpm
+perl-Object-Accessor-0.34-130.el6_4.x86_64.rpm
+perl-Package-Constants-0.02-130.el6_4.x86_64.rpm
+perl-Params-Check-0.26-130.el6_4.x86_64.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.x86_64.rpm
+perl-Pod-Escapes-1.04-130.el6_4.x86_64.rpm
+perl-Pod-Simple-3.13-130.el6_4.x86_64.rpm
+perl-Term-UI-0.20-130.el6_4.x86_64.rpm
+perl-Test-Harness-3.17-130.el6_4.x86_64.rpm
+perl-Test-Simple-0.92-130.el6_4.x86_64.rpm
+perl-Time-HiRes-1.9721-130.el6_4.x86_64.rpm
+perl-Time-Piece-1.15-130.el6_4.x86_64.rpm
+perl-core-5.10.1-130.el6_4.x86_64.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.x86_64.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.x86_64.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.x86_64.rpm
+perl-parent-0.221-130.el6_4.x86_64.rpm
+perl-suidperl-5.10.1-130.el6_4.x86_64.rpm
+perl-version-0.77-130.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perl-5.10.1-130.el6_4.src.rpm</a>
+
+i386:
+perl-5.10.1-130.el6_4.i686.rpm
+perl-Archive-Extract-0.38-130.el6_4.i686.rpm
+perl-Archive-Tar-1.58-130.el6_4.i686.rpm
+perl-CGI-3.51-130.el6_4.i686.rpm
+perl-CPAN-1.9402-130.el6_4.i686.rpm
+perl-CPANPLUS-0.88-130.el6_4.i686.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.i686.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.i686.rpm
+perl-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-Digest-SHA-5.47-130.el6_4.i686.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.i686.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.i686.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.i686.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.i686.rpm
+perl-File-Fetch-0.26-130.el6_4.i686.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.i686.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.i686.rpm
+perl-IO-Zlib-1.09-130.el6_4.i686.rpm
+perl-IPC-Cmd-0.56-130.el6_4.i686.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.i686.rpm
+perl-Log-Message-0.02-130.el6_4.i686.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.i686.rpm
+perl-Module-Build-0.3500-130.el6_4.i686.rpm
+perl-Module-CoreList-2.18-130.el6_4.i686.rpm
+perl-Module-Load-0.16-130.el6_4.i686.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.i686.rpm
+perl-Module-Loaded-0.02-130.el6_4.i686.rpm
+perl-Module-Pluggable-3.90-130.el6_4.i686.rpm
+perl-Object-Accessor-0.34-130.el6_4.i686.rpm
+perl-Package-Constants-0.02-130.el6_4.i686.rpm
+perl-Params-Check-0.26-130.el6_4.i686.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.i686.rpm
+perl-Pod-Escapes-1.04-130.el6_4.i686.rpm
+perl-Pod-Simple-3.13-130.el6_4.i686.rpm
+perl-Term-UI-0.20-130.el6_4.i686.rpm
+perl-Test-Harness-3.17-130.el6_4.i686.rpm
+perl-Test-Simple-0.92-130.el6_4.i686.rpm
+perl-Time-HiRes-1.9721-130.el6_4.i686.rpm
+perl-Time-Piece-1.15-130.el6_4.i686.rpm
+perl-core-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-parent-0.221-130.el6_4.i686.rpm
+perl-suidperl-5.10.1-130.el6_4.i686.rpm
+perl-version-0.77-130.el6_4.i686.rpm
+
+x86_64:
+perl-5.10.1-130.el6_4.x86_64.rpm
+perl-Archive-Extract-0.38-130.el6_4.x86_64.rpm
+perl-Archive-Tar-1.58-130.el6_4.x86_64.rpm
+perl-CGI-3.51-130.el6_4.x86_64.rpm
+perl-CPAN-1.9402-130.el6_4.x86_64.rpm
+perl-CPANPLUS-0.88-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Raw-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-Digest-SHA-5.47-130.el6_4.x86_64.rpm
+perl-ExtUtils-CBuilder-0.27-130.el6_4.x86_64.rpm
+perl-ExtUtils-Embed-1.28-130.el6_4.x86_64.rpm
+perl-ExtUtils-MakeMaker-6.55-130.el6_4.x86_64.rpm
+perl-ExtUtils-ParseXS-2.2003.0-130.el6_4.x86_64.rpm
+perl-File-Fetch-0.26-130.el6_4.x86_64.rpm
+perl-IO-Compress-Base-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Bzip2-2.020-130.el6_4.x86_64.rpm
+perl-IO-Compress-Zlib-2.020-130.el6_4.x86_64.rpm
+perl-IO-Zlib-1.09-130.el6_4.x86_64.rpm
+perl-IPC-Cmd-0.56-130.el6_4.x86_64.rpm
+perl-Locale-Maketext-Simple-0.18-130.el6_4.x86_64.rpm
+perl-Log-Message-0.02-130.el6_4.x86_64.rpm
+perl-Log-Message-Simple-0.04-130.el6_4.x86_64.rpm
+perl-Module-Build-0.3500-130.el6_4.x86_64.rpm
+perl-Module-CoreList-2.18-130.el6_4.x86_64.rpm
+perl-Module-Load-0.16-130.el6_4.x86_64.rpm
+perl-Module-Load-Conditional-0.30-130.el6_4.x86_64.rpm
+perl-Module-Loaded-0.02-130.el6_4.x86_64.rpm
+perl-Module-Pluggable-3.90-130.el6_4.x86_64.rpm
+perl-Object-Accessor-0.34-130.el6_4.x86_64.rpm
+perl-Package-Constants-0.02-130.el6_4.x86_64.rpm
+perl-Params-Check-0.26-130.el6_4.x86_64.rpm
+perl-Parse-CPAN-Meta-1.40-130.el6_4.x86_64.rpm
+perl-Pod-Escapes-1.04-130.el6_4.x86_64.rpm
+perl-Pod-Simple-3.13-130.el6_4.x86_64.rpm
+perl-Term-UI-0.20-130.el6_4.x86_64.rpm
+perl-Test-Harness-3.17-130.el6_4.x86_64.rpm
+perl-Test-Simple-0.92-130.el6_4.x86_64.rpm
+perl-Time-HiRes-1.9721-130.el6_4.x86_64.rpm
+perl-Time-Piece-1.15-130.el6_4.x86_64.rpm
+perl-core-5.10.1-130.el6_4.x86_64.rpm
+perl-debuginfo-5.10.1-130.el6_4.i686.rpm
+perl-debuginfo-5.10.1-130.el6_4.x86_64.rpm
+perl-devel-5.10.1-130.el6_4.i686.rpm
+perl-devel-5.10.1-130.el6_4.x86_64.rpm
+perl-libs-5.10.1-130.el6_4.i686.rpm
+perl-libs-5.10.1-130.el6_4.x86_64.rpm
+perl-parent-0.221-130.el6_4.x86_64.rpm
+perl-suidperl-5.10.1-130.el6_4.x86_64.rpm
+perl-version-0.77-130.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5195.html">https://www.redhat.com/security/data/cve/CVE-2012-5195.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5526.html">https://www.redhat.com/security/data/cve/CVE-2012-5526.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6329.html">https://www.redhat.com/security/data/cve/CVE-2012-6329.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1667.html">https://www.redhat.com/security/data/cve/CVE-2013-1667.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRUfdNXlSAg2UNWIIRAl88AJ4/YxSeZA3iaPdv6vs78VxWw5fr/wCgl+DZ
+gKbJPAspitHnnYb4NngdLT4=
+=CjhI
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00069.html">Date Prev</a>][<a href="msg00071.html">Date Next</a>] &nbsp; [<a href="msg00069.html">Thread Prev</a>][<a href="msg00071.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00070">Thread Index</A>]
+[<A HREF="date.html#00070">Date Index</A>]
+[<A HREF="author.html#00070">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

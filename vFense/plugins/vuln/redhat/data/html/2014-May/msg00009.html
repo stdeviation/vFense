@@ -1,0 +1,274 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0469&#45;01] Important: cfme security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 12 May 2014 14:18:13 &#45;0400 -->
+<!--X-Message-Id: 201405121818.s4CIICFP027250@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0469-01] Important: cfme security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0469-01] Important: cfme security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:0469-01] Important: cfme security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Mon, 12 May 2014 18:18:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: cfme security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0469-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0469.html">https://rhn.redhat.com/errata/RHSA-2014-0469.html</a>
+Issue date:        2014-05-12
+CVE Names:         CVE-2013-6417 CVE-2014-0060 CVE-2014-0061 
+                   CVE-2014-0062 CVE-2014-0063 CVE-2014-0064 
+                   CVE-2014-0065 CVE-2014-0066 CVE-2014-0078 
+                   CVE-2014-0137 CVE-2014-2669 
+=====================================================================
+
+1. Summary:
+
+Updated cfme packages that fix multiple security issues, several bugs, and
+add various enhancements are now available for Red Hat CloudForms 3.0.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Management Engine - noarch, x86_64
+
+3. Description:
+
+Red Hat CloudForms Management Engine delivers the insight, control, and
+automation needed to address the challenges of managing virtual
+environments.
+
+A flaw was found in the way Ruby on Rails' actionpack rubygem performed
+JSON parameter parsing. An application using a third party library, which
+uses the Rack::Request interface, or custom Rack middleware could bypass
+the protection implemented to fix the CVE-2013-0155 vulnerability, causing
+the application to receive unsafe parameters and become vulnerable to
+CVE-2013-0155. (CVE-2013-6417)
+
+An input sanitization flaw was found in the saved_report_delete action in
+the ReportController. An authenticated Management Engine user could use
+this flaw to perform an SQL injection attack on the Management Engine back
+end database. (CVE-2014-0137)
+
+It was found that Red Hat CloudForms Management Engine did not properly
+check user role permissions for actions associated with catalogs.
+An authenticated Management Engine user could use this flaw to delete
+arbitrary catalogs regardless of the granted permissions. (CVE-2014-0078)
+
+Multiple stack-based buffer overflow flaws were found in the date/time
+implementation of PostgreSQL. An authenticated database user could provide
+a specially crafted date/time value that, when processed, could cause
+PostgreSQL to crash or, potentially, execute arbitrary code with the
+permissions of the user running PostgreSQL. (CVE-2014-0063)
+
+Multiple integer overflow flaws, leading to heap-based buffer overflows,
+were found in various type input functions in PostgreSQL. An authenticated
+database user could possibly use these flaws to crash PostgreSQL or,
+potentially, execute arbitrary code with the permissions of the user
+running PostgreSQL. (CVE-2014-0064, CVE-2014-2669)
+
+Multiple potential buffer overflow flaws were found in PostgreSQL.
+An authenticated database user could possibly use these flaws to crash
+PostgreSQL or, potentially, execute arbitrary code with the permissions of
+the user running PostgreSQL. (CVE-2014-0065)
+
+It was found that granting an SQL role to a database user in a PostgreSQL
+database without specifying the &quot;ADMIN&quot; option allowed the grantee to
+remove other users from their granted role. An authenticated database user
+could use this flaw to remove a user from an SQL role which they were
+granted access to. (CVE-2014-0060)
+
+A flaw was found in the validator functions provided by PostgreSQL's
+procedural languages. An authenticated database user could possibly use
+this flaw to escalate their privileges. (CVE-2014-0061)
+
+A race condition was found in the way PostgreSQL's CREATE INDEX command
+performed multiple independent lookups of a table that had to be indexed.
+An authenticated database user could possibly use this flaw to escalate
+their privileges. (CVE-2014-0062)
+
+It was found that the chkpass extension of PostgreSQL did not check the
+return value of the crypt() function. An authenticated database user could
+possibly use this flaw to crash PostgreSQL via a null pointer dereference.
+(CVE-2014-0066)
+
+Red Hat would like to thank the Ruby on Rails project for reporting
+CVE-2013-6417; upstream acknowledges Sudhir Rao as the original reporter
+of this issue.
+
+Red Hat would also like to thank the PostgreSQL project for reporting
+CVE-2014-0060, CVE-2014-0061, CVE-2014-0062, CVE-2014-0063, CVE-2014-0064,
+CVE-2014-0065, CVE-2014-0066, and CVE-2014-2669; upstream acknowledges Noah
+Misch, Heikki Linnakangas, Peter Eisentraut, Jozef Mlich, Andres Freund,
+Robert Haas, Honza Horak, and Bruce Momjian as the original reporters of
+these issues.
+
+The CVE-2014-0137 and CVE-2014-0078 issues were discovered by Jan Rusnacko
+of the Red Hat Product Security Team.
+
+4. Solution:
+
+These updated packages upgrade PostgreSQL to version 9.2.7, which fixes
+these issues as well as several non-security issues. Refer to the
+PostgreSQL Release Notes for a full list of changes:
+
+<a  rel="nofollow" href="http://www.postgresql.org/docs/9.2/static/release-9-2-7.html">http://www.postgresql.org/docs/9.2/static/release-9-2-7.html</a>
+
+This update also fixes several bugs and adds various enhancements.
+Documentation for these changes will be available shortly from the
+Technical Notes document linked to in the References section.
+
+All users of Red Hat CloudForms 3.0 are advised to upgrade to these updated
+packages, which correct these issues and add these enhancements.
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1036409 - CVE-2013-6417 rubygem-actionpack: unsafe query generation risk (incomplete fix for CVE-2013- 0155)
+1064556 - CVE-2014-0078 CFME: multiple authorization bypass vulnerabilities in CatalogController
+1065219 - CVE-2014-0060 postgresql: SET ROLE without ADMIN OPTION allows adding and removing group members
+1065220 - CVE-2014-0061 postgresql: privilege escalation via procedural language validator functions
+1065222 - CVE-2014-0062 postgresql: CREATE INDEX race condition possibly leading to privilege escalation
+1065226 - CVE-2014-0063 postgresql: stack-based buffer overflow in datetime input/output
+1065230 - CVE-2014-0064 postgresql: integer overflows leading to buffer overflows
+1065235 - CVE-2014-0065 postgresql: possible buffer overflow flaws
+1065236 - CVE-2014-0066 postgresql: NULL pointer dereference
+1076688 - CVE-2014-0137 CFME: ReportController SQL injection
+1082154 - CVE-2014-2669 postgresql: multiple integer overflows in hstore_io.c
+
+6. Package List:
+
+Management Engine:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.3.2-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.3.2-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/postgresql92-postgresql-9.2.7-1.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/postgresql92-postgresql-9.2.7-1.1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/prince-9.0r2-4.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/prince-9.0r2-4.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-actionpack-3.2.13-6.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-actionpack-3.2.13-6.el6cf.src.rpm</a>
+
+noarch:
+ruby193-rubygem-actionpack-3.2.13-6.el6cf.noarch.rpm
+
+x86_64:
+cfme-5.2.3.2-1.el6cf.x86_64.rpm
+cfme-appliance-5.2.3.2-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.2.3.2-1.el6cf.x86_64.rpm
+cfme-lib-5.2.3.2-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.2.3.2-1.el6cf.x86_64.rpm
+postgresql92-postgresql-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-contrib-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-debuginfo-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-devel-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-docs-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-libs-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-plperl-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-plpython-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-pltcl-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-server-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-test-9.2.7-1.1.el6.x86_64.rpm
+postgresql92-postgresql-upgrade-9.2.7-1.1.el6.x86_64.rpm
+prince-9.0r2-4.el6cf.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6417.html">https://www.redhat.com/security/data/cve/CVE-2013-6417.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0060.html">https://www.redhat.com/security/data/cve/CVE-2014-0060.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0061.html">https://www.redhat.com/security/data/cve/CVE-2014-0061.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0062.html">https://www.redhat.com/security/data/cve/CVE-2014-0062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0063.html">https://www.redhat.com/security/data/cve/CVE-2014-0063.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0064.html">https://www.redhat.com/security/data/cve/CVE-2014-0064.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0065.html">https://www.redhat.com/security/data/cve/CVE-2014-0065.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0066.html">https://www.redhat.com/security/data/cve/CVE-2014-0066.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0078.html">https://www.redhat.com/security/data/cve/CVE-2014-0078.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0137.html">https://www.redhat.com/security/data/cve/CVE-2014-0137.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2669.html">https://www.redhat.com/security/data/cve/CVE-2014-2669.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTcRBNXlSAg2UNWIIRAsjrAKCVuwykzHsJQjpLR2jA1PMAPaTEEgCgsDnD
+oszyqWTKnQ+9Hj7zhfTOPWo=
+=gvKq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

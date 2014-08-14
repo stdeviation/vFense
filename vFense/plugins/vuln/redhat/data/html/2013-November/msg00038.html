@@ -1,0 +1,240 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1527&#45;01] Important: rhev&#45;hypervisor6 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Nov 2013 00:06:49 &#45;0500 -->
+<!--X-Message-Id: 201311210506.rAL56lB3008080@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1527-01] Important: rhev-hypervisor6 security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1527-01] Important: rhev-hypervisor6 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1527-01] Important: rhev-hypervisor6 security and bug fix	update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 05:10:20 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security and bug fix update
+Advisory ID:       RHSA-2013:1527-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1527.html">https://rhn.redhat.com/errata/RHSA-2013-1527.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2010-5107 CVE-2013-2888 CVE-2013-2889 
+                   CVE-2013-2892 CVE-2013-4238 CVE-2013-4344 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes multiple security issues and
+one bug is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: a subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+Upgrade Note: If you upgrade the Red Hat Enterprise Virtualization
+Hypervisor through the 3.2 Manager administration portal, the Host may
+appear with the status of &quot;Install Failed&quot;. If this happens, place the host
+into maintenance mode, then activate it again to get the host back to an
+&quot;Up&quot; state.
+
+A buffer overflow flaw was found in the way QEMU processed the SCSI &quot;REPORT
+LUNS&quot; command when more than 256 LUNs were specified for a single SCSI
+target. A privileged guest user could use this flaw to corrupt QEMU process
+memory on the host, which could potentially result in arbitrary code
+execution on the host with the privileges of the QEMU process.
+(CVE-2013-4344)
+
+Multiple flaws were found in the way Linux kernel handled HID (Human
+Interface Device) reports. An attacker with physical access to the system
+could use this flaw to crash the system or, potentially, escalate their
+privileges on the system. (CVE-2013-2888, CVE-2013-2889, CVE-2013-2892)
+
+A flaw was found in the way the Python SSL module handled X.509 certificate
+fields that contain a NULL byte. An attacker could potentially exploit this
+flaw to conduct man-in-the-middle attacks to spoof SSL servers. Note that
+to exploit this issue, an attacker would need to obtain a carefully crafted
+certificate signed by an authority that the client trusts. (CVE-2013-4238)
+
+The default OpenSSH configuration made it easy for remote attackers to
+exhaust unauthorized connection slots and prevent other users from being
+able to log in to a system. This flaw has been addressed by enabling random
+early connection drops by setting MaxStartups to 10:30:100 by default.
+For more information, refer to the sshd_config(5) man page. (CVE-2010-5107)
+
+The CVE-2013-4344 issue was discovered by Asias He of Red Hat.
+
+This updated package provides updated components that include fixes for
+various security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2012-0786 and CVE-2012-0787 (augeas issues)
+
+CVE-2013-1813 (busybox issue)
+
+CVE-2013-0221, CVE-2013-0222, and CVE-2013-0223 (coreutils issues)
+
+CVE-2012-4453 (dracut issue)
+
+CVE-2013-4332, CVE-2013-0242, and CVE-2013-1914 (glibc issues)
+
+CVE-2013-4387, CVE-2013-0343, CVE-2013-4345, CVE-2013-4591, CVE-2013-4592,
+CVE-2012-6542, CVE-2013-3231, CVE-2013-1929, CVE-2012-6545, CVE-2013-1928,
+CVE-2013-2164, CVE-2013-2234, and CVE-2013-2851 (kernel issues)
+
+CVE-2013-4242 (libgcrypt issue)
+
+CVE-2013-4419 (libguestfs issue)
+
+CVE-2013-1775, CVE-2013-2776, and CVE-2013-2777 (sudo issues)
+
+This update also fixes the following bug:
+
+* A previous version of the rhev-hypervisor6 package did not contain the
+latest vhostmd package, which provides a &quot;metrics communication channel&quot;
+between a host and its hosted virtual machines, allowing limited
+introspection of host resource usage from within virtual machines. This has
+been fixed, and rhev-hypervisor6 now includes the latest vhostmd package.
+(BZ#1026703)
+
+This update also contains the fixes from the following errata:
+
+* ovirt-node: <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-1528.html">https://rhn.redhat.com/errata/RHBA-2013-1528.html</a>
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization environments
+using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux</a>
+/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat
+_Enterprise_Virtualization_Hypervisors.html
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+908060 - rhev-hypervisor 6.5 release
+908707 - CVE-2010-5107 openssh: Prevent connection slot exhaustion attacks
+996381 - CVE-2013-4238 python: hostname check bypassing vulnerability in SSL module
+999890 - CVE-2013-2889 Kernel: HID: zeroplus: heap overflow flaw
+1000429 - CVE-2013-2892 Kernel: HID: pantherlord: heap overflow flaw
+1000451 - CVE-2013-2888 Kernel: HID: memory corruption flaw
+1007330 - CVE-2013-4344 qemu: buffer overflow in scsi_target_emulate_report_luns
+1026703 - Latest vhostmd package is not built in
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.5-20131115.0.3.2.el6_5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-5107.html">https://www.redhat.com/security/data/cve/CVE-2010-5107.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2888.html">https://www.redhat.com/security/data/cve/CVE-2013-2888.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2889.html">https://www.redhat.com/security/data/cve/CVE-2013-2889.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2892.html">https://www.redhat.com/security/data/cve/CVE-2013-2892.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4238.html">https://www.redhat.com/security/data/cve/CVE-2013-4238.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4344.html">https://www.redhat.com/security/data/cve/CVE-2013-4344.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-1528.html">https://rhn.redhat.com/errata/RHBA-2013-1528.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjZTgXlSAg2UNWIIRAs2fAJ494SJEchFSytaJzyWDWzX67CQXpQCfTd4U
+oKiWr2wIkagzmf/wWO/aDLY=
+=Wach
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

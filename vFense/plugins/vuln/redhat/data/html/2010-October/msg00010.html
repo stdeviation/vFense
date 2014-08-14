@@ -1,0 +1,273 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0755&#45;01] Important: cups security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 7 Oct 2010 13:53:20 &#45;0400 -->
+<!--X-Message-Id: 201010071753.o97HrEGB026875@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0755-01] Important: cups security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0755-01] Important: cups security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0755-01] Important: cups security update</li>
+<li><em>Date</em>: Thu, 7 Oct 2010 13:51:49 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: cups security update
+Advisory ID:       RHSA-2010:0755-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0755.html">https://rhn.redhat.com/errata/RHSA-2010-0755.html</a>
+Issue date:        2010-10-07
+CVE Names:         CVE-2009-3609 CVE-2010-3702 
+=====================================================================
+
+1. Summary:
+
+Updated cups packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The Common UNIX Printing System (CUPS) provides a portable printing layer
+for UNIX operating systems. The CUPS &quot;pdftops&quot; filter converts Portable
+Document Format (PDF) files to PostScript.
+
+Multiple flaws were discovered in the CUPS &quot;pdftops&quot; filter. An attacker
+could create a malicious PDF file that, when printed, would cause &quot;pdftops&quot;
+to crash or, potentially, execute arbitrary code as the &quot;lp&quot; user.
+(CVE-2010-3702, CVE-2009-3609)
+
+Users of cups are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the cupsd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+526893 - CVE-2009-3609 xpdf/poppler: ImageStream::ImageStream integer overflow
+595245 - CVE-2010-3702 xpdf: uninitialized Gfx::parser pointer dereference
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm</a>
+
+i386:
+cups-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+
+ia64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+
+ppc:
+cups-1.1.22-0.rc1.9.32.el4_8.10.ppc.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.ppc.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.ppc64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.ppc.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.ppc.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.ppc64.rpm
+
+s390:
+cups-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+
+s390x:
+cups-1.1.22-0.rc1.9.32.el4_8.10.s390x.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.s390x.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.s390x.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.s390.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.s390x.rpm
+
+x86_64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm</a>
+
+i386:
+cups-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+
+x86_64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm</a>
+
+i386:
+cups-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+
+ia64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+
+x86_64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/cups-1.1.22-0.rc1.9.32.el4_8.10.src.rpm</a>
+
+i386:
+cups-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+
+ia64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.ia64.rpm
+
+x86_64:
+cups-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-debuginfo-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-devel-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.i386.rpm
+cups-libs-1.1.22-0.rc1.9.32.el4_8.10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3609.html">https://www.redhat.com/security/data/cve/CVE-2009-3609.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3702.html">https://www.redhat.com/security/data/cve/CVE-2010-3702.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMrgiaXlSAg2UNWIIRAmthAKC8N80K1tz68AiHfDbIooswqZjdUwCfbi/M
+ZSKNDVoqStV6rXaPCiAKOVk=
+=cV8S
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

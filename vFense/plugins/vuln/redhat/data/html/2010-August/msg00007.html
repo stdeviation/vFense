@@ -1,0 +1,327 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0590&#45;01] Low: Red Hat Directory Server security and	enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 3 Aug 2010 16:17:00 &#45;0400 -->
+<!--X-Message-Id: 201008032016.o73KGtNh005238@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0590-01] Low: Red Hat Directory Server security and	enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0590-01] Low: Red Hat Directory Server security and	enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2010:0590-01] Low: Red Hat Directory Server security and	enhancement update</li>
+<li><em>Date</em>: Tue, 3 Aug 2010 14:16:54 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Directory Server security and enhancement update
+Advisory ID:       RHSA-2010:0590-01
+Product:           Red Hat Directory Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0590.html">https://rhn.redhat.com/errata/RHSA-2010-0590.html</a>
+Issue date:        2010-08-03
+CVE Names:         CVE-2010-2241 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Directory Server and related packages that fix one security
+issue, multiple bugs, and add enhancements are now available as Red Hat
+Directory Server 8.2.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Directory Server 8 (for RHEL 5 Server) - i386, noarch, x86_64
+Red Hat Directory Server 8.0 (for AS v. 4) - i386, noarch, x86_64
+Red Hat Directory Server 8.0 (for ES v. 4) - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Directory Server is an LDAPv3-compliant directory server. The
+redhat-ds-base package includes the LDAP server and command line utilities
+for server administration.
+
+Directory Server setup scripts created cache files, containing passwords
+for the Directory and Administration Server administrative accounts, with
+weak file permissions. A local user could use this flaw to obtain
+authentication credentials for the administrative accounts. (CVE-2010-2241)
+
+This update also adds the following enhancements:
+
+* Entry USN - The Entry USN Plug-in provides a way for LDAP clients to know
+that something in the database has changed by generating a global update
+sequence number (USN) for every write operation.
+
+* Linked Attributes - The new Linked Attributes Plug-in uses the DN value
+of a known attribute to trace its way to the referenced entry, and then it
+adds a reciprocal value, pointing back to the first entry.
+
+* Bitwise Search - This release adds support for bit field values in LDAP
+searches.
+
+* Dereference Control - This release adds server support for the
+dereference control in LDAP searches. A dereferencing search tracks back
+over cross-references in an entry and returns information about the
+referenced entry.
+
+* PAM Pass-through Plug-in - The PAM PTA plug-in allows Directory Server to
+leverage a network's existing PAM service to authenticate users.
+
+* SMD5 Password Storage Scheme - Passwords can now be stored with the
+salted MD5 password hash.
+
+* Syntax Checking - A new syntax validation plug-in verifies that the value
+given for an attribute in an operation matches the required syntax for that
+attribute.
+
+* Anonymous Resource Limits - A new server configuration attribute enables
+the Directory Server to apply resource limits to anonymous binds.
+
+* Anonymous Access Switch - A new server configuration attribute tells the
+Directory Server to disable anonymous binds for added security.
+
+* Secure Binds Switch - A new server configuration attribute tells the
+Directory Server to require a secure connection of some kind for any simple
+binds.
+
+* SSF Restrictions - A new server configuration attribute allows
+administrators to set a minimum Security Strength Factor (SSF) for all
+connections to the server, which can require a secure connection.
+
+* Mixed SASL/TLS Connections - Now, the server can have both SASL and TLS
+configured.
+
+* Setting Plug-in Load Orders - A new plug-in configuration attribute sets
+the load order preference for the plug-in, anywhere from 1 to 99. This
+effectively sets the load order for plug-ins of the same type.
+
+* Named Pipe Log Script - A new directory script allows logging data to be
+sent to a named pipe instead of the standard server logs.
+
+* Simple Paged Results - This release adds server support for results of
+LDAP searches to be broken into pages.
+
+* New Matching Rule and Attribute Syntaxes - This release adds support for
+several new matching rules and 11 new attribute syntaxes.
+
+These packages also contain many bug fixes for major features in Red Hat
+Directory Server, including replication, synchronization, setup and
+migration, command line tools, the Java console, and the Administration
+Server. Refer to the Red Hat Directory Server 8.2 Release Notes for further
+information:
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html">http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html</a>
+
+All Red Hat Directory Server users should upgrade to Red Hat Directory
+Server 8.2, which resolves these issues and adds these enhancements.
+
+4. Solution:
+
+Users running Red Hat Directory Server should consult the Red Hat Directory
+Server 8.2 Release Notes for installation and upgrade instructions:
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html">http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+608032 - CVE-2010-2241 redhat-ds: setup script insecure .inf file permissions
+
+6. Package List:
+
+Red Hat Directory Server 8.0 (for AS v. 4):
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el4idm.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el4idm.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-8.2.0-1.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-8.2.0-1.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-4.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-4.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-14.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-14.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el4idm.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el4idm.src.rpm</a>
+
+i386:
+redhat-ds-8.2.0-1.el4dsrv.i386.rpm
+redhat-ds-admin-8.2.0-4.el4dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.2.0-4.el4dsrv.i386.rpm
+redhat-ds-base-8.2.0-14.el4dsrv.i386.rpm
+redhat-ds-base-debuginfo-8.2.0-14.el4dsrv.i386.rpm
+redhat-ds-base-devel-8.2.0-14.el4dsrv.i386.rpm
+redhat-idm-console-1.0.2-1.el4idm.i386.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el4idm.i386.rpm
+
+noarch:
+idm-console-framework-1.1.5-1.el4idm.noarch.rpm
+redhat-admin-console-8.2.0-2.el4dsrv.noarch.rpm
+redhat-ds-console-8.2.0-4.el4dsrv.noarch.rpm
+
+x86_64:
+redhat-ds-8.2.0-1.el4dsrv.x86_64.rpm
+redhat-ds-admin-8.2.0-4.el4dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.2.0-4.el4dsrv.x86_64.rpm
+redhat-ds-base-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-ds-base-debuginfo-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-ds-base-devel-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-idm-console-1.0.2-1.el4idm.x86_64.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el4idm.x86_64.rpm
+
+Red Hat Directory Server 8.0 (for ES v. 4):
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el4idm.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el4idm.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-8.2.0-1.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-8.2.0-1.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-4.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-4.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-14.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-14.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el4dsrv.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el4dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el4idm.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el4idm.src.rpm</a>
+
+i386:
+redhat-ds-8.2.0-1.el4dsrv.i386.rpm
+redhat-ds-admin-8.2.0-4.el4dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.2.0-4.el4dsrv.i386.rpm
+redhat-ds-base-8.2.0-14.el4dsrv.i386.rpm
+redhat-ds-base-debuginfo-8.2.0-14.el4dsrv.i386.rpm
+redhat-ds-base-devel-8.2.0-14.el4dsrv.i386.rpm
+redhat-idm-console-1.0.2-1.el4idm.i386.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el4idm.i386.rpm
+
+noarch:
+idm-console-framework-1.1.5-1.el4idm.noarch.rpm
+redhat-admin-console-8.2.0-2.el4dsrv.noarch.rpm
+redhat-ds-console-8.2.0-4.el4dsrv.noarch.rpm
+
+x86_64:
+redhat-ds-8.2.0-1.el4dsrv.x86_64.rpm
+redhat-ds-admin-8.2.0-4.el4dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.2.0-4.el4dsrv.x86_64.rpm
+redhat-ds-base-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-ds-base-debuginfo-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-ds-base-devel-8.2.0-14.el4dsrv.x86_64.rpm
+redhat-idm-console-1.0.2-1.el4idm.x86_64.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el4idm.x86_64.rpm
+
+Red Hat Directory Server 8 (for RHEL 5 Server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el5idm.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/idm-console-framework-1.1.5-1.el5idm.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/jss-4.2.6-6.el5idm.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/jss-4.2.6-6.el5idm.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-admin-console-8.2.0-2.el5dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-8.2.0-2.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-8.2.0-2.el5dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-3.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-admin-8.2.0-3.el5dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-13.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-base-8.2.0-13.el5dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-ds-console-8.2.0-4.el5dsrv.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el5idm.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHDirServ/SRPMS/redhat-idm-console-1.0.2-1.el5idm.src.rpm</a>
+
+i386:
+jss-4.2.6-6.el5idm.i386.rpm
+jss-debuginfo-4.2.6-6.el5idm.i386.rpm
+redhat-ds-8.2.0-2.el5dsrv.i386.rpm
+redhat-ds-admin-8.2.0-3.el5dsrv.i386.rpm
+redhat-ds-admin-debuginfo-8.2.0-3.el5dsrv.i386.rpm
+redhat-ds-base-8.2.0-13.el5dsrv.i386.rpm
+redhat-ds-base-debuginfo-8.2.0-13.el5dsrv.i386.rpm
+redhat-ds-base-devel-8.2.0-13.el5dsrv.i386.rpm
+redhat-idm-console-1.0.2-1.el5idm.i386.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el5idm.i386.rpm
+
+noarch:
+idm-console-framework-1.1.5-1.el5idm.noarch.rpm
+redhat-admin-console-8.2.0-2.el5dsrv.noarch.rpm
+redhat-ds-console-8.2.0-4.el5dsrv.noarch.rpm
+
+x86_64:
+jss-4.2.6-6.el5idm.x86_64.rpm
+jss-debuginfo-4.2.6-6.el5idm.x86_64.rpm
+redhat-ds-8.2.0-2.el5dsrv.x86_64.rpm
+redhat-ds-admin-8.2.0-3.el5dsrv.x86_64.rpm
+redhat-ds-admin-debuginfo-8.2.0-3.el5dsrv.x86_64.rpm
+redhat-ds-base-8.2.0-13.el5dsrv.x86_64.rpm
+redhat-ds-base-debuginfo-8.2.0-13.el5dsrv.x86_64.rpm
+redhat-ds-base-devel-8.2.0-13.el5dsrv.x86_64.rpm
+redhat-idm-console-1.0.2-1.el5idm.x86_64.rpm
+redhat-idm-console-debuginfo-1.0.2-1.el5idm.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2241.html">https://www.redhat.com/security/data/cve/CVE-2010-2241.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html">http://www.redhat.com/docs/manuals/dir-server/8.2/rel-notes/html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMWHkaXlSAg2UNWIIRAn04AJ43oV0rpeoIsRd3ZT3pJz1S8PYsCgCdHQcA
+Vpob09ofBi2LiJ2kjazgeEI=
+=AcIA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

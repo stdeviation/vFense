@@ -1,0 +1,326 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1508&#45;01] Important: rhev&#45;3.1.0 vdsm security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Dec 2012 15:32:51 &#45;0500 -->
+<!--X-Message-Id: 201212042032.qB4KWj5N032167@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1508-01] Important: rhev-3.1.0 vdsm security, bug fix,	and en</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1508-01] Important: rhev-3.1.0 vdsm security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1508-01] Important: rhev-3.1.0 vdsm security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 4 Dec 2012 20:32:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-3.1.0 vdsm security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:1508-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1508.html">https://rhn.redhat.com/errata/RHSA-2012-1508.html</a>
+Issue date:        2012-12-04
+CVE Names:         CVE-2012-0860 CVE-2012-0861 
+=====================================================================
+
+1. Summary:
+
+Updated vdsm packages are now available for Red Hat Enterprise Linux 6.3.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Agents (vdsm) - noarch, x86_64
+
+3. Description:
+
+VDSM is a management module that serves as a Red Hat Enterprise
+Virtualization Manager agent on Red Hat Enterprise Virtualization
+Hypervisor or Red Hat Enterprise Linux 6.3 hosts.
+
+A flaw was found in the way Red Hat Enterprise Linux hosts were added to
+the Red Hat Enterprise Virtualization environment. The Python scripts
+needed to configure the host for Red Hat Enterprise Virtualization were
+stored in the &quot;/tmp/&quot; directory and could be pre-created by an attacker. A
+local, unprivileged user on the host to be added to the Red Hat Enterprise
+Virtualization environment could use this flaw to escalate their
+privileges. This update provides the VDSM part of the fix. The
+RHSA-2012:1506 Red Hat Enterprise Virtualization Manager update must also
+be installed to completely fix this issue. (CVE-2012-0860)
+
+A flaw was found in the way Red Hat Enterprise Linux and Red Hat Enterprise
+Virtualization Hypervisor hosts were added to the Red Hat Enterprise
+Virtualization environment. The Python scripts needed to configure the host
+for Red Hat Enterprise Virtualization were downloaded in an insecure way,
+that is, without properly validating SSL certificates during HTTPS
+connections. An attacker on the local network could use this flaw to
+conduct a man-in-the-middle attack, potentially gaining root access to the
+host being added to the Red Hat Enterprise Virtualization environment. This
+update provides the VDSM part of the fix. The RHSA-2012:1506 Red Hat
+Enterprise Virtualization Manager update must also be installed to
+completely fix this issue. (CVE-2012-0861)
+
+The CVE-2012-0860 and CVE-2012-0861 issues were discovered by Red Hat.
+
+In addition to resolving the above security issues these updated VDSM
+packages fix various bugs, and add various enhancements.
+
+Documentation for these bug fixes and enhancements is available in the
+Technical Notes:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/index.html</a>
+
+All users who require VDSM are advised to install these updated packages
+which resolve these security issues, fix these bugs, and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+734847 - 3.1 - [vdsm] [init-script] vdsmd always restarts libvirtd upon start-up.
+744704 - [vdsm] moveMultipleImages continues on but task fails (COW disks only)
+772556 - vdsm installation fails when selinux is disabled
+783383 - 3.1 - rhev-h tui: Apply and Reset buttons do not display in RHEV-M page via serial console
+790730 - CVE-2012-0860 rhev: vds_installer insecure /tmp use
+790754 - CVE-2012-0861 rhev: vds_installer is prone to MITM when downloading 2nd stage installer
+797526 - 3.1 - vm recovery fail after vdsm is restarted as we try to restore vm before pool is connected
+798635 - 3.1 - getVGInfo returns with partial luns list on domains with more than one lun which causes hsm's to fail in ConnectStorageServer
+800367 - 3.1 - vdsm does not report the system and user cpu usage separately for vms.
+802759 - 3.1 - deadlock after activateStorageDomain ran
+806625 - libvirt fails to start on rhevh
+806757 - [ovirt] [vdsm] guest video device is corrupted during saving state
+807351 - [ovirt] [vdsm] NFS ISO\Export domain will not recover after failure if they enter (deleted) state
+807687 - vdsm: hsm becomes non-operational after activation if changes were made to master domain or its version while host was in maintenance
+812793 - [vdsm][addNetwork] addNetwork/setupNetworks fails to attach network to an interface.
+813423 - All visible labels should say RHEV-M and not ovirt-engine
+814435 - 3.1 - LUN with locally-mounted fs is reported as a valid storage domain device
+815359 - 3.1 - vdsm: delete snapshot fails and when trying to delete it again task hangs on preparing to finish and vm is stuck in image locked
+826467 - 3.1 - [vdsm][setupNetworks] Failed to remove bond &amp; attach network to NIC
+826873 - 3.1 - [vdsm][setupNetworks] Failed to resize bond
+826921 - 3.1 - vdsm ignores options in vdsm.conf file.
+829037 - 3.1 - Several bridgeless networks on same NIC/Bond should be avoided
+829645 - 3.1 - [vdsm] VM moves to paused when trying to create live snapshot on iscsi domain
+829710 - 3.1 - vdsm: host become non-responsive when blocking nfs export domain
+830485 - [vdsm][setupNetworks] netConfigDirty flag not reported in correct place
+830486 - setupNetwork is broken when using diff parameters
+831528 - 3.1 - Allow multiple VLANed network together with on only one non-VLANed bridgeless network on top of NIC/Bond
+832765 - beta2 3.1 - bridgeless networks are persisted  within libvirt on creation
+832798 - [text] Typo in exception &quot;raise Exception(&quot;Could not like to directory. Path does not exist &quot;) - like -&gt; link
+833084 - 3.1 - [Storage] Pool SPM ID value shouldn't be None !
+833099 - 3.1 - [Storage] engine should  do reconstruct  master  to take care the situation when the metadata is corrupted and vdsm sends to engine &quot;general&quot; exception.
+833119 - 3.1 Allow to create VLANed network on top of existing bond
+833425 - 3.1.z - vdsm cpuCores shows the wrong number of cores on multi node systems - AMD (Magny-Cours 61XX and Bulldozer 62XX)
+833803 - 3.1 - Avoid bond breaking after network detach
+834008 - 3.1 - Can attach the same bridge network to different interfaces
+834105 - 3.1 - KVM version is N/A in RHEVM
+834205 - 3.1 [vdsm][bridgeless] BOOTPROTO/IPADDR/NETMASK options are not set on interface
+835478 - 3.1 - Add Execcmd to RHEV3.0 /  VDSM
+835784 - 3.1 - Allow to create a network on top of existing bond in additional to create a new bond and network
+835900 - 3.1 - beta2 - Check connectivity | no revert to backup when check connectivity failed
+835920 - 3.1 - vdsm - beta1 PosixFS: after reconstruct, data-center is UP and storage is unknown (stuck)
+836161 - 3.1 - vdsm: move of 20-30 disks will cause image corruption
+836562 - 3.1 - [Storage] Merge snapshot fails.
+836954 - 3.1- Allow to break bond and create a new network on its interface in single action
+837054 - 3.1 - Do not detach network from the bond during bond resize
+837836 - 3.1 - vdsm: Error when trying to login to target ( invalid literal for int() with base 10 )
+838347 - 3.1 vdsm-created /etc/sysconfig/network-scripts/ifcfg-* have bad selinux context
+838547 - 3.1 - VDSM [Scalability]: 'OSError' during refreshStoragePool mkdir that fails over File exists.
+838802 - 3.1 - Add config option to enable/disable sanlock
+838924 - 3.1 - VDSM should require libvirt that fixes  BZ#832184 - &quot;Disable keepalive in libvirt by default&quot;
+840294 - 3.1 - vds_bootstrap reports unusable error on missing package during installation
+840300 - 3.1 beta3 - [vdsm][bootstrap]: we do not fail installation when failing to create rhevm network
+840386 - 3.1 - vdsm - beta1: vms with shared disk will pause due to I/O errors
+840594 - 3.1 - beta2 VDSM | Host status unassigned when virsh and brctl bridge list do not match.
+841863 - 3.1 beta1 - While trying to scan ISO domain - Import error append to log - scanning ends before it started
+842115 - - 3.1 - beta3 - [vdsm] Migration fails as both source and destination shares the same UUID
+842146 - 3.1 - [Storage][Text] Not informative error message when trying to attach import domain with wrong permissions.
+842338 - VDSM 3.1 beta1: vdsm doesn't manage to configure bonding mode.
+842662 - [vdsm] 3.1 beta2 - Host becomes Non responsive after rolling back from incorrect configuration
+842771 - 3.1 beta1 - [vdsm] TypeError: cannot marshal None unless allow_none is enabled  after restore from suspend (unable to migrate vm)
+843076 - 3.1 beta2 - upgrade from engine failing due to grub2 support
+843387 - VDSM: unable to start VM  (UnboundLocalError: local variable 'volPath' referenced before assignment)
+843498 - 3.1 - [vdsm][Networking] Change getVdsCaps reporting of networks
+844180 - formatStorageDomain fails due to devices not being discovered in time
+844294 - VDSM - 3.1 beta1 - VM (with thin-provision disk) enter to “paused” state, during installation OS (SPM not extending the disk)
+844347 - 3.1 beta1 - VDSM: addNetwork Failed to attach bridge to bond interface
+845193 - 3.1 - Remove BRIDGE from nic/bond config files (ifcfg-*) when bridged network detached
+845346 - oVirt 3.1 - breth0 still available after registration and manual reboot
+845525 - beta2 - VSDM is not reporting the BONDING_OPTS for bonds
+845830 - beta2 - Its impossible to create Non_VM non_VLAN and any VLAN Network over NIC/bond in one step
+846004 - IP disappears from the NON_VM Network on the NIC, when adding additional VLAN Network to the same NIC
+846014 - [rhevm] [engine-core] beta2 - Hot-Plug failure adding a non-bootable VirtIO disk where OS installed on IDE disk
+846307 - [vdsm] super-vdsm is restarted upon IO error and vdsm communicates with old socket
+846312 - beta2 3.1 - Custom MTU is not working properly.
+846323 - vdsm: remove storage domain fails on format command with Failed reload error
+846376 - 3.1 - VDSM [scalability] beta2 : during connectStoragePool vdsm call 'vgs' twice for each storage domain.
+847518 - 3.1 [Port mirroring] Failed to start second VM with port mirroring enabled while another VM with port mirroring enabled is already running
+847733 - [beta2] [vdsm_bootstrap] failure to create rhevm network over pre-configured VLAN
+847744 - 3.1 beta2 fenceNode verb ignores its &quot;options&quot; argument
+848101 - 3.1 beta2 [vdsm] port-mirroring: vdsm doesn't remove port-mirroring after migration ends successfully on source (also for hot-plug)
+848299 - 3.1 beta2 Failed to break BOND when bridge VLAN interface with custome MTU attached to it
+848616 - 3.1 - vdsm-reg needs to change default port to 443
+848728 - 3.1 - Allow VDSM to report logical cores/threads as physical cores.
+849315 - vdsm-upgrade exits with wrong exit code
+849542 - [vds-bootstrap] Host has 7 minute time difference with engine after installation
+851146 - 3.1 - VDSM [Scalability] When performing storage actions vdsm stop sampling Storage Domains and engine moves host to non-operational
+851839 - 3.1 beta3 VDSM network logs | need logs for VDSM network commands
+852989 - 3.1 beta3 VDSM should require libvirt 0.9.10-21.el6_3.4
+853011 - 3.1 - [vdsm] logging: 'No free file handlers in pool' when /rhev/data-center/mnt/ contains lots of directories
+853040 - 3.1 - [vdsm] we are not cleaning /rhev/data-center/mnt/ after failed mount commands
+853703 - 3.1 - [vdsm] python Attribute Error for DomainMonitorThread during domain state change
+853710 - 3.1 - [vdsm] deactivateStorageDomain fails due to &quot;storage domain does not exist&quot; (Problem with handler, treating as timeout)
+853910 - beta3 - Fix the check to convert block domains V0 to tag based metadata
+853968 - 3.1 beta 3 [VDSM] getVdsCaps not update 'mtu' when removing network with MTU from nic/BOND interface
+854027 - 3.1 - vdsm should start ksmtuned upon startup (if ksm/memory sharing is enabled on the cluster)
+854151 - 3.1 - vdsm: iscsi connections are not disconnected when host is put in maintenance and backend is sending disconnectStorageServer
+854212 - 3.1 useless /usr/bin/vdsm-tool should not be shipped
+854242 - 3.1 - [vdsm] unable to delete multiple virtual disks with Wipe after delete (engine fence SPM)
+854457 - RHEVH: The RHEVM Password can be set successfully even 'password' and 'confirm password' do not match
+854748 - 3.1 - beta3 - [vdsm] Bump sanlock required version for EL6
+854763 - 3.1 - vdsmd service should create directory eariler
+854765 - beta2 - Upgrade script should successfully terminate before reboot occurs
+854919 - 3.1 beta3  [VDSM] NON_VM_VLAN networks |  MTU not updated in ifcfg-* file after removing VLAN network with higher MTU from nic/BOND
+854953 - 3.1 - beta3 - [vdsm] Logs show AttributeError when domain is not reachable and attempting to release hostId
+855049 - [RHEV-H] [VDSM] VDSM service failed to start - vdsm: Failed to define network filters on libvirt     [FAILED]
+855425 - 3.1 - Pool upgrade to DC 3.1 generates multiple lease files for the same template
+855729 - 3.1 - [vdsm] change default NFS version value from 'auto-negotiate' to 'v3'
+855887 - vdsm: reinstall of host when vdsm repo was updated from 4.9-113.3 to vdsm-4.9.6-32.0 fails on Transaction Check Error
+855918 - Backport the vdsm configuration format for libvirt
+855922 - vdsm: vm's fail to migrate from host with vdsm-4.9-113.3 to host with vdsm-4.9.6-32 due to &quot;can't set attribute&quot; error (cluster level still 3.0)
+855924 - 3.1: vdsm: vm's fail to migrate from host with vdsm-4.9.6-32 to host with vdsm-4.9-113.3 due to KeyError: 'domainID' (cluster level still 3.0)
+856163 - 3.1 - beta3 VDSM | Host status unassigned when libvirt network definitions refer to missing vlan, bond or nic.
+856167 - 3.1 - [RHEV-H 6.3]Auto install RHEV-H with &quot;management_server=$RHEV-M_IP&quot; parameter, it failed to approve rhevh on rhevm side.
+857112 - 3.1 - Configuration of network with Boot protocol = DHCP on specific interface will configure that interface with Boot protocl DHCP as well
+859109 - vdsm should depend on initscripts-9.03.31-2.el6_3.1 or above
+862002 - 3.1 [RHEV-H] VDSM service failed to start - vdsm: Failed to define network filters on libvirt [FAILED]
+863265 - Payload cannot be set via the API
+865386 - 3.1 - vdsm: vm's become non-responsive while upgrading pool from 3.0 to 3.1
+866163 - 3.1 - vdsm should depend on libvirt ver libvirt-0.9.10-21.el6_3.5 (and above)
+866533 - 3.1 VDSM: some warning in upgrade of 4.9-113-3 to 4.9.6-36
+867354 - Configure the selinux sanlock_use_nfs boolean
+867806 - Hotplug NIC should fail when an action of enabling  port mirroring on the VM fails
+867813 - If VM migration fails on source host, then on destination host the destroy VM fails with AttributeError: 'NetworkInterfaceDevice' object has no attribute 'name'
+867922 - [vdsm-bootstrap] vdsm-bootstrap of rhevm-3.0 cannot bootstrap vdsm-4.9.6 (3.1)
+868272 - 3.1 - Save the correct (raw) volume size in the metadata during createVolume
+868681 - [RACE]: Error in forceIScsiScan when putting hsm host in maintenance and deactivating domains at the same time (disconnect storage server is failing)
+868721 - Improve logging for the lastCheck value returned by getVdsStats
+870024 - 3.1.z - vdsm: Unexpected exception when upgrading local/NFS domain from 3.0 to 3.1
+870079 - 3.1 - packaging: vdsm and vdsm-cli conflict causes rhevm-3.0 bootstrap to fail
+870734 - 3.1 - rehvm-3.0 cannot bootstrap vdsm-4.9.6 as it does not start libvirtd
+870768 - 3.1 - multipath? [vdsm] ReconstructMasterDomain fails in ConnectStoragePool - cannot find master domain
+871355 - 3.1 - [vdsm] Zombie VDSM processes remain when Export NFS or ISO NFS domain is blocked
+871811 - 3.1 [vdsm] createVolume failsfor file based storage (NFS and local storage)
+872270 - 3.1 - [vdsm] Pool link is missing under /rhev/data-center after failure of storage domain during live-snapshot (altough host sees both pool and storage domain)
+872935 - [vdsm] Threads leakage after failure of storage domain
+874481 - 3.1 - vdsm [Live Storage Migration]: vm fails to resume after being paused on ENOspace
+876115 - 3.1 - [vdsm] moveImage fails in case 'force' option is True and image doesn't exists on destination storage domain
+876558 - 3.1 - engine: live snapshot fails due to race on multiple move of disks (live storage migration)
+
+6. Package List:
+
+RHEV Agents (vdsm):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.9.6-44.0.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.9.6-44.0.el6_3.src.rpm</a>
+
+noarch:
+vdsm-cli-4.9.6-44.0.el6_3.noarch.rpm
+vdsm-hook-vhostmd-4.9.6-44.0.el6_3.noarch.rpm
+vdsm-reg-4.9.6-44.0.el6_3.noarch.rpm
+
+x86_64:
+vdsm-4.9.6-44.0.el6_3.x86_64.rpm
+vdsm-debuginfo-4.9.6-44.0.el6_3.x86_64.rpm
+vdsm-python-4.9.6-44.0.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0860.html">https://www.redhat.com/security/data/cve/CVE-2012-0860.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0861.html">https://www.redhat.com/security/data/cve/CVE-2012-0861.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQvl3RXlSAg2UNWIIRAk0sAKCrS3bi0xqD0mttKLxx8X4OxcVImwCgnNSb
+8HpHsoirTTN6ETEVl1xUJxE=
+=X1iW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1771&#45;01] Low: Red Hat JBoss Web Framework Kit 2.4.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Nov 2013 12:12:01 &#45;0500 -->
+<!--X-Message-Id: 201311271712.rARHC0Yq031881@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1771-01] Low: Red Hat JBoss Web Framework Kit 2.4.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00044.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00044.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1771-01] Low: Red Hat JBoss Web Framework Kit 2.4.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1771-01] Low: Red Hat JBoss Web Framework Kit 2.4.0 update</li>
+<li><em>Date</em>: Wed, 27 Nov 2013 17:12:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat JBoss Web Framework Kit 2.4.0 update
+Advisory ID:       RHSA-2013:1771-01
+Product:           Red Hat JBoss Web Framework Kit
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1771.html">https://rhn.redhat.com/errata/RHSA-2013-1771.html</a>
+Issue date:        2013-11-27
+CVE Names:         CVE-2013-4112 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Web Framework Kit 2.4.0, which fixes one security issue,
+various bugs, and adds enhancements, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+Red Hat JBoss Web Framework Kit combines popular open source web frameworks
+into a single solution for Java applications.
+
+This release serves as a replacement for Red Hat JBoss Web Framework Kit
+2.3.0, and includes bug fixes and enhancements. Refer to the 2.4.0
+Release Notes for information on the most significant of these changes,
+available shortly from <a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+This release also fixes the following security issue:
+
+A flaw was found in JGroup's DiagnosticsHandler that allowed an attacker on
+an adjacent network to reuse the credentials from a previous successful
+authentication. This could be exploited to read diagnostic information
+(information disclosure) and attain limited remote code execution.
+(CVE-2013-4112)
+
+All users of Red Hat JBoss Web Framework Kit 2.3.0 as provided from the Red
+Hat Customer Portal are advised to upgrade to Red Hat JBoss Web Framework
+Kit 2.4.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing installation of Red Hat JBoss Enterprise Application Platform or
+Red Hat JBoss Web Server, and applications deployed to it.
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+983489 - CVE-2013-4112 JGroups: Authentication via cached credentials
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4112.html">https://www.redhat.com/security/data/cve/CVE-2013-4112.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_JBoss_Web_Framework_Kit/">https://access.redhat.com/site/documentation/Red_Hat_JBoss_Web_Framework_Kit/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSlifPXlSAg2UNWIIRAgxjAKCxDbqWuewetZn9Chv/DQXT9bGjAwCfVxfr
+liocUrmbZdJvbpcuEf3QfFM=
+=582i
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00044.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00044.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

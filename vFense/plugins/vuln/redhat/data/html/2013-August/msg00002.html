@@ -1,0 +1,313 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1135&#45;01] Moderate: nss and nspr security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 5 Aug 2013 12:22:28 &#45;0400 -->
+<!--X-Message-Id: 201308051622.r75GMQut006253@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1135-01] Moderate: nss and nspr security, bug fix,	and enhanc</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1135-01] Moderate: nss and nspr security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1135-01] Moderate: nss and nspr security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Mon, 5 Aug 2013 16:22:26 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: nss and nspr security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1135-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1135.html">https://rhn.redhat.com/errata/RHSA-2013-1135.html</a>
+Issue date:        2013-08-05
+CVE Names:         CVE-2013-0791 CVE-2013-1620 
+=====================================================================
+
+1. Summary:
+
+Updated nss and nspr packages that fix two security issues, various bugs,
+and add enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications. Netscape Portable Runtime (NSPR) provides platform
+independence for non-GUI operating system facilities.
+
+It was discovered that NSS leaked timing information when decrypting
+TLS/SSL and DTLS protocol encrypted records when CBC-mode cipher suites
+were used. A remote attacker could possibly use this flaw to retrieve plain
+text from the encrypted packets by using a TLS/SSL or DTLS server as a
+padding oracle. (CVE-2013-1620)
+
+An out-of-bounds memory read flaw was found in the way NSS decoded certain
+certificates. If an application using NSS decoded a malformed certificate,
+it could cause the application to crash. (CVE-2013-0791)
+
+Red Hat would like to thank the Mozilla project for reporting
+CVE-2013-0791. Upstream acknowledges Ambroz Bizjak as the original reporter
+of CVE-2013-0791.
+
+This update also fixes the following bugs:
+
+* A defect in the FreeBL library implementation of the Diffie-Hellman (DH)
+protocol previously caused Openswan to drop connections. (BZ#958023)
+
+ * A memory leak in the nssutil_ReadSecmodDB() function has been fixed.
+(BZ#986969)
+
+In addition, the nss package has been upgraded to upstream version 3.14.3,
+and the nspr package has been upgraded to upstream version 4.9.5. These
+updates provide a number of bug fixes and enhancements over the previous
+versions. (BZ#949845, BZ#924741)
+
+Note that while upstream NSS version 3.14 prevents the use of certificates
+that have an MD5 signature, this erratum includes a patch that allows such
+certificates by default. To prevent the use of certificates that have an
+MD5 signature, set the &quot;NSS_HASH_ALG_SUPPORT&quot; environment variable
+to &quot;-MD5&quot;.
+
+Users of NSS and NSPR are advised to upgrade to these updated packages,
+which fix these issues and add these enhancements. After installing this
+update, applications using NSS or NSPR must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+908234 - CVE-2013-1620 nss: TLS CBC padding timing attack
+924741 - Rebase to nspr-4.9.5
+946947 - CVE-2013-0791 Mozilla: Out-of-bounds array read in CERT_DecodeCertPackage (MFSA 2013-40)
+949845 - [RFE][RHEL5] Rebase to nss-3.14.3 to fix the lucky-13 issue
+986969 - nssutil_ReadSecmodDB() leaks memory
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm</a>
+
+i386:
+nspr-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nss-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-tools-3.14.3-6.el5_9.i386.rpm
+
+x86_64:
+nspr-4.9.5-1.el5_9.i386.rpm
+nspr-4.9.5-1.el5_9.x86_64.rpm
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.x86_64.rpm
+nss-3.14.3-6.el5_9.i386.rpm
+nss-3.14.3-6.el5_9.x86_64.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.x86_64.rpm
+nss-tools-3.14.3-6.el5_9.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm</a>
+
+i386:
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-devel-4.9.5-1.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-devel-3.14.3-6.el5_9.i386.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.i386.rpm
+
+x86_64:
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.x86_64.rpm
+nspr-devel-4.9.5-1.el5_9.i386.rpm
+nspr-devel-4.9.5-1.el5_9.x86_64.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.x86_64.rpm
+nss-devel-3.14.3-6.el5_9.i386.rpm
+nss-devel-3.14.3-6.el5_9.x86_64.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.i386.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.9.5-1.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.14.3-6.el5_9.src.rpm</a>
+
+i386:
+nspr-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-devel-4.9.5-1.el5_9.i386.rpm
+nss-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-devel-3.14.3-6.el5_9.i386.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.i386.rpm
+nss-tools-3.14.3-6.el5_9.i386.rpm
+
+ia64:
+nspr-4.9.5-1.el5_9.i386.rpm
+nspr-4.9.5-1.el5_9.ia64.rpm
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.ia64.rpm
+nspr-devel-4.9.5-1.el5_9.ia64.rpm
+nss-3.14.3-6.el5_9.i386.rpm
+nss-3.14.3-6.el5_9.ia64.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.ia64.rpm
+nss-devel-3.14.3-6.el5_9.ia64.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.ia64.rpm
+nss-tools-3.14.3-6.el5_9.ia64.rpm
+
+ppc:
+nspr-4.9.5-1.el5_9.ppc.rpm
+nspr-4.9.5-1.el5_9.ppc64.rpm
+nspr-debuginfo-4.9.5-1.el5_9.ppc.rpm
+nspr-debuginfo-4.9.5-1.el5_9.ppc64.rpm
+nspr-devel-4.9.5-1.el5_9.ppc.rpm
+nspr-devel-4.9.5-1.el5_9.ppc64.rpm
+nss-3.14.3-6.el5_9.ppc.rpm
+nss-3.14.3-6.el5_9.ppc64.rpm
+nss-debuginfo-3.14.3-6.el5_9.ppc.rpm
+nss-debuginfo-3.14.3-6.el5_9.ppc64.rpm
+nss-devel-3.14.3-6.el5_9.ppc.rpm
+nss-devel-3.14.3-6.el5_9.ppc64.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.ppc.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.ppc64.rpm
+nss-tools-3.14.3-6.el5_9.ppc.rpm
+
+s390x:
+nspr-4.9.5-1.el5_9.s390.rpm
+nspr-4.9.5-1.el5_9.s390x.rpm
+nspr-debuginfo-4.9.5-1.el5_9.s390.rpm
+nspr-debuginfo-4.9.5-1.el5_9.s390x.rpm
+nspr-devel-4.9.5-1.el5_9.s390.rpm
+nspr-devel-4.9.5-1.el5_9.s390x.rpm
+nss-3.14.3-6.el5_9.s390.rpm
+nss-3.14.3-6.el5_9.s390x.rpm
+nss-debuginfo-3.14.3-6.el5_9.s390.rpm
+nss-debuginfo-3.14.3-6.el5_9.s390x.rpm
+nss-devel-3.14.3-6.el5_9.s390.rpm
+nss-devel-3.14.3-6.el5_9.s390x.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.s390.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.s390x.rpm
+nss-tools-3.14.3-6.el5_9.s390x.rpm
+
+x86_64:
+nspr-4.9.5-1.el5_9.i386.rpm
+nspr-4.9.5-1.el5_9.x86_64.rpm
+nspr-debuginfo-4.9.5-1.el5_9.i386.rpm
+nspr-debuginfo-4.9.5-1.el5_9.x86_64.rpm
+nspr-devel-4.9.5-1.el5_9.i386.rpm
+nspr-devel-4.9.5-1.el5_9.x86_64.rpm
+nss-3.14.3-6.el5_9.i386.rpm
+nss-3.14.3-6.el5_9.x86_64.rpm
+nss-debuginfo-3.14.3-6.el5_9.i386.rpm
+nss-debuginfo-3.14.3-6.el5_9.x86_64.rpm
+nss-devel-3.14.3-6.el5_9.i386.rpm
+nss-devel-3.14.3-6.el5_9.x86_64.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.i386.rpm
+nss-pkcs11-devel-3.14.3-6.el5_9.x86_64.rpm
+nss-tools-3.14.3-6.el5_9.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0791.html">https://www.redhat.com/security/data/cve/CVE-2013-0791.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1620.html">https://www.redhat.com/security/data/cve/CVE-2013-1620.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR/9EsXlSAg2UNWIIRAimFAJ4rk0lo+MDMuEJtBP9Z5wRqclEgEwCgp3me
+1+g1/JhMHXAr4nBahcD2JJg=
+=Qq32
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

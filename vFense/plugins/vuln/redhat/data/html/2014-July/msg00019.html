@@ -1,0 +1,414 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0867&#45;01] Moderate: samba security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 9 Jul 2014 13:31:43 &#45;0400 -->
+<!--X-Message-Id: 201407091731.s69HVhHq020645@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0867-01] Moderate: samba security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0867-01] Moderate: samba security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0867-01] Moderate: samba security update</li>
+<li><em>Date</em>: Wed, 9 Jul 2014 17:31:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: samba security update
+Advisory ID:       RHSA-2014:0867-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0867.html">https://rhn.redhat.com/errata/RHSA-2014-0867.html</a>
+Issue date:        2014-07-09
+CVE Names:         CVE-2014-0178 CVE-2014-0244 CVE-2014-3493 
+=====================================================================
+
+1. Summary:
+
+Updated samba packages that fix three security issues are now available for
+Red Hat Enterprise Linux 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+Samba is an open-source implementation of the Server Message Block (SMB) or
+Common Internet File System (CIFS) protocol, which allows PC-compatible
+machines to share files, printers, and other information.
+
+A denial of service flaw was found in the way the sys_recvfile() function
+of nmbd, the NetBIOS message block daemon, processed non-blocking sockets.
+An attacker could send a specially crafted packet that, when processed,
+would cause nmbd to enter an infinite loop and consume an excessive amount
+of CPU time. (CVE-2014-0244)
+
+A flaw was found in the way Samba created responses for certain
+authenticated client requests when a shadow-copy VFS module was enabled.
+An attacker able to send an authenticated request could use this flaw to
+disclose limited portions of memory per each request. (CVE-2014-0178)
+
+It was discovered that smbd, the Samba file server daemon, did not properly
+handle certain files that were stored on the disk and used a valid Unicode
+character in the file name. An attacker able to send an authenticated
+non-Unicode request that attempted to read such a file could cause smbd to
+crash. (CVE-2014-3493)
+
+Red Hat would like to thank Daniel Berteaud of FIREWALL-SERVICES SARL for
+reporting CVE-2014-0244, and the Samba project for reporting CVE-2014-0178
+and CVE-2014-3493. The Samba project acknowledges Christof Schmitt as the
+original reporter of CVE-2014-0178, and Simon Arlott as the original
+reporter of CVE-2014-3493.
+
+All Samba users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1097815 - CVE-2014-0244 samba: nmbd denial of service
+1101992 - CVE-2014-0178 samba: Uninitialized memory exposure
+1108748 - CVE-2014-3493 samba: smbd unicode path names denial of service
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+samba-4.1.1-35.el7_0.src.rpm
+
+x86_64:
+libsmbclient-4.1.1-35.el7_0.i686.rpm
+libsmbclient-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-4.1.1-35.el7_0.i686.rpm
+libwbclient-4.1.1-35.el7_0.x86_64.rpm
+samba-client-4.1.1-35.el7_0.x86_64.rpm
+samba-common-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-libs-4.1.1-35.el7_0.i686.rpm
+samba-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-modules-4.1.1-35.el7_0.i686.rpm
+samba-winbind-modules-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libsmbclient-devel-4.1.1-35.el7_0.i686.rpm
+libsmbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-devel-4.1.1-35.el7_0.i686.rpm
+libwbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-devel-4.1.1-35.el7_0.i686.rpm
+samba-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-pidl-4.1.1-35.el7_0.x86_64.rpm
+samba-python-4.1.1-35.el7_0.x86_64.rpm
+samba-test-4.1.1-35.el7_0.x86_64.rpm
+samba-test-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-vfs-glusterfs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-clients-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+samba-4.1.1-35.el7_0.src.rpm
+
+x86_64:
+libsmbclient-4.1.1-35.el7_0.i686.rpm
+libsmbclient-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-4.1.1-35.el7_0.i686.rpm
+libwbclient-4.1.1-35.el7_0.x86_64.rpm
+samba-client-4.1.1-35.el7_0.x86_64.rpm
+samba-common-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-libs-4.1.1-35.el7_0.i686.rpm
+samba-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-modules-4.1.1-35.el7_0.i686.rpm
+samba-winbind-modules-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libsmbclient-devel-4.1.1-35.el7_0.i686.rpm
+libsmbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-devel-4.1.1-35.el7_0.i686.rpm
+libwbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-devel-4.1.1-35.el7_0.i686.rpm
+samba-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-pidl-4.1.1-35.el7_0.x86_64.rpm
+samba-python-4.1.1-35.el7_0.x86_64.rpm
+samba-test-4.1.1-35.el7_0.x86_64.rpm
+samba-test-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-vfs-glusterfs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-clients-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+samba-4.1.1-35.el7_0.src.rpm
+
+ppc64:
+libsmbclient-4.1.1-35.el7_0.ppc.rpm
+libsmbclient-4.1.1-35.el7_0.ppc64.rpm
+libwbclient-4.1.1-35.el7_0.ppc.rpm
+libwbclient-4.1.1-35.el7_0.ppc64.rpm
+samba-4.1.1-35.el7_0.ppc64.rpm
+samba-client-4.1.1-35.el7_0.ppc64.rpm
+samba-common-4.1.1-35.el7_0.ppc64.rpm
+samba-debuginfo-4.1.1-35.el7_0.ppc.rpm
+samba-debuginfo-4.1.1-35.el7_0.ppc64.rpm
+samba-libs-4.1.1-35.el7_0.ppc.rpm
+samba-libs-4.1.1-35.el7_0.ppc64.rpm
+samba-winbind-4.1.1-35.el7_0.ppc64.rpm
+samba-winbind-modules-4.1.1-35.el7_0.ppc.rpm
+samba-winbind-modules-4.1.1-35.el7_0.ppc64.rpm
+
+s390x:
+libsmbclient-4.1.1-35.el7_0.s390.rpm
+libsmbclient-4.1.1-35.el7_0.s390x.rpm
+libwbclient-4.1.1-35.el7_0.s390.rpm
+libwbclient-4.1.1-35.el7_0.s390x.rpm
+samba-4.1.1-35.el7_0.s390x.rpm
+samba-client-4.1.1-35.el7_0.s390x.rpm
+samba-common-4.1.1-35.el7_0.s390x.rpm
+samba-debuginfo-4.1.1-35.el7_0.s390.rpm
+samba-debuginfo-4.1.1-35.el7_0.s390x.rpm
+samba-libs-4.1.1-35.el7_0.s390.rpm
+samba-libs-4.1.1-35.el7_0.s390x.rpm
+samba-winbind-4.1.1-35.el7_0.s390x.rpm
+samba-winbind-modules-4.1.1-35.el7_0.s390.rpm
+samba-winbind-modules-4.1.1-35.el7_0.s390x.rpm
+
+x86_64:
+libsmbclient-4.1.1-35.el7_0.i686.rpm
+libsmbclient-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-4.1.1-35.el7_0.i686.rpm
+libwbclient-4.1.1-35.el7_0.x86_64.rpm
+samba-4.1.1-35.el7_0.x86_64.rpm
+samba-client-4.1.1-35.el7_0.x86_64.rpm
+samba-common-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-libs-4.1.1-35.el7_0.i686.rpm
+samba-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-python-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-modules-4.1.1-35.el7_0.i686.rpm
+samba-winbind-modules-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+libsmbclient-devel-4.1.1-35.el7_0.ppc.rpm
+libsmbclient-devel-4.1.1-35.el7_0.ppc64.rpm
+libwbclient-devel-4.1.1-35.el7_0.ppc.rpm
+libwbclient-devel-4.1.1-35.el7_0.ppc64.rpm
+samba-dc-4.1.1-35.el7_0.ppc64.rpm
+samba-dc-libs-4.1.1-35.el7_0.ppc64.rpm
+samba-debuginfo-4.1.1-35.el7_0.ppc.rpm
+samba-debuginfo-4.1.1-35.el7_0.ppc64.rpm
+samba-devel-4.1.1-35.el7_0.ppc.rpm
+samba-devel-4.1.1-35.el7_0.ppc64.rpm
+samba-pidl-4.1.1-35.el7_0.ppc64.rpm
+samba-python-4.1.1-35.el7_0.ppc64.rpm
+samba-test-4.1.1-35.el7_0.ppc64.rpm
+samba-test-devel-4.1.1-35.el7_0.ppc64.rpm
+samba-winbind-clients-4.1.1-35.el7_0.ppc64.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.ppc64.rpm
+
+s390x:
+libsmbclient-devel-4.1.1-35.el7_0.s390.rpm
+libsmbclient-devel-4.1.1-35.el7_0.s390x.rpm
+libwbclient-devel-4.1.1-35.el7_0.s390.rpm
+libwbclient-devel-4.1.1-35.el7_0.s390x.rpm
+samba-dc-4.1.1-35.el7_0.s390x.rpm
+samba-dc-libs-4.1.1-35.el7_0.s390x.rpm
+samba-debuginfo-4.1.1-35.el7_0.s390.rpm
+samba-debuginfo-4.1.1-35.el7_0.s390x.rpm
+samba-devel-4.1.1-35.el7_0.s390.rpm
+samba-devel-4.1.1-35.el7_0.s390x.rpm
+samba-pidl-4.1.1-35.el7_0.s390x.rpm
+samba-python-4.1.1-35.el7_0.s390x.rpm
+samba-test-4.1.1-35.el7_0.s390x.rpm
+samba-test-devel-4.1.1-35.el7_0.s390x.rpm
+samba-winbind-clients-4.1.1-35.el7_0.s390x.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.s390x.rpm
+
+x86_64:
+libsmbclient-devel-4.1.1-35.el7_0.i686.rpm
+libsmbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-devel-4.1.1-35.el7_0.i686.rpm
+libwbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-devel-4.1.1-35.el7_0.i686.rpm
+samba-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-pidl-4.1.1-35.el7_0.x86_64.rpm
+samba-test-4.1.1-35.el7_0.x86_64.rpm
+samba-test-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-vfs-glusterfs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-clients-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+samba-4.1.1-35.el7_0.src.rpm
+
+x86_64:
+libsmbclient-4.1.1-35.el7_0.i686.rpm
+libsmbclient-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-4.1.1-35.el7_0.i686.rpm
+libwbclient-4.1.1-35.el7_0.x86_64.rpm
+samba-4.1.1-35.el7_0.x86_64.rpm
+samba-client-4.1.1-35.el7_0.x86_64.rpm
+samba-common-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-libs-4.1.1-35.el7_0.i686.rpm
+samba-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-python-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-modules-4.1.1-35.el7_0.i686.rpm
+samba-winbind-modules-4.1.1-35.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libsmbclient-devel-4.1.1-35.el7_0.i686.rpm
+libsmbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+libwbclient-devel-4.1.1-35.el7_0.i686.rpm
+libwbclient-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-4.1.1-35.el7_0.x86_64.rpm
+samba-dc-libs-4.1.1-35.el7_0.x86_64.rpm
+samba-debuginfo-4.1.1-35.el7_0.i686.rpm
+samba-debuginfo-4.1.1-35.el7_0.x86_64.rpm
+samba-devel-4.1.1-35.el7_0.i686.rpm
+samba-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-pidl-4.1.1-35.el7_0.x86_64.rpm
+samba-test-4.1.1-35.el7_0.x86_64.rpm
+samba-test-devel-4.1.1-35.el7_0.x86_64.rpm
+samba-vfs-glusterfs-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-clients-4.1.1-35.el7_0.x86_64.rpm
+samba-winbind-krb5-locator-4.1.1-35.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0178.html">https://www.redhat.com/security/data/cve/CVE-2014-0178.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0244.html">https://www.redhat.com/security/data/cve/CVE-2014-0244.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3493.html">https://www.redhat.com/security/data/cve/CVE-2014-3493.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://www.samba.org/samba/security/CVE-2014-0244">https://www.samba.org/samba/security/CVE-2014-0244</a>
+<a  rel="nofollow" href="https://www.samba.org/samba/security/CVE-2014-0178">https://www.samba.org/samba/security/CVE-2014-0178</a>
+<a  rel="nofollow" href="https://www.samba.org/samba/security/CVE-2014-3493">https://www.samba.org/samba/security/CVE-2014-3493</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTvXxtXlSAg2UNWIIRAo80AJ0W9PdVUX/W4qsgAWqJiqw7Z6ZYUwCgl88F
+CZm4nbcxzN3QAufu5wCm+uw=
+=13v3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

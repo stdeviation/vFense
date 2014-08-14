@@ -1,0 +1,147 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1301&#45;01] Moderate: JBoss Enterprise Data Services Platform	5.3.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 20 Sep 2012 13:34:19 &#45;0400 -->
+<!--X-Message-Id: 201209201734.q8KHYDJk016456@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1301-01] Moderate: JBoss Enterprise Data Services Platform	5.</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1301-01] Moderate: JBoss Enterprise Data Services Platform	5.3.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1301-01] Moderate: JBoss Enterprise Data Services Platform	5.3.0 update</li>
+<li><em>Date</em>: Thu, 20 Sep 2012 17:34:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: JBoss Enterprise Data Services Platform 5.3.0 update
+Advisory ID:       RHSA-2012:1301-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1301.html">https://rhn.redhat.com/errata/RHSA-2012-1301.html</a>
+Issue date:        2012-09-20
+CVE Names:         CVE-2012-3431 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Data Services Platform 5.3.0 roll up patch 1, which fixes
+one security issue and various bugs, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+JBoss Enterprise Data Services Platform extends JBoss Enterprise SOA
+Platform to provide services for data virtualization, federation, and
+integration.
+
+This roll up patch serves as a cumulative upgrade for JBoss Enterprise Data
+Services Platform 5.3.0. It includes various bug fixes. The following
+security issue is also fixed with this release:
+
+It was found that the Teiid JDBC (Java Database Connectivity) socket did
+not encrypt client log in messages by default. A man-in-the-middle
+attacker could use this flaw to obtain log in credentials and other JDBC
+traffic. (CVE-2012-3431)
+
+This issue was discovered by Steven Hawkins of Red Hat.
+
+All users of JBoss Enterprise Data Services Platform 5.3.0 as provided from
+the Red Hat Customer Portal are advised to apply this roll up patch.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Data Services Platform installation (including
+its databases, applications, configuration files, and so on).
+
+Note that it is recommended to halt the JBoss Enterprise Data Services
+Platform server by stopping the JBoss Application Server process before
+installing this update, and then after installing the update, restart the
+JBoss Enterprise Data Services Platform server by starting the JBoss
+Application Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+843669 - CVE-2012-3431 Teiid: JDBC socket does not encrypt client login messages by default
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3431.html">https://www.redhat.com/security/data/cve/CVE-2012-3431.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=data.services.platform&amp;downloadType=securityPatches&amp;version=5.3.0+GA">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=data.services.platform&amp;downloadType=securityPatches&amp;version=5.3.0+GA</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQW1N5XlSAg2UNWIIRAnLPAJ99DLUi3huthsLRvklhKjFO6mFeFQCgnqQc
+E/qXt8btm7HG/HyYqtbNgzk=
+=voX6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

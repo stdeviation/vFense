@@ -1,0 +1,321 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0825&#45;01] Moderate: mysql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Nov 2010 16:27:25 &#45;0400 -->
+<!--X-Message-Id: 201011032027.oA3KRJGs013317@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0825-01] Moderate: mysql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0825-01] Moderate: mysql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0825-01] Moderate: mysql security update</li>
+<li><em>Date</em>: Wed, 3 Nov 2010 14:27:19 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mysql security update
+Advisory ID:       RHSA-2010:0825-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0825.html">https://rhn.redhat.com/errata/RHSA-2010-0825.html</a>
+Issue date:        2010-11-03
+CVE Names:         CVE-2010-3677 CVE-2010-3680 CVE-2010-3681 
+                   CVE-2010-3682 CVE-2010-3833 CVE-2010-3835 
+                   CVE-2010-3836 CVE-2010-3837 CVE-2010-3838 
+                   CVE-2010-3839 CVE-2010-3840 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+It was found that the MySQL PolyFromWKB() function did not sanity check
+Well-Known Binary (WKB) data. A remote, authenticated attacker could use
+specially-crafted WKB data to crash mysqld. This issue only caused a
+temporary denial of service, as mysqld was automatically restarted after
+the crash. (CVE-2010-3840)
+
+A flaw was found in the way MySQL processed certain JOIN queries. If a
+stored procedure contained JOIN queries, and that procedure was executed
+twice in sequence, it could cause an infinite loop, leading to excessive
+CPU use (up to 100%). A remote, authenticated attacker could use this flaw
+to cause a denial of service. (CVE-2010-3839)
+
+A flaw was found in the way MySQL processed queries that provide a mixture
+of numeric and longblob data types to the LEAST or GREATEST function. A
+remote, authenticated attacker could use this flaw to crash mysqld. This
+issue only caused a temporary denial of service, as mysqld was
+automatically restarted after the crash. (CVE-2010-3838)
+
+A flaw was found in the way MySQL processed PREPARE statements containing
+both GROUP_CONCAT and the WITH ROLLUP modifier. A remote, authenticated
+attacker could use this flaw to crash mysqld. This issue only caused a
+temporary denial of service, as mysqld was automatically restarted after
+the crash. (CVE-2010-3837)
+
+It was found that MySQL did not properly pre-evaluate LIKE arguments in
+view prepare mode. A remote, authenticated attacker could possibly use this
+flaw to crash mysqld. (CVE-2010-3836)
+
+A flaw was found in the way MySQL processed statements that assign a value
+to a user-defined variable and that also contain a logical value
+evaluation. A remote, authenticated attacker could use this flaw to crash
+mysqld. This issue only caused a temporary denial of service, as mysqld was
+automatically restarted after the crash. (CVE-2010-3835)
+
+A flaw was found in the way MySQL evaluated the arguments of extreme-value
+functions, such as LEAST and GREATEST. A remote, authenticated attacker
+could use this flaw to crash mysqld. This issue only caused a temporary
+denial of service, as mysqld was automatically restarted after the crash.
+(CVE-2010-3833)
+
+A flaw was found in the way MySQL processed EXPLAIN statements for some
+complex SELECT queries. A remote, authenticated attacker could use this
+flaw to crash mysqld. This issue only caused a temporary denial of service,
+as mysqld was automatically restarted after the crash. (CVE-2010-3682)
+
+A flaw was found in the way MySQL processed certain alternating READ
+requests provided by HANDLER statements. A remote, authenticated attacker
+could use this flaw to provide such requests, causing mysqld to crash. This
+issue only caused a temporary denial of service, as mysqld was
+automatically restarted after the crash. (CVE-2010-3681)
+
+A flaw was found in the way MySQL processed CREATE TEMPORARY TABLE
+statements that define NULL columns when using the InnoDB storage engine. A
+remote, authenticated attacker could use this flaw to crash mysqld. This
+issue only caused a temporary denial of service, as mysqld was
+automatically restarted after the crash. (CVE-2010-3680)
+
+A flaw was found in the way MySQL processed JOIN queries that attempt to
+retrieve data from a unique SET column. A remote, authenticated attacker
+could use this flaw to crash mysqld. This issue only caused a temporary
+denial of service, as mysqld was automatically restarted after the crash.
+(CVE-2010-3677)
+
+All MySQL users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the MySQL server daemon (mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+628040 - CVE-2010-3677 MySQL: Mysqld DoS (crash) by processing joins involving a table with a unique SET column (MySQL BZ#54575)
+628192 - CVE-2010-3680 MySQL: mysqld DoS (assertion failure) by using temporary InnoDB engine tables with nullable columns (MySQL bug #54044)
+628328 - CVE-2010-3682 MySQL: mysqld DoS (crash) by processing EXPLAIN statements for complex SQL queries (MySQL bug #52711)
+628680 - CVE-2010-3681 MySQL: mysqld DoS (assertion failure) by alternate reads from two indexes on a table using the HANDLER interface (MySQL bug #54007)
+640751 - CVE-2010-3833 MySQL: CREATE TABLE ... SELECT causes crash when KILL_BAD_DATA is returned (MySQL Bug#55826)
+640819 - CVE-2010-3835 MySQL: crash with user variables, assignments, joins... (MySQL Bug #55564)
+640845 - CVE-2010-3836 MySQL: pre-evaluating LIKE arguments in view prepare mode causes crash (MySQL Bug#54568)
+640856 - CVE-2010-3837 MySQL: crash when group_concat and &quot;with rollup&quot; in prepared statements (MySQL Bug#54476)
+640858 - CVE-2010-3838 MySQL: crash with LONGBLOB and union or update with subquery (MySQL Bug#54461)
+640861 - CVE-2010-3839 MySQL: server hangs during JOIN query in stored procedures called twice in a row (MySQL Bug#53544)
+640865 - CVE-2010-3840 MySQL: crash when loading data into geometry function PolyFromWKB() (MySQL Bug#51875)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm</a>
+
+i386:
+mysql-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+
+x86_64:
+mysql-5.0.77-4.el5_5.4.i386.rpm
+mysql-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm</a>
+
+i386:
+mysql-bench-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-devel-5.0.77-4.el5_5.4.i386.rpm
+mysql-server-5.0.77-4.el5_5.4.i386.rpm
+mysql-test-5.0.77-4.el5_5.4.i386.rpm
+
+x86_64:
+mysql-bench-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-devel-5.0.77-4.el5_5.4.i386.rpm
+mysql-devel-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-server-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-test-5.0.77-4.el5_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.77-4.el5_5.4.src.rpm</a>
+
+i386:
+mysql-5.0.77-4.el5_5.4.i386.rpm
+mysql-bench-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-devel-5.0.77-4.el5_5.4.i386.rpm
+mysql-server-5.0.77-4.el5_5.4.i386.rpm
+mysql-test-5.0.77-4.el5_5.4.i386.rpm
+
+ia64:
+mysql-5.0.77-4.el5_5.4.i386.rpm
+mysql-5.0.77-4.el5_5.4.ia64.rpm
+mysql-bench-5.0.77-4.el5_5.4.ia64.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.ia64.rpm
+mysql-devel-5.0.77-4.el5_5.4.ia64.rpm
+mysql-server-5.0.77-4.el5_5.4.ia64.rpm
+mysql-test-5.0.77-4.el5_5.4.ia64.rpm
+
+ppc:
+mysql-5.0.77-4.el5_5.4.ppc.rpm
+mysql-5.0.77-4.el5_5.4.ppc64.rpm
+mysql-bench-5.0.77-4.el5_5.4.ppc.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.ppc.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.ppc64.rpm
+mysql-devel-5.0.77-4.el5_5.4.ppc.rpm
+mysql-devel-5.0.77-4.el5_5.4.ppc64.rpm
+mysql-server-5.0.77-4.el5_5.4.ppc.rpm
+mysql-server-5.0.77-4.el5_5.4.ppc64.rpm
+mysql-test-5.0.77-4.el5_5.4.ppc.rpm
+
+s390x:
+mysql-5.0.77-4.el5_5.4.s390.rpm
+mysql-5.0.77-4.el5_5.4.s390x.rpm
+mysql-bench-5.0.77-4.el5_5.4.s390x.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.s390.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.s390x.rpm
+mysql-devel-5.0.77-4.el5_5.4.s390.rpm
+mysql-devel-5.0.77-4.el5_5.4.s390x.rpm
+mysql-server-5.0.77-4.el5_5.4.s390x.rpm
+mysql-test-5.0.77-4.el5_5.4.s390x.rpm
+
+x86_64:
+mysql-5.0.77-4.el5_5.4.i386.rpm
+mysql-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-bench-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.i386.rpm
+mysql-debuginfo-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-devel-5.0.77-4.el5_5.4.i386.rpm
+mysql-devel-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-server-5.0.77-4.el5_5.4.x86_64.rpm
+mysql-test-5.0.77-4.el5_5.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3677.html">https://www.redhat.com/security/data/cve/CVE-2010-3677.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3680.html">https://www.redhat.com/security/data/cve/CVE-2010-3680.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3681.html">https://www.redhat.com/security/data/cve/CVE-2010-3681.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3682.html">https://www.redhat.com/security/data/cve/CVE-2010-3682.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3833.html">https://www.redhat.com/security/data/cve/CVE-2010-3833.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3835.html">https://www.redhat.com/security/data/cve/CVE-2010-3835.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3836.html">https://www.redhat.com/security/data/cve/CVE-2010-3836.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3837.html">https://www.redhat.com/security/data/cve/CVE-2010-3837.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3838.html">https://www.redhat.com/security/data/cve/CVE-2010-3838.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3839.html">https://www.redhat.com/security/data/cve/CVE-2010-3839.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3840.html">https://www.redhat.com/security/data/cve/CVE-2010-3840.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM0cVeXlSAg2UNWIIRAo2wAJ9El7FssRd8ARHXSNUF/tRwiLmHgwCfczvp
+GlADjy9lPl4R9Kp2zumFuuU=
+=z1hX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

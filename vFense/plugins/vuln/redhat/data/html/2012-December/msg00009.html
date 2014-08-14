@@ -1,0 +1,320 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1541&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Dec 2012 15:54:58 &#45;0500 -->
+<!--X-Message-Id: 201212042054.qB4KsqGY023740@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1541-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1541-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1541-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 4 Dec 2012 20:54:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2012:1541-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1541.html">https://rhn.redhat.com/errata/RHSA-2012-1541.html</a>
+Issue date:        2012-12-04
+CVE Names:         CVE-2011-4131 CVE-2012-2313 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 6.2 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server EUS (v. 6.2) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.2) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+These packages contain the Linux kernel.
+
+Security fixes:
+
+* A malicious NFSv4 server could return a crafted reply to a GETACL
+request, causing a denial of service on the client. (CVE-2011-4131,
+Moderate)
+
+* A flaw in the dl2k driver could allow a local, unprivileged user to issue
+potentially harmful IOCTLs, possibly causing Ethernet adapters using the
+driver to malfunction (such as losing network connectivity).
+(CVE-2012-2313, Low)
+
+Red Hat would like to thank Andy Adamson for reporting CVE-2011-4131, and
+Stephan Mueller for reporting CVE-2012-2313.
+
+Bug fixes:
+
+* A kernel oops occurred in the nf_nat code when a bogus pointer was
+dereferenced in the nf_conn_nat structure. Consequently, if Source Network
+Address Translation (SNAT) was performed, incorrect information could be
+received by other CTS (Clear to Send) signals. A conntrack entry is now
+placed in the source hash after SNAT has been completed, which prevents the
+described problems. (BZ#865715)
+
+* Previously, the ixgbe_setup_tc() function was called recursively when the
+set_state() CEE (Convergence Enhanced Ethernet) API routine was called in
+IEEE DCBX (Data Center Bridging eXchange) mode. This is considered unsafe
+according to the IEEE standards. With this update, the ixgbe driver has
+been modified to no longer call the set_state() routine in IEEE DCBX mode.
+The driver now calls routines of the PFC (Priority-based Flow Control) and
+ETS (Enhanced Transmission Selection) extensions instead of the CEE
+extension routines in IEEE DCBX mode. (BZ#867859)
+
+* A Symmetric Multi Processing (SMP) race condition between the munmap()
+and exit() function could lead to false-positive triggering of the BUG_ON()
+macro if Transparent Huge Pages (THP) were enabled. This update fixes the
+race condition, which avoids false-positive triggering of the BUG_ON()
+macro in this scenario. (BZ#875121)
+
+* The kernel allows high priority real time tasks, such as tasks scheduled
+with the SCHED_FIFO policy, to be throttled. Previously, the CPU stop tasks
+were scheduled as high priority real time tasks and could be thus throttled
+accordingly. However, the replenishment timer, which is responsible for
+clearing a throttle flag on tasks, could be pending on the just disabled
+CPU. This could lead to the situation that the throttled tasks were never
+scheduled to run. Consequently, if any of such tasks was needed to complete
+the CPU disabling, the system became unresponsive. This update introduces a
+new scheduler class, which gives a task the highest possible system
+priority and such a task cannot be throttled. The stop-task scheduling
+class is now used for the CPU stop tasks, and the system shutdown completes
+as expected in the scenario described. (BZ#876078)
+
+* Previously, XFS log buffers were handled incorrectly so that XFS could,
+in certain circumstances, incorrectly read metadata from the journal during
+XFS log recovery. As a consequence, XFS log recovery terminated with an
+error message and prevented the file system from being mounted. This
+problem could result in a loss of data if the user forcibly emptied the log
+to allow the file system to be mounted. This update ensures that metadata
+is read correctly from the log and journal recovery thus completes
+successfully, and the file system mounts as expected. (BZ#876498)
+
+* Previously, kernel was allowed to reduce the number of unnecessary commit
+calls by skipping the commit when there was a large number of outstanding
+pages being written. However, a test on the number of commits (ncommit) did
+not properly handle the edge case when ncommit was zero. Consequently,
+inodes sometimes remained on the sb-&gt;s_dirty list and could not be freed by
+the inode cache shrinker. As a result, the nfs_inode_cache structure grew
+very large over time. With this update, the call to the nfs_write_inode()
+function is immediately returned when commit == 0, thus fixing this bug.
+(BZ#877394)
+
+4. Solution:
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+747106 - CVE-2011-4131 kernel: nfs4_getfacl decoding kernel oops
+818820 - CVE-2012-2313 kernel: unfiltered netdev rio_ioctl access by users
+
+6. Package List:
+
+Red Hat Enterprise Linux Server EUS (v. 6.2):
+
+Source:
+kernel-2.6.32-220.30.1.el6.src.rpm
+
+i386:
+kernel-2.6.32-220.30.1.el6.i686.rpm
+kernel-debug-2.6.32-220.30.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-220.30.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-220.30.1.el6.i686.rpm
+kernel-devel-2.6.32-220.30.1.el6.i686.rpm
+kernel-headers-2.6.32-220.30.1.el6.i686.rpm
+perf-2.6.32-220.30.1.el6.i686.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-220.30.1.el6.noarch.rpm
+kernel-firmware-2.6.32-220.30.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debug-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-devel-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-headers-2.6.32-220.30.1.el6.ppc64.rpm
+perf-2.6.32-220.30.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debug-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-220.30.1.el6.s390x.rpm
+kernel-devel-2.6.32-220.30.1.el6.s390x.rpm
+kernel-headers-2.6.32-220.30.1.el6.s390x.rpm
+kernel-kdump-2.6.32-220.30.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-220.30.1.el6.s390x.rpm
+perf-2.6.32-220.30.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debug-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-devel-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-headers-2.6.32-220.30.1.el6.x86_64.rpm
+perf-2.6.32-220.30.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.2):
+
+Source:
+kernel-2.6.32-220.30.1.el6.src.rpm
+
+i386:
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-220.30.1.el6.i686.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+python-perf-2.6.32-220.30.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-220.30.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+python-perf-2.6.32-220.30.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-220.30.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+python-perf-2.6.32-220.30.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.30.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+python-perf-2.6.32-220.30.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.30.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4131.html">https://www.redhat.com/security/data/cve/CVE-2011-4131.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2313.html">https://www.redhat.com/security/data/cve/CVE-2012-2313.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQvmL/XlSAg2UNWIIRApY6AKCsPyjEXrfszP+2mPTFqMsxMCUA0ACfYffF
+vhchv+BbvP3CDxB5t7m2kBA=
+=4QT6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

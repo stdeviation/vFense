@@ -1,0 +1,190 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0300&#45;01] Moderate: Red Hat Network Satellite Server	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Feb 2011 14:14:06 &#45;0500 -->
+<!--X-Message-Id: 201102231914.p1NJE1M8009682@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0300-01] Moderate: Red Hat Network Satellite Server	security </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0300-01] Moderate: Red Hat Network Satellite Server	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2011:0300-01] Moderate: Red Hat Network Satellite Server	security update</li>
+<li><em>Date</em>: Wed, 23 Feb 2011 14:12:48 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Network Satellite Server security update
+Advisory ID:       RHSA-2011:0300-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0300.html">https://rhn.redhat.com/errata/RHSA-2011-0300.html</a>
+Issue date:        2011-02-23
+CVE Names:         CVE-2011-0717 CVE-2011-0718 
+=====================================================================
+
+1. Summary:
+
+Updated packages that fix two security issues are now available for Red Hat
+Network Satellite Server 5.4.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+5Server-Satellite54 - noarch
+
+3. Description:
+
+Red Hat Network Satellite Server (RHN Satellite Server) is a system
+management tool for Linux-based infrastructures. It allows for the
+provisioning, remote management and monitoring of multiple Linux
+deployments with a single, centralized tool.
+
+A session fixation flaw was found in the way RHN Satellite Server handled
+session cookies. An RHN Satellite Server user able to pre-set the session
+cookie in a victim's browser to a valid value could use this flaw to hijack
+the victim's session after the next log in. (CVE-2011-0717)
+
+A flaw was found in the way RHN Satellite Server managed user
+authentication. A time delay was not inserted after each failed log in,
+which could allow a remote attacker to conduct a password guessing attack
+efficiently. (CVE-2011-0718)
+
+Red Hat would like to thank Thomas Biege of the SuSE Security Team for
+reporting these issues.
+
+Users of RHN Satellite Server 5.4 are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues. RHN
+Satellite Server must be restarted (&quot;rhn-satellite restart&quot;) for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+672159 - CVE-2011-0717 Satellite, Spacewalk: Session fixation flaw
+672163 - CVE-2011-0718 Satellite, Spacewalk: Prone to brute force password guessing attacks
+
+6. Package List:
+
+5Server-Satellite54:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-1.2.13-26.2.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-1.2.13-26.2.el5sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-java-1.2.39-35.1.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-java-1.2.39-35.1.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-app-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-applet-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-common-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-tool-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-iss-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-iss-export-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-libs-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-package-push-server-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-server-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-sql-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-sql-oracle-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-tools-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-upload-server-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-xml-export-libs-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-xmlrpc-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-backend-xp-1.2.13-26.2.el5sat.noarch.rpm
+spacewalk-java-1.2.39-35.1.el5sat.noarch.rpm
+spacewalk-java-config-1.2.39-35.1.el5sat.noarch.rpm
+spacewalk-java-lib-1.2.39-35.1.el5sat.noarch.rpm
+spacewalk-java-oracle-1.2.39-35.1.el5sat.noarch.rpm
+spacewalk-taskomatic-1.2.39-35.1.el5sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0717.html">https://www.redhat.com/security/data/cve/CVE-2011-0717.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0718.html">https://www.redhat.com/security/data/cve/CVE-2011-0718.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNZVtdXlSAg2UNWIIRAgTdAJ9twBhSNH8uihMUVPCaiqCnc+k/owCgwKzf
+/LlhG0c8x2lPi/Nz8j95DXI=
+=Jlyv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

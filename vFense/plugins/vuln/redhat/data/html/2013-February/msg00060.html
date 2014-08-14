@@ -1,0 +1,281 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0521&#45;02] Moderate: pam security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:50:46 &#45;0500 -->
+<!--X-Message-Id: 201302210650.r1L6oim1028333@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0521-02] Moderate: pam security, bug fix,	and enhancement upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0521-02] Moderate: pam security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0521-02] Moderate: pam security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:39:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: pam security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0521-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0521.html">https://rhn.redhat.com/errata/RHSA-2013-0521.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2011-3148 CVE-2011-3149 
+=====================================================================
+
+1. Summary:
+
+Updated pam packages that fix two security issues, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Pluggable Authentication Modules (PAM) provide a system whereby
+administrators can set up authentication policies without having to
+recompile programs to handle authentication.
+
+A stack-based buffer overflow flaw was found in the way the pam_env module
+parsed users' &quot;~/.pam_environment&quot; files. If an application's PAM
+configuration contained &quot;user_readenv=1&quot; (this is not the default), a
+local attacker could use this flaw to crash the application or, possibly,
+escalate their privileges. (CVE-2011-3148)
+
+A denial of service flaw was found in the way the pam_env module expanded
+certain environment variables. If an application's PAM configuration
+contained &quot;user_readenv=1&quot; (this is not the default), a local attacker
+could use this flaw to cause the application to enter an infinite loop.
+(CVE-2011-3149)
+
+Red Hat would like to thank Kees Cook of the Google ChromeOS Team for
+reporting the CVE-2011-3148 and CVE-2011-3149 issues.
+
+These updated pam packages include numerous bug fixes and enhancements.
+Space precludes documenting all of these changes in this advisory. Users
+are directed to the Red Hat Enterprise Linux 6.4 Technical Notes, linked
+to in the References, for information on the most significant of these
+changes.
+
+All pam users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+588893 - pam does not enforce password complexity restrictions on root
+673398 - request for additional pam_cracklib checks
+723297 - limits.conf should mention limits.d directory
+746619 - CVE-2011-3148 pam (pam_env): Stack-based buffer overflow by parsing user's pam_environment file
+746620 - CVE-2011-3149 pam (pam_env): Infinite loop by expanding certain arguments
+750601 - pam_namespace cannot verify status of SELinux in MLS
+811168 - fix pam_get_authtok_verify() to respect the authtok_type= option
+811243 - pam_cracklib: difignore is no-op in the current package - needs man page update
+815516 - pam remember can check wrong username if it is a substring of another username
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+i386:
+pam-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+
+x86_64:
+pam-1.1.1-13.el6.i686.rpm
+pam-1.1.1-13.el6.x86_64.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+i386:
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+
+x86_64:
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+x86_64:
+pam-1.1.1-13.el6.i686.rpm
+pam-1.1.1-13.el6.x86_64.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+x86_64:
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+i386:
+pam-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+
+ppc64:
+pam-1.1.1-13.el6.ppc.rpm
+pam-1.1.1-13.el6.ppc64.rpm
+pam-debuginfo-1.1.1-13.el6.ppc.rpm
+pam-debuginfo-1.1.1-13.el6.ppc64.rpm
+pam-devel-1.1.1-13.el6.ppc.rpm
+pam-devel-1.1.1-13.el6.ppc64.rpm
+
+s390x:
+pam-1.1.1-13.el6.s390.rpm
+pam-1.1.1-13.el6.s390x.rpm
+pam-debuginfo-1.1.1-13.el6.s390.rpm
+pam-debuginfo-1.1.1-13.el6.s390x.rpm
+pam-devel-1.1.1-13.el6.s390.rpm
+pam-devel-1.1.1-13.el6.s390x.rpm
+
+x86_64:
+pam-1.1.1-13.el6.i686.rpm
+pam-1.1.1-13.el6.x86_64.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pam-1.1.1-13.el6.src.rpm</a>
+
+i386:
+pam-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+
+x86_64:
+pam-1.1.1-13.el6.i686.rpm
+pam-1.1.1-13.el6.x86_64.rpm
+pam-debuginfo-1.1.1-13.el6.i686.rpm
+pam-debuginfo-1.1.1-13.el6.x86_64.rpm
+pam-devel-1.1.1-13.el6.i686.rpm
+pam-devel-1.1.1-13.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3148.html">https://www.redhat.com/security/data/cve/CVE-2011-3148.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3149.html">https://www.redhat.com/security/data/cve/CVE-2011-3149.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/pam.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/pam.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcOdXlSAg2UNWIIRAlkwAJ9EJGkxoj0PcQwQ5xZkoCDg5jPOpACgtH9g
+utUfUaSiFJiz27JlJWe1gbg=
+=B82c
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

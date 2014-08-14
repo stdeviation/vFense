@@ -1,0 +1,163 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0581&#45;01] Low: python&#45;django&#45;horizon security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 May 2014 17:22:38 &#45;0400 -->
+<!--X-Message-Id: 201405292122.s4TLMbLM014563@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0581-01] Low: python-django-horizon security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0581-01] Low: python-django-horizon security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0581-01] Low: python-django-horizon security update</li>
+<li><em>Date</em>: Thu, 29 May 2014 21:22:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: python-django-horizon security update
+Advisory ID:       RHSA-2014:0581-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0581.html">https://rhn.redhat.com/errata/RHSA-2014-0581.html</a>
+Issue date:        2014-05-29
+CVE Names:         CVE-2014-0157 
+=====================================================================
+
+1. Summary:
+
+Updated python-django-horizon packages that fix one security issue are now
+available for Red Hat Enterprise Linux OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+OpenStack Dashboard (horizon) provides administrators and users a graphical
+interface to access, provision and automate cloud-based resources.
+The dashboard allows cloud administrators to get an overall view of the
+size and state of the cloud and it provides end-users a self-service portal
+to provision their own resources within the limits set by administrators.
+
+A flaw was discovered in OpenStack Dashboard that could allow a remote
+attacker to conduct cross-site scripting (XSS) attacks if they were able to
+trick a horizon user into using a malicious heat template. Note that only
+setups exposing the orchestration dashboard in OpenStack Dashboard were
+affected. (CVE-2014-0157)
+
+Red Hat would like to thank the OpenStack project for reporting this issue.
+Upstream acknowledges Cristian Fiorentino from Intel as the original
+reporter.
+
+All python-django-horizon users are advised to upgrade to these updated
+packages, which correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1082858 - CVE-2014-0157 OpenStack: XSS in Horizon orchestration dashboard when using a malicious template
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/python-django-horizon-2013.2.3-1.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/python-django-horizon-2013.2.3-1.el6ost.src.rpm</a>
+
+noarch:
+openstack-dashboard-2013.2.3-1.el6ost.noarch.rpm
+openstack-dashboard-theme-2013.2.3-1.el6ost.noarch.rpm
+python-django-horizon-2013.2.3-1.el6ost.noarch.rpm
+python-django-horizon-doc-2013.2.3-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0157.html">https://www.redhat.com/security/data/cve/CVE-2014-0157.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTh6USXlSAg2UNWIIRAnqnAJwPwpf+CA9raLB/flaaqbHORNKHXgCdGtiL
+aXwHp13gQdp6/DKLaCyDuQQ=
+=tm7q
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

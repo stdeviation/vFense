@@ -1,0 +1,207 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0029&#45;01] Important: Red Hat JBoss Data Grid 6.2.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 15 Jan 2014 12:47:33 &#45;0500 -->
+<!--X-Message-Id: 201401151747.s0FHlXNs008304@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0029-01] Important: Red Hat JBoss Data Grid 6.2.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0029-01] Important: Red Hat JBoss Data Grid 6.2.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0029-01] Important: Red Hat JBoss Data Grid 6.2.0 update</li>
+<li><em>Date</em>: Wed, 15 Jan 2014 17:47:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Data Grid 6.2.0 update
+Advisory ID:       RHSA-2014:0029-01
+Product:           Red Hat JBoss Data Grid
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0029.html">https://rhn.redhat.com/errata/RHSA-2014-0029.html</a>
+Issue date:        2014-01-15
+CVE Names:         CVE-2012-6612 CVE-2013-1921 CVE-2013-2035 
+                   CVE-2013-3827 CVE-2013-4112 CVE-2013-6397 
+                   CVE-2013-6407 CVE-2013-6408 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Data Grid 6.2.0, which fixes multiple security issues,
+various bugs, and adds enhancements, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Data Grid is a distributed in-memory data grid, based on
+Infinispan.
+
+This release of Red Hat JBoss Data Grid 6.2.0 serves as a replacement for
+Red Hat JBoss Data Grid 6.1.0. It includes various bug fixes and
+enhancements which are detailed in the Red Hat JBoss Data Grid 6.2.0
+Release Notes. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_JBoss_Data_Grid/">https://access.redhat.com/site/documentation/Red_Hat_JBoss_Data_Grid/</a>
+
+This update also fixes the following security issues:
+
+Multiple path traversal flaws where found in the Mojarra JSF2
+implementation for identifying resources by name or by library.
+An unauthenticated, remote attacker could use these flaws to gather
+otherwise undisclosed information from within an application's root
+directory. (CVE-2013-3827)
+
+It was found that the SolrResourceLoader class in Apache Solr allowed
+loading of resources via absolute paths, or relative paths which were not
+sanitized for directory traversal. Some Solr components expose REST
+interfaces which load resources (XSL style sheets and Velocity templates)
+via SolrResourceLoader, using paths identified by REST parameters. A remote
+attacker could use this flaw to load arbitrary local files on the server
+via SolrResourceLoader, potentially resulting in information disclosure or
+remote code execution. (CVE-2013-6397)
+
+It was found that the XML and XSLT UpdateRequestHandler classes in Apache
+Solr would resolve external entities, allowing an attacker to conduct XML
+External Entity (XXE) attacks. A remote attacker could use this flaw to
+read files accessible to the user running the application server, and
+potentially perform other more advanced XXE attacks. (CVE-2012-6612,
+CVE-2013-6407)
+
+It was found that the DocumentAnalysisRequestHandler class in Apache Solr
+would resolve external entities, allowing an attacker to conduct XXE
+attacks. A remote attacker could use this flaw to read files accessible to
+the user running the application server, and potentially perform other more
+advanced XXE attacks. (CVE-2013-6408)
+
+The data file used by PicketBox Vault to store encrypted passwords contains
+a copy of its own admin key. The file is encrypted using only this admin
+key, not the corresponding JKS key. A local attacker with permission to
+read the vault data file could read the admin key from the file.
+(CVE-2013-1921)
+
+The HawtJNI Library class wrote native libraries to a predictable file name
+in /tmp/ when the native libraries were bundled in a JAR file, and no
+custom library path was specified. A local attacker could overwrite these
+native libraries with malicious versions during the window between when
+HawtJNI writes them and when they are executed. (CVE-2013-2035)
+
+A flaw was found in JGroup's DiagnosticsHandler that allowed an attacker on
+an adjacent network to reuse the credentials from a previous successful
+authentication. This could be exploited to read diagnostic information
+(information disclosure) and attain limited remote code execution.
+(CVE-2013-4112)
+
+Note that CVE-2013-6397, CVE-2013-6407, and CVE-2013-6408 are not exposed
+by default. They are only exploitable if a user has manually exposed
+servlets provided in the Apachr Solr component that ships with Red Hat
+JBoss Data Grid, or written their own code that makes use of the vulnerable
+elements of Apache Solr.
+
+The CVE-2013-2035 issue was discovered by Florian Weimer of the Red Hat
+Product Security Team.
+
+All users of Red Hat JBoss Data Grid 6.1.0 as provided from the Red Hat
+Customer Portal are advised to upgrade to Red Hat JBoss Data Grid 6.2.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Data Grid installation.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+948106 - CVE-2013-1921 JBoss PicketBox: Insecure storage of masked passwords
+958618 - CVE-2013-2035 HawtJNI: predictable temporary file name leading to local arbitrary code execution
+983489 - CVE-2013-4112 JGroups: Authentication via cached credentials
+1035062 - CVE-2013-6397 Apache Solr: directory traversal when loading XSL stylesheets and Velocity templates
+1035981 - CVE-2012-6612 CVE-2013-6407 Apache Solr: XML eXternal Entity (XXE) flaw in XML and XSLT UpdateRequestHandler
+1035985 - CVE-2013-6408 Apache Solr: XML eXternal Entity (XXE) flaw in DocumentAnalysisRequestHandler
+1038898 - CVE-2013-3827 Mojarra JSF2: Multiple Information Disclosure flaws due to unsafe path traversal
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6612.html">https://www.redhat.com/security/data/cve/CVE-2012-6612.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1921.html">https://www.redhat.com/security/data/cve/CVE-2013-1921.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2035.html">https://www.redhat.com/security/data/cve/CVE-2013-2035.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3827.html">https://www.redhat.com/security/data/cve/CVE-2013-3827.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4112.html">https://www.redhat.com/security/data/cve/CVE-2013-4112.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6397.html">https://www.redhat.com/security/data/cve/CVE-2013-6397.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6407.html">https://www.redhat.com/security/data/cve/CVE-2013-6407.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6408.html">https://www.redhat.com/security/data/cve/CVE-2013-6408.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=data.grid&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=data.grid&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_JBoss_Data_Grid/">https://access.redhat.com/site/documentation/Red_Hat_JBoss_Data_Grid/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS1smKXlSAg2UNWIIRAjPPAJkB+UrI2r1ouX8bXmg3YdB/OsKPcACdEF4u
+YWSZ5d19HxUd6tJ1qLqPNIQ=
+=jz00
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

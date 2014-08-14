@@ -1,0 +1,185 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0175&#45;01] Moderate: JBoss Web Framework Kit 1.0.0 removal -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 25 Jan 2011 11:10:25 &#45;0500 -->
+<!--X-Message-Id: 201101251610.p0PGAJQN027393@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0175-01] Moderate: JBoss Web Framework Kit 1.0.0 removal</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0175-01] Moderate: JBoss Web Framework Kit 1.0.0 removal</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0175-01] Moderate: JBoss Web Framework Kit 1.0.0 removal</li>
+<li><em>Date</em>: Tue, 25 Jan 2011 11:09:47 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: JBoss Web Framework Kit 1.0.0 removal
+Advisory ID:       RHSA-2011:0175-01
+Product:           JBoss Web Framework Kit
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0175.html">https://rhn.redhat.com/errata/RHSA-2011-0175.html</a>
+Issue date:        2011-01-25
+CVE Names:         CVE-2010-1622 
+=====================================================================
+
+1. Summary:
+
+JBoss Web Framework Kit 1.0.0 contains a security flaw and should no
+longer be used. This update removes the JBoss Web Framework Kit 1.0.0
+packages.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Web Framework Kit 1.0.0 for RHEL 5 Server - noarch
+JBoss Web Framework Kit 5.0.0 for RHEL 4 AS - noarch
+JBoss Web Framework Kit 5.0.0 for RHEL 4 ES - noarch
+
+3. Description:
+
+The JBoss Web Framework Kit combines popular open source web frameworks
+into a single solution for Java applications.
+
+The spring2 packages shipped as part of JBoss Web Framework Kit 1.0.0 are
+vulnerable to a security flaw that could allow a remote attacker to
+execute arbitrary code via a specially-crafted HTTP request.
+(CVE-2010-1622)
+
+This update removes the JBoss Web Framework Kit 1.0.0 packages. JBoss Web
+Framework Kit 1.0.0 RPMs and updates will no longer be available from the
+Red Hat Network.
+
+Registered users wishing to continue to use the JBoss Web Framework Kit are
+advised to download the latest version, 1.1.0, from the Red Hat Customer
+Portal:
+
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/">https://access.redhat.com/jbossnetwork/</a>
+
+Future updates for JBoss Web Framework Kit will be made available only
+through the Red Hat Customer Portal. Note that JBoss Web Framework Kit
+1.1.0 from the Customer Portal does not include the Spring framework, and
+is therefore not affected by the CVE-2010-1622 issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+606706 - CVE-2010-1622 SpringSource Spring Framework (x &lt; 2.5.6.SEC02, 2.5.7.SR01, 3.0.3): Arbitrary Java code execution via an HTTP request containing a specially-crafted .jar file
+
+6. Package List:
+
+JBoss Web Framework Kit 5.0.0 for RHEL 4 AS:
+
+Source:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el4.src.rpm
+
+noarch:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el4.noarch.rpm
+
+JBoss Web Framework Kit 5.0.0 for RHEL 4 ES:
+
+Source:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el4.src.rpm
+
+noarch:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el4.noarch.rpm
+
+JBoss Web Framework Kit 1.0.0 for RHEL 5 Server:
+
+Source:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el5.src.rpm
+
+noarch:
+jboss-wfk-1.0.0-uninstall-1.0.0-3.ep5.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1622.html">https://www.redhat.com/security/data/cve/CVE-2010-1622.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/">https://access.redhat.com/jbossnetwork/</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/JBoss_Web_Framework_Kit/1.1/html/Release_Notes_1.1.0/Installation_Notes.html">http://docs.redhat.com/docs/en-US/JBoss_Web_Framework_Kit/1.1/html/Release_Notes_1.1.0/Installation_Notes.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNPvV5XlSAg2UNWIIRAkc1AKCLLMbms6qntTxRQlB3HO7xa0arggCeLdpg
+E0ngMbC/3FjxfmYL0usP0sI=
+=wxJc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

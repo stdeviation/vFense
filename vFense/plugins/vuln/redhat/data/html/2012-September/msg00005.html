@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1233&#45;01] Important: qemu&#45;kvm&#45;rhev security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 5 Sep 2012 13:06:01 &#45;0400 -->
+<!--X-Message-Id: 201209051705.q85H5ts1005588@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1233-01] Important: qemu-kvm-rhev security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1233-01] Important: qemu-kvm-rhev security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1233-01] Important: qemu-kvm-rhev security and bug fix	update</li>
+<li><em>Date</em>: Wed, 5 Sep 2012 17:05:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: qemu-kvm-rhev security and bug fix update
+Advisory ID:       RHSA-2012:1233-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1233.html">https://rhn.redhat.com/errata/RHSA-2012-1233.html</a>
+Issue date:        2012-09-05
+CVE Names:         CVE-2012-3515 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm-rhev packages that fix one security issue and two bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Agents (vdsm) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm-rhev packages form the
+user-space component for running virtual machines using KVM.
+
+A flaw was found in the way QEMU handled VT100 terminal escape sequences
+when emulating certain character devices. A guest user with privileges to
+write to a character device that is emulated on the host using a virtual
+console back-end could use this flaw to crash the qemu-kvm process on the
+host or, possibly, escalate their privileges on the host. (CVE-2012-3515)
+
+When using qemu-kvm-rhev on a Red Hat Enterprise Linux 6 host not managed
+by Red Hat Enterprise Virtualization:
+
+* This flaw did not affect the default use of KVM. Affected configurations
+were:
+
+- - When guests were started from the command line (&quot;/usr/libexec/qemu-kvm&quot;)
+without the &quot;-nodefaults&quot; option, and also without specifying a
+serial or parallel device, or a virtio-console device, that specifically
+does not use a virtual console (vc) back-end. (Note that Red Hat does not
+support invoking &quot;qemu-kvm&quot; from the command line without &quot;-nodefaults&quot; on
+Red Hat Enterprise Linux 6.)
+
+- - Guests that were managed via libvirt, such as when using Virtual Machine
+Manager (virt-manager), but that have a serial or parallel device, or a
+virtio-console device, that uses a virtual console back-end. By default,
+guests managed via libvirt will not use a virtual console back-end for such
+devices.
+
+When using qemu-kvm-rhev on a Red Hat Enterprise Virtualization managed Red
+Hat Enterprise Linux 6 host:
+
+* This flaw did not affect the default use of a Red Hat Enterprise
+Virtualization host: it is not possible to add a device that uses a virtual
+console back-end via Red Hat Enterprise Virtualization Manager.
+
+To specify a virtual console back-end for a device and therefore be
+vulnerable to this issue, the device would have to be created another way,
+for example, by using a VDSM hook.
+
+Red Hat would like to thank the Xen project for reporting this issue.
+
+This update also fixes the following bugs:
+
+* Previously, the KVM modules were not loaded by the postinstall scriptlet
+of RPM scripts. This bug caused various issues and required the system to
+be rebooted to resolve them. With this update, the modules are loaded
+properly by the scriptlet and no unnecessary reboots are now required.
+(BZ#839897)
+
+* Previously, when a guest was started up with two serial devices, qemu-kvm
+returned an error message and terminated the boot because IRQ 4 for the ISA
+bus was being used by both devices. This update fixes the qemu-kvm code,
+which allows IRQ 4 to be used by more than one device on the ISA bus, and
+the boot now succeeds in the described scenario. (BZ#840054)
+
+All users of qemu-kvm-rhev are advised to upgrade to these updated
+packages, which fix these issues. After installing this update, shut down
+all running virtual machines. Once all virtual machines have shut down,
+start them again for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+851252 - CVE-2012-3515 qemu: VT100 emulation vulnerability
+
+6. Package List:
+
+RHEV Agents (vdsm):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/qemu-kvm-rhev-0.12.1.2-2.295.el6_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/qemu-kvm-rhev-0.12.1.2-2.295.el6_3.2.src.rpm</a>
+
+x86_64:
+qemu-img-rhev-0.12.1.2-2.295.el6_3.2.x86_64.rpm
+qemu-kvm-rhev-0.12.1.2-2.295.el6_3.2.x86_64.rpm
+qemu-kvm-rhev-debuginfo-0.12.1.2-2.295.el6_3.2.x86_64.rpm
+qemu-kvm-rhev-tools-0.12.1.2-2.295.el6_3.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3515.html">https://www.redhat.com/security/data/cve/CVE-2012-3515.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQR4YVXlSAg2UNWIIRAq5WAJ9Z18R5/JvEpbbnZm47gi4lcxRSpACdHlZA
+BcVS3dd+MxlwoYjMQtUCINU=
+=3sF2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

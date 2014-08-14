@@ -1,0 +1,320 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0009&#45;01] Moderate: evince security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 6 Jan 2011 13:32:35 &#45;0500 -->
+<!--X-Message-Id: 201101061832.p06IWTYV023575@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0009-01] Moderate: evince security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0009-01] Moderate: evince security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0009-01] Moderate: evince security update</li>
+<li><em>Date</em>: Thu, 6 Jan 2011 11:32:29 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: evince security update
+Advisory ID:       RHSA-2011:0009-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0009.html">https://rhn.redhat.com/errata/RHSA-2011-0009.html</a>
+Issue date:        2011-01-06
+CVE Names:         CVE-2010-2640 CVE-2010-2641 CVE-2010-2642 
+                   CVE-2010-2643 
+=====================================================================
+
+1. Summary:
+
+Updated evince packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Evince is a document viewer.
+
+An array index error was found in the DeVice Independent (DVI) renderer's
+PK and VF font file parsers. A DVI file that references a specially-crafted
+font file could, when opened, cause Evince to crash or, potentially,
+execute arbitrary code with the privileges of the user running Evince.
+(CVE-2010-2640, CVE-2010-2641)
+
+A heap-based buffer overflow flaw was found in the DVI renderer's AFM font
+file parser. A DVI file that references a specially-crafted font file
+could, when opened, cause Evince to crash or, potentially, execute
+arbitrary code with the privileges of the user running Evince.
+(CVE-2010-2642)
+
+An integer overflow flaw was found in the DVI renderer's TFM font file
+parser. A DVI file that references a specially-crafted font file could,
+when opened, cause Evince to crash or, potentially, execute arbitrary code
+with the privileges of the user running Evince. (CVE-2010-2643)
+
+Note: The above issues are not exploitable unless an attacker can trick the
+user into installing a malicious font file.
+
+Red Hat would like to thank the Evince development team for reporting these
+issues.  Upstream acknowledges Jon Larimer of IBM X-Force as the original
+reporter of these issues.
+
+Users are advised to upgrade to these updated packages, which contain a
+backported patch to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+666313 - CVE-2010-2640 evince: Array index errror in DVI file PK font parser
+666314 - CVE-2010-2641 evince: Array index errror in DVI file VF font parser
+666318 - CVE-2010-2642 evince: Heap based buffer overflow in DVI file AFM font parser
+666321 - CVE-2010-2643 evince: Integer overflow in DVI file TFM font parser
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-dvi-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+
+x86_64:
+evince-2.28.2-14.el6_0.1.x86_64.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-dvi-2.28.2-14.el6_0.1.x86_64.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+
+x86_64:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+x86_64:
+evince-2.28.2-14.el6_0.1.x86_64.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.x86_64.rpm
+evince-dvi-2.28.2-14.el6_0.1.x86_64.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-dvi-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+
+ppc64:
+evince-2.28.2-14.el6_0.1.ppc64.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.ppc.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.ppc64.rpm
+evince-dvi-2.28.2-14.el6_0.1.ppc64.rpm
+evince-libs-2.28.2-14.el6_0.1.ppc.rpm
+evince-libs-2.28.2-14.el6_0.1.ppc64.rpm
+
+s390x:
+evince-2.28.2-14.el6_0.1.s390x.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.s390.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.s390x.rpm
+evince-dvi-2.28.2-14.el6_0.1.s390x.rpm
+evince-libs-2.28.2-14.el6_0.1.s390.rpm
+evince-libs-2.28.2-14.el6_0.1.s390x.rpm
+
+x86_64:
+evince-2.28.2-14.el6_0.1.x86_64.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-dvi-2.28.2-14.el6_0.1.x86_64.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+
+ppc64:
+evince-debuginfo-2.28.2-14.el6_0.1.ppc.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.ppc64.rpm
+evince-devel-2.28.2-14.el6_0.1.ppc.rpm
+evince-devel-2.28.2-14.el6_0.1.ppc64.rpm
+
+s390x:
+evince-debuginfo-2.28.2-14.el6_0.1.s390.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.s390x.rpm
+evince-devel-2.28.2-14.el6_0.1.s390.rpm
+evince-devel-2.28.2-14.el6_0.1.s390x.rpm
+
+x86_64:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-dvi-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+
+x86_64:
+evince-2.28.2-14.el6_0.1.x86_64.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-dvi-2.28.2-14.el6_0.1.x86_64.rpm
+evince-libs-2.28.2-14.el6_0.1.i686.rpm
+evince-libs-2.28.2-14.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evince-2.28.2-14.el6_0.1.src.rpm</a>
+
+i386:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+
+x86_64:
+evince-debuginfo-2.28.2-14.el6_0.1.i686.rpm
+evince-debuginfo-2.28.2-14.el6_0.1.x86_64.rpm
+evince-devel-2.28.2-14.el6_0.1.i686.rpm
+evince-devel-2.28.2-14.el6_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2640.html">https://www.redhat.com/security/data/cve/CVE-2010-2640.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2641.html">https://www.redhat.com/security/data/cve/CVE-2010-2641.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2642.html">https://www.redhat.com/security/data/cve/CVE-2010-2642.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2643.html">https://www.redhat.com/security/data/cve/CVE-2010-2643.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNJgqlXlSAg2UNWIIRAt/YAKCcQOy+2nYxWfuTyIRHvoa8Q9y4CgCdES4L
+Bh20RjfkBXiA+SZ7rV/SEl0=
+=YAJa
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

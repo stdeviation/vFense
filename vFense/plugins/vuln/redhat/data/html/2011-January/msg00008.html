@@ -1,0 +1,315 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0027&#45;01] Low: python security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Jan 2011 06:25:31 &#45;0500 -->
+<!--X-Message-Id: 201101131125.p0DBPPB7024896@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0027-01] Low: python security, bug fix,	and enhancement updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0027-01] Low: python security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0027-01] Low: python security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 13 Jan 2011 11:25:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: python security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0027-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0027.html">https://rhn.redhat.com/errata/RHSA-2011-0027.html</a>
+Issue date:        2011-01-13
+CVE Names:         CVE-2008-5983 CVE-2009-4134 CVE-2010-1449 
+                   CVE-2010-1450 CVE-2010-1634 CVE-2010-2089 
+=====================================================================
+
+1. Summary:
+
+Updated python packages that fix multiple security issues, several bugs,
+and add two enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Python is an interpreted, interactive, object-oriented programming
+language.
+
+It was found that many applications embedding the Python interpreter did
+not specify a valid full path to the script or application when calling the
+PySys_SetArgv API function, which could result in the addition of the
+current working directory to the module search path (sys.path). A local
+attacker able to trick a victim into running such an application in an
+attacker-controlled directory could use this flaw to execute code with the
+victim's privileges. This update adds the PySys_SetArgvEx API. Developers
+can modify their applications to use this new API, which sets sys.argv
+without modifying sys.path. (CVE-2008-5983)
+
+Multiple flaws were found in the Python rgbimg module. If an application
+written in Python was using the rgbimg module and loaded a
+specially-crafted SGI image file, it could cause the application to crash
+or, possibly, execute arbitrary code with the privileges of the user
+running the application. (CVE-2009-4134, CVE-2010-1449, CVE-2010-1450)
+
+Multiple flaws were found in the Python audioop module. Supplying certain
+inputs could cause the audioop module to crash or, possibly, execute
+arbitrary code. (CVE-2010-1634, CVE-2010-2089)
+
+This update also fixes the following bugs:
+
+* When starting a child process from the subprocess module in Python 2.4,
+the parent process could leak file descriptors if an error occurred. This
+update resolves the issue. (BZ#609017)
+
+* Prior to Python 2.7, programs that used &quot;ulimit -n&quot; to enable
+communication with large numbers of subprocesses could still monitor only
+1024 file descriptors at a time, which caused an exception:
+
+  ValueError: filedescriptor out of range in select()
+
+This was due to the subprocess module using the &quot;select&quot; system call. The
+module now uses the &quot;poll&quot; system call, removing this limitation.
+(BZ#609020)
+
+* Prior to Python 2.5, the tarfile module failed to unpack tar files if the
+path was longer than 100 characters. This update backports the tarfile
+module from Python 2.5 and the issue no longer occurs. (BZ#263401)
+
+* The email module incorrectly implemented the logic for obtaining
+attachment file names: the get_filename() fallback for using the deprecated
+&quot;name&quot; parameter of the &quot;Content-Type&quot; header erroneously used the
+&quot;Content-Disposition&quot; header. This update backports a fix from Python 2.6,
+which resolves this issue. (BZ#644147)
+
+* Prior to version 2.5, Python's optimized memory allocator never released
+memory back to the system. The memory usage of a long-running Python
+process would resemble a &quot;high-water mark&quot;. This update backports a fix
+from Python 2.5a1, which frees unused arenas, and adds a non-standard
+sys._debugmallocstats() function, which prints diagnostic information to
+stderr. Finally, when running under Valgrind, the optimized allocator is
+deactivated, to allow more convenient debugging of Python memory usage
+issues. (BZ#569093)
+
+* The urllib and urllib2 modules ignored the no_proxy variable, which could
+lead to programs such as &quot;yum&quot; erroneously accessing a proxy server for
+URLs covered by a &quot;no_proxy&quot; exclusion. This update backports fixes of
+urllib and urllib2, which respect the &quot;no_proxy&quot; variable, which fixes
+these issues. (BZ#549372)
+
+As well, this update adds the following enhancements:
+
+* This update introduces a new python-libs package, subsuming the majority
+of the content of the core python package. This makes both 32-bit and
+64-bit Python libraries available on PowerPC systems. (BZ#625372)
+
+* The python-libs.i386 package is now available for 64-bit Itanium with the
+32-bit Itanium compatibility mode. (BZ#644761)
+
+All Python users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+482814 - CVE-2008-5983 python: untrusted python modules search path
+541698 - CVE-2009-4134 CVE-2010-1449 CVE-2010-1450 python: rgbimg: multiple security issues
+569093 - Python 2.4's arena allocator does not release memory back to the system, leading to &quot;high-water mark&quot; memory usage
+590690 - CVE-2010-1634 python: audioop: incorrect integer overflow checks
+598197 - CVE-2010-2089 Python: Memory corruption in audioop module
+609017 - subprocess leaves open fds on construction error
+609020 - subprocess fails in select when descriptors are large
+625372 - split python-libs subpackage
+644147 - Patch for get_filename in email.message when content-disposition is missing
+644761 - python-libs conflict on ia64 compatlayer
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/python-2.4.3-43.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/python-2.4.3-43.el5.src.rpm</a>
+
+i386:
+python-2.4.3-43.el5.i386.rpm
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-libs-2.4.3-43.el5.i386.rpm
+python-tools-2.4.3-43.el5.i386.rpm
+tkinter-2.4.3-43.el5.i386.rpm
+
+x86_64:
+python-2.4.3-43.el5.x86_64.rpm
+python-debuginfo-2.4.3-43.el5.x86_64.rpm
+python-libs-2.4.3-43.el5.x86_64.rpm
+python-tools-2.4.3-43.el5.x86_64.rpm
+tkinter-2.4.3-43.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/python-2.4.3-43.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/python-2.4.3-43.el5.src.rpm</a>
+
+i386:
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-devel-2.4.3-43.el5.i386.rpm
+
+x86_64:
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-debuginfo-2.4.3-43.el5.x86_64.rpm
+python-devel-2.4.3-43.el5.i386.rpm
+python-devel-2.4.3-43.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/python-2.4.3-43.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/python-2.4.3-43.el5.src.rpm</a>
+
+i386:
+python-2.4.3-43.el5.i386.rpm
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-devel-2.4.3-43.el5.i386.rpm
+python-libs-2.4.3-43.el5.i386.rpm
+python-tools-2.4.3-43.el5.i386.rpm
+tkinter-2.4.3-43.el5.i386.rpm
+
+ia64:
+python-2.4.3-43.el5.ia64.rpm
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-debuginfo-2.4.3-43.el5.ia64.rpm
+python-devel-2.4.3-43.el5.ia64.rpm
+python-libs-2.4.3-43.el5.i386.rpm
+python-libs-2.4.3-43.el5.ia64.rpm
+python-tools-2.4.3-43.el5.ia64.rpm
+tkinter-2.4.3-43.el5.ia64.rpm
+
+ppc:
+python-2.4.3-43.el5.ppc.rpm
+python-debuginfo-2.4.3-43.el5.ppc.rpm
+python-debuginfo-2.4.3-43.el5.ppc64.rpm
+python-devel-2.4.3-43.el5.ppc.rpm
+python-devel-2.4.3-43.el5.ppc64.rpm
+python-libs-2.4.3-43.el5.ppc.rpm
+python-libs-2.4.3-43.el5.ppc64.rpm
+python-tools-2.4.3-43.el5.ppc.rpm
+tkinter-2.4.3-43.el5.ppc.rpm
+
+s390x:
+python-2.4.3-43.el5.s390x.rpm
+python-debuginfo-2.4.3-43.el5.s390.rpm
+python-debuginfo-2.4.3-43.el5.s390x.rpm
+python-devel-2.4.3-43.el5.s390.rpm
+python-devel-2.4.3-43.el5.s390x.rpm
+python-libs-2.4.3-43.el5.s390x.rpm
+python-tools-2.4.3-43.el5.s390x.rpm
+tkinter-2.4.3-43.el5.s390x.rpm
+
+x86_64:
+python-2.4.3-43.el5.x86_64.rpm
+python-debuginfo-2.4.3-43.el5.i386.rpm
+python-debuginfo-2.4.3-43.el5.x86_64.rpm
+python-devel-2.4.3-43.el5.i386.rpm
+python-devel-2.4.3-43.el5.x86_64.rpm
+python-libs-2.4.3-43.el5.x86_64.rpm
+python-tools-2.4.3-43.el5.x86_64.rpm
+tkinter-2.4.3-43.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-5983.html">https://www.redhat.com/security/data/cve/CVE-2008-5983.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4134.html">https://www.redhat.com/security/data/cve/CVE-2009-4134.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1449.html">https://www.redhat.com/security/data/cve/CVE-2010-1449.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1450.html">https://www.redhat.com/security/data/cve/CVE-2010-1450.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1634.html">https://www.redhat.com/security/data/cve/CVE-2010-1634.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2089.html">https://www.redhat.com/security/data/cve/CVE-2010-2089.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNLuEeXlSAg2UNWIIRAnsvAJ4u14+FXfrlN6U+GhB+QE9j4u/ljgCfdfMY
+GImamCsc46O7oiqsjceWlkc=
+=iAA8
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

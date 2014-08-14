@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0172&#45;01] Important: rhev&#45;hypervisor security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 24 Mar 2010 12:11:16 &#45;0400 -->
+<!--X-Message-Id: 201003241611.o2OGB9m7011316@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0172-01] Important: rhev-hypervisor security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0172-01] Important: rhev-hypervisor security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0172-01] Important: rhev-hypervisor security and bug fix	update</li>
+<li><em>Date</em>: Wed, 24 Mar 2010 17:11:09 +0100</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor security and bug fix update
+Advisory ID:       RHSA-2010:0172-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0172.html">https://rhn.redhat.com/errata/RHSA-2010-0172.html</a>
+Issue date:        2010-03-24
+CVE Names:         CVE-2009-3722 CVE-2010-0008 CVE-2010-0297 
+                   CVE-2010-0419 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes multiple security issues and
+several bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor 2.1 - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+(RHEV) Hypervisor ISO disk image. The RHEV Hypervisor is a dedicated
+Kernel-based Virtual Machine (KVM) hypervisor. It includes everything
+necessary to run and manage virtual machines: A subset of the Red Hat
+Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: RHEV Hypervisor is only available for the Intel 64 and AMD64
+architectures with virtualization extensions.
+
+A flaw was found in the sctp_rcv_ootb() function in the Linux kernel Stream
+Control Transmission Protocol (SCTP) implementation. A remote attacker
+could send a specially-crafted SCTP packet to a target system, resulting in
+a denial of service. (CVE-2010-0008)
+
+A flaw was found in the way the x86 emulator in KVM loaded segment
+selectors (used for memory segmentation and protection) into segment
+registers. In some guest system configurations, an unprivileged guest user
+could leverage this flaw to crash the guest or possibly escalate their
+privileges within the guest. (CVE-2010-0419)
+
+The KVM x86 emulator implementation was missing a check for the Current
+Privilege Level (CPL) while accessing debug registers. An unprivileged user
+in a guest could leverage this flaw to crash the guest. (CVE-2009-3722)
+
+A flaw was found in the USB passthrough handling code in KVM. A
+specially-crafted USB packet sent from inside a guest could be used to
+trigger a buffer overflow in the usb_host_handle_control() function, which
+runs under the QEMU-KVM context on the host. A user in a guest could
+leverage this flaw to cause a denial of service (guest hang or crash) or
+possibly escalate their privileges within the host. (CVE-2010-0297)
+
+This updated package provides updated components that include fixes for
+security issues; however, these issues have no security impact for RHEV
+Hypervisor. These fixes are for kernel issues CVE-2009-4308, CVE-2010-0003,
+CVE-2010-0007, CVE-2010-0415, and CVE-2010-0437; and sudo issues
+CVE-2010-0426 and CVE-2010-0427.
+
+This update also fixes the following bugs:
+
+* the required storage device driver was not detected correctly by mkdumprd
+when using multipath devices. When RHEV Hypervisor was installed on a
+multipath device, kdump was unable to mount the logical volume to store the
+kernel core dump; therefore, the core dump would not be recorded. With this
+update, multipath support has been added to the mkdumprd tool, which
+resolves this issue. (BZ#569459)
+
+As RHEV Hypervisor is based on KVM, the bug fixes from KVM updates
+RHSA-2010:0126 and RHBA-2010:0158 have been included in this update:
+
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0126.html">https://rhn.redhat.com/errata/RHSA-2010-0126.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2010-0158.html">https://rhn.redhat.com/errata/RHBA-2010-0158.html</a>
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+531660 - CVE-2009-3722 KVM: Check cpl before emulating debug register access
+555658 - CVE-2010-0008 kernel: sctp remote denial of service
+557025 - CVE-2010-0297 kvm-userspace-rhel5: usb-linux.c: fix buffer overflow
+563463 - CVE-2010-0419 kvm: emulator privilege escalation segment selector check
+
+6. Package List:
+
+RHEV Hypervisor 2.1:
+
+Source:
+rhev-hypervisor-5.4-2.1.10.el5_4rhev2_1.src.rpm
+
+noarch:
+rhev-hypervisor-5.4-2.1.10.el5_4rhev2_1.noarch.rpm
+rhev-hypervisor-pxe-5.4-2.1.10.el5_4rhev2_1.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3722.html">https://www.redhat.com/security/data/cve/CVE-2009-3722.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0008.html">https://www.redhat.com/security/data/cve/CVE-2010-0008.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0297.html">https://www.redhat.com/security/data/cve/CVE-2010-0297.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0419.html">https://www.redhat.com/security/data/cve/CVE-2010-0419.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLqjmLXlSAg2UNWIIRAv20AJ9KIB7Wv8yha5PnvDDJ+95XQ56DTwCeLp3+
+Od0SvQ/UvooXCUnCGQfDoL4=
+=TjN9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0579&#45;01] Low: openstack&#45;heat&#45;templates security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 May 2014 17:21:35 &#45;0400 -->
+<!--X-Message-Id: 201405292121.s4TLLY4G008682@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0579-01] Low: openstack-heat-templates security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0579-01] Low: openstack-heat-templates security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0579-01] Low: openstack-heat-templates security update</li>
+<li><em>Date</em>: Thu, 29 May 2014 21:21:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openstack-heat-templates security update
+Advisory ID:       RHSA-2014:0579-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0579.html">https://rhn.redhat.com/errata/RHSA-2014-0579.html</a>
+Issue date:        2014-05-29
+CVE Names:         CVE-2014-0040 CVE-2014-0041 CVE-2014-0042 
+=====================================================================
+
+1. Summary:
+
+An updated openstack-heat-templates package that fixes three security
+issues is now available Red Hat Enterprise Linux OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+OpenStack Orchestration (heat) is a template-driven engine used to specify
+and deploy configurations for Compute, Storage, and OpenStack Networking.
+It can also be used to automate post-deployment actions, which in turn
+allows automated provisioning of infrastructure, services, and
+applications. Orchestration can also be integrated with Telemetry alarms to
+implement auto-scaling for certain infrastructure resources.
+
+The openstack-heat-templates package provides heat example templates and
+image building elements for the openstack-heat package.
+
+It was discovered that certain heat templates used HTTP to insecurely
+download packages and signing keys via Yum. An attacker could use this flaw
+to conduct man-in-the-middle attacks to prevent essential security updates
+from being installed on the system. (CVE-2014-0040)
+
+It was found that certain heat templates disabled SSL protection for
+various Yum repositories (sslverify=false). An attacker could use this flaw
+to conduct man-in-the-middle attacks to prevent essential security updates
+from being installed on the system. (CVE-2014-0041)
+
+It was discovered that certain heat templates disabled GPG signature
+checking of packages via Yum (gpgcheck=0). An attacker could use this flaw
+to conduct man-in-the-middle attacks to install arbitrary packages on the
+system. (CVE-2014-0042)
+
+These issues were discovered by Grant Murphy of the Red Hat Product
+Security Team.
+
+All openstack-heat-templates users are advised to upgrade to this updated
+package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1059514 - CVE-2014-0040 OpenStack openstack-heat-templates: use of HTTP to download signing keys/code
+1059515 - CVE-2014-0041 OpenStack openstack-heat-templates: use of HTTPS url and sslverify=false
+1059520 - CVE-2014-0042 OpenStack openstack-heat-templates: setting gpgcheck=0 for signed packages
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-heat-templates-0-0.3.20140407git.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-heat-templates-0-0.3.20140407git.el6ost.src.rpm</a>
+
+noarch:
+openstack-heat-templates-0-0.3.20140407git.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0040.html">https://www.redhat.com/security/data/cve/CVE-2014-0040.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0041.html">https://www.redhat.com/security/data/cve/CVE-2014-0041.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0042.html">https://www.redhat.com/security/data/cve/CVE-2014-0042.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTh6TEXlSAg2UNWIIRAksGAKC2niKX/sc3il6xbsd7ScbrZpxIrwCgiO0I
+S+sPQATQbTSS8Gm6jxXH69M=
+=m1tU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

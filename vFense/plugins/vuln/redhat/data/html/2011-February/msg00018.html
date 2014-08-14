@@ -1,0 +1,306 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0262&#45;01] Low: sendmail security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Feb 2011 10:43:25 &#45;0500 -->
+<!--X-Message-Id: 201102161543.p1GFhKmb003211@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0262-01] Low: sendmail security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0262-01] Low: sendmail security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0262-01] Low: sendmail security and bug fix update</li>
+<li><em>Date</em>: Wed, 16 Feb 2011 10:43:03 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sendmail security and bug fix update 
+Advisory ID:       RHSA-2011:0262-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0262.html">https://rhn.redhat.com/errata/RHSA-2011-0262.html</a>
+Issue date:        2011-02-16
+CVE Names:         CVE-2009-4565 
+=====================================================================
+
+1. Summary:
+
+Updated sendmail packages that fix one security issue and three bugs are
+now available for Red Hat Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Sendmail is a Mail Transport Agent (MTA) used to send mail between
+machines.
+
+A flaw was found in the way sendmail handled NUL characters in the
+CommonName field of X.509 certificates. An attacker able to get a
+carefully-crafted certificate signed by a trusted Certificate Authority
+could trick sendmail into accepting it by mistake, allowing the attacker to
+perform a man-in-the-middle attack or bypass intended client certificate
+authentication. (CVE-2009-4565) 
+
+The CVE-2009-4565 issue only affected configurations using TLS with
+certificate verification and CommonName checking enabled, which is not a
+typical configuration.
+
+This update also fixes the following bugs:
+
+* Previously, sendmail did not correctly handle mail messages that had a
+long first header line. A line with more than 2048 characters was split,
+causing the part of the line exceeding the limit, as well as all of the
+following mail headers, to be incorrectly handled as the message body.
+(BZ#499450)
+
+* When an SMTP-sender is sending mail data to sendmail, it may spool that
+data to a file in the mail queue. It was found that, if the SMTP-sender
+stopped sending data and a timeout occurred, the file may have been left
+stalled in the mail queue, instead of being deleted. This update may not
+correct this issue for every situation and configuration. Refer to the
+Solution section for further information. (BZ#434645)
+
+* Previously, the sendmail macro MAXHOSTNAMELEN used 64 characters as the
+limit for the hostname length. However, in some cases, it was used against
+an FQDN length, which has a maximum length of 255 characters. With this
+update, the MAXHOSTNAMELEN limit has been changed to 255. (BZ#485380)
+
+All sendmail users should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing this update,
+sendmail will be restarted automatically.
+
+4. Solution:
+
+As part of the fix for BZ#434645, a script called purge-mqueue is shipped
+with this update. It is located in the /usr/share/sendmail/ directory. The
+primary purpose of this script is a one-time clean up of the mqueue from
+stalled files that were created before the installation of this update. By
+default, the script removes all files from /var/spool/mqueue/ that have an
+atime older than one month. It requires the tmpwatch package to be
+installed. If you have stalled files in your mqueue you can run this script
+or clean them manually. It is also possible to use this script as a cron
+job (for example, by copying it to /etc/cron.daily/), but it should not be
+needed in most cases, because this update should prevent the creation of
+new stalled files.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+434645 - DATA timeouts leave behind stale df files in mqueue
+485380 - sendmail applies MAXHOSTNAMELEN for FQDN.
+552622 - CVE-2009-4565 sendmail: incorrect verification of SSL certificate with NUL in name
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm</a>
+
+i386:
+sendmail-8.13.1-6.el4.i386.rpm
+sendmail-cf-8.13.1-6.el4.i386.rpm
+sendmail-debuginfo-8.13.1-6.el4.i386.rpm
+sendmail-devel-8.13.1-6.el4.i386.rpm
+sendmail-doc-8.13.1-6.el4.i386.rpm
+
+ia64:
+sendmail-8.13.1-6.el4.ia64.rpm
+sendmail-cf-8.13.1-6.el4.ia64.rpm
+sendmail-debuginfo-8.13.1-6.el4.ia64.rpm
+sendmail-devel-8.13.1-6.el4.ia64.rpm
+sendmail-doc-8.13.1-6.el4.ia64.rpm
+
+ppc:
+sendmail-8.13.1-6.el4.ppc.rpm
+sendmail-cf-8.13.1-6.el4.ppc.rpm
+sendmail-debuginfo-8.13.1-6.el4.ppc.rpm
+sendmail-devel-8.13.1-6.el4.ppc.rpm
+sendmail-doc-8.13.1-6.el4.ppc.rpm
+
+s390:
+sendmail-8.13.1-6.el4.s390.rpm
+sendmail-cf-8.13.1-6.el4.s390.rpm
+sendmail-debuginfo-8.13.1-6.el4.s390.rpm
+sendmail-devel-8.13.1-6.el4.s390.rpm
+sendmail-doc-8.13.1-6.el4.s390.rpm
+
+s390x:
+sendmail-8.13.1-6.el4.s390x.rpm
+sendmail-cf-8.13.1-6.el4.s390x.rpm
+sendmail-debuginfo-8.13.1-6.el4.s390x.rpm
+sendmail-devel-8.13.1-6.el4.s390x.rpm
+sendmail-doc-8.13.1-6.el4.s390x.rpm
+
+x86_64:
+sendmail-8.13.1-6.el4.x86_64.rpm
+sendmail-cf-8.13.1-6.el4.x86_64.rpm
+sendmail-debuginfo-8.13.1-6.el4.x86_64.rpm
+sendmail-devel-8.13.1-6.el4.x86_64.rpm
+sendmail-doc-8.13.1-6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm</a>
+
+i386:
+sendmail-8.13.1-6.el4.i386.rpm
+sendmail-cf-8.13.1-6.el4.i386.rpm
+sendmail-debuginfo-8.13.1-6.el4.i386.rpm
+sendmail-devel-8.13.1-6.el4.i386.rpm
+sendmail-doc-8.13.1-6.el4.i386.rpm
+
+x86_64:
+sendmail-8.13.1-6.el4.x86_64.rpm
+sendmail-cf-8.13.1-6.el4.x86_64.rpm
+sendmail-debuginfo-8.13.1-6.el4.x86_64.rpm
+sendmail-devel-8.13.1-6.el4.x86_64.rpm
+sendmail-doc-8.13.1-6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm</a>
+
+i386:
+sendmail-8.13.1-6.el4.i386.rpm
+sendmail-cf-8.13.1-6.el4.i386.rpm
+sendmail-debuginfo-8.13.1-6.el4.i386.rpm
+sendmail-devel-8.13.1-6.el4.i386.rpm
+sendmail-doc-8.13.1-6.el4.i386.rpm
+
+ia64:
+sendmail-8.13.1-6.el4.ia64.rpm
+sendmail-cf-8.13.1-6.el4.ia64.rpm
+sendmail-debuginfo-8.13.1-6.el4.ia64.rpm
+sendmail-devel-8.13.1-6.el4.ia64.rpm
+sendmail-doc-8.13.1-6.el4.ia64.rpm
+
+x86_64:
+sendmail-8.13.1-6.el4.x86_64.rpm
+sendmail-cf-8.13.1-6.el4.x86_64.rpm
+sendmail-debuginfo-8.13.1-6.el4.x86_64.rpm
+sendmail-devel-8.13.1-6.el4.x86_64.rpm
+sendmail-doc-8.13.1-6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/sendmail-8.13.1-6.el4.src.rpm</a>
+
+i386:
+sendmail-8.13.1-6.el4.i386.rpm
+sendmail-cf-8.13.1-6.el4.i386.rpm
+sendmail-debuginfo-8.13.1-6.el4.i386.rpm
+sendmail-devel-8.13.1-6.el4.i386.rpm
+sendmail-doc-8.13.1-6.el4.i386.rpm
+
+ia64:
+sendmail-8.13.1-6.el4.ia64.rpm
+sendmail-cf-8.13.1-6.el4.ia64.rpm
+sendmail-debuginfo-8.13.1-6.el4.ia64.rpm
+sendmail-devel-8.13.1-6.el4.ia64.rpm
+sendmail-doc-8.13.1-6.el4.ia64.rpm
+
+x86_64:
+sendmail-8.13.1-6.el4.x86_64.rpm
+sendmail-cf-8.13.1-6.el4.x86_64.rpm
+sendmail-debuginfo-8.13.1-6.el4.x86_64.rpm
+sendmail-devel-8.13.1-6.el4.x86_64.rpm
+sendmail-doc-8.13.1-6.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4565.html">https://www.redhat.com/security/data/cve/CVE-2009-4565.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNW++mXlSAg2UNWIIRAmNOAJ9gHRqZ2xjhbkTNyg0FfaMyjq703wCgtcUM
+GHpvsgr3sd43BrzGRnku/pI=
+=zWrS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

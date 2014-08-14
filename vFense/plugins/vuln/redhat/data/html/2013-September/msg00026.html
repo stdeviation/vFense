@@ -1,0 +1,277 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1264&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 16 Sep 2013 13:05:28 &#45;0400 -->
+<!--X-Message-Id: 201309161705.r8GH5R3b001048@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1264-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1264-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1264-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Mon, 16 Sep 2013 17:05:26 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2013:1264-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1264.html">https://rhn.redhat.com/errata/RHSA-2013-1264.html</a>
+Issue date:        2013-09-16
+CVE Names:         CVE-2013-2058 CVE-2013-2141 CVE-2013-2146 
+                   CVE-2013-2147 CVE-2013-2148 CVE-2013-2164 
+                   CVE-2013-2232 CVE-2013-2234 CVE-2013-2237 
+                   CVE-2013-2850 CVE-2013-2851 CVE-2013-2852 
+                   CVE-2013-3301 CVE-2013-4162 CVE-2013-4163 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix several security issues and multiple
+bugs are now available for Red Hat Enterprise MRG 2.3.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A heap-based buffer overflow flaw was found in the Linux kernel's iSCSI
+target subsystem. A remote attacker could use a specially-crafted iSCSI
+request to cause a denial of service on a system or, potentially, escalate
+their privileges on that system. (CVE-2013-2850, Important)
+
+* A flaw was found in the Linux kernel's Performance Events implementation.
+On systems with certain Intel processors, a local, unprivileged user could
+use this flaw to cause a denial of service by leveraging the perf subsystem
+to write into the reserved bits of the OFFCORE_RSP_0 and OFFCORE_RSP_1
+model-specific registers. (CVE-2013-2146, Moderate)
+
+* An invalid pointer dereference flaw was found in the Linux kernel's
+TCP/IP protocol suite implementation. A local, unprivileged user could use
+this flaw to crash the system or, potentially, escalate their privileges on
+the system by using sendmsg() with an IPv6 socket connected to an IPv4
+destination. (CVE-2013-2232, Moderate)
+
+* Two flaws were found in the way the Linux kernel's TCP/IP protocol suite
+implementation handled IPv6 sockets that used the UDP_CORK option. A local,
+unprivileged user could use these flaws to cause a denial of service.
+(CVE-2013-4162, CVE-2013-4163, Moderate)
+
+* A flaw was found in the Linux kernel's Chipidea USB driver. A local,
+unprivileged user could use this flaw to cause a denial of service.
+(CVE-2013-2058, Low)
+
+* Information leak flaws in the Linux kernel could allow a privileged,
+local user to leak kernel memory to user-space. (CVE-2013-2147,
+CVE-2013-2164, CVE-2013-2234, CVE-2013-2237, Low)
+
+* Information leak flaws in the Linux kernel could allow a local,
+unprivileged user to leak kernel memory to user-space. (CVE-2013-2141,
+CVE-2013-2148, Low)
+
+* A format string flaw was found in the Linux kernel's block layer. A
+privileged, local user could potentially use this flaw to escalate their
+privileges to kernel level (ring0). (CVE-2013-2851, Low)
+
+* A format string flaw was found in the b43_do_request_fw() function in the
+Linux kernel's b43 driver implementation. A local user who is able to
+specify the &quot;fwpostfix&quot; b43 module parameter could use this flaw to cause a
+denial of service or, potentially, escalate their privileges.
+(CVE-2013-2852, Low)
+
+* A NULL pointer dereference flaw was found in the Linux kernel's ftrace
+and function tracer implementations. A local user who has the CAP_SYS_ADMIN
+capability could use this flaw to cause a denial of service.
+(CVE-2013-3301, Low)
+
+Red Hat would like to thank Kees Cook for reporting CVE-2013-2850,
+CVE-2013-2851, and CVE-2013-2852; and Hannes Frederic Sowa for reporting
+CVE-2013-4162 and CVE-2013-4163.
+
+This update also fixes the following bugs:
+
+* The following drivers have been updated, fixing a number of bugs:
+myri10ge, bna, enic, mlx4, bgmac, bcma, cxgb3, cxgb4, qlcnic, r8169,
+be2net, e100, e1000, e1000e, igb, ixgbe, brcm80211, cpsw, pch_gbe,
+bfin_mac, bnx2x, bnx2, cnic, tg3, and sfc. (BZ#974138)
+
+* The realtime kernel was not built with the CONFIG_NET_DROP_WATCH kernel
+configuration option enabled. As such, attempting to run the dropwatch
+command resulted in the following error:
+
+Unable to find NET_DM family, dropwatch can't work
+Cleaning up on socket creation error
+
+With this update, the realtime kernel is built with the
+CONFIG_NET_DROP_WATCH option, allowing dropwatch to work as expected.
+(BZ#979417)
+
+Users should upgrade to these updated packages, which upgrade the kernel-rt
+kernel to version kernel-rt-3.6.11.5-rt37, and correct these issues. The
+system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+952197 - CVE-2013-3301 Kernel: tracing: NULL pointer dereference
+959210 - CVE-2013-2058 Kernel: usb: chipidea: Allow disabling streaming not just in udc mode
+968036 - CVE-2013-2850 kernel: iscsi-target: heap buffer overflow on large key error
+969515 - CVE-2013-2851 kernel: block: passing disk names as format strings
+969518 - CVE-2013-2852 kernel: b43: format string leaking into error msgs
+970873 - CVE-2013-2141 Kernel: signal: information leak in tkill/tgkill
+971242 - CVE-2013-2147 Kernel: cpqarray/cciss: information leak via ioctl
+971258 - CVE-2013-2148 Kernel: fanotify: info leak in copy_event_to_user
+971309 - CVE-2013-2146 Kernel: perf/x86: offcore_rsp valid mask for SNB/IVB
+973100 - CVE-2013-2164 Kernel: information leak in cdrom driver
+974138 - MRG 2.3 kernel drivers update
+980995 - CVE-2013-2234 Kernel: net: information leak in AF_KEY notify
+981220 - CVE-2013-2237 Kernel: net: af_key: initialize satype in key_notify_policy_flush
+981552 - CVE-2013-2232 Kernel: ipv6: using ipv4 vs ipv6 structure during routing lookup in sendmsg
+983603 - update RT specfile references of version.h to vermagic.h
+987627 - CVE-2013-4162 Kernel: net: panic while pushing pending data out of a IPv6 socket with UDP_CORK enabled
+987633 - CVE-2013-4163 Kernel: net: panic while appending data to a corked IPv6 socket in ip6_append_data_mtu
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.6.11.5-rt37.55.el6rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.6.11.5-rt37.55.el6rt.src.rpm</a>
+
+noarch:
+kernel-rt-doc-3.6.11.5-rt37.55.el6rt.noarch.rpm
+kernel-rt-firmware-3.6.11.5-rt37.55.el6rt.noarch.rpm
+mrg-rt-release-3.6.11.5-rt37.55.el6rt.noarch.rpm
+
+x86_64:
+kernel-rt-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-debug-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-devel-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-trace-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.6.11.5-rt37.55.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2058.html">https://www.redhat.com/security/data/cve/CVE-2013-2058.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2141.html">https://www.redhat.com/security/data/cve/CVE-2013-2141.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2146.html">https://www.redhat.com/security/data/cve/CVE-2013-2146.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2147.html">https://www.redhat.com/security/data/cve/CVE-2013-2147.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2148.html">https://www.redhat.com/security/data/cve/CVE-2013-2148.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2164.html">https://www.redhat.com/security/data/cve/CVE-2013-2164.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2232.html">https://www.redhat.com/security/data/cve/CVE-2013-2232.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2234.html">https://www.redhat.com/security/data/cve/CVE-2013-2234.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2237.html">https://www.redhat.com/security/data/cve/CVE-2013-2237.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2850.html">https://www.redhat.com/security/data/cve/CVE-2013-2850.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2851.html">https://www.redhat.com/security/data/cve/CVE-2013-2851.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2852.html">https://www.redhat.com/security/data/cve/CVE-2013-2852.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3301.html">https://www.redhat.com/security/data/cve/CVE-2013-3301.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4162.html">https://www.redhat.com/security/data/cve/CVE-2013-4162.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4163.html">https://www.redhat.com/security/data/cve/CVE-2013-4163.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSNzpBXlSAg2UNWIIRArFLAJsHqV97c2DqHCkhsX3pjxpgYd/D/QCfQIUk
+OhWpIPoF8EMEQxliWpz60bw=
+=JJc7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

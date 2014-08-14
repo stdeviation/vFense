@@ -1,0 +1,302 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1536&#45;02] Moderate: libguestfs security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:05:42 &#45;0500 -->
+<!--X-Message-Id: 201311210405.rAL45eGb001778@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1536-02] Moderate: libguestfs security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1536-02] Moderate: libguestfs security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1536-02] Moderate: libguestfs security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:09:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libguestfs security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1536-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1536.html">https://rhn.redhat.com/errata/RHSA-2013-1536.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2013-4419 
+=====================================================================
+
+1. Summary:
+
+Updated libguestfs packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+Libguestfs is a library and set of tools for accessing and modifying guest
+disk images.
+
+It was found that guestfish, which enables shell scripting and command line
+access to libguestfs, insecurely created the temporary directory used to
+store the network socket when started in server mode. A local attacker
+could use this flaw to intercept and modify other user's guestfish command,
+allowing them to perform arbitrary guestfish actions with the privileges of
+a different user, or use this flaw to obtain authentication credentials.
+(CVE-2013-4419)
+
+This issue was discovered by Michael Scherer of the Red Hat Regional IT
+team.
+
+These updated libguestfs packages include numerous bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.5 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+All libguestfs users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+892291 - guestmount: link() incorrectly returns ENOENT, when it should be EXDEV
+892834 - guestmount: rename() incorrectly follows symbolic links
+908255 - error message didn't translate to user language
+909666 - Unexpected non-tail recursion in recv_from_daemon results in stack overflow in very long-running API calls that send progress messages
+958183 - Rebase libguestfs in RHEL 6.5
+971207 - guestfish aug-init command fails: libguestfs: error: aug_init: Augeas initialization failed
+971326 - ntfsresize-opts execute failed when omitted the 'size' option
+971664 - Need add some removed commands back into guestfish in RHEL 6.5
+972413 - txz-out command produces a bzip2-compressed file (should be xz-compressed)
+973425 - lsscsi is not available in 6client
+975377 - inspect-get-hostname return unknown for linux guest in rhel6
+975572 - virt-sysprep is in the wrong subpackage
+975753 - &quot;virt-resize --expand&quot; and &quot;virt-resize --resize&quot; outputs error message for Win2008 32bit OS
+975760 - Specifying virtio interface ('iface' parameter) breaks the appliance attach-method - libguestfs hangs
+980358 - filesystem-available should return false for xfs in rhel6
+980372 - &quot;hivex-commit&quot; should fail with a relative path
+980502 - libguestfs is not able to be built with yum cache from multiple repos
+983690 - libguestfs double free when kernel link fails during launch
+985269 - Can't set acl value for a specified user with 'acl-set-file'
+988863 - virt-sysprep --firstboot option writes incorrect &quot;99&quot; (instead of &quot;S99&quot;) sysv-init-style start up script
+989352 - cap-get-file will return error if the file has not be set capabilities
+996039 - guestfish does not work due to conflict of remote and interactive mode
+997884 - 9p support should be disabled in libguestfs in RHEL 6
+998108 - Let's enable kvmclock in RHEL 6
+1000122 - 'sh' command before mount causes daemon to segfault
+1016960 - CVE-2013-4419 libguestfs: insecure temporary directory handling for guestfish's network socket
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-1.20.11-2.el6.x86_64.rpm
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-c-1.20.11-2.el6.x86_64.rpm
+perl-Sys-Guestfs-1.20.11-2.el6.x86_64.rpm
+python-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-javadoc-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+ruby-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-1.20.11-2.el6.x86_64.rpm
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-c-1.20.11-2.el6.x86_64.rpm
+perl-Sys-Guestfs-1.20.11-2.el6.x86_64.rpm
+python-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-javadoc-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+ruby-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-1.20.11-2.el6.x86_64.rpm
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-c-1.20.11-2.el6.x86_64.rpm
+perl-Sys-Guestfs-1.20.11-2.el6.x86_64.rpm
+python-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-javadoc-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+ruby-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-1.20.11-2.el6.x86_64.rpm
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-1.20.11-2.el6.x86_64.rpm
+libguestfs-tools-c-1.20.11-2.el6.x86_64.rpm
+perl-Sys-Guestfs-1.20.11-2.el6.x86_64.rpm
+python-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.20.11-2.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.20.11-2.el6.x86_64.rpm
+libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-java-devel-1.20.11-2.el6.x86_64.rpm
+libguestfs-javadoc-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-1.20.11-2.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.20.11-2.el6.x86_64.rpm
+ruby-libguestfs-1.20.11-2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4419.html">https://www.redhat.com/security/data/cve/CVE-2013-4419.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/libguestfs.html#RHSA-2013-1536">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/libguestfs.html#RHSA-2013-1536</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjYZeXlSAg2UNWIIRApOlAJ93mbE4ij0MdlyXKg/PhRORZHG2sQCff+/n
+uh1BReL9EF9iwz1aWTh2OPE=
+=WNFJ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

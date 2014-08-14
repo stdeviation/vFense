@@ -1,0 +1,239 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0702&#45;01] Critical: java&#45;1.4.2&#45;ibm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 30 May 2012 12:13:19 &#45;0400 -->
+<!--X-Message-Id: 201205301613.q4UGDDgw006029@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0702-01] Critical: java-1.4.2-ibm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00021.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0702-01] Critical: java-1.4.2-ibm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0702-01] Critical: java-1.4.2-ibm security update</li>
+<li><em>Date</em>: Wed, 30 May 2012 16:13:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.4.2-ibm security update
+Advisory ID:       RHSA-2012:0702-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0702.html">https://rhn.redhat.com/errata/RHSA-2012-0702.html</a>
+Issue date:        2012-05-30
+CVE Names:         CVE-2011-3563 CVE-2012-0499 CVE-2012-0502 
+                   CVE-2012-0503 CVE-2012-0505 CVE-2012-0506 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.4.2-ibm packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 5) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The IBM Java SE version 1.4.2 release includes the IBM Java 1.4.2 Runtime
+Environment and the IBM Java 1.4.2 Software Development Kit.
+
+This update fixes several vulnerabilities in the IBM Java 1.4.2 Runtime
+Environment and the IBM Java 1.4.2 Software Development Kit. Detailed
+vulnerability descriptions are linked from the IBM &quot;Security alerts&quot; page,
+listed in the References section. (CVE-2011-3563, CVE-2012-0499,
+CVE-2012-0502, CVE-2012-0503, CVE-2012-0505, CVE-2012-0506)
+
+All users of java-1.4.2-ibm are advised to upgrade to these updated
+packages, which contain the IBM Java 1.4.2 SR13-FP12 release. All running
+instances of IBM Java must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+788976 - CVE-2012-0503 OpenJDK: unrestricted use of TimeZone.setDefault() (i18n, 7110687)
+789295 - CVE-2011-3563 OpenJDK: JavaSound incorrect bounds check (Sound, 7088367)
+789297 - CVE-2012-0502 OpenJDK: KeyboardFocusManager focus stealing (AWT, 7110683)
+789299 - CVE-2012-0505 OpenJDK: incomplete info in the deserialization exception (Serialization, 7110700)
+789300 - CVE-2012-0506 OpenJDK: mutable repository identifiers (CORBA, 7110704)
+790722 - CVE-2012-0499 Oracle JDK: unspecified vulnerability fixed in 6u31 and 7u3 (2D)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5):
+
+i386:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-plugin-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+
+x86_64:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-plugin-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 5):
+
+i386:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-plugin-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+
+ia64:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.ia64.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.ia64.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.ia64.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.ia64.rpm
+
+ppc:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.ppc64.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.ppc64.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.ppc64.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.ppc64.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.ppc.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.ppc64.rpm
+
+s390x:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.s390.rpm
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.s390x.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.s390.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.s390x.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.s390.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.s390x.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.s390.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.s390.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.s390x.rpm
+
+x86_64:
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-demo-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-devel-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-javacomm-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+java-1.4.2-ibm-jdbc-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-plugin-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.i386.rpm
+java-1.4.2-ibm-src-1.4.2.13.12-1jpp.1.el5_8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3563.html">https://www.redhat.com/security/data/cve/CVE-2011-3563.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0499.html">https://www.redhat.com/security/data/cve/CVE-2012-0499.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0502.html">https://www.redhat.com/security/data/cve/CVE-2012-0502.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0503.html">https://www.redhat.com/security/data/cve/CVE-2012-0503.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0505.html">https://www.redhat.com/security/data/cve/CVE-2012-0505.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0506.html">https://www.redhat.com/security/data/cve/CVE-2012-0506.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.ibm.com/developerworks/java/jdk/alerts/">http://www.ibm.com/developerworks/java/jdk/alerts/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPxkbzXlSAg2UNWIIRAsZ2AJ9lii7KxFL+isVdR2933SYhVa4gKACgvUtW
+inzdbAQuhqqz721/FLb0n+Y=
+=6T9Q
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00021.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

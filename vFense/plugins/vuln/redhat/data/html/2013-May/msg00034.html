@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0874&#45;01] Important: JBoss Enterprise Web Platform 5.2.0	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 28 May 2013 13:53:51 &#45;0400 -->
+<!--X-Message-Id: 201305281753.r4SHro2x030140@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0874-01] Important: JBoss Enterprise Web Platform 5.2.0	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0874-01] Important: JBoss Enterprise Web Platform 5.2.0	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0874-01] Important: JBoss Enterprise Web Platform 5.2.0	security update</li>
+<li><em>Date</em>: Tue, 28 May 2013 17:53:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Web Platform 5.2.0 security update
+Advisory ID:       RHSA-2013:0874-01
+Product:           JBoss Enterprise Web Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0874.html">https://rhn.redhat.com/errata/RHSA-2013-0874.html</a>
+Issue date:        2013-05-28
+CVE Names:         CVE-2012-5575 
+=====================================================================
+
+1. Summary:
+
+Updated packages for JBoss Enterprise Web Platform 5.2.0 which fix one
+security issue are now available for Red Hat Enterprise Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Platform 5 for RHEL 4 AS - noarch
+JBoss Enterprise Web Platform 5 for RHEL 4 ES - noarch
+JBoss Enterprise Web Platform 5 for RHEL 5 Server - noarch
+JBoss Enterprise Web Platform 5 for RHEL 6 Server - noarch
+
+3. Description:
+
+The Enterprise Web Platform is a slimmed down profile of the JBoss
+Enterprise Application Platform intended for mid-size workloads with light
+and rich Java applications.
+
+XML encryption backwards compatibility attacks were found against various
+frameworks, including Apache CXF. An attacker could force a server to use
+insecure, legacy cryptosystems, even when secure cryptosystems were enabled
+on endpoints. By forcing the use of legacy cryptosystems, flaws such as
+CVE-2011-1096 and CVE-2011-2487 would be exposed, allowing plain text to be
+recovered from cryptograms and symmetric keys. This issue affected both the
+JBoss Web Services CXF (jbossws-cxf) and JBoss Web Services Native
+(jbossws-native) stacks. (CVE-2012-5575)
+
+Red Hat would like to thank Tibor Jager, Kenneth G. Paterson and Juraj
+Somorovsky of Ruhr-University Bochum for reporting this issue.
+
+If you are using jbossws-cxf, then automatic checks to prevent this flaw
+are only run when WS-SecurityPolicy is used to enforce security
+requirements. It is best practice to use WS-SecurityPolicy to enforce
+security requirements.
+
+If you are using jbossws-native, the fix for this flaw is implemented by
+two new configuration parameters in the 'encryption' element. This element
+can be a child of 'requires' in both client and server wsse configuration
+descriptors (set on a per-application basis via the application's
+jboss-wsse-server.xml and jboss-wsse-client.xml files). The new attributes
+are 'algorithms' and 'keyWrapAlgorithms'. These attributes should contain a
+blank space or comma separated list of algorithm IDs that are allowed for
+the encrypted incoming message, both for encryption and private key
+wrapping. For backwards compatibility, no algorithm checks are performed by
+default for empty lists or missing attributes.
+
+For example (do not include the line break in your configuration):
+
+encryption algorithms=&quot;aes-192-gcm aes-256-gcm&quot;
+keyWrapAlgorithms=&quot;rsa_oaep&quot;
+
+Specifies that incoming messages are required to be encrypted, and that the
+only permitted encryption algorithms are AES-192 and 256 in GCM mode, and
+RSA-OAEP only for key wrapping.
+
+Before performing any decryption, the jbossws-native stack will verify that
+each algorithm specified in the incoming messages is included in the
+allowed algorithms lists from these new encryption element attributes. The
+algorithm values to be used for 'algorithms' and 'keyWrapAlgorithms' are
+the same as for 'algorithm' and 'keyWrapAlgorithm' in the 'encrypt'
+element.
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Web Platform installation (including all applications and
+configuration files).
+
+All users of JBoss Enterprise Web Platform 5.2.0 on Red Hat Enterprise
+Linux 4, 5, and 6 are advised to upgrade to these updated packages. The
+JBoss server process must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+880443 - CVE-2012-5575 jbossws-native, jbossws-cxf, apache-cxf: XML encryption backwards compatibility attacks
+
+6. Package List:
+
+JBoss Enterprise Web Platform 5 for RHEL 4 AS:
+
+Source:
+apache-cxf-2.2.12-12.patch_07.ep5.el4.src.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el4.src.rpm
+wss4j-1.5.12-6_patch_03.ep5.el4.src.rpm
+
+noarch:
+apache-cxf-2.2.12-12.patch_07.ep5.el4.noarch.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el4.noarch.rpm
+wss4j-1.5.12-6_patch_03.ep5.el4.noarch.rpm
+
+JBoss Enterprise Web Platform 5 for RHEL 4 ES:
+
+Source:
+apache-cxf-2.2.12-12.patch_07.ep5.el4.src.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el4.src.rpm
+wss4j-1.5.12-6_patch_03.ep5.el4.src.rpm
+
+noarch:
+apache-cxf-2.2.12-12.patch_07.ep5.el4.noarch.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el4.noarch.rpm
+wss4j-1.5.12-6_patch_03.ep5.el4.noarch.rpm
+
+JBoss Enterprise Web Platform 5 for RHEL 5 Server:
+
+Source:
+apache-cxf-2.2.12-12.patch_07.ep5.el5.src.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el5.src.rpm
+wss4j-1.5.12-6_patch_03.ep5.el5.src.rpm
+
+noarch:
+apache-cxf-2.2.12-12.patch_07.ep5.el5.noarch.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el5.noarch.rpm
+wss4j-1.5.12-6_patch_03.ep5.el5.noarch.rpm
+
+JBoss Enterprise Web Platform 5 for RHEL 6 Server:
+
+Source:
+apache-cxf-2.2.12-12.patch_07.ep5.el6.src.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el6.src.rpm
+wss4j-1.5.12-6_patch_03.ep5.el6.src.rpm
+
+noarch:
+apache-cxf-2.2.12-12.patch_07.ep5.el6.noarch.rpm
+jbossws-3.1.2-14.SP15_patch_02.ep5.el6.noarch.rpm
+wss4j-1.5.12-6_patch_03.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5575.html">https://www.redhat.com/security/data/cve/CVE-2012-5575.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://ws.apache.org/wss4j/best_practice.html">http://ws.apache.org/wss4j/best_practice.html</a>
+<a  rel="nofollow" href="http://cxf.apache.org/cve-2012-5575.html">http://cxf.apache.org/cve-2012-5575.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRpO8ZXlSAg2UNWIIRAgwmAKCnDesF3xgbi3YsULQs2AFowwWPbgCdEbRQ
+vj8SAalIeRmBJjJ+bIKzPck=
+=izsi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

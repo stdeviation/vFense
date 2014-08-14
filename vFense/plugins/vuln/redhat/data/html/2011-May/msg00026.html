@@ -1,0 +1,289 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0791&#45;01] Moderate: tomcat6 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 May 2011 08:39:09 &#45;0400 -->
+<!--X-Message-Id: 201105191239.p4JCd343013040@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0791-01] Moderate: tomcat6 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0791-01] Moderate: tomcat6 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0791-01] Moderate: tomcat6 security and bug fix update</li>
+<li><em>Date</em>: Thu, 19 May 2011 12:39:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: tomcat6 security and bug fix update
+Advisory ID:       RHSA-2011:0791-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0791.html">https://rhn.redhat.com/errata/RHSA-2011-0791.html</a>
+Issue date:        2011-05-19
+CVE Names:         CVE-2010-3718 CVE-2010-4172 CVE-2011-0013 
+=====================================================================
+
+1. Summary:
+
+Updated tomcat6 packages that fix three security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - noarch
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch
+Red Hat Enterprise Linux Server (v. 6) - noarch
+Red Hat Enterprise Linux Server Optional (v. 6) - noarch
+Red Hat Enterprise Linux Workstation (v. 6) - noarch
+Red Hat Enterprise Linux Workstation Optional (v. 6) - noarch
+
+3. Description:
+
+Apache Tomcat is a servlet container for the Java Servlet and JavaServer
+Pages (JSP) technologies.
+
+It was found that web applications could modify the location of the Tomcat
+host's work directory. As web applications deployed on Tomcat have read and
+write access to this directory, a malicious web application could use this
+flaw to trick Tomcat into giving it read and write access to an arbitrary
+directory on the file system. (CVE-2010-3718)
+
+A cross-site scripting (XSS) flaw was found in the Manager application,
+used for managing web applications on Tomcat. If a remote attacker could
+trick a user who is logged into the Manager application into visiting a
+specially-crafted URL, the attacker could perform Manager application tasks
+with the privileges of the logged in user. (CVE-2010-4172)
+
+A second cross-site scripting (XSS) flaw was found in the Manager
+application. A malicious web application could use this flaw to conduct an
+XSS attack, leading to arbitrary web script execution with the privileges
+of victims who are logged into and viewing Manager application web pages.
+(CVE-2011-0013)
+
+This update also fixes the following bugs:
+
+* A bug in the &quot;tomcat6&quot; init script prevented additional Tomcat instances
+from starting. As well, running &quot;service tomcat6 start&quot; caused
+configuration options applied from &quot;/etc/sysconfig/tomcat6&quot; to be
+overwritten with those from &quot;/etc/tomcat6/tomcat6.conf&quot;. With this update,
+multiple instances of Tomcat run as expected. (BZ#636997)
+
+* The &quot;/usr/share/java/&quot; directory was missing a symbolic link to the
+&quot;/usr/share/tomcat6/bin/tomcat-juli.jar&quot; library. Because this library was
+mandatory for certain operations (such as running the Jasper JSP
+precompiler), the &quot;build-jar-repository&quot; command was unable to compose a
+valid classpath. With this update, the missing symbolic link has been
+added. (BZ#661244)
+
+* Previously, the &quot;tomcat6&quot; init script failed to start Tomcat with a &quot;This
+account is currently not available.&quot; message when Tomcat was configured to
+run under a user that did not have a valid shell configured as a login
+shell. This update modifies the init script to work correctly regardless of
+the daemon user's login shell. Additionally, these new tomcat6 packages now
+set &quot;/sbin/nologin&quot; as the login shell for the &quot;tomcat&quot; user upon
+installation, as recommended by deployment best practices. (BZ#678671)
+
+* Some standard Tomcat directories were missing write permissions for the
+&quot;tomcat&quot; group, which could cause certain applications to fail with errors
+such as &quot;No output folder&quot;. This update adds write permissions for the
+&quot;tomcat&quot; group to the affected directories. (BZ#643809)
+
+* The &quot;/usr/sbin/tomcat6&quot; wrapper script used a hard-coded path to the
+&quot;catalina.out&quot; file, which may have caused problems (such as for logging
+init script output) if Tomcat was being run with a user other than &quot;tomcat&quot;
+and with CATALINA_BASE set to a directory other than the default.
+(BZ#695284, BZ#697504)
+
+* Stopping Tomcat could have resulted in traceback errors being logged to
+&quot;catalina.out&quot; when certain web applications were deployed. (BZ#698624)
+
+Users of Tomcat should upgrade to these updated packages, which contain
+backported patches to correct these issues. Tomcat must be restarted for
+this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+636997 - Additionally Created Instances of Tomcat  are broken / don't work
+643809 - Bad permissions on tomcat folders
+656246 - CVE-2010-4172 tomcat: cross-site-scripting vulnerability in the manager application
+661244 - Missing tomcat6-juli link in /usr/share/java
+675786 - CVE-2011-0013 tomcat: XSS vulnerability in HTML Manager interface
+675792 - CVE-2010-3718 tomcat: file permission bypass flaw
+678671 - tomcat user requires login shell
+695284 - catalina.out path hard-coded in /usr/sbin/tomcat6
+697504 - tomcat6-6.0.wrapper redirects init script output to wrong place
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-6.0.24-33.el6.noarch.rpm
+tomcat6-admin-webapps-6.0.24-33.el6.noarch.rpm
+tomcat6-docs-webapp-6.0.24-33.el6.noarch.rpm
+tomcat6-el-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-javadoc-6.0.24-33.el6.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-lib-6.0.24-33.el6.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-33.el6.noarch.rpm
+tomcat6-webapps-6.0.24-33.el6.noarch.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-6.0.24-33.el6.noarch.rpm
+tomcat6-admin-webapps-6.0.24-33.el6.noarch.rpm
+tomcat6-docs-webapp-6.0.24-33.el6.noarch.rpm
+tomcat6-el-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-javadoc-6.0.24-33.el6.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-lib-6.0.24-33.el6.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-33.el6.noarch.rpm
+tomcat6-webapps-6.0.24-33.el6.noarch.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-6.0.24-33.el6.noarch.rpm
+tomcat6-el-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-lib-6.0.24-33.el6.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-33.el6.noarch.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-admin-webapps-6.0.24-33.el6.noarch.rpm
+tomcat6-docs-webapp-6.0.24-33.el6.noarch.rpm
+tomcat6-javadoc-6.0.24-33.el6.noarch.rpm
+tomcat6-webapps-6.0.24-33.el6.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-6.0.24-33.el6.noarch.rpm
+tomcat6-el-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-33.el6.noarch.rpm
+tomcat6-lib-6.0.24-33.el6.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-33.el6.noarch.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/tomcat6-6.0.24-33.el6.src.rpm</a>
+
+noarch:
+tomcat6-admin-webapps-6.0.24-33.el6.noarch.rpm
+tomcat6-docs-webapp-6.0.24-33.el6.noarch.rpm
+tomcat6-javadoc-6.0.24-33.el6.noarch.rpm
+tomcat6-webapps-6.0.24-33.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3718.html">https://www.redhat.com/security/data/cve/CVE-2010-3718.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4172.html">https://www.redhat.com/security/data/cve/CVE-2010-4172.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0013.html">https://www.redhat.com/security/data/cve/CVE-2011-0013.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-6.html">http://tomcat.apache.org/security-6.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN1Q8DXlSAg2UNWIIRAiAjAKCKpl/PFfVHVQW3duUk3RvEpSrxOgCfQOVY
+4+vDaJH2BGgmbj70ZTb551A=
+=zxY+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

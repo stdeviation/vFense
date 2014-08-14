@@ -1,0 +1,256 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0264&#45;01] Low: rgmanager security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Feb 2011 10:47:21 &#45;0500 -->
+<!--X-Message-Id: 201102161547.p1GFlGok005024@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0264-01] Low: rgmanager security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0264-01] Low: rgmanager security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0264-01] Low: rgmanager security and bug fix update</li>
+<li><em>Date</em>: Wed, 16 Feb 2011 10:46:59 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: rgmanager security and bug fix update
+Advisory ID:       RHSA-2011:0264-01
+Product:           Red Hat Cluster Suite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0264.html">https://rhn.redhat.com/errata/RHSA-2011-0264.html</a>
+Issue date:        2011-02-16
+CVE Names:         CVE-2008-6552 CVE-2010-3389 
+=====================================================================
+
+1. Summary:
+
+An updated rgmanager package that fixes multiple security issues and
+several bugs is now available for Red Hat Cluster Suite 4.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Cluster Suite 4AS - i386, ia64, ppc, x86_64
+Red Hat Cluster Suite 4ES - i386, ia64, x86_64
+Red Hat Cluster Suite 4WS - i386, ia64, x86_64
+
+3. Description:
+
+The rgmanager package contains the Red Hat Resource Group Manager, which
+provides high availability for critical server applications.
+
+Multiple insecure temporary file use flaws were discovered in rgmanager and
+various resource scripts run by rgmanager. A local attacker could use these
+flaws to overwrite an arbitrary file writable by the rgmanager process
+(i.e. user root) with the output of rgmanager or a resource agent via a
+symbolic link attack. (CVE-2008-6552)
+
+It was discovered that certain resource agent scripts set the
+LD_LIBRARY_PATH environment variable to an insecure value containing empty
+path elements. A local user able to trick a user running those scripts to
+run them while working from an attacker-writable directory could use this
+flaw to escalate their privileges via a specially-crafted dynamic library.
+(CVE-2010-3389)
+
+Red Hat would like to thank Raphael Geissert for reporting the
+CVE-2010-3389 issue.
+
+This update also fixes the following bugs:
+
+* Previously, starting threads could incorrectly include a reference to an
+exited thread if that thread exited when rgmanager received a request
+to start a new thread. Due to this issue, the new thread did not retry and
+entered an infinite loop. This update ensures that new threads do not
+reference old threads. Now, new threads no longer enter an infinite loop
+in which the rgmanager enables and disables services without failing
+gracefully. (BZ#502872)
+
+* Previously, nfsclient.sh left temporary nfsclient-status-cache-$$ files
+in /tmp/. (BZ#506152)
+
+* Previously, the function local_node_name in
+/resources/utils/member_util.sh did not correctly check whether magma_tool
+failed. Due to this issue, empty strings could be returned. This update
+checks the input and rejects empty strings. (BZ#516758)
+
+* Previously, the file system agent could kill a process when an
+application used a mount point with a similar name to a mount point managed
+by rgmanager using force_unmount. With this update, the file system agent
+kills only the processes that access the mount point managed by rgmanager.
+(BZ#555901)
+
+* Previously, simultaneous execution of &quot;lvchange --deltag&quot; from
+/etc/init.d/rgmanager caused a checksum error on High Availability Logical
+Volume Manager (HA-LVM). With this update, ownership of LVM tags is checked
+before removing them. (BZ#559582)
+
+* Previously, the isAlive check could fail if two nodes used the same file
+name. With this update, the isAlive function prevents two nodes from using
+the same file name. (BZ#469815)
+
+* Previously, the S/Lang code could lead to unwanted S/Lang stack leaks
+during event processing. (BZ#507430)
+
+All users of rgmanager are advised to upgrade to this updated package,
+which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+469815 - clurgmgrd[15993]: &lt;notice&gt; status on clusterfs &quot;gfs&quot; returned 1 (generic error)
+498985 - rgmanager is affected by several symlink attack vulnerabilities
+506152 - nfsclient.sh leaves temporary files /tmp/nfsclient-status-cache-$$
+507430 - S/Lang stack / memory leaks
+516758 - rgmanager:  local_node_name does not check if magma_tool failed.
+519436 - CVE-2008-6552 cman, gfs2-utils, rgmanager: multiple insecure temporary file use issues
+555901 - fs.sh can kill processes that are not on the mount point which is being unmounted
+639044 - CVE-2010-3389 rgmanager: insecure library loading vulnerability
+
+6. Package List:
+
+Red Hat Cluster Suite 4AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm</a>
+
+i386:
+rgmanager-1.9.88-2.el4.i386.rpm
+rgmanager-debuginfo-1.9.88-2.el4.i386.rpm
+
+ia64:
+rgmanager-1.9.88-2.el4.ia64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.ia64.rpm
+
+ppc:
+rgmanager-1.9.88-2.el4.ppc64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.ppc64.rpm
+
+x86_64:
+rgmanager-1.9.88-2.el4.x86_64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.x86_64.rpm
+
+Red Hat Cluster Suite 4ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm</a>
+
+i386:
+rgmanager-1.9.88-2.el4.i386.rpm
+rgmanager-debuginfo-1.9.88-2.el4.i386.rpm
+
+ia64:
+rgmanager-1.9.88-2.el4.ia64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.ia64.rpm
+
+x86_64:
+rgmanager-1.9.88-2.el4.x86_64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.x86_64.rpm
+
+Red Hat Cluster Suite 4WS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/RHCS/SRPMS/rgmanager-1.9.88-2.el4.src.rpm</a>
+
+i386:
+rgmanager-1.9.88-2.el4.i386.rpm
+rgmanager-debuginfo-1.9.88-2.el4.i386.rpm
+
+ia64:
+rgmanager-1.9.88-2.el4.ia64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.ia64.rpm
+
+x86_64:
+rgmanager-1.9.88-2.el4.x86_64.rpm
+rgmanager-debuginfo-1.9.88-2.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-6552.html">https://www.redhat.com/security/data/cve/CVE-2008-6552.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3389.html">https://www.redhat.com/security/data/cve/CVE-2010-3389.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNW/CaXlSAg2UNWIIRAonpAJ9BaU7Y+6qXzBY5oiQ4PgQFDpQrMQCgrrAw
+g+llk7ovrBjO2zjH2U/tuSg=
+=lug0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

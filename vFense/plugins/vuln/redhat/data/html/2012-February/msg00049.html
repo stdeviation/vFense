@@ -1,0 +1,236 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0307&#45;03] Low: util&#45;linux security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:53:40 &#45;0500 -->
+<!--X-Message-Id: 201202210453.q1L4rWMW013859@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0307-03] Low: util-linux security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0307-03] Low: util-linux security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0307-03] Low: util-linux security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:53:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: util-linux security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0307-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0307.html">https://rhn.redhat.com/errata/RHSA-2012-0307.html</a>
+Issue date:        2012-02-21
+Keywords:          fdisk fsfreeze blockdev ipc
+CVE Names:         CVE-2011-1675 CVE-2011-1677 
+=====================================================================
+
+1. Summary:
+
+An updated util-linux package that fixes multiple security issues, various
+bugs, and adds two enhancements is now available for Red Hat
+Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The util-linux package contains a large variety of low-level system
+utilities that are necessary for a Linux system to function. Among others,
+util-linux contains the fdisk configuration tool and the login program.
+
+Multiple flaws were found in the way the mount and umount commands
+performed mtab (mounted file systems table) file updates. A local,
+unprivileged user allowed to mount or unmount file systems could use these
+flaws to corrupt the mtab file and create a stale lock file, preventing
+other users from mounting and unmounting file systems. (CVE-2011-1675,
+CVE-2011-1677)
+
+This update also fixes the following bugs:
+
+* When the user logged into a telnet server, the login utility did not
+update the utmp database properly if the utility was executed from the
+telnetd daemon. This was due to telnetd not creating an appropriate entry
+in a utmp file before executing login. With this update, correct entries
+are created and the database is updated properly. (BZ#646300)
+
+* Various options were not described on the blockdev(8) manual page. With
+this update, the blockdev(8) manual page includes all the relevant options.
+(BZ#650937)
+
+* Prior to this update, the build process of the util-linux package failed
+in the po directory with the following error message: &quot;@MKINSTALLDIRS@:
+No such file or directory&quot;. An upstream patch has been applied to address
+this issue, and the util-linux package now builds successfully. (BZ#677452)
+
+* Previously, the ipcs(1) and ipcrm(1) manual pages mentioned an invalid
+option, &quot;-b&quot;. With this update, only valid options are listed on those
+manual pages. (BZ#678407)
+
+* Previously, the mount(8) manual page contained incomplete information
+about the ext4 and XFS file systems. With this update, the mount(8) manual
+page contains the missing information. (BZ#699639)
+
+In addition, this update adds the following enhancements:
+
+* Previously, if DOS mode was enabled on a device, the fdisk utility could
+report error messages similar to the following:
+
+Partition 1 has different physical/logical beginnings (non-Linux?):
+phys=(0, 1, 1) logical=(0, 2, 7)
+
+This update enables users to switch off DOS compatible mode (by specifying
+the &quot;-c&quot; option), and such error messages are no longer displayed.
+(BZ#678430)
+
+* This update adds the &quot;fsfreeze&quot; command which halts access to a file
+system on a disk. (BZ#726572)
+
+All users of util-linux are advised to upgrade to this updated package,
+which contains backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+646300 - login doesn't update /var/run/utmp properly
+650937 - blockdev man page missing information
+677452 - util-linux fails to build with gettext-0.17
+678407 - [RHEL 5] ipcs and ipcrm in wrong man section
+695916 - CVE-2011-1675 util-linux: mount fails to anticipate RLIMIT_FSIZE
+695924 - CVE-2011-1677 util-linux: umount may fail to remove /etc/mtab~ lock file
+699639 - mount man page is missing support for ext4/xfs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/util-linux-2.13-0.59.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/util-linux-2.13-0.59.el5.src.rpm</a>
+
+i386:
+util-linux-2.13-0.59.el5.i386.rpm
+util-linux-debuginfo-2.13-0.59.el5.i386.rpm
+
+x86_64:
+util-linux-2.13-0.59.el5.x86_64.rpm
+util-linux-debuginfo-2.13-0.59.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/util-linux-2.13-0.59.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/util-linux-2.13-0.59.el5.src.rpm</a>
+
+i386:
+util-linux-2.13-0.59.el5.i386.rpm
+util-linux-debuginfo-2.13-0.59.el5.i386.rpm
+
+ia64:
+util-linux-2.13-0.59.el5.ia64.rpm
+util-linux-debuginfo-2.13-0.59.el5.ia64.rpm
+
+ppc:
+util-linux-2.13-0.59.el5.ppc.rpm
+util-linux-debuginfo-2.13-0.59.el5.ppc.rpm
+
+s390x:
+util-linux-2.13-0.59.el5.s390x.rpm
+util-linux-debuginfo-2.13-0.59.el5.s390x.rpm
+
+x86_64:
+util-linux-2.13-0.59.el5.x86_64.rpm
+util-linux-debuginfo-2.13-0.59.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1675.html">https://www.redhat.com/security/data/cve/CVE-2011-1675.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1677.html">https://www.redhat.com/security/data/cve/CVE-2011-1677.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyNEXlSAg2UNWIIRAlBTAKC7wU9LA81evd44RyV9FwsPwG2EPwCcCHvh
+dthhpih+YRya55EStW9wwuA=
+=7bun
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

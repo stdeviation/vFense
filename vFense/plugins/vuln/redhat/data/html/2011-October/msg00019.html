@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1408&#45;01] Moderate: rhev&#45;hypervisor security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 26 Oct 2011 13:25:25 &#45;0400 -->
+<!--X-Message-Id: 201110261725.p9QHPIvf006939@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1408-01] Moderate: rhev-hypervisor security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1408-01] Moderate: rhev-hypervisor security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1408-01] Moderate: rhev-hypervisor security update</li>
+<li><em>Date</em>: Wed, 26 Oct 2011 17:25:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhev-hypervisor security update
+Advisory ID:       RHSA-2011:1408-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1408.html">https://rhn.redhat.com/errata/RHSA-2011-1408.html</a>
+Issue date:        2011-10-26
+CVE Names:         CVE-2011-2723 CVE-2011-2942 CVE-2011-3188 
+                   CVE-2011-3347 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes several security issues is
+now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-5 - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+The RHBA-2011:1254 update introduced a regression in the Linux kernel's
+Ethernet bridge implementation. If a system had an interface in a bridge,
+and an attacker on the local network could send packets to that interface,
+they could cause a denial of service on that system. (CVE-2011-2942)
+
+A flaw in the Linux kernel could lead to GRO (Generic Receive Offload)
+fields being left in an inconsistent state. An attacker on the local
+network could use this flaw to trigger a denial of service. GRO is enabled
+by default in all network drivers that support it. (CVE-2011-2723)
+
+The way IPv4 and IPv6 protocol sequence numbers and fragment IDs were
+generated could allow a man-in-the-middle attacker to inject packets and
+possibly hijack connections. Protocol sequence numbers and fragment IDs are
+now more random. (CVE-2011-3188)
+
+Non-member VLAN (virtual LAN) packet handling for interfaces in promiscuous
+mode and also using the be2net driver could allow an attacker on the local
+network to cause a denial of service. (CVE-2011-3347)
+
+Red Hat would like to thank Brent Meshier for reporting CVE-2011-2723; Dan
+Kaminsky for reporting CVE-2011-3188; and Somnath Kotur for reporting
+CVE-2011-3347.
+
+This updated package provides updated components that include fixes for
+numerous security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however.
+
+The security fixes included in this update address the following CVE
+numbers:
+
+CVE-2011-2695, CVE-2011-2699, CVE-2011-3191, CVE-2011-1833, CVE-2011-2496,
+CVE-2011-3209, CVE-2011-2484, CVE-2011-3131, CVE-2009-4067, CVE-2011-1160,
+and CVE-2011-1585 (kernel issues)
+
+CVE-2011-3378 (rpm issues)
+
+Users of Red Hat Enterprise Virtualization Hypervisor should upgrade to
+this updated package, which resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+726552 - CVE-2011-2723 kernel: gro: only reset frag0 when skb can be pulled
+730917 - CVE-2011-2942 kernel: bridge: null pointer dereference in __br_deliver
+732658 - CVE-2011-3188 kernel: net: improve sequence number generation
+736425 - CVE-2011-3347 kernel: be2net: promiscuous mode and non-member VLAN packets DoS
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-5:
+
+noarch:
+rhev-hypervisor-5.7-20111018.1.el5_7.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2723.html">https://www.redhat.com/security/data/cve/CVE-2011-2723.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2942.html">https://www.redhat.com/security/data/cve/CVE-2011-2942.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3188.html">https://www.redhat.com/security/data/cve/CVE-2011-3188.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3347.html">https://www.redhat.com/security/data/cve/CVE-2011-3347.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-1254.html">https://rhn.redhat.com/errata/RHBA-2011-1254.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOqEJqXlSAg2UNWIIRAklfAJ4/CAe4xb1UCpuB6a1L1QSnwbGAbgCfQd9g
+FcmqqjxbdN5SYNy7DNT8O9c=
+=WUu6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1426&#45;01] Important: xorg&#45;x11&#45;server security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 15 Oct 2013 14:42:18 &#45;0400 -->
+<!--X-Message-Id: 201310151842.r9FIgHva014830@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1426-01] Important: xorg-x11-server security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1426-01] Important: xorg-x11-server security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1426-01] Important: xorg-x11-server security update</li>
+<li><em>Date</em>: Tue, 15 Oct 2013 18:42:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xorg-x11-server security update
+Advisory ID:       RHSA-2013:1426-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1426.html">https://rhn.redhat.com/errata/RHSA-2013-1426.html</a>
+Issue date:        2013-10-15
+CVE Names:         CVE-2013-4396 
+=====================================================================
+
+1. Summary:
+
+Updated xorg-x11-server packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+X.Org is an open source implementation of the X Window System. It provides
+the basic low-level functionality that full-fledged graphical user
+interfaces are designed upon.
+
+A use-after-free flaw was found in the way the X.Org server handled
+ImageText requests. A malicious, authorized client could use this flaw to
+crash the X.Org server or, potentially, execute arbitrary code with root
+privileges. (CVE-2013-4396)
+
+Red Hat would like to thank the X.Org security team for reporting this
+issue. Upstream acknowledges Pedro Ribeiro as the original reporter.
+
+All xorg-x11-server users are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+1014561 - CVE-2013-4396 xorg-x11-server: use-after-free flaw when handling ImageText requests
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.i386.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm</a>
+
+i386:
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.i386.rpm
+
+x86_64:
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xorg-x11-server-1.1.1-48.101.el5_10.1.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.i386.rpm
+
+ia64:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.ia64.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.ia64.rpm
+
+ppc:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.ppc.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.ppc.rpm
+
+s390x:
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.s390x.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.s390x.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.s390x.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.s390x.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.s390x.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.101.el5_10.1.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.101.el5_10.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+
+x86_64:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+
+noarch:
+xorg-x11-server-source-1.13.0-11.1.el6_4.2.noarch.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+noarch:
+xorg-x11-server-source-1.13.0-11.1.el6_4.2.noarch.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+
+ppc64:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.ppc64.rpm
+
+s390x:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.s390x.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.s390x.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.s390x.rpm
+
+x86_64:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+
+noarch:
+xorg-x11-server-source-1.13.0-11.1.el6_4.2.noarch.rpm
+
+ppc64:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.ppc.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.ppc64.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.ppc.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.ppc64.rpm
+
+s390x:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.s390x.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.s390x.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.s390x.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.s390x.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+
+x86_64:
+xorg-x11-server-Xephyr-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xorg-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-common-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-server-1.13.0-11.1.el6_4.2.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+
+noarch:
+xorg-x11-server-source-1.13.0-11.1.el6_4.2.noarch.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xnest-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-Xvfb-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-debuginfo-1.13.0-11.1.el6_4.2.x86_64.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.i686.rpm
+xorg-x11-server-devel-1.13.0-11.1.el6_4.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4396.html">https://www.redhat.com/security/data/cve/CVE-2013-4396.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSXYxwXlSAg2UNWIIRAm/2AKCvUEvpGnUJRnB8qSO++nHUvzyhSACeOkgd
+mAjaqUHDbJLXTdQileULXs4=
+=TQ40
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

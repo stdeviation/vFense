@@ -1,0 +1,297 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1635&#45;02] Low: pacemaker security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:38:06 &#45;0500 -->
+<!--X-Message-Id: 201311210438.rAL4c4ix013843@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1635-02] Low: pacemaker security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1635-02] Low: pacemaker security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1635-02] Low: pacemaker security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:41:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: pacemaker security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1635-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1635.html">https://rhn.redhat.com/errata/RHSA-2013-1635.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2013-0281 
+=====================================================================
+
+1. Summary:
+
+Updated pacemaker packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux High Availability (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Resilient Storage (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Pacemaker is a high-availability cluster resource manager with a powerful
+policy engine.
+
+A denial of service flaw was found in the way Pacemaker performed
+authentication and processing of remote connections in certain
+circumstances. When Pacemaker was configured to allow remote Cluster
+Information Base (CIB) configuration or resource management, a remote
+attacker could use this flaw to cause Pacemaker to block indefinitely
+(preventing it from serving other requests). (CVE-2013-0281)
+
+Note: The default Pacemaker configuration in Red Hat Enterprise Linux 6 has
+the remote CIB management functionality disabled.
+
+The pacemaker package has been upgraded to upstream version 1.1.10, which
+provides a number of bug fixes and enhancements over the previous version:
+
+* Pacemaker no longer assumes unknown cman nodes are safely stopped.
+
+* The core dump file now converts all exit codes into positive 'errno'
+values.
+
+* Pacemaker ensures a return to a stable state after too many fencing
+failures, and initiates a shutdown if a node claimed to be fenced is still
+active.
+
+* The crm_error tool adds the ability to list and print error symbols.
+
+* The crm_resource command allows individual resources to be reprobed, and
+implements the &quot;--ban&quot; option for moving resources away from nodes.
+The &quot;--clear&quot; option has replaced the &quot;--unmove&quot; option. Also, crm_resource
+now supports OCF tracing when using the &quot;--force&quot; option.
+
+* The IPC mechanism restores the ability for members of the haclient group
+to connect to the cluster.
+
+* The Policy Engine daemon allows active nodes in the current membership to
+be fenced without quorum.
+
+* Policy Engine now suppresses meaningless IDs when displaying anonymous
+clone status, supports maintenance mode for a single node, and correctly
+handles the recovered resources before they are operated on.
+
+* XML configuration files are now checked for non-printing characters and
+replaced with their octal equivalent when exporting XML text. Also, a more
+reliable buffer allocation strategy has been implemented to prevent
+lockups.
+
+(BZ#987355)
+
+Additional bug fixes:
+
+* The &quot;crm_resource --move&quot; command was designed for atomic resources and
+could not handle resources on clones, masters, or slaves present on
+multiple nodes. Consequently, crm_resource could not obtain enough
+information to move a resource and did not perform any action. The &quot;--ban&quot;
+and &quot;--clear&quot; options have been added to allow the administrator to
+instruct the cluster unambiguously. Clone, master, and slave resources can
+now be navigated within the cluster as expected. (BZ#902407)
+
+* The hacluster user account did not have a user identification (UID) or
+group identification (GID) number reserved on the system. Thus, UID and GID
+values were picked randomly during the installation process. The UID and
+GID number 189 was reserved for hacluster and is now used consistently for
+all installations. (BZ#908450)
+
+* Certain clusters used node host names that did not match the output of
+the &quot;uname -n&quot; command. Thus, the default node name used by the crm_standby
+and crm_failcount commands was incorrect and caused the cluster to ignore
+the update by the administrator. The crm_node command is now used instead
+of the uname utility in helper scripts. As a result, the cluster behaves as
+expected. (BZ#913093)
+
+* Due to incorrect return code handling, internal recovery logic of the
+crm_mon utility was not executed when a configuration updated failed to
+apply, leading to an assertion failure. Return codes are now checked
+correctly, and the recovery of an expected error state is now handled
+transparently. (BZ#951371)
+
+* cman's automatic unfencing feature failed when combined with Pacemaker.
+Support for automated unfencing in Pacemaker has been added, and the
+unwanted behavior no longer occurs. (BZ#996850)
+
+All pacemaker users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+891922 - CVE-2013-0281 pacemaker: remote DoS when CIB management is enabled caused by use of blocking sockets
+902407 - Different results when moving Master/Slave resources
+902459 - Persistent resource-related data after the resource is deleted
+996850 - Unfence at cluster startup with fence_scsi
+997346 - pacemaker enables itself on boot during installation
+1011618 - Slave roles inconsistent in pcs status xml (or crm_mon)
+
+6. Package List:
+
+Red Hat Enterprise Linux High Availability (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm</a>
+
+i386:
+pacemaker-1.1.10-14.el6.i686.rpm
+pacemaker-cli-1.1.10-14.el6.i686.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.i686.rpm
+pacemaker-cts-1.1.10-14.el6.i686.rpm
+pacemaker-debuginfo-1.1.10-14.el6.i686.rpm
+pacemaker-doc-1.1.10-14.el6.i686.rpm
+pacemaker-libs-1.1.10-14.el6.i686.rpm
+pacemaker-libs-devel-1.1.10-14.el6.i686.rpm
+
+x86_64:
+pacemaker-1.1.10-14.el6.x86_64.rpm
+pacemaker-cli-1.1.10-14.el6.x86_64.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.i686.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.x86_64.rpm
+pacemaker-cts-1.1.10-14.el6.x86_64.rpm
+pacemaker-debuginfo-1.1.10-14.el6.i686.rpm
+pacemaker-debuginfo-1.1.10-14.el6.x86_64.rpm
+pacemaker-doc-1.1.10-14.el6.x86_64.rpm
+pacemaker-libs-1.1.10-14.el6.i686.rpm
+pacemaker-libs-1.1.10-14.el6.x86_64.rpm
+pacemaker-libs-devel-1.1.10-14.el6.i686.rpm
+pacemaker-libs-devel-1.1.10-14.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Resilient Storage (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm</a>
+
+i386:
+pacemaker-1.1.10-14.el6.i686.rpm
+pacemaker-cli-1.1.10-14.el6.i686.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.i686.rpm
+pacemaker-cts-1.1.10-14.el6.i686.rpm
+pacemaker-debuginfo-1.1.10-14.el6.i686.rpm
+pacemaker-doc-1.1.10-14.el6.i686.rpm
+pacemaker-libs-1.1.10-14.el6.i686.rpm
+pacemaker-libs-devel-1.1.10-14.el6.i686.rpm
+
+x86_64:
+pacemaker-1.1.10-14.el6.x86_64.rpm
+pacemaker-cli-1.1.10-14.el6.x86_64.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.i686.rpm
+pacemaker-cluster-libs-1.1.10-14.el6.x86_64.rpm
+pacemaker-cts-1.1.10-14.el6.x86_64.rpm
+pacemaker-debuginfo-1.1.10-14.el6.i686.rpm
+pacemaker-debuginfo-1.1.10-14.el6.x86_64.rpm
+pacemaker-doc-1.1.10-14.el6.x86_64.rpm
+pacemaker-libs-1.1.10-14.el6.i686.rpm
+pacemaker-libs-1.1.10-14.el6.x86_64.rpm
+pacemaker-libs-devel-1.1.10-14.el6.i686.rpm
+pacemaker-libs-devel-1.1.10-14.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pacemaker-1.1.10-14.el6.src.rpm</a>
+
+i386:
+pacemaker-debuginfo-1.1.10-14.el6.i686.rpm
+pacemaker-remote-1.1.10-14.el6.i686.rpm
+
+x86_64:
+pacemaker-debuginfo-1.1.10-14.el6.x86_64.rpm
+pacemaker-remote-1.1.10-14.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0281.html">https://www.redhat.com/security/data/cve/CVE-2013-0281.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjY4fXlSAg2UNWIIRAh/NAJ0aE95vq2J06nTLQqnwLhV9yWrM5wCeIN9t
+CSiV2AI7kFPkupLOCP2BBSM=
+=he1w
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

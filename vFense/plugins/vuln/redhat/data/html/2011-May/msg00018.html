@@ -1,0 +1,329 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0560&#45;01] Low: sssd security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 May 2011 08:20:59 &#45;0400 -->
+<!--X-Message-Id: 201105191220.p4JCKq57021649@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0560-01] Low: sssd security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0560-01] Low: sssd security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0560-01] Low: sssd security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 19 May 2011 12:20:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sssd security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0560-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0560.html">https://rhn.redhat.com/errata/RHSA-2011-0560.html</a>
+Issue date:        2011-05-19
+CVE Names:         CVE-2010-4341 
+=====================================================================
+
+1. Summary:
+
+Updated sssd packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The System Security Services Daemon (SSSD) provides a set of daemons to
+manage access to remote directories and authentication mechanisms. It
+provides an NSS and PAM interface toward the system and a pluggable
+back-end system to connect to multiple different account sources. It is
+also the basis to provide client auditing and policy services for projects
+such as FreeIPA.
+
+A flaw was found in the SSSD PAM responder that could allow a local
+attacker to crash SSSD via a carefully-crafted packet. With SSSD
+unresponsive, legitimate users could be denied the ability to log in to the
+system. (CVE-2010-4341)
+
+Red Hat would like to thank Sebastian Krahmer for reporting this issue.
+
+This update also fixes several bugs and adds various enhancements.
+Documentation for these bug fixes and enhancements will be available
+shortly from the Technical Notes document, linked to in the References
+section.
+
+Users of SSSD should upgrade to these updated packages, which upgrade SSSD
+to upstream version 1.5.1 to correct this issue, and fix the bugs and add
+the enhancements noted in the Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+442680 - Better support for Kerberos ticket cache management
+598501 - SSSD doesn't follow LDAP referrals when using non-anonymous bind
+633406 - the krb5 locator plugin isn't packaged for multilib
+633487 - SSSD initgroups does not behave as expected
+640602 - sssd is not escaping correctly LDAP searches
+644072 - Rebase SSSD to 1.5
+645438 - NSS responder dies if DP dies during a request
+645449 - 'getent passwd &lt;username&gt;' returns nothing if its uidNumber gt 2147483647.
+647816 - Login screen freezes for more than 2mins when configured SSSD for proxy auth.
+649286 - SSSD will sometimes lose groups from the cache
+658158 - sssd stops on upgrade
+659401 - SSSD shutdown sometimes hangs
+660323 - Provide an option to specify DNS domain for service discovery
+661163 - CVE-2010-4341 sssd: DoS in sssd PAM responder can prevent logins
+667059 - nss client blocks when enumerating local domain after restart.
+667326 - '-s' option in sss_obfuscate command is a bit redundant.
+667349 - Obfuscated passwords can kill LDAP provider if OpenLDAP uses NSS.
+670511 - SSSD and sftp-only jailed users with pubkey login
+670763 - Missing primary group with simple access provider.
+670804 - Nested groups are not unrolled during the first enumeration.
+671478 - authconfig-tui/gtk removes &quot;ldap_user_home_directory&quot; from sssd.conf
+674141 - Traceback call messages displayed while &quot;sss_obfuscate&quot; command is executed as a non-root user.
+674164 - sss_obfuscate fails if there's no domain named &quot;default&quot;.
+674172 - Group members are not sanitized in nested group processing
+674515 - -p option always uses empty string to obfuscate password.
+675284 - &quot;no matching rule&quot; message logged on all successful requests.
+676401 - Remove HBAC time rules from SSSD
+676911 - SSSD attempts to use START_TLS over LDAPS for authentication
+677318 - Does not read renewable ccache at startup.
+677588 - sssd crashes at the next tgt renewals it tries.
+678091 - SSSD in 6.0 can not locate HBAC rules from FreeIPAv2
+678410 - name service caches names, so id command shows recently deleted users
+678593 - User information not updated on login for secondary domains
+678614 - SSSD needs to look at IPA's compat tree for netgroups
+678777 - IPA provider does not update removed group memberships on initgroups
+679082 - SSSD IPA provider should honor the krb5_realm option
+680367 - sssd not thread-safe
+682340 - sssd-be segmentation fault - ipa-client on ipa-server
+682807 - sssd_nss core dumps with certain lookups
+682850 - IPA provider should use realm instead of ipa_domain for base DN
+683158 - multiple problems with sssd + ldap (Active-Directory) and groups members.
+683255 - sudo/ldap lookup via sssd gets stuck for 5min waiting on netgroup
+683860 - sssd 1.5.1-9 breaks AD authentication
+683885 - SSSD should skip over groups with multiple names
+688491 - authconfig fails when access_provider is set as krb5 in sssd.conf.
+689886 - group memberships are not populated correctly during IPA provider initgroups
+690131 - Traceback messages seen while interrupting sss_obfuscate using ctrl+d.
+690421 - [abrt] sssd-1.2.1-28.el6_0.4: _talloc_free: Process /usr/libexec/sssd/sssd_be was killed by signal 11 (SIGSEGV)
+690866 - Groups with a zero-length memberuid attribute can cause SSSD to stop caching and responding to requests
+691678 - SSSD needs to fall back to 'cn' for GECOS information (was: SSSD configuration problem when configured with MSAD)
+692472 - Process /usr/libexec/sssd/sssd_be was killed by signal 11 (SIGSEGV)
+694146 - SSSD consumes GBs of RAM, possible memory leak
+694444 - Unable to resolve SRV record when called with _srv_,&lt;fixed ldap uri&gt; in ldap_uri
+694783 - SSSD crashes during getent when anonymous bind is disabled.
+696972 - [REGRESSION] Filters not honoured against fully-qualified users.
+701700 - sssd client libraries use select() but should use poll() instead
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+
+x86_64:
+sssd-1.5.1-34.el6.x86_64.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.x86_64.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-tools-1.5.1-34.el6.i686.rpm
+
+x86_64:
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+sssd-tools-1.5.1-34.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+
+ppc64:
+sssd-1.5.1-34.el6.ppc64.rpm
+sssd-client-1.5.1-34.el6.ppc.rpm
+sssd-client-1.5.1-34.el6.ppc64.rpm
+sssd-debuginfo-1.5.1-34.el6.ppc.rpm
+sssd-debuginfo-1.5.1-34.el6.ppc64.rpm
+
+s390x:
+sssd-1.5.1-34.el6.s390x.rpm
+sssd-client-1.5.1-34.el6.s390.rpm
+sssd-client-1.5.1-34.el6.s390x.rpm
+sssd-debuginfo-1.5.1-34.el6.s390.rpm
+sssd-debuginfo-1.5.1-34.el6.s390x.rpm
+
+x86_64:
+sssd-1.5.1-34.el6.x86_64.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.x86_64.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-tools-1.5.1-34.el6.i686.rpm
+
+ppc64:
+sssd-debuginfo-1.5.1-34.el6.ppc64.rpm
+sssd-tools-1.5.1-34.el6.ppc64.rpm
+
+s390x:
+sssd-debuginfo-1.5.1-34.el6.s390x.rpm
+sssd-tools-1.5.1-34.el6.s390x.rpm
+
+x86_64:
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+sssd-tools-1.5.1-34.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+
+x86_64:
+sssd-1.5.1-34.el6.x86_64.rpm
+sssd-client-1.5.1-34.el6.i686.rpm
+sssd-client-1.5.1-34.el6.x86_64.rpm
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.5.1-34.el6.src.rpm</a>
+
+i386:
+sssd-debuginfo-1.5.1-34.el6.i686.rpm
+sssd-tools-1.5.1-34.el6.i686.rpm
+
+x86_64:
+sssd-debuginfo-1.5.1-34.el6.x86_64.rpm
+sssd-tools-1.5.1-34.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4341.html">https://www.redhat.com/security/data/cve/CVE-2010-4341.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/index.html">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN1Qr+XlSAg2UNWIIRAitmAJ4/vnFA+RG6yosPlusnICXjY6ayygCfZRO7
++8USf94DNiwfiJq2wxiq3Rc=
+=Onj8
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

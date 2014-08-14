@@ -1,0 +1,143 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0633&#45;01] Moderate: jbossweb security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 11 Mar 2013 15:59:57 &#45;0400 -->
+<!--X-Message-Id: 201303111959.r2BJxvov025478@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0633-01] Moderate: jbossweb security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0633-01] Moderate: jbossweb security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0633-01] Moderate: jbossweb security update</li>
+<li><em>Date</em>: Mon, 11 Mar 2013 19:59:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: jbossweb security update
+Advisory ID:       RHSA-2013:0633-01
+Product:           JBoss Enterprise Web Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0633.html">https://rhn.redhat.com/errata/RHSA-2013-0633.html</a>
+Issue date:        2013-03-11
+CVE Names:         CVE-2012-5885 CVE-2012-5886 CVE-2012-5887 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Web Platform 5.2.0 which fixes multiple
+security issues is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+JBoss Web is a web container based on Apache Tomcat. It provides a single
+deployment platform for the JavaServer Pages (JSP) and Java Servlet
+technologies.
+
+Multiple weaknesses were found in the JBoss Web DIGEST authentication
+implementation, effectively reducing the security normally provided by
+DIGEST authentication. A remote attacker could use these flaws to perform
+replay attacks in some circumstances. (CVE-2012-5885, CVE-2012-5886,
+CVE-2012-5887)
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Web Platform installation (including all applications and
+configuration files).
+
+All users of JBoss Enterprise Web Platform 5.2.0 as provided from the Red
+Hat Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Web Platform installation (including all
+applications and configuration files).
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+873664 - CVE-2012-5885 CVE-2012-5886 CVE-2012-5887 tomcat: three DIGEST authentication implementation issues
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5885.html">https://www.redhat.com/security/data/cve/CVE-2012-5885.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5886.html">https://www.redhat.com/security/data/cve/CVE-2012-5886.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5887.html">https://www.redhat.com/security/data/cve/CVE-2012-5887.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.2.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.2.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRPjetXlSAg2UNWIIRAnN4AKC4ZvJHC8ME2ufJV3wXkETKsk/v6QCfVPsn
+NsYaebyoKQfVpdgVAP/3kEY=
+=yCKt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0521&#45;01] Moderate: gfs&#45;kmod security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 8 Jul 2010 16:03:00 &#45;0400 -->
+<!--X-Message-Id: 201007082002.o68K2sCR018528@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0521-01] Moderate: gfs-kmod security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0521-01] Moderate: gfs-kmod security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0521-01] Moderate: gfs-kmod security update</li>
+<li><em>Date</em>: Thu, 8 Jul 2010 14:02:54 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gfs-kmod security update
+Advisory ID:       RHSA-2010:0521-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0521.html">https://rhn.redhat.com/errata/RHSA-2010-0521.html</a>
+Issue date:        2010-07-08
+CVE Names:         CVE-2010-0727 
+=====================================================================
+
+1. Summary:
+
+Updated gfs-kmod packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.4 Extended Update Support, kernel release
+2.6.18-164.19.1.el5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Cluster-Storage (v. 5.4.Z server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The gfs-kmod packages contain modules that provide the ability to mount and
+use GFS file systems.
+
+A flaw was found in the gfs_lock() implementation. The GFS locking code
+could skip the lock operation for files that have the S_ISGID bit
+(set-group-ID on execution) in their mode set. A local, unprivileged user
+on a system that has a GFS file system mounted could use this flaw to cause
+a kernel panic. (CVE-2010-0727)
+
+These updated gfs-kmod packages are in sync with the latest kernel
+(2.6.18-164.19.1.el5). The modules in earlier gfs-kmod packages failed to
+load because they did not match the running kernel. It was possible to
+force-load the modules. With this update, however, users no longer need to.
+
+Users are advised to upgrade to these latest gfs-kmod packages, updated for
+use with the 2.6.18-164.19.1.el5 kernel, which contain a backported patch
+to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+570863 - CVE-2010-0727 bug in GFS/GFS2 locking code leads to dos
+
+6. Package List:
+
+RHEL Cluster-Storage (v. 5.4.Z server):
+
+Source:
+gfs-kmod-0.1.34-2.el5_4.3.src.rpm
+
+i386:
+gfs-kmod-debuginfo-0.1.34-2.el5_4.3.i686.rpm
+kmod-gfs-0.1.34-2.el5_4.3.i686.rpm
+kmod-gfs-PAE-0.1.34-2.el5_4.3.i686.rpm
+kmod-gfs-xen-0.1.34-2.el5_4.3.i686.rpm
+
+ia64:
+gfs-kmod-debuginfo-0.1.34-2.el5_4.3.ia64.rpm
+kmod-gfs-0.1.34-2.el5_4.3.ia64.rpm
+kmod-gfs-xen-0.1.34-2.el5_4.3.ia64.rpm
+
+ppc:
+gfs-kmod-debuginfo-0.1.34-2.el5_4.3.ppc64.rpm
+kmod-gfs-0.1.34-2.el5_4.3.ppc64.rpm
+
+x86_64:
+gfs-kmod-debuginfo-0.1.34-2.el5_4.3.x86_64.rpm
+kmod-gfs-0.1.34-2.el5_4.3.x86_64.rpm
+kmod-gfs-xen-0.1.34-2.el5_4.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0727.html">https://www.redhat.com/security/data/cve/CVE-2010-0727.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMNi7aXlSAg2UNWIIRApVNAJ9Ni0KxRzDzfGdRY/t5nrP5dxGMUACbB6V9
+B69Pl4RzXz38NEhhhEDt4V8=
+=GOJs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

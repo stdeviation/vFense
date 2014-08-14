@@ -1,0 +1,285 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0500&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 10 May 2011 14:18:22 &#45;0400 -->
+<!--X-Message-Id: 201105101818.p4AIIGA7023128@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0500-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0500-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0500-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Tue, 10 May 2011 12:18:16 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2011:0500-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0500.html">https://rhn.redhat.com/errata/RHSA-2011-0500.html</a>
+Issue date:        2011-05-10
+CVE Names:         CVE-2011-0695 CVE-2011-0711 CVE-2011-0726 
+                   CVE-2011-1010 CVE-2011-1013 CVE-2011-1019 
+                   CVE-2011-1078 CVE-2011-1079 CVE-2011-1080 
+                   CVE-2011-1082 CVE-2011-1093 CVE-2011-1163 
+                   CVE-2011-1170 CVE-2011-1171 CVE-2011-1172 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and various
+bugs are now available for Red Hat Enterprise MRG 1.3.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A race condition in the way the Linux kernel's InfiniBand implementation
+set up new connections could allow a remote user to cause a denial of
+service. (CVE-2011-0695, Important)
+
+* An integer signedness flaw in drm_modeset_ctl() could allow a local,
+unprivileged user to cause a denial of service or escalate their
+privileges. (CVE-2011-1013, Important)
+
+* A flaw in dccp_rcv_state_process() could allow a remote attacker to cause
+a denial of service, even when the socket was already closed.
+(CVE-2011-1093, Important)
+
+* A missing validation of a null-terminated string data structure element
+in bnep_sock_ioctl() could allow a local user to cause an information leak
+or a denial of service. (CVE-2011-1079, Moderate)
+
+* A flaw in the Linux kernel's Event Poll (epoll) implementation could
+allow a local, unprivileged user to cause a denial of service.
+(CVE-2011-1082, Moderate)
+
+* A missing initialization flaw in the XFS file system implementation could
+lead to an information leak. (CVE-2011-0711, Low)
+
+* The start_code and end_code values in &quot;/proc/[pid]/stat&quot; were not
+protected. In certain scenarios, this flaw could be used to defeat Address
+Space Layout Randomization (ASLR). (CVE-2011-0726, Low)
+
+* A missing validation check in the Linux kernel's mac_partition()
+implementation, used for supporting file systems created on Mac OS
+operating systems, could allow a local attacker to cause a denial of
+service by mounting a disk that contains specially-crafted partitions.
+(CVE-2011-1010, Low)
+
+* A flaw in dev_load() could allow a local user who has the CAP_NET_ADMIN
+capability to load arbitrary modules from &quot;/lib/modules/&quot;, instead of only
+netdev modules. (CVE-2011-1019, Low)
+
+* A missing initialization flaw in sco_sock_getsockopt_old() could allow a
+local, unprivileged user to cause an information leak. (CVE-2011-1078, Low)
+
+* A buffer overflow flaw in the DEC Alpha OSF partition implementation in
+the Linux kernel could allow a local attacker to cause an information leak
+by mounting a disk that contains specially-crafted partition tables.
+(CVE-2011-1163, Low)
+
+* Missing validations of null-terminated string data structure elements
+in the do_replace(), compat_do_replace(), do_ipt_get_ctl(),
+do_ip6t_get_ctl(), and do_arpt_get_ctl() functions could allow a local user
+who has the CAP_NET_ADMIN capability to cause an information leak.
+(CVE-2011-1170, CVE-2011-1171, CVE-2011-1172, CVE-2011-1080, Low)
+
+Red Hat would like to thank Jens Kuehnel for reporting CVE-2011-0695;
+Vasiliy Kulikov for reporting CVE-2011-1079, CVE-2011-1019, CVE-2011-1078,
+CVE-2011-1170, CVE-2011-1171, CVE-2011-1172, and CVE-2011-1080; Nelson
+Elhage for reporting CVE-2011-1082; Dan Rosenberg for reporting
+CVE-2011-0711; Kees Cook for reporting CVE-2011-0726; and Timo Warns for
+reporting CVE-2011-1010 and CVE-2011-1163.
+
+This update also fixes various bugs. Documentation for these bug fixes will
+be available shortly from the Technical Notes document linked to in the
+References section.
+
+Users should upgrade to these updated packages, which upgrade the kernel-rt
+kernel to version 2.6.33.9-rt31, and correct these issues. The system must
+be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+653648 - CVE-2011-0695 kernel: panic in ib_cm:cm_work_handler
+677260 - CVE-2011-0711 kernel: xfs: prevent leaking uninitialized stack memory in FSGEOMETRY_V1
+679282 - CVE-2011-1010 kernel: fs/partitions: Validate map_count in Mac partition tables
+679925 - CVE-2011-1013 kernel: drm_modeset_ctl signedness issue
+680360 - CVE-2011-1019 kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+681259 - CVE-2011-1078 kernel: bt sco_conninfo infoleak
+681260 - CVE-2011-1079 kernel: bnep device field missing NULL terminator
+681262 - CVE-2011-1080 kernel: ebtables stack infoleak
+681575 - CVE-2011-1082 kernel: potential kernel deadlock when creating circular epoll file structures
+682954 - CVE-2011-1093 kernel: dccp: fix oops on Reset after close
+684569 - CVE-2011-0726 kernel: proc: protect mm start_code/end_code in /proc/pid/stat
+688021 - CVE-2011-1163 kernel: fs/partitions: Corrupted OSF partition table infoleak
+689321 - CVE-2011-1170 ipv4: netfilter: arp_tables: fix infoleak to userspace
+689327 - CVE-2011-1171 ipv4: netfilter: ip_tables: fix infoleak to userspace
+689345 - CVE-2011-1172 ipv6: netfilter: ip6_tables: fix infoleak to userspace
+692665 - bnx2x NICs occassionally do not come up on boot
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.9-rt31.64.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.9-rt31.64.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-debug-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-devel-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-trace-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.9-rt31.64.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.33.9-rt31.64.el5rt.i686.rpm
+perf-2.6.33.9-rt31.64.el5rt.i686.rpm
+perf-debuginfo-2.6.33.9-rt31.64.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.33.9-rt31.64.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+perf-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+perf-debuginfo-2.6.33.9-rt31.64.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0695.html">https://www.redhat.com/security/data/cve/CVE-2011-0695.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0711.html">https://www.redhat.com/security/data/cve/CVE-2011-0711.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0726.html">https://www.redhat.com/security/data/cve/CVE-2011-0726.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1010.html">https://www.redhat.com/security/data/cve/CVE-2011-1010.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1013.html">https://www.redhat.com/security/data/cve/CVE-2011-1013.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1019.html">https://www.redhat.com/security/data/cve/CVE-2011-1019.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1078.html">https://www.redhat.com/security/data/cve/CVE-2011-1078.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1079.html">https://www.redhat.com/security/data/cve/CVE-2011-1079.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1080.html">https://www.redhat.com/security/data/cve/CVE-2011-1080.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1082.html">https://www.redhat.com/security/data/cve/CVE-2011-1082.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1093.html">https://www.redhat.com/security/data/cve/CVE-2011-1093.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1163.html">https://www.redhat.com/security/data/cve/CVE-2011-1163.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1170.html">https://www.redhat.com/security/data/cve/CVE-2011-1170.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1171.html">https://www.redhat.com/security/data/cve/CVE-2011-1171.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1172.html">https://www.redhat.com/security/data/cve/CVE-2011-1172.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1.3/html/Technical_Notes/RHSA-2011-0500.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1.3/html/Technical_Notes/RHSA-2011-0500.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNyYEtXlSAg2UNWIIRAmxmAJ9ywz4C0KHUJDhJSC4IuM7d+EnC0ACePY1/
+DCsJ+Fm6hnIhdDmh0lcD1uI=
+=xL/Q
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

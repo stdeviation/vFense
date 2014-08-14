@@ -1,0 +1,229 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0128&#45;01] Low: conga security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 02:01:51 &#45;0500 -->
+<!--X-Message-Id: 201301080701.r0871nJN031882@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0128-01] Low: conga security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0128-01] Low: conga security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0128-01] Low: conga security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:52:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: conga security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0128-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0128.html">https://rhn.redhat.com/errata/RHSA-2013-0128.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2012-3359 
+=====================================================================
+
+1. Summary:
+
+Updated conga packages that fix one security issue, multiple bugs, and add
+two enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Clustering (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The Conga project is a management system for remote workstations. It
+consists of luci, which is a secure web-based front end, and ricci, which
+is a secure daemon that dispatches incoming messages to underlying
+management modules.
+
+It was discovered that luci stored usernames and passwords in session
+cookies. This issue prevented the session inactivity timeout feature from
+working correctly, and allowed attackers able to get access to a session
+cookie to obtain the victim's authentication credentials. (CVE-2012-3359)
+
+Red Hat would like to thank George Hedfors of Cybercom Sweden East AB for
+reporting this issue.
+
+This update also fixes the following bugs:
+
+* Prior to this update, luci did not allow the fence_apc_snmp agent to be
+configured. As a consequence, users could not configure or view an existing
+configuration for fence_apc_snmp. This update adds a new screen that allows
+fence_apc_snmp to be configured. (BZ#832181)
+
+* Prior to this update, luci did not allow the SSL operation of the
+fence_ilo fence agent to be enabled or disabled. As a consequence, users
+could not configure or view an existing configuration for the 'ssl'
+attribute for fence_ilo. This update adds a checkbox to show whether the
+SSL operation is enabled and allows users to edit that attribute.
+(BZ#832183)
+
+* Prior to this update, luci did not allow the &quot;identity_file&quot; attribute of
+the fence_ilo_mp fence agent to be viewed or edited. As a consequence,
+users could not configure or view an existing configuration for the
+&quot;identity_file&quot; attribute of the fence_ilo_mp fence agent. This update adds
+a text input box to show the current state of the &quot;identity_file&quot; attribute
+of fence_ilo_mp and allows users to edit that attribute. (BZ#832185)
+
+* Prior to this update, redundant files and directories remained on the
+file system at /var/lib/luci/var/pts and /usr/lib{,64}/luci/zope/var/pts
+when the luci package was uninstalled. This update removes these files
+and directories when the luci package is uninstalled. (BZ#835649)
+
+* Prior to this update, the &quot;restart-disable&quot; recovery policy was not
+displayed in the recovery policy list from which users could select when
+they configure a recovery policy for a failover domain. As a consequence,
+the &quot;restart-disable&quot; recovery policy could not be set with the luci GUI.
+This update adds the &quot;restart-disable&quot; recovery option to the recovery
+policy pulldown list. (BZ#839732)
+
+* Prior to this update, line breaks that were not anticipated in the &quot;yum
+list&quot; output could cause package upgrade and/or installation to fail when
+creating clusters or adding nodes to existing clusters. As a consequence,
+creating clusters and adding cluster nodes to existing clusters could fail.
+This update modifies the ricci daemon to be able to correctly handle line
+breaks in the &quot;yum list&quot; output. (BZ#842865)
+
+In addition, this update adds the following enhancements:
+
+* This update adds support for configuring the Intel iPDU fence agent to
+the luci package. (BZ#741986)
+
+* This update adds support for viewing and changing the state of the new
+'nfsrestart' attribute to the FS and Cluster FS resource agent
+configuration screens. (BZ#822633)
+
+All users of conga are advised to upgrade to these updated packages, which
+resolve these issues and add these enhancements. After installing this
+update, the luci and ricci services will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+607179 - CVE-2012-3359 conga: insecure handling of luci web interface sessions
+832181 - fence_apc_snmp is missing from luci
+832183 - Luci is missing configuration of ssl for fence_ilo
+832185 - Luci cannot configure the &quot;identity_file&quot; attribute for fence_ilo_mp
+835649 - luci uninstall will leave /var/lib/luci/var/pts and /usr/lib*/luci/zope/var/pts behind
+839732 - Conga Add a Service Screen is Missing Option for Restart-Disable Recovery Policy
+
+6. Package List:
+
+RHEL Clustering (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/conga-0.12.2-64.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/conga-0.12.2-64.el5.src.rpm</a>
+
+i386:
+conga-debuginfo-0.12.2-64.el5.i386.rpm
+luci-0.12.2-64.el5.i386.rpm
+ricci-0.12.2-64.el5.i386.rpm
+
+ia64:
+conga-debuginfo-0.12.2-64.el5.ia64.rpm
+luci-0.12.2-64.el5.ia64.rpm
+ricci-0.12.2-64.el5.ia64.rpm
+
+ppc:
+conga-debuginfo-0.12.2-64.el5.ppc.rpm
+luci-0.12.2-64.el5.ppc.rpm
+ricci-0.12.2-64.el5.ppc.rpm
+
+x86_64:
+conga-debuginfo-0.12.2-64.el5.x86_64.rpm
+luci-0.12.2-64.el5.x86_64.rpm
+ricci-0.12.2-64.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3359.html">https://www.redhat.com/security/data/cve/CVE-2012-3359.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68RZXlSAg2UNWIIRArUYAKCFK4E7iD9cw25nQMvdsg2Tpk2TSQCgv2Dg
+OE1RPK2GrQaOvw4mwcCr8DY=
+=bbf3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

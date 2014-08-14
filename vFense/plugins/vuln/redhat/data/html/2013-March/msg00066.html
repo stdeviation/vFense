@@ -1,0 +1,187 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0680&#45;01] Moderate: jakarta&#45;commons&#45;httpclient security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 25 Mar 2013 13:21:13 &#45;0400 -->
+<!--X-Message-Id: 201303251721.r2PHLCaR014303@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0680-01] Moderate: jakarta-commons-httpclient security	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0680-01] Moderate: jakarta-commons-httpclient security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0680-01] Moderate: jakarta-commons-httpclient security	update</li>
+<li><em>Date</em>: Mon, 25 Mar 2013 17:21:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: jakarta-commons-httpclient security update
+Advisory ID:       RHSA-2013:0680-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0680.html">https://rhn.redhat.com/errata/RHSA-2013-0680.html</a>
+Issue date:        2013-03-25
+CVE Names:         CVE-2012-5783 
+=====================================================================
+
+1. Summary:
+
+An updated jakarta-commons-httpclient package for JBoss Enterprise
+Application Platform 5.2.0 which fixes one security issue is now available
+for Red Hat Enterprise Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform 5 for RHEL 4 AS - noarch
+JBoss Enterprise Application Platform 5 for RHEL 4 ES - noarch
+JBoss Enterprise Application Platform 5 for RHEL 5 Server - noarch
+JBoss Enterprise Application Platform 5 for RHEL 6 Server - noarch
+
+3. Description:
+
+The Jakarta Commons HttpClient component can be used to build HTTP-aware
+client applications (such as web browsers and web service clients).
+
+The Jakarta Commons HttpClient component did not verify that the server
+hostname matched the domain name in the subject's Common Name (CN) or
+subjectAltName field in X.509 certificates. This could allow a
+man-in-the-middle attacker to spoof an SSL server if they had a certificate
+that was valid for any domain name. (CVE-2012-5783)
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Application Platform installation (including all applications
+and configuration files).
+
+All users of JBoss Enterprise Application Platform 5.2.0 on Red Hat
+Enterprise Linux 4, 5, and 6 are advised to upgrade to this updated
+package. The JBoss server process must be restarted for the update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+873317 - CVE-2012-5783 jakarta-commons-httpclient: missing connection hostname check against X.509 certificate name
+
+6. Package List:
+
+JBoss Enterprise Application Platform 5 for RHEL 4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.src.rpm</a>
+
+noarch:
+jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.src.rpm</a>
+
+noarch:
+jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el5.src.rpm</a>
+
+noarch:
+jakarta-commons-httpclient-3.1-2.1_patch_01.ep5.el5.noarch.rpm
+
+JBoss Enterprise Application Platform 5 for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2_patch_01.ep5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/jakarta-commons-httpclient-3.1-2_patch_01.ep5.el6.src.rpm</a>
+
+noarch:
+jakarta-commons-httpclient-3.1-2_patch_01.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5783.html">https://www.redhat.com/security/data/cve/CVE-2012-5783.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRUIdvXlSAg2UNWIIRAowOAJ9ZUqMyRI5CZxLFgmV9EL7o02mvLwCgw5XB
+A7E7JXGBdnemkjTKMGqhgmQ=
+=9eWH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

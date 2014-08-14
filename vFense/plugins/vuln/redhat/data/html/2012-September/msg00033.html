@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1282&#45;01] Moderate: kernel&#45;rt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 19 Sep 2012 14:15:10 &#45;0400 -->
+<!--X-Message-Id: 201209191815.q8JIF5hW009947@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1282-01] Moderate: kernel-rt security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1282-01] Moderate: kernel-rt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1282-01] Moderate: kernel-rt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 19 Sep 2012 18:15:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel-rt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:1282-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1282.html">https://rhn.redhat.com/errata/RHSA-2012-1282.html</a>
+Issue date:        2012-09-19
+CVE Names:         CVE-2012-4398 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix one security issue, several bugs, and
+add enhancements are now available for Red Hat Enterprise MRG 2.2.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issue:
+
+* It was found that a deadlock could occur in the Out of Memory (OOM)
+killer. A process could trigger this deadlock by consuming a large amount
+of memory, and then causing request_module() to be called. A local,
+unprivileged user could use this flaw to cause a denial of service
+(excessive memory consumption). (CVE-2012-4398, Moderate)
+
+Red Hat would like to thank Tetsuo Handa for reporting this issue.
+
+The kernel-rt packages have been upgraded to upstream version 3.2, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#798421)
+
+This update also fixes various bugs and adds enhancements. Documentation
+for these changes will be available shortly from the Technical Notes
+document linked to in the References section.
+
+Users should upgrade to these updated kernel-rt packages, which correct
+this issue, fix these bugs, and add these enhancements. The system must
+be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+725799 - diskless support for MRG 2.x
+786083 - iptables unable to log to rsyslog
+798421 - Rebase MRG RT kernel to 3.2-rtX series
+798423 - InfiniBand stack refresh in MRG RT
+799385 - Thread can dead lock in migrate timers
+799386 - The futex proxy handler grabs the pi_lock without disabling interrupts
+799389 - lglocks can be taken and never released on cpu offline and onlining
+799391 - Tasks waiting on a state change of another task may get wrong result
+799399 - ftrace_dump() can cause issues on RT
+814689 - missing /proc/sys/crypto/fips_enabled in 3.2.14-rt24.22.el6rt.x86_64 causes openssh errors
+815937 - 3.0.25-rt44.57.el6rt.x86_64 missing firmware rtl_nic/rtl8168e-2.fw
+825344 - new mrg-rt-release sub-package [mrg2.2]
+834583 - kernel-rt-3.2.20-rt32.44.el6rt.x86_64 floods the console with &quot;DMAR [fault reason 02] Present bit in context entry is clear&quot;
+842680 - kernel 3.2.23-rt37.49.el6rt.x86_64 doesn't create symlinks to /lib/firmware/mrg-rt-firmware
+853474 - CVE-2012-4398 kernel: request_module() OOM local DoS
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.2.23-rt37.56.el6rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.2.23-rt37.56.el6rt.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/rt-firmware-1.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/rt-firmware-1.0-3.el6_3.src.rpm</a>
+
+noarch:
+kernel-rt-doc-3.2.23-rt37.56.el6rt.noarch.rpm
+kernel-rt-firmware-3.2.23-rt37.56.el6rt.noarch.rpm
+mrg-rt-release-3.2.23-rt37.56.el6rt.noarch.rpm
+rt-firmware-1.0-3.el6_3.noarch.rpm
+
+x86_64:
+kernel-rt-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-debug-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-devel-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-trace-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.2.23-rt37.56.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.2.23-rt37.56.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4398.html">https://www.redhat.com/security/data/cve/CVE-2012-4398.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/sec-Red_Hat_Enterprise_Linux_6.html#RHSA-2012-1282">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/sec-Red_Hat_Enterprise_Linux_6.html#RHSA-2012-1282</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQWguSXlSAg2UNWIIRAtvyAJ9NqjXmJUosNb16Zh3WuO7C+q5c9wCgjL9g
+jiW2xcBSkQ6Wue5ODcsauTE=
+=S4+I
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

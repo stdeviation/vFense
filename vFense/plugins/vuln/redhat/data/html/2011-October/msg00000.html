@@ -1,0 +1,801 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1349&#45;01] Important: rpm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Oct 2011 16:13:42 &#45;0400 -->
+<!--X-Message-Id: 201110032013.p93KDa07003212@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1349-01] Important: rpm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1349-01] Important: rpm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1349-01] Important: rpm security update</li>
+<li><em>Date</em>: Mon, 3 Oct 2011 20:13:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rpm security update
+Advisory ID:       RHSA-2011:1349-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1349.html">https://rhn.redhat.com/errata/RHSA-2011-1349.html</a>
+Issue date:        2011-10-03
+CVE Names:         CVE-2011-3378 
+=====================================================================
+
+1. Summary:
+
+Updated rpm packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 4, 5, and 6, and Red Hat Enterprise Linux 3
+Extended Life Cycle Support, 5.3 Long Life, 5.6 Extended Update Support,
+and 6.0 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux (v. 5.3.LL server) - i386, ia64, x86_64
+Red Hat Enterprise Linux (v. 5.6.z server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS (v. 3 ELS) - i386
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES (v. 3 ELS) - i386
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 6.0.z) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - noarch
+Red Hat Enterprise Linux Server Optional (v. 6.0.z) - noarch
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - noarch
+
+3. Description:
+
+The RPM Package Manager (RPM) is a command line driven package management
+system capable of installing, uninstalling, verifying, querying, and
+updating software packages.
+
+Multiple flaws were found in the way the RPM library parsed package
+headers. An attacker could create a specially-crafted RPM package that,
+when queried or installed, would cause rpm to crash or, potentially,
+execute arbitrary code. (CVE-2011-3378)
+
+Note: Although an RPM package can, by design, execute arbitrary code when
+installed, this issue would allow a specially-crafted RPM package to
+execute arbitrary code before its digital signature has been verified.
+Package downloads from the Red Hat Network remain secure due to certificate
+checks performed on the secure connection.
+
+All RPM users should upgrade to these updated packages, which contain a
+backported patch to correct these issues. All running applications linked
+against the RPM library must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+741606 - CVE-2011-3378 rpm: crashes and overflows on malformed header
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (v. 3 ELS):
+
+Source:
+rpm-4.2.3-35_nonptl.src.rpm
+
+i386:
+popt-1.8.2-35_nonptl.i386.rpm
+rpm-4.2.3-35_nonptl.i386.rpm
+rpm-build-4.2.3-35_nonptl.i386.rpm
+rpm-debuginfo-4.2.3-35_nonptl.i386.rpm
+rpm-devel-4.2.3-35_nonptl.i386.rpm
+rpm-libs-4.2.3-35_nonptl.i386.rpm
+rpm-python-4.2.3-35_nonptl.i386.rpm
+
+Red Hat Enterprise Linux ES (v. 3 ELS):
+
+Source:
+rpm-4.2.3-35_nonptl.src.rpm
+
+i386:
+popt-1.8.2-35_nonptl.i386.rpm
+rpm-4.2.3-35_nonptl.i386.rpm
+rpm-build-4.2.3-35_nonptl.i386.rpm
+rpm-debuginfo-4.2.3-35_nonptl.i386.rpm
+rpm-devel-4.2.3-35_nonptl.i386.rpm
+rpm-libs-4.2.3-35_nonptl.i386.rpm
+rpm-python-4.2.3-35_nonptl.i386.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm</a>
+
+i386:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+rpm-4.3.3-35_nonptl.el4.i386.rpm
+rpm-build-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-devel-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-python-4.3.3-35_nonptl.el4.i386.rpm
+
+ia64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.ia64.rpm
+rpm-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-build-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-python-4.3.3-35_nonptl.el4.ia64.rpm
+
+ppc:
+popt-1.9.1-35_nonptl.el4.ppc.rpm
+popt-1.9.1-35_nonptl.el4.ppc64.rpm
+rpm-4.3.3-35_nonptl.el4.ppc.rpm
+rpm-build-4.3.3-35_nonptl.el4.ppc.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.ppc.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.ppc64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.ppc.rpm
+rpm-libs-4.3.3-35_nonptl.el4.ppc.rpm
+rpm-libs-4.3.3-35_nonptl.el4.ppc64.rpm
+rpm-python-4.3.3-35_nonptl.el4.ppc.rpm
+
+s390:
+popt-1.9.1-35_nonptl.el4.s390.rpm
+rpm-4.3.3-35_nonptl.el4.s390.rpm
+rpm-build-4.3.3-35_nonptl.el4.s390.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.s390.rpm
+rpm-devel-4.3.3-35_nonptl.el4.s390.rpm
+rpm-libs-4.3.3-35_nonptl.el4.s390.rpm
+rpm-python-4.3.3-35_nonptl.el4.s390.rpm
+
+s390x:
+popt-1.9.1-35_nonptl.el4.s390.rpm
+popt-1.9.1-35_nonptl.el4.s390x.rpm
+rpm-4.3.3-35_nonptl.el4.s390x.rpm
+rpm-build-4.3.3-35_nonptl.el4.s390x.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.s390.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.s390x.rpm
+rpm-devel-4.3.3-35_nonptl.el4.s390x.rpm
+rpm-libs-4.3.3-35_nonptl.el4.s390.rpm
+rpm-libs-4.3.3-35_nonptl.el4.s390x.rpm
+rpm-python-4.3.3-35_nonptl.el4.s390x.rpm
+
+x86_64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.x86_64.rpm
+rpm-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-build-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-python-4.3.3-35_nonptl.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm</a>
+
+i386:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+rpm-4.3.3-35_nonptl.el4.i386.rpm
+rpm-build-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-devel-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-python-4.3.3-35_nonptl.el4.i386.rpm
+
+x86_64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.x86_64.rpm
+rpm-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-build-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-python-4.3.3-35_nonptl.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm</a>
+
+i386:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+rpm-4.3.3-35_nonptl.el4.i386.rpm
+rpm-build-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-devel-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-python-4.3.3-35_nonptl.el4.i386.rpm
+
+ia64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.ia64.rpm
+rpm-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-build-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-python-4.3.3-35_nonptl.el4.ia64.rpm
+
+x86_64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.x86_64.rpm
+rpm-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-build-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-python-4.3.3-35_nonptl.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/rpm-4.3.3-35_nonptl.el4.src.rpm</a>
+
+i386:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+rpm-4.3.3-35_nonptl.el4.i386.rpm
+rpm-build-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-devel-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-python-4.3.3-35_nonptl.el4.i386.rpm
+
+ia64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.ia64.rpm
+rpm-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-build-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.ia64.rpm
+rpm-python-4.3.3-35_nonptl.el4.ia64.rpm
+
+x86_64:
+popt-1.9.1-35_nonptl.el4.i386.rpm
+popt-1.9.1-35_nonptl.el4.x86_64.rpm
+rpm-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-build-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.i386.rpm
+rpm-debuginfo-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-devel-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-libs-4.3.3-35_nonptl.el4.i386.rpm
+rpm-libs-4.3.3-35_nonptl.el4.x86_64.rpm
+rpm-python-4.3.3-35_nonptl.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm</a>
+
+i386:
+popt-1.10.2.3-22.el5_7.2.i386.rpm
+rpm-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-python-4.4.2.3-22.el5_7.2.i386.rpm
+
+x86_64:
+popt-1.10.2.3-22.el5_7.2.i386.rpm
+popt-1.10.2.3-22.el5_7.2.x86_64.rpm
+rpm-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-python-4.4.2.3-22.el5_7.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm</a>
+
+i386:
+rpm-apidocs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-build-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.i386.rpm
+
+x86_64:
+rpm-apidocs-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-build-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5.3.LL server):
+
+Source:
+rpm-4.4.2.3-9.el5_3.2.src.rpm
+
+i386:
+popt-1.10.2.3-9.el5_3.2.i386.rpm
+rpm-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-apidocs-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-build-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-debuginfo-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-devel-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-libs-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-python-4.4.2.3-9.el5_3.2.i386.rpm
+
+ia64:
+popt-1.10.2.3-9.el5_3.2.ia64.rpm
+rpm-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-apidocs-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-build-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-debuginfo-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-devel-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-libs-4.4.2.3-9.el5_3.2.ia64.rpm
+rpm-python-4.4.2.3-9.el5_3.2.ia64.rpm
+
+x86_64:
+popt-1.10.2.3-9.el5_3.2.i386.rpm
+popt-1.10.2.3-9.el5_3.2.x86_64.rpm
+rpm-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-apidocs-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-build-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-debuginfo-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-debuginfo-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-devel-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-devel-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-libs-4.4.2.3-9.el5_3.2.i386.rpm
+rpm-libs-4.4.2.3-9.el5_3.2.x86_64.rpm
+rpm-python-4.4.2.3-9.el5_3.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5.6.z server):
+
+Source:
+rpm-4.4.2.3-22.el5_6.2.src.rpm
+
+i386:
+popt-1.10.2.3-22.el5_6.2.i386.rpm
+rpm-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-apidocs-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-build-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-python-4.4.2.3-22.el5_6.2.i386.rpm
+
+ia64:
+popt-1.10.2.3-22.el5_6.2.ia64.rpm
+rpm-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-apidocs-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-build-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.ia64.rpm
+rpm-python-4.4.2.3-22.el5_6.2.ia64.rpm
+
+ppc:
+popt-1.10.2.3-22.el5_6.2.ppc.rpm
+popt-1.10.2.3-22.el5_6.2.ppc64.rpm
+rpm-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-apidocs-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-build-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.ppc64.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.ppc64.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.ppc.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.ppc64.rpm
+rpm-python-4.4.2.3-22.el5_6.2.ppc.rpm
+
+s390x:
+popt-1.10.2.3-22.el5_6.2.s390.rpm
+popt-1.10.2.3-22.el5_6.2.s390x.rpm
+rpm-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-apidocs-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-build-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.s390.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.s390.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.s390.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.s390x.rpm
+rpm-python-4.4.2.3-22.el5_6.2.s390x.rpm
+
+x86_64:
+popt-1.10.2.3-22.el5_6.2.i386.rpm
+popt-1.10.2.3-22.el5_6.2.x86_64.rpm
+rpm-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-apidocs-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-build-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_6.2.x86_64.rpm
+rpm-python-4.4.2.3-22.el5_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rpm-4.4.2.3-22.el5_7.2.src.rpm</a>
+
+i386:
+popt-1.10.2.3-22.el5_7.2.i386.rpm
+rpm-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-apidocs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-build-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-python-4.4.2.3-22.el5_7.2.i386.rpm
+
+ia64:
+popt-1.10.2.3-22.el5_7.2.ia64.rpm
+rpm-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-apidocs-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-build-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.ia64.rpm
+rpm-python-4.4.2.3-22.el5_7.2.ia64.rpm
+
+ppc:
+popt-1.10.2.3-22.el5_7.2.ppc.rpm
+popt-1.10.2.3-22.el5_7.2.ppc64.rpm
+rpm-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-apidocs-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-build-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.ppc64.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.ppc64.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.ppc.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.ppc64.rpm
+rpm-python-4.4.2.3-22.el5_7.2.ppc.rpm
+
+s390x:
+popt-1.10.2.3-22.el5_7.2.s390.rpm
+popt-1.10.2.3-22.el5_7.2.s390x.rpm
+rpm-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-apidocs-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-build-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.s390.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.s390.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.s390.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.s390x.rpm
+rpm-python-4.4.2.3-22.el5_7.2.s390x.rpm
+
+x86_64:
+popt-1.10.2.3-22.el5_7.2.i386.rpm
+popt-1.10.2.3-22.el5_7.2.x86_64.rpm
+rpm-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-apidocs-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-build-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-debuginfo-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-devel-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.i386.rpm
+rpm-libs-4.4.2.3-22.el5_7.2.x86_64.rpm
+rpm-python-4.4.2.3-22.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+i386:
+rpm-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-python-4.8.0-16.el6_1.1.i686.rpm
+
+x86_64:
+rpm-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-python-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+i386:
+rpm-build-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+
+noarch:
+rpm-apidocs-4.8.0-16.el6_1.1.noarch.rpm
+rpm-cron-4.8.0-16.el6_1.1.noarch.rpm
+
+x86_64:
+rpm-build-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+x86_64:
+rpm-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-python-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+noarch:
+rpm-apidocs-4.8.0-16.el6_1.1.noarch.rpm
+rpm-cron-4.8.0-16.el6_1.1.noarch.rpm
+
+x86_64:
+rpm-build-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6.0.z):
+
+Source:
+rpm-4.8.0-12.el6_0.1.src.rpm
+
+i386:
+rpm-4.8.0-12.el6_0.1.i686.rpm
+rpm-build-4.8.0-12.el6_0.1.i686.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.i686.rpm
+rpm-devel-4.8.0-12.el6_0.1.i686.rpm
+rpm-libs-4.8.0-12.el6_0.1.i686.rpm
+rpm-python-4.8.0-12.el6_0.1.i686.rpm
+
+ppc64:
+rpm-4.8.0-12.el6_0.1.ppc64.rpm
+rpm-build-4.8.0-12.el6_0.1.ppc64.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.ppc.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.ppc64.rpm
+rpm-devel-4.8.0-12.el6_0.1.ppc.rpm
+rpm-devel-4.8.0-12.el6_0.1.ppc64.rpm
+rpm-libs-4.8.0-12.el6_0.1.ppc.rpm
+rpm-libs-4.8.0-12.el6_0.1.ppc64.rpm
+rpm-python-4.8.0-12.el6_0.1.ppc64.rpm
+
+s390x:
+rpm-4.8.0-12.el6_0.1.s390x.rpm
+rpm-build-4.8.0-12.el6_0.1.s390x.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.s390.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.s390x.rpm
+rpm-devel-4.8.0-12.el6_0.1.s390.rpm
+rpm-devel-4.8.0-12.el6_0.1.s390x.rpm
+rpm-libs-4.8.0-12.el6_0.1.s390.rpm
+rpm-libs-4.8.0-12.el6_0.1.s390x.rpm
+rpm-python-4.8.0-12.el6_0.1.s390x.rpm
+
+x86_64:
+rpm-4.8.0-12.el6_0.1.x86_64.rpm
+rpm-build-4.8.0-12.el6_0.1.x86_64.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.i686.rpm
+rpm-debuginfo-4.8.0-12.el6_0.1.x86_64.rpm
+rpm-devel-4.8.0-12.el6_0.1.i686.rpm
+rpm-devel-4.8.0-12.el6_0.1.x86_64.rpm
+rpm-libs-4.8.0-12.el6_0.1.i686.rpm
+rpm-libs-4.8.0-12.el6_0.1.x86_64.rpm
+rpm-python-4.8.0-12.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+i386:
+rpm-4.8.0-16.el6_1.1.i686.rpm
+rpm-build-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-python-4.8.0-16.el6_1.1.i686.rpm
+
+ppc64:
+rpm-4.8.0-16.el6_1.1.ppc64.rpm
+rpm-build-4.8.0-16.el6_1.1.ppc64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.ppc.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.ppc64.rpm
+rpm-devel-4.8.0-16.el6_1.1.ppc.rpm
+rpm-devel-4.8.0-16.el6_1.1.ppc64.rpm
+rpm-libs-4.8.0-16.el6_1.1.ppc.rpm
+rpm-libs-4.8.0-16.el6_1.1.ppc64.rpm
+rpm-python-4.8.0-16.el6_1.1.ppc64.rpm
+
+s390x:
+rpm-4.8.0-16.el6_1.1.s390x.rpm
+rpm-build-4.8.0-16.el6_1.1.s390x.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.s390.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.s390x.rpm
+rpm-devel-4.8.0-16.el6_1.1.s390.rpm
+rpm-devel-4.8.0-16.el6_1.1.s390x.rpm
+rpm-libs-4.8.0-16.el6_1.1.s390.rpm
+rpm-libs-4.8.0-16.el6_1.1.s390x.rpm
+rpm-python-4.8.0-16.el6_1.1.s390x.rpm
+
+x86_64:
+rpm-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-build-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-python-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6.0.z):
+
+Source:
+rpm-4.8.0-12.el6_0.1.src.rpm
+
+noarch:
+rpm-apidocs-4.8.0-12.el6_0.1.noarch.rpm
+rpm-cron-4.8.0-12.el6_0.1.noarch.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+noarch:
+rpm-apidocs-4.8.0-16.el6_1.1.noarch.rpm
+rpm-cron-4.8.0-16.el6_1.1.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+i386:
+rpm-4.8.0-16.el6_1.1.i686.rpm
+rpm-build-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-python-4.8.0-16.el6_1.1.i686.rpm
+
+x86_64:
+rpm-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-build-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.i686.rpm
+rpm-debuginfo-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-devel-4.8.0-16.el6_1.1.i686.rpm
+rpm-devel-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-libs-4.8.0-16.el6_1.1.i686.rpm
+rpm-libs-4.8.0-16.el6_1.1.x86_64.rpm
+rpm-python-4.8.0-16.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rpm-4.8.0-16.el6_1.1.src.rpm</a>
+
+noarch:
+rpm-apidocs-4.8.0-16.el6_1.1.noarch.rpm
+rpm-cron-4.8.0-16.el6_1.1.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3378.html">https://www.redhat.com/security/data/cve/CVE-2011-3378.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOihdaXlSAg2UNWIIRAgUbAJ41yDhKnRyaBGEiYupgYze7Tvu3oQCeLYua
+ydXgq0h0gCbvOH9KdSAuEx0=
+=Pcaj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

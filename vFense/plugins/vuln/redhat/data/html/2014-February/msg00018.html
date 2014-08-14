@@ -1,0 +1,340 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0170&#45;01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Feb 2014 13:50:29 &#45;0500 -->
+<!--X-Message-Id: 201402131850.s1DIoSuk023570@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0170-01] Moderate: Red Hat JBoss Enterprise Application	Platf</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0170-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0170-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.1 update</li>
+<li><em>Date</em>: Thu, 13 Feb 2014 18:50:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Enterprise Application Platform 6.2.1 update
+Advisory ID:       RHSA-2014:0170-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0170.html">https://rhn.redhat.com/errata/RHSA-2014-0170.html</a>
+Issue date:        2014-02-13
+CVE Names:         CVE-2013-4517 CVE-2013-6440 CVE-2014-0018 
+=====================================================================
+
+1. Summary:
+
+Updated packages that provide Red Hat JBoss Enterprise Application Platform
+6.2.1 and fix three security issues, several bugs, and add various
+enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Enterprise Application Platform 6 for RHEL 5 Server - noarch
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server - noarch
+
+3. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was found that the ParserPool and Decrypter classes in the OpenSAML Java
+implementation resolved external entities, permitting XML External Entity
+(XXE) attacks. A remote attacker could use this flaw to read files
+accessible to the user running the application server, and potentially
+perform other more advanced XXE attacks. (CVE-2013-6440)
+
+It was discovered that the Apache Santuario XML Security for Java project
+allowed Document Type Definitions (DTDs) to be processed when applying
+Transforms even when secure validation was enabled. A remote attacker could
+use this flaw to exhaust all available memory on the system, causing a
+denial of service. (CVE-2013-4517)
+
+In Red Hat JBoss Enterprise Application Platform, when running under a
+security manager, it was possible for deployed code to get access to the
+Modular Service Container (MSC) service registry without any permission
+checks. This could allow malicious deployments to modify the internal state
+of the server in various ways. (CVE-2014-0018)
+
+The CVE-2013-6440 was discovered by David Illsley, Ron Gutierrez of Gotham
+Digital Science, and David Jorm of the Red Hat Security Response Team, and
+the CVE-2014-0018 issue was discovered by Stuart Douglas of Red Hat.
+
+This release serves as a replacement for JBoss Enterprise Application
+Platform 6.2.0, and includes bug fixes and enhancements. Documentation for
+these changes will be available shortly from the JBoss Enterprise
+Application Platform 6.2.1 Release Notes, linked to in the References.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.2.0 on Red Hat
+Enterprise Linux 5 are advised to upgrade to these updated packages.
+The JBoss server process must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up any customized Red
+Hat JBoss Enterprise Application Platform 6 configuration files. On update,
+the configuration files that have been locally modified will not be
+updated. The updated version of such files will be stored as the rpmnew
+files. Make sure to locate any such files after the update and merge any
+changes manually.
+
+For more details, refer to the Release Notes for Red Hat JBoss Enterprise
+Application Platform 6.2.1, available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1038643 - Tracker bug for the EAP 6.2.1 release for RHEL-5.
+1043332 - CVE-2013-6440 XMLTooling-J/OpenSAML Java: XML eXternal Entity (XXE) flaw in ParserPool and Decrypter
+1045257 - CVE-2013-4517 Apache Santuario XML Security for Java: Java XML Signature DoS Attack
+1052718 - RHEL5 RPMs: Upgrade jboss-logmanager to 1.5.2.Final-redhat-1
+1052783 - CVE-2014-0018 jboss-as-server: Unchecked access to MSC Service Registry under JSM
+1052989 - RHEL5 RPMs: Upgrade xml-security to 1.5.6.redhat-1
+1053216 - RHEL5 RPMs: Upgrade hornetq to 2.3.14.Final-redhat-1
+1053218 - RHEL5 RPMs: Upgrade jbossweb to 7.3.0.Final-redhat-1
+1053224 - RHEL5 RPMs: Upgrade netty to 3.6.7.Final-redhat-1
+1053229 - RHEL5 RPMs: Upgrade jboss-xnio-base to 3.0.9.GA-redhat-1
+1053231 - RHEL5 RPMs: Upgrade jboss-marshalling to 1.4.3.Final-redhat-1
+1053779 - RHEL5 RPMs: Upgrade weld-core to 1.1.17.Final-redhat-1
+
+6. Package List:
+
+Red Hat JBoss Enterprise Application Platform 6 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/hornetq-2.3.14-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/hornetq-2.3.14-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jacorb-jboss-2.3.2-13.redhat_6.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jacorb-jboss-2.3.2-13.redhat_6.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-appclient-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-appclient-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-cli-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-cli-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-client-all-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-client-all-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-clustering-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-clustering-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-cmp-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-cmp-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-configadmin-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-configadmin-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-connector-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-connector-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-controller-client-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-controller-client-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-core-security-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-core-security-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-deployment-repository-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-deployment-repository-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-deployment-scanner-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-deployment-scanner-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-domain-http-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-domain-http-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-domain-management-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-domain-management-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ee-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ee-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ee-deployment-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ee-deployment-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ejb3-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-ejb3-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-embedded-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-embedded-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-host-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-host-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jacorb-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jacorb-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jaxr-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jaxr-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jaxrs-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jaxrs-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jdr-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jdr-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jmx-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jmx-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jpa-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jpa-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jsf-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jsf-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jsr77-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-jsr77-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-logging-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-logging-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-mail-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-mail-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-management-client-content-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-management-client-content-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-messaging-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-messaging-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-modcluster-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-modcluster-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-naming-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-naming-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-network-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-network-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-configadmin-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-configadmin-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-service-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-osgi-service-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-platform-mbean-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-platform-mbean-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-pojo-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-pojo-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-process-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-process-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-protocol-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-protocol-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-remoting-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-remoting-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-sar-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-sar-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-security-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-security-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-server-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-server-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-system-jmx-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-system-jmx-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-threads-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-threads-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-transactions-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-transactions-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-version-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-version-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-webservices-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-webservices-7.3.1-3.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-weld-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-weld-7.3.1-4.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-xts-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-xts-7.3.1-2.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-logmanager-1.5.2-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-logmanager-1.5.2-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-marshalling-1.4.3-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-marshalling-1.4.3-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-xnio-base-3.0.9-1.GA_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-xnio-base-3.0.9-1.GA_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-core-7.3.1-5.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-core-7.3.1-5.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-modules-eap-7.3.1-6.Final_redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-modules-eap-7.3.1-6.Final_redhat_3.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossweb-7.3.0-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossweb-7.3.0-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/netty-3.6.7-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/netty-3.6.7-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/picketbox-4.0.19-2.SP3_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/picketbox-4.0.19-2.SP3_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/weld-core-1.1.17-1.Final_redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/weld-core-1.1.17-1.Final_redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xml-security-1.5.6-1.redhat_1.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xml-security-1.5.6-1.redhat_1.1.ep6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xmltooling-1.3.4-5.redhat_3.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xmltooling-1.3.4-5.redhat_3.1.ep6.el5.src.rpm</a>
+
+noarch:
+hornetq-2.3.14-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jacorb-jboss-2.3.2-13.redhat_6.1.ep6.el5.noarch.rpm
+jboss-as-appclient-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-cli-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-client-all-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-clustering-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-cmp-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-configadmin-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-connector-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-controller-client-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-core-security-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-deployment-repository-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-deployment-scanner-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-domain-http-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-domain-management-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-ee-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-ee-deployment-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-ejb3-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-embedded-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-host-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jacorb-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jaxr-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jaxrs-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jdr-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jmx-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jpa-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jsf-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-jsr77-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-logging-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-mail-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-management-client-content-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-messaging-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-modcluster-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-naming-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-network-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-osgi-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-osgi-configadmin-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-osgi-service-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-platform-mbean-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-pojo-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-process-controller-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-protocol-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-remoting-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-sar-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-security-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-server-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-system-jmx-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-threads-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-transactions-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-version-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-web-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-webservices-7.3.1-3.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-weld-7.3.1-4.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-as-xts-7.3.1-2.Final_redhat_3.1.ep6.el5.noarch.rpm
+jboss-logmanager-1.5.2-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-marshalling-1.4.3-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-xnio-base-3.0.9-1.GA_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-core-7.3.1-5.Final_redhat_3.1.ep6.el5.noarch.rpm
+jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.noarch.rpm
+jbossas-modules-eap-7.3.1-6.Final_redhat_3.1.ep6.el5.noarch.rpm
+jbossweb-7.3.0-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+netty-3.6.7-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+picketbox-4.0.19-2.SP3_redhat_1.1.ep6.el5.noarch.rpm
+weld-core-1.1.17-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+xml-security-1.5.6-1.redhat_1.1.ep6.el5.noarch.rpm
+xmltooling-1.3.4-5.redhat_3.1.ep6.el5.noarch.rpm
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.src.rpm</a>
+
+noarch:
+jbossas-javadocs-7.3.1-3.Final_redhat_3.ep6.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4517.html">https://www.redhat.com/security/data/cve/CVE-2013-4517.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6440.html">https://www.redhat.com/security/data/cve/CVE-2013-6440.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0018.html">https://www.redhat.com/security/data/cve/CVE-2014-0018.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Application_Platform/6.2/html/6.2.1_Release_Notes/index.html">https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Application_Platform/6.2/html/6.2.1_Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS/RPDXlSAg2UNWIIRAg4PAKCn1rO0JY407dzANPFYV/LlxtopQACfW04r
+EOMYVYblj/wWpTgJTCcpMLE=
+=s46+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

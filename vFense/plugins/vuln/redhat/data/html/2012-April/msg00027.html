@@ -1,0 +1,197 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0531&#45;01] Important: rhev&#45;hypervisor6 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Apr 2012 14:02:11 &#45;0400 -->
+<!--X-Message-Id: 201204301802.q3UI25K5001464@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0531-01] Important: rhev-hypervisor6 security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0531-01] Important: rhev-hypervisor6 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0531-01] Important: rhev-hypervisor6 security and bug fix	update</li>
+<li><em>Date</em>: Mon, 30 Apr 2012 18:02:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security and bug fix update
+Advisory ID:       RHSA-2012:0531-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0531.html">https://rhn.redhat.com/errata/RHSA-2012-0531.html</a>
+Issue date:        2012-04-30
+CVE Names:         CVE-2012-0864 CVE-2012-1569 CVE-2012-1573 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes three security issues and
+one bug is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found in the way libtasn1 decoded DER data. An attacker could
+create carefully-crafted DER encoded input (such as an X.509 certificate)
+that, when parsed by an application that uses libtasn1 (such as
+applications using GnuTLS), could cause the application to crash.
+(CVE-2012-1569)
+
+A flaw was found in the way GnuTLS decrypted malformed TLS records. This
+could cause a TLS/SSL client or server to crash when processing a
+specially-crafted TLS record from a remote TLS/SSL connection peer.
+(CVE-2012-1573)
+
+An integer overflow flaw was found in the implementation of the printf
+functions family. This could allow an attacker to bypass FORTIFY_SOURCE
+protections and execute arbitrary code using a format string flaw in an
+application, even though these protections are expected to limit the
+impact of such flaws to an application abort. (CVE-2012-0864)
+
+Red Hat would like to thank Matthew Hall of Mu Dynamics for reporting
+CVE-2012-1569 and CVE-2012-1573.
+
+This updated package provides updated components that include fixes for
+various security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2011-4128 (gnutls issue)
+
+CVE-2012-0879, CVE-2012-1090, and CVE-2012-1097 (kernel issues)
+
+CVE-2012-0884 and CVE-2012-1165 (openssl issues)
+
+CVE-2012-0060, CVE-2012-0061, and CVE-2012-0815 (rpm issues)
+
+This update also fixes the following bug:
+
+* The Hypervisor previously set the lro_disable option for the enic driver.
+The driver does not support this option, as a result the Hypervisor did
+not correctly detect and configure the network interfaces of a Cisco M81KR
+adaptor, when present. The Hypervisor has been updated and no longer sets
+the invalid option for this driver. (BZ#809463)
+
+Users of Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which fixes these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+794766 - CVE-2012-0864 glibc: FORTIFY_SOURCE format string protection bypass via &quot;nargs&quot; integer overflow
+804920 - CVE-2012-1569 libtasn1: DER decoding buffer overflow (GNUTLS-SA-2012-3, MU-201202-02)
+805432 - CVE-2012-1573 gnutls: TLS record handling issue (GNUTLS-SA-2012-2, MU-201202-01)
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.2-20120423.1.el6_2.noarch.rpm
+rhev-hypervisor6-tools-6.2-20120423.1.el6_2.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0864.html">https://www.redhat.com/security/data/cve/CVE-2012-0864.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1569.html">https://www.redhat.com/security/data/cve/CVE-2012-1569.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1573.html">https://www.redhat.com/security/data/cve/CVE-2012-1573.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPntOAXlSAg2UNWIIRArUzAJ0drm31+JZVcz/mtQfiDwvMmZx7mgCgheAC
+8kiDppSITlZg/DVi+lj2pfo=
+=RLcA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1458&#45;01] Moderate: gnupg security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Oct 2013 11:30:31 &#45;0400 -->
+<!--X-Message-Id: 201310241530.r9OFU3Ng011222@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1458-01] Moderate: gnupg security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1458-01] Moderate: gnupg security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1458-01] Moderate: gnupg security update</li>
+<li><em>Date</em>: Thu, 24 Oct 2013 15:30:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gnupg security update
+Advisory ID:       RHSA-2013:1458-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1458.html">https://rhn.redhat.com/errata/RHSA-2013-1458.html</a>
+Issue date:        2013-10-24
+CVE Names:         CVE-2012-6085 CVE-2013-4242 CVE-2013-4351 
+                   CVE-2013-4402 
+=====================================================================
+
+1. Summary:
+
+An updated gnupg package that fixes multiple security issues is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The GNU Privacy Guard (GnuPG or GPG) is a tool for encrypting data and
+creating digital signatures, compliant with the proposed OpenPGP Internet
+standard and the S/MIME standard.
+
+It was found that GnuPG was vulnerable to the Yarom/Falkner flush+reload
+cache side-channel attack on the RSA secret exponent. An attacker able to
+execute a process on the logical CPU that shared the L3 cache with the
+GnuPG process (such as a different local user or a user of a KVM guest
+running on the same host with the kernel same-page merging functionality
+enabled) could possibly use this flaw to obtain portions of the RSA secret
+key. (CVE-2013-4242)
+
+A denial of service flaw was found in the way GnuPG parsed certain
+compressed OpenPGP packets. An attacker could use this flaw to send
+specially crafted input data to GnuPG, making GnuPG enter an infinite loop
+when parsing data. (CVE-2013-4402)
+
+It was found that importing a corrupted public key into a GnuPG keyring
+database corrupted that keyring. An attacker could use this flaw to trick a
+local user into importing a specially crafted public key into their keyring
+database, causing the keyring to be corrupted and preventing its further
+use. (CVE-2012-6085)
+
+It was found that GnuPG did not properly interpret the key flags in a PGP
+key packet. GPG could accept a key for uses not indicated by its holder.
+(CVE-2013-4351)
+
+Red Hat would like to thank Werner Koch for reporting the CVE-2013-4402
+issue. Upstream acknowledges Taylor R Campbell as the original reporter.
+
+All gnupg users are advised to upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+891142 - CVE-2012-6085 GnuPG: read_block() corrupt key input validation
+988589 - CVE-2013-4242 GnuPG susceptible to Yarom/Falkner flush+reload cache side-channel attack
+1010137 - CVE-2013-4351 gnupg: treats no-usage-permitted keys as all-usages-permitted
+1015685 - CVE-2013-4402 GnuPG: infinite recursion in the compressed packet parser DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnupg-1.4.5-18.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnupg-1.4.5-18.el5_10.src.rpm</a>
+
+i386:
+gnupg-1.4.5-18.el5_10.i386.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.i386.rpm
+
+x86_64:
+gnupg-1.4.5-18.el5_10.x86_64.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnupg-1.4.5-18.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnupg-1.4.5-18.el5_10.src.rpm</a>
+
+i386:
+gnupg-1.4.5-18.el5_10.i386.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.i386.rpm
+
+ia64:
+gnupg-1.4.5-18.el5_10.ia64.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.ia64.rpm
+
+ppc:
+gnupg-1.4.5-18.el5_10.ppc.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.ppc.rpm
+
+s390x:
+gnupg-1.4.5-18.el5_10.s390x.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.s390x.rpm
+
+x86_64:
+gnupg-1.4.5-18.el5_10.x86_64.rpm
+gnupg-debuginfo-1.4.5-18.el5_10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6085.html">https://www.redhat.com/security/data/cve/CVE-2012-6085.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4242.html">https://www.redhat.com/security/data/cve/CVE-2013-4242.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4351.html">https://www.redhat.com/security/data/cve/CVE-2013-4351.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4402.html">https://www.redhat.com/security/data/cve/CVE-2013-4402.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSaTzeXlSAg2UNWIIRAuZvAJ93/bPF5XiUzGd5pwRa0ZYTVp/KngCfSqbg
+D1l6mFb8d+AcZmHt4uWJjhA=
+=ZSJL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

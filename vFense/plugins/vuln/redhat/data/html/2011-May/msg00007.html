@@ -1,0 +1,225 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0496&#45;01] Important: xen security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 9 May 2011 12:01:02 &#45;0400 -->
+<!--X-Message-Id: 201105091600.p49G0ubl001335@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0496-01] Important: xen security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0496-01] Important: xen security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0496-01] Important: xen security update</li>
+<li><em>Date</em>: Mon, 9 May 2011 10:00:56 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xen security update
+Advisory ID:       RHSA-2011:0496-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0496.html">https://rhn.redhat.com/errata/RHSA-2011-0496.html</a>
+Issue date:        2011-05-09
+CVE Names:         CVE-2011-1583 
+=====================================================================
+
+1. Summary:
+
+Updated xen packages that fix several security issues are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The xen packages contain administration tools and the xend service for
+managing the kernel-xen kernel for virtualization on Red Hat Enterprise
+Linux.
+
+It was found that the xc_try_bzip2_decode() and xc_try_lzma_decode() decode
+routines did not correctly check for a possible buffer size overflow in the
+decoding loop. As well, several integer overflow flaws and missing
+error/range checking were found that could lead to an infinite loop. A
+privileged guest user could use these flaws to crash the guest or,
+possibly, execute arbitrary code in the privileged management domain
+(Dom0). (CVE-2011-1583)
+
+All xen users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+696927 - CVE-2011-1583 xen: insufficiencies in pv kernel image validation
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-libs-3.0.3-120.el5_6.2.i386.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.x86_64.rpm
+xen-libs-3.0.3-120.el5_6.2.i386.rpm
+xen-libs-3.0.3-120.el5_6.2.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm</a>
+
+i386:
+xen-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-devel-3.0.3-120.el5_6.2.i386.rpm
+
+x86_64:
+xen-3.0.3-120.el5_6.2.x86_64.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.x86_64.rpm
+xen-devel-3.0.3-120.el5_6.2.i386.rpm
+xen-devel-3.0.3-120.el5_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-libs-3.0.3-120.el5_6.2.i386.rpm
+
+ia64:
+xen-debuginfo-3.0.3-120.el5_6.2.ia64.rpm
+xen-libs-3.0.3-120.el5_6.2.ia64.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.x86_64.rpm
+xen-libs-3.0.3-120.el5_6.2.i386.rpm
+xen-libs-3.0.3-120.el5_6.2.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-120.el5_6.2.src.rpm</a>
+
+i386:
+xen-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-devel-3.0.3-120.el5_6.2.i386.rpm
+
+ia64:
+xen-3.0.3-120.el5_6.2.ia64.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.ia64.rpm
+xen-devel-3.0.3-120.el5_6.2.ia64.rpm
+
+x86_64:
+xen-3.0.3-120.el5_6.2.x86_64.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.i386.rpm
+xen-debuginfo-3.0.3-120.el5_6.2.x86_64.rpm
+xen-devel-3.0.3-120.el5_6.2.i386.rpm
+xen-devel-3.0.3-120.el5_6.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1583.html">https://www.redhat.com/security/data/cve/CVE-2011-1583.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNyA+jXlSAg2UNWIIRAt6QAJ9mabE0BcI5xfVHglu2b30qGXXGnwCdGo39
+l0tqwYfwbVoZY/lsmH4RAvY=
+=YCAR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0958&#45;04] Low: sos security, bug fix, and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 05:31:47 &#45;0400 -->
+<!--X-Message-Id: 201206200931.q5K9VeF2030125@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0958-04] Low: sos security, bug fix, and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0958-04] Low: sos security, bug fix, and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0958-04] Low: sos security, bug fix, and enhancement update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 09:27:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sos security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0958-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0958.html">https://rhn.redhat.com/errata/RHSA-2012-0958.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-2664 
+=====================================================================
+
+1. Summary:
+
+An updated sos package that fixes one security issue, several bugs, and
+adds various enhancements is now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - noarch
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch
+Red Hat Enterprise Linux Server (v. 6) - noarch
+Red Hat Enterprise Linux Workstation (v. 6) - noarch
+
+3. Description:
+
+The sos package contains a set of tools that gather information from system
+hardware, logs and configuration files. The information can then be used
+for diagnostic purposes and debugging.
+
+The sosreport utility collected the Kickstart configuration file
+(&quot;/root/anaconda-ks.cfg&quot;), but did not remove the root user's password from
+it before adding the file to the resulting archive of debugging
+information. An attacker able to access the archive could possibly use this
+flaw to obtain the root user's password. &quot;/root/anaconda-ks.cfg&quot; usually
+only contains a hash of the password, not the plain text password.
+(CVE-2012-2664)
+
+Note: This issue affected all installations, not only systems installed via
+Kickstart. A &quot;/root/anaconda-ks.cfg&quot; file is created by all installation
+types.
+
+This updated sos package also includes numerous bug fixes and enhancements.
+Space precludes documenting all of these changes in this advisory. Users
+are directed to the Red Hat Enterprise Linux 6.3 Technical Notes for
+information on the most significant of these changes.
+
+All users of sos are advised to upgrade to this updated package, which
+contains backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+730641 - sosreport does not collect /proc/net details
+749262 - sosreport does not gather RHN Proxy squid logs
+749279 - rhn plugin should collect tomcat version 6 info, instead of obsoleted version 5
+749919 - teach sos to collect /etc/modprobe.d/*
+771393 - Sosreport fails for default values when rhn user name contains character '/' in it.
+771501 - capture non standard log files via syslog - fix filename regexp
+782589 - When copying directory into report using addCopySpec, links inside are not handled correctly
+784862 - sos does not collect /proc/irq
+784874 - sos does not collect /proc/cgroups
+790402 - sosreport should blank root password in anaconda plugin
+826884 - CVE-2012-2664 sosreport does not blank root password in anaconda plugin
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sos-2.2-29.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sos-2.2-29.el6.src.rpm</a>
+
+noarch:
+sos-2.2-29.el6.noarch.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sos-2.2-29.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sos-2.2-29.el6.src.rpm</a>
+
+noarch:
+sos-2.2-29.el6.noarch.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sos-2.2-29.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sos-2.2-29.el6.src.rpm</a>
+
+noarch:
+sos-2.2-29.el6.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sos-2.2-29.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sos-2.2-29.el6.src.rpm</a>
+
+noarch:
+sos-2.2-29.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2664.html">https://www.redhat.com/security/data/cve/CVE-2012-2664.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/sos.html#RHSA-2012-0958">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/sos.html#RHSA-2012-0958</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4Zh3XlSAg2UNWIIRAqmgAJsGRyU7J5iAv1FtCCPIGp+KvlwvPwCgihL1
+eLUK+sVscoBjiZ0PBgr4CKo=
+=Dev1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

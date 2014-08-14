@@ -1,0 +1,196 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0815&#45;01] Important: rhev&#45;hypervisor6 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Jun 2014 13:58:44 &#45;0400 -->
+<!--X-Message-Id: 201406301758.s5UHwiHA015546@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0815-01] Important: rhev-hypervisor6 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0815-01] Important: rhev-hypervisor6 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0815-01] Important: rhev-hypervisor6 security update</li>
+<li><em>Date</em>: Mon, 30 Jun 2014 17:58:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security update
+Advisory ID:       RHSA-2014:0815-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0815.html">https://rhn.redhat.com/errata/RHSA-2014-0815.html</a>
+Issue date:        2014-06-30
+CVE Names:         CVE-2014-3466 CVE-2014-3467 CVE-2014-3468 
+                   CVE-2014-3469 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes several security issues is
+now available.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: a subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found in the way GnuTLS parsed session IDs from ServerHello
+messages of the TLS/SSL handshake. A malicious server could use this flaw
+to send an excessively long session ID value, which would trigger a buffer
+overflow in a connecting TLS/SSL client application using GnuTLS, causing
+the client application to crash or, possibly, execute arbitrary code.
+(CVE-2014-3466)
+
+It was discovered that the asn1_get_bit_der() function of the libtasn1
+library incorrectly reported the length of ASN.1-encoded data. Specially
+crafted ASN.1 input could cause an application using libtasn1 to perform
+an out-of-bounds access operation, causing the application to crash or,
+possibly, execute arbitrary code. (CVE-2014-3468)
+
+Multiple incorrect buffer boundary check issues were discovered in
+libtasn1. Specially crafted ASN.1 input could cause an application using
+libtasn1 to crash. (CVE-2014-3467)
+
+Multiple NULL pointer dereference flaws were found in libtasn1's
+asn1_read_value() function. Specially crafted ASN.1 input could cause an
+application using libtasn1 to crash, if the application used the
+aforementioned function in a certain way. (CVE-2014-3469)
+
+Red Hat would like to thank GnuTLS upstream for reporting CVE-2014-3466,
+CVE-2014-3468, CVE-2014-3467, and CVE-2014-3469. Upstream acknowledges
+Joonas Kuorilehto of Codenomicon as the original reporter of CVE-2014-3466.
+
+This updated package provides an updated kernel component that includes
+fixes for various security issues. These issues have no security impact on
+Red Hat Enterprise Virtualization Hypervisor itself, however. The security
+fixes included in this update address the following CVE numbers:
+
+CVE-2013-6378, CVE-2014-0203, CVE-2014-1737, CVE-2014-1738, CVE-2014-1874,
+CVE-2014-2039 and CVE-2014-3153 (kernel issues)
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package.
+
+4. Solution:
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization environments
+using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1101932 - CVE-2014-3466 gnutls: insufficient session id length check in _gnutls_read_server_hello (GNUTLS-SA-2014-3)
+1102022 - CVE-2014-3467 libtasn1: multiple boundary check issues
+1102323 - CVE-2014-3468 libtasn1: asn1_get_bit_der() can return negative bit length
+1102329 - CVE-2014-3469 libtasn1: asn1_read_value_type() NULL pointer dereference
+1107789 - (rhevh-6.5.5) Packaging for RHEL 6.5 update 5 release
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.5-20140624.0.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3466.html">https://www.redhat.com/security/data/cve/CVE-2014-3466.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3467.html">https://www.redhat.com/security/data/cve/CVE-2014-3467.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3468.html">https://www.redhat.com/security/data/cve/CVE-2014-3468.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3469.html">https://www.redhat.com/security/data/cve/CVE-2014-3469.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTsaUxXlSAg2UNWIIRAndwAJoD6jT4beXacPKphFUq4uGSbGWnswCgnLxJ
+c7c04ffAqiG8Bg+OiK3808k=
+=ZZ1Y
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

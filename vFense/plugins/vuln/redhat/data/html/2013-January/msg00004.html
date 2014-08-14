@@ -1,0 +1,281 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0121&#45;01] Low: mysql security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 01:53:09 &#45;0500 -->
+<!--X-Message-Id: 201301080653.r086r75u031033@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0121-01] Low: mysql security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0121-01] Low: mysql security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0121-01] Low: mysql security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:43:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: mysql security and bug fix update
+Advisory ID:       RHSA-2013:0121-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0121.html">https://rhn.redhat.com/errata/RHSA-2013-0121.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2012-4452 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix one security issue and several bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+It was found that the fix for the CVE-2009-4030 issue, a flaw in the way
+MySQL checked the paths used as arguments for the DATA DIRECTORY and INDEX
+DIRECTORY directives when the &quot;datadir&quot; option was configured with a
+relative path, was incorrectly removed when the mysql packages in Red Hat
+Enterprise Linux 5 were updated to version 5.0.95 via RHSA-2012:0127. An
+authenticated attacker could use this flaw to bypass the restriction
+preventing the use of subdirectories of the MySQL data directory being used
+as DATA DIRECTORY and INDEX DIRECTORY paths. This update re-applies the fix
+for CVE-2009-4030. (CVE-2012-4452)
+
+Note: If the use of the DATA DIRECTORY and INDEX DIRECTORY directives were
+disabled as described in RHSA-2010:0109 (by adding &quot;symbolic-links=0&quot; to
+the &quot;[mysqld]&quot; section of the &quot;my.cnf&quot; configuration file), users were not
+vulnerable to this issue.
+
+This issue was discovered by Karel Volný of the Red Hat Quality Engineering
+team.
+
+This update also fixes the following bugs:
+
+* Prior to this update, the log file path in the logrotate script did not
+behave as expected. As a consequence, the logrotate function failed to
+rotate the &quot;/var/log/mysqld.log&quot; file. This update modifies the logrotate
+script to allow rotating the mysqld.log file. (BZ#647223)
+
+* Prior to this update, the mysqld daemon could fail when using the EXPLAIN
+flag in prepared statement mode. This update modifies the underlying code
+to handle the EXPLAIN flag as expected. (BZ#654000)
+
+* Prior to this update, the mysqld init script could wrongly report that
+mysql server startup failed when the server was actually started. This
+update modifies the init script to report the status of the mysqld server
+as expected. (BZ#703476)
+
+* Prior to this update, the &quot;--enable-profiling&quot; option was by default
+disabled. This update enables the profiling feature. (BZ#806365)
+
+All MySQL users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues. After installing this
+update, the MySQL server daemon (mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+526850 - MySQL 5.0.77 crashes on comparison of date &amp; datetime types to NAME_CONST()
+528512 - MySQL memory DoS
+543730 - mysqld segfaults during SHOW CREATE TABLE
+548685 - Extra characters appear in BLOB after mysqldump/import
+654000 - Mysql bug 54488 - crash when using explain and prepared statements with subqueries
+675906 - Restore / import of mysqldump fails on &quot;Unknown command '\''&quot;
+806365 - mysql-server-5.0.95-1.el5_7.1 has Profiling disabled by default
+860808 - CVE-2012-4452 mysql: regression of CVE-2009-4030
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm</a>
+
+i386:
+mysql-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+
+x86_64:
+mysql-5.0.95-3.el5.i386.rpm
+mysql-5.0.95-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm</a>
+
+i386:
+mysql-bench-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-devel-5.0.95-3.el5.i386.rpm
+mysql-server-5.0.95-3.el5.i386.rpm
+mysql-test-5.0.95-3.el5.i386.rpm
+
+x86_64:
+mysql-bench-5.0.95-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.x86_64.rpm
+mysql-devel-5.0.95-3.el5.i386.rpm
+mysql-devel-5.0.95-3.el5.x86_64.rpm
+mysql-server-5.0.95-3.el5.x86_64.rpm
+mysql-test-5.0.95-3.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.95-3.el5.src.rpm</a>
+
+i386:
+mysql-5.0.95-3.el5.i386.rpm
+mysql-bench-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-devel-5.0.95-3.el5.i386.rpm
+mysql-server-5.0.95-3.el5.i386.rpm
+mysql-test-5.0.95-3.el5.i386.rpm
+
+ia64:
+mysql-5.0.95-3.el5.i386.rpm
+mysql-5.0.95-3.el5.ia64.rpm
+mysql-bench-5.0.95-3.el5.ia64.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.ia64.rpm
+mysql-devel-5.0.95-3.el5.ia64.rpm
+mysql-server-5.0.95-3.el5.ia64.rpm
+mysql-test-5.0.95-3.el5.ia64.rpm
+
+ppc:
+mysql-5.0.95-3.el5.ppc.rpm
+mysql-5.0.95-3.el5.ppc64.rpm
+mysql-bench-5.0.95-3.el5.ppc.rpm
+mysql-debuginfo-5.0.95-3.el5.ppc.rpm
+mysql-debuginfo-5.0.95-3.el5.ppc64.rpm
+mysql-devel-5.0.95-3.el5.ppc.rpm
+mysql-devel-5.0.95-3.el5.ppc64.rpm
+mysql-server-5.0.95-3.el5.ppc.rpm
+mysql-server-5.0.95-3.el5.ppc64.rpm
+mysql-test-5.0.95-3.el5.ppc.rpm
+
+s390x:
+mysql-5.0.95-3.el5.s390.rpm
+mysql-5.0.95-3.el5.s390x.rpm
+mysql-bench-5.0.95-3.el5.s390x.rpm
+mysql-debuginfo-5.0.95-3.el5.s390.rpm
+mysql-debuginfo-5.0.95-3.el5.s390x.rpm
+mysql-devel-5.0.95-3.el5.s390.rpm
+mysql-devel-5.0.95-3.el5.s390x.rpm
+mysql-server-5.0.95-3.el5.s390x.rpm
+mysql-test-5.0.95-3.el5.s390x.rpm
+
+x86_64:
+mysql-5.0.95-3.el5.i386.rpm
+mysql-5.0.95-3.el5.x86_64.rpm
+mysql-bench-5.0.95-3.el5.x86_64.rpm
+mysql-debuginfo-5.0.95-3.el5.i386.rpm
+mysql-debuginfo-5.0.95-3.el5.x86_64.rpm
+mysql-devel-5.0.95-3.el5.i386.rpm
+mysql-devel-5.0.95-3.el5.x86_64.rpm
+mysql-server-5.0.95-3.el5.x86_64.rpm
+mysql-test-5.0.95-3.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4452.html">https://www.redhat.com/security/data/cve/CVE-2012-4452.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0127.html">https://rhn.redhat.com/errata/RHSA-2012-0127.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0109.html">https://rhn.redhat.com/errata/RHSA-2010-0109.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68JPXlSAg2UNWIIRAsUMAJ0ZMiyYZBgeZ5L5dL+zPijQR9OMTgCdGz7b
+5sT0eF5SCGyLA3SQngEn2NU=
+=aPsf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

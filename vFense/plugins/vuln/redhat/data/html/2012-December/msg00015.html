@@ -1,0 +1,175 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1550&#45;01] Moderate: pki security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 6 Dec 2012 15:38:15 &#45;0500 -->
+<!--X-Message-Id: 201212062038.qB6Kc99g020110@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1550-01] Moderate: pki security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1550-01] Moderate: pki security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:1550-01] Moderate: pki security update</li>
+<li><em>Date</em>: Thu, 6 Dec 2012 20:38:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: pki security update
+Advisory ID:       RHSA-2012:1550-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1550.html">https://rhn.redhat.com/errata/RHSA-2012-1550.html</a>
+Issue date:        2012-12-06
+CVE Names:         CVE-2012-4543 CVE-2012-4555 CVE-2012-4556 
+=====================================================================
+
+1. Summary:
+
+Updated pki-common and pki-tps packages that fix multiple security issues
+are now available for Red Hat Certificate System 8.1.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 8 - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments.
+
+Multiple cross-site scripting flaws were discovered in the Red Hat
+Certificate System. An attacker could use these flaws to perform a
+cross-site scripting (XSS) attack against victims using Certificate
+System's web interface. (CVE-2012-4543)
+
+Multiple denial of service flaws were found in the Red Hat Certificate
+System token processing. A Certificate System user could use these flaws
+to crash the Apache httpd web server child process, possibly interrupting
+the processing of other users' requests. (CVE-2012-4555, CVE-2012-4556)
+
+Red Hat would like to thank Patrick Raspante and Ryan Millay of GDC4S for
+reporting the CVE-2012-4555 and CVE-2012-4556 issues.
+
+All users of Red Hat Certificate System are advised to upgrade to these
+updated packages, which correct these issues. After installing this update,
+all Red Hat Certificate System subsystems must be restarted (&quot;/etc/init.d
+/[instance-name] restart&quot;) for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+864397 - CVE-2012-4543 Certificate System: Multiple cross-site scripting flaws by displaying CRL or processing profile
+869570 - CVE-2012-4555 pki-tps: Temporary denial of service on interrupted token format operations
+869579 - CVE-2012-4556 pki-tps: Connection reset when performing empty certificate search in TPS
+
+6. Package List:
+
+Red Hat Certificate System 8:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-common-8.1.3-2.el5pki.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-common-8.1.3-2.el5pki.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-tps-8.1.3-2.el5pki.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHCERT/SRPMS/pki-tps-8.1.3-2.el5pki.src.rpm</a>
+
+i386:
+pki-tps-8.1.3-2.el5pki.i386.rpm
+
+noarch:
+pki-common-8.1.3-2.el5pki.noarch.rpm
+pki-common-javadoc-8.1.3-2.el5pki.noarch.rpm
+
+x86_64:
+pki-tps-8.1.3-2.el5pki.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4543.html">https://www.redhat.com/security/data/cve/CVE-2012-4543.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4555.html">https://www.redhat.com/security/data/cve/CVE-2012-4555.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4556.html">https://www.redhat.com/security/data/cve/CVE-2012-4556.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQwQIbXlSAg2UNWIIRAqNBAKCtMMT9DKxGjSFjoAnwToo2G+1r6wCgigel
+Loo++u+CNXd5olcB8rG1Ao0=
+=uju9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

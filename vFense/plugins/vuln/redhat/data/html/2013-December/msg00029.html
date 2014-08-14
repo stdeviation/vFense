@@ -1,0 +1,172 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1842&#45;01] Moderate: nodejs010&#45;nodejs security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 16 Dec 2013 13:47:48 &#45;0500 -->
+<!--X-Message-Id: 201312161847.rBGIllkQ020170@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1842-01] Moderate: nodejs010-nodejs security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1842-01] Moderate: nodejs010-nodejs security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1842-01] Moderate: nodejs010-nodejs security update</li>
+<li><em>Date</em>: Mon, 16 Dec 2013 18:47:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: nodejs010-nodejs security update
+Advisory ID:       RHSA-2013:1842-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1842.html">https://rhn.redhat.com/errata/RHSA-2013-1842.html</a>
+Issue date:        2013-12-16
+CVE Names:         CVE-2013-4450 
+=====================================================================
+
+1. Summary:
+
+Updated nodejs010-nodejs packages that fix one security issue are now
+available for Red Hat Software Collections 1.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections for RHEL 6 Server - x86_64
+Red Hat Software Collections for RHEL 6 Workstation - x86_64
+
+3. Description:
+
+Node.js is a software development platform for building fast and scalable
+network applications in the JavaScript programming language.
+
+A denial of service flaw was found in the way Node.js handled pipelined
+HTTP requests. A remote attacker could use this flaw to send an excessive
+amount of HTTP requests over a network connection, causing Node.js to use
+an excessive amount of memory and possibly exit when all available memory
+is exhausted. (CVE-2013-4450)
+
+Node.js is included in Red Hat Software Collections 1.0 as a Technology
+Preview. More information about Red Hat Technology Previews is available
+here: <a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+All nodejs010-nodejs users are advised to upgrade to these updated
+packages, which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1021170 - CVE-2013-4450 NodeJS: HTTP Pipelining DoS
+
+6. Package List:
+
+Red Hat Software Collections for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHSCL/SRPMS/nodejs010-nodejs-0.10.5-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHSCL/SRPMS/nodejs010-nodejs-0.10.5-8.el6.src.rpm</a>
+
+x86_64:
+nodejs010-nodejs-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-debuginfo-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-devel-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-docs-0.10.5-8.el6.x86_64.rpm
+
+Red Hat Software Collections for RHEL 6 Workstation:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHSCL/SRPMS/nodejs010-nodejs-0.10.5-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHSCL/SRPMS/nodejs010-nodejs-0.10.5-8.el6.src.rpm</a>
+
+x86_64:
+nodejs010-nodejs-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-debuginfo-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-devel-0.10.5-8.el6.x86_64.rpm
+nodejs010-nodejs-docs-0.10.5-8.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4450.html">https://www.redhat.com/security/data/cve/CVE-2013-4450.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSr0q9XlSAg2UNWIIRAplZAKCNJooZ8mJA2a/ke2+zDonkXBgQMACgjYHJ
+q5tCftH+wfTRq0Xalgs8iMM=
+=7XqG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

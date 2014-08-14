@@ -1,0 +1,249 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0168&#45;01] Moderate: httpd security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 25 Mar 2010 07:08:40 &#45;0400 -->
+<!--X-Message-Id: 201003251108.o2PB8YdT018292@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0168-01] Moderate: httpd security and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0168-01] Moderate: httpd security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0168-01] Moderate: httpd security and enhancement update</li>
+<li><em>Date</em>: Thu, 25 Mar 2010 12:08:34 +0100</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security and enhancement update
+Advisory ID:       RHSA-2010:0168-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0168.html">https://rhn.redhat.com/errata/RHSA-2010-0168.html</a>
+Issue date:        2010-03-25
+CVE Names:         CVE-2010-0408 CVE-2010-0434 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix two security issues and add an enhancement
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular web server.
+
+It was discovered that mod_proxy_ajp incorrectly returned an &quot;Internal
+Server Error&quot; response when processing certain malformed requests, which
+caused the back-end server to be marked as failed in configurations where
+mod_proxy is used in load balancer mode. A remote attacker could cause
+mod_proxy to not send requests to back-end AJP (Apache JServ Protocol)
+servers for the retry timeout period (60 seconds by default) by sending
+specially-crafted requests. (CVE-2010-0408)
+
+A use-after-free flaw was discovered in the way the Apache HTTP Server
+handled request headers in subrequests. In configurations where subrequests
+are used, a multithreaded MPM (Multi-Processing Module) could possibly leak
+information from other requests in request replies. (CVE-2010-0434)
+
+This update also adds the following enhancement:
+
+* with the updated openssl packages from RHSA-2010:0162 installed, mod_ssl
+will refuse to renegotiate a TLS/SSL connection with an unpatched client
+that does not support RFC 5746. This update adds the
+&quot;SSLInsecureRenegotiation&quot; configuration directive. If this directive is
+enabled, mod_ssl will renegotiate insecurely with unpatched clients.
+(BZ#567980)
+
+Refer to the following Red Hat Knowledgebase article for more details about
+the changed mod_ssl behavior: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+All httpd users should upgrade to these updated packages, which contain
+backported patches to correct these issues and add this enhancement. After
+installing the updated packages, the httpd daemon must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+567980 - [RFE] mod_ssl: Add SSLInsecureRenegotiation directive [rhel-5]
+569905 - CVE-2010-0408 httpd: mod_proxy_ajp remote temporary DoS
+570171 - CVE-2010-0434 httpd: request header information leak
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm</a>
+
+i386:
+httpd-2.2.3-31.el5_4.4.i386.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.i386.rpm
+mod_ssl-2.2.3-31.el5_4.4.i386.rpm
+
+x86_64:
+httpd-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.x86_64.rpm
+mod_ssl-2.2.3-31.el5_4.4.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm</a>
+
+i386:
+httpd-debuginfo-2.2.3-31.el5_4.4.i386.rpm
+httpd-devel-2.2.3-31.el5_4.4.i386.rpm
+httpd-manual-2.2.3-31.el5_4.4.i386.rpm
+
+x86_64:
+httpd-debuginfo-2.2.3-31.el5_4.4.i386.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-devel-2.2.3-31.el5_4.4.i386.rpm
+httpd-devel-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-manual-2.2.3-31.el5_4.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-31.el5_4.4.src.rpm</a>
+
+i386:
+httpd-2.2.3-31.el5_4.4.i386.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.i386.rpm
+httpd-devel-2.2.3-31.el5_4.4.i386.rpm
+httpd-manual-2.2.3-31.el5_4.4.i386.rpm
+mod_ssl-2.2.3-31.el5_4.4.i386.rpm
+
+ia64:
+httpd-2.2.3-31.el5_4.4.ia64.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.ia64.rpm
+httpd-devel-2.2.3-31.el5_4.4.ia64.rpm
+httpd-manual-2.2.3-31.el5_4.4.ia64.rpm
+mod_ssl-2.2.3-31.el5_4.4.ia64.rpm
+
+ppc:
+httpd-2.2.3-31.el5_4.4.ppc.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.ppc.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.ppc64.rpm
+httpd-devel-2.2.3-31.el5_4.4.ppc.rpm
+httpd-devel-2.2.3-31.el5_4.4.ppc64.rpm
+httpd-manual-2.2.3-31.el5_4.4.ppc.rpm
+mod_ssl-2.2.3-31.el5_4.4.ppc.rpm
+
+s390x:
+httpd-2.2.3-31.el5_4.4.s390x.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.s390.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.s390x.rpm
+httpd-devel-2.2.3-31.el5_4.4.s390.rpm
+httpd-devel-2.2.3-31.el5_4.4.s390x.rpm
+httpd-manual-2.2.3-31.el5_4.4.s390x.rpm
+mod_ssl-2.2.3-31.el5_4.4.s390x.rpm
+
+x86_64:
+httpd-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.i386.rpm
+httpd-debuginfo-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-devel-2.2.3-31.el5_4.4.i386.rpm
+httpd-devel-2.2.3-31.el5_4.4.x86_64.rpm
+httpd-manual-2.2.3-31.el5_4.4.x86_64.rpm
+mod_ssl-2.2.3-31.el5_4.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0408.html">https://www.redhat.com/security/data/cve/CVE-2010-0408.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0434.html">https://www.redhat.com/security/data/cve/CVE-2010-0434.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLq0O9XlSAg2UNWIIRArtjAJ9xSUFspvZd3sA9pHvQ9r5CfNfzmwCfQB3B
+T3PiK20o3d0V6m26ZqVSHiM=
+=p6kl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1691&#45;03] Low: util&#45;linux&#45;ng security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 6 Dec 2011 10:42:23 &#45;0500 -->
+<!--X-Message-Id: 201112061542.pB6FgGut005494@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1691-03] Low: util-linux-ng security, bug fix,	and enhancemen</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1691-03] Low: util-linux-ng security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1691-03] Low: util-linux-ng security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 6 Dec 2011 15:42:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: util-linux-ng security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1691-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1691.html">https://rhn.redhat.com/errata/RHSA-2011-1691.html</a>
+Issue date:        2011-12-06
+CVE Names:         CVE-2011-1675 CVE-2011-1677 
+=====================================================================
+
+1. Summary:
+
+Updated util-linux-ng packages that fix multiple security issues, several
+bugs, and add various enhancements are now available for Red Hat
+Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The util-linux-ng packages contain a large variety of low-level system
+utilities that are necessary for a Linux operating system to function.
+
+Multiple flaws were found in the way the mount and umount commands
+performed mtab (mounted file systems table) file updates. A local,
+unprivileged user allowed to mount or unmount file systems could use these
+flaws to corrupt the mtab file and create a stale lock file, preventing
+other users from mounting and unmounting file systems. (CVE-2011-1675,
+CVE-2011-1677)
+
+This update also fixes the following bugs:
+
+* Due to a hard coded limit of 128 devices, an attempt to run the
+&quot;blkid -c&quot; command on more than 128 devices caused blkid to terminate
+unexpectedly. This update increases the maximum number of devices to 8192
+so that blkid no longer crashes in this scenario. (BZ#675999)
+
+* Previously, the &quot;swapon -a&quot; command did not detect device-mapper
+devices that were already in use. This update corrects the swapon utility
+to detect such devices as expected. (BZ#679741)
+
+* Prior to this update, the presence of an invalid line in the /etc/fstab
+file could cause the umount utility to terminate unexpectedly with
+a segmentation fault. This update applies a patch that corrects this error
+so that umount now correctly reports invalid lines and no longer crashes.
+(BZ#684203)
+
+* Previously, an attempt to use the wipefs utility on a partitioned
+device caused the utility to terminate unexpectedly with an error. This
+update adapts wipefs to only display a warning message in this situation.
+(BZ#696959)
+
+* When providing information on interprocess communication (IPC)
+facilities, the ipcs utility could previously display a process owner as
+a negative number if the user's UID was too large. This update adapts the
+underlying source code to make sure the UID values are now displayed
+correctly. (BZ#712158)
+
+* In the installation scriptlets, the uuidd package uses the chkconfig
+utility to enable and disable the uuidd service. Previously, this package
+did not depend on the chkconfig package, which could lead to errors during
+installation if chkconfig was not installed. This update adds chkconfig
+to the list of dependencies so that such errors no longer occur.
+(BZ#712808)
+
+* The previous version of the /etc/udev/rules.d/60-raw.rules file
+contained a statement that both this file and raw devices are deprecated.
+This is no longer true and the Red Hat Enterprise Linux kernel supports
+this functionality. With this update, the aforementioned file no longer
+contains this incorrect statement. (BZ#716995)
+
+* Previously, an attempt to use the cfdisk utility to read the default
+Red Hat Enterprise Linux 6 partition layout failed with an error. This
+update corrects this error and the cfdisk utility can now read the default
+partition layout as expected. (BZ#723352)
+
+* The previous version of the tailf(1) manual page incorrectly stated that
+users can use the &quot;--lines=NUMBER&quot; command line option to limit the number
+of displayed lines. However, the tailf utility does not allow the use of
+the equals sign (=) between the option and its argument. This update
+corrects this error. (BZ#679831)
+
+* The fstab(5) manual page has been updated to clarify that empty lines in
+the /etc/fstab configuration file are ignored. (BZ#694648)
+
+As well, this update adds the following enhancements:
+
+* A new fstrim utility has been added to the package. This utility allows
+the root user to discard unused blocks on a mounted file system.
+(BZ#692119)
+
+* The login utility has been updated to provide support for failed login
+attempts that are reported by PAM. (BZ#696731)
+
+* The lsblk utility has been updated to provide additional information
+about the topology and status of block devices. (BZ#723638)
+
+* The agetty utility has been updated to pass the hostname to the login
+utility. (BZ#726092)
+
+All users of util-linux-ng are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+675999 - blkid crashes on a server with more than 128 storage devices
+679741 - canonicalize swap devices
+679831 - --lines does not work: tailf: invalid option
+684203 - umount fails on inconsistent fstab
+692119 - Include fstrim tool to enable user-space using discard/UNMAP/WRITE_SAME for enterprise arrays
+694648 - [RHEL6] Blank line at head of fstab
+695916 - CVE-2011-1675 util-linux: mount fails to anticipate RLIMIT_FSIZE
+695924 - CVE-2011-1677 util-linux: umount may fail to remove /etc/mtab~ lock file
+696731 - display failed login attempts
+696959 - wipefs(8) reject partitioned devices
+712158 - uid/gid overflow in ipcs
+712808 - uuidd should depend on chkconfig
+716995 - Remove Deprecation Statement in /etc/udev/rules.d/60-raw.rules
+723352 - cfdisk cannot read default installer partitioning
+723546 - Defects revealed by Coverity scan
+723638 - Backport upstream extensions for lsblk
+726092 - Pass host name from agetty to login
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+uuidd-2.17.2-12.4.el6.i686.rpm
+
+x86_64:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-2.17.2-12.4.el6.x86_64.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+uuidd-2.17.2-12.4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+i386:
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+
+x86_64:
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+x86_64:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-2.17.2-12.4.el6.x86_64.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+uuidd-2.17.2-12.4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+x86_64:
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+uuidd-2.17.2-12.4.el6.i686.rpm
+
+ppc64:
+libblkid-2.17.2-12.4.el6.ppc.rpm
+libblkid-2.17.2-12.4.el6.ppc64.rpm
+libblkid-devel-2.17.2-12.4.el6.ppc.rpm
+libblkid-devel-2.17.2-12.4.el6.ppc64.rpm
+libuuid-2.17.2-12.4.el6.ppc.rpm
+libuuid-2.17.2-12.4.el6.ppc64.rpm
+libuuid-devel-2.17.2-12.4.el6.ppc.rpm
+libuuid-devel-2.17.2-12.4.el6.ppc64.rpm
+util-linux-ng-2.17.2-12.4.el6.ppc.rpm
+util-linux-ng-2.17.2-12.4.el6.ppc64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.ppc.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.ppc64.rpm
+uuidd-2.17.2-12.4.el6.ppc64.rpm
+
+s390x:
+libblkid-2.17.2-12.4.el6.s390.rpm
+libblkid-2.17.2-12.4.el6.s390x.rpm
+libblkid-devel-2.17.2-12.4.el6.s390.rpm
+libblkid-devel-2.17.2-12.4.el6.s390x.rpm
+libuuid-2.17.2-12.4.el6.s390.rpm
+libuuid-2.17.2-12.4.el6.s390x.rpm
+libuuid-devel-2.17.2-12.4.el6.s390.rpm
+libuuid-devel-2.17.2-12.4.el6.s390x.rpm
+util-linux-ng-2.17.2-12.4.el6.s390.rpm
+util-linux-ng-2.17.2-12.4.el6.s390x.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.s390.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.s390x.rpm
+uuidd-2.17.2-12.4.el6.s390x.rpm
+
+x86_64:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-2.17.2-12.4.el6.x86_64.rpm
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.x86_64.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+uuidd-2.17.2-12.4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/util-linux-ng-2.17.2-12.4.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+uuidd-2.17.2-12.4.el6.i686.rpm
+
+x86_64:
+libblkid-2.17.2-12.4.el6.i686.rpm
+libblkid-2.17.2-12.4.el6.x86_64.rpm
+libblkid-devel-2.17.2-12.4.el6.i686.rpm
+libblkid-devel-2.17.2-12.4.el6.x86_64.rpm
+libuuid-2.17.2-12.4.el6.i686.rpm
+libuuid-2.17.2-12.4.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.4.el6.i686.rpm
+libuuid-devel-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-2.17.2-12.4.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.4.el6.x86_64.rpm
+uuidd-2.17.2-12.4.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1675.html">https://www.redhat.com/security/data/cve/CVE-2011-1675.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1677.html">https://www.redhat.com/security/data/cve/CVE-2011-1677.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO3jejXlSAg2UNWIIRAh39AJ9SmNlmbtuPuGGNSnKCaGirN4nAKwCfas8d
+QHdUnk9PFsZii5D9SJh1w8g=
+=yWd9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

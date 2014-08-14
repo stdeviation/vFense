@@ -1,0 +1,301 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0586&#45;01] Low: libguestfs security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 May 2011 08:22:48 &#45;0400 -->
+<!--X-Message-Id: 201105191222.p4JCMg72005995@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0586-01] Low: libguestfs security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0586-01] Low: libguestfs security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0586-01] Low: libguestfs security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 19 May 2011 12:22:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: libguestfs security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0586-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0586.html">https://rhn.redhat.com/errata/RHSA-2011-0586.html</a>
+Issue date:        2011-05-19
+CVE Names:         CVE-2010-3851 
+=====================================================================
+
+1. Summary:
+
+Updated libguestfs packages that fix one security issue, several bugs, and
+add one enhancement are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+libguestfs is a library for accessing and modifying guest disk images.
+
+libguestfs relied on the format auto-detection in QEMU rather than
+allowing the guest image file format to be specified. A privileged guest
+user could potentially use this flaw to read arbitrary files on the host
+that were accessible to a user on that host who was running a program that
+utilized the libguestfs library. (CVE-2010-3851)
+
+This erratum upgrades libguestfs to upstream version 1.7.17, which includes
+a number of bug fixes and one enhancement. Documentation for these bug
+fixes and this enhancement is provided in the Technical Notes document,
+linked to in the References section.
+
+All libguestfs users are advised to upgrade to these updated packages,
+which correct this issue, and fix the bugs and add the enhancement noted
+in the Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+600144 - document that mkmountpoint and umount-all cannot be mixed
+612308 - qemu -net / vlan option deprecated.  Use -netdev instead.
+613593 - Rebase libguestfs in RHEL 6.1
+615223 - vfs-type could not read just-created filesystem
+617440 - guestfish: fails to tilde expand '~' when the $HOME env is unset
+627468 - [RFE]It's better to emphasize &quot;libguestfs-winsupport&quot; in V2V manpage or error output
+627832 - [RFE] guestfish should print outputs in a suitable base (eg. octal for modes)
+627833 - get-e2uuid should use blkid instead of &quot;tune2fs -l&quot; to get filesystem UUID
+633174 - some guestfish sub commands can not handle special files properly
+639601 - &quot;virt-ls&quot; command failed to parse domain name &quot;#&quot;
+639602 - &quot;&quot;virt-list-filesystems&quot; fails to parse the command line argument if the domain name is &quot;#&quot;.
+643958 - CVE-2010-3851 libguestfs: missing disk format specifier when adding a disk
+657472 - checksum: wrong check sum type causes umount to fail
+657502 - virt-inspector depends on EPEL package perl-String-ShellQuote but does not require it
+666577 - libguestfs: unknown filesystem /dev/fd0
+666579 - libguestfs: unknown filesystem /dev/hd{x} (cdrom)
+668115 - virt-filesystems command fails on guest with corrupt filesystem label
+668611 - guestfish -i is trying to mount all mounts from /etc/fstab and fails with an error when device doesn't exists
+673477 - Add a grep-friendly string to LIBGUESTFS_TRACE output
+673721 - Typo in virt-make-fs manual page
+676788 - libguestfs trace segfaults when list-filesystems returns error
+677616 - appliance doesn't include augeas device_map lens
+691724 - virt-inspector reports unknown filesystem /dev/vda1
+695138 - Remove dependency on gfs2-utils
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+guestfish-1.7.17-17.el6.x86_64.rpm
+libguestfs-1.7.17-17.el6.x86_64.rpm
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-1.7.17-17.el6.x86_64.rpm
+libguestfs-mount-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-c-1.7.17-17.el6.x86_64.rpm
+perl-Sys-Guestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-javadoc-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+python-libguestfs-1.7.17-17.el6.x86_64.rpm
+ruby-libguestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+guestfish-1.7.17-17.el6.x86_64.rpm
+libguestfs-1.7.17-17.el6.x86_64.rpm
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-1.7.17-17.el6.x86_64.rpm
+libguestfs-mount-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-c-1.7.17-17.el6.x86_64.rpm
+perl-Sys-Guestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-javadoc-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+python-libguestfs-1.7.17-17.el6.x86_64.rpm
+ruby-libguestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+guestfish-1.7.17-17.el6.x86_64.rpm
+libguestfs-1.7.17-17.el6.x86_64.rpm
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-1.7.17-17.el6.x86_64.rpm
+libguestfs-mount-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-c-1.7.17-17.el6.x86_64.rpm
+perl-Sys-Guestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-javadoc-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+python-libguestfs-1.7.17-17.el6.x86_64.rpm
+ruby-libguestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+guestfish-1.7.17-17.el6.x86_64.rpm
+libguestfs-1.7.17-17.el6.x86_64.rpm
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-1.7.17-17.el6.x86_64.rpm
+libguestfs-mount-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-1.7.17-17.el6.x86_64.rpm
+libguestfs-tools-c-1.7.17-17.el6.x86_64.rpm
+perl-Sys-Guestfs-1.7.17-17.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libguestfs-1.7.17-17.el6.src.rpm</a>
+
+x86_64:
+libguestfs-debuginfo-1.7.17-17.el6.x86_64.rpm
+libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-java-devel-1.7.17-17.el6.x86_64.rpm
+libguestfs-javadoc-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-1.7.17-17.el6.x86_64.rpm
+ocaml-libguestfs-devel-1.7.17-17.el6.x86_64.rpm
+python-libguestfs-1.7.17-17.el6.x86_64.rpm
+ruby-libguestfs-1.7.17-17.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3851.html">https://www.redhat.com/security/data/cve/CVE-2010-3851.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/index.html#libguestfs">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.1_Technical_Notes/index.html#libguestfs</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN1QttXlSAg2UNWIIRAurJAKCrnb86vob16o/HWDyRSU91uYBcjQCbBMm3
+/0Io6mGHOwBf7f3+YEVxarQ=
+=CsHH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1806&#45;01] Important: samba and samba3x security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 9 Dec 2013 19:27:29 &#45;0500 -->
+<!--X-Message-Id: 201312100027.rBA0RTvf028747@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1806-01] Important: samba and samba3x security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1806-01] Important: samba and samba3x security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1806-01] Important: samba and samba3x security update</li>
+<li><em>Date</em>: Tue, 10 Dec 2013 00:27:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: samba and samba3x security update
+Advisory ID:       RHSA-2013:1806-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1806.html">https://rhn.redhat.com/errata/RHSA-2013-1806.html</a>
+Issue date:        2013-12-09
+CVE Names:         CVE-2013-4408 CVE-2013-4475 
+=====================================================================
+
+1. Summary:
+
+Updated samba3x and samba packages that fix two security issues are now
+available for Red Hat Enterprise Linux 5 and 6 respectively.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+ Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Samba is an open-source implementation of the Server Message Block (SMB) or
+Common Internet File System (CIFS) protocol, which allows PC-compatible
+machines to share files, printers, and other information.
+
+A heap-based buffer overflow flaw was found in the DCE-RPC client code in
+Samba. A specially crafted DCE-RPC packet could cause various Samba
+programs to crash or, possibly, execute arbitrary code when parsed.
+A malicious or compromised Active Directory Domain Controller could use
+this flaw to compromise the winbindd daemon running with root privileges.
+(CVE-2013-4408)
+
+A flaw was found in the way Samba performed ACL checks on alternate file
+and directory data streams. An attacker able to access a CIFS share with
+alternate stream support enabled could access alternate data streams
+regardless of the underlying file or directory ACL permissions.
+(CVE-2013-4475)
+
+Red Hat would like to thank the Samba project for reporting CVE-2013-4408.
+Upstream acknowledges Stefan Metzmacher and Michael Adam of SerNet as the
+original reporters of this issue.
+
+All users of Samba are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1018032 - CVE-2013-4408 samba: Heap-based buffer overflow due to incorrect DCE-RPC fragment length field check
+1024542 - CVE-2013-4475 samba: no access check verification on stream files
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm</a>
+
+i386:
+samba3x-3.6.6-0.138.el5_10.i386.rpm
+samba3x-client-3.6.6-0.138.el5_10.i386.rpm
+samba3x-common-3.6.6-0.138.el5_10.i386.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-doc-3.6.6-0.138.el5_10.i386.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.i386.rpm
+samba3x-swat-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.i386.rpm
+
+x86_64:
+samba3x-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-client-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-common-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-doc-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-swat-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm</a>
+
+i386:
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.i386.rpm
+
+x86_64:
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba3x-3.6.6-0.138.el5_10.src.rpm</a>
+
+i386:
+samba3x-3.6.6-0.138.el5_10.i386.rpm
+samba3x-client-3.6.6-0.138.el5_10.i386.rpm
+samba3x-common-3.6.6-0.138.el5_10.i386.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-doc-3.6.6-0.138.el5_10.i386.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.i386.rpm
+samba3x-swat-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.i386.rpm
+
+ia64:
+samba3x-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-client-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-common-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-doc-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-swat-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.ia64.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.ia64.rpm
+
+ppc:
+samba3x-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-client-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-common-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.ppc64.rpm
+samba3x-doc-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-swat-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.ppc64.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.ppc.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.ppc64.rpm
+
+s390x:
+samba3x-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-client-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-common-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.s390.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-doc-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-swat-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.s390.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.s390x.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.s390.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.s390x.rpm
+
+x86_64:
+samba3x-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-client-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-common-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.i386.rpm
+samba3x-debuginfo-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-doc-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-domainjoin-gui-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-swat-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-3.6.6-0.138.el5_10.x86_64.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.i386.rpm
+samba3x-winbind-devel-3.6.6-0.138.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+samba-client-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-winbind-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+
+x86_64:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+libsmbclient-3.6.9-167.el6_5.x86_64.rpm
+samba-client-3.6.9-167.el6_5.x86_64.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+samba-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-doc-3.6.9-167.el6_5.i686.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.i686.rpm
+samba-swat-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.i686.rpm
+
+x86_64:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+libsmbclient-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-doc-3.6.9-167.el6_5.x86_64.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.x86_64.rpm
+samba-swat-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.x86_64.rpm
+
+ Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+x86_64:
+samba-client-3.6.9-167.el6_5.x86_64.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+x86_64:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+libsmbclient-3.6.9-167.el6_5.x86_64.rpm
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+libsmbclient-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-doc-3.6.9-167.el6_5.x86_64.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.x86_64.rpm
+samba-swat-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+samba-3.6.9-167.el6_5.i686.rpm
+samba-client-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-winbind-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+
+ppc64:
+libsmbclient-3.6.9-167.el6_5.ppc.rpm
+libsmbclient-3.6.9-167.el6_5.ppc64.rpm
+samba-3.6.9-167.el6_5.ppc64.rpm
+samba-client-3.6.9-167.el6_5.ppc64.rpm
+samba-common-3.6.9-167.el6_5.ppc.rpm
+samba-common-3.6.9-167.el6_5.ppc64.rpm
+samba-debuginfo-3.6.9-167.el6_5.ppc.rpm
+samba-debuginfo-3.6.9-167.el6_5.ppc64.rpm
+samba-winbind-3.6.9-167.el6_5.ppc64.rpm
+samba-winbind-clients-3.6.9-167.el6_5.ppc.rpm
+samba-winbind-clients-3.6.9-167.el6_5.ppc64.rpm
+
+s390x:
+libsmbclient-3.6.9-167.el6_5.s390.rpm
+libsmbclient-3.6.9-167.el6_5.s390x.rpm
+samba-3.6.9-167.el6_5.s390x.rpm
+samba-client-3.6.9-167.el6_5.s390x.rpm
+samba-common-3.6.9-167.el6_5.s390.rpm
+samba-common-3.6.9-167.el6_5.s390x.rpm
+samba-debuginfo-3.6.9-167.el6_5.s390.rpm
+samba-debuginfo-3.6.9-167.el6_5.s390x.rpm
+samba-winbind-3.6.9-167.el6_5.s390x.rpm
+samba-winbind-clients-3.6.9-167.el6_5.s390.rpm
+samba-winbind-clients-3.6.9-167.el6_5.s390x.rpm
+
+x86_64:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+libsmbclient-3.6.9-167.el6_5.x86_64.rpm
+samba-3.6.9-167.el6_5.x86_64.rpm
+samba-client-3.6.9-167.el6_5.x86_64.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-doc-3.6.9-167.el6_5.i686.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.i686.rpm
+samba-swat-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.i686.rpm
+
+ppc64:
+libsmbclient-devel-3.6.9-167.el6_5.ppc.rpm
+libsmbclient-devel-3.6.9-167.el6_5.ppc64.rpm
+samba-debuginfo-3.6.9-167.el6_5.ppc.rpm
+samba-debuginfo-3.6.9-167.el6_5.ppc64.rpm
+samba-doc-3.6.9-167.el6_5.ppc64.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.ppc64.rpm
+samba-swat-3.6.9-167.el6_5.ppc64.rpm
+samba-winbind-devel-3.6.9-167.el6_5.ppc.rpm
+samba-winbind-devel-3.6.9-167.el6_5.ppc64.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.ppc64.rpm
+
+s390x:
+libsmbclient-devel-3.6.9-167.el6_5.s390.rpm
+libsmbclient-devel-3.6.9-167.el6_5.s390x.rpm
+samba-debuginfo-3.6.9-167.el6_5.s390.rpm
+samba-debuginfo-3.6.9-167.el6_5.s390x.rpm
+samba-doc-3.6.9-167.el6_5.s390x.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.s390x.rpm
+samba-swat-3.6.9-167.el6_5.s390x.rpm
+samba-winbind-devel-3.6.9-167.el6_5.s390.rpm
+samba-winbind-devel-3.6.9-167.el6_5.s390x.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.s390x.rpm
+
+x86_64:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+libsmbclient-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-doc-3.6.9-167.el6_5.x86_64.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.x86_64.rpm
+samba-swat-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+samba-3.6.9-167.el6_5.i686.rpm
+samba-client-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-winbind-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+
+x86_64:
+libsmbclient-3.6.9-167.el6_5.i686.rpm
+libsmbclient-3.6.9-167.el6_5.x86_64.rpm
+samba-3.6.9-167.el6_5.x86_64.rpm
+samba-client-3.6.9-167.el6_5.x86_64.rpm
+samba-common-3.6.9-167.el6_5.i686.rpm
+samba-common-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-clients-3.6.9-167.el6_5.i686.rpm
+samba-winbind-clients-3.6.9-167.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/samba-3.6.9-167.el6_5.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-doc-3.6.9-167.el6_5.i686.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.i686.rpm
+samba-swat-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.i686.rpm
+
+x86_64:
+libsmbclient-devel-3.6.9-167.el6_5.i686.rpm
+libsmbclient-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-debuginfo-3.6.9-167.el6_5.i686.rpm
+samba-debuginfo-3.6.9-167.el6_5.x86_64.rpm
+samba-doc-3.6.9-167.el6_5.x86_64.rpm
+samba-domainjoin-gui-3.6.9-167.el6_5.x86_64.rpm
+samba-swat-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-devel-3.6.9-167.el6_5.i686.rpm
+samba-winbind-devel-3.6.9-167.el6_5.x86_64.rpm
+samba-winbind-krb5-locator-3.6.9-167.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4408.html">https://www.redhat.com/security/data/cve/CVE-2013-4408.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4475.html">https://www.redhat.com/security/data/cve/CVE-2013-4475.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.samba.org/samba/security/CVE-2013-4408">http://www.samba.org/samba/security/CVE-2013-4408</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSpl+9XlSAg2UNWIIRAntpAJ4vPhfKGwIUTApbnDgnn4y7MpK12ACdF7YK
+ZnGtmuSkcKrvL/Du9IvuMnY=
+=W1Zo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

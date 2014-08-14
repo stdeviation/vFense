@@ -1,0 +1,261 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0697&#45;01] Important: thunderbird security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Apr 2013 16:12:31 &#45;0400 -->
+<!--X-Message-Id: 201304022012.r32KCV2p001061@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0697-01] Important: thunderbird security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0697-01] Important: thunderbird security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0697-01] Important: thunderbird security update</li>
+<li><em>Date</em>: Tue, 2 Apr 2013 20:12:30 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: thunderbird security update
+Advisory ID:       RHSA-2013:0697-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0697.html">https://rhn.redhat.com/errata/RHSA-2013-0697.html</a>
+Issue date:        2013-04-02
+CVE Names:         CVE-2013-0788 CVE-2013-0793 CVE-2013-0795 
+                   CVE-2013-0796 CVE-2013-0800 
+=====================================================================
+
+1. Summary:
+
+An updated thunderbird package that fixes several security issues is now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Optional Productivity Applications (v. 5 server)	 - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Mozilla Thunderbird is a standalone mail and newsgroup client.
+
+Several flaws were found in the processing of malformed content. Malicious
+content could cause Thunderbird to crash or, potentially, execute arbitrary
+code with the privileges of the user running Thunderbird. (CVE-2013-0788)
+
+A flaw was found in the way Same Origin Wrappers were implemented in
+Thunderbird. Malicious content could use this flaw to bypass the
+same-origin policy and execute arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2013-0795)
+
+A flaw was found in the embedded WebGL library in Thunderbird. Malicious
+content could cause Thunderbird to crash or, potentially, execute arbitrary
+code with the privileges of the user running Thunderbird. Note: This issue
+only affected systems using the Intel Mesa graphics drivers.
+(CVE-2013-0796)
+
+An out-of-bounds write flaw was found in the embedded Cairo library in
+Thunderbird. Malicious content could cause Thunderbird to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+Thunderbird. (CVE-2013-0800)
+
+A flaw was found in the way Thunderbird handled the JavaScript history
+functions. Malicious content could cause a page to be displayed that
+has a baseURI pointing to a different site, allowing cross-site scripting
+(XSS) and phishing attacks. (CVE-2013-0793)
+
+Red Hat would like to thank the Mozilla project for reporting these issues.
+Upstream acknowledges Olli Pettay, Jesse Ruderman, Boris Zbarsky, Christian
+Holler, Milan Sreckovic, Joe Drew, Cody Crews, miaubiz, Abhishek Arya, and
+Mariusz Mlynski as the original reporters of these issues.
+
+Note: All issues except CVE-2013-0800 cannot be exploited by a
+specially-crafted HTML mail message as JavaScript is disabled by default
+for mail messages. They could be exploited another way in Thunderbird, for
+example, when viewing the full remote content of an RSS feed.
+
+All Thunderbird users should upgrade to this updated package, which
+contains Thunderbird version 17.0.5 ESR, which corrects these issues. After
+installing the update, Thunderbird must be restarted for the changes to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+946927 - CVE-2013-0788 Mozilla: Miscellaneous memory safety hazards (rv:17.0.5) (MFSA 2013-30)
+946929 - CVE-2013-0800 Mozilla: Out-of-bounds write in Cairo library (MFSA 2013-31)
+946931 - CVE-2013-0796 Mozilla: WebGL crash with Mesa graphics driver on Linux (MFSA 2013-35)
+946932 - CVE-2013-0795 Mozilla: Bypass of SOW protections allows cloning of protected nodes (MFSA 2013-36)
+946935 - CVE-2013-0793 Mozilla: Cross-site scripting (XSS) using timed history navigations (MFSA 2013-38)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-17.0.5-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-17.0.5-1.el5_9.src.rpm</a>
+
+i386:
+thunderbird-17.0.5-1.el5_9.i386.rpm
+thunderbird-debuginfo-17.0.5-1.el5_9.i386.rpm
+
+x86_64:
+thunderbird-17.0.5-1.el5_9.x86_64.rpm
+thunderbird-debuginfo-17.0.5-1.el5_9.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server)	:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-17.0.5-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-17.0.5-1.el5_9.src.rpm</a>
+
+i386:
+thunderbird-17.0.5-1.el5_9.i386.rpm
+thunderbird-debuginfo-17.0.5-1.el5_9.i386.rpm
+
+x86_64:
+thunderbird-17.0.5-1.el5_9.x86_64.rpm
+thunderbird-debuginfo-17.0.5-1.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm</a>
+
+i386:
+thunderbird-17.0.5-1.el6_4.i686.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.i686.rpm
+
+x86_64:
+thunderbird-17.0.5-1.el6_4.x86_64.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm</a>
+
+i386:
+thunderbird-17.0.5-1.el6_4.i686.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.i686.rpm
+
+ppc64:
+thunderbird-17.0.5-1.el6_4.ppc64.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.ppc64.rpm
+
+s390x:
+thunderbird-17.0.5-1.el6_4.s390x.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.s390x.rpm
+
+x86_64:
+thunderbird-17.0.5-1.el6_4.x86_64.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/thunderbird-17.0.5-1.el6_4.src.rpm</a>
+
+i386:
+thunderbird-17.0.5-1.el6_4.i686.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.i686.rpm
+
+x86_64:
+thunderbird-17.0.5-1.el6_4.x86_64.rpm
+thunderbird-debuginfo-17.0.5-1.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0788.html">https://www.redhat.com/security/data/cve/CVE-2013-0788.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0793.html">https://www.redhat.com/security/data/cve/CVE-2013-0793.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0795.html">https://www.redhat.com/security/data/cve/CVE-2013-0795.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0796.html">https://www.redhat.com/security/data/cve/CVE-2013-0796.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0800.html">https://www.redhat.com/security/data/cve/CVE-2013-0800.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRWzugXlSAg2UNWIIRAnCnAJoDruA5cPyS86KWAlLLzWn5Ey5GhgCghjLv
+HoC1MilQismXf0G+m2J5hN0=
+=LtV1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

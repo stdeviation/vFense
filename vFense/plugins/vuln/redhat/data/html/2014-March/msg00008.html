@@ -1,0 +1,331 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0249&#45;01] Important: postgresql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Mar 2014 14:50:55 &#45;0500 -->
+<!--X-Message-Id: 201403041950.s24JotpO012292@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0249-01] Important: postgresql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0249-01] Important: postgresql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0249-01] Important: postgresql security update</li>
+<li><em>Date</em>: Tue, 4 Mar 2014 19:50:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: postgresql security update
+Advisory ID:       RHSA-2014:0249-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0249.html">https://rhn.redhat.com/errata/RHSA-2014-0249.html</a>
+Issue date:        2014-03-04
+CVE Names:         CVE-2014-0060 CVE-2014-0061 CVE-2014-0062 
+                   CVE-2014-0063 CVE-2014-0064 CVE-2014-0065 
+                   CVE-2014-0066 
+=====================================================================
+
+1. Summary:
+
+Updated postgresql packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+PostgreSQL is an advanced object-relational database management system
+(DBMS).
+
+Multiple stack-based buffer overflow flaws were found in the date/time
+implementation of PostgreSQL. An authenticated database user could provide
+a specially crafted date/time value that, when processed, could cause
+PostgreSQL to crash or, potentially, execute arbitrary code with the
+permissions of the user running PostgreSQL. (CVE-2014-0063)
+
+Multiple integer overflow flaws, leading to heap-based buffer overflows,
+were found in various type input functions in PostgreSQL. An authenticated
+database user could possibly use these flaws to crash PostgreSQL or,
+potentially, execute arbitrary code with the permissions of the user
+running PostgreSQL. (CVE-2014-0064)
+
+Multiple potential buffer overflow flaws were found in PostgreSQL.
+An authenticated database user could possibly use these flaws to crash
+PostgreSQL or, potentially, execute arbitrary code with the permissions of
+the user running PostgreSQL. (CVE-2014-0065)
+
+It was found that granting an SQL role to a database user in a PostgreSQL
+database without specifying the &quot;ADMIN&quot; option allowed the grantee to
+remove other users from their granted role. An authenticated database user
+could use this flaw to remove a user from an SQL role which they were
+granted access to. (CVE-2014-0060)
+
+A flaw was found in the validator functions provided by PostgreSQL's
+procedural languages (PLs). An authenticated database user could possibly
+use this flaw to escalate their privileges. (CVE-2014-0061)
+
+A race condition was found in the way the CREATE INDEX command performed
+multiple independent lookups of a table that had to be indexed. An
+authenticated database user could possibly use this flaw to escalate their
+privileges. (CVE-2014-0062)
+
+It was found that the chkpass extension of PostgreSQL did not check the
+return value of the crypt() function. An authenticated database user could
+possibly use this flaw to crash PostgreSQL via a null pointer dereference.
+(CVE-2014-0066)
+
+Red Hat would like to thank the PostgreSQL project for reporting these
+issues. Upstream acknowledges Noah Misch as the original reporter of
+CVE-2014-0060 and CVE-2014-0063, Heikki Linnakangas and Noah Misch as the
+original reporters of CVE-2014-0064, Peter Eisentraut and Jozef Mlich as
+the original reporters of CVE-2014-0065, Andres Freund as the original
+reporter of CVE-2014-0061, Robert Haas and Andres Freund as the original
+reporters of CVE-2014-0062, and Honza Horak and Bruce Momjian as the
+original reporters of CVE-2014-0066.
+
+All PostgreSQL users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. If the postgresql
+service is running, it will be automatically restarted after installing
+this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1065219 - CVE-2014-0060 postgresql: SET ROLE without ADMIN OPTION allows adding and removing group members
+1065220 - CVE-2014-0061 postgresql: privilege escalation via procedural language validator functions
+1065222 - CVE-2014-0062 postgresql: CREATE INDEX race condition possibly leading to privilege escalation
+1065226 - CVE-2014-0063 postgresql: stack-based buffer overflow in datetime input/output
+1065230 - CVE-2014-0064 postgresql: integer overflows leading to buffer overflows
+1065235 - CVE-2014-0065 postgresql: possible buffer overflow flaws
+1065236 - CVE-2014-0066 postgresql: NULL pointer dereference
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm</a>
+
+i386:
+postgresql-8.1.23-10.el5_10.i386.rpm
+postgresql-contrib-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-docs-8.1.23-10.el5_10.i386.rpm
+postgresql-libs-8.1.23-10.el5_10.i386.rpm
+postgresql-python-8.1.23-10.el5_10.i386.rpm
+postgresql-tcl-8.1.23-10.el5_10.i386.rpm
+
+x86_64:
+postgresql-8.1.23-10.el5_10.x86_64.rpm
+postgresql-contrib-8.1.23-10.el5_10.x86_64.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.x86_64.rpm
+postgresql-docs-8.1.23-10.el5_10.x86_64.rpm
+postgresql-libs-8.1.23-10.el5_10.i386.rpm
+postgresql-libs-8.1.23-10.el5_10.x86_64.rpm
+postgresql-python-8.1.23-10.el5_10.x86_64.rpm
+postgresql-tcl-8.1.23-10.el5_10.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm</a>
+
+i386:
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-devel-8.1.23-10.el5_10.i386.rpm
+postgresql-pl-8.1.23-10.el5_10.i386.rpm
+postgresql-server-8.1.23-10.el5_10.i386.rpm
+postgresql-test-8.1.23-10.el5_10.i386.rpm
+
+x86_64:
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.x86_64.rpm
+postgresql-devel-8.1.23-10.el5_10.i386.rpm
+postgresql-devel-8.1.23-10.el5_10.x86_64.rpm
+postgresql-pl-8.1.23-10.el5_10.x86_64.rpm
+postgresql-server-8.1.23-10.el5_10.x86_64.rpm
+postgresql-test-8.1.23-10.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/postgresql-8.1.23-10.el5_10.src.rpm</a>
+
+i386:
+postgresql-8.1.23-10.el5_10.i386.rpm
+postgresql-contrib-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-devel-8.1.23-10.el5_10.i386.rpm
+postgresql-docs-8.1.23-10.el5_10.i386.rpm
+postgresql-libs-8.1.23-10.el5_10.i386.rpm
+postgresql-pl-8.1.23-10.el5_10.i386.rpm
+postgresql-python-8.1.23-10.el5_10.i386.rpm
+postgresql-server-8.1.23-10.el5_10.i386.rpm
+postgresql-tcl-8.1.23-10.el5_10.i386.rpm
+postgresql-test-8.1.23-10.el5_10.i386.rpm
+
+ia64:
+postgresql-8.1.23-10.el5_10.ia64.rpm
+postgresql-contrib-8.1.23-10.el5_10.ia64.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.ia64.rpm
+postgresql-devel-8.1.23-10.el5_10.ia64.rpm
+postgresql-docs-8.1.23-10.el5_10.ia64.rpm
+postgresql-libs-8.1.23-10.el5_10.i386.rpm
+postgresql-libs-8.1.23-10.el5_10.ia64.rpm
+postgresql-pl-8.1.23-10.el5_10.ia64.rpm
+postgresql-python-8.1.23-10.el5_10.ia64.rpm
+postgresql-server-8.1.23-10.el5_10.ia64.rpm
+postgresql-tcl-8.1.23-10.el5_10.ia64.rpm
+postgresql-test-8.1.23-10.el5_10.ia64.rpm
+
+ppc:
+postgresql-8.1.23-10.el5_10.ppc.rpm
+postgresql-8.1.23-10.el5_10.ppc64.rpm
+postgresql-contrib-8.1.23-10.el5_10.ppc.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.ppc.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.ppc64.rpm
+postgresql-devel-8.1.23-10.el5_10.ppc.rpm
+postgresql-devel-8.1.23-10.el5_10.ppc64.rpm
+postgresql-docs-8.1.23-10.el5_10.ppc.rpm
+postgresql-libs-8.1.23-10.el5_10.ppc.rpm
+postgresql-libs-8.1.23-10.el5_10.ppc64.rpm
+postgresql-pl-8.1.23-10.el5_10.ppc.rpm
+postgresql-python-8.1.23-10.el5_10.ppc.rpm
+postgresql-server-8.1.23-10.el5_10.ppc.rpm
+postgresql-tcl-8.1.23-10.el5_10.ppc.rpm
+postgresql-test-8.1.23-10.el5_10.ppc.rpm
+
+s390x:
+postgresql-8.1.23-10.el5_10.s390x.rpm
+postgresql-contrib-8.1.23-10.el5_10.s390x.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.s390.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.s390x.rpm
+postgresql-devel-8.1.23-10.el5_10.s390.rpm
+postgresql-devel-8.1.23-10.el5_10.s390x.rpm
+postgresql-docs-8.1.23-10.el5_10.s390x.rpm
+postgresql-libs-8.1.23-10.el5_10.s390.rpm
+postgresql-libs-8.1.23-10.el5_10.s390x.rpm
+postgresql-pl-8.1.23-10.el5_10.s390x.rpm
+postgresql-python-8.1.23-10.el5_10.s390x.rpm
+postgresql-server-8.1.23-10.el5_10.s390x.rpm
+postgresql-tcl-8.1.23-10.el5_10.s390x.rpm
+postgresql-test-8.1.23-10.el5_10.s390x.rpm
+
+x86_64:
+postgresql-8.1.23-10.el5_10.x86_64.rpm
+postgresql-contrib-8.1.23-10.el5_10.x86_64.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.i386.rpm
+postgresql-debuginfo-8.1.23-10.el5_10.x86_64.rpm
+postgresql-devel-8.1.23-10.el5_10.i386.rpm
+postgresql-devel-8.1.23-10.el5_10.x86_64.rpm
+postgresql-docs-8.1.23-10.el5_10.x86_64.rpm
+postgresql-libs-8.1.23-10.el5_10.i386.rpm
+postgresql-libs-8.1.23-10.el5_10.x86_64.rpm
+postgresql-pl-8.1.23-10.el5_10.x86_64.rpm
+postgresql-python-8.1.23-10.el5_10.x86_64.rpm
+postgresql-server-8.1.23-10.el5_10.x86_64.rpm
+postgresql-tcl-8.1.23-10.el5_10.x86_64.rpm
+postgresql-test-8.1.23-10.el5_10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0060.html">https://www.redhat.com/security/data/cve/CVE-2014-0060.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0061.html">https://www.redhat.com/security/data/cve/CVE-2014-0061.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0062.html">https://www.redhat.com/security/data/cve/CVE-2014-0062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0063.html">https://www.redhat.com/security/data/cve/CVE-2014-0063.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0064.html">https://www.redhat.com/security/data/cve/CVE-2014-0064.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0065.html">https://www.redhat.com/security/data/cve/CVE-2014-0065.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0066.html">https://www.redhat.com/security/data/cve/CVE-2014-0066.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTFi5uXlSAg2UNWIIRAuD1AJwMViIK6H5OrweWJ6ZPWRhawPqipACfVj+T
+aBJpy02d9zNDSx7vwqd5YU8=
+=VtM0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

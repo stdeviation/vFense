@@ -1,0 +1,151 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0783&#45;01] Moderate: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 1 May 2013 14:12:00 &#45;0400 -->
+<!--X-Message-Id: 201305011811.r41IBxid021041@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0783-01] Moderate: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0783-01] Moderate: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0783-01] Moderate: openssl security update</li>
+<li><em>Date</em>: Wed, 1 May 2013 18:11:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssl security update
+Advisory ID:       RHSA-2013:0783-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0783.html">https://rhn.redhat.com/errata/RHSA-2013-0783.html</a>
+Issue date:        2013-05-01
+CVE Names:         CVE-2013-0166 CVE-2013-0169 
+=====================================================================
+
+1. Summary:
+
+An update for the OpenSSL component for JBoss Enterprise Application
+Platform 5.2.0 for Solaris and Microsoft Windows that fixes two security
+issues is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+A NULL pointer dereference flaw was found in the OCSP response verification
+in OpenSSL. A malicious OCSP server could use this flaw to crash
+applications performing OCSP verification by sending a specially-crafted
+response. (CVE-2013-0166)
+
+It was discovered that OpenSSL leaked timing information when decrypting
+TLS/SSL and DTLS protocol encrypted records when CBC-mode cipher suites
+were used. A remote attacker could possibly use this flaw to retrieve plain
+text from the encrypted packets by using a TLS/SSL or DTLS server as a
+padding oracle. (CVE-2013-0169)
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Application Platform installation (including all applications
+and configuration files).
+
+All users of JBoss Enterprise Application Platform 5.2.0 for Solaris and
+Microsoft Windows as provided from the Red Hat Customer Portal are advised
+to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Application Platform installation (including all
+applications and configuration files).
+
+JBoss server instances configured to use the Tomcat Native library must be
+restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+907589 - CVE-2013-0169 SSL/TLS: CBC padding timing attack (lucky-13)
+908052 - CVE-2013-0166 openssl: DoS due to improper handling of OCSP response verification
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0166.html">https://www.redhat.com/security/data/cve/CVE-2013-0166.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0169.html">https://www.redhat.com/security/data/cve/CVE-2013-0169.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.2.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.2.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRgVrKXlSAg2UNWIIRAvcsAJ4in5pJNa8IvaAWovQedSRDPT8c5wCgn5mb
+Ye1PyaSjfXCbOJGIpqidUF4=
+=GOdf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

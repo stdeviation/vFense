@@ -1,0 +1,187 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0683&#45;01] Important: bind&#45;dyndb&#45;ldap security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 May 2012 13:23:13 &#45;0400 -->
+<!--X-Message-Id: 201205211723.q4LHN6CI012159@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0683-01] Important: bind-dyndb-ldap security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0683-01] Important: bind-dyndb-ldap security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0683-01] Important: bind-dyndb-ldap security update</li>
+<li><em>Date</em>: Mon, 21 May 2012 17:23:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bind-dyndb-ldap security update
+Advisory ID:       RHSA-2012:0683-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0683.html">https://rhn.redhat.com/errata/RHSA-2012-0683.html</a>
+Issue date:        2012-05-21
+CVE Names:         CVE-2012-2134 
+=====================================================================
+
+1. Summary:
+
+An updated bind-dyndb-ldap package that fixes one security issue is now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The dynamic LDAP back end is a plug-in for BIND that provides back-end
+capabilities to LDAP databases. It features support for dynamic updates
+and internal caching that help to reduce the load on LDAP servers.
+
+A flaw was found in the way bind-dyndb-ldap handled LDAP query errors. If a
+remote attacker were able to send DNS queries to a named server that is
+configured to use bind-dyndb-ldap, they could trigger such an error with a
+DNS query leveraging bind-dyndb-ldap's insufficient escaping of the LDAP
+base DN (distinguished name). This would result in an invalid LDAP query
+that named would retry in a loop, preventing it from responding to other
+DNS queries. With this update, bind-dyndb-ldap only attempts to retry one
+time when an LDAP search returns an unexpected error. (CVE-2012-2134)
+
+Red Hat would like to thank Ronald van Zantvoort for reporting this issue.
+
+All bind-dyndb-ldap users should upgrade to this updated package, which
+contains a backported patch to correct this issue. For the update to take
+effect, the named service must be restarted.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+815846 - CVE-2012-2134 bind-dyndb-ldap: Bind DoS (named hang) by processing DNS query for zone served by bind-dyndb-ldap
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-dyndb-ldap-0.2.0-7.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bind-dyndb-ldap-0.2.0-7.el6_2.1.src.rpm</a>
+
+i386:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.i686.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.i686.rpm
+
+ppc64:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.ppc64.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.ppc64.rpm
+
+s390x:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.s390x.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.s390x.rpm
+
+x86_64:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.x86_64.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-dyndb-ldap-0.2.0-7.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bind-dyndb-ldap-0.2.0-7.el6_2.1.src.rpm</a>
+
+i386:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.i686.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.i686.rpm
+
+x86_64:
+bind-dyndb-ldap-0.2.0-7.el6_2.1.x86_64.rpm
+bind-dyndb-ldap-debuginfo-0.2.0-7.el6_2.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2134.html">https://www.redhat.com/security/data/cve/CVE-2012-2134.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPunndXlSAg2UNWIIRAk/6AJ0Y0KgruLTHRac/qgUbYdehf3uANACfUTXk
+2rTDMycBS30NAqhRm2HIQwM=
+=/s0U
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

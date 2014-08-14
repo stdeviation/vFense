@@ -1,0 +1,1353 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1540&#45;02] Low: evolution security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:07:32 &#45;0500 -->
+<!--X-Message-Id: 201311210407.rAL47TBn032668@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1540-02] Low: evolution security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1540-02] Low: evolution security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1540-02] Low: evolution security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:11:01 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: evolution security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1540-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1540.html">https://rhn.redhat.com/errata/RHSA-2013-1540.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2013-4166 
+=====================================================================
+
+1. Summary:
+
+Updated evolution packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+Evolution is the integrated collection of email, calendaring, contact
+management, communications, and personal information management (PIM) tools
+for the GNOME desktop environment.
+
+A flaw was found in the way Evolution selected GnuPG public keys when
+encrypting emails. This could result in emails being encrypted with public
+keys other than the one belonging to the intended recipient.
+(CVE-2013-4166)
+
+The Evolution packages have been upgraded to upstream version 2.32.3, which
+provides a number of bug fixes and enhancements over the previous version.
+These changes include implementation of Gnome XDG Config Folders, and
+support for Exchange Web Services (EWS) protocol to connect to Microsoft
+Exchange servers. EWS support has been added as a part of the
+evolution-exchange packages. (BZ#883010, BZ#883014, BZ#883015, BZ#883017,
+BZ#524917, BZ#524921, BZ#883044)
+
+The gtkhtml3 packages have been upgraded to upstream version 2.32.2, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#883019)
+
+The libgdata packages have been upgraded to upstream version 0.6.4, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#883032)
+
+This update also fixes the following bug:
+
+* The Exchange Calendar could not fetch the &quot;Free&quot; and &quot;Busy&quot; information
+for meeting attendees when using Microsoft Exchange 2010 servers, and this
+information thus could not be displayed. This happened because Microsoft
+Exchange 2010 servers use more strict rules for &quot;Free&quot; and &quot;Busy&quot;
+information fetching. With this update, the respective code in the
+openchange packages has been modified so the &quot;Free&quot; and &quot;Busy&quot; information
+fetching now complies with the fetching rules on Microsoft Exchange 2010
+servers. The &quot;Free&quot; and &quot;Busy&quot; information can now be displayed as expected
+in the Exchange Calendar. (BZ#665967)
+
+All Evolution users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. All running instances of Evolution must be restarted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+589263 - [PATCH] Google contacts can unlock its cache causing slow updating
+602667 - [PATCH] [abrt] evolution-2.28.3-3.el6: camel_msgport_try_pop, camel_operation_cancel_check, regen_list_done
+615969 - Whitespaces drop on paste
+619842 - Attached email message is empty in forwarded email
+624851 - Evolution mail client: Unable to load encryption cert from the smart card to send/receive encrypted messages.
+626690 - [mail] HTML format - header 1 size Text becomes Normal after selecting strike, italic, underline format
+628174 - [cal] Listview - Copy Paste is not working
+630314 - [evol][ml_IN] - Translation Short-cuts are inconsistent
+665967 - Free/busy fetch broken
+667081 - evo - Crash in alarm-queue.c:display_notification
+670917 - Evolution reports cancelled meeting is in disabled calendar
+683402 - gnome bug #615384 - Use contact's free/busy URL only when not empty
+689429 - Button &quot;Open With&quot; doesn't work
+692658 - [PATCH] evolution can't load caldav calendars with a space in their name
+694134 - Contacts in evolution-mapi address book are not searchable
+694142 - Global Address List is not displayed when it loads for the first time
+696620 - Crash in retrieval_done of OnTheWeb calendar
+698243 - Alarms can't be set on meetings/appointments filed by others
+698246 - Calendar password dialog box has insane default
+700726 - [i686] Folders are not migrated
+700733 - Folder summary information is not properly updated after migration
+700789 - [evol][ml_IN] - Translation Short-cuts are inconsistent
+702608 - sending link and close will not kill all evolution processes
+724843 - [abrt] evolution-2.28.3-24.el6: Process /usr/bin/evolution was killed by signal 11 (SIGSEGV)
+737865 - Accepting invitation of event in Evolution doesn't change its state in Zimbra
+739968 - Initialize dbus-glib threading in evolution-data-server
+750916 - Evolution should offer TLSv1 for IMAPS handshake
+772652 - Evolution picks default account address when it does not make sense
+804651 - CalDAV backend doesn't respect &quot;Copy for offline&quot; option
+809542 - When auto-moving within message list, move to &quot;most preferred&quot; or &quot;least preferred unread&quot;
+810460 - when going to offline mode, evolution shows sync dialog window on top of last opened main window, not actual window
+811980 - Adding event to Google calendar reports error in Evolution
+813266 - Deadlock on folder search
+815363 - RFE: Add Reply to List to toolbar
+815371 - When copying &amp; pasting a name with chinese characters via clipboard, quoted-printable text is pasted
+832973 - segfault in connect_header() after attempt to save view layout with unicode in its name
+838750 - [RFE] Add support for exchange's delegate email feature to Evolution
+857003 - bad czech translation string: &quot;Nenalezena událost '$CALENDAR' v kalendáři&quot;
+903728 - [abrt] crash in get_server_data, e_cal_backend_mapi_send_objects
+905591 - Error while refreshing folder
+906267 - [abrt] Use-after-free in impl_ShellView_setButtonIcon()
+906341 - Cannot create a new MAPI Book/Calendar
+909259 - Accepted meeting gets duplicated
+919002 - when there is no message selected, don't select any message after flip of read/important icon in msg list
+949610 - Don't block UI while downloading message attachment
+950005 - evolution doesn't download some messages from imap, showing their bodies as zero size (and with zero size attachment of text/html)
+951118 - Prefer-plain suppresses its own HTML attachments recursively
+955587 - Do not consider PGP and S/MIME subparts as attachments
+956064 - [abrt] Crash on name-selector's GConf access from multiple threads
+956510 - [abrt] Crash in remove_queued_alarm()
+962331 - Initialize dbus-glib threading in evolution
+962499 - evolution should use information from gpg's status file (descriptor) to determine encryption and signature status
+970013 - Workaround QResync Zimbra bug in IMAP+
+971073 - [abrt-caught bug] evolution 2.32 crashed in imapx_command_select_done
+971496 - Notify user about question dialogs
+971621 - Book factory stuck waiting on WebDAV backend view stop
+973276 - Rebuild cheese for evolution-data-server rebase
+973279 - Rebuild control-center for evolution-data-server rebase
+973281 - Rebuild ekiga for evolution-data-server rebase
+973284 - Rebuild gnome-panel for evolution-data-server rebase
+973285 - Rebuild gnome-python2-desktop for evolution-data-server rebase
+973287 - Rebuild nautilus-sendto for evolution-data-server rebase
+973288 - Rebuild pidgin for evolution-data-server rebase
+973289 - Rebuild planner for evolution-data-server rebase
+973728 - CVE-2013-4166 evolution: incorrect selection of recipient gpg public key for encrypted mail
+974234 - [abrt] Crash in try_open_e_book_cb()
+974647 - Load extensions in GObject::constructed
+975394 - &quot;Can not connect to destination&quot; on webcal calendar produces a pop-up instead of status-bar warning
+977292 - 'evolution --force-shutdown' should kill e-d-s processes as well
+977395 - 'evolution --force-shutdown' should kill e-d-s processes as well
+978525 - CamelSession's network-available never set to TRUE, only to FALSE
+983964 - e-calendar-factory performs network io for caldav in the main thread
+991074 - [abrt] Unnecessary crash due to g_assert() call
+1000323 - Subpackage evolution-devel is no longer multilib-clean for all multilib arches
+1000325 - Subpackage evolution-exchange is no longer multilib-clean for s390x vs s390
+1005072 - Unable to authenticate to Exchange MAPI server after update
+1014677 - Search filter persists when changing folders
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openchange-1.0-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openchange-1.0-6.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+cheese-2.28.1-8.el6.i686.rpm
+cheese-debuginfo-2.28.1-8.el6.i686.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-extra-2.28.1-39.el6.i686.rpm
+control-center-filesystem-2.28.1-39.el6.i686.rpm
+ekiga-3.2.6-4.el6.i686.rpm
+ekiga-debuginfo-3.2.6-4.el6.i686.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-mapi-0.32.2-12.el6.i686.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.i686.rpm
+gnome-panel-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-python2-applet-2.28.0-5.el6.i686.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.i686.rpm
+gnome-python2-libwnck-2.28.0-5.el6.i686.rpm
+gnome-python2-rsvg-2.28.0-5.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+nautilus-sendto-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+openchange-1.0-6.el6.i686.rpm
+openchange-debuginfo-1.0-6.el6.i686.rpm
+pidgin-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+totem-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-mozplugin-2.28.6-4.el6.i686.rpm
+totem-nautilus-2.28.6-4.el6.i686.rpm
+totem-upnp-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-help-2.32.3-30.el6.noarch.rpm
+
+x86_64:
+cheese-2.28.1-8.el6.x86_64.rpm
+cheese-debuginfo-2.28.1-8.el6.x86_64.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-2.28.1-39.el6.x86_64.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-extra-2.28.1-39.el6.x86_64.rpm
+control-center-filesystem-2.28.1-39.el6.x86_64.rpm
+ekiga-3.2.6-4.el6.x86_64.rpm
+ekiga-debuginfo-3.2.6-4.el6.x86_64.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-2.32.3-30.el6.x86_64.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.x86_64.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.x86_64.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.x86_64.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.x86_64.rpm
+evolution-mapi-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.x86_64.rpm
+gnome-panel-2.30.2-15.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.x86_64.rpm
+gnome-python2-applet-2.28.0-5.el6.x86_64.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libwnck-2.28.0-5.el6.x86_64.rpm
+gnome-python2-rsvg-2.28.0-5.el6.x86_64.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.x86_64.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.x86_64.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.x86_64.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+libpurple-2.7.9-11.el6.x86_64.rpm
+nautilus-sendto-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+openchange-1.0-6.el6.x86_64.rpm
+openchange-debuginfo-1.0-6.el6.x86_64.rpm
+pidgin-2.7.9-11.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.x86_64.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-0.14.4-10.el6.x86_64.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.x86_64.rpm
+totem-2.28.6-4.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-mozplugin-2.28.6-4.el6.x86_64.rpm
+totem-nautilus-2.28.6-4.el6.x86_64.rpm
+totem-upnp-2.28.6-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openchange-1.0-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openchange-1.0-6.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.i686.rpm
+evolution-mapi-devel-0.32.2-12.el6.i686.rpm
+evolution-perl-2.32.3-30.el6.i686.rpm
+evolution-pst-2.32.3-30.el6.i686.rpm
+evolution-spamassassin-2.32.3-30.el6.i686.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-python2-brasero-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-evince-2.28.0-5.el6.i686.rpm
+gnome-python2-evolution-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.i686.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.i686.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.i686.rpm
+gnome-python2-metacity-2.28.0-5.el6.i686.rpm
+gnome-python2-totem-2.28.0-5.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-perl-2.7.9-11.el6.i686.rpm
+libpurple-tcl-2.7.9-11.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+openchange-client-1.0-6.el6.i686.rpm
+openchange-debuginfo-1.0-6.el6.i686.rpm
+openchange-devel-1.0-6.el6.i686.rpm
+openchange-devel-docs-1.0-6.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-docs-2.7.9-11.el6.i686.rpm
+pidgin-perl-2.7.9-11.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-eds-0.14.4-10.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-jamendo-2.28.6-4.el6.i686.rpm
+totem-youtube-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-data-server-doc-2.32.3-18.el6.noarch.rpm
+evolution-devel-docs-2.32.3-30.el6.noarch.rpm
+
+x86_64:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.x86_64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.x86_64.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.x86_64.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.x86_64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-devel-0.32.2-12.el6.x86_64.rpm
+evolution-perl-2.32.3-30.el6.x86_64.rpm
+evolution-pst-2.32.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.32.3-30.el6.x86_64.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-2.7.9-11.el6.x86_64.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.x86_64.rpm
+gnome-python2-brasero-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evince-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evolution-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.x86_64.rpm
+gnome-python2-metacity-2.28.0-5.el6.x86_64.rpm
+gnome-python2-totem-2.28.0-5.el6.x86_64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.x86_64.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.x86_64.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.x86_64.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.x86_64.rpm
+libpurple-perl-2.7.9-11.el6.x86_64.rpm
+libpurple-tcl-2.7.9-11.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.x86_64.rpm
+openchange-client-1.0-6.el6.x86_64.rpm
+openchange-debuginfo-1.0-6.el6.x86_64.rpm
+openchange-devel-1.0-6.el6.x86_64.rpm
+openchange-devel-docs-1.0-6.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.x86_64.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.x86_64.rpm
+pidgin-docs-2.7.9-11.el6.x86_64.rpm
+pidgin-perl-2.7.9-11.el6.x86_64.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.x86_64.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.x86_64.rpm
+planner-eds-0.14.4-10.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.x86_64.rpm
+totem-jamendo-2.28.6-4.el6.x86_64.rpm
+totem-youtube-2.28.6-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+
+x86_64:
+gnome-python2-desktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm</a>
+
+noarch:
+evolution-data-server-doc-2.32.3-18.el6.noarch.rpm
+
+x86_64:
+control-center-2.28.1-39.el6.i686.rpm
+control-center-2.28.1-39.el6.x86_64.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.x86_64.rpm
+control-center-extra-2.28.1-39.el6.x86_64.rpm
+control-center-filesystem-2.28.1-39.el6.x86_64.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.x86_64.rpm
+gnome-panel-2.30.2-15.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.x86_64.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.x86_64.rpm
+gnome-python2-applet-2.28.0-5.el6.x86_64.rpm
+gnome-python2-brasero-2.28.0-5.el6.x86_64.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evince-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evolution-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libwnck-2.28.0-5.el6.x86_64.rpm
+gnome-python2-metacity-2.28.0-5.el6.x86_64.rpm
+gnome-python2-rsvg-2.28.0-5.el6.x86_64.rpm
+gnome-python2-totem-2.28.0-5.el6.x86_64.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.x86_64.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.x86_64.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+cheese-2.28.1-8.el6.i686.rpm
+cheese-debuginfo-2.28.1-8.el6.i686.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-extra-2.28.1-39.el6.i686.rpm
+control-center-filesystem-2.28.1-39.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+gnome-panel-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-python2-applet-2.28.0-5.el6.i686.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.i686.rpm
+gnome-python2-libwnck-2.28.0-5.el6.i686.rpm
+gnome-python2-rsvg-2.28.0-5.el6.i686.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+nautilus-sendto-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+totem-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-mozplugin-2.28.6-4.el6.i686.rpm
+totem-nautilus-2.28.6-4.el6.i686.rpm
+totem-upnp-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-data-server-doc-2.32.3-18.el6.noarch.rpm
+
+ppc64:
+cheese-2.28.1-8.el6.ppc64.rpm
+cheese-debuginfo-2.28.1-8.el6.ppc64.rpm
+control-center-2.28.1-39.el6.ppc.rpm
+control-center-2.28.1-39.el6.ppc64.rpm
+control-center-debuginfo-2.28.1-39.el6.ppc.rpm
+control-center-debuginfo-2.28.1-39.el6.ppc64.rpm
+control-center-extra-2.28.1-39.el6.ppc64.rpm
+control-center-filesystem-2.28.1-39.el6.ppc64.rpm
+evolution-data-server-2.32.3-18.el6.ppc.rpm
+evolution-data-server-2.32.3-18.el6.ppc64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.ppc.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.ppc64.rpm
+evolution-data-server-devel-2.32.3-18.el6.ppc.rpm
+evolution-data-server-devel-2.32.3-18.el6.ppc64.rpm
+gnome-panel-2.30.2-15.el6.ppc64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.ppc.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.ppc64.rpm
+gnome-panel-libs-2.30.2-15.el6.ppc.rpm
+gnome-panel-libs-2.30.2-15.el6.ppc64.rpm
+gnome-python2-applet-2.28.0-5.el6.ppc64.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.ppc64.rpm
+gnome-python2-desktop-2.28.0-5.el6.ppc64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.ppc64.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.ppc64.rpm
+gnome-python2-libwnck-2.28.0-5.el6.ppc64.rpm
+gnome-python2-rsvg-2.28.0-5.el6.ppc64.rpm
+libgdata-0.6.4-2.el6.ppc.rpm
+libgdata-0.6.4-2.el6.ppc64.rpm
+libgdata-debuginfo-0.6.4-2.el6.ppc.rpm
+libgdata-debuginfo-0.6.4-2.el6.ppc64.rpm
+libgdata-devel-0.6.4-2.el6.ppc.rpm
+libgdata-devel-0.6.4-2.el6.ppc64.rpm
+nautilus-sendto-2.28.2-4.el6.ppc64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.ppc64.rpm
+totem-2.28.6-4.el6.ppc64.rpm
+totem-debuginfo-2.28.6-4.el6.ppc64.rpm
+totem-mozplugin-2.28.6-4.el6.ppc64.rpm
+totem-nautilus-2.28.6-4.el6.ppc64.rpm
+totem-upnp-2.28.6-4.el6.ppc64.rpm
+
+s390x:
+cheese-2.28.1-8.el6.s390x.rpm
+cheese-debuginfo-2.28.1-8.el6.s390x.rpm
+control-center-2.28.1-39.el6.s390.rpm
+control-center-2.28.1-39.el6.s390x.rpm
+control-center-debuginfo-2.28.1-39.el6.s390.rpm
+control-center-debuginfo-2.28.1-39.el6.s390x.rpm
+control-center-extra-2.28.1-39.el6.s390x.rpm
+control-center-filesystem-2.28.1-39.el6.s390x.rpm
+evolution-data-server-2.32.3-18.el6.s390.rpm
+evolution-data-server-2.32.3-18.el6.s390x.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.s390.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.s390x.rpm
+evolution-data-server-devel-2.32.3-18.el6.s390.rpm
+evolution-data-server-devel-2.32.3-18.el6.s390x.rpm
+gnome-panel-2.30.2-15.el6.s390x.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.s390.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.s390x.rpm
+gnome-panel-libs-2.30.2-15.el6.s390.rpm
+gnome-panel-libs-2.30.2-15.el6.s390x.rpm
+gnome-python2-applet-2.28.0-5.el6.s390x.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.s390x.rpm
+gnome-python2-desktop-2.28.0-5.el6.s390x.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.s390x.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.s390x.rpm
+gnome-python2-libwnck-2.28.0-5.el6.s390x.rpm
+gnome-python2-rsvg-2.28.0-5.el6.s390x.rpm
+libgdata-0.6.4-2.el6.s390.rpm
+libgdata-0.6.4-2.el6.s390x.rpm
+libgdata-debuginfo-0.6.4-2.el6.s390.rpm
+libgdata-debuginfo-0.6.4-2.el6.s390x.rpm
+libgdata-devel-0.6.4-2.el6.s390.rpm
+libgdata-devel-0.6.4-2.el6.s390x.rpm
+nautilus-sendto-2.28.2-4.el6.s390x.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.s390x.rpm
+totem-2.28.6-4.el6.s390x.rpm
+totem-debuginfo-2.28.6-4.el6.s390x.rpm
+totem-mozplugin-2.28.6-4.el6.s390x.rpm
+totem-nautilus-2.28.6-4.el6.s390x.rpm
+totem-upnp-2.28.6-4.el6.s390x.rpm
+
+x86_64:
+cheese-2.28.1-8.el6.x86_64.rpm
+cheese-debuginfo-2.28.1-8.el6.x86_64.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-2.28.1-39.el6.x86_64.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-extra-2.28.1-39.el6.x86_64.rpm
+control-center-filesystem-2.28.1-39.el6.x86_64.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.x86_64.rpm
+gnome-panel-2.30.2-15.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.x86_64.rpm
+gnome-python2-applet-2.28.0-5.el6.x86_64.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libwnck-2.28.0-5.el6.x86_64.rpm
+gnome-python2-rsvg-2.28.0-5.el6.x86_64.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.x86_64.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.x86_64.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.x86_64.rpm
+nautilus-sendto-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+totem-2.28.6-4.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-mozplugin-2.28.6-4.el6.x86_64.rpm
+totem-nautilus-2.28.6-4.el6.x86_64.rpm
+totem-upnp-2.28.6-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openchange-1.0-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openchange-1.0-6.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+ekiga-3.2.6-4.el6.i686.rpm
+ekiga-debuginfo-3.2.6-4.el6.i686.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-mapi-0.32.2-12.el6.i686.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.i686.rpm
+evolution-mapi-devel-0.32.2-12.el6.i686.rpm
+evolution-perl-2.32.3-30.el6.i686.rpm
+evolution-pst-2.32.3-30.el6.i686.rpm
+evolution-spamassassin-2.32.3-30.el6.i686.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-python2-brasero-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-evince-2.28.0-5.el6.i686.rpm
+gnome-python2-evolution-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.i686.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.i686.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.i686.rpm
+gnome-python2-metacity-2.28.0-5.el6.i686.rpm
+gnome-python2-totem-2.28.0-5.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-perl-2.7.9-11.el6.i686.rpm
+libpurple-tcl-2.7.9-11.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+openchange-1.0-6.el6.i686.rpm
+openchange-client-1.0-6.el6.i686.rpm
+openchange-debuginfo-1.0-6.el6.i686.rpm
+openchange-devel-1.0-6.el6.i686.rpm
+openchange-devel-docs-1.0-6.el6.i686.rpm
+pidgin-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-docs-2.7.9-11.el6.i686.rpm
+pidgin-perl-2.7.9-11.el6.i686.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-eds-0.14.4-10.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-jamendo-2.28.6-4.el6.i686.rpm
+totem-youtube-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-devel-docs-2.32.3-30.el6.noarch.rpm
+evolution-help-2.32.3-30.el6.noarch.rpm
+
+ppc64:
+control-center-debuginfo-2.28.1-39.el6.ppc.rpm
+control-center-debuginfo-2.28.1-39.el6.ppc64.rpm
+control-center-devel-2.28.1-39.el6.ppc.rpm
+control-center-devel-2.28.1-39.el6.ppc64.rpm
+ekiga-3.2.6-4.el6.ppc64.rpm
+ekiga-debuginfo-3.2.6-4.el6.ppc64.rpm
+evolution-2.32.3-30.el6.ppc.rpm
+evolution-2.32.3-30.el6.ppc64.rpm
+evolution-debuginfo-2.32.3-30.el6.ppc.rpm
+evolution-debuginfo-2.32.3-30.el6.ppc64.rpm
+evolution-devel-2.32.3-30.el6.ppc.rpm
+evolution-devel-2.32.3-30.el6.ppc64.rpm
+evolution-exchange-2.32.3-16.el6.ppc.rpm
+evolution-exchange-2.32.3-16.el6.ppc64.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.ppc.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.ppc64.rpm
+evolution-mapi-0.32.2-12.el6.ppc64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.ppc64.rpm
+evolution-mapi-devel-0.32.2-12.el6.ppc64.rpm
+evolution-perl-2.32.3-30.el6.ppc64.rpm
+evolution-pst-2.32.3-30.el6.ppc64.rpm
+evolution-spamassassin-2.32.3-30.el6.ppc64.rpm
+finch-2.7.9-11.el6.ppc.rpm
+finch-2.7.9-11.el6.ppc64.rpm
+finch-devel-2.7.9-11.el6.ppc.rpm
+finch-devel-2.7.9-11.el6.ppc64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.ppc.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.ppc64.rpm
+gnome-panel-devel-2.30.2-15.el6.ppc.rpm
+gnome-panel-devel-2.30.2-15.el6.ppc64.rpm
+gnome-python2-brasero-2.28.0-5.el6.ppc64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.ppc64.rpm
+gnome-python2-evince-2.28.0-5.el6.ppc64.rpm
+gnome-python2-evolution-2.28.0-5.el6.ppc64.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.ppc64.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.ppc64.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.ppc64.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.ppc64.rpm
+gnome-python2-metacity-2.28.0-5.el6.ppc64.rpm
+gnome-python2-totem-2.28.0-5.el6.ppc64.rpm
+gtkhtml3-3.32.2-2.el6.ppc.rpm
+gtkhtml3-3.32.2-2.el6.ppc64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.ppc.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.ppc64.rpm
+gtkhtml3-devel-3.32.2-2.el6.ppc.rpm
+gtkhtml3-devel-3.32.2-2.el6.ppc64.rpm
+libpurple-2.7.9-11.el6.ppc.rpm
+libpurple-2.7.9-11.el6.ppc64.rpm
+libpurple-devel-2.7.9-11.el6.ppc.rpm
+libpurple-devel-2.7.9-11.el6.ppc64.rpm
+libpurple-perl-2.7.9-11.el6.ppc64.rpm
+libpurple-tcl-2.7.9-11.el6.ppc64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.ppc.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.ppc64.rpm
+nautilus-sendto-devel-2.28.2-4.el6.ppc.rpm
+nautilus-sendto-devel-2.28.2-4.el6.ppc64.rpm
+openchange-1.0-6.el6.ppc64.rpm
+openchange-client-1.0-6.el6.ppc64.rpm
+openchange-debuginfo-1.0-6.el6.ppc64.rpm
+openchange-devel-1.0-6.el6.ppc64.rpm
+openchange-devel-docs-1.0-6.el6.ppc64.rpm
+pidgin-2.7.9-11.el6.ppc64.rpm
+pidgin-debuginfo-2.7.9-11.el6.ppc.rpm
+pidgin-debuginfo-2.7.9-11.el6.ppc64.rpm
+pidgin-devel-2.7.9-11.el6.ppc.rpm
+pidgin-devel-2.7.9-11.el6.ppc64.rpm
+pidgin-docs-2.7.9-11.el6.ppc64.rpm
+pidgin-perl-2.7.9-11.el6.ppc64.rpm
+planner-0.14.4-10.el6.ppc.rpm
+planner-0.14.4-10.el6.ppc64.rpm
+planner-debuginfo-0.14.4-10.el6.ppc.rpm
+planner-debuginfo-0.14.4-10.el6.ppc64.rpm
+planner-devel-0.14.4-10.el6.ppc.rpm
+planner-devel-0.14.4-10.el6.ppc64.rpm
+planner-eds-0.14.4-10.el6.ppc64.rpm
+totem-debuginfo-2.28.6-4.el6.ppc.rpm
+totem-debuginfo-2.28.6-4.el6.ppc64.rpm
+totem-devel-2.28.6-4.el6.ppc.rpm
+totem-devel-2.28.6-4.el6.ppc64.rpm
+totem-jamendo-2.28.6-4.el6.ppc64.rpm
+totem-youtube-2.28.6-4.el6.ppc64.rpm
+
+s390x:
+control-center-debuginfo-2.28.1-39.el6.s390.rpm
+control-center-debuginfo-2.28.1-39.el6.s390x.rpm
+control-center-devel-2.28.1-39.el6.s390.rpm
+control-center-devel-2.28.1-39.el6.s390x.rpm
+ekiga-3.2.6-4.el6.s390x.rpm
+ekiga-debuginfo-3.2.6-4.el6.s390x.rpm
+evolution-2.32.3-30.el6.s390.rpm
+evolution-2.32.3-30.el6.s390x.rpm
+evolution-debuginfo-2.32.3-30.el6.s390.rpm
+evolution-debuginfo-2.32.3-30.el6.s390x.rpm
+evolution-devel-2.32.3-30.el6.s390.rpm
+evolution-devel-2.32.3-30.el6.s390x.rpm
+evolution-exchange-2.32.3-16.el6.s390.rpm
+evolution-exchange-2.32.3-16.el6.s390x.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.s390.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.s390x.rpm
+evolution-mapi-0.32.2-12.el6.s390x.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.s390x.rpm
+evolution-mapi-devel-0.32.2-12.el6.s390x.rpm
+evolution-perl-2.32.3-30.el6.s390x.rpm
+evolution-pst-2.32.3-30.el6.s390x.rpm
+evolution-spamassassin-2.32.3-30.el6.s390x.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.s390.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.s390x.rpm
+gnome-panel-devel-2.30.2-15.el6.s390.rpm
+gnome-panel-devel-2.30.2-15.el6.s390x.rpm
+gnome-python2-brasero-2.28.0-5.el6.s390x.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.s390x.rpm
+gnome-python2-evince-2.28.0-5.el6.s390x.rpm
+gnome-python2-evolution-2.28.0-5.el6.s390x.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.s390x.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.s390x.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.s390x.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.s390x.rpm
+gnome-python2-metacity-2.28.0-5.el6.s390x.rpm
+gnome-python2-totem-2.28.0-5.el6.s390x.rpm
+gtkhtml3-3.32.2-2.el6.s390.rpm
+gtkhtml3-3.32.2-2.el6.s390x.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.s390.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.s390x.rpm
+gtkhtml3-devel-3.32.2-2.el6.s390.rpm
+gtkhtml3-devel-3.32.2-2.el6.s390x.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.s390.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.s390x.rpm
+nautilus-sendto-devel-2.28.2-4.el6.s390.rpm
+nautilus-sendto-devel-2.28.2-4.el6.s390x.rpm
+openchange-1.0-6.el6.s390x.rpm
+openchange-client-1.0-6.el6.s390x.rpm
+openchange-debuginfo-1.0-6.el6.s390x.rpm
+openchange-devel-1.0-6.el6.s390x.rpm
+openchange-devel-docs-1.0-6.el6.s390x.rpm
+planner-0.14.4-10.el6.s390.rpm
+planner-0.14.4-10.el6.s390x.rpm
+planner-debuginfo-0.14.4-10.el6.s390.rpm
+planner-debuginfo-0.14.4-10.el6.s390x.rpm
+planner-devel-0.14.4-10.el6.s390.rpm
+planner-devel-0.14.4-10.el6.s390x.rpm
+planner-eds-0.14.4-10.el6.s390x.rpm
+totem-debuginfo-2.28.6-4.el6.s390.rpm
+totem-debuginfo-2.28.6-4.el6.s390x.rpm
+totem-devel-2.28.6-4.el6.s390.rpm
+totem-devel-2.28.6-4.el6.s390x.rpm
+totem-jamendo-2.28.6-4.el6.s390x.rpm
+totem-youtube-2.28.6-4.el6.s390x.rpm
+
+x86_64:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.x86_64.rpm
+ekiga-3.2.6-4.el6.x86_64.rpm
+ekiga-debuginfo-3.2.6-4.el6.x86_64.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-2.32.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.x86_64.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.x86_64.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.x86_64.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.x86_64.rpm
+evolution-mapi-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-devel-0.32.2-12.el6.x86_64.rpm
+evolution-perl-2.32.3-30.el6.x86_64.rpm
+evolution-pst-2.32.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.32.3-30.el6.x86_64.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-2.7.9-11.el6.x86_64.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.x86_64.rpm
+gnome-python2-brasero-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evince-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evolution-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.x86_64.rpm
+gnome-python2-metacity-2.28.0-5.el6.x86_64.rpm
+gnome-python2-totem-2.28.0-5.el6.x86_64.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.x86_64.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+libpurple-2.7.9-11.el6.x86_64.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.x86_64.rpm
+libpurple-perl-2.7.9-11.el6.x86_64.rpm
+libpurple-tcl-2.7.9-11.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.x86_64.rpm
+openchange-1.0-6.el6.x86_64.rpm
+openchange-client-1.0-6.el6.x86_64.rpm
+openchange-debuginfo-1.0-6.el6.x86_64.rpm
+openchange-devel-1.0-6.el6.x86_64.rpm
+openchange-devel-docs-1.0-6.el6.x86_64.rpm
+pidgin-2.7.9-11.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.x86_64.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.x86_64.rpm
+pidgin-docs-2.7.9-11.el6.x86_64.rpm
+pidgin-perl-2.7.9-11.el6.x86_64.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-0.14.4-10.el6.x86_64.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.x86_64.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.x86_64.rpm
+planner-eds-0.14.4-10.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.x86_64.rpm
+totem-jamendo-2.28.6-4.el6.x86_64.rpm
+totem-youtube-2.28.6-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/cheese-2.28.1-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ekiga-3.2.6-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-data-server-2.32.3-18.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-exchange-2.32.3-16.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libgdata-0.6.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openchange-1.0-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openchange-1.0-6.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+cheese-2.28.1-8.el6.i686.rpm
+cheese-debuginfo-2.28.1-8.el6.i686.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-extra-2.28.1-39.el6.i686.rpm
+control-center-filesystem-2.28.1-39.el6.i686.rpm
+ekiga-3.2.6-4.el6.i686.rpm
+ekiga-debuginfo-3.2.6-4.el6.i686.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-mapi-0.32.2-12.el6.i686.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.i686.rpm
+gnome-panel-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-python2-applet-2.28.0-5.el6.i686.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.i686.rpm
+gnome-python2-libwnck-2.28.0-5.el6.i686.rpm
+gnome-python2-rsvg-2.28.0-5.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+nautilus-sendto-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+openchange-1.0-6.el6.i686.rpm
+openchange-debuginfo-1.0-6.el6.i686.rpm
+pidgin-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+totem-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-mozplugin-2.28.6-4.el6.i686.rpm
+totem-nautilus-2.28.6-4.el6.i686.rpm
+totem-upnp-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-data-server-doc-2.32.3-18.el6.noarch.rpm
+evolution-help-2.32.3-30.el6.noarch.rpm
+
+x86_64:
+cheese-2.28.1-8.el6.x86_64.rpm
+cheese-debuginfo-2.28.1-8.el6.x86_64.rpm
+control-center-2.28.1-39.el6.i686.rpm
+control-center-2.28.1-39.el6.x86_64.rpm
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-extra-2.28.1-39.el6.x86_64.rpm
+control-center-filesystem-2.28.1-39.el6.x86_64.rpm
+ekiga-3.2.6-4.el6.x86_64.rpm
+ekiga-debuginfo-3.2.6-4.el6.x86_64.rpm
+evolution-2.32.3-30.el6.i686.rpm
+evolution-2.32.3-30.el6.x86_64.rpm
+evolution-data-server-2.32.3-18.el6.i686.rpm
+evolution-data-server-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.i686.rpm
+evolution-data-server-debuginfo-2.32.3-18.el6.x86_64.rpm
+evolution-data-server-devel-2.32.3-18.el6.i686.rpm
+evolution-data-server-devel-2.32.3-18.el6.x86_64.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.x86_64.rpm
+evolution-exchange-2.32.3-16.el6.i686.rpm
+evolution-exchange-2.32.3-16.el6.x86_64.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.i686.rpm
+evolution-exchange-debuginfo-2.32.3-16.el6.x86_64.rpm
+evolution-mapi-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.x86_64.rpm
+gnome-panel-2.30.2-15.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-libs-2.30.2-15.el6.i686.rpm
+gnome-panel-libs-2.30.2-15.el6.x86_64.rpm
+gnome-python2-applet-2.28.0-5.el6.x86_64.rpm
+gnome-python2-bugbuddy-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomekeyring-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libwnck-2.28.0-5.el6.x86_64.rpm
+gnome-python2-rsvg-2.28.0-5.el6.x86_64.rpm
+gtkhtml3-3.32.2-2.el6.i686.rpm
+gtkhtml3-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.x86_64.rpm
+libgdata-0.6.4-2.el6.i686.rpm
+libgdata-0.6.4-2.el6.x86_64.rpm
+libgdata-debuginfo-0.6.4-2.el6.i686.rpm
+libgdata-debuginfo-0.6.4-2.el6.x86_64.rpm
+libgdata-devel-0.6.4-2.el6.i686.rpm
+libgdata-devel-0.6.4-2.el6.x86_64.rpm
+libpurple-2.7.9-11.el6.i686.rpm
+libpurple-2.7.9-11.el6.x86_64.rpm
+nautilus-sendto-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+openchange-1.0-6.el6.x86_64.rpm
+openchange-debuginfo-1.0-6.el6.x86_64.rpm
+pidgin-2.7.9-11.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.x86_64.rpm
+planner-0.14.4-10.el6.i686.rpm
+planner-0.14.4-10.el6.x86_64.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.x86_64.rpm
+totem-2.28.6-4.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-mozplugin-2.28.6-4.el6.x86_64.rpm
+totem-nautilus-2.28.6-4.el6.x86_64.rpm
+totem-upnp-2.28.6-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/control-center-2.28.1-39.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.32.3-30.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-mapi-0.32.2-12.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-panel-2.30.2-15.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnome-python2-desktop-2.28.0-5.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gtkhtml3-3.32.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nautilus-sendto-2.28.2-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openchange-1.0-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openchange-1.0-6.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-11.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/planner-0.14.4-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/totem-2.28.6-4.el6.src.rpm</a>
+
+i386:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.i686.rpm
+evolution-mapi-devel-0.32.2-12.el6.i686.rpm
+evolution-perl-2.32.3-30.el6.i686.rpm
+evolution-pst-2.32.3-30.el6.i686.rpm
+evolution-spamassassin-2.32.3-30.el6.i686.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-python2-brasero-2.28.0-5.el6.i686.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.i686.rpm
+gnome-python2-evince-2.28.0-5.el6.i686.rpm
+gnome-python2-evolution-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.i686.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.i686.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.i686.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.i686.rpm
+gnome-python2-metacity-2.28.0-5.el6.i686.rpm
+gnome-python2-totem-2.28.0-5.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-perl-2.7.9-11.el6.i686.rpm
+libpurple-tcl-2.7.9-11.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+openchange-client-1.0-6.el6.i686.rpm
+openchange-debuginfo-1.0-6.el6.i686.rpm
+openchange-devel-1.0-6.el6.i686.rpm
+openchange-devel-docs-1.0-6.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-docs-2.7.9-11.el6.i686.rpm
+pidgin-perl-2.7.9-11.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-eds-0.14.4-10.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-jamendo-2.28.6-4.el6.i686.rpm
+totem-youtube-2.28.6-4.el6.i686.rpm
+
+noarch:
+evolution-devel-docs-2.32.3-30.el6.noarch.rpm
+
+x86_64:
+control-center-debuginfo-2.28.1-39.el6.i686.rpm
+control-center-debuginfo-2.28.1-39.el6.x86_64.rpm
+control-center-devel-2.28.1-39.el6.i686.rpm
+control-center-devel-2.28.1-39.el6.x86_64.rpm
+evolution-debuginfo-2.32.3-30.el6.i686.rpm
+evolution-debuginfo-2.32.3-30.el6.x86_64.rpm
+evolution-devel-2.32.3-30.el6.i686.rpm
+evolution-devel-2.32.3-30.el6.x86_64.rpm
+evolution-mapi-debuginfo-0.32.2-12.el6.x86_64.rpm
+evolution-mapi-devel-0.32.2-12.el6.x86_64.rpm
+evolution-perl-2.32.3-30.el6.x86_64.rpm
+evolution-pst-2.32.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.32.3-30.el6.x86_64.rpm
+finch-2.7.9-11.el6.i686.rpm
+finch-2.7.9-11.el6.x86_64.rpm
+finch-devel-2.7.9-11.el6.i686.rpm
+finch-devel-2.7.9-11.el6.x86_64.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.i686.rpm
+gnome-panel-debuginfo-2.30.2-15.el6.x86_64.rpm
+gnome-panel-devel-2.30.2-15.el6.i686.rpm
+gnome-panel-devel-2.30.2-15.el6.x86_64.rpm
+gnome-python2-brasero-2.28.0-5.el6.x86_64.rpm
+gnome-python2-desktop-debuginfo-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evince-2.28.0-5.el6.x86_64.rpm
+gnome-python2-evolution-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomedesktop-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gnomeprint-2.28.0-5.el6.x86_64.rpm
+gnome-python2-gtksourceview-2.28.0-5.el6.x86_64.rpm
+gnome-python2-libgtop2-2.28.0-5.el6.x86_64.rpm
+gnome-python2-metacity-2.28.0-5.el6.x86_64.rpm
+gnome-python2-totem-2.28.0-5.el6.x86_64.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.i686.rpm
+gtkhtml3-debuginfo-3.32.2-2.el6.x86_64.rpm
+gtkhtml3-devel-3.32.2-2.el6.i686.rpm
+gtkhtml3-devel-3.32.2-2.el6.x86_64.rpm
+libpurple-devel-2.7.9-11.el6.i686.rpm
+libpurple-devel-2.7.9-11.el6.x86_64.rpm
+libpurple-perl-2.7.9-11.el6.x86_64.rpm
+libpurple-tcl-2.7.9-11.el6.x86_64.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.i686.rpm
+nautilus-sendto-debuginfo-2.28.2-4.el6.x86_64.rpm
+nautilus-sendto-devel-2.28.2-4.el6.i686.rpm
+nautilus-sendto-devel-2.28.2-4.el6.x86_64.rpm
+openchange-client-1.0-6.el6.x86_64.rpm
+openchange-debuginfo-1.0-6.el6.x86_64.rpm
+openchange-devel-1.0-6.el6.x86_64.rpm
+openchange-devel-docs-1.0-6.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-11.el6.i686.rpm
+pidgin-debuginfo-2.7.9-11.el6.x86_64.rpm
+pidgin-devel-2.7.9-11.el6.i686.rpm
+pidgin-devel-2.7.9-11.el6.x86_64.rpm
+pidgin-docs-2.7.9-11.el6.x86_64.rpm
+pidgin-perl-2.7.9-11.el6.x86_64.rpm
+planner-debuginfo-0.14.4-10.el6.i686.rpm
+planner-debuginfo-0.14.4-10.el6.x86_64.rpm
+planner-devel-0.14.4-10.el6.i686.rpm
+planner-devel-0.14.4-10.el6.x86_64.rpm
+planner-eds-0.14.4-10.el6.x86_64.rpm
+totem-debuginfo-2.28.6-4.el6.i686.rpm
+totem-debuginfo-2.28.6-4.el6.x86_64.rpm
+totem-devel-2.28.6-4.el6.i686.rpm
+totem-devel-2.28.6-4.el6.x86_64.rpm
+totem-jamendo-2.28.6-4.el6.x86_64.rpm
+totem-youtube-2.28.6-4.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4166.html">https://www.redhat.com/security/data/cve/CVE-2013-4166.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjYb2XlSAg2UNWIIRAvEMAJ94KUsNz4n9V+tEdT1+2iT8pUdCpACgi7Il
+C3a57c6awe+C+mvfHVRnzKw=
+=6eXj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

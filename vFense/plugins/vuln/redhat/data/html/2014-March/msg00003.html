@@ -1,0 +1,166 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0229&#45;01] Moderate: openstack&#45;glance security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Mar 2014 14:31:49 &#45;0500 -->
+<!--X-Message-Id: 201403041931.s24JVlr3003499@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0229-01] Moderate: openstack-glance security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0229-01] Moderate: openstack-glance security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0229-01] Moderate: openstack-glance security and bug fix	update</li>
+<li><em>Date</em>: Tue, 4 Mar 2014 19:31:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-glance security and bug fix update
+Advisory ID:       RHSA-2014:0229-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0229.html">https://rhn.redhat.com/errata/RHSA-2014-0229.html</a>
+Issue date:        2014-03-04
+CVE Names:         CVE-2014-1948 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-glance packages that fix one security issues and multiple
+bugs are now available for Red Hat Enterprise Linux OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 4 - noarch
+
+3. Description:
+
+OpenStack Image service (glance) provides discovery, registration, and
+delivery services for disk and server images. It provides the ability to
+copy or snapshot a server image, and immediately store it away. Stored
+images can be used as a template to get new servers up and running quickly
+and more consistently than installing a server operating system and
+individually configuring additional services.
+
+An information leak flaw was found in the way glance stored certain logging
+information. An attacker with access to the glance log files could use this
+flaw to obtain authentication credentials to the OpenStack Object Storage
+(swift) back end. Note that only setups using the swift back end were
+affected. (CVE-2014-1948)
+
+The openstack-glance packages have been upgraded to upstream version
+2013.2.2, which provides a number of bug fixes over the previous version.
+(BZ#1065313)
+
+All users of openstack-glance are advised to upgrade to these updated
+packages, which correct these issues. After installing the updated
+packages, the running OpenStack Image services must be manually restarted
+(using &quot;service [service name] restart&quot;) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1064589 - CVE-2014-1948 openstack-glance: Glance Swift store backend password leak
+1065313 - Rebase openstack-glance to 2013.2.2
+
+6. Package List:
+
+OpenStack 4:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-glance-2013.2.2-2.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-glance-2013.2.2-2.el6ost.src.rpm</a>
+
+noarch:
+openstack-glance-2013.2.2-2.el6ost.noarch.rpm
+openstack-glance-doc-2013.2.2-2.el6ost.noarch.rpm
+python-glance-2013.2.2-2.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1948.html">https://www.redhat.com/security/data/cve/CVE-2014-1948.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTFil+XlSAg2UNWIIRAjeWAJ9ZNxtWp9JNVMjIL2rEDIQWFf76uwCfd92v
+OSzLUzPlx+4AGf6qCJyvgFw=
+=XktN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

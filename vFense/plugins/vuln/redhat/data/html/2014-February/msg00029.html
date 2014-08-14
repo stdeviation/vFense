@@ -1,0 +1,231 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0204&#45;01] Low: Red Hat JBoss Enterprise Application	Platform 6.2.1 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 24 Feb 2014 15:35:06 &#45;0500 -->
+<!--X-Message-Id: 201402242035.s1OKZ5QG012037@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0204-01] Low: Red Hat JBoss Enterprise Application	Platform 6</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0204-01] Low: Red Hat JBoss Enterprise Application	Platform 6.2.1 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0204-01] Low: Red Hat JBoss Enterprise Application	Platform 6.2.1 security update</li>
+<li><em>Date</em>: Mon, 24 Feb 2014 20:35:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat JBoss Enterprise Application Platform 6.2.1 security update
+Advisory ID:       RHSA-2014:0204-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0204.html">https://rhn.redhat.com/errata/RHSA-2014-0204.html</a>
+Issue date:        2014-02-24
+CVE Names:         CVE-2014-0058 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat JBoss Enterprise Application Platform 6.2.1 packages that
+fix one security issue are now available for Red Hat Enterprise Linux 5
+and 6.
+
+The Red Hat Security Response Team has rated this update as having Low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server - noarch
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was found that the security audit functionality, as provided by Red Hat
+JBoss Enterprise Application Platform 6, logged request parameters in plain
+text. This may have caused passwords to be included in the audit log files
+when using BASIC or FORM-based authentication. A local attacker with access
+to audit log files could possibly use this flaw to obtain application or
+server authentication credentials. (CVE-2014-0058)
+
+The provided patch to fix CVE-2014-0058 also allows greater control over
+which of the following components of web requests are captured in audit
+logs:
+
+ - parameters
+ - cookies
+ - headers
+ - attributes
+
+It is also possible to selectively mask some elements of headers,
+parameters, cookies, and attributes using masks. This capability is
+provided by two system properties, which are introduced by this patch:
+
+1) org.jboss.security.web.audit
+
+Description:
+This property controls the granularity of the security auditing of web
+requests.
+
+Possible values:
+off = Disables auditing of web requests
+headers = Audits only the headers of web requests
+cookies = Audits only the cookies of web requests
+parameters = Audits only the parameters of web requests
+attributes = Audits only the attributes of web requests
+headers,cookies,parameters = Audits the headers, cookies, and parameters of
+web requests
+headers,cookies = Audits the headers and cookies of web requests
+
+Default Value:
+headers, parameters
+
+Examples:
+Setting &quot;org.jboss.security.web.audit=off&quot; disables security auditing of
+web requests entirely.
+Setting &quot;org.jboss.security.web.audit=headers&quot; enables security auditing of
+only headers in web requests.
+
+2) org.jboss.security.web.audit.mask
+
+Description:
+This property can be used to specify a list of strings to be matched
+against headers, parameters, cookies, and attributes of web requests.
+Any element matching the specified masks will be excluded from security
+audit logging.
+
+Possible values:
+Any comma separated string indicating keys of headers, parameters, cookies,
+and attributes.
+
+Default Value:
+j_password, authorization
+
+Note that currently the matching of the masks is fuzzy rather than strict.
+For example, a mask of &quot;authorization&quot; will mask both the header called
+authorization and the parameter called &quot;custom_authorization&quot;. A future
+release may introduce strict masks.
+
+Warning: Before applying this update, back up your existing Red Hat JBoss
+Enterprise Application Platform installation and deployed applications.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.2.1 on Red Hat
+Enterprise Linux 5 and 6 are advised to upgrade to these updated packages.
+The JBoss server process must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up any customized Red
+Hat JBoss Enterprise Application Platform 6 configuration files. On update,
+the configuration files that have been locally modified will not be
+updated. The updated version of such files will be stored as the rpmnew
+files. Make sure to locate any such files after the update and merge any
+changes manually.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1063641 - CVE-2014-0058 Red Hat JBoss EAP6: Plain text password logging during security audit
+
+6. Package List:
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el5.src.rpm</a>
+
+noarch:
+jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el5.noarch.rpm
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el6.src.rpm</a>
+
+noarch:
+jboss-as-web-7.3.1-4.Final_redhat_4.1.ep6.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0058.html">https://www.redhat.com/security/data/cve/CVE-2014-0058.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTC6zlXlSAg2UNWIIRAqsdAJ4z490doXjbmk6XktEBzqUSYvCwcQCgt68E
+Sq7itDstpUqFXaATfejV7gU=
+=MYex
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

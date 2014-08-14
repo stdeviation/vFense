@@ -1,0 +1,403 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0137&#45;01] Moderate: texlive security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 15 Feb 2012 11:25:57 &#45;0500 -->
+<!--X-Message-Id: 201202151625.q1FGPpTX026806@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0137-01] Moderate: texlive security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0137-01] Moderate: texlive security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0137-01] Moderate: texlive security update</li>
+<li><em>Date</em>: Wed, 15 Feb 2012 16:25:49 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: texlive security update
+Advisory ID:       RHSA-2012:0137-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0137.html">https://rhn.redhat.com/errata/RHSA-2012-0137.html</a>
+Issue date:        2012-02-15
+CVE Names:         CVE-2010-2642 CVE-2011-0433 CVE-2011-0764 
+                   CVE-2011-1552 CVE-2011-1553 CVE-2011-1554 
+=====================================================================
+
+1. Summary:
+
+Updated texlive packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+TeX Live is an implementation of TeX. TeX takes a text file and a set of
+formatting commands as input, and creates a typesetter-independent DeVice
+Independent (DVI) file as output. The texlive packages provide a number of
+utilities, including dvips.
+
+TeX Live embeds a copy of t1lib. The t1lib library allows you to rasterize
+bitmaps from PostScript Type 1 fonts. The following issues affect t1lib
+code:
+
+Two heap-based buffer overflow flaws were found in the way t1lib processed
+Adobe Font Metrics (AFM) files. If a specially-crafted font file was opened
+by a TeX Live utility, it could cause the utility to crash or, potentially,
+execute arbitrary code with the privileges of the user running the utility.
+(CVE-2010-2642, CVE-2011-0433)
+
+An invalid pointer dereference flaw was found in t1lib. A specially-crafted
+font file could, when opened, cause a TeX Live utility to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+the utility. (CVE-2011-0764)
+
+A use-after-free flaw was found in t1lib. A specially-crafted font file
+could, when opened, cause a TeX Live utility to crash or, potentially,
+execute arbitrary code with the privileges of the user running the utility.
+(CVE-2011-1553)
+
+An off-by-one flaw was found in t1lib. A specially-crafted font file could,
+when opened, cause a TeX Live utility to crash or, potentially, execute
+arbitrary code with the privileges of the user running the utility.
+(CVE-2011-1554)
+
+An out-of-bounds memory read flaw was found in t1lib. A specially-crafted
+font file could, when opened, cause a TeX Live utility to crash.
+(CVE-2011-1552)
+
+Red Hat would like to thank the Evince development team for reporting
+CVE-2010-2642. Upstream acknowledges Jon Larimer of IBM X-Force as the
+original reporter of CVE-2010-2642.
+
+All users of texlive are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+666318 - CVE-2010-2642 evince, t1lib: Heap based buffer overflow in DVI file AFM font parser
+679732 - CVE-2011-0433 evince, t1lib: Heap-based buffer overflow DVI file AFM font parser
+692853 - CVE-2011-1552 t1lib: invalid read crash via crafted Type 1 font
+692854 - CVE-2011-1553 t1lib: Use-after-free via crafted Type 1 font
+692856 - CVE-2011-1554 t1lib: Off-by-one via crafted Type 1 font
+692909 - CVE-2011-0764 t1lib: Invalid pointer dereference via crafted Type 1 font
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-2007-57.el6_2.i686.rpm
+texlive-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dvips-2007-57.el6_2.i686.rpm
+texlive-latex-2007-57.el6_2.i686.rpm
+texlive-utils-2007-57.el6_2.i686.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.x86_64.rpm
+texlive-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dvips-2007-57.el6_2.x86_64.rpm
+texlive-latex-2007-57.el6_2.x86_64.rpm
+texlive-utils-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-devel-2007-57.el6_2.i686.rpm
+mendexk-2.6e-57.el6_2.i686.rpm
+texlive-afm-2007-57.el6_2.i686.rpm
+texlive-context-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dviutils-2007-57.el6_2.i686.rpm
+texlive-east-asian-2007-57.el6_2.i686.rpm
+texlive-xetex-2007-57.el6_2.i686.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.x86_64.rpm
+mendexk-2.6e-57.el6_2.x86_64.rpm
+texlive-afm-2007-57.el6_2.x86_64.rpm
+texlive-context-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dviutils-2007-57.el6_2.x86_64.rpm
+texlive-east-asian-2007-57.el6_2.x86_64.rpm
+texlive-xetex-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+x86_64:
+kpathsea-2007-57.el6_2.i686.rpm
+kpathsea-2007-57.el6_2.x86_64.rpm
+kpathsea-devel-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.x86_64.rpm
+mendexk-2.6e-57.el6_2.x86_64.rpm
+texlive-2007-57.el6_2.x86_64.rpm
+texlive-afm-2007-57.el6_2.x86_64.rpm
+texlive-context-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dvips-2007-57.el6_2.x86_64.rpm
+texlive-dviutils-2007-57.el6_2.x86_64.rpm
+texlive-east-asian-2007-57.el6_2.x86_64.rpm
+texlive-latex-2007-57.el6_2.x86_64.rpm
+texlive-utils-2007-57.el6_2.x86_64.rpm
+texlive-xetex-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-2007-57.el6_2.i686.rpm
+texlive-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dvips-2007-57.el6_2.i686.rpm
+texlive-latex-2007-57.el6_2.i686.rpm
+texlive-utils-2007-57.el6_2.i686.rpm
+
+ppc64:
+kpathsea-2007-57.el6_2.ppc64.rpm
+texlive-2007-57.el6_2.ppc64.rpm
+texlive-debuginfo-2007-57.el6_2.ppc64.rpm
+texlive-dvips-2007-57.el6_2.ppc64.rpm
+texlive-latex-2007-57.el6_2.ppc64.rpm
+texlive-utils-2007-57.el6_2.ppc64.rpm
+
+s390x:
+kpathsea-2007-57.el6_2.s390x.rpm
+texlive-2007-57.el6_2.s390x.rpm
+texlive-debuginfo-2007-57.el6_2.s390x.rpm
+texlive-dvips-2007-57.el6_2.s390x.rpm
+texlive-latex-2007-57.el6_2.s390x.rpm
+texlive-utils-2007-57.el6_2.s390x.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.x86_64.rpm
+texlive-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dvips-2007-57.el6_2.x86_64.rpm
+texlive-latex-2007-57.el6_2.x86_64.rpm
+texlive-utils-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-devel-2007-57.el6_2.i686.rpm
+mendexk-2.6e-57.el6_2.i686.rpm
+texlive-afm-2007-57.el6_2.i686.rpm
+texlive-context-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dviutils-2007-57.el6_2.i686.rpm
+texlive-east-asian-2007-57.el6_2.i686.rpm
+texlive-xetex-2007-57.el6_2.i686.rpm
+
+ppc64:
+kpathsea-2007-57.el6_2.ppc.rpm
+kpathsea-devel-2007-57.el6_2.ppc.rpm
+kpathsea-devel-2007-57.el6_2.ppc64.rpm
+mendexk-2.6e-57.el6_2.ppc64.rpm
+texlive-afm-2007-57.el6_2.ppc64.rpm
+texlive-context-2007-57.el6_2.ppc64.rpm
+texlive-debuginfo-2007-57.el6_2.ppc.rpm
+texlive-debuginfo-2007-57.el6_2.ppc64.rpm
+texlive-dviutils-2007-57.el6_2.ppc64.rpm
+texlive-east-asian-2007-57.el6_2.ppc64.rpm
+texlive-xetex-2007-57.el6_2.ppc64.rpm
+
+s390x:
+kpathsea-2007-57.el6_2.s390.rpm
+kpathsea-devel-2007-57.el6_2.s390.rpm
+kpathsea-devel-2007-57.el6_2.s390x.rpm
+mendexk-2.6e-57.el6_2.s390x.rpm
+texlive-afm-2007-57.el6_2.s390x.rpm
+texlive-context-2007-57.el6_2.s390x.rpm
+texlive-debuginfo-2007-57.el6_2.s390.rpm
+texlive-debuginfo-2007-57.el6_2.s390x.rpm
+texlive-dviutils-2007-57.el6_2.s390x.rpm
+texlive-east-asian-2007-57.el6_2.s390x.rpm
+texlive-xetex-2007-57.el6_2.s390x.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.x86_64.rpm
+mendexk-2.6e-57.el6_2.x86_64.rpm
+texlive-afm-2007-57.el6_2.x86_64.rpm
+texlive-context-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dviutils-2007-57.el6_2.x86_64.rpm
+texlive-east-asian-2007-57.el6_2.x86_64.rpm
+texlive-xetex-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-2007-57.el6_2.i686.rpm
+texlive-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dvips-2007-57.el6_2.i686.rpm
+texlive-latex-2007-57.el6_2.i686.rpm
+texlive-utils-2007-57.el6_2.i686.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.x86_64.rpm
+texlive-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dvips-2007-57.el6_2.x86_64.rpm
+texlive-latex-2007-57.el6_2.x86_64.rpm
+texlive-utils-2007-57.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/texlive-2007-57.el6_2.src.rpm</a>
+
+i386:
+kpathsea-devel-2007-57.el6_2.i686.rpm
+mendexk-2.6e-57.el6_2.i686.rpm
+texlive-afm-2007-57.el6_2.i686.rpm
+texlive-context-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-dviutils-2007-57.el6_2.i686.rpm
+texlive-east-asian-2007-57.el6_2.i686.rpm
+texlive-xetex-2007-57.el6_2.i686.rpm
+
+x86_64:
+kpathsea-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.i686.rpm
+kpathsea-devel-2007-57.el6_2.x86_64.rpm
+mendexk-2.6e-57.el6_2.x86_64.rpm
+texlive-afm-2007-57.el6_2.x86_64.rpm
+texlive-context-2007-57.el6_2.x86_64.rpm
+texlive-debuginfo-2007-57.el6_2.i686.rpm
+texlive-debuginfo-2007-57.el6_2.x86_64.rpm
+texlive-dviutils-2007-57.el6_2.x86_64.rpm
+texlive-east-asian-2007-57.el6_2.x86_64.rpm
+texlive-xetex-2007-57.el6_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2642.html">https://www.redhat.com/security/data/cve/CVE-2010-2642.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0433.html">https://www.redhat.com/security/data/cve/CVE-2011-0433.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0764.html">https://www.redhat.com/security/data/cve/CVE-2011-0764.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1552.html">https://www.redhat.com/security/data/cve/CVE-2011-1552.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1553.html">https://www.redhat.com/security/data/cve/CVE-2011-1553.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1554.html">https://www.redhat.com/security/data/cve/CVE-2011-1554.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPO9xzXlSAg2UNWIIRAvr8AJsFnUi7sc7zAfT0DXkODUMr0gs76QCglwx1
+zxv5hiwPEJDRZD66UbFxZK8=
+=r79X
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

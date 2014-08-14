@@ -1,0 +1,198 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0416&#45;01] Important: rhevm&#45;spice&#45;client security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 17 Apr 2014 08:38:55 &#45;0400 -->
+<!--X-Message-Id: 201404171238.s3HCcs4e023267@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0416-01] Important: rhevm-spice-client security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0416-01] Important: rhevm-spice-client security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0416-01] Important: rhevm-spice-client security update</li>
+<li><em>Date</em>: Thu, 17 Apr 2014 12:39:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhevm-spice-client security update
+Advisory ID:       RHSA-2014:0416-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0416.html">https://rhn.redhat.com/errata/RHSA-2014-0416.html</a>
+Issue date:        2014-04-17
+CVE Names:         CVE-2012-4929 CVE-2013-0169 CVE-2013-4353 
+                   CVE-2014-0160 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm-spice-client packages that fix multiple security issues are
+now available for Red Hat Enterprise Virtualization Manager 3.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.3 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager provides access to virtual
+machines using SPICE. These SPICE client packages provide the SPICE client
+and usbclerk service for both Windows 32-bit operating systems and Windows
+64-bit operating systems.
+
+The rhevm-spice-client package includes the mingw-virt-viewer Windows SPICE
+client. OpenSSL, a general purpose cryptography library with a TLS
+implementation, is bundled with mingw-virt-viewer. The mingw-virt-viewer
+package has been updated to correct the following issues:
+
+An information disclosure flaw was found in the way OpenSSL handled TLS and
+DTLS Heartbeat Extension packets. A malicious TLS or DTLS client or server
+could send a specially crafted TLS or DTLS Heartbeat packet to disclose a
+limited portion of memory per request from a connected client or server.
+Note that the disclosed portions of memory could potentially include
+sensitive information such as private keys. (CVE-2014-0160)
+
+It was discovered that OpenSSL leaked timing information when decrypting
+TLS/SSL and DTLS protocol encrypted records when CBC-mode cipher suites
+were used. A remote attacker could possibly use this flaw to retrieve plain
+text from the encrypted packets by using a TLS/SSL or DTLS server as a
+padding oracle. (CVE-2013-0169)
+
+A NULL pointer dereference flaw was found in the way OpenSSL handled
+TLS/SSL protocol handshake packets. A specially crafted handshake packet
+could cause a TLS/SSL client using OpenSSL to crash. (CVE-2013-4353)
+
+It was discovered that the TLS/SSL protocol could leak information about
+plain text when optional compression was used. An attacker able to control
+part of the plain text sent over an encrypted TLS/SSL connection could
+possibly use this flaw to recover other portions of the plain text.
+(CVE-2012-4929)
+
+Red Hat would like to thank the OpenSSL project for reporting
+CVE-2014-0160. Upstream acknowledges Neel Mehta of Google Security as the
+original reporter.
+
+The updated mingw-virt-viewer Windows SPICE client further includes OpenSSL
+security fixes that have no security impact on mingw-virt-viewer itself.
+The security fixes included in this update address the following CVE
+numbers:
+
+CVE-2013-6449, CVE-2013-6450, CVE-2012-2686, and CVE-2013-0166
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which address these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+857051 - CVE-2012-4929 SSL/TLS CRIME attack against HTTPS
+907589 - CVE-2013-0169 SSL/TLS: CBC padding timing attack (lucky-13)
+1049058 - CVE-2013-4353 openssl: client NULL dereference crash on malformed handshake packets
+1084875 - CVE-2014-0160 openssl: information disclosure in handling of TLS heartbeat extension packets
+
+6. Package List:
+
+RHEV-M 3.3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-spice-client-3.3-12.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-spice-client-3.3-12.el6_5.src.rpm</a>
+
+noarch:
+rhevm-spice-client-x64-cab-3.3-12.el6_5.noarch.rpm
+rhevm-spice-client-x64-msi-3.3-12.el6_5.noarch.rpm
+rhevm-spice-client-x86-cab-3.3-12.el6_5.noarch.rpm
+rhevm-spice-client-x86-msi-3.3-12.el6_5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4929.html">https://www.redhat.com/security/data/cve/CVE-2012-4929.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0169.html">https://www.redhat.com/security/data/cve/CVE-2013-0169.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4353.html">https://www.redhat.com/security/data/cve/CVE-2013-4353.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0160.html">https://www.redhat.com/security/data/cve/CVE-2014-0160.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTT8qkXlSAg2UNWIIRAl9MAKCZoCRG5sXeWHWzpMGC7Hf49QGAFgCeIGEX
+lhz1ReDnz2v0u5/tBISb1Nc=
+=0FK6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

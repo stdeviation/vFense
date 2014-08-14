@@ -1,0 +1,225 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1594&#45;01] Important: JBoss Enterprise Application Platform	6.0.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Dec 2012 17:55:02 &#45;0500 -->
+<!--X-Message-Id: 201212182254.qBIMsvIi014056@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1594-01] Important: JBoss Enterprise Application Platform	6.0</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1594-01] Important: JBoss Enterprise Application Platform	6.0.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1594-01] Important: JBoss Enterprise Application Platform	6.0.1 update</li>
+<li><em>Date</em>: Tue, 18 Dec 2012 22:54:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Application Platform 6.0.1 update
+Advisory ID:       RHSA-2012:1594-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1594.html">https://rhn.redhat.com/errata/RHSA-2012-1594.html</a>
+Issue date:        2012-12-18
+CVE Names:         CVE-2008-0455 CVE-2012-0883 CVE-2012-2378 
+                   CVE-2012-2379 CVE-2012-2672 CVE-2012-2687 
+                   CVE-2012-3428 CVE-2012-3451 CVE-2012-4549 
+                   CVE-2012-4550 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Application Platform 6.0.1, which fixes multiple security
+issues, various bugs, and adds enhancements, is now available from the Red
+Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise Application Platform 6 is a platform for Java applications
+based on JBoss Application Server 7.
+
+This release serves as a replacement for JBoss Enterprise Application
+Platform 6.0.0, and includes bug fixes and enhancements. Refer to the 6.0.1
+Release Notes for information on the most significant of these changes,
+available shortly from <a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+Security fixes:
+
+Apache CXF checked to ensure XML elements were signed or encrypted by a
+Supporting Token, but not whether the correct token was used. A remote
+attacker could transmit confidential information without the appropriate
+security, and potentially circumvent access controls on web services
+exposed via Apache CXF. (CVE-2012-2379)
+
+When using role-based authorization to configure EJB access, JACC
+permissions should be used to determine access; however, due to a flaw the
+configured authorization modules (JACC, XACML, etc.) were not called, and
+the JACC permissions were not used to determine access to an EJB.
+(CVE-2012-4550)
+
+A flaw in the way Apache CXF enforced child policies of WS-SecurityPolicy
+1.1 on the client side could, in certain cases, lead to a client failing to
+sign or encrypt certain elements as directed by the security policy,
+leading to information disclosure and insecure information transmission.
+(CVE-2012-2378)
+
+A flaw was found in the way IronJacamar authenticated credentials and
+returned a valid datasource connection when configured to
+&quot;allow-multiple-users&quot;. A remote attacker, provided the correct subject,
+could obtain a datasource connection that might belong to a privileged
+user. (CVE-2012-3428)
+
+It was found that Apache CXF was vulnerable to SOAPAction spoofing attacks
+under certain conditions. Note that WS-Policy validation is performed
+against the operation being invoked, and an attack must pass validation to
+be successful. (CVE-2012-3451)
+
+When there are no allowed roles for an EJB method invocation, the
+invocation should be denied for all users. It was found that the
+processInvocation() method in
+org.jboss.as.ejb3.security.AuthorizationInterceptor incorrectly authorizes
+all method invocations to proceed when the list of allowed roles is empty.
+(CVE-2012-4549)
+
+The apachectl script set an insecure library search path. Running apachectl
+in an attacker-controlled directory containing a malicious library file
+could cause arbitrary code execution with the privileges of the user
+running the apachectl script (typically the root user). This issue only
+affected JBoss Enterprise Application Platform on Solaris. (CVE-2012-0883)
+
+It was found that in Mojarra, the FacesContext that is made available
+during application startup is held in a ThreadLocal. The reference is not
+properly cleaned up in all cases. As a result, if a JavaServer Faces (JSF)
+WAR calls FacesContext.getCurrentInstance() during application startup,
+another WAR can get access to the leftover context and thus get access to
+the other WAR's resources. A local attacker could use this flaw to access
+another WAR's resources using a crafted, deployed application.
+(CVE-2012-2672)
+
+An input sanitization flaw was found in the mod_negotiation Apache HTTP
+Server module. A remote attacker able to upload or create files with
+arbitrary names in a directory that has the MultiViews options enabled,
+could use this flaw to conduct cross-site scripting attacks against users
+visiting the site. (CVE-2008-0455, CVE-2012-2687)
+
+Red Hat would like to thank the Apache CXF project for reporting
+CVE-2012-2379, CVE-2012-2378, and CVE-2012-3451. The CVE-2012-4550 issue
+was discovered by Josef Cacek of the Red Hat JBoss EAP Quality Engineering
+team; CVE-2012-3428 and CVE-2012-4549 were discovered by Arun Neelicattu of
+the Red Hat Security Response Team; and CVE-2012-2672 was discovered by
+Marek Schmidt and Stan Silvert of Red Hat.
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Application Platform installation and deployed applications.
+
+3. Solution:
+
+Users of JBoss Enterprise Application Platform 6.0.0 as provided from the
+Red Hat Customer Portal are advised to upgrade to JBoss Enterprise
+Application Platform 6.0.1.
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Enterprise Application Platform installation and deployed
+applications.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+813559 - CVE-2012-0883 httpd: insecure handling of LD_LIBRARY_PATH in envvars
+826533 - CVE-2012-2378 jbossws-cxf, apache-cxf: Certain child policies of WS-SecurityPolicy 1.1 SupportingToken policy not applied on the client side
+826534 - CVE-2012-2379 jbossws-cxf, apache-cxf: Apache CXF does not verify that elements were signed / encrypted by a particular Supporting Token
+829560 - CVE-2012-2672 Mojarra: deployed web applications can read FacesContext from other applications under certain conditions
+843358 - CVE-2012-3428 JBoss: Datasource connection manager returns valid connection for wrong credentials when using security-domains
+850794 - CVE-2012-2687 CVE-2008-0455 httpd: mod_negotiation XSS via untrusted file names in directories with MultiViews enabled
+851896 - CVE-2012-3451 jbossws-cxf, apache-cxf: SOAPAction spoofing on document literal web services
+870868 - CVE-2012-4549 JBoss AS: EJB authorization succeeds for any role when allowed roles list is empty
+870871 - CVE-2012-4550 JBoss JACC: Security constraints configured for EJBs are incorrectly interpreted and not applied
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0455.html">https://www.redhat.com/security/data/cve/CVE-2008-0455.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0883.html">https://www.redhat.com/security/data/cve/CVE-2012-0883.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2378.html">https://www.redhat.com/security/data/cve/CVE-2012-2378.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2379.html">https://www.redhat.com/security/data/cve/CVE-2012-2379.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2672.html">https://www.redhat.com/security/data/cve/CVE-2012-2672.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2687.html">https://www.redhat.com/security/data/cve/CVE-2012-2687.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3428.html">https://www.redhat.com/security/data/cve/CVE-2012-3428.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3451.html">https://www.redhat.com/security/data/cve/CVE-2012-3451.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4549.html">https://www.redhat.com/security/data/cve/CVE-2012-4549.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4550.html">https://www.redhat.com/security/data/cve/CVE-2012-4550.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ0PQeXlSAg2UNWIIRAn1OAJ4vsN27vBPPT4A5YhNTKuzKHjPFjgCeI8It
+xYmaao2xT7hTB6fanPYw8bw=
+=lCyd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

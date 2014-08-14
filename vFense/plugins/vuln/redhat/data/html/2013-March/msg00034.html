@@ -1,0 +1,315 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0628&#45;01] Moderate: 389&#45;ds&#45;base security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 11 Mar 2013 15:57:22 &#45;0400 -->
+<!--X-Message-Id: 201303111957.r2BJvLrv026821@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0628-01] Moderate: 389-ds-base security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0628-01] Moderate: 389-ds-base security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0628-01] Moderate: 389-ds-base security and bug fix update</li>
+<li><em>Date</em>: Mon, 11 Mar 2013 19:57:20 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: 389-ds-base security and bug fix update
+Advisory ID:       RHSA-2013:0628-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0628.html">https://rhn.redhat.com/errata/RHSA-2013-0628.html</a>
+Issue date:        2013-03-11
+CVE Names:         CVE-2013-0312 
+=====================================================================
+
+1. Summary:
+
+Updated 389-ds-base packages that fix one security issue and multiple bugs
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The 389 Directory Server is an LDAPv3 compliant server. The base packages
+include the Lightweight Directory Access Protocol (LDAP) server and
+command-line utilities for server administration.
+
+A flaw was found in the way LDAPv3 control data was handled by 389
+Directory Server. If a malicious user were able to bind to the directory
+(even anonymously) and send an LDAP request containing crafted LDAPv3
+control data, they could cause the server to crash, denying service to the
+directory. (CVE-2013-0312)
+
+The CVE-2013-0312 issue was discovered by Thierry Bordaz of Red Hat.
+
+This update also fixes the following bugs:
+
+* After an upgrade from Red Hat Enterprise Linux 6.3 to version 6.4, the
+upgrade script did not update the schema file for the PamConfig object
+class. Consequently, new features for PAM such as configuration of multiple
+instances and pamFilter attribute could not be used because of the schema
+violation. With this update, the upgrade script updates the schema file for
+the PamConfig object class and new features function properly. (BZ#910994)
+
+* Previously, the valgrind test suite reported recurring memory leaks in
+the modify_update_last_modified_attr() function. The size of the leaks
+averaged between 60-80 bytes per modify call. In environments where modify
+operations were frequent, this caused significant problems. Now, memory
+leaks no longer occur in the modify_update_last_modified_attr() function.
+(BZ#910995)
+
+* The Directory Server (DS) failed when multi-valued attributes were
+replaced. The problem occurred when replication was enabled, while the
+server executing the modification was configured as a single master and
+there was at least one replication agreement. Consequently, the
+modification requests were refused by the master server, which returned a
+code 20 &quot;Type or value exists&quot; error message. These requests were
+replacements of multi-valued attributes, and the error only occurred when
+one of the new values matched one of the current values of the attribute,
+but had a different letter case. Now, modification requests function
+properly and no longer return code 20 errors. (BZ#910996)
+
+* The DNA (distributed numeric assignment) plug-in, under certain
+conditions, could log error messages with the &quot;DB_LOCK_DEADLOCK&quot; error
+code when attempting to create an entry with a uidNumber attribute. Now,
+DNA handles this case properly and errors no longer occur during attempts
+to create entries with uidNumber attributes. (BZ#911467)
+
+* Posix Winsync plugin was calling an internal modify function which was
+not necessary. The internal modify call failed and logged an error message
+&quot;slapi_modify_internal_set_pb: NULL parameter&quot; which was not clear. This
+patch stops calling the internal modify function if it is not necessary and
+the cryptic error message is not observed. (BZ#911468)
+
+* Previously, under certain conditions, the dse.ldif file had 0 bytes after
+a server termination or when the machine was powered off. Consequently,
+after the system was brought up, a DS or IdM system could be unable to
+restart, leading to production server outages. Now, the server mechanism by
+which the dse.ldif is written is more robust, and tries all available
+backup dse.ldif files, and outages no longer occur. (BZ#911469)
+
+* Due to an incorrect interpretation of an error code, a directory server
+considered an invalid chaining configuration setting as the disk full error
+and shut down unexpectedly. Now, a more appropriate error code is in use
+and the server no longer shuts down from invalid chaining configuration
+settings. (BZ#911474)
+
+* While trying to remove a tombstone entry, the ns-slapd daemon terminated
+unexpectedly with a segmentation fault. With this update, removal of
+tombstone entries no longer causes crashes. (BZ#914305)
+
+All 389-ds-base users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. After installing
+this update, the 389 server service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+910994 - PamConfig schema not updated during upgrade
+910995 - Valgrind reports memleak in modify_update_last_modified_attr
+911467 - DNA plugin acceptance tests failed with &quot;DB_LOCK_DEADLOCK&quot; error.
+911468 - Error messages encountered when using POSIX winsync
+911469 - dse.ldif is 0 length after server kill or machine kill
+911474 - Invalid chaining config triggers a disk full error and shutdown
+912964 - CVE-2013-0312 389-ds: unauthenticated denial of service vulnerability in handling of LDAPv3 control data
+914305 - ns-slapd segfaults while trying to delete a tombstone entry
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+x86_64:
+389-ds-base-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-12.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-12.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-12.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0312.html">https://www.redhat.com/security/data/cve/CVE-2013-0312.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRPjcJXlSAg2UNWIIRAr7vAKCaklQDgAQ1lFr4Am4MEFcKY+Lt5QCeLy3U
+EIgYNua7vYdHlgSFM+EhH6g=
+=wIbF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

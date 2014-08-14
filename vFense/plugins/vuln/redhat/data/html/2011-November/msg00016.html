@@ -1,0 +1,227 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1459&#45;01] Important: bind97 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 17 Nov 2011 14:53:37 &#45;0500 -->
+<!--X-Message-Id: 201111171953.pAHJrVO3018482@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1459-01] Important: bind97 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1459-01] Important: bind97 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1459-01] Important: bind97 security update</li>
+<li><em>Date</em>: Thu, 17 Nov 2011 19:53:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bind97 security update
+Advisory ID:       RHSA-2011:1459-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1459.html">https://rhn.redhat.com/errata/RHSA-2011-1459.html</a>
+Issue date:        2011-11-17
+CVE Names:         CVE-2011-4313 
+=====================================================================
+
+1. Summary:
+
+Updated bind97 packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+A flaw was discovered in the way BIND handled certain DNS queries, which
+caused it to cache an invalid record. A remote attacker could use this
+flaw to send repeated queries for this invalid record, causing the
+resolvers to exit unexpectedly due to a failed assertion. (CVE-2011-4313)
+
+Users of bind97 are advised to upgrade to these updated packages, which
+resolve this issue. After installing the update, the BIND daemon (named)
+will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+754398 - CVE-2011-4313 bind: Remote denial of service against recursive servers via logging negative cache entry
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind97-9.7.0-6.P2.el5_7.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind97-9.7.0-6.P2.el5_7.4.src.rpm</a>
+
+i386:
+bind97-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.i386.rpm
+
+x86_64:
+bind97-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind97-9.7.0-6.P2.el5_7.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind97-9.7.0-6.P2.el5_7.4.src.rpm</a>
+
+i386:
+bind97-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.i386.rpm
+
+ia64:
+bind97-9.7.0-6.P2.el5_7.4.ia64.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.ia64.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.ia64.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.ia64.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.ia64.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.ia64.rpm
+
+ppc:
+bind97-9.7.0-6.P2.el5_7.4.ppc.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.ppc.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.ppc.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.ppc64.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.ppc.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.ppc64.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.ppc.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.ppc64.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.ppc.rpm
+
+s390x:
+bind97-9.7.0-6.P2.el5_7.4.s390x.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.s390x.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.s390.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.s390x.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.s390.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.s390x.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.s390.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.s390x.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.s390x.rpm
+
+x86_64:
+bind97-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-chroot-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-debuginfo-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-devel-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.i386.rpm
+bind97-libs-9.7.0-6.P2.el5_7.4.x86_64.rpm
+bind97-utils-9.7.0-6.P2.el5_7.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4313.html">https://www.redhat.com/security/data/cve/CVE-2011-4313.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://www.isc.org/software/bind/advisories/cve-2011-4313">https://www.isc.org/software/bind/advisories/cve-2011-4313</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOxWYdXlSAg2UNWIIRApg1AJ9KWgOEGaX3iqUNfN330eUcHMLLAwCgjJBr
+URxco+JehiQ7Ttf4i+8eCbs=
+=2c/W
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

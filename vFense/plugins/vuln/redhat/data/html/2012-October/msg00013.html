@@ -1,0 +1,323 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1359&#45;01] Moderate: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 11 Oct 2012 09:31:19 &#45;0400 -->
+<!--X-Message-Id: 201210111331.q9BDVDYv023549@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1359-01] Moderate: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1359-01] Moderate: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1359-01] Moderate: libvirt security and bug fix update</li>
+<li><em>Date</em>: Thu, 11 Oct 2012 13:31:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security and bug fix update
+Advisory ID:       RHSA-2012:1359-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1359.html">https://rhn.redhat.com/errata/RHSA-2012-1359.html</a>
+Issue date:        2012-10-11
+CVE Names:         CVE-2012-4423 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix one security issue and multiple bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In
+addition, libvirt provides tools for remote management of virtualized
+systems.
+
+A flaw was found in libvirtd's RPC call handling. An attacker able to
+establish a read-only connection to libvirtd could use this flaw to crash
+libvirtd by sending an RPC message that has an event as the RPC number, or
+an RPC number that falls into a gap in the RPC dispatch table.
+(CVE-2012-4423)
+
+This issue was discovered by Wenlong Huang of the Red Hat Virtualization QE
+Team.
+
+This update also fixes the following bugs:
+
+* When the host_uuid option was present in the libvirtd.conf file, the
+augeas libvirt lens was unable to parse the file. This bug has been fixed
+and the augeas libvirt lens now parses libvirtd.conf as expected in the
+described scenario. (BZ#858988)
+
+* Disk hot plug is a two-part action: the qemuMonitorAddDrive() call is
+followed by the qemuMonitorAddDevice() call. When the first part succeeded
+but the second one failed, libvirt failed to roll back the first part and
+the device remained in use even though the disk hot plug failed. With this
+update, the rollback for the drive addition is properly performed in the
+described scenario and disk hot plug now works as expected. (BZ#859376)
+
+* When a virtual machine was started with an image chain using block
+devices and a block rebase operation was issued, the operation failed on
+completion in the blockJobAbort() function. This update relabels and
+configures cgroups for the backing files and the rebase operation now
+succeeds. (BZ#860720)
+
+All users of libvirt are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. After installing
+the updated packages, libvirtd will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+857133 - CVE-2012-4423 libvirt: null function pointer invocation in virNetServerProgramDispatchCall()
+858988 - The libvirt augeas lens can't parse a libvirtd.conf file where host_uuid is present
+859376 - after failed hotplug qemu keeps the file descriptor open
+860720 - Relabel and configure cgroups for the backing files on VIR_DOMAIN_BLOCK_JOB_ABORT_PIVOT
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+i386:
+libvirt-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-python-0.9.10-21.el6_3.5.i686.rpm
+
+x86_64:
+libvirt-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-python-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+i386:
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+
+x86_64:
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-lock-sanlock-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+x86_64:
+libvirt-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-python-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-lock-sanlock-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+i386:
+libvirt-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-python-0.9.10-21.el6_3.5.i686.rpm
+
+ppc64:
+libvirt-0.9.10-21.el6_3.5.ppc64.rpm
+libvirt-client-0.9.10-21.el6_3.5.ppc.rpm
+libvirt-client-0.9.10-21.el6_3.5.ppc64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.ppc.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.ppc64.rpm
+libvirt-devel-0.9.10-21.el6_3.5.ppc.rpm
+libvirt-devel-0.9.10-21.el6_3.5.ppc64.rpm
+libvirt-python-0.9.10-21.el6_3.5.ppc64.rpm
+
+s390x:
+libvirt-0.9.10-21.el6_3.5.s390x.rpm
+libvirt-client-0.9.10-21.el6_3.5.s390.rpm
+libvirt-client-0.9.10-21.el6_3.5.s390x.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.s390.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.s390x.rpm
+libvirt-devel-0.9.10-21.el6_3.5.s390.rpm
+libvirt-devel-0.9.10-21.el6_3.5.s390x.rpm
+libvirt-python-0.9.10-21.el6_3.5.s390x.rpm
+
+x86_64:
+libvirt-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-python-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-lock-sanlock-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+i386:
+libvirt-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-python-0.9.10-21.el6_3.5.i686.rpm
+
+x86_64:
+libvirt-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-client-0.9.10-21.el6_3.5.i686.rpm
+libvirt-client-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.i686.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-devel-0.9.10-21.el6_3.5.i686.rpm
+libvirt-devel-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-python-0.9.10-21.el6_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.9.10-21.el6_3.5.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.9.10-21.el6_3.5.x86_64.rpm
+libvirt-lock-sanlock-0.9.10-21.el6_3.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4423.html">https://www.redhat.com/security/data/cve/CVE-2012-4423.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQdsnMXlSAg2UNWIIRAu4dAJ9+GjZw8oawTlRk7hO8CHg8o55BYgCfdW61
+pgDEiHRfDIwNm4/l4w3U3gE=
+=rs7W
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

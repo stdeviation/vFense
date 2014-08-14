@@ -1,0 +1,486 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0737&#45;01] Moderate: subversion security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 11 Apr 2013 13:55:24 &#45;0400 -->
+<!--X-Message-Id: 201304111755.r3BHtNSU030286@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0737-01] Moderate: subversion security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0737-01] Moderate: subversion security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0737-01] Moderate: subversion security update</li>
+<li><em>Date</em>: Thu, 11 Apr 2013 17:55:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: subversion security update
+Advisory ID:       RHSA-2013:0737-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0737.html">https://rhn.redhat.com/errata/RHSA-2013-0737.html</a>
+Issue date:        2013-04-11
+CVE Names:         CVE-2013-1845 CVE-2013-1846 CVE-2013-1847 
+                   CVE-2013-1849 
+=====================================================================
+
+1. Summary:
+
+Updated subversion packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+Subversion (SVN) is a concurrent version control system which enables one
+or more users to collaborate in developing and maintaining a hierarchy of
+files and directories while keeping a history of all changes. The
+mod_dav_svn module is used with the Apache HTTP Server to allow access to
+Subversion repositories via HTTP.
+
+A NULL pointer dereference flaw was found in the way the mod_dav_svn module
+handled PROPFIND requests on activity URLs. A remote attacker could use
+this flaw to cause the httpd process serving the request to crash.
+(CVE-2013-1849)
+
+A flaw was found in the way the mod_dav_svn module handled large numbers
+of properties (such as those set with the &quot;svn propset&quot; command). A
+malicious, remote user could use this flaw to cause the httpd process
+serving the request to consume an excessive amount of system memory.
+(CVE-2013-1845)
+
+Two NULL pointer dereference flaws were found in the way the mod_dav_svn
+module handled LOCK requests on certain types of URLs. A malicious, remote
+user could use these flaws to cause the httpd process serving the request
+to crash. (CVE-2013-1846, CVE-2013-1847)
+
+Note: The CVE-2013-1849, CVE-2013-1846, and CVE-2013-1847 issues only
+caused a temporary denial of service, as the Apache HTTP Server started a
+new process to replace the crashed child process. When using prefork MPM,
+the crash only affected the attacker. When using worker (threaded) MPM, the
+connections of other users may have been interrupted.
+
+Red Hat would like to thank the Apache Subversion project for reporting
+these issues. Upstream acknowledges Alexander Klink as the original
+reporter of CVE-2013-1845; Ben Reser as the original reporter of
+CVE-2013-1846; and Philip Martin and Ben Reser as the original reporters of
+CVE-2013-1847.
+
+All subversion users should upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, you must restart the httpd daemon, if you are using
+mod_dav_svn, for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+929082 - CVE-2013-1845 Subversion (mod_dav_svn): DoS (excessive memory use) when large number of properties are set or deleted
+929087 - CVE-2013-1846 Subversion (mod_dav_svn): DoS (crash) via LOCK requests against an activity URL
+929090 - CVE-2013-1847 Subversion (mod_dav_svn): DoS (crash) via LOCK requests against a non-existent URL
+929093 - CVE-2013-1849 Subversion (mod_dav_svn): DoS (crash) via PROPFIND request made against activity URLs
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/subversion-1.6.11-11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/subversion-1.6.11-11.el5_9.src.rpm</a>
+
+i386:
+mod_dav_svn-1.6.11-11.el5_9.i386.rpm
+subversion-1.6.11-11.el5_9.i386.rpm
+subversion-debuginfo-1.6.11-11.el5_9.i386.rpm
+subversion-devel-1.6.11-11.el5_9.i386.rpm
+subversion-javahl-1.6.11-11.el5_9.i386.rpm
+subversion-perl-1.6.11-11.el5_9.i386.rpm
+subversion-ruby-1.6.11-11.el5_9.i386.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-11.el5_9.x86_64.rpm
+subversion-1.6.11-11.el5_9.i386.rpm
+subversion-1.6.11-11.el5_9.x86_64.rpm
+subversion-debuginfo-1.6.11-11.el5_9.i386.rpm
+subversion-debuginfo-1.6.11-11.el5_9.x86_64.rpm
+subversion-devel-1.6.11-11.el5_9.i386.rpm
+subversion-devel-1.6.11-11.el5_9.x86_64.rpm
+subversion-javahl-1.6.11-11.el5_9.x86_64.rpm
+subversion-perl-1.6.11-11.el5_9.x86_64.rpm
+subversion-ruby-1.6.11-11.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/subversion-1.6.11-11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/subversion-1.6.11-11.el5_9.src.rpm</a>
+
+i386:
+mod_dav_svn-1.6.11-11.el5_9.i386.rpm
+subversion-1.6.11-11.el5_9.i386.rpm
+subversion-debuginfo-1.6.11-11.el5_9.i386.rpm
+subversion-devel-1.6.11-11.el5_9.i386.rpm
+subversion-javahl-1.6.11-11.el5_9.i386.rpm
+subversion-perl-1.6.11-11.el5_9.i386.rpm
+subversion-ruby-1.6.11-11.el5_9.i386.rpm
+
+ia64:
+mod_dav_svn-1.6.11-11.el5_9.ia64.rpm
+subversion-1.6.11-11.el5_9.ia64.rpm
+subversion-debuginfo-1.6.11-11.el5_9.ia64.rpm
+subversion-devel-1.6.11-11.el5_9.ia64.rpm
+subversion-javahl-1.6.11-11.el5_9.ia64.rpm
+subversion-perl-1.6.11-11.el5_9.ia64.rpm
+subversion-ruby-1.6.11-11.el5_9.ia64.rpm
+
+ppc:
+mod_dav_svn-1.6.11-11.el5_9.ppc.rpm
+subversion-1.6.11-11.el5_9.ppc.rpm
+subversion-1.6.11-11.el5_9.ppc64.rpm
+subversion-debuginfo-1.6.11-11.el5_9.ppc.rpm
+subversion-debuginfo-1.6.11-11.el5_9.ppc64.rpm
+subversion-devel-1.6.11-11.el5_9.ppc.rpm
+subversion-devel-1.6.11-11.el5_9.ppc64.rpm
+subversion-javahl-1.6.11-11.el5_9.ppc.rpm
+subversion-perl-1.6.11-11.el5_9.ppc.rpm
+subversion-ruby-1.6.11-11.el5_9.ppc.rpm
+
+s390x:
+mod_dav_svn-1.6.11-11.el5_9.s390x.rpm
+subversion-1.6.11-11.el5_9.s390.rpm
+subversion-1.6.11-11.el5_9.s390x.rpm
+subversion-debuginfo-1.6.11-11.el5_9.s390.rpm
+subversion-debuginfo-1.6.11-11.el5_9.s390x.rpm
+subversion-devel-1.6.11-11.el5_9.s390.rpm
+subversion-devel-1.6.11-11.el5_9.s390x.rpm
+subversion-javahl-1.6.11-11.el5_9.s390x.rpm
+subversion-perl-1.6.11-11.el5_9.s390x.rpm
+subversion-ruby-1.6.11-11.el5_9.s390x.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-11.el5_9.x86_64.rpm
+subversion-1.6.11-11.el5_9.i386.rpm
+subversion-1.6.11-11.el5_9.x86_64.rpm
+subversion-debuginfo-1.6.11-11.el5_9.i386.rpm
+subversion-debuginfo-1.6.11-11.el5_9.x86_64.rpm
+subversion-devel-1.6.11-11.el5_9.i386.rpm
+subversion-devel-1.6.11-11.el5_9.x86_64.rpm
+subversion-javahl-1.6.11-11.el5_9.x86_64.rpm
+subversion-perl-1.6.11-11.el5_9.x86_64.rpm
+subversion-ruby-1.6.11-11.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+i386:
+mod_dav_svn-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+
+noarch:
+subversion-svn2cl-1.6.11-9.el6_4.noarch.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-9.el6_4.x86_64.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.x86_64.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.x86_64.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.x86_64.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.x86_64.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.x86_64.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.x86_64.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+noarch:
+subversion-svn2cl-1.6.11-9.el6_4.noarch.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-9.el6_4.x86_64.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.x86_64.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.x86_64.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.x86_64.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.x86_64.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.x86_64.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.x86_64.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+i386:
+mod_dav_svn-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+
+ppc64:
+mod_dav_svn-1.6.11-9.el6_4.ppc64.rpm
+subversion-1.6.11-9.el6_4.ppc.rpm
+subversion-1.6.11-9.el6_4.ppc64.rpm
+subversion-debuginfo-1.6.11-9.el6_4.ppc.rpm
+subversion-debuginfo-1.6.11-9.el6_4.ppc64.rpm
+
+s390x:
+mod_dav_svn-1.6.11-9.el6_4.s390x.rpm
+subversion-1.6.11-9.el6_4.s390.rpm
+subversion-1.6.11-9.el6_4.s390x.rpm
+subversion-debuginfo-1.6.11-9.el6_4.s390.rpm
+subversion-debuginfo-1.6.11-9.el6_4.s390x.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-9.el6_4.x86_64.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.x86_64.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+i386:
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+
+noarch:
+subversion-svn2cl-1.6.11-9.el6_4.noarch.rpm
+
+ppc64:
+subversion-debuginfo-1.6.11-9.el6_4.ppc.rpm
+subversion-debuginfo-1.6.11-9.el6_4.ppc64.rpm
+subversion-devel-1.6.11-9.el6_4.ppc.rpm
+subversion-devel-1.6.11-9.el6_4.ppc64.rpm
+subversion-gnome-1.6.11-9.el6_4.ppc.rpm
+subversion-gnome-1.6.11-9.el6_4.ppc64.rpm
+subversion-javahl-1.6.11-9.el6_4.ppc.rpm
+subversion-javahl-1.6.11-9.el6_4.ppc64.rpm
+subversion-kde-1.6.11-9.el6_4.ppc.rpm
+subversion-kde-1.6.11-9.el6_4.ppc64.rpm
+subversion-perl-1.6.11-9.el6_4.ppc.rpm
+subversion-perl-1.6.11-9.el6_4.ppc64.rpm
+subversion-ruby-1.6.11-9.el6_4.ppc.rpm
+subversion-ruby-1.6.11-9.el6_4.ppc64.rpm
+
+s390x:
+subversion-debuginfo-1.6.11-9.el6_4.s390.rpm
+subversion-debuginfo-1.6.11-9.el6_4.s390x.rpm
+subversion-devel-1.6.11-9.el6_4.s390.rpm
+subversion-devel-1.6.11-9.el6_4.s390x.rpm
+subversion-gnome-1.6.11-9.el6_4.s390.rpm
+subversion-gnome-1.6.11-9.el6_4.s390x.rpm
+subversion-javahl-1.6.11-9.el6_4.s390.rpm
+subversion-javahl-1.6.11-9.el6_4.s390x.rpm
+subversion-kde-1.6.11-9.el6_4.s390.rpm
+subversion-kde-1.6.11-9.el6_4.s390x.rpm
+subversion-perl-1.6.11-9.el6_4.s390.rpm
+subversion-perl-1.6.11-9.el6_4.s390x.rpm
+subversion-ruby-1.6.11-9.el6_4.s390.rpm
+subversion-ruby-1.6.11-9.el6_4.s390x.rpm
+
+x86_64:
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.x86_64.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.x86_64.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.x86_64.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.x86_64.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+i386:
+mod_dav_svn-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+
+x86_64:
+mod_dav_svn-1.6.11-9.el6_4.x86_64.rpm
+subversion-1.6.11-9.el6_4.i686.rpm
+subversion-1.6.11-9.el6_4.x86_64.rpm
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-javahl-1.6.11-9.el6_4.i686.rpm
+subversion-javahl-1.6.11-9.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/subversion-1.6.11-9.el6_4.src.rpm</a>
+
+i386:
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+
+noarch:
+subversion-svn2cl-1.6.11-9.el6_4.noarch.rpm
+
+x86_64:
+subversion-debuginfo-1.6.11-9.el6_4.i686.rpm
+subversion-debuginfo-1.6.11-9.el6_4.x86_64.rpm
+subversion-devel-1.6.11-9.el6_4.i686.rpm
+subversion-devel-1.6.11-9.el6_4.x86_64.rpm
+subversion-gnome-1.6.11-9.el6_4.i686.rpm
+subversion-gnome-1.6.11-9.el6_4.x86_64.rpm
+subversion-kde-1.6.11-9.el6_4.i686.rpm
+subversion-kde-1.6.11-9.el6_4.x86_64.rpm
+subversion-perl-1.6.11-9.el6_4.i686.rpm
+subversion-perl-1.6.11-9.el6_4.x86_64.rpm
+subversion-ruby-1.6.11-9.el6_4.i686.rpm
+subversion-ruby-1.6.11-9.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1845.html">https://www.redhat.com/security/data/cve/CVE-2013-1845.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1846.html">https://www.redhat.com/security/data/cve/CVE-2013-1846.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1847.html">https://www.redhat.com/security/data/cve/CVE-2013-1847.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1849.html">https://www.redhat.com/security/data/cve/CVE-2013-1849.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://subversion.apache.org/security/CVE-2013-1849-advisory.txt">http://subversion.apache.org/security/CVE-2013-1849-advisory.txt</a>
+<a  rel="nofollow" href="http://subversion.apache.org/security/CVE-2013-1845-advisory.txt">http://subversion.apache.org/security/CVE-2013-1845-advisory.txt</a>
+<a  rel="nofollow" href="http://subversion.apache.org/security/CVE-2013-1846-advisory.txt">http://subversion.apache.org/security/CVE-2013-1846-advisory.txt</a>
+<a  rel="nofollow" href="http://subversion.apache.org/security/CVE-2013-1847-advisory.txt">http://subversion.apache.org/security/CVE-2013-1847-advisory.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRZvjgXlSAg2UNWIIRAlJRAJ0XpPuqXLUagfYKve2M4JaQeS2hDQCfSE7V
+UBZRpRBvOey4KRgVi88F4C8=
+=LnOt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

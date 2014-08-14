@@ -1,0 +1,202 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1235&#45;01] Important: kvm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 5 Sep 2012 13:07:52 &#45;0400 -->
+<!--X-Message-Id: 201209051707.q85H7l2J026901@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1235-01] Important: kvm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1235-01] Important: kvm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1235-01] Important: kvm security update</li>
+<li><em>Date</em>: Wed, 5 Sep 2012 17:07:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kvm security update
+Advisory ID:       RHSA-2012:1235-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1235.html">https://rhn.redhat.com/errata/RHSA-2012-1235.html</a>
+Issue date:        2012-09-05
+CVE Names:         CVE-2012-3515 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built
+for the standard Red Hat Enterprise Linux kernel.
+
+A flaw was found in the way QEMU handled VT100 terminal escape sequences
+when emulating certain character devices. A guest user with privileges to
+write to a character device that is emulated on the host using a virtual
+console back-end could use this flaw to crash the qemu-kvm process on the
+host or, possibly, escalate their privileges on the host. (CVE-2012-3515)
+
+This flaw did not affect the default use of KVM. Affected configurations
+were:
+
+* When guests were started from the command line (&quot;/usr/libexec/qemu-kvm&quot;),
+and without specifying a serial or parallel device that specifically does
+not use a virtual console (vc) back-end. (Note that Red Hat does not
+support invoking &quot;qemu-kvm&quot; from the command line on Red Hat Enterprise
+Linux 5.)
+
+* Guests that were managed via libvirt, such as when using Virtual Machine
+Manager (virt-manager), but that have a serial or parallel device that uses
+a virtual console back-end. By default, guests managed via libvirt will not
+use a virtual console back-end for such devices.
+
+Red Hat would like to thank the Xen project for reporting this issue.
+
+All KVM users should upgrade to these updated packages, which correct this
+issue. Note: The procedure in the Solution section must be performed before
+this update will take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+The following procedure must be performed before this update will take
+effect:
+
+1) Stop all KVM guest virtual machines.
+
+2) Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3) Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+851252 - CVE-2012-3515 qemu: VT100 emulation vulnerability
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-249.el5_8.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-249.el5_8.5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-249.el5_8.5.x86_64.rpm
+kmod-kvm-debug-83-249.el5_8.5.x86_64.rpm
+kvm-83-249.el5_8.5.x86_64.rpm
+kvm-debuginfo-83-249.el5_8.5.x86_64.rpm
+kvm-qemu-img-83-249.el5_8.5.x86_64.rpm
+kvm-tools-83-249.el5_8.5.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-249.el5_8.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-249.el5_8.5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-249.el5_8.5.x86_64.rpm
+kmod-kvm-debug-83-249.el5_8.5.x86_64.rpm
+kvm-83-249.el5_8.5.x86_64.rpm
+kvm-debuginfo-83-249.el5_8.5.x86_64.rpm
+kvm-qemu-img-83-249.el5_8.5.x86_64.rpm
+kvm-tools-83-249.el5_8.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3515.html">https://www.redhat.com/security/data/cve/CVE-2012-3515.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQR4a9XlSAg2UNWIIRAhmlAKCQoRr+yx3FFIbE0hFwcJxrtKcgYgCfa4MW
+WuzMrb3s542bwmcl9ef21qc=
+=C0+E
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

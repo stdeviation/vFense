@@ -1,0 +1,231 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0095&#45;01] Important: rhev&#45;hypervisor security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 19 Feb 2010 04:31:38 &#45;0500 -->
+<!--X-Message-Id: 201002190931.o1J9VVYl017437@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0095-01] Important: rhev-hypervisor security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0095-01] Important: rhev-hypervisor security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0095-01] Important: rhev-hypervisor security and bug fix	update</li>
+<li><em>Date</em>: Fri, 19 Feb 2010 04:31:31 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor security and bug fix update
+Advisory ID:       RHSA-2010:0095-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0095.html">https://rhn.redhat.com/errata/RHSA-2010-0095.html</a>
+Issue date:        2010-02-09
+CVE Names:         CVE-2007-4567 CVE-2009-4272 CVE-2009-4536 
+                   CVE-2009-4537 CVE-2009-4538 CVE-2010-0298 
+                   CVE-2010-0306 CVE-2010-0309 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes security issues and several
+bugs is now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor 2.1 - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+(RHEV) Hypervisor ISO disk image. The RHEV Hypervisor is a dedicated
+Kernel-based Virtual Machine (KVM) hypervisor. It includes everything
+necessary to run and manage virtual machines: A subset of the Red Hat
+Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: RHEV Hypervisor is only available for the Intel 64 and AMD64
+architectures with virtualization extensions.
+
+A flaw was found in the IPv6 Extension Header (EH) handling
+implementation in the Linux kernel. The skb-&gt;dst data structure was not
+properly validated in the ipv6_hop_jumbo() function. This could possibly
+lead to a remote denial of service. (CVE-2007-4567)
+
+The Parallels Virtuozzo Containers team reported two flaws in the routing
+implementation. If an attacker was able to cause a large enough number of
+collisions in the routing hash table (via specially-crafted packets) for
+the emergency route flush to trigger, a deadlock could occur. Secondly, if
+the kernel routing cache was disabled, an uninitialized pointer would be
+left behind after a route lookup, leading to a kernel panic.
+(CVE-2009-4272)
+
+A flaw was found in each of the following Intel PRO/1000 Linux drivers in
+the Linux kernel: e1000 and e1000e. A remote attacker using packets larger
+than the MTU could bypass the existing fragment check, resulting in
+partial, invalid frames being passed to the network stack. These flaws
+could also possibly be used to trigger a remote denial of service.
+(CVE-2009-4536, CVE-2009-4538)
+
+A flaw was found in the Realtek r8169 Ethernet driver in the Linux kernel.
+Receiving overly-long frames with a certain revision of the network cards
+supported by this driver could possibly result in a remote denial of
+service. (CVE-2009-4537)
+
+The x86 emulator implementation was missing a check for the Current
+Privilege Level (CPL) and I/O Privilege Level (IOPL). A user in a guest
+could leverage these flaws to cause a denial of service (guest crash) or
+possibly escalate their privileges within that guest. (CVE-2010-0298,
+CVE-2010-0306)
+
+A flaw was found in the Programmable Interval Timer (PIT) emulation. Access
+to the internal data structure pit_state, which represents the data state
+of the emulated PIT, was not properly validated in the pit_ioport_read()
+function. A privileged guest user could use this flaw to crash the host.
+(CVE-2010-0309)
+
+This updated package provides updated components that include fixes for
+security issues; however, these issues have no security impact for RHEV
+Hypervisor. These fixes are for kernel issues CVE-2006-6304, CVE-2009-2910,
+CVE-2009-3080, CVE-2009-3556, CVE-2009-3889, CVE-2009-3939, CVE-2009-4020,
+CVE-2009-4021, CVE-2009-4138, and CVE-2009-4141; ntp issue CVE-2009-3563;
+dbus issue CVE-2009-1189; dnsmasq issues CVE-2009-2957 and CVE-2009-2958;
+gnutls issue CVE-2009-2730; krb5 issue CVE-2009-4212; bind issue 
+CVE-2010-0097; gzip issue CVE-2010-0001; openssl issues CVE-2009-2409 and 
+CVE-2009-4355; and gcc issue CVE-2009-3736.
+
+This update also fixes the following bugs:
+
+* on systems with a large number of disk devices, USB storage devices may
+get enumerated after &quot;/dev/sdz&quot;, for example, &quot;/dev/sdcd&quot;. This was not
+handled by the udev rules, resulting in a missing &quot;/dev/live&quot; symbolic
+link, causing installations from USB media to fail. With this update, udev
+rules correctly handle USB storage devices on systems with a large number
+of disk devices, which resolves this issue. (BZ#555083)
+
+As RHEV Hypervisor is based on KVM, the bug fixes from the KVM update
+RHSA-2010:0088 have been included in this update:
+
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0088.html">https://rhn.redhat.com/errata/RHSA-2010-0088.html</a>
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+545411 - CVE-2009-4272 kernel: emergency route cache flushing leads to node deadlock
+548641 - CVE-2007-4567 kernel: ipv6_hop_jumbo remote system crash
+550907 - CVE-2009-4537 kernel: r8169 issue reported at 26c3
+551214 - CVE-2009-4538 kernel: e1000e frame fragment issue
+552126 - CVE-2009-4536 kernel: e1000 issue reported at 26c3
+559091 - CVE-2010-0298 kvm: emulator privilege escalation
+560654 - CVE-2010-0306 kvm: emulator privilege escalation IOPL/CPL level check
+560887 - CVE-2010-0309 kvm: cat /dev/port in guest cause the host hang
+
+6. Package List:
+
+RHEV Hypervisor 2.1:
+
+Source:
+rhev-hypervisor-5.4-2.1.8.el5_4rhev2_1.src.rpm
+
+noarch:
+rhev-hypervisor-5.4-2.1.8.el5_4rhev2_1.noarch.rpm
+rhev-hypervisor-pxe-5.4-2.1.8.el5_4rhev2_1.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-4567.html">https://www.redhat.com/security/data/cve/CVE-2007-4567.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4272.html">https://www.redhat.com/security/data/cve/CVE-2009-4272.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4536.html">https://www.redhat.com/security/data/cve/CVE-2009-4536.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4537.html">https://www.redhat.com/security/data/cve/CVE-2009-4537.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4538.html">https://www.redhat.com/security/data/cve/CVE-2009-4538.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0298.html">https://www.redhat.com/security/data/cve/CVE-2010-0298.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0306.html">https://www.redhat.com/security/data/cve/CVE-2010-0306.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0309.html">https://www.redhat.com/security/data/cve/CVE-2010-0309.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0088.html">https://rhn.redhat.com/errata/RHSA-2010-0088.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLflpcXlSAg2UNWIIRAj4NAJwLObK1WPZFnh17z/k1FuruzvJ+qACdGA0R
+MtHLJw811Qhtm9UIND0kaSU=
+=7JJi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

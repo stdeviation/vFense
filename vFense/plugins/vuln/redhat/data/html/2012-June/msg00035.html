@@ -1,0 +1,264 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0902&#45;04] Low: cifs&#45;utils security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 05:31:02 &#45;0400 -->
+<!--X-Message-Id: 201206200930.q5K9UtIC032030@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0902-04] Low: cifs-utils security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0902-04] Low: cifs-utils security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0902-04] Low: cifs-utils security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 09:26:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: cifs-utils security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0902-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0902.html">https://rhn.redhat.com/errata/RHSA-2012-0902.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-1586 
+=====================================================================
+
+1. Summary:
+
+An updated cifs-utils package that fixes one security issue, multiple bugs,
+and adds various enhancements is now available for Red Hat
+Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The cifs-utils package contains tools for mounting and managing shares on
+Linux using the SMB/CIFS protocol. The CIFS shares can be used as standard
+Linux file systems.
+
+A file existence disclosure flaw was found in mount.cifs. If the tool was
+installed with the setuid bit set, a local attacker could use this flaw to
+determine the existence of files or directories in directories not
+accessible to the attacker. (CVE-2012-1586)
+
+Note: mount.cifs from the cifs-utils package distributed by Red Hat does
+not have the setuid bit set. We recommend that administrators do not
+manually set the setuid bit for mount.cifs.
+
+This update also fixes the following bugs:
+
+* The cifs.mount(8) manual page was previously missing documentation for
+several mount options. With this update, the missing entries have been
+added to the manual page. (BZ#769923)
+
+* Previously, the mount.cifs utility did not properly update the
+&quot;/etc/mtab&quot; system information file when remounting an existing CIFS
+mount. Consequently, mount.cifs created a duplicate entry of the existing
+mount entry. This update adds the del_mtab() function to cifs.mount, which
+ensures that the old mount entry is removed from &quot;/etc/mtab&quot; before adding
+the updated mount entry. (BZ#770004)
+
+* The mount.cifs utility did not properly convert user and group names to
+numeric UIDs and GIDs. Therefore, when the &quot;uid&quot;, &quot;gid&quot; or &quot;cruid&quot; mount
+options were specified with user or group names, CIFS shares were mounted
+with default values. This caused shares to be inaccessible to the intended
+users because UID and GID is set to &quot;0&quot; by default. With this update, user
+and group names are properly converted so that CIFS shares are now mounted
+with specified user and group ownership as expected. (BZ#796463)
+
+* The cifs.upcall utility did not respect the &quot;domain_realm&quot; section in
+the &quot;krb5.conf&quot; file and worked only with the default domain.
+Consequently, an attempt to mount a CIFS share from a different than the
+default domain failed with the following error message:
+
+    mount error(126): Required key not available
+
+This update modifies the underlying code so that cifs.upcall handles
+multiple Kerberos domains correctly and CIFS shares can now be mounted as
+expected in a multi-domain environment. (BZ#805490)
+
+In addition, this update adds the following enhancements:
+
+* The cifs.upcall utility previously always used the &quot;/etc/krb5.conf&quot; file
+regardless of whether the user had specified a custom Kerberos
+configuration file. This update adds the &quot;--krb5conf&quot; option to
+cifs.upcall allowing the administrator to specify an alternate
+krb5.conf file. For more information on this option, refer to the
+cifs.upcall(8) manual page. (BZ#748756)
+
+* The cifs.upcall utility did not optimally determine the correct service
+principal name (SPN) used for Kerberos authentication, which occasionally
+caused krb5 authentication to fail when mounting a server's unqualified
+domain name. This update improves cifs.upcall so that the method used to
+determine the SPN is now more versatile. (BZ#748757)
+
+* This update adds the &quot;backupuid&quot; and &quot;backupgid&quot; mount options to the
+mount.cifs utility. When specified, these options grant a user or a group
+the right to access files with the backup intent. For more information on
+these options, refer to the mount.cifs(8) manual page. (BZ#806337)
+
+All users of cifs-utils are advised to upgrade to this updated package,
+which contains backported patches to fix these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+748756 - mount.cifs does not use KRB5_CONFIG
+748757 - RFE: Improve selection of SPNs with cifs.upcall
+807252 - CVE-2012-1586 samba / cifs-utils: mount.cifs file existence disclosure vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm</a>
+
+i386:
+cifs-utils-4.8.1-10.el6.i686.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.i686.rpm
+
+x86_64:
+cifs-utils-4.8.1-10.el6.x86_64.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm</a>
+
+x86_64:
+cifs-utils-4.8.1-10.el6.x86_64.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm</a>
+
+i386:
+cifs-utils-4.8.1-10.el6.i686.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.i686.rpm
+
+ppc64:
+cifs-utils-4.8.1-10.el6.ppc64.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.ppc64.rpm
+
+s390x:
+cifs-utils-4.8.1-10.el6.s390x.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.s390x.rpm
+
+x86_64:
+cifs-utils-4.8.1-10.el6.x86_64.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/cifs-utils-4.8.1-10.el6.src.rpm</a>
+
+i386:
+cifs-utils-4.8.1-10.el6.i686.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.i686.rpm
+
+x86_64:
+cifs-utils-4.8.1-10.el6.x86_64.rpm
+cifs-utils-debuginfo-4.8.1-10.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1586.html">https://www.redhat.com/security/data/cve/CVE-2012-1586.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4ZhKXlSAg2UNWIIRAgltAJ9ckpwC6RSzVsOrozAAV2YZR5roGwCfX3gJ
+MGBwsosfi453Eh+GOSTSYKI=
+=EWaq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

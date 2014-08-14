@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0125&#45;01] Moderate: wireshark security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 01:59:44 &#45;0500 -->
+<!--X-Message-Id: 201301080659.r086xggb009840@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0125-01] Moderate: wireshark security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0125-01] Moderate: wireshark security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0125-01] Moderate: wireshark security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:49:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: wireshark security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0125-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0125.html">https://rhn.redhat.com/errata/RHSA-2013-0125.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2011-1958 CVE-2011-1959 CVE-2011-2175 
+                   CVE-2011-2698 CVE-2011-4102 CVE-2012-0041 
+                   CVE-2012-0042 CVE-2012-0066 CVE-2012-0067 
+                   CVE-2012-4285 CVE-2012-4289 CVE-2012-4290 
+                   CVE-2012-4291 
+=====================================================================
+
+1. Summary:
+
+Updated wireshark packages that fix several security issues, three bugs,
+and add one enhancement are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Wireshark, previously known as Ethereal, is a network protocol analyzer. It
+is used to capture and browse the traffic running on a computer network.
+
+A heap-based buffer overflow flaw was found in the way Wireshark handled
+Endace ERF (Extensible Record Format) capture files. If Wireshark opened a
+specially-crafted ERF capture file, it could crash or, possibly, execute
+arbitrary code as the user running Wireshark. (CVE-2011-4102)
+
+Several denial of service flaws were found in Wireshark. Wireshark could
+crash or stop responding if it read a malformed packet off a network, or
+opened a malicious dump file. (CVE-2011-1958, CVE-2011-1959, CVE-2011-2175,
+CVE-2011-2698, CVE-2012-0041, CVE-2012-0042, CVE-2012-0066, CVE-2012-0067,
+CVE-2012-4285, CVE-2012-4289, CVE-2012-4290, CVE-2012-4291)
+
+The CVE-2011-1958, CVE-2011-1959, CVE-2011-2175, and CVE-2011-4102 issues
+were discovered by Huzaifa Sidhpurwala of the Red Hat Security Response
+Team.
+
+This update also fixes the following bugs:
+
+* When Wireshark starts with the X11 protocol being tunneled through an SSH
+connection, it automatically prepares its capture filter to omit the SSH
+packets. If the SSH connection was to a link-local IPv6 address including
+an interface name (for example ssh -X [ipv6addr]%eth0), Wireshark parsed
+this address erroneously, constructed an incorrect capture filter and
+refused to capture packets. The &quot;Invalid capture filter&quot; message was
+displayed. With this update, parsing of link-local IPv6 addresses is fixed
+and Wireshark correctly prepares a capture filter to omit SSH packets over
+a link-local IPv6 connection. (BZ#438473)
+
+* Previously, Wireshark's column editing dialog malformed column names when
+they were selected. With this update, the dialog is fixed and no longer
+breaks column names. (BZ#493693)
+
+* Previously, TShark, the console packet analyzer, did not properly analyze
+the exit code of Dumpcap, Wireshark's packet capturing back end. As a
+result, TShark returned exit code 0 when Dumpcap failed to parse its
+command-line arguments. In this update, TShark correctly propagates the
+Dumpcap exit code and returns a non-zero exit code when Dumpcap fails.
+(BZ#580510)
+
+* Previously, the TShark &quot;-s&quot; (snapshot length) option worked only for a
+value greater than 68 bytes. If a lower value was specified, TShark
+captured just 68 bytes of incoming packets. With this update, the &quot;-s&quot;
+option is fixed and sizes lower than 68 bytes work as expected. (BZ#580513)
+
+This update also adds the following enhancement:
+
+* In this update, support for the &quot;NetDump&quot; protocol was added. (BZ#484999)
+
+All users of Wireshark are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues and add this
+enhancement. All running instances of Wireshark must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+438473 - wireshark via ssh -X on ipv6 link-local address fails to allow capture
+484999 - add netdump dissector to wireshark
+580510 - tshark returns exit code 0 in case of errors
+580513 - tshark snaplen parameter does not work
+710039 - CVE-2011-1959 wireshark: Stack-based buffer over-read from tvbuff buffer when reading snoop capture files
+710109 - CVE-2011-2175 wireshark: Heap-based buffer over-read in Visual Networks dissector
+710184 - CVE-2011-1958 wireshark (64bit): NULL pointer dereference by processing of a corrupted Diameter dictionary file
+723215 - CVE-2011-2698 wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
+750648 - CVE-2011-4102 wireshark: buffer overflow in the ERF file reader
+773726 - CVE-2012-0041 wireshark: multiple file parser vulnerabilities (wnpa-sec-2012-01)
+773728 - CVE-2012-0042 wireshark: NULL pointer vulnerabilities (wnpa-sec-2012-02)
+783360 - CVE-2012-0066 Wireshark: Dos via large buffer allocation request
+783363 - CVE-2012-0067 Wireshark: Dos due to integer overflow in IPTrace capture format parser
+848541 - CVE-2012-4285 wireshark: crash due to zero division in DCP ETSI dissector (wnpa-sec-2012-13)
+848561 - CVE-2012-4289 wireshark: DoS via excessive CPU consumption in AFP dissector (wnpa-sec-2012-17)
+848572 - CVE-2012-4291 wireshark: DoS via excessive system resource consumption in CIP dissector (wnpa-sec-2012-20)
+848578 - CVE-2012-4290 wireshark: DoS via excessive CPU consumption in CTDB dissector (wnpa-sec-2012-23)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm</a>
+
+i386:
+wireshark-1.0.15-5.el5.i386.rpm
+wireshark-debuginfo-1.0.15-5.el5.i386.rpm
+
+x86_64:
+wireshark-1.0.15-5.el5.x86_64.rpm
+wireshark-debuginfo-1.0.15-5.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.0.15-5.el5.i386.rpm
+wireshark-gnome-1.0.15-5.el5.i386.rpm
+
+x86_64:
+wireshark-debuginfo-1.0.15-5.el5.x86_64.rpm
+wireshark-gnome-1.0.15-5.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/wireshark-1.0.15-5.el5.src.rpm</a>
+
+i386:
+wireshark-1.0.15-5.el5.i386.rpm
+wireshark-debuginfo-1.0.15-5.el5.i386.rpm
+wireshark-gnome-1.0.15-5.el5.i386.rpm
+
+ia64:
+wireshark-1.0.15-5.el5.ia64.rpm
+wireshark-debuginfo-1.0.15-5.el5.ia64.rpm
+wireshark-gnome-1.0.15-5.el5.ia64.rpm
+
+ppc:
+wireshark-1.0.15-5.el5.ppc.rpm
+wireshark-debuginfo-1.0.15-5.el5.ppc.rpm
+wireshark-gnome-1.0.15-5.el5.ppc.rpm
+
+s390x:
+wireshark-1.0.15-5.el5.s390x.rpm
+wireshark-debuginfo-1.0.15-5.el5.s390x.rpm
+wireshark-gnome-1.0.15-5.el5.s390x.rpm
+
+x86_64:
+wireshark-1.0.15-5.el5.x86_64.rpm
+wireshark-debuginfo-1.0.15-5.el5.x86_64.rpm
+wireshark-gnome-1.0.15-5.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1958.html">https://www.redhat.com/security/data/cve/CVE-2011-1958.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1959.html">https://www.redhat.com/security/data/cve/CVE-2011-1959.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2175.html">https://www.redhat.com/security/data/cve/CVE-2011-2175.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2698.html">https://www.redhat.com/security/data/cve/CVE-2011-2698.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4102.html">https://www.redhat.com/security/data/cve/CVE-2011-4102.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0041.html">https://www.redhat.com/security/data/cve/CVE-2012-0041.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0042.html">https://www.redhat.com/security/data/cve/CVE-2012-0042.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0066.html">https://www.redhat.com/security/data/cve/CVE-2012-0066.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0067.html">https://www.redhat.com/security/data/cve/CVE-2012-0067.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4285.html">https://www.redhat.com/security/data/cve/CVE-2012-4285.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4289.html">https://www.redhat.com/security/data/cve/CVE-2012-4289.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4290.html">https://www.redhat.com/security/data/cve/CVE-2012-4290.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4291.html">https://www.redhat.com/security/data/cve/CVE-2012-4291.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68PaXlSAg2UNWIIRAj7lAJ9+/2599n8ictAq4q84c8c7N7xRYQCfYDK9
+luCrOpknTD3CW5PenX5RtoM=
+=5bn/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

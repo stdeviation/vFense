@@ -1,0 +1,246 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0999&#45;01] Moderate: rsync security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 09:29:18 &#45;0400 -->
+<!--X-Message-Id: 201107211329.p6LDTBhf013365@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0999-01] Moderate: rsync security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0999-01] Moderate: rsync security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0999-01] Moderate: rsync security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 13:29:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rsync security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0999-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0999.html">https://rhn.redhat.com/errata/RHSA-2011-0999.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2007-6200 
+=====================================================================
+
+1. Summary:
+
+An updated rsync package that fixes one security issue, several bugs, and
+adds enhancements is now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+rsync is a program for synchronizing files over a network.
+
+A flaw was found in the way the rsync daemon handled the &quot;filter&quot;,
+&quot;exclude&quot;, and &quot;exclude from&quot; options, used for hiding files and preventing
+access to them from rsync clients. A remote attacker could use this flaw to
+bypass those restrictions by using certain command line options and
+symbolic links, allowing the attacker to overwrite those files if they knew
+their file names and had write access to them. (CVE-2007-6200)
+
+Note: This issue only affected users running rsync as a writable daemon:
+&quot;read only&quot; set to &quot;false&quot; in the rsync configuration file (for example,
+&quot;/etc/rsyncd.conf&quot;). By default, this option is set to &quot;true&quot;.
+
+This update also fixes the following bugs:
+
+* The rsync package has been upgraded to upstream version 3.0.6, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#339971)
+
+* When running an rsync daemon that was receiving files, a deferred info,
+error or log message could have been sent directly to the sender instead of
+being handled by the &quot;rwrite()&quot; function in the generator. Also, under
+certain circumstances, a deferred info or error message from the receiver
+could have bypassed the log file and could have been sent only to the
+client process. As a result, an &quot;unexpected tag 3&quot; fatal error could have
+been displayed. These problems have been fixed in this update so that an
+rsync daemon receiving files now works as expected. (BZ#471182)
+
+* Prior to this update, the rsync daemon called a number of timezone-using
+functions after doing a chroot. As a result, certain C libraries were
+unable to generate proper timestamps from inside a chrooted daemon. This
+bug has been fixed in this update so that the rsync daemon now calls the
+respective timezone-using functions prior to doing a chroot, and proper
+timestamps are now generated as expected. (BZ#575022)
+
+* When running rsync under a non-root user with the &quot;-A&quot; (&quot;--acls&quot;) option
+and without using the &quot;--numeric-ids&quot; option, if there was an Access
+Control List (ACL) that included a group entry for a group that the
+respective user was not a member of on the receiving side, the
+&quot;acl_set_file()&quot; function returned an invalid argument value (&quot;EINVAL&quot;).
+This was caused by rsync mistakenly mapping the group name to the Group ID
+&quot;GID_NONE&quot; (&quot;-1&quot;), which failed. The bug has been fixed in this update so
+that no invalid argument is returned and rsync works as expected.
+(BZ#616093)
+
+* When creating a sparse file that was zero blocks long, the &quot;rsync
+- --sparse&quot; command did not properly truncate the sparse file at the end of
+the copy transaction. As a result, the file size was bigger than expected.
+This bug has been fixed in this update by properly truncating the file so
+that rsync now copies such files as expected. (BZ#530866)
+
+* Under certain circumstances, when using rsync in daemon mode, rsync
+generator instances could have entered an infinitive loop, trying to write
+an error message for the receiver to an invalid socket. This problem has
+been fixed in this update by adding a new sibling message: when the
+receiver is reporting a socket-read error, the generator will notice this
+fact and avoid writing an error message down the socket, allowing it to
+close down gracefully when the pipe from the receiver closes. (BZ#690148)
+
+* Prior to this update, there were missing deallocations found in the
+&quot;start_client()&quot; function. This bug has been fixed in this update and no
+longer occurs. (BZ#700450)
+
+All users of rsync are advised to upgrade to this updated package, which
+resolves these issues and adds enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+339971 - [RFE] Rebase rsync packages to version 3
+407171 - CVE-2007-6200 rsync excluded content access restrictions bypass via symlinks
+471182 - rsync errors: unexpected tag 3 [sender]
+530866 - rsync --sparse does not properly copy sparse files
+575022 - rsyncd gets confused with timezones when logging to syslog
+616093 - EINVAL (Invalid argument) setting group --acls
+690148 - Rsync instances stay in memory when using in daemon mode
+700450 - Resource leaks revealed by Coverity scan.
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rsync-3.0.6-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/rsync-3.0.6-4.el5.src.rpm</a>
+
+i386:
+rsync-3.0.6-4.el5.i386.rpm
+rsync-debuginfo-3.0.6-4.el5.i386.rpm
+
+x86_64:
+rsync-3.0.6-4.el5.x86_64.rpm
+rsync-debuginfo-3.0.6-4.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rsync-3.0.6-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/rsync-3.0.6-4.el5.src.rpm</a>
+
+i386:
+rsync-3.0.6-4.el5.i386.rpm
+rsync-debuginfo-3.0.6-4.el5.i386.rpm
+
+ia64:
+rsync-3.0.6-4.el5.ia64.rpm
+rsync-debuginfo-3.0.6-4.el5.ia64.rpm
+
+ppc:
+rsync-3.0.6-4.el5.ppc.rpm
+rsync-debuginfo-3.0.6-4.el5.ppc.rpm
+
+s390x:
+rsync-3.0.6-4.el5.s390x.rpm
+rsync-debuginfo-3.0.6-4.el5.s390x.rpm
+
+x86_64:
+rsync-3.0.6-4.el5.x86_64.rpm
+rsync-debuginfo-3.0.6-4.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-6200.html">https://www.redhat.com/security/data/cve/CVE-2007-6200.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://rsync.samba.org/security.html#s3_0_0">http://rsync.samba.org/security.html#s3_0_0</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKClrXlSAg2UNWIIRAr/kAJ9EgEdBTcjM1aTFnxp7P5gJ4omnngCguanK
+eVvtpi4wjNuGa+GHXF5y6Bk=
+=4Ez/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

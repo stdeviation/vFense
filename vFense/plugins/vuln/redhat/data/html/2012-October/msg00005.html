@@ -1,0 +1,163 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1330&#45;01] Important: JBoss Enterprise SOA Platform 5.3.0	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Oct 2012 11:24:08 &#45;0400 -->
+<!--X-Message-Id: 201210031524.q93FO39W014366@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1330-01] Important: JBoss Enterprise SOA Platform 5.3.0	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1330-01] Important: JBoss Enterprise SOA Platform 5.3.0	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1330-01] Important: JBoss Enterprise SOA Platform 5.3.0	security update</li>
+<li><em>Date</em>: Wed, 3 Oct 2012 15:24:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise SOA Platform 5.3.0 security update
+Advisory ID:       RHSA-2012:1330-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1330.html">https://rhn.redhat.com/errata/RHSA-2012-1330.html</a>
+Issue date:        2012-10-03
+CVE Names:         CVE-2011-1096 
+=====================================================================
+
+1. Summary:
+
+An update for the JBoss Web Services component in JBoss Enterprise SOA
+Platform 5.3.0 that fixes one security issue is now available from the Red
+Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Enterprise SOA Platform is the next-generation ESB and business
+process automation infrastructure. JBoss Enterprise SOA Platform allows IT
+to leverage existing (MoM and EAI), modern (SOA and BPM-Rules), and future
+(EDA and CEP) integration methodologies to dramatically improve business
+process execution speed and quality.
+
+An attack technique was found against the W3C XML Encryption Standard when
+block ciphers were used in cipher-block chaining (CBC) mode. A remote
+attacker could use this flaw to conduct chosen-ciphertext attacks, leading
+to the recovery of the entire plain text of a particular cryptogram by
+examining the differences between SOAP (Simple Object Access Protocol)
+responses sent from JBoss Web Services. (CVE-2011-1096)
+
+Red Hat would like to thank Juraj Somorovsky of Ruhr-University Bochum
+for reporting this issue.
+
+Note: Manual action is required to apply this update. The CVE-2011-1096
+issue is an attack on the WS-Security standard itself. Using new
+Galois/Counter Mode (GCM) based algorithms for WS-Security encryption is
+the W3C suggested way of dealing with this issue. The WS-SecurityPolicy
+specification has not yet been updated to include the new algorithms.
+Consequently, Apache CXF independently added support for such GCM based
+algorithms through AlgorithmSuites called &quot;Basic128GCM&quot;, &quot;Basic192GCM&quot;, and
+&quot;Basic256GCM&quot; in the namespace
+&quot;<a  rel="nofollow" href="http://cxf.apache.org/custom/security-policy&quot">http://cxf.apache.org/custom/security-policy&quot</a>;.
+
+To apply these policies to your applications that use WS-Security
+encryption, specify them in the application's WSDL file. Refer to Red Hat
+Bugzilla bug 681916 for an example.
+
+All users of JBoss Enterprise SOA Platform 5.3.0 as provided from the Red
+Hat Customer Portal are advised to install this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise SOA Platform installation (including its
+databases, applications, configuration files, and so on).
+
+Note that it is recommended to halt the JBoss Enterprise SOA Platform
+server by stopping the JBoss Application Server process before installing
+this update, and then after installing the update, restart the JBoss
+Enterprise SOA Platform server by starting the JBoss Application Server
+process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+681916 - CVE-2011-1096 jbossws: Prone to character encoding pattern attack (XML Encryption flaw)
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1096.html">https://www.redhat.com/security/data/cve/CVE-2011-1096.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=securityPatches&amp;version=5.3.0+GA">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=securityPatches&amp;version=5.3.0+GA</a>
+<a  rel="nofollow" href="https://bugzilla.redhat.com/show_bug.cgi?id=681916">https://bugzilla.redhat.com/show_bug.cgi?id=681916</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQbFh9XlSAg2UNWIIRAoZ9AJ9+DVn6byfh9c5f1H60Medc+QObsQCgnmYP
+aKjk7uMfOeh55G0kMAgyRlo=
+=xE3L
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

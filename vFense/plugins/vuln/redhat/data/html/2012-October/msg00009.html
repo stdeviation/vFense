@@ -1,0 +1,227 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1346&#45;01] Critical: flash&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 9 Oct 2012 03:59:50 &#45;0400 -->
+<!--X-Message-Id: 201210090759.q997xhl2005729@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1346-01] Critical: flash-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1346-01] Critical: flash-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1346-01] Critical: flash-plugin security update</li>
+<li><em>Date</em>: Tue, 9 Oct 2012 07:52:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: flash-plugin security update
+Advisory ID:       RHSA-2012:1346-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1346.html">https://rhn.redhat.com/errata/RHSA-2012-1346.html</a>
+Issue date:        2012-10-09
+CVE Names:         CVE-2012-5248 CVE-2012-5249 CVE-2012-5250 
+                   CVE-2012-5251 CVE-2012-5252 CVE-2012-5253 
+                   CVE-2012-5254 CVE-2012-5255 CVE-2012-5256 
+                   CVE-2012-5257 CVE-2012-5258 CVE-2012-5259 
+                   CVE-2012-5260 CVE-2012-5261 CVE-2012-5262 
+                   CVE-2012-5263 CVE-2012-5264 CVE-2012-5265 
+                   CVE-2012-5266 CVE-2012-5267 CVE-2012-5268 
+                   CVE-2012-5269 CVE-2012-5270 CVE-2012-5271 
+                   CVE-2012-5272 
+=====================================================================
+
+1. Summary:
+
+An updated Adobe Flash Player package that fixes several security issues is
+now available for Red Hat Enterprise Linux 5 and 6 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5) - i386, x86_64
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 5) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+The flash-plugin package contains a Mozilla Firefox compatible Adobe Flash
+Player web browser plug-in.
+
+This update fixes several vulnerabilities in Adobe Flash Player. These
+vulnerabilities are detailed on the Adobe security page APSB12-22, listed
+in the References section. Specially-crafted SWF content could cause
+flash-plugin to crash or, potentially, execute arbitrary code when a victim
+loads a page containing the malicious SWF content. (CVE-2012-5248,
+CVE-2012-5249, CVE-2012-5250, CVE-2012-5251, CVE-2012-5252, CVE-2012-5253,
+CVE-2012-5254, CVE-2012-5255, CVE-2012-5256, CVE-2012-5257, CVE-2012-5258,
+CVE-2012-5259, CVE-2012-5260, CVE-2012-5261, CVE-2012-5262, CVE-2012-5263,
+CVE-2012-5264, CVE-2012-5265, CVE-2012-5266, CVE-2012-5267, CVE-2012-5268,
+CVE-2012-5269, CVE-2012-5270, CVE-2012-5271, CVE-2012-5272)
+
+All users of Adobe Flash Player should install this updated package, which
+upgrades Flash Player to version 11.2.202.243.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+864284 - flash-plugin: multiple code-execution flaws (APSB12-22)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 5):
+
+i386:
+flash-plugin-11.2.202.243-1.el5.i386.rpm
+
+x86_64:
+flash-plugin-11.2.202.243-1.el5.i386.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 5):
+
+i386:
+flash-plugin-11.2.202.243-1.el5.i386.rpm
+
+x86_64:
+flash-plugin-11.2.202.243-1.el5.i386.rpm
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+i386:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+x86_64:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+i386:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+x86_64:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+i386:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+x86_64:
+flash-plugin-11.2.202.243-1.el6.i686.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5248.html">https://www.redhat.com/security/data/cve/CVE-2012-5248.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5249.html">https://www.redhat.com/security/data/cve/CVE-2012-5249.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5250.html">https://www.redhat.com/security/data/cve/CVE-2012-5250.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5251.html">https://www.redhat.com/security/data/cve/CVE-2012-5251.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5252.html">https://www.redhat.com/security/data/cve/CVE-2012-5252.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5253.html">https://www.redhat.com/security/data/cve/CVE-2012-5253.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5254.html">https://www.redhat.com/security/data/cve/CVE-2012-5254.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5255.html">https://www.redhat.com/security/data/cve/CVE-2012-5255.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5256.html">https://www.redhat.com/security/data/cve/CVE-2012-5256.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5257.html">https://www.redhat.com/security/data/cve/CVE-2012-5257.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5258.html">https://www.redhat.com/security/data/cve/CVE-2012-5258.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5259.html">https://www.redhat.com/security/data/cve/CVE-2012-5259.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5260.html">https://www.redhat.com/security/data/cve/CVE-2012-5260.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5261.html">https://www.redhat.com/security/data/cve/CVE-2012-5261.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5262.html">https://www.redhat.com/security/data/cve/CVE-2012-5262.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5263.html">https://www.redhat.com/security/data/cve/CVE-2012-5263.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5264.html">https://www.redhat.com/security/data/cve/CVE-2012-5264.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5265.html">https://www.redhat.com/security/data/cve/CVE-2012-5265.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5266.html">https://www.redhat.com/security/data/cve/CVE-2012-5266.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5267.html">https://www.redhat.com/security/data/cve/CVE-2012-5267.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5268.html">https://www.redhat.com/security/data/cve/CVE-2012-5268.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5269.html">https://www.redhat.com/security/data/cve/CVE-2012-5269.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5270.html">https://www.redhat.com/security/data/cve/CVE-2012-5270.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5271.html">https://www.redhat.com/security/data/cve/CVE-2012-5271.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5272.html">https://www.redhat.com/security/data/cve/CVE-2012-5272.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.adobe.com/support/security/bulletins/apsb12-22.html">http://www.adobe.com/support/security/bulletins/apsb12-22.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQc9lAXlSAg2UNWIIRAmMNAJ9/iz3/6iGteMGTU4y9VZCDnIuTcgCgwHYI
+Ueh0ulQGOXSNmABZxKn8d5c=
+=0ify
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0231&#45;01] Moderate: openstack&#45;nova security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Mar 2014 14:33:05 &#45;0500 -->
+<!--X-Message-Id: 201403041933.s24JX5tj032313@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0231-01] Moderate: openstack-nova security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0231-01] Moderate: openstack-nova security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0231-01] Moderate: openstack-nova security and bug fix	update</li>
+<li><em>Date</em>: Tue, 4 Mar 2014 19:33:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-nova security and bug fix update
+Advisory ID:       RHSA-2014:0231-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0231.html">https://rhn.redhat.com/errata/RHSA-2014-0231.html</a>
+Issue date:        2014-03-04
+CVE Names:         CVE-2013-6419 CVE-2013-6437 CVE-2013-7048 
+                   CVE-2013-7130 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix multiple security issues and
+several bugs are now available for Red Hat Enterprise Linux OpenStack
+Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 4 - noarch
+
+3. Description:
+
+OpenStack Compute (nova) launches and schedules large networks of virtual
+machines, creating a redundant and scalable cloud computing platform.
+Compute provides the software, control panels, and APIs required to
+orchestrate a cloud, including running virtual machine instances, managing
+networks, and controlling access through users and projects.
+
+It was discovered that the metadata agent in OpenStack Networking was
+missing an authorization check on the device ID that is bound to a specific
+port. A remote tenant could guess the instance ID bound to a port and
+retrieve metadata of another tenant, resulting in information disclosure.
+Note that only OpenStack Networking setups running neutron-metadata-agent
+were affected. (CVE-2013-6419)
+
+It was found that nova used directories that were writable to by all local
+users to temporarily store live snapshots. A local attacker with access to
+such a directory could use this flaw to read and modify the contents of
+live snapshots. (CVE-2013-7048)
+
+A flaw was found in the way the libvirt driver handled short-lived disk
+back-up files on Compute nodes. An authenticated attacker could use this
+flaw to create a large number of such files, exhausting all available space
+on Compute node disks, and potentially causing a denial of service.
+Note that only Compute setups using the libvirt driver were affected.
+(CVE-2013-6437)
+
+It was discovered that the libvirt driver did not properly handle live
+migration of virtual machines. An authenticated attacker could use this
+flaw to gain access to a snapshot of a migrated virtual machine. Note that
+only setups using KVM live block migration were affected. (CVE-2013-7130)
+
+Red Hat would like to thank the OpenStack Project for reporting
+CVE-2013-6419, CVE-2013-6437, and CVE-2013-7130. Upstream acknowledges
+Aaron Rosen of VMware as the original reporter of CVE-2013-6419, Phil Day
+from HP as the original reporter of CVE-2013-6437, and Loganathan Parthipan
+as the original reporter of CVE-2013-7130.
+
+These updated openstack-nova packages have been upgraded to upstream
+version 2013.2.2, which provides a number of bug fixes over the previous
+version. (BZ#1065317)
+
+Bug fixes:
+
+* The GlusterFS volume connector in nova did not pass a port to libvirt for
+the GlusterFS disk specification. Attaching a volume failed with a libvirt
+error indicating the port field was missing. This update fixes this bug by
+providing the default Gluster port in nova. (BZ#1020979)
+
+* The database back end did not handle the 2013 MySQL error code (Lost
+connection). The 2013 MySQL error code has been added to the collection of
+known database error codes. (BZ#1060771)
+
+* OpenStack Compute set the smbios product/vendor information to OpenStack
+values, which Red Hat Satellite 5 did not recognize when processing
+entitlements. (BZ#1059414)
+
+* Prior to this update, nova-api did not pass the absolute path of the
+configuration file to the api-paste library if a file with the same name
+was found in the current directory. (BZ#1039554)
+
+* The definition of the libvirt_info method in the RBD back-end class was
+missing a positional argument that the base class defined. (BZ#1063445)
+
+* Rebooting a host caused all of its instances to stop and change to the
+SHUTDOWN power state. The unpause action was only allowed on instances with
+the PAUSED power state. (BZ#1047863)
+
+* The previous default of writing zeros over deleted volumes took a
+significant amount of time. It is now possible to set a global
+configuration setting to clear only a part of a volume, or to disable
+clearing completely. Additionally, a new 'shred' capability is available to
+overwrite volumes with random data instead of zeros. (BZ#1062377)
+
+* In OpenStack Compute, low-level QPID debug log messages are no longer
+shown by default. These previously appeared due to the 'level=debug'
+parameter set in the nova.conf file. (BZ#1047849)
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1020979 - After configuring cinder for libgfapi, volumes create but do not attach
+1039148 - CVE-2013-6419 OpenStack Neutron and Nova: Metadata queries from Neutron to Nova are not restricted by tenant
+1039554 - Cannot resolve relative uri 'config:api-paste.ini'; no relative_to keyword argument given
+1040786 - CVE-2013-7048 Openstack Nova: insecure directory permissions in snapshots
+1043106 - CVE-2013-6437 openstack-nova: DoS through ephemeral disk backing files
+1047849 - openstack-nova: remove qpid logs from the compute logs
+1047863 - Openstack-Nova: Unpause instance after host reboot fails
+1055400 - CVE-2013-7130 OpenStack nova: Live migration can leak root disk into ephemeral storage
+1060771 - nova does not read sql db config option
+1062377 - RFE: configurable volume clearing options for nova
+1065317 - Rebase openstack-nova to 2013.2.2
+
+6. Package List:
+
+OpenStack 4:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.2.2-2.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.2.2-2.el6ost.src.rpm</a>
+
+noarch:
+openstack-nova-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-api-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-cells-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-cert-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-common-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-compute-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-conductor-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-console-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-doc-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-network-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-novncproxy-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-objectstore-2013.2.2-2.el6ost.noarch.rpm
+openstack-nova-scheduler-2013.2.2-2.el6ost.noarch.rpm
+python-nova-2013.2.2-2.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6419.html">https://www.redhat.com/security/data/cve/CVE-2013-6419.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6437.html">https://www.redhat.com/security/data/cve/CVE-2013-6437.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-7048.html">https://www.redhat.com/security/data/cve/CVE-2013-7048.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-7130.html">https://www.redhat.com/security/data/cve/CVE-2013-7130.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTFipQXlSAg2UNWIIRAonKAJ0djmrWRf9XVDl3qjC7O97pN4jhegCffe/K
+n63zByWw8lM1nKRALsUhw+s=
+=qAK0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

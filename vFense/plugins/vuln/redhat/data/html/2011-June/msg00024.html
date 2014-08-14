@@ -1,0 +1,305 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0909&#45;01] Moderate: ruby security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 28 Jun 2011 13:37:35 &#45;0400 -->
+<!--X-Message-Id: 201106281737.p5SHbTLJ030497@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0909-01] Moderate: ruby security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0909-01] Moderate: ruby security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0909-01] Moderate: ruby security update</li>
+<li><em>Date</em>: Tue, 28 Jun 2011 17:37:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ruby security update
+Advisory ID:       RHSA-2011:0909-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0909.html">https://rhn.redhat.com/errata/RHSA-2011-0909.html</a>
+Issue date:        2011-06-28
+CVE Names:         CVE-2009-4492 CVE-2010-0541 CVE-2011-0188 
+                   CVE-2011-1004 CVE-2011-1005 
+=====================================================================
+
+1. Summary:
+
+Updated ruby packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Ruby is an extensible, interpreted, object-oriented, scripting language. It
+has features to process text files and to do system management tasks.
+
+A flaw was found in the way large amounts of memory were allocated on
+64-bit systems when using the BigDecimal class. A context-dependent
+attacker could use this flaw to cause memory corruption, causing a Ruby
+application that uses the BigDecimal class to crash or, possibly, execute
+arbitrary code. This issue did not affect 32-bit systems. (CVE-2011-0188)
+
+A race condition flaw was found in the remove system entries method in the
+FileUtils module. If a local user ran a Ruby script that uses this method,
+a local attacker could use this flaw to delete arbitrary files and
+directories accessible to that user via a symbolic link attack.
+(CVE-2011-1004)
+
+It was found that WEBrick (the Ruby HTTP server toolkit) did not filter
+terminal escape sequences from its log files. A remote attacker could use
+specially-crafted HTTP requests to inject terminal escape sequences into
+the WEBrick log files. If a victim viewed the log files with a terminal
+emulator, it could result in control characters being executed with the
+privileges of that user. (CVE-2009-4492)
+
+A cross-site scripting (XSS) flaw was found in the way WEBrick displayed
+error pages. A remote attacker could use this flaw to perform a cross-site
+scripting attack against victims by tricking them into visiting a
+specially-crafted URL. (CVE-2010-0541)
+
+A flaw was found in the method for translating an exception message into a
+string in the Exception class. A remote attacker could use this flaw to
+bypass safe level 4 restrictions, allowing untrusted (tainted) code to
+modify arbitrary, trusted (untainted) strings, which safe level 4
+restrictions would otherwise prevent. (CVE-2011-1005)
+
+Red Hat would like to thank Drew Yao of Apple Product Security for
+reporting the CVE-2011-0188 and CVE-2010-0541 issues.
+
+All Ruby users should upgrade to these updated packages, which contain
+backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+554485 - CVE-2009-4492 ruby WEBrick log escape sequence
+587731 - CVE-2010-0541 Ruby WEBrick javascript injection flaw
+678913 - CVE-2011-1004 Ruby: Symlink race condition by removing directory trees in fileutils module
+678920 - CVE-2011-1005 Ruby: Untrusted codes able to modify arbitrary strings
+682332 - CVE-2011-0188 ruby: memory corruption in BigDecimal on 64bit platforms
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm</a>
+
+i386:
+ruby-1.8.5-19.el5_6.1.i386.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-docs-1.8.5-19.el5_6.1.i386.rpm
+ruby-irb-1.8.5-19.el5_6.1.i386.rpm
+ruby-libs-1.8.5-19.el5_6.1.i386.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.i386.rpm
+ruby-ri-1.8.5-19.el5_6.1.i386.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.i386.rpm
+
+x86_64:
+ruby-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-docs-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-irb-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-libs-1.8.5-19.el5_6.1.i386.rpm
+ruby-libs-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-ri-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm</a>
+
+i386:
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-devel-1.8.5-19.el5_6.1.i386.rpm
+ruby-mode-1.8.5-19.el5_6.1.i386.rpm
+
+x86_64:
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-devel-1.8.5-19.el5_6.1.i386.rpm
+ruby-devel-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-mode-1.8.5-19.el5_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ruby-1.8.5-19.el5_6.1.src.rpm</a>
+
+i386:
+ruby-1.8.5-19.el5_6.1.i386.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-devel-1.8.5-19.el5_6.1.i386.rpm
+ruby-docs-1.8.5-19.el5_6.1.i386.rpm
+ruby-irb-1.8.5-19.el5_6.1.i386.rpm
+ruby-libs-1.8.5-19.el5_6.1.i386.rpm
+ruby-mode-1.8.5-19.el5_6.1.i386.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.i386.rpm
+ruby-ri-1.8.5-19.el5_6.1.i386.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.i386.rpm
+
+ia64:
+ruby-1.8.5-19.el5_6.1.ia64.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.ia64.rpm
+ruby-devel-1.8.5-19.el5_6.1.ia64.rpm
+ruby-docs-1.8.5-19.el5_6.1.ia64.rpm
+ruby-irb-1.8.5-19.el5_6.1.ia64.rpm
+ruby-libs-1.8.5-19.el5_6.1.ia64.rpm
+ruby-mode-1.8.5-19.el5_6.1.ia64.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.ia64.rpm
+ruby-ri-1.8.5-19.el5_6.1.ia64.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.ia64.rpm
+
+ppc:
+ruby-1.8.5-19.el5_6.1.ppc.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.ppc.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.ppc64.rpm
+ruby-devel-1.8.5-19.el5_6.1.ppc.rpm
+ruby-devel-1.8.5-19.el5_6.1.ppc64.rpm
+ruby-docs-1.8.5-19.el5_6.1.ppc.rpm
+ruby-irb-1.8.5-19.el5_6.1.ppc.rpm
+ruby-libs-1.8.5-19.el5_6.1.ppc.rpm
+ruby-libs-1.8.5-19.el5_6.1.ppc64.rpm
+ruby-mode-1.8.5-19.el5_6.1.ppc.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.ppc.rpm
+ruby-ri-1.8.5-19.el5_6.1.ppc.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.ppc.rpm
+
+s390x:
+ruby-1.8.5-19.el5_6.1.s390x.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.s390.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.s390x.rpm
+ruby-devel-1.8.5-19.el5_6.1.s390.rpm
+ruby-devel-1.8.5-19.el5_6.1.s390x.rpm
+ruby-docs-1.8.5-19.el5_6.1.s390x.rpm
+ruby-irb-1.8.5-19.el5_6.1.s390x.rpm
+ruby-libs-1.8.5-19.el5_6.1.s390.rpm
+ruby-libs-1.8.5-19.el5_6.1.s390x.rpm
+ruby-mode-1.8.5-19.el5_6.1.s390x.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.s390x.rpm
+ruby-ri-1.8.5-19.el5_6.1.s390x.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.s390x.rpm
+
+x86_64:
+ruby-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.i386.rpm
+ruby-debuginfo-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-devel-1.8.5-19.el5_6.1.i386.rpm
+ruby-devel-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-docs-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-irb-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-libs-1.8.5-19.el5_6.1.i386.rpm
+ruby-libs-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-mode-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-rdoc-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-ri-1.8.5-19.el5_6.1.x86_64.rpm
+ruby-tcltk-1.8.5-19.el5_6.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4492.html">https://www.redhat.com/security/data/cve/CVE-2009-4492.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0541.html">https://www.redhat.com/security/data/cve/CVE-2010-0541.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0188.html">https://www.redhat.com/security/data/cve/CVE-2011-0188.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1004.html">https://www.redhat.com/security/data/cve/CVE-2011-1004.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1005.html">https://www.redhat.com/security/data/cve/CVE-2011-1005.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/">http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/</a>
+<a  rel="nofollow" href="http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/">http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/</a>
+<a  rel="nofollow" href="http://www.ruby-lang.org/en/news/2010/01/10/webrick-escape-sequence-injection/">http://www.ruby-lang.org/en/news/2010/01/10/webrick-escape-sequence-injection/</a>
+<a  rel="nofollow" href="http://www.ruby-lang.org/en/news/2010/08/16/xss-in-webrick-cve-2010-0541/">http://www.ruby-lang.org/en/news/2010/08/16/xss-in-webrick-cve-2010-0541/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOChE2XlSAg2UNWIIRApbvAJ9jyCr3ab4eoWGmH/Lr1D9fbqlPbQCfSmOh
+k7GfQmHQju444Nztk6ar944=
+=VbL1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

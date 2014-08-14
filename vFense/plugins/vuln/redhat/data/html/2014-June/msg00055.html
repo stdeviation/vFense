@@ -1,0 +1,365 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0798&#45;01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.4 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 26 Jun 2014 11:18:26 &#45;0400 -->
+<!--X-Message-Id: 201406261518.s5QFIOrI016169@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0798-01] Moderate: Red Hat JBoss Enterprise Application	Platf</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0798-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.4 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0798-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.2.4 update</li>
+<li><em>Date</em>: Thu, 26 Jun 2014 15:18:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Enterprise Application Platform 6.2.4 update
+Advisory ID:       RHSA-2014:0798-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0798.html">https://rhn.redhat.com/errata/RHSA-2014-0798.html</a>
+Issue date:        2014-06-26
+CVE Names:         CVE-2014-0034 CVE-2014-0035 CVE-2014-0109 
+                   CVE-2014-0110 CVE-2014-3481 
+=====================================================================
+
+1. Summary:
+
+Updated packages that provide Red Hat JBoss Enterprise Application Platform
+6.2.4 and fix multiple security issues, several bugs, and add various
+enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server - noarch
+
+3. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+Apache CXF is an open source services framework, which is a part of
+Red Hat JBoss Enterprise Application Platform.
+
+It was found that the SecurityTokenService (STS), provided as a part of
+Apache CXF, could under certain circumstances accept invalid SAML tokens as
+valid. A remote attacker could use a specially crafted SAML token to gain
+access to an application that uses STS for validation of SAML tokens.
+(CVE-2014-0034)
+
+A denial of service flaw was found in the way Apache CXF created error
+messages for certain POST requests. A remote attacker could send a
+specially crafted request which, when processed by an application using
+Apache CXF, could consume an excessive amount of memory on the system,
+possibly triggering an Out Of Memory (OOM) error. (CVE-2014-0109)
+
+It was found that when a large invalid SOAP message was processed by Apache
+CXF, it could be saved to a temporary file in the /tmp directory. A remote
+attacker could send a specially crafted SOAP message that, when processed
+by an application using Apache CXF, would use an excessive amount of disk
+space, possibly causing a denial of service. (CVE-2014-0110)
+
+It was found that the Java API for RESTful Web Services (JAX-RS)
+implementation enabled external entity expansion by default. A remote
+attacker could use this flaw to view the contents of arbitrary files
+accessible to the application server user. (CVE-2014-3481)
+
+It was discovered that UsernameTokens were sent in plain text by an Apache
+CXF client that used a Symmetric EncryptBeforeSigning password policy.
+A man-in-the-middle attacker could use this flaw to obtain the user name
+and password used by the client application using Apache CXF.
+(CVE-2014-0035)
+
+The CVE-2014-3481 issue was discovered by the Red Hat JBoss Enterprise
+Application Platform QE team.
+
+This release serves as a replacement for Red Hat JBoss Enterprise
+Application Platform 6.2.3, and includes bug fixes and enhancements.
+Documentation for these changes will be available shortly from the Red Hat
+JBoss Enterprise Application Platform 6.2.4 Release Notes, linked to in
+the References.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.2 on Red Hat
+Enterprise Linux 5 are advised to upgrade to these updated packages.
+The JBoss server process must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up any customized Red
+Hat JBoss Enterprise Application Platform 6 configuration files. On update,
+the configuration files that have been locally modified will not be
+updated. The updated version of such files will be stored as the rpmnew
+files. Make sure to locate any such files after the update and merge any
+changes manually.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1090473 - RHEL5 RPMs: Upgrade wss4j to 1.6.15.redhat-1
+1093526 - CVE-2014-0109 Apache CXF: HTML content posted to SOAP endpoint could cause OOM errors
+1093527 - CVE-2014-0110 Apache CXF: Large invalid content could cause temporary space to fill
+1093529 - CVE-2014-0034 Apache CXF: The SecurityTokenService accepts certain invalid SAML Tokens as valid
+1093530 - CVE-2014-0035 Apache CXF: UsernameTokens are sent in plaintext with a Symmetric EncryptBeforeSigning policy
+1103767 - Tracker bug for the EAP 6.2.4 release for RHEL-5.
+1103873 - RHEL5 RPMs: Upgrade jboss-aesh to 0.33.12.redhat-1
+1104167 - RHEL5 RPMs: Upgrade jbossweb to 7.3.2.Final-redhat-1
+1105242 - CVE-2014-3481 JBoss AS JAX-RS: Information disclosure via XML eXternal Entity (XXE)
+1105592 - RHEL5 RPMs: Upgrade hibernate4-eap6 to 4.2.7.SP5-redhat-1
+1105658 - RHEL5 RPMs: Upgrade jboss-security-negotiation to 2.2.10.Final-redhat-1
+1106546 - RHEL5 RPMs: Upgrade jboss-xnio-base to 3.0.10.GA-redhat-1
+1106580 - RHEL5 RPMs: Upgrade apache-cxf to 2.7.11.redhat-3
+1106583 - RHEL5 RPMs: Upgrade jbossts to 4.17.15.Final-redhat-5
+1106586 - RHEL5 RPMs: Upgrade picketbox to 4.0.19.SP8-redhat-1
+1106590 - RHEL5 RPMs: Upgrade weld-core to 1.1.17.SP3-redhat-1
+1109954 - RHEL5 RPMs: Upgrade resteasy to 2.3.7.2-redhat-1
+
+6. Package List:
+
+Red Hat JBoss Enterprise Application Platform 6.2 for RHEL 5 Server:
+
+Source:
+apache-cxf-2.7.11-3.redhat_3.1.ep6.el5.src.rpm
+hibernate4-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.src.rpm
+jboss-aesh-0.33.12-1.redhat_1.1.ep6.el5.src.rpm
+jboss-as-appclient-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-cli-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-client-all-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-clustering-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-cmp-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-configadmin-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-connector-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-controller-client-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-core-security-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-deployment-repository-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-deployment-scanner-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-domain-http-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-domain-management-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-ee-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-ee-deployment-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-ejb3-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-embedded-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-host-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jacorb-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jaxr-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jaxrs-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jdr-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jmx-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jpa-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jsf-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-jsr77-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-logging-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-mail-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-management-client-content-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-messaging-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-modcluster-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-naming-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-network-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-osgi-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-osgi-configadmin-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-osgi-service-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-platform-mbean-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-pojo-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-process-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-protocol-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-remoting-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-sar-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-security-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-server-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-system-jmx-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-threads-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-transactions-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-version-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-web-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-webservices-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-weld-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-as-xts-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-security-negotiation-2.2.10-1.Final_redhat_1.1.ep6.el5.src.rpm
+jboss-xnio-base-3.0.10-1.GA_redhat_1.1.ep6.el5.src.rpm
+jbossas-appclient-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-bundles-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-core-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-domain-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-javadocs-7.3.4-1.Final_redhat_1.ep6.el5.src.rpm
+jbossas-modules-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-product-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-standalone-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossas-welcome-content-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.src.rpm
+jbossts-4.17.15-5.Final_redhat_5.1.ep6.el5.src.rpm
+jbossweb-7.3.2-1.Final_redhat_1.1.ep6.el5.src.rpm
+picketbox-4.0.19-8.SP8_redhat_1.1.ep6.el5.src.rpm
+resteasy-2.3.7.2-1.Final_redhat_1.1.ep6.el5.src.rpm
+weld-core-1.1.17-4.SP3_redhat_1.1.ep6.el5.src.rpm
+wss4j-1.6.15-1.redhat_1.1.ep6.el5.src.rpm
+
+noarch:
+apache-cxf-2.7.11-3.redhat_3.1.ep6.el5.noarch.rpm
+hibernate4-core-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.noarch.rpm
+hibernate4-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.noarch.rpm
+hibernate4-entitymanager-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.noarch.rpm
+hibernate4-envers-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.noarch.rpm
+hibernate4-infinispan-eap6-4.2.7-9.SP5_redhat_1.1.ep6.el5.noarch.rpm
+jboss-aesh-0.33.12-1.redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-appclient-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-cli-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-client-all-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-clustering-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-cmp-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-configadmin-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-connector-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-controller-client-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-core-security-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-deployment-repository-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-deployment-scanner-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-domain-http-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-domain-management-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-ee-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-ee-deployment-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-ejb3-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-embedded-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-host-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jacorb-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jaxr-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jaxrs-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jdr-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jmx-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jpa-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jsf-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-jsr77-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-logging-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-mail-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-management-client-content-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-messaging-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-modcluster-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-naming-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-network-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-osgi-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-osgi-configadmin-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-osgi-service-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-platform-mbean-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-pojo-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-process-controller-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-protocol-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-remoting-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-sar-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-security-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-server-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-system-jmx-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-threads-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-transactions-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-version-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-web-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-webservices-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-weld-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-as-xts-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-security-negotiation-2.2.10-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jboss-xnio-base-3.0.10-1.GA_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-appclient-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-bundles-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-core-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-domain-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-javadocs-7.3.4-1.Final_redhat_1.ep6.el5.noarch.rpm
+jbossas-modules-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-product-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-standalone-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossas-welcome-content-eap-7.3.4-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+jbossts-4.17.15-5.Final_redhat_5.1.ep6.el5.noarch.rpm
+jbossweb-7.3.2-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+picketbox-4.0.19-8.SP8_redhat_1.1.ep6.el5.noarch.rpm
+resteasy-2.3.7.2-1.Final_redhat_1.1.ep6.el5.noarch.rpm
+weld-core-1.1.17-4.SP3_redhat_1.1.ep6.el5.noarch.rpm
+wss4j-1.6.15-1.redhat_1.1.ep6.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0034.html">https://www.redhat.com/security/data/cve/CVE-2014-0034.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0035.html">https://www.redhat.com/security/data/cve/CVE-2014-0035.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0109.html">https://www.redhat.com/security/data/cve/CVE-2014-0109.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0110.html">https://www.redhat.com/security/data/cve/CVE-2014-0110.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3481.html">https://www.redhat.com/security/data/cve/CVE-2014-3481.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Application_Platform/6.2/html-single/6.2.4_Release_Notes/index.html">https://access.redhat.com/site/documentation/en-US/JBoss_Enterprise_Application_Platform/6.2/html-single/6.2.4_Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTrDmMXlSAg2UNWIIRAnj7AJ4toUb7iQxZ7613lYKEWPUIRjY76QCgo7lI
+gG+p+ESHH2Ff0pRqNP2Ws1A=
+=g9wp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

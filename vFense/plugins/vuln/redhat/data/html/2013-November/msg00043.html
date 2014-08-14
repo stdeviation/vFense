@@ -1,0 +1,347 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1764&#45;01] Critical: ruby security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 25 Nov 2013 14:09:17 &#45;0500 -->
+<!--X-Message-Id: 201311251909.rAPJ9GUO029690@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1764-01] Critical: ruby security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1764-01] Critical: ruby security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1764-01] Critical: ruby security update</li>
+<li><em>Date</em>: Mon, 25 Nov 2013 19:09:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: ruby security update
+Advisory ID:       RHSA-2013:1764-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1764.html">https://rhn.redhat.com/errata/RHSA-2013-1764.html</a>
+Issue date:        2013-11-25
+CVE Names:         CVE-2013-4164 
+=====================================================================
+
+1. Summary:
+
+Updated ruby packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+ Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Ruby is an extensible, interpreted, object-oriented, scripting language.
+It has features to process text files and to perform system management
+tasks.
+
+A buffer overflow flaw was found in the way Ruby parsed floating point
+numbers from their text representation. If an application using Ruby
+accepted untrusted input strings and converted them to floating point
+numbers, an attacker able to provide such input could cause the application
+to crash or, possibly, execute arbitrary code with the privileges of the
+application. (CVE-2013-4164)
+
+All ruby users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1033460 - CVE-2013-4164 ruby: heap overflow in floating point parsing
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-irb-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-rdoc-1.8.7.352-13.el6.i686.rpm
+
+x86_64:
+ruby-1.8.7.352-13.el6.x86_64.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.x86_64.rpm
+ruby-irb-1.8.7.352-13.el6.x86_64.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.x86_64.rpm
+ruby-rdoc-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-docs-1.8.7.352-13.el6.i686.rpm
+ruby-ri-1.8.7.352-13.el6.i686.rpm
+ruby-static-1.8.7.352-13.el6.i686.rpm
+ruby-tcltk-1.8.7.352-13.el6.i686.rpm
+
+x86_64:
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-docs-1.8.7.352-13.el6.x86_64.rpm
+ruby-ri-1.8.7.352-13.el6.x86_64.rpm
+ruby-static-1.8.7.352-13.el6.x86_64.rpm
+ruby-tcltk-1.8.7.352-13.el6.x86_64.rpm
+
+ Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+x86_64:
+ruby-1.8.7.352-13.el6.x86_64.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.x86_64.rpm
+ruby-irb-1.8.7.352-13.el6.x86_64.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.x86_64.rpm
+ruby-rdoc-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+x86_64:
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-docs-1.8.7.352-13.el6.x86_64.rpm
+ruby-ri-1.8.7.352-13.el6.x86_64.rpm
+ruby-static-1.8.7.352-13.el6.x86_64.rpm
+ruby-tcltk-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-irb-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-rdoc-1.8.7.352-13.el6.i686.rpm
+
+ppc64:
+ruby-1.8.7.352-13.el6.ppc64.rpm
+ruby-debuginfo-1.8.7.352-13.el6.ppc.rpm
+ruby-debuginfo-1.8.7.352-13.el6.ppc64.rpm
+ruby-devel-1.8.7.352-13.el6.ppc.rpm
+ruby-devel-1.8.7.352-13.el6.ppc64.rpm
+ruby-irb-1.8.7.352-13.el6.ppc64.rpm
+ruby-libs-1.8.7.352-13.el6.ppc.rpm
+ruby-libs-1.8.7.352-13.el6.ppc64.rpm
+ruby-rdoc-1.8.7.352-13.el6.ppc64.rpm
+
+s390x:
+ruby-1.8.7.352-13.el6.s390x.rpm
+ruby-debuginfo-1.8.7.352-13.el6.s390.rpm
+ruby-debuginfo-1.8.7.352-13.el6.s390x.rpm
+ruby-devel-1.8.7.352-13.el6.s390.rpm
+ruby-devel-1.8.7.352-13.el6.s390x.rpm
+ruby-irb-1.8.7.352-13.el6.s390x.rpm
+ruby-libs-1.8.7.352-13.el6.s390.rpm
+ruby-libs-1.8.7.352-13.el6.s390x.rpm
+ruby-rdoc-1.8.7.352-13.el6.s390x.rpm
+
+x86_64:
+ruby-1.8.7.352-13.el6.x86_64.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.x86_64.rpm
+ruby-irb-1.8.7.352-13.el6.x86_64.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.x86_64.rpm
+ruby-rdoc-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-docs-1.8.7.352-13.el6.i686.rpm
+ruby-ri-1.8.7.352-13.el6.i686.rpm
+ruby-static-1.8.7.352-13.el6.i686.rpm
+ruby-tcltk-1.8.7.352-13.el6.i686.rpm
+
+ppc64:
+ruby-debuginfo-1.8.7.352-13.el6.ppc64.rpm
+ruby-docs-1.8.7.352-13.el6.ppc64.rpm
+ruby-ri-1.8.7.352-13.el6.ppc64.rpm
+ruby-static-1.8.7.352-13.el6.ppc64.rpm
+ruby-tcltk-1.8.7.352-13.el6.ppc64.rpm
+
+s390x:
+ruby-debuginfo-1.8.7.352-13.el6.s390x.rpm
+ruby-docs-1.8.7.352-13.el6.s390x.rpm
+ruby-ri-1.8.7.352-13.el6.s390x.rpm
+ruby-static-1.8.7.352-13.el6.s390x.rpm
+ruby-tcltk-1.8.7.352-13.el6.s390x.rpm
+
+x86_64:
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-docs-1.8.7.352-13.el6.x86_64.rpm
+ruby-ri-1.8.7.352-13.el6.x86_64.rpm
+ruby-static-1.8.7.352-13.el6.x86_64.rpm
+ruby-tcltk-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-irb-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-rdoc-1.8.7.352-13.el6.i686.rpm
+
+x86_64:
+ruby-1.8.7.352-13.el6.x86_64.rpm
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-devel-1.8.7.352-13.el6.i686.rpm
+ruby-devel-1.8.7.352-13.el6.x86_64.rpm
+ruby-irb-1.8.7.352-13.el6.x86_64.rpm
+ruby-libs-1.8.7.352-13.el6.i686.rpm
+ruby-libs-1.8.7.352-13.el6.x86_64.rpm
+ruby-rdoc-1.8.7.352-13.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ruby-1.8.7.352-13.el6.src.rpm</a>
+
+i386:
+ruby-debuginfo-1.8.7.352-13.el6.i686.rpm
+ruby-docs-1.8.7.352-13.el6.i686.rpm
+ruby-ri-1.8.7.352-13.el6.i686.rpm
+ruby-static-1.8.7.352-13.el6.i686.rpm
+ruby-tcltk-1.8.7.352-13.el6.i686.rpm
+
+x86_64:
+ruby-debuginfo-1.8.7.352-13.el6.x86_64.rpm
+ruby-docs-1.8.7.352-13.el6.x86_64.rpm
+ruby-ri-1.8.7.352-13.el6.x86_64.rpm
+ruby-static-1.8.7.352-13.el6.x86_64.rpm
+ruby-tcltk-1.8.7.352-13.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4164.html">https://www.redhat.com/security/data/cve/CVE-2013-4164.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSk6BNXlSAg2UNWIIRAlZiAKDAAPRSZ1H9cccz0veRzTeGoeJjcACcCB69
+P78u5S2/0ZOC5eh3GKqWcx0=
+=VMn2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

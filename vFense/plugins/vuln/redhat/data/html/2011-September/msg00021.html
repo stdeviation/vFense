@@ -1,0 +1,142 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1302&#45;01] Important: jbossws&#45;common security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 15 Sep 2011 15:54:37 &#45;0400 -->
+<!--X-Message-Id: 201109151954.p8FJsVt0021116@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1302-01] Important: jbossws-common security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1302-01] Important: jbossws-common security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1302-01] Important: jbossws-common security update</li>
+<li><em>Date</em>: Thu, 15 Sep 2011 19:54:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jbossws-common security update
+Advisory ID:       RHSA-2011:1302-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1302.html">https://rhn.redhat.com/errata/RHSA-2011-1302.html</a>
+Issue date:        2011-09-15
+CVE Names:         CVE-2011-1483 
+=====================================================================
+
+1. Summary:
+
+An updated jbossws-common.jar file for JBoss Enterprise Application
+Platform 5.1.1 that fixes one security issue is now available from the Red
+Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Web Services Native is a web service framework included as part of
+JBoss Enterprise Application Platform. It implements the JAX-WS
+specification.
+
+It was found that JBoss Web Services Native did not properly protect
+against recursive entity resolution when processing Document Type
+Definitions (DTD). A remote attacker could exploit this flaw by sending a
+specially-crafted HTTP POST request to a deployed web service, causing
+excessive CPU and memory consumption on the system hosting that service. If
+the attack is repeated to consume all available network sockets, the server
+will become unavailable. This flaw did not affect systems using JBoss Web
+Services CXF (provided by jboss-ep-ws-cxf-5.1.1-installer.zip).
+(CVE-2011-1483)
+
+All users of JBoss Enterprise Application Platform 5.1.1 as provided from
+the Red Hat Customer Portal are advised to install this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the updated file). Before applying the update, backup
+your existing JBoss Enterprise Application Platform installation (including
+all applications and configuration files).
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+692584 - CVE-2011-1483 JBossWS remote Denial of Service
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1483.html">https://www.redhat.com/security/data/cve/CVE-2011-1483.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.1.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=appplatform&amp;version=5.1.1</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOclfTXlSAg2UNWIIRAnUCAKCV/8y5wMKlt/ta9LAPsU+jyPe7AwCfTphV
+gGCne8Vn+Ce/Dhyr9zSAIvk=
+=o/Cf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

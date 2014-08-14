@@ -1,0 +1,467 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1829&#45;01] Important: nss, nspr, and nss&#45;util security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 12 Dec 2013 14:30:20 &#45;0500 -->
+<!--X-Message-Id: 201312121930.rBCJUDV9012229@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1829-01] Important: nss, nspr, and nss-util security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1829-01] Important: nss, nspr, and nss-util security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1829-01] Important: nss, nspr, and nss-util security update</li>
+<li><em>Date</em>: Thu, 12 Dec 2013 19:30:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: nss, nspr, and nss-util security update
+Advisory ID:       RHSA-2013:1829-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1829.html">https://rhn.redhat.com/errata/RHSA-2013-1829.html</a>
+Issue date:        2013-12-12
+CVE Names:         CVE-2013-1739 CVE-2013-1741 CVE-2013-5605 
+                   CVE-2013-5606 CVE-2013-5607 
+=====================================================================
+
+1. Summary:
+
+Updated nss, nspr, and nss-util packages that fix multiple security issues
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+ Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications. Netscape Portable Runtime (NSPR) provides platform
+independence for non-GUI operating system facilities.
+
+A flaw was found in the way NSS handled invalid handshake packets. A remote
+attacker could use this flaw to cause a TLS/SSL client using NSS to crash
+or, possibly, execute arbitrary code with the privileges of the user
+running the application. (CVE-2013-5605)
+
+It was found that the fix for CVE-2013-1620 released via RHSA-2013:1135
+introduced a regression causing NSS to read uninitialized data when a
+decryption failure occurred. A remote attacker could use this flaw to cause
+a TLS/SSL server using NSS to crash. (CVE-2013-1739)
+
+An integer overflow flaw was discovered in both NSS and NSPR's
+implementation of certification parsing on 64-bit systems. A remote
+attacker could use these flaws to cause an application using NSS or NSPR to
+crash. (CVE-2013-1741, CVE-2013-5607)
+
+It was discovered that NSS did not reject certificates with incompatible
+key usage constraints when validating them while the verifyLog feature was
+enabled. An application using the NSS certificate validation API could
+accept an invalid certificate. (CVE-2013-5606)
+
+Red Hat would like to thank the Mozilla project for reporting
+CVE-2013-1741, CVE-2013-5606, and CVE-2013-5607. Upstream acknowledges
+Tavis Ormandy as the original reporter of CVE-2013-1741, Camilo Viecco as
+the original reporter of CVE-2013-5606, and Pascal Cuoq, Kamil Dudka, and
+Wan-Teh Chang as the original reporters of CVE-2013-5607.
+
+All NSS, NSPR, and nss-util users are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues.
+After installing this update, applications using NSS, NSPR, or nss-util
+must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1012740 - CVE-2013-1739 nss: Avoid uninitialized data read in the event of a decryption failure
+1030807 - CVE-2013-5605 nss: Null_Cipher() does not respect maxOutputLen  (MFSA 2013-103)
+1031457 - CVE-2013-5606 nss: CERT_VerifyCert returns SECSuccess (saying certificate is good) even for bad certificates (MFSA 2013-103)
+1031458 - CVE-2013-1741 nss: Integer truncation in certificate parsing (MFSA 2013-103)
+1031461 - CVE-2013-5607 nspr: Avoid unsigned integer wrapping in PL_ArenaAllocate (MFSA 2013-103)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+i386:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-sysinit-3.15.3-2.el6_5.i686.rpm
+nss-tools-3.15.3-2.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+
+x86_64:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-4.10.2-1.el6_5.x86_64.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-sysinit-3.15.3-2.el6_5.x86_64.rpm
+nss-tools-3.15.3-2.el6_5.x86_64.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+i386:
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+
+x86_64:
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.x86_64.rpm
+
+ Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+x86_64:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-4.10.2-1.el6_5.x86_64.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-sysinit-3.15.3-2.el6_5.x86_64.rpm
+nss-tools-3.15.3-2.el6_5.x86_64.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+x86_64:
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+i386:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-sysinit-3.15.3-2.el6_5.i686.rpm
+nss-tools-3.15.3-2.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+
+ppc64:
+nspr-4.10.2-1.el6_5.ppc.rpm
+nspr-4.10.2-1.el6_5.ppc64.rpm
+nspr-debuginfo-4.10.2-1.el6_5.ppc.rpm
+nspr-debuginfo-4.10.2-1.el6_5.ppc64.rpm
+nspr-devel-4.10.2-1.el6_5.ppc.rpm
+nspr-devel-4.10.2-1.el6_5.ppc64.rpm
+nss-3.15.3-2.el6_5.ppc.rpm
+nss-3.15.3-2.el6_5.ppc64.rpm
+nss-debuginfo-3.15.3-2.el6_5.ppc.rpm
+nss-debuginfo-3.15.3-2.el6_5.ppc64.rpm
+nss-devel-3.15.3-2.el6_5.ppc.rpm
+nss-devel-3.15.3-2.el6_5.ppc64.rpm
+nss-sysinit-3.15.3-2.el6_5.ppc64.rpm
+nss-tools-3.15.3-2.el6_5.ppc64.rpm
+nss-util-3.15.3-1.el6_5.ppc.rpm
+nss-util-3.15.3-1.el6_5.ppc64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.ppc.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.ppc64.rpm
+nss-util-devel-3.15.3-1.el6_5.ppc.rpm
+nss-util-devel-3.15.3-1.el6_5.ppc64.rpm
+
+s390x:
+nspr-4.10.2-1.el6_5.s390.rpm
+nspr-4.10.2-1.el6_5.s390x.rpm
+nspr-debuginfo-4.10.2-1.el6_5.s390.rpm
+nspr-debuginfo-4.10.2-1.el6_5.s390x.rpm
+nspr-devel-4.10.2-1.el6_5.s390.rpm
+nspr-devel-4.10.2-1.el6_5.s390x.rpm
+nss-3.15.3-2.el6_5.s390.rpm
+nss-3.15.3-2.el6_5.s390x.rpm
+nss-debuginfo-3.15.3-2.el6_5.s390.rpm
+nss-debuginfo-3.15.3-2.el6_5.s390x.rpm
+nss-devel-3.15.3-2.el6_5.s390.rpm
+nss-devel-3.15.3-2.el6_5.s390x.rpm
+nss-sysinit-3.15.3-2.el6_5.s390x.rpm
+nss-tools-3.15.3-2.el6_5.s390x.rpm
+nss-util-3.15.3-1.el6_5.s390.rpm
+nss-util-3.15.3-1.el6_5.s390x.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.s390.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.s390x.rpm
+nss-util-devel-3.15.3-1.el6_5.s390.rpm
+nss-util-devel-3.15.3-1.el6_5.s390x.rpm
+
+x86_64:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-4.10.2-1.el6_5.x86_64.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.x86_64.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-sysinit-3.15.3-2.el6_5.x86_64.rpm
+nss-tools-3.15.3-2.el6_5.x86_64.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+
+i386:
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+
+ppc64:
+nss-debuginfo-3.15.3-2.el6_5.ppc.rpm
+nss-debuginfo-3.15.3-2.el6_5.ppc64.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.ppc.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.ppc64.rpm
+
+s390x:
+nss-debuginfo-3.15.3-2.el6_5.s390.rpm
+nss-debuginfo-3.15.3-2.el6_5.s390x.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.s390.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.s390x.rpm
+
+x86_64:
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nspr-4.10.2-1.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-util-3.15.3-1.el6_5.src.rpm</a>
+
+i386:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-sysinit-3.15.3-2.el6_5.i686.rpm
+nss-tools-3.15.3-2.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+
+x86_64:
+nspr-4.10.2-1.el6_5.i686.rpm
+nspr-4.10.2-1.el6_5.x86_64.rpm
+nspr-debuginfo-4.10.2-1.el6_5.i686.rpm
+nspr-debuginfo-4.10.2-1.el6_5.x86_64.rpm
+nspr-devel-4.10.2-1.el6_5.i686.rpm
+nspr-devel-4.10.2-1.el6_5.x86_64.rpm
+nss-3.15.3-2.el6_5.i686.rpm
+nss-3.15.3-2.el6_5.x86_64.rpm
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-devel-3.15.3-2.el6_5.i686.rpm
+nss-devel-3.15.3-2.el6_5.x86_64.rpm
+nss-sysinit-3.15.3-2.el6_5.x86_64.rpm
+nss-tools-3.15.3-2.el6_5.x86_64.rpm
+nss-util-3.15.3-1.el6_5.i686.rpm
+nss-util-3.15.3-1.el6_5.x86_64.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.i686.rpm
+nss-util-debuginfo-3.15.3-1.el6_5.x86_64.rpm
+nss-util-devel-3.15.3-1.el6_5.i686.rpm
+nss-util-devel-3.15.3-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.15.3-2.el6_5.src.rpm</a>
+
+i386:
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+
+x86_64:
+nss-debuginfo-3.15.3-2.el6_5.i686.rpm
+nss-debuginfo-3.15.3-2.el6_5.x86_64.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.i686.rpm
+nss-pkcs11-devel-3.15.3-2.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1739.html">https://www.redhat.com/security/data/cve/CVE-2013-1739.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1741.html">https://www.redhat.com/security/data/cve/CVE-2013-1741.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5605.html">https://www.redhat.com/security/data/cve/CVE-2013-5605.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5606.html">https://www.redhat.com/security/data/cve/CVE-2013-5606.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5607.html">https://www.redhat.com/security/data/cve/CVE-2013-5607.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/announce/2013/mfsa2013-103.html">http://www.mozilla.org/security/announce/2013/mfsa2013-103.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSqg6jXlSAg2UNWIIRAjD+AJ95g/FcBD44zcUxxK+JvoNqCB/SXwCgkwcM
+7Qn5aqD10LLZJGBuOx0RKsI=
+=30e0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

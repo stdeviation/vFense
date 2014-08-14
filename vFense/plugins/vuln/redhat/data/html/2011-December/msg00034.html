@@ -1,0 +1,365 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1811&#45;01] Important: netpbm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 12 Dec 2011 16:09:20 &#45;0500 -->
+<!--X-Message-Id: 201112122109.pBCL9EeK011846@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1811-01] Important: netpbm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1811-01] Important: netpbm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1811-01] Important: netpbm security update</li>
+<li><em>Date</em>: Mon, 12 Dec 2011 21:09:14 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: netpbm security update
+Advisory ID:       RHSA-2011:1811-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1811.html">https://rhn.redhat.com/errata/RHSA-2011-1811.html</a>
+Issue date:        2011-12-12
+CVE Names:         CVE-2009-4274 CVE-2011-4516 CVE-2011-4517 
+=====================================================================
+
+1. Summary:
+
+Updated netpbm packages that fix three security issues are now available
+for Red Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The netpbm packages contain a library of functions which support programs
+for handling various graphics file formats, including .pbm (Portable Bit
+Map), .pgm (Portable Gray Map), .pnm (Portable Any Map), .ppm (Portable
+Pixel Map), and others.
+
+Two heap-based buffer overflow flaws were found in the embedded JasPer
+library, which is used to provide support for Part 1 of the JPEG 2000 image
+compression standard in the jpeg2ktopam and pamtojpeg2k tools. An attacker
+could create a malicious JPEG 2000 compressed image file that could cause
+jpeg2ktopam to crash or, potentially, execute arbitrary code with the
+privileges of the user running jpeg2ktopam. These flaws do not affect
+pamtojpeg2k. (CVE-2011-4516, CVE-2011-4517)
+
+A stack-based buffer overflow flaw was found in the way the xpmtoppm tool
+processed X PixMap (XPM) image files. An attacker could create a malicious
+XPM file that would cause xpmtoppm to crash or, potentially, execute
+arbitrary code with the privileges of the user running xpmtoppm.
+(CVE-2009-4274)
+
+Red Hat would like to thank Jonathan Foote of the CERT Coordination Center
+for reporting the CVE-2011-4516 and CVE-2011-4517 issues.
+
+All users of netpbm are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+546580 - CVE-2009-4274 netpbm: Stack-based buffer overflow by processing X PixMap image header fields
+747726 - CVE-2011-4516 CVE-2011-4517 jasper: heap buffer overflow flaws lead to arbitrary code execution (CERT VU#887409)
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-devel-10.35.58-8.el4.i386.rpm
+netpbm-progs-10.35.58-8.el4.i386.rpm
+
+ia64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.ia64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.ia64.rpm
+netpbm-devel-10.35.58-8.el4.ia64.rpm
+netpbm-progs-10.35.58-8.el4.ia64.rpm
+
+ppc:
+netpbm-10.35.58-8.el4.ppc.rpm
+netpbm-10.35.58-8.el4.ppc64.rpm
+netpbm-debuginfo-10.35.58-8.el4.ppc.rpm
+netpbm-debuginfo-10.35.58-8.el4.ppc64.rpm
+netpbm-devel-10.35.58-8.el4.ppc.rpm
+netpbm-progs-10.35.58-8.el4.ppc.rpm
+
+s390:
+netpbm-10.35.58-8.el4.s390.rpm
+netpbm-debuginfo-10.35.58-8.el4.s390.rpm
+netpbm-devel-10.35.58-8.el4.s390.rpm
+netpbm-progs-10.35.58-8.el4.s390.rpm
+
+s390x:
+netpbm-10.35.58-8.el4.s390.rpm
+netpbm-10.35.58-8.el4.s390x.rpm
+netpbm-debuginfo-10.35.58-8.el4.s390.rpm
+netpbm-debuginfo-10.35.58-8.el4.s390x.rpm
+netpbm-devel-10.35.58-8.el4.s390x.rpm
+netpbm-progs-10.35.58-8.el4.s390x.rpm
+
+x86_64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.x86_64.rpm
+netpbm-devel-10.35.58-8.el4.x86_64.rpm
+netpbm-progs-10.35.58-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-devel-10.35.58-8.el4.i386.rpm
+netpbm-progs-10.35.58-8.el4.i386.rpm
+
+x86_64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.x86_64.rpm
+netpbm-devel-10.35.58-8.el4.x86_64.rpm
+netpbm-progs-10.35.58-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-devel-10.35.58-8.el4.i386.rpm
+netpbm-progs-10.35.58-8.el4.i386.rpm
+
+ia64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.ia64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.ia64.rpm
+netpbm-devel-10.35.58-8.el4.ia64.rpm
+netpbm-progs-10.35.58-8.el4.ia64.rpm
+
+x86_64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.x86_64.rpm
+netpbm-devel-10.35.58-8.el4.x86_64.rpm
+netpbm-progs-10.35.58-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/netpbm-10.35.58-8.el4.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-devel-10.35.58-8.el4.i386.rpm
+netpbm-progs-10.35.58-8.el4.i386.rpm
+
+ia64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.ia64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.ia64.rpm
+netpbm-devel-10.35.58-8.el4.ia64.rpm
+netpbm-progs-10.35.58-8.el4.ia64.rpm
+
+x86_64:
+netpbm-10.35.58-8.el4.i386.rpm
+netpbm-10.35.58-8.el4.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el4.i386.rpm
+netpbm-debuginfo-10.35.58-8.el4.x86_64.rpm
+netpbm-devel-10.35.58-8.el4.x86_64.rpm
+netpbm-progs-10.35.58-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el5_7.3.i386.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-progs-10.35.58-8.el5_7.3.i386.rpm
+
+x86_64:
+netpbm-10.35.58-8.el5_7.3.i386.rpm
+netpbm-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-progs-10.35.58-8.el5_7.3.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm</a>
+
+i386:
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-devel-10.35.58-8.el5_7.3.i386.rpm
+
+x86_64:
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-devel-10.35.58-8.el5_7.3.i386.rpm
+netpbm-devel-10.35.58-8.el5_7.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/netpbm-10.35.58-8.el5_7.3.src.rpm</a>
+
+i386:
+netpbm-10.35.58-8.el5_7.3.i386.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-devel-10.35.58-8.el5_7.3.i386.rpm
+netpbm-progs-10.35.58-8.el5_7.3.i386.rpm
+
+ia64:
+netpbm-10.35.58-8.el5_7.3.ia64.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.ia64.rpm
+netpbm-devel-10.35.58-8.el5_7.3.ia64.rpm
+netpbm-progs-10.35.58-8.el5_7.3.ia64.rpm
+
+ppc:
+netpbm-10.35.58-8.el5_7.3.ppc.rpm
+netpbm-10.35.58-8.el5_7.3.ppc64.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.ppc.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.ppc64.rpm
+netpbm-devel-10.35.58-8.el5_7.3.ppc.rpm
+netpbm-devel-10.35.58-8.el5_7.3.ppc64.rpm
+netpbm-progs-10.35.58-8.el5_7.3.ppc.rpm
+
+s390x:
+netpbm-10.35.58-8.el5_7.3.s390.rpm
+netpbm-10.35.58-8.el5_7.3.s390x.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.s390.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.s390x.rpm
+netpbm-devel-10.35.58-8.el5_7.3.s390.rpm
+netpbm-devel-10.35.58-8.el5_7.3.s390x.rpm
+netpbm-progs-10.35.58-8.el5_7.3.s390x.rpm
+
+x86_64:
+netpbm-10.35.58-8.el5_7.3.i386.rpm
+netpbm-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.i386.rpm
+netpbm-debuginfo-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-devel-10.35.58-8.el5_7.3.i386.rpm
+netpbm-devel-10.35.58-8.el5_7.3.x86_64.rpm
+netpbm-progs-10.35.58-8.el5_7.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4274.html">https://www.redhat.com/security/data/cve/CVE-2009-4274.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4516.html">https://www.redhat.com/security/data/cve/CVE-2011-4516.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4517.html">https://www.redhat.com/security/data/cve/CVE-2011-4517.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO5m1oXlSAg2UNWIIRAhT/AJwN4PCkN1Xt3W8TWxeZepgh+hRr1ACggAWh
+8WI1NNpIAISQBTxT7cjrNRw=
+=aBZy
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1437&#45;01] Important: Red Hat JBoss Portal 6.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Oct 2013 13:37:53 &#45;0400 -->
+<!--X-Message-Id: 201310161737.r9GHbqVu024704@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1437-01] Important: Red Hat JBoss Portal 6.1.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1437-01] Important: Red Hat JBoss Portal 6.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1437-01] Important: Red Hat JBoss Portal 6.1.0 update</li>
+<li><em>Date</em>: Wed, 16 Oct 2013 17:37:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Portal 6.1.0 update
+Advisory ID:       RHSA-2013:1437-01
+Product:           Red Hat JBoss Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1437.html">https://rhn.redhat.com/errata/RHSA-2013-1437.html</a>
+Issue date:        2013-10-16
+CVE Names:         CVE-2012-4431 CVE-2012-4529 CVE-2012-4572 
+                   CVE-2012-5575 CVE-2013-1921 CVE-2013-2067 
+                   CVE-2013-2102 CVE-2013-2160 CVE-2013-2172 
+                   CVE-2013-4112 CVE-2013-4128 CVE-2013-4213 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Portal 6.1.0, which fixes multiple security
+issues and various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+This Red Hat JBoss Portal 6.1.0 release serves as a replacement for
+6.0.0. Refer to the 6.1.0 Release Notes for further information, available
+shortly from <a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+It was found that sending a request without a session identifier to a
+protected resource could bypass the CSRF prevention filter in JBoss Web. A
+remote attacker could use this flaw to perform CSRF attacks against
+applications that rely on the CSRF prevention filter. (CVE-2012-4431)
+
+When applications used the COOKIE session tracking method, the jsessionid
+would be appended as a query string parameter when processing the first
+request of a session. This could possibly lead to users' sessions being
+hijacked via man-in-the-middle attacks. (CVE-2012-4529)
+
+If multiple applications used the same custom authorization module class
+name, and provided their own implementations of it, the first application
+to be loaded will have its implementation used for all other applications
+using the same custom authorization module class name. A local attacker
+could deploy a malicious application that provides implementations of
+custom authorization modules that apply authorization rules supplied by the
+attacker. (CVE-2012-4572)
+
+XML encryption backwards compatibility attacks were found against various
+frameworks, including Apache CXF. An attacker could force a server to use
+insecure, legacy cryptosystems, even when secure cryptosystems were enabled
+on endpoints. By forcing the use of legacy cryptosystems, flaws such as
+CVE-2011-1096 and CVE-2011-2487 would be exposed, allowing plain text to be
+recovered from cryptograms and symmetric keys. (CVE-2012-5575)
+
+Note: Automatic checks to prevent CVE-2012-5575 are only run when
+WS-SecurityPolicy is used to enforce security requirements, which is best
+practice.
+
+The data file used by PicketBox Vault to store encrypted passwords contains
+a copy of its own admin key. The file is encrypted using only this admin
+key, not the corresponding JKS key. A local attacker with permission to
+read the vault data file could read the admin key from the file.
+(CVE-2013-1921)
+
+A session fixation flaw was found in the Tomcat FormAuthenticator module.
+(CVE-2013-2067)
+
+When a JGroups channel was started, the JGroups diagnostics service was
+enabled by default with no authentication via IP multicast. An attacker on
+an adjacent network could exploit this flaw to read diagnostics
+information. (CVE-2013-2102)
+
+Multiple denial of service flaws were found in the way the Apache CXF StAX
+parser implementation processed certain XML files. A remote attacker could
+provide a specially crafted XML file that, when processed, would lead to
+excessive CPU and memory consumption. (CVE-2013-2160)
+
+A flaw was found in the way Apache Santuario XML Security for Java
+validated XML signatures. Santuario allowed a signature to specify an
+arbitrary canonicalization algorithm, which would be applied to the
+SignedInfo XML fragment. A remote attacker could exploit this to spoof an
+XML signature, via a specially-crafted XML signature block. (CVE-2013-2172)
+
+A flaw was found in JGroup's DiagnosticsHandler that allowed an attacker on
+an adjacent network to reuse the credentials from a previous successful
+authentication. This could be exploited to read diagnostic information and
+attain limited remote code execution. (CVE-2013-4112)
+
+A flaw was discovered in the way authenticated connections were cached on
+the server by remote-naming. After a user has successfully logged in, a
+remote attacker could use a remoting client to log in as that user without
+knowing their password, allowing them to access data and perform actions
+with the privileges of that user. (CVE-2013-4128)
+
+A flaw was discovered in the way connections for remote EJB invocations via
+the EJB client API were cached on the server. After a user has successfully
+logged in, a remote attacker could use an EJB client to log in as that user
+without knowing their password. (CVE-2013-4213)
+
+3. Solution:
+
+Red Hat would like to thank Tibor Jager, Kenneth G. Paterson and Juraj
+Somorovsky of Ruhr-University Bochum for reporting CVE-2012-5575; and
+Andreas Falkenberg of SEC Consult Deutschland GmbH, and Christian Mainka,
+Juraj Somorovsky, and Joerg Schwenk of Ruhr-University Bochum for reporting
+CVE-2013-2160. CVE-2012-4572 was discovered by Josef Cacek of the Red Hat
+JBoss EAP Quality Engineering team; CVE-2013-4128 and CVE-2013-4213 were
+discovered by Wolf-Dieter Fink of the Red Hat GSS Team; and CVE-2013-2102
+was discovered by Red Hat.
+
+All users of Red Hat JBoss Portal 6.0.0 as provided from the Red Hat
+Customer Portal are advised to upgrade to Red Hat JBoss Portal 6.1.0.
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up all
+applications deployed on JBoss Enterprise Portal Platform, along with all
+customized configuration files, and any databases and database settings.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+868202 - CVE-2012-4529 JBoss Web: jsessionid exposed via encoded url when using cookie based session tracking
+872059 - CVE-2012-4572 JBoss: custom authorization module implementations shared between applications
+880443 - CVE-2012-5575 jbossws-native, jbossws-cxf, apache-cxf: XML encryption backwards compatibility attacks
+883636 - CVE-2012-4431 Tomcat/JBoss Web - Bypass of CSRF prevention filter
+929197 - CVE-2013-2160 cxf, jbossws-cxf, apache-cxf: Multiple denial of service flaws in the StAX parser
+948106 - CVE-2013-1921 JBoss PicketBox: Insecure storage of masked passwords
+961779 - CVE-2013-2067 tomcat: Session fixation in form authenticator
+963984 - CVE-2013-2102 Gatein: JGroups configurations enable diagnostics without authentication
+983489 - CVE-2013-4112 JGroups: Authentication via cached credentials
+984795 - CVE-2013-4128 JBoss remote-naming: Session fixation due improper connection caching
+985359 - CVE-2013-4213 JBoss ejb-client: Session fixation due improper connection caching
+999263 - CVE-2013-2172 Apache Santuario XML Security for Java: XML signature spoofing
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4431.html">https://www.redhat.com/security/data/cve/CVE-2012-4431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4529.html">https://www.redhat.com/security/data/cve/CVE-2012-4529.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4572.html">https://www.redhat.com/security/data/cve/CVE-2012-4572.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5575.html">https://www.redhat.com/security/data/cve/CVE-2012-5575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1921.html">https://www.redhat.com/security/data/cve/CVE-2013-1921.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2067.html">https://www.redhat.com/security/data/cve/CVE-2013-2067.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2102.html">https://www.redhat.com/security/data/cve/CVE-2013-2102.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2160.html">https://www.redhat.com/security/data/cve/CVE-2013-2160.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2172.html">https://www.redhat.com/security/data/cve/CVE-2013-2172.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4112.html">https://www.redhat.com/security/data/cve/CVE-2013-4112.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4128.html">https://www.redhat.com/security/data/cve/CVE-2013-4128.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4213.html">https://www.redhat.com/security/data/cve/CVE-2013-4213.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=distributions</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSXs7IXlSAg2UNWIIRAlkmAJ4uSf3hX0b2MQYBwOZYQwbPSVtIaQCfa1J9
+nJdncwsFOdRoeQFVw6/3ep4=
+=zG8K
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

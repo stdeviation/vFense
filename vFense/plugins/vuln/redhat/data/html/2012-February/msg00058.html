@@ -1,0 +1,266 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0302&#45;03] Low: cups security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 21 Feb 2012 00:01:25 &#45;0500 -->
+<!--X-Message-Id: 201202210501.q1L51HRJ012059@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0302-03] Low: cups security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00057.html">Date Prev</a>][<a href="msg00059.html">Date Next</a>] &nbsp; [<a href="msg00057.html">Thread Prev</a>][<a href="msg00059.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00058">Thread Index</A>]
+[<A HREF="date.html#00058">Date Index</A>]
+[<A HREF="author.html#00058">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0302-03] Low: cups security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0302-03] Low: cups security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 05:01:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: cups security and bug fix update
+Advisory ID:       RHSA-2012:0302-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0302.html">https://rhn.redhat.com/errata/RHSA-2012-0302.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-2896 
+=====================================================================
+
+1. Summary:
+
+Updated cups packages that fix one security issue and various bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Common UNIX Printing System (CUPS) provides a portable printing layer
+for Linux, UNIX, and similar operating systems.
+
+A heap-based buffer overflow flaw was found in the Lempel-Ziv-Welch (LZW)
+decompression algorithm implementation used by the CUPS GIF image format
+reader. An attacker could create a malicious GIF image file that, when
+printed, could possibly cause CUPS to crash or, potentially, execute
+arbitrary code with the privileges of the &quot;lp&quot; user. (CVE-2011-2896)
+
+This update also fixes the following bugs:
+
+* Prior to this update, the &quot;Show Completed Jobs,&quot; &quot;Show All Jobs,&quot; and
+&quot;Show Active Jobs&quot; buttons returned results globally across all printers
+and not the results for the specified printer. With this update, jobs from
+only the selected printer are shown. (BZ#625900)
+
+* Prior to this update, the code of the serial backend contained a wrong
+condition. As a consequence, print jobs on the raw print queue could not be
+canceled. This update modifies the condition in the serial backend code.
+Now, the user can cancel these print jobs. (BZ#625955)
+
+* Prior to this update, the textonly filter did not work if used as a pipe,
+for example when the command line did not specify the filename and the
+number of copies was always 1. This update modifies the condition in the
+textonly filter. Now, the data are sent to the printer regardless of the
+number of copies specified. (BZ#660518)
+
+* Prior to this update, the file descriptor count increased until it ran
+out of resources when the cups daemon was running with enabled
+Security-Enhanced Linux (SELinux) features. With this update, all resources
+are allocated only once. (BZ#668009)
+
+* Prior to this update, CUPS incorrectly handled the en_US.ASCII value for
+the LANG environment variable. As a consequence, the lpadmin, lpstat, and
+lpinfo binaries failed to write to standard output if using LANG with the
+value. This update fixes the handling of the en_US.ASCII value and the
+binaries now write to standard output properly. (BZ#759081)
+
+All users of cups are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues. After installing this
+update, the cupsd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+625900 - STR #3436: Jobs buttons not working correctly when viewing a specific printer
+625955 - Serial back end has inverted SIGTERM block
+660518 - textonly filter won't work as a pipe with copies=1
+668009 - avc calls leak file descriptors
+727800 - CVE-2011-2896 David Koblas' GIF decoder LZW decoder buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm</a>
+
+i386:
+cups-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-libs-1.3.7-30.el5.i386.rpm
+cups-lpd-1.3.7-30.el5.i386.rpm
+
+x86_64:
+cups-1.3.7-30.el5.x86_64.rpm
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.x86_64.rpm
+cups-libs-1.3.7-30.el5.i386.rpm
+cups-libs-1.3.7-30.el5.x86_64.rpm
+cups-lpd-1.3.7-30.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm</a>
+
+i386:
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-devel-1.3.7-30.el5.i386.rpm
+
+x86_64:
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.x86_64.rpm
+cups-devel-1.3.7-30.el5.i386.rpm
+cups-devel-1.3.7-30.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cups-1.3.7-30.el5.src.rpm</a>
+
+i386:
+cups-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-devel-1.3.7-30.el5.i386.rpm
+cups-libs-1.3.7-30.el5.i386.rpm
+cups-lpd-1.3.7-30.el5.i386.rpm
+
+ia64:
+cups-1.3.7-30.el5.ia64.rpm
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.ia64.rpm
+cups-devel-1.3.7-30.el5.ia64.rpm
+cups-libs-1.3.7-30.el5.i386.rpm
+cups-libs-1.3.7-30.el5.ia64.rpm
+cups-lpd-1.3.7-30.el5.ia64.rpm
+
+ppc:
+cups-1.3.7-30.el5.ppc.rpm
+cups-debuginfo-1.3.7-30.el5.ppc.rpm
+cups-debuginfo-1.3.7-30.el5.ppc64.rpm
+cups-devel-1.3.7-30.el5.ppc.rpm
+cups-devel-1.3.7-30.el5.ppc64.rpm
+cups-libs-1.3.7-30.el5.ppc.rpm
+cups-libs-1.3.7-30.el5.ppc64.rpm
+cups-lpd-1.3.7-30.el5.ppc.rpm
+
+s390x:
+cups-1.3.7-30.el5.s390x.rpm
+cups-debuginfo-1.3.7-30.el5.s390.rpm
+cups-debuginfo-1.3.7-30.el5.s390x.rpm
+cups-devel-1.3.7-30.el5.s390.rpm
+cups-devel-1.3.7-30.el5.s390x.rpm
+cups-libs-1.3.7-30.el5.s390.rpm
+cups-libs-1.3.7-30.el5.s390x.rpm
+cups-lpd-1.3.7-30.el5.s390x.rpm
+
+x86_64:
+cups-1.3.7-30.el5.x86_64.rpm
+cups-debuginfo-1.3.7-30.el5.i386.rpm
+cups-debuginfo-1.3.7-30.el5.x86_64.rpm
+cups-devel-1.3.7-30.el5.i386.rpm
+cups-devel-1.3.7-30.el5.x86_64.rpm
+cups-libs-1.3.7-30.el5.i386.rpm
+cups-libs-1.3.7-30.el5.x86_64.rpm
+cups-lpd-1.3.7-30.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2896.html">https://www.redhat.com/security/data/cve/CVE-2011-2896.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyUZXlSAg2UNWIIRAmioAJ9gBk6Poy7RE22h7TKkzGLF98r4AACdFi4C
+4f1Ci++Q+rq+4dall0u/lSw=
+=YJGy
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00057.html">Date Prev</a>][<a href="msg00059.html">Date Next</a>] &nbsp; [<a href="msg00057.html">Thread Prev</a>][<a href="msg00059.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00058">Thread Index</A>]
+[<A HREF="date.html#00058">Date Index</A>]
+[<A HREF="author.html#00058">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

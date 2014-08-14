@@ -1,0 +1,420 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0095&#45;01] Moderate: ghostscript security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 2 Feb 2012 17:54:41 &#45;0500 -->
+<!--X-Message-Id: 201202022254.q12MsZhu024358@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0095-01] Moderate: ghostscript security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0095-01] Moderate: ghostscript security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0095-01] Moderate: ghostscript security update</li>
+<li><em>Date</em>: Thu, 2 Feb 2012 22:54:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ghostscript security update
+Advisory ID:       RHSA-2012:0095-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0095.html">https://rhn.redhat.com/errata/RHSA-2012-0095.html</a>
+Issue date:        2012-02-02
+CVE Names:         CVE-2009-3743 CVE-2010-2055 CVE-2010-4054 
+                   CVE-2010-4820 
+=====================================================================
+
+1. Summary:
+
+Updated ghostscript packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Ghostscript is a set of software that provides a PostScript interpreter, a
+set of C procedures (the Ghostscript library, which implements the graphics
+capabilities in the PostScript language) and an interpreter for Portable
+Document Format (PDF) files.
+
+An integer overflow flaw was found in Ghostscript's TrueType bytecode
+interpreter. An attacker could create a specially-crafted PostScript or PDF
+file that, when interpreted, could cause Ghostscript to crash or,
+potentially, execute arbitrary code. (CVE-2009-3743)
+
+It was found that Ghostscript always tried to read Ghostscript system
+initialization files from the current working directory before checking
+other directories, even if a search path that did not contain the current
+working directory was specified with the &quot;-I&quot; option, or the &quot;-P-&quot; option
+was used (to prevent the current working directory being searched first).
+If a user ran Ghostscript in an attacker-controlled directory containing a
+system initialization file, it could cause Ghostscript to execute arbitrary
+PostScript code. (CVE-2010-2055)
+
+Ghostscript included the current working directory in its library search
+path by default. If a user ran Ghostscript without the &quot;-P-&quot; option in an
+attacker-controlled directory containing a specially-crafted PostScript
+library file, it could cause Ghostscript to execute arbitrary PostScript
+code. With this update, Ghostscript no longer searches the current working
+directory for library files by default. (CVE-2010-4820)
+
+Note: The fix for CVE-2010-4820 could possibly break existing
+configurations. To use the previous, vulnerable behavior, run Ghostscript
+with the &quot;-P&quot; option (to always search the current working directory
+first).
+
+A flaw was found in the way Ghostscript interpreted PostScript Type 1 and
+PostScript Type 2 font files. An attacker could create a specially-crafted
+PostScript Type 1 or PostScript Type 2 font file that, when interpreted,
+could cause Ghostscript to crash or, potentially, execute arbitrary code.
+(CVE-2010-4054)
+
+Users of Ghostscript are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+599564 - CVE-2010-2055 ghostscript: gs_init.ps searched in current directory despite -P-
+627902 - CVE-2009-3743 ghostscript: TrueType bytecode intepreter integer overflow or wraparound
+646086 - CVE-2010-4054 ghostscript: glyph data access improper input validation
+771853 - CVE-2010-4820 ghostscript: CWD included in the default library search path
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm</a>
+
+i386:
+ghostscript-8.70-6.el5_7.6.i386.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-gtk-8.70-6.el5_7.6.i386.rpm
+
+x86_64:
+ghostscript-8.70-6.el5_7.6.i386.rpm
+ghostscript-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-gtk-8.70-6.el5_7.6.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm</a>
+
+i386:
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-devel-8.70-6.el5_7.6.i386.rpm
+
+x86_64:
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-devel-8.70-6.el5_7.6.i386.rpm
+ghostscript-devel-8.70-6.el5_7.6.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ghostscript-8.70-6.el5_7.6.src.rpm</a>
+
+i386:
+ghostscript-8.70-6.el5_7.6.i386.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-devel-8.70-6.el5_7.6.i386.rpm
+ghostscript-gtk-8.70-6.el5_7.6.i386.rpm
+
+ia64:
+ghostscript-8.70-6.el5_7.6.ia64.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.ia64.rpm
+ghostscript-devel-8.70-6.el5_7.6.ia64.rpm
+ghostscript-gtk-8.70-6.el5_7.6.ia64.rpm
+
+ppc:
+ghostscript-8.70-6.el5_7.6.ppc.rpm
+ghostscript-8.70-6.el5_7.6.ppc64.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.ppc.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.ppc64.rpm
+ghostscript-devel-8.70-6.el5_7.6.ppc.rpm
+ghostscript-devel-8.70-6.el5_7.6.ppc64.rpm
+ghostscript-gtk-8.70-6.el5_7.6.ppc.rpm
+
+s390x:
+ghostscript-8.70-6.el5_7.6.s390.rpm
+ghostscript-8.70-6.el5_7.6.s390x.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.s390.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.s390x.rpm
+ghostscript-devel-8.70-6.el5_7.6.s390.rpm
+ghostscript-devel-8.70-6.el5_7.6.s390x.rpm
+ghostscript-gtk-8.70-6.el5_7.6.s390x.rpm
+
+x86_64:
+ghostscript-8.70-6.el5_7.6.i386.rpm
+ghostscript-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.i386.rpm
+ghostscript-debuginfo-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-devel-8.70-6.el5_7.6.i386.rpm
+ghostscript-devel-8.70-6.el5_7.6.x86_64.rpm
+ghostscript-gtk-8.70-6.el5_7.6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+
+x86_64:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-doc-8.70-11.el6_2.6.i686.rpm
+ghostscript-gtk-8.70-11.el6_2.6.i686.rpm
+
+x86_64:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-doc-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-gtk-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+x86_64:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+x86_64:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-doc-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-gtk-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+
+ppc64:
+ghostscript-8.70-11.el6_2.6.ppc.rpm
+ghostscript-8.70-11.el6_2.6.ppc64.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.ppc.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.ppc64.rpm
+
+s390x:
+ghostscript-8.70-11.el6_2.6.s390.rpm
+ghostscript-8.70-11.el6_2.6.s390x.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.s390.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.s390x.rpm
+
+x86_64:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-doc-8.70-11.el6_2.6.i686.rpm
+ghostscript-gtk-8.70-11.el6_2.6.i686.rpm
+
+ppc64:
+ghostscript-debuginfo-8.70-11.el6_2.6.ppc.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.ppc64.rpm
+ghostscript-devel-8.70-11.el6_2.6.ppc.rpm
+ghostscript-devel-8.70-11.el6_2.6.ppc64.rpm
+ghostscript-doc-8.70-11.el6_2.6.ppc64.rpm
+ghostscript-gtk-8.70-11.el6_2.6.ppc64.rpm
+
+s390x:
+ghostscript-debuginfo-8.70-11.el6_2.6.s390.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.s390x.rpm
+ghostscript-devel-8.70-11.el6_2.6.s390.rpm
+ghostscript-devel-8.70-11.el6_2.6.s390x.rpm
+ghostscript-doc-8.70-11.el6_2.6.s390x.rpm
+ghostscript-gtk-8.70-11.el6_2.6.s390x.rpm
+
+x86_64:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-doc-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-gtk-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+
+x86_64:
+ghostscript-8.70-11.el6_2.6.i686.rpm
+ghostscript-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ghostscript-8.70-11.el6_2.6.src.rpm</a>
+
+i386:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-doc-8.70-11.el6_2.6.i686.rpm
+ghostscript-gtk-8.70-11.el6_2.6.i686.rpm
+
+x86_64:
+ghostscript-debuginfo-8.70-11.el6_2.6.i686.rpm
+ghostscript-debuginfo-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-devel-8.70-11.el6_2.6.i686.rpm
+ghostscript-devel-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-doc-8.70-11.el6_2.6.x86_64.rpm
+ghostscript-gtk-8.70-11.el6_2.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3743.html">https://www.redhat.com/security/data/cve/CVE-2009-3743.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2055.html">https://www.redhat.com/security/data/cve/CVE-2010-2055.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4054.html">https://www.redhat.com/security/data/cve/CVE-2010-4054.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4820.html">https://www.redhat.com/security/data/cve/CVE-2010-4820.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD4DBQFPKxQeXlSAg2UNWIIRArqLAJYndAdU+gEQ5Ki//vi/wh7KgAtYAJ9NwToi
+Ov6GX/QA+l4EOfr9Yj/1Qg==
+=6sZd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

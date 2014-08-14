@@ -1,0 +1,236 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1019&#45;01] Critical: java&#45;1.7.0&#45;oracle security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 07:44:04 &#45;0400 -->
+<!--X-Message-Id: 201206201143.q5KBhvXh027400@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1019-01] Critical: java-1.7.0-oracle security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1019-01] Critical: java-1.7.0-oracle security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1019-01] Critical: java-1.7.0-oracle security update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 11:39:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.7.0-oracle security update
+Advisory ID:       RHSA-2012:1019-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1019.html">https://rhn.redhat.com/errata/RHSA-2012-1019.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-0551 CVE-2012-1711 CVE-2012-1713 
+                   CVE-2012-1716 CVE-2012-1717 CVE-2012-1718 
+                   CVE-2012-1719 CVE-2012-1721 CVE-2012-1722 
+                   CVE-2012-1723 CVE-2012-1724 CVE-2012-1725 
+                   CVE-2012-1726 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.7.0-oracle packages that fix several security issues are now
+available for Red Hat Enterprise Linux 6 Supplementary.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Supplementary (v. 6) - x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+The Oracle Java 7 release includes the Oracle Java 7 Runtime Environment
+and the Oracle Java 7 Software Development Kit.
+
+This update fixes several vulnerabilities in the Oracle Java 7 Runtime
+Environment and the Oracle Java 7 Software Development Kit. Further
+information about these flaws can be found on the Oracle Java SE Critical
+Patch page, listed in the References section. (CVE-2012-0551,
+CVE-2012-1711, CVE-2012-1713, CVE-2012-1716, CVE-2012-1717, CVE-2012-1718,
+CVE-2012-1719, CVE-2012-1721, CVE-2012-1722, CVE-2012-1723, CVE-2012-1724,
+CVE-2012-1725, CVE-2012-1726)
+
+All users of java-1.7.0-oracle are advised to upgrade to these updated
+packages, which provide Oracle Java 7 Update 5 and resolve these issues.
+All running instances of Oracle Java must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+829354 - CVE-2012-1711 OpenJDK: improper protection of CORBA data models (CORBA, 7079902)
+829358 - CVE-2012-1717 OpenJDK: insecure temporary file permissions (JRE, 7143606)
+829360 - CVE-2012-1716 OpenJDK: SynthLookAndFeel application context bypass (Swing, 7143614)
+829361 - CVE-2012-1713 OpenJDK: fontmanager layout lookup code memory corruption (2D, 7143617)
+829371 - CVE-2012-1719 OpenJDK: mutable repository identifiers in generated stub code (CORBA, 7143851)
+829372 - CVE-2012-1718 OpenJDK: CRL and certificate extensions handling improvements (Security, 7143872)
+829373 - CVE-2012-1723 OpenJDK: insufficient field accessibility checks (HotSpot, 7152811)
+829374 - CVE-2012-1724 OpenJDK: XML parsing infinite loop (JAXP, 7157609)
+829376 - CVE-2012-1725 OpenJDK: insufficient invokespecial &lt;init&gt; verification (HotSpot, 7160757)
+829377 - CVE-2012-1726 OpenJDK: java.lang.invoke.MethodHandles.Lookup does not honor access modes (Libraries, 7165628)
+831353 - CVE-2012-1721 Oracle JDK: unspecified vulnerability fixed in 6u33 and 7u5 (Deployment)
+831354 - CVE-2012-1722 Oracle JDK: unspecified vulnerability fixed in 6u33 and 7u5 (Deployment)
+831355 - CVE-2012-0551 Oracle JDK: unspecified vulnerability fixed in 6u33 and 7u5 (Deployment)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+i386:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.i686.rpm
+
+x86_64:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Supplementary (v. 6):
+
+x86_64:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+i386:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.i686.rpm
+
+x86_64:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+i386:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.i686.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.i686.rpm
+
+x86_64:
+java-1.7.0-oracle-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-devel-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-jdbc-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-plugin-1.7.0.5-1jpp.1.el6.x86_64.rpm
+java-1.7.0-oracle-src-1.7.0.5-1jpp.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0551.html">https://www.redhat.com/security/data/cve/CVE-2012-0551.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1711.html">https://www.redhat.com/security/data/cve/CVE-2012-1711.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1713.html">https://www.redhat.com/security/data/cve/CVE-2012-1713.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1716.html">https://www.redhat.com/security/data/cve/CVE-2012-1716.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1717.html">https://www.redhat.com/security/data/cve/CVE-2012-1717.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1718.html">https://www.redhat.com/security/data/cve/CVE-2012-1718.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1719.html">https://www.redhat.com/security/data/cve/CVE-2012-1719.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1721.html">https://www.redhat.com/security/data/cve/CVE-2012-1721.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1722.html">https://www.redhat.com/security/data/cve/CVE-2012-1722.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1723.html">https://www.redhat.com/security/data/cve/CVE-2012-1723.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1724.html">https://www.redhat.com/security/data/cve/CVE-2012-1724.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1725.html">https://www.redhat.com/security/data/cve/CVE-2012-1725.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1726.html">https://www.redhat.com/security/data/cve/CVE-2012-1726.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.oracle.com/technetwork/topics/security/javacpujun2012-1515912.html">http://www.oracle.com/technetwork/topics/security/javacpujun2012-1515912.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4bdxXlSAg2UNWIIRAmfYAJ9TCuvKlVt54rLez7D1weEyGR9TFgCdGLJr
+qbBjH9XeCQS9nTZ1G1QdwKI=
+=38hN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0150&#45;03] Moderate: Red Hat Enterprise Linux 5.8 kernel	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:57:56 &#45;0500 -->
+<!--X-Message-Id: 201202210457.q1L4vmmd015568@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0150-03] Moderate: Red Hat Enterprise Linux 5.8 kernel	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0150-03] Moderate: Red Hat Enterprise Linux 5.8 kernel	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0150-03] Moderate: Red Hat Enterprise Linux 5.8 kernel	update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:57:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise Linux 5.8 kernel update
+Advisory ID:       RHSA-2012:0150-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0150.html">https://rhn.redhat.com/errata/RHSA-2012-0150.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-1083 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix one security issue, address several
+hundred bugs, and add numerous enhancements are now available as part of
+the ongoing support and maintenance of Red Hat Enterprise Linux version 5.
+This is the eighth regular update.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issue:
+
+* A flaw was found in the way the Linux kernel's Event Poll (epoll)
+subsystem handled large, nested epoll structures. A local, unprivileged
+user could use this flaw to cause a denial of service. (CVE-2011-1083,
+Moderate)
+
+Red Hat would like to thank Nelson Elhage for reporting this issue.
+
+These updated kernel packages include a number of bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 5.8 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+All Red Hat Enterprise Linux 5 users are advised to install these updated
+packages, which correct these issues and add these enhancements. The system
+must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+485173 - kernel/module-verify-sig.c with memory uncleaned bug
+516170 - kernel multipath driver behaves badly on medium errors
+526862 - [RHEL5 Xen]: Mask out CPU features by default
+543064 - No NUMA node hash function found on a EX machine
+571737 - Cannot use Quickcam Pro 9000 with Ekiga, fails with &quot;uvcvideo: Failed to query ...&quot;
+585935 - Bug in RHEL-5.4/5.5 nfs_access_cache_shrinker
+608156 - kernel panic if bonding initialization fails
+618317 - RFE: RHEL5 Xen: support online dynamic resize of guest virtual disks
+664653 - [5.4] OS cannot recognize DVD disk replace in rescue mode.
+668027 - unexpected error message when sending a unsolicited NA from user code
+668529 - Spare disk added to a raid1 array by mdadm command is dropped upon next boot.
+674663 - vlapic: Fix possible guest tick losing after save/restore
+681578 - CVE-2011-1083 kernel: excessive in kernel CPU consumption when creating large nested epoll structures
+681902 - GFS2: Add readahead to sequential directory traversal
+683372 - NFS4: Incorrect server behavior when using OPEN call with O_CREATE on a directory on which the process has no WRITE permissions.
+688673 - PCI Virtual Function Passthrough - SR-IOV, Paravirt Guest fails to obtain IRQ after reboot
+688791 - dropwatch&gt;stop: Waiting for deactivation ack  (forever)
+691087 - Incorrect values in /proc/sys/vm/dirty_writeback_centises and dirty_expire_centisecs
+694625 - Non-responsive scsi target leads to excessive scsi recovery and dm-mp failover time
+697021 - Patch needed to allow MTU &gt;1500 on vif prior to connecting to bridge
+698842 - kvmclock: MP-BIOS bug: 8254 timer not connected to IO-APIC
+698928 - VLAN interface with changed MAC address fails to communicate
+700565 - RHEL6.1 32bit xen hvm guest crash randomly
+700752 - 32-bit PV guest crash on restore on x64_86 host
+700886 - RHEL5.6 TSC used as default clock source on multi-chassis system
+703150 - multiple resource leaks on error paths in blkfront and netfront
+703505 - 300 seconds time shift in vdso version of clock_gettime()
+704921 - panic in cifsd code after unexpected lookup error -88.
+706339 - open/closed files in cifs mount points
+707966 - 2.6.18-238.1.1.el5 or newer won't boot under Xen HVM due to linux-2.6-virt-nmi-don-t-print-nmi-stuck-messages-on-guests.patch
+709271 - net.ipv6.conf.default.dad_transmits has no effect on tentative IPv6 addresses
+709515 - Kernel panic at nfs4_callback_compound+0x2dd
+711070 - mask the SMEP bit for PV, do the same or backport SMEP emulation for HVM
+712439 - Backport &quot;x86: extend debug key 't' to collect useful clock skew info&quot;
+712440 - Backport &quot;vmx: Print advanced features during boot&quot;
+712441 - Backport &quot;x86/hvm: fix off-by-one errors in vcpuid range checks&quot;
+713702 - pull missing fixes from upstream x86_emulate()
+714053 - couple nice-to-have xen hypervisor patches
+714670 - TCP_CRR and concurrent TCP stream tests over IPv6 sometime fails on rhel5.7
+715501 - ext4: Don't error out the fs if the user tries to make a file too big
+716834 - 'dmesg' command  is swamped with the message: pci_set_power_state(): 0000:05:05.0: state=3, current state=5
+717434 - Unable to attach a cdrom device to guest domain
+717850 - miss xmit_hash_policy=layer2+3 in modinfo bonding output
+718232 - [xfs] mis-sized O_DIRECT I/O results in hung task timeouts
+718641 - Can't change lacp_rate in bonding mode=802.3ad
+718988 - [EL5.7] igb: failed to activate WOL on 2nd LAN port on i350
+720347 - RHEL 6.1 Xen paravirt guest is getting network outage during live migration (host side)
+720551 - xfs_error_report() oops when passed-in mp is NULL
+720936 - Windows guests may hang/BSOD on some AMD processors.
+720986 - vlapic: backport EOI fast path
+723755 - win2003 i386 guest BSOD when created with e1000 nic
+728508 - Huge performance regression in NFS client
+729261 - ext3/ext4 mbcache  causes high CPU load
+732752 - exclude VMX_PROCBASED_CTL2 from the MSRs a VMX guest is allowed to access
+733416 - netfront MTU drops to 1500 after domain migration
+734708 - xen modules - unable to handle kernel NULL pointer dereference
+734900 - Panic, NMI Watchdog detected LOCKUP on CPU 6
+735477 - nfs4_getfacl decoding causes kernel oops
+740203 - Host crash when pass-through fails
+740299 - [RTC] - The ioctl RTC_IRPQ_READ doesn't return the correct value
+742880 - [RFE] backport Xen watchdog (hypervisor side only)
+752626 - BNX2I: Fixed the endian on TTT for NOP out transmission
+753729 - system cannot suspend with &quot;stopping tasks timed out - bnx2i_thread/0 remaining&quot;
+771592 - Install RHEV-H to virtual machine cause VM kernel panic when boot
+772578 - [ALL LANG] [anaconda] The installation halted when clicking 'Skip' button (select 'Skip entering Installation Number')
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-308.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-308.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-308.el5.i686.rpm
+kernel-PAE-2.6.18-308.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-PAE-devel-2.6.18-308.el5.i686.rpm
+kernel-debug-2.6.18-308.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-debug-devel-2.6.18-308.el5.i686.rpm
+kernel-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-308.el5.i686.rpm
+kernel-devel-2.6.18-308.el5.i686.rpm
+kernel-headers-2.6.18-308.el5.i386.rpm
+kernel-xen-2.6.18-308.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-xen-devel-2.6.18-308.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-308.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-308.el5.x86_64.rpm
+kernel-debug-2.6.18-308.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-308.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-308.el5.x86_64.rpm
+kernel-devel-2.6.18-308.el5.x86_64.rpm
+kernel-headers-2.6.18-308.el5.x86_64.rpm
+kernel-xen-2.6.18-308.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-308.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-308.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-308.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-308.el5.i686.rpm
+kernel-PAE-2.6.18-308.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-PAE-devel-2.6.18-308.el5.i686.rpm
+kernel-debug-2.6.18-308.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-debug-devel-2.6.18-308.el5.i686.rpm
+kernel-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-308.el5.i686.rpm
+kernel-devel-2.6.18-308.el5.i686.rpm
+kernel-headers-2.6.18-308.el5.i386.rpm
+kernel-xen-2.6.18-308.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-308.el5.i686.rpm
+kernel-xen-devel-2.6.18-308.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-308.el5.ia64.rpm
+kernel-debug-2.6.18-308.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.ia64.rpm
+kernel-debug-devel-2.6.18-308.el5.ia64.rpm
+kernel-debuginfo-2.6.18-308.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-308.el5.ia64.rpm
+kernel-devel-2.6.18-308.el5.ia64.rpm
+kernel-headers-2.6.18-308.el5.ia64.rpm
+kernel-xen-2.6.18-308.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-308.el5.ia64.rpm
+kernel-xen-devel-2.6.18-308.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-308.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-308.el5.ppc64.rpm
+kernel-debug-2.6.18-308.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-308.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-308.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-308.el5.ppc64.rpm
+kernel-devel-2.6.18-308.el5.ppc64.rpm
+kernel-headers-2.6.18-308.el5.ppc.rpm
+kernel-headers-2.6.18-308.el5.ppc64.rpm
+kernel-kdump-2.6.18-308.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-308.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-308.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-308.el5.s390x.rpm
+kernel-debug-2.6.18-308.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.s390x.rpm
+kernel-debug-devel-2.6.18-308.el5.s390x.rpm
+kernel-debuginfo-2.6.18-308.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-308.el5.s390x.rpm
+kernel-devel-2.6.18-308.el5.s390x.rpm
+kernel-headers-2.6.18-308.el5.s390x.rpm
+kernel-kdump-2.6.18-308.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-308.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-308.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-308.el5.x86_64.rpm
+kernel-debug-2.6.18-308.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-308.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-308.el5.x86_64.rpm
+kernel-devel-2.6.18-308.el5.x86_64.rpm
+kernel-headers-2.6.18-308.el5.x86_64.rpm
+kernel-xen-2.6.18-308.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-308.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1083.html">https://www.redhat.com/security/data/cve/CVE-2011-1083.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.8_Technical_Notes/kernel.html#RHSA-2012-0150">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.8_Technical_Notes/kernel.html#RHSA-2012-0150</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyRGXlSAg2UNWIIRArL8AJ4p5o/4QRlcwsYv1Qg91KI+8qsrqwCeM1ks
++b77f5VxTGHGM3BoAB80Ymc=
+=wl+4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

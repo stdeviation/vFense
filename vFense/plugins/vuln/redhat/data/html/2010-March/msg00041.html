@@ -1,0 +1,238 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0331&#45;01] Moderate: GFS&#45;kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 13:59:25 &#45;0400 -->
+<!--X-Message-Id: 201003301759.o2UHxJKX021473@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0331-01] Moderate: GFS-kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0331-01] Moderate: GFS-kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0331-01] Moderate: GFS-kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 13:59:19 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: GFS-kernel security and bug fix update
+Advisory ID:       RHSA-2010:0331-01
+Product:           Red Hat Global File System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0331.html">https://rhn.redhat.com/errata/RHSA-2010-0331.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2010-0727 
+=====================================================================
+
+1. Summary:
+
+Updated GFS-kernel packages that fix one security issue are now available
+for Red Hat Enterprise Linux 4.8, kernel release 2.6.9-89.0.20.EL.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Global File System 4AS - i386, ia64, ppc, x86_64
+Red Hat Global File System 4ES - i386, ia64, x86_64
+Red Hat Global File System 4WS - i386, ia64, x86_64
+
+3. Description:
+
+The GFS-kernel packages contain modules that provide the ability to mount
+and use GFS file systems.
+
+A flaw was found in the gfs_lock() implementation. The GFS locking code
+could skip the lock operation for files that have the S_ISGID bit
+(set-group-ID on execution) in their mode set. A local, unprivileged user
+on a system that has a GFS file system mounted could use this flaw to cause
+a kernel panic. (CVE-2010-0727)
+
+As well, these updated GFS-kernel packages are in sync with the latest
+kernel (2.6.9-89.0.20.EL). The modules in earlier GFS-kernel packages fail
+to load because they do not match the running kernel. It is possible to
+force-load the modules; however, with this update, force-loading the
+modules is not required.
+
+Users are advised to upgrade to these latest GFS-kernel packages, which
+resolve this issue and are updated for use with the 2.6.9-89.0.20.EL
+kernel.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+570863 - CVE-2010-0727 bug in GFS/GFS2 locking code leads to dos
+
+6. Package List:
+
+Red Hat Global File System 4AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm</a>
+
+i386:
+GFS-kernel-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-hugemem-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.i686.rpm
+
+ia64:
+GFS-kernel-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.ia64.rpm
+
+ppc:
+GFS-kernel-2.6.9-85.2.el4_8.10.ppc64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.ppc64.rpm
+GFS-kernel-largesmp-2.6.9-85.2.el4_8.10.ppc64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.ppc64.rpm
+
+x86_64:
+GFS-kernel-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-largesmp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.x86_64.rpm
+
+Red Hat Global File System 4ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm</a>
+
+i386:
+GFS-kernel-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-hugemem-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.i686.rpm
+
+ia64:
+GFS-kernel-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.ia64.rpm
+
+x86_64:
+GFS-kernel-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-largesmp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.x86_64.rpm
+
+Red Hat Global File System 4WS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/RHGFS/SRPMS/GFS-kernel-2.6.9-85.2.el4_8.10.src.rpm</a>
+
+i386:
+GFS-kernel-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-hugemem-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.i686.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.i686.rpm
+
+ia64:
+GFS-kernel-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.ia64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.ia64.rpm
+
+x86_64:
+GFS-kernel-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-debuginfo-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-largesmp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-smp-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernel-xenU-2.6.9-85.2.el4_8.10.x86_64.rpm
+GFS-kernheaders-2.6.9-85.2.el4_8.10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0727.html">https://www.redhat.com/security/data/cve/CVE-2010-0727.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsjvyXlSAg2UNWIIRAqnwAJ98kDrGFYlboY9AOH1VjqxMb1nH2ACdFsSF
+Klf4y++z7c6AihlFU0SI9Mw=
+=CFDs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

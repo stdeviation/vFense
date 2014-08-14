@@ -1,0 +1,402 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1451&#45;01] Critical: java&#45;1.7.0&#45;openjdk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 22 Oct 2013 13:45:51 &#45;0400 -->
+<!--X-Message-Id: 201310221745.r9MHjoBS010510@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1451-01] Critical: java-1.7.0-openjdk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1451-01] Critical: java-1.7.0-openjdk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1451-01] Critical: java-1.7.0-openjdk security update</li>
+<li><em>Date</em>: Tue, 22 Oct 2013 17:45:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.7.0-openjdk security update
+Advisory ID:       RHSA-2013:1451-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1451.html">https://rhn.redhat.com/errata/RHSA-2013-1451.html</a>
+Issue date:        2013-10-22
+CVE Names:         CVE-2013-3829 CVE-2013-4002 CVE-2013-5772 
+                   CVE-2013-5774 CVE-2013-5778 CVE-2013-5780 
+                   CVE-2013-5782 CVE-2013-5783 CVE-2013-5784 
+                   CVE-2013-5790 CVE-2013-5797 CVE-2013-5800 
+                   CVE-2013-5802 CVE-2013-5803 CVE-2013-5804 
+                   CVE-2013-5809 CVE-2013-5814 CVE-2013-5817 
+                   CVE-2013-5820 CVE-2013-5823 CVE-2013-5825 
+                   CVE-2013-5829 CVE-2013-5830 CVE-2013-5838 
+                   CVE-2013-5840 CVE-2013-5842 CVE-2013-5849 
+                   CVE-2013-5850 CVE-2013-5851 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.7.0-openjdk packages that fix various security issues are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The java-1.7.0-openjdk packages provide the OpenJDK 7 Java Runtime
+Environment and the OpenJDK 7 Java Software Development Kit.
+
+Multiple input checking flaws were found in the 2D component native image
+parsing code. A specially crafted image file could trigger a Java Virtual
+Machine memory corruption and, possibly, lead to arbitrary code execution
+with the privileges of the user running the Java Virtual Machine.
+(CVE-2013-5782)
+
+The class loader did not properly check the package access for non-public
+proxy classes. A remote attacker could possibly use this flaw to execute
+arbitrary code with the privileges of the user running the Java Virtual
+Machine. (CVE-2013-5830)
+
+Multiple improper permission check issues were discovered in the 2D, CORBA,
+JNDI, and Libraries components in OpenJDK. An untrusted Java application or
+applet could use these flaws to bypass Java sandbox restrictions.
+(CVE-2013-5829, CVE-2013-5814, CVE-2013-5817, CVE-2013-5842, CVE-2013-5850,
+CVE-2013-5838)
+
+Multiple input checking flaws were discovered in the JPEG image reading and
+writing code in the 2D component. An untrusted Java application or applet
+could use these flaws to corrupt the Java Virtual Machine memory and bypass
+Java sandbox restrictions. (CVE-2013-5809)
+
+The FEATURE_SECURE_PROCESSING setting was not properly honored by the
+javax.xml.transform package transformers. A remote attacker could use this
+flaw to supply a crafted XML that would be processed without the intended
+security restrictions. (CVE-2013-5802)
+
+Multiple errors were discovered in the way the JAXP and Security components
+processes XML inputs. A remote attacker could create a crafted XML that
+would cause a Java application to use an excessive amount of CPU and memory
+when processed. (CVE-2013-5825, CVE-2013-4002, CVE-2013-5823)
+
+Multiple improper permission check issues were discovered in the Libraries,
+Swing, JAX-WS, JAXP, JGSS, AWT, Beans, and Scripting components in OpenJDK.
+An untrusted Java application or applet could use these flaws to bypass
+certain Java sandbox restrictions. (CVE-2013-3829, CVE-2013-5840,
+CVE-2013-5774, CVE-2013-5783, CVE-2013-5820, CVE-2013-5851, CVE-2013-5800,
+CVE-2013-5849, CVE-2013-5790, CVE-2013-5784)
+
+It was discovered that the 2D component image library did not properly
+check bounds when performing image conversions. An untrusted Java
+application or applet could use this flaw to disclose portions of the Java
+Virtual Machine memory. (CVE-2013-5778)
+
+Multiple input sanitization flaws were discovered in javadoc. When javadoc
+documentation was generated from an untrusted Java source code and hosted
+on a domain not controlled by the code author, these issues could make it
+easier to perform cross-site scripting attacks. (CVE-2013-5804,
+CVE-2013-5797)
+
+Various OpenJDK classes that represent cryptographic keys could leak
+private key information by including sensitive data in strings returned by
+toString() methods. These flaws could possibly lead to an unexpected
+exposure of sensitive key data. (CVE-2013-5780)
+
+The Java Heap Analysis Tool (jhat) failed to properly escape all data added
+into the HTML pages it generated. Crafted content in the memory of a Java
+program analyzed using jhat could possibly be used to conduct cross-site
+scripting attacks. (CVE-2013-5772)
+
+The Kerberos implementation in OpenJDK did not properly parse KDC
+responses. A malformed packet could cause a Java application using JGSS to
+exit. (CVE-2013-5803)
+
+Note: If the web browser plug-in provided by the icedtea-web package was
+installed, the issues exposed via Java applets could have been exploited
+without user interaction if a user visited a malicious website.
+
+All users of java-1.7.0-openjdk are advised to upgrade to these updated
+packages, which resolve these issues. All running instances of OpenJDK Java
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+1018713 - CVE-2013-5803 OpenJDK: insufficient checks of KDC replies (JGSS, 8014341)
+1018717 - CVE-2013-5772 OpenJDK: insufficient html escaping in jhat (jhat, 8011081)
+1018720 - CVE-2013-5797 OpenJDK: insufficient escaping of window title string (Javadoc, 8016675)
+1018727 - CVE-2013-5784 OpenJDK: insufficient InterfaceImplementor security checks (Scripting, 8017299)
+1018736 - CVE-2013-5790 OpenJDK: insufficient security checks (Beans, 8012071)
+1018750 - CVE-2013-5849 OpenJDK: insufficient DataFlavor security checks (AWT, 8012277)
+1018755 - CVE-2013-5800 OpenJDK: default keytab path information leak (JGSS, 8022931)
+1018785 - CVE-2013-5780 OpenJDK: key data leak via toString() methods (Libraries, 8011071)
+1018831 - CVE-2013-5840 OpenJDK: getDeclaringClass() information leak (Libraries, 8014349)
+1018972 - CVE-2013-5820 OpenJDK: insufficient security checks (JAXWS, 8017505)
+1018977 - CVE-2013-5851 OpenJDK: XML stream factory finder information leak (JAXP, 8013502)
+1018984 - CVE-2013-5778 OpenJDK: image conversion out of bounds read (2D, 8014102)
+1019108 - CVE-2013-5782 OpenJDK: Incorrect awt_getPixelByte/awt_getPixelShort/awt_setPixelByte/awt_setPixelShort image raster checks (2D, 8014093)
+1019110 - CVE-2013-5830 OpenJDK: checkPackageAccess missing security check (Libraries, 8017291)
+1019113 - CVE-2013-5809 OpenJDK: JPEGImageReader and JPEGImageWriter missing band size checks (2D, 8013510)
+1019115 - CVE-2013-5829 OpenJDK: Java2d Disposer security bypass (2D, 8017287)
+1019117 - CVE-2013-5814 OpenJDK: RMIConnection stub missing permission check (CORBA, 8011157)
+1019118 - CVE-2013-5817 OpenJDK: VersionHelper12 does not honor modifyThreadGroup restriction (JNDI, 8013739)
+1019123 - CVE-2013-5842 OpenJDK: ObjectInputStream/ObjectOutputStream missing checks (Libraries, 8014987)
+1019127 - CVE-2013-5850 OpenJDK: Missing CORBA security checks (Libraries, 8017196)
+1019130 - CVE-2013-5802 OpenJDK: javax.xml.transform.TransformerFactory does not properly honor XMLConstants.FEATURE_SECURE_PROCESSING (JAXP, 8012425)
+1019131 - CVE-2013-5804 OpenJDK: javac does not ignore certain ignorable characters (Javadoc, 8016653)
+1019133 - CVE-2013-3829 OpenJDK: java.util.TimeZone does not restrict setting of default time zone (Libraries, 8001029)
+1019137 - CVE-2013-5783 OpenJDK: JTable not properly performing certain access checks (Swing, 8013744)
+1019139 - CVE-2013-5825 OpenJDK: XML parsing Denial of Service (JAXP, 8014530)
+1019145 - CVE-2013-5823 OpenJDK: com.sun.org.apache.xml.internal.security.utils.UnsyncByteArrayOutputStream Denial of Service (Security, 8021290)
+1019147 - CVE-2013-5774 OpenJDK: Inet6Address class IPv6 address processing errors (Libraries, 8015743)
+1019176 - CVE-2013-4002 OpenJDK: XML parsing Denial of Service (JAXP, 8017298)
+1019300 - CVE-2013-5838 OpenJDK: Vulnerability in Libraries component (Libraries, 7023639)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+noarch:
+java-1.7.0-openjdk-javadoc-1.7.0.45-2.4.3.2.el6_4.noarch.rpm
+
+x86_64:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+noarch:
+java-1.7.0-openjdk-javadoc-1.7.0.45-2.4.3.2.el6_4.noarch.rpm
+
+x86_64:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+noarch:
+java-1.7.0-openjdk-javadoc-1.7.0.45-2.4.3.2.el6_4.noarch.rpm
+
+x86_64:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.45-2.4.3.2.el6_4.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.i686.rpm
+
+noarch:
+java-1.7.0-openjdk-javadoc-1.7.0.45-2.4.3.2.el6_4.noarch.rpm
+
+x86_64:
+java-1.7.0-openjdk-debuginfo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.45-2.4.3.2.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3829.html">https://www.redhat.com/security/data/cve/CVE-2013-3829.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4002.html">https://www.redhat.com/security/data/cve/CVE-2013-4002.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5772.html">https://www.redhat.com/security/data/cve/CVE-2013-5772.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5774.html">https://www.redhat.com/security/data/cve/CVE-2013-5774.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5778.html">https://www.redhat.com/security/data/cve/CVE-2013-5778.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5780.html">https://www.redhat.com/security/data/cve/CVE-2013-5780.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5782.html">https://www.redhat.com/security/data/cve/CVE-2013-5782.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5783.html">https://www.redhat.com/security/data/cve/CVE-2013-5783.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5784.html">https://www.redhat.com/security/data/cve/CVE-2013-5784.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5790.html">https://www.redhat.com/security/data/cve/CVE-2013-5790.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5797.html">https://www.redhat.com/security/data/cve/CVE-2013-5797.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5800.html">https://www.redhat.com/security/data/cve/CVE-2013-5800.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5802.html">https://www.redhat.com/security/data/cve/CVE-2013-5802.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5803.html">https://www.redhat.com/security/data/cve/CVE-2013-5803.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5804.html">https://www.redhat.com/security/data/cve/CVE-2013-5804.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5809.html">https://www.redhat.com/security/data/cve/CVE-2013-5809.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5814.html">https://www.redhat.com/security/data/cve/CVE-2013-5814.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5817.html">https://www.redhat.com/security/data/cve/CVE-2013-5817.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5820.html">https://www.redhat.com/security/data/cve/CVE-2013-5820.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5823.html">https://www.redhat.com/security/data/cve/CVE-2013-5823.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5825.html">https://www.redhat.com/security/data/cve/CVE-2013-5825.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5829.html">https://www.redhat.com/security/data/cve/CVE-2013-5829.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5830.html">https://www.redhat.com/security/data/cve/CVE-2013-5830.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5838.html">https://www.redhat.com/security/data/cve/CVE-2013-5838.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5840.html">https://www.redhat.com/security/data/cve/CVE-2013-5840.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5842.html">https://www.redhat.com/security/data/cve/CVE-2013-5842.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5849.html">https://www.redhat.com/security/data/cve/CVE-2013-5849.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5850.html">https://www.redhat.com/security/data/cve/CVE-2013-5850.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5851.html">https://www.redhat.com/security/data/cve/CVE-2013-5851.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSZrmrXlSAg2UNWIIRAh6sAJ0WQ797HscVf/5+FQidZT6jkWaPsgCZAUjS
+J8t9STiPD1W6tH8qpm7fzBA=
+=hgt4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

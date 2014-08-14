@@ -1,0 +1,153 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0151&#45;01] Important: JBoss Enterprise Portal Platform 4.3	CP07 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 10 Jan 2013 00:50:37 &#45;0500 -->
+<!--X-Message-Id: 201301100550.r0A5oHXf003574@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0151-01] Important: JBoss Enterprise Portal Platform 4.3	CP07</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0151-01] Important: JBoss Enterprise Portal Platform 4.3	CP07 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0151-01] Important: JBoss Enterprise Portal Platform 4.3	CP07 security update</li>
+<li><em>Date</em>: Thu, 10 Jan 2013 05:50:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Portal Platform 4.3 CP07 security update
+Advisory ID:       RHSA-2013:0151-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0151.html">https://rhn.redhat.com/errata/RHSA-2013-0151.html</a>
+Issue date:        2013-01-10
+CVE Names:         CVE-2012-3546 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Portal Platform 4.3 CP07 that fixes one
+security issue is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Enterprise Portal Platform is the open source implementation of the
+Java EE suite of services and Portal services running atop JBoss Enterprise
+Application Platform. It comprises a set of offerings for enterprise
+customers who are looking for pre-configured profiles of JBoss Enterprise
+Middleware components that have been tested and certified together to
+provide an integrated experience.
+
+It was found that when an application used FORM authentication, along with
+another component that calls request.setUserPrincipal() before the call to
+FormAuthenticator#authenticate() (such as the Single-Sign-On valve), it was
+possible to bypass the security constraint checks in the FORM authenticator
+by appending &quot;/j_security_check&quot; to the end of a URL. A remote attacker
+with an authenticated session on an affected application could use this
+flaw to circumvent authorization controls, and thereby access resources not
+permitted by the roles associated with their authenticated session.
+(CVE-2012-3546)
+
+Warning: Before applying this update, back up all applications deployed on
+JBoss Enterprise Portal Platform, along with all customized configuration
+files, and any databases and database settings.
+
+All users of JBoss Enterprise Portal Platform 4.3 CP07 as provided from the
+Red Hat Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up all
+applications deployed on JBoss Enterprise Portal Platform, along with all
+customized configuration files, and any databases and database settings.
+
+Note that it is recommended to halt the JBoss Enterprise Portal Platform
+server by stopping the JBoss Application Server process before installing
+this update, and then after installing the update, restart the JBoss
+Enterprise Portal Platform server by starting the JBoss Application Server
+process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+883634 - CVE-2012-3546 Tomcat/JBoss Web: Bypass of security constraints
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3546.html">https://www.redhat.com/security/data/cve/CVE-2012-3546.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=4.3+CP07">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=4.3+CP07</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-6.html">http://tomcat.apache.org/security-6.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ7lXfXlSAg2UNWIIRAmzyAJ4nnmG23IpJ5DVLL53hRQvx3vrcngCgnP/S
+/GvAATzj67lWS6m61Ip+K7s=
+=Z9rF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

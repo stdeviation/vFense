@@ -1,0 +1,264 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0858&#45;03] Important: bzip2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Nov 2010 14:28:35 &#45;0500 -->
+<!--X-Message-Id: 201011101928.oAAJSUDd012847@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0858-03] Important: bzip2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0858-03] Important: bzip2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0858-03] Important: bzip2 security update</li>
+<li><em>Date</em>: Wed, 10 Nov 2010 12:28:29 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bzip2 security update
+Advisory ID:       RHSA-2010:0858-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0858.html">https://rhn.redhat.com/errata/RHSA-2010-0858.html</a>
+Issue date:        2010-11-10
+CVE Names:         CVE-2010-0405 
+=====================================================================
+
+1. Summary:
+
+Updated bzip2 packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+bzip2 is a freely available, high-quality data compressor. It provides both
+standalone compression and decompression utilities, as well as a shared
+library for use with other programs.
+
+An integer overflow flaw was discovered in the bzip2 decompression routine.
+This issue could, when decompressing malformed archives, cause bzip2, or an
+application linked against the libbz2 library, to crash or, potentially,
+execute arbitrary code. (CVE-2010-0405)
+
+Users of bzip2 should upgrade to these updated packages, which contain a
+backported patch to resolve this issue. All running applications using the
+libbz2 library must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+627882 - CVE-2010-0405 bzip2: integer overflow flaw in BZ2_decompress
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+i386:
+bzip2-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+
+x86_64:
+bzip2-1.0.5-7.el6_0.x86_64.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+i386:
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+
+x86_64:
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+x86_64:
+bzip2-1.0.5-7.el6_0.x86_64.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+x86_64:
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+i386:
+bzip2-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+
+ppc64:
+bzip2-1.0.5-7.el6_0.ppc64.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.ppc.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.ppc64.rpm
+bzip2-devel-1.0.5-7.el6_0.ppc.rpm
+bzip2-devel-1.0.5-7.el6_0.ppc64.rpm
+bzip2-libs-1.0.5-7.el6_0.ppc.rpm
+bzip2-libs-1.0.5-7.el6_0.ppc64.rpm
+
+s390x:
+bzip2-1.0.5-7.el6_0.s390x.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.s390.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.s390x.rpm
+bzip2-devel-1.0.5-7.el6_0.s390.rpm
+bzip2-devel-1.0.5-7.el6_0.s390x.rpm
+bzip2-libs-1.0.5-7.el6_0.s390.rpm
+bzip2-libs-1.0.5-7.el6_0.s390x.rpm
+
+x86_64:
+bzip2-1.0.5-7.el6_0.x86_64.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.x86_64.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/bzip2-1.0.5-7.el6_0.src.rpm</a>
+
+i386:
+bzip2-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+
+x86_64:
+bzip2-1.0.5-7.el6_0.x86_64.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.i686.rpm
+bzip2-debuginfo-1.0.5-7.el6_0.x86_64.rpm
+bzip2-devel-1.0.5-7.el6_0.i686.rpm
+bzip2-devel-1.0.5-7.el6_0.x86_64.rpm
+bzip2-libs-1.0.5-7.el6_0.i686.rpm
+bzip2-libs-1.0.5-7.el6_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0405.html">https://www.redhat.com/security/data/cve/CVE-2010-0405.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM2vJPXlSAg2UNWIIRAhDjAKC48dJpaosiVbbCgKPMsTELZQd4DQCdFddW
+lwFEfrDu228ccL3xrVjYiIU=
+=BLU3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

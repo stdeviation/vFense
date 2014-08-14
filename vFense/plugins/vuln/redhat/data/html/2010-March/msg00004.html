@@ -1,0 +1,336 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0130&#45;01] Moderate: java&#45;1.5.0&#45;ibm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Mar 2010 13:23:33 &#45;0500 -->
+<!--X-Message-Id: 201003031823.o23INQXA019399@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0130-01] Moderate: java-1.5.0-ibm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0130-01] Moderate: java-1.5.0-ibm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0130-01] Moderate: java-1.5.0-ibm security update</li>
+<li><em>Date</em>: Wed, 3 Mar 2010 13:23:26 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: java-1.5.0-ibm security update
+Advisory ID:       RHSA-2010:0130-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0130.html">https://rhn.redhat.com/errata/RHSA-2010-0130.html</a>
+Issue date:        2010-03-03
+CVE Names:         CVE-2009-3555 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.5.0-ibm packages that fix a security issue are now available
+for Red Hat Enterprise Linux 4 Extras and 5 Supplementary.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, ppc, s390x, x86_64
+Red Hat Desktop version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux AS version 4 Extras - i386, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux ES version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux WS version 4 Extras - i386, x86_64
+
+3. Description:
+
+The IBM 1.5.0 Java release includes the IBM Java 2 Runtime Environment and
+the IBM Java 2 Software Development Kit.
+
+A flaw was found in the way the TLS/SSL (Transport Layer Security/Secure
+Sockets Layer) protocols handle session renegotiation. A man-in-the-middle
+attacker could use this flaw to prefix arbitrary plain text to a client's
+session (for example, an HTTPS connection to a website). This could force
+the server to process an attacker's request as if authenticated using the
+victim's credentials. (CVE-2009-3555)
+
+This update disables renegotiation in the Java Secure Socket Extension
+(JSSE) component. Unsafe renegotiation can be re-enabled using the
+com.ibm.jsse2.renegotiate property. Refer to the following Knowledgebase
+article for details: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+All users of java-1.5.0-ibm are advised to upgrade to these updated
+packages, containing the IBM 1.5.0 SR11-FP1 Java release. All running
+instances of IBM Java must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+533125 - CVE-2009-3555 TLS: MITM attacks via session renegotiation
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.i386.rpm
+
+ppc:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.ppc64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.ppc64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.ppc64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.ppc64.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.ppc.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.ppc64.rpm
+
+s390:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.s390.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.s390.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.s390.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.s390.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.s390.rpm
+
+s390x:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.s390x.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.s390x.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.s390x.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.s390x.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.i386.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.i386.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el4.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.i386.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el4.x86_64.rpm
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.i386.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.i386.rpm
+
+ppc:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.ppc64.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.ppc64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.ppc64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.ppc64.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.ppc.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.ppc64.rpm
+
+s390x:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.s390.rpm
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.s390x.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.s390x.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.s390.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.s390x.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.s390.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.s390x.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.s390.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.s390.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.s390x.rpm
+
+x86_64:
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-accessibility-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-demo-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-devel-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-javacomm-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+java-1.5.0-ibm-jdbc-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-plugin-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.i386.rpm
+java-1.5.0-ibm-src-1.5.0.11.1-1jpp.3.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3555.html">https://www.redhat.com/security/data/cve/CVE-2009-3555.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLjqkCXlSAg2UNWIIRAo4iAJ9Htnva6uRj0e39vEEAkYb4UIuQHACgsscc
+OntQs0wrBL6+6e0kFXtQPLs=
+=Hach
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

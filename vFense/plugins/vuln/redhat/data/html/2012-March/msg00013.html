@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0397&#45;01] Moderate: glibc security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 19 Mar 2012 18:06:33 &#45;0400 -->
+<!--X-Message-Id: 201203192206.q2JM6R4w005348@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0397-01] Moderate: glibc security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0397-01] Moderate: glibc security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0397-01] Moderate: glibc security update</li>
+<li><em>Date</em>: Mon, 19 Mar 2012 22:06:27 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security update
+Advisory ID:       RHSA-2012:0397-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0397.html">https://rhn.redhat.com/errata/RHSA-2012-0397.html</a>
+Issue date:        2012-03-19
+CVE Names:         CVE-2012-0864 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The glibc packages provide the standard C and standard math libraries used
+by multiple programs on the system. Without these libraries, the Linux
+system cannot function correctly.
+
+An integer overflow flaw was found in the implementation of the printf
+functions family. This could allow an attacker to bypass FORTIFY_SOURCE
+protections and execute arbitrary code using a format string flaw in an
+application, even though these protections are expected to limit the impact
+of such flaws to an application abort. (CVE-2012-0864)
+
+All users of glibc are advised to upgrade to these updated packages, which
+contain a patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+794766 - CVE-2012-0864 glibc: FORTIFY_SOURCE format string protection bypass via &quot;nargs&quot; integer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-81.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-81.el5_8.1.src.rpm</a>
+
+i386:
+glibc-2.5-81.el5_8.1.i386.rpm
+glibc-2.5-81.el5_8.1.i686.rpm
+glibc-common-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i686.rpm
+glibc-debuginfo-common-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.i386.rpm
+glibc-headers-2.5-81.el5_8.1.i386.rpm
+glibc-utils-2.5-81.el5_8.1.i386.rpm
+nscd-2.5-81.el5_8.1.i386.rpm
+
+x86_64:
+glibc-2.5-81.el5_8.1.i686.rpm
+glibc-2.5-81.el5_8.1.x86_64.rpm
+glibc-common-2.5-81.el5_8.1.x86_64.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i686.rpm
+glibc-debuginfo-2.5-81.el5_8.1.x86_64.rpm
+glibc-debuginfo-common-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.x86_64.rpm
+glibc-headers-2.5-81.el5_8.1.x86_64.rpm
+glibc-utils-2.5-81.el5_8.1.x86_64.rpm
+nscd-2.5-81.el5_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-81.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-81.el5_8.1.src.rpm</a>
+
+i386:
+glibc-2.5-81.el5_8.1.i386.rpm
+glibc-2.5-81.el5_8.1.i686.rpm
+glibc-common-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i686.rpm
+glibc-debuginfo-common-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.i386.rpm
+glibc-headers-2.5-81.el5_8.1.i386.rpm
+glibc-utils-2.5-81.el5_8.1.i386.rpm
+nscd-2.5-81.el5_8.1.i386.rpm
+
+ia64:
+glibc-2.5-81.el5_8.1.i686.rpm
+glibc-2.5-81.el5_8.1.ia64.rpm
+glibc-common-2.5-81.el5_8.1.ia64.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i686.rpm
+glibc-debuginfo-2.5-81.el5_8.1.ia64.rpm
+glibc-devel-2.5-81.el5_8.1.ia64.rpm
+glibc-headers-2.5-81.el5_8.1.ia64.rpm
+glibc-utils-2.5-81.el5_8.1.ia64.rpm
+nscd-2.5-81.el5_8.1.ia64.rpm
+
+ppc:
+glibc-2.5-81.el5_8.1.ppc.rpm
+glibc-2.5-81.el5_8.1.ppc64.rpm
+glibc-common-2.5-81.el5_8.1.ppc.rpm
+glibc-debuginfo-2.5-81.el5_8.1.ppc.rpm
+glibc-debuginfo-2.5-81.el5_8.1.ppc64.rpm
+glibc-devel-2.5-81.el5_8.1.ppc.rpm
+glibc-devel-2.5-81.el5_8.1.ppc64.rpm
+glibc-headers-2.5-81.el5_8.1.ppc.rpm
+glibc-utils-2.5-81.el5_8.1.ppc.rpm
+nscd-2.5-81.el5_8.1.ppc.rpm
+
+s390x:
+glibc-2.5-81.el5_8.1.s390.rpm
+glibc-2.5-81.el5_8.1.s390x.rpm
+glibc-common-2.5-81.el5_8.1.s390x.rpm
+glibc-debuginfo-2.5-81.el5_8.1.s390.rpm
+glibc-debuginfo-2.5-81.el5_8.1.s390x.rpm
+glibc-devel-2.5-81.el5_8.1.s390.rpm
+glibc-devel-2.5-81.el5_8.1.s390x.rpm
+glibc-headers-2.5-81.el5_8.1.s390x.rpm
+glibc-utils-2.5-81.el5_8.1.s390x.rpm
+nscd-2.5-81.el5_8.1.s390x.rpm
+
+x86_64:
+glibc-2.5-81.el5_8.1.i686.rpm
+glibc-2.5-81.el5_8.1.x86_64.rpm
+glibc-common-2.5-81.el5_8.1.x86_64.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i386.rpm
+glibc-debuginfo-2.5-81.el5_8.1.i686.rpm
+glibc-debuginfo-2.5-81.el5_8.1.x86_64.rpm
+glibc-debuginfo-common-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.i386.rpm
+glibc-devel-2.5-81.el5_8.1.x86_64.rpm
+glibc-headers-2.5-81.el5_8.1.x86_64.rpm
+glibc-utils-2.5-81.el5_8.1.x86_64.rpm
+nscd-2.5-81.el5_8.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0864.html">https://www.redhat.com/security/data/cve/CVE-2012-0864.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPZ63QXlSAg2UNWIIRAgIoAKDCfqaaA+1eP/vua+72RT4U4KvSFgCffiPk
+rPa1rro4gGcJH8prF+aUUCw=
+=eMZq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

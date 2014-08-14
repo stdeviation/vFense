@@ -1,0 +1,238 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0091&#45;01] Moderate: openstack&#45;neutron security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Jan 2014 13:41:59 &#45;0500 -->
+<!--X-Message-Id: 201401221841.s0MIfwQJ013905@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0091-01] Moderate: openstack-neutron security, bug fix,	and e</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0091-01] Moderate: openstack-neutron security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0091-01] Moderate: openstack-neutron security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 22 Jan 2014 18:41:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-neutron security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0091-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0091.html">https://rhn.redhat.com/errata/RHSA-2014-0091.html</a>
+Issue date:        2014-01-22
+CVE Names:         CVE-2013-6419 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-neutron packages that fix one security issue, several
+bugs, and add various enhancements are now available for Red Hat Enterprise
+Linux OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 4 - noarch
+
+3. Description:
+
+The openstack-neutron packages provide Openstack Networking (neutron), the
+virtual network service.
+
+It was discovered that the metadata agent in OpenStack Networking was
+missing an authorization check on the device ID that is bound to a specific
+port. A remote tenant could guess the instance ID bound to a port and
+retrieve metadata of another tenant, resulting in information disclosure.
+Note that only OpenStack Networking setups running neutron-metadata-agent
+were affected. (CVE-2013-6419)
+
+Red Hat would like to thank Jeremy Stanley of the OpenStack Project for
+reporting this issue. Upstream acknowledges Aaron Rosen of VMware as the
+original reporter.
+
+The openstack-neutron packages have been upgraded to upstream version
+2013.2.1, which provides a number of bug fixes and enhancements over the
+previous version. The most notable fixes and enhancements are:
+
+* Support for multiple workers in the Neutron API. This can be achieved by
+  setting the 'workers=' parameter in the neutron.conf file.
+
+* The downtime and report interval default settings are tuned for
+  neutron agents.
+
+* The floating IP address stability has been enhanced.
+
+* A heartbeat-related deadlock problem in neutron-server has been fixed.
+
+(BZ#1045419)
+
+This update also fixes the following bugs:
+
+* An incorrect warning was displayed when running neutron-dhcp-agent with
+Red Hat Enterprise Linux's version of dnsmasq. This meant that users were
+incorrectly warned that Red Hat Enterprise Linux's dnsmasq version will not
+work with neutron-dhcp-agent. This warning has been removed, and will no
+longer be logged to the neutron-dhcp-agent log file. (BZ#1040196)
+
+* A bug in the QPID topic consumer re-connection logic (under the v2
+topology) caused qpidd to use a malformed subscriber address after
+restarting, resulting in RPC requests sent to a topic with multiple servers
+ending up being incorrectly multicast to all servers. This update removes
+the special-case reconnect logic that handles UUID addresses, which in turn
+avoids the incorrect establishment of multiple subscription to the same
+fanout address. The QPID broker now simply automatically generates unique
+queue names when clients reconnect. (BZ#1045067)
+
+* Thread-consuming QPID messages were killed silently by unhandled errors,
+thus resulting in isolating the component from the rest of the system.
+With this update, consuming threads are made more resilient to errors by
+ensuring they do not die on an unhandled error. The error is now logged,
+and the consuming thread is retried. (BZ#1054249)
+
+In addition, this update adds the following enhancement:
+
+* Previously, instances connected to tenant networks gained outside
+connectivity by going through an SNAT by the L3 agent hosting that
+network's virtual router. With this release, the ability to disable
+SNAT/PAT on virtual servers is added ensuring that an instance in a tenant
+network subnet will retain its IP address as it passes through external
+networks. For example, if 10.0.0.1 is an instance in the 10.0.0.0/8 tenant
+network, R1, a virtual router that connects the 10.0.0.0/8 subnet to the
+20.0.0.0/8 public provider networks, then you can use the 'neutron
+router-gateway-set --disable-snat R1 public' command and any traffic from
+10.0.0.1, which is forwarded out to the provider network, will retain its
+actual source IP address of 10.0.0.1. This can be a flexible and useful
+method to connect instances directly to a provider network, while retaining
+it in a tenant network. (BZ#1046070)
+
+All openstack-neutron users are advised to upgrade to these updated
+packages, which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1038737 - neutron is creating duplicated NAT rules, resulting in instances without network connection
+1039148 - CVE-2013-6419 OpenStack Neutron and Nova: Metadata queries from Neutron to Nova are not restricted by tenant
+1039528 - Neutron rootwrap does not follow packaging guidelines
+1040196 - Remove dnsmasq version warning for dhcp-agent on RHEL
+1045067 - [oslo] With QPID, RPC calls to a topic are always fanned-out to all subscribers.
+1046070 - Configurable External Gateway Modes
+1046087 - The error message that indicates manual DB stamping is needed is not clear enough
+1054249 - Thread consuming qpid messages can die silently
+
+6. Package List:
+
+OpenStack 4:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-neutron-2013.2.1-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-neutron-2013.2.1-4.el6ost.src.rpm</a>
+
+noarch:
+openstack-neutron-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-bigswitch-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-brocade-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-cisco-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-hyperv-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-linuxbridge-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-mellanox-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-metaplugin-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-metering-agent-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-midonet-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-ml2-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-nec-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-nicira-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-openvswitch-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-plumgrid-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-ryu-2013.2.1-4.el6ost.noarch.rpm
+openstack-neutron-vpn-agent-2013.2.1-4.el6ost.noarch.rpm
+python-neutron-2013.2.1-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6419.html">https://www.redhat.com/security/data/cve/CVE-2013-6419.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS4BDfXlSAg2UNWIIRAivNAKCVWiwL/nIdn7v6YXgfI0F+74mk0QCfZlps
+gQgFmSvzl9jrK02N6xI26E8=
+=s88t
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

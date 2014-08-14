@@ -1,0 +1,177 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1448&#45;01] Important: Red Hat JBoss Operations Network 3.1.2	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 Oct 2013 13:46:21 &#45;0400 -->
+<!--X-Message-Id: 201310211746.r9LHkKog018385@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1448-01] Important: Red Hat JBoss Operations Network 3.1.2	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1448-01] Important: Red Hat JBoss Operations Network 3.1.2	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1448-01] Important: Red Hat JBoss Operations Network 3.1.2	update</li>
+<li><em>Date</em>: Mon, 21 Oct 2013 17:46:20 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Operations Network 3.1.2 update
+Advisory ID:       RHSA-2013:1448-01
+Product:           Red Hat JBoss Operations Network
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1448.html">https://rhn.redhat.com/errata/RHSA-2013-1448.html</a>
+Issue date:        2013-10-21
+CVE Names:         CVE-2013-2186 CVE-2013-4210 CVE-2013-4293 
+                   CVE-2013-4373 
+=====================================================================
+
+1. Summary:
+
+An update for Red Hat JBoss Operations Network 3.1.2 that fixes multiple
+security issues is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+Red Hat JBoss Operations Network is a middleware management solution that
+provides a single point of control to deploy, manage, and monitor JBoss
+Enterprise Middleware, applications, and services.
+
+A flaw was found in the way the DiskFileItem class handled NULL characters
+in file names. A remote attacker able to supply a serialized instance of
+the DiskFileItem class, which will be deserialized on a server, could use
+this flaw to write arbitrary content to any location on the server that is
+accessible to the user running the application server process.
+(CVE-2013-2186)
+
+A denial of service flaw was found in the implementation of the
+org.jboss.remoting.transport.socket.ServerThread class in JBoss
+Remoting. An attacker could use this flaw to exhaust all available file
+descriptors on the target server, preventing legitimate connections. Note
+that to exploit this flaw remotely, the remoting port must be exposed
+directly or indirectly (for example, deploying a public facing application
+that uses JBoss Remoting could indirectly expose this flaw).
+(CVE-2013-4210)
+
+It was found that the JBoss Operations Network server exposed configured
+passwords in plain text in its log files by default. A local user with
+access to these log files could use the exposed credentials.
+(CVE-2013-4293)
+
+A flaw was found in the way JPADriftServerBean instances stored drift
+files. The storeFiles method created a predictable temporary directory when
+unpacking a zip file. Once a zip file was extracted to the temporary
+directory, all files in this directory were stored. A local attacker could
+provide their own drift files to be imported into the server instance.
+(CVE-2013-4373)
+
+The CVE-2013-4293 was discovered by Larry O'Leary of the Red Hat Middleware
+Support Engineering Group, and CVE-2013-4210 was discovered by James
+Livingston of the Red Hat Support Engineering Group.
+
+All users of JBoss Operations Network 3.1.2 as provided from the Red Hat
+Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Operations Network installation (including its databases,
+applications, configuration files, the JBoss Operations Network server's
+file system directory, and so on).
+
+Note: This update provides fixes for the server, agent, and core GUI
+components of Red Hat JBoss Operations Network. It is recommended to apply
+all the patches provided by this update.
+
+Refer to the JBoss Operations Network 3.1.2 Release Notes for installation
+information.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+974814 - CVE-2013-2186 Apache commons-fileupload: Arbitrary file upload via deserialization
+994321 - CVE-2013-4210 JBoss Remoting: DoS by file descriptor exhaustion
+1002853 - CVE-2013-4293 JON Server: Plaintext passwords in server logs
+1011824 - CVE-2013-4373 JON Drift: Malicious drift file import due to insecure temporary file usage
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2186.html">https://www.redhat.com/security/data/cve/CVE-2013-2186.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4210.html">https://www.redhat.com/security/data/cve/CVE-2013-4210.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4293.html">https://www.redhat.com/security/data/cve/CVE-2013-4293.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4373.html">https://www.redhat.com/security/data/cve/CVE-2013-4373.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.1.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.1.2</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_JBoss_Operations_Network/">https://access.redhat.com/site/documentation/Red_Hat_JBoss_Operations_Network/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSZWhSXlSAg2UNWIIRAlgnAJ4m16prX+D7KVnv/1FX43gAuOM/OgCeMrqS
+kAmcTYRT/kD/5IIgkDZfHo0=
+=WyAr
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

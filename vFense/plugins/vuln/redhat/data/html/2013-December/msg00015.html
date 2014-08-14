@@ -1,0 +1,297 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1812&#45;01] Critical: firefox security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Dec 2013 00:32:45 &#45;0500 -->
+<!--X-Message-Id: 201312110532.rBB5WhoG019372@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1812-01] Critical: firefox security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1812-01] Critical: firefox security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1812-01] Critical: firefox security update</li>
+<li><em>Date</em>: Wed, 11 Dec 2013 05:36:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: firefox security update
+Advisory ID:       RHSA-2013:1812-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1812.html">https://rhn.redhat.com/errata/RHSA-2013-1812.html</a>
+Issue date:        2013-12-11
+CVE Names:         CVE-2013-5609 CVE-2013-5612 CVE-2013-5613 
+                   CVE-2013-5614 CVE-2013-5616 CVE-2013-5618 
+                   CVE-2013-6671 
+=====================================================================
+
+1. Summary:
+
+Updated firefox packages that fix several security issues are now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Mozilla Firefox is an open source web browser. XULRunner provides the XUL
+Runtime environment for Mozilla Firefox.
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Firefox to terminate
+unexpectedly or, potentially, execute arbitrary code with the privileges of
+the user running Firefox. (CVE-2013-5609, CVE-2013-5616, CVE-2013-5618,
+CVE-2013-6671, CVE-2013-5613)
+
+A flaw was found in the way Firefox rendered web content with missing
+character encoding information. An attacker could use this flaw to possibly
+bypass same-origin inheritance and perform cross-site scripting (XSS)
+attacks. (CVE-2013-5612)
+
+It was found that certain malicious web content could bypass restrictions
+applied by sandboxed iframes. An attacker could combine this flaw with
+other vulnerabilities to execute arbitrary code with the privileges of the
+user running Firefox. (CVE-2013-5614)
+
+Red Hat would like to thank the Mozilla project for reporting these issues.
+Upstream acknowledges Ben Turner, Bobby Holley, Jesse Ruderman, Christian
+Holler, Masato Kinugawa, Daniel Veditz, Jesse Schwartzentruber, Nils, Tyson
+Smith, and Atte Kettunen as the original reporters of these issues.
+
+For technical details regarding these flaws, refer to the Mozilla security
+advisories for Firefox 24.2.0 ESR. You can find a link to the Mozilla
+advisories in the References section of this erratum.
+
+All Firefox users should upgrade to these updated packages, which contain
+Firefox version 24.2.0 ESR, which corrects these issues. After installing
+the update, Firefox must be restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1039417 - CVE-2013-5609 Mozilla: Miscellaneous memory safety hazards (rv:24.2) (MFSA 2013-104)
+1039420 - CVE-2013-5612 Mozilla: Character encoding cross-origin XSS attack (MFSA 2013-106)
+1039421 - CVE-2013-5614 Mozilla: Sandbox restrictions not applied to nested object elements (MFSA 2013-107)
+1039422 - CVE-2013-5616 Mozilla: Use-after-free in event listeners (MFSA 2013-108)
+1039423 - CVE-2013-5618 Mozilla: Use-after-free during Table Editing (MFSA 2013-109)
+1039426 - CVE-2013-6671 Mozilla: Segmentation violation when replacing ordered list elements (MFSA 2013-111)
+1039429 - CVE-2013-5613 Mozilla: Use-after-free in synthetic mouse movement (MFSA 2013-114)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-24.2.0-1.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/firefox-24.2.0-1.el5_10.src.rpm</a>
+
+i386:
+firefox-24.2.0-1.el5_10.i386.rpm
+firefox-debuginfo-24.2.0-1.el5_10.i386.rpm
+
+x86_64:
+firefox-24.2.0-1.el5_10.i386.rpm
+firefox-24.2.0-1.el5_10.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el5_10.i386.rpm
+firefox-debuginfo-24.2.0-1.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-24.2.0-1.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/firefox-24.2.0-1.el5_10.src.rpm</a>
+
+i386:
+firefox-24.2.0-1.el5_10.i386.rpm
+firefox-debuginfo-24.2.0-1.el5_10.i386.rpm
+
+ia64:
+firefox-24.2.0-1.el5_10.ia64.rpm
+firefox-debuginfo-24.2.0-1.el5_10.ia64.rpm
+
+ppc:
+firefox-24.2.0-1.el5_10.ppc.rpm
+firefox-debuginfo-24.2.0-1.el5_10.ppc.rpm
+
+s390x:
+firefox-24.2.0-1.el5_10.s390.rpm
+firefox-24.2.0-1.el5_10.s390x.rpm
+firefox-debuginfo-24.2.0-1.el5_10.s390.rpm
+firefox-debuginfo-24.2.0-1.el5_10.s390x.rpm
+
+x86_64:
+firefox-24.2.0-1.el5_10.i386.rpm
+firefox-24.2.0-1.el5_10.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el5_10.i386.rpm
+firefox-debuginfo-24.2.0-1.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm</a>
+
+i386:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+
+x86_64:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-24.2.0-1.el6_5.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm</a>
+
+x86_64:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-24.2.0-1.el6_5.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm</a>
+
+i386:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+
+ppc64:
+firefox-24.2.0-1.el6_5.ppc.rpm
+firefox-24.2.0-1.el6_5.ppc64.rpm
+firefox-debuginfo-24.2.0-1.el6_5.ppc.rpm
+firefox-debuginfo-24.2.0-1.el6_5.ppc64.rpm
+
+s390x:
+firefox-24.2.0-1.el6_5.s390.rpm
+firefox-24.2.0-1.el6_5.s390x.rpm
+firefox-debuginfo-24.2.0-1.el6_5.s390.rpm
+firefox-debuginfo-24.2.0-1.el6_5.s390x.rpm
+
+x86_64:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-24.2.0-1.el6_5.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/firefox-24.2.0-1.el6_5.src.rpm</a>
+
+i386:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+
+x86_64:
+firefox-24.2.0-1.el6_5.i686.rpm
+firefox-24.2.0-1.el6_5.x86_64.rpm
+firefox-debuginfo-24.2.0-1.el6_5.i686.rpm
+firefox-debuginfo-24.2.0-1.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5609.html">https://www.redhat.com/security/data/cve/CVE-2013-5609.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5612.html">https://www.redhat.com/security/data/cve/CVE-2013-5612.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5613.html">https://www.redhat.com/security/data/cve/CVE-2013-5613.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5614.html">https://www.redhat.com/security/data/cve/CVE-2013-5614.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5616.html">https://www.redhat.com/security/data/cve/CVE-2013-5616.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5618.html">https://www.redhat.com/security/data/cve/CVE-2013-5618.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6671.html">https://www.redhat.com/security/data/cve/CVE-2013-6671.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/known-vulnerabilities/firefoxESR.html">http://www.mozilla.org/security/known-vulnerabilities/firefoxESR.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSp/izXlSAg2UNWIIRAugaAJ4lymQu8kCSOPdpYAz1SPvv3p+iegCfbubu
+BwNjWgdqMa9q9zKrkWGcpQ0=
+=lj49
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0950&#45;01] Important: jboss&#45;seam2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 18 Jul 2011 18:09:57 &#45;0400 -->
+<!--X-Message-Id: 201107182209.p6IM9pSF002587@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0950-01] Important: jboss-seam2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0950-01] Important: jboss-seam2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0950-01] Important: jboss-seam2 security update</li>
+<li><em>Date</em>: Mon, 18 Jul 2011 22:09:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jboss-seam2 security update
+Advisory ID:       RHSA-2011:0950-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0950.html">https://rhn.redhat.com/errata/RHSA-2011-0950.html</a>
+Issue date:        2011-07-18
+CVE Names:         CVE-2011-2196 
+=====================================================================
+
+1. Summary:
+
+Updated jboss-seam2 packages that fix one security issue are now available
+for JBoss Enterprise Application Platform 4.3 for Red Hat Enterprise Linux
+4 and 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 AS - noarch
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 ES - noarch
+JBoss Enterprise Application Platform 4.3.0 for RHEL 5 Server - noarch
+
+3. Description:
+
+The JBoss Seam 2 framework is an application framework for building web
+applications in Java.
+
+It was found that the fix for CVE-2011-1484 was incomplete: JBoss Seam 2
+did not block access to all malicious JBoss Expression Language (EL)
+constructs in page exception handling, allowing arbitrary Java methods to
+be executed. A remote attacker could use this flaw to execute arbitrary
+code via a specially-crafted URL provided to certain applications based on
+the JBoss Seam 2 framework. Note: A properly configured and enabled Java
+Security Manager would prevent exploitation of this flaw. (CVE-2011-2196)
+
+Red Hat would like to thank the ObjectWorks+ Development Team at Nomura
+Research Institute for reporting this issue.
+
+Users of jboss-seam2 should upgrade to these updated packages, which
+correct this issue. Manual action is required for this update to take
+effect. Refer to the Solution section for details.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+For this update to take effect:
+
+1) If you have created custom applications that are packaged with a
+copy of the JBoss Seam 2 library, those applications must be rebuilt
+with the updated jboss-seam.jar file provided by this update.
+
+2) Restart the JBoss server process.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+712283 - CVE-2011-2196 JBoss Seam EL interpolation in exception handling
+
+6. Package List:
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.src.rpm</a>
+
+noarch:
+jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.noarch.rpm
+jboss-seam2-docs-2.0.2.FP_SEC1-1.ep2.4.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.src.rpm</a>
+
+noarch:
+jboss-seam2-2.0.2.FP_SEC1-1.ep2.4.el4.noarch.rpm
+jboss-seam2-docs-2.0.2.FP_SEC1-1.ep2.4.el4.noarch.rpm
+
+JBoss Enterprise Application Platform 4.3.0 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/jboss-seam2-2.0.2.FP_SEC1-1.ep2.3.el5.src.rpm</a>
+
+noarch:
+jboss-seam2-2.0.2.FP_SEC1-1.ep2.3.el5.noarch.rpm
+jboss-seam2-docs-2.0.2.FP_SEC1-1.ep2.3.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2196.html">https://www.redhat.com/security/data/cve/CVE-2011-2196.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOJK8mXlSAg2UNWIIRAj7vAKCwMcNEXJbJiWp888GlnmL5J9suigCffH8n
+JLCwrBQcKKq+gjX12xDnY94=
+=oU/j
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

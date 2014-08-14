@@ -1,0 +1,178 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0939&#45;01] Important: JBoss Enterprise Application Platform	4.3.0.CP09 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 1 Dec 2010 18:58:12 &#45;0500 -->
+<!--X-Message-Id: 201012012358.oB1Nw6vG000590@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0939-01] Important: JBoss Enterprise Application Platform	4.3</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0939-01] Important: JBoss Enterprise Application Platform	4.3.0.CP09 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0939-01] Important: JBoss Enterprise Application Platform	4.3.0.CP09 update</li>
+<li><em>Date</em>: Wed, 1 Dec 2010 16:58:06 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Application Platform 4.3.0.CP09 update
+Advisory ID:       RHSA-2010:0939-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0939.html">https://rhn.redhat.com/errata/RHSA-2010-0939.html</a>
+Issue date:        2010-12-01
+CVE Names:         CVE-2010-3708 CVE-2010-3862 CVE-2010-3878 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Application Platform (JBEAP) 4.3.0.CP09, which fixes three
+security issues and multiple bugs, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise Application Platform is the market leading platform for
+innovative and scalable Java applications; integrating the JBoss
+Application Server, with JBoss Hibernate and JBoss Seam into a complete,
+simple enterprise solution.
+
+This release of JBEAP serves as a replacement to JBEAP 4.3.0.CP08. It
+includes multiple bug fixes which are detailed in the Release Notes. The
+Release Notes will be available shortly from the link in the References
+section.
+
+The following security issues are also fixed with this release:
+
+An input sanitization flaw was found in the way JBoss Drools implemented
+certain rule base serialization. If a remote attacker supplied
+specially-crafted input to a JBoss Seam based application that accepts
+serialized input, it could lead to arbitrary code execution with the
+privileges of the JBoss server process. (CVE-2010-3708)
+
+A Cross-Site Request Forgery (CSRF) flaw was found in the JMX Console. A
+remote attacker could use this flaw to deploy a WAR file of their choosing
+on the target server, if they are able to trick a user, who is logged into
+the JMX Console as the admin user, into visiting a specially-crafted web
+page. (CVE-2010-3878)
+
+A flaw was found in the JBoss Remoting component. A remote attacker could
+use specially-crafted input to cause the JBoss Remoting listeners to become
+unresponsive, resulting in a denial of service condition for services
+communicating via JBoss Remoting sockets. (CVE-2010-3862)
+
+Red Hat would like to thank Ole Husgaard of eXerp.com for reporting the
+CVE-2010-3862 issue.
+
+Warning: Before applying this update, please backup the JBEAP
+&quot;server/[configuration]/deploy/&quot; directory, and any other customized
+configuration files.
+
+All users of JBEAP 4.3.0.CP08 as provided from the Red Hat Customer Portal
+are advised to upgrade to JBEAP 4.3.0.CP09. Refer to the Solution section
+of this erratum for installation instructions.
+
+3. Solution:
+
+JBoss Enterprise Application Platform 4.3.0.CP09 is available from the Red
+Hat Customer Portal. To download and install the complete JBEAP 4.3.0.CP09
+distribution:
+
+1) Log into the Customer Portal: <a  rel="nofollow" href="https://access.redhat.com/login">https://access.redhat.com/login</a>
+
+2) Navigate to
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html</a>
+
+3) On the left-hand side menu, under &quot;JBoss Enterprise Platforms&quot; click
+&quot;Application Platform&quot;. Then, use the &quot;Version:&quot; drop down menu to select
+&quot;4.3.0.GA_CP09&quot;.
+
+4) Select the desired installation method, for example the binary
+installer.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+604617 - CVE-2010-3878 JBoss EAP jmx console FileDeployment CSRF
+633859 - CVE-2010-3708 JBoss drools deserialization remote code execution
+641389 - CVE-2010-3862 JBoss Remoting Denial-Of-Service
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3708.html">https://www.redhat.com/security/data/cve/CVE-2010-3708.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3862.html">https://www.redhat.com/security/data/cve/CVE-2010-3862.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3878.html">https://www.redhat.com/security/data/cve/CVE-2010-3878.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/4.3/html-single/Release_Notes_CP09/index.html">http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/4.3/html-single/Release_Notes_CP09/index.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM9uD7XlSAg2UNWIIRAvUeAJ0dkTww6G4CCh/PWCdX27lmGquYSACglHTX
+SbZWpIEt+cBGrqk6FHhTJJo=
+=ZjoY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

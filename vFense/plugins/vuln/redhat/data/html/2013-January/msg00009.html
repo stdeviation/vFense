@@ -1,0 +1,226 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0126&#45;01] Low: squirrelmail security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 02:00:52 &#45;0500 -->
+<!--X-Message-Id: 201301080700.r0870XK9010114@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0126-01] Low: squirrelmail security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0126-01] Low: squirrelmail security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0126-01] Low: squirrelmail security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:50:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: squirrelmail security and bug fix update
+Advisory ID:       RHSA-2013:0126-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0126.html">https://rhn.redhat.com/errata/RHSA-2013-0126.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2012-2124 
+=====================================================================
+
+1. Summary:
+
+An updated squirrelmail package that fixes one security issue and several
+bugs is now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - noarch
+Red Hat Enterprise Linux (v. 5 server) - noarch
+
+3. Description:
+
+SquirrelMail is a standards-based webmail package written in PHP.
+
+The SquirrelMail security update RHSA-2012:0103 did not, unlike the erratum
+text stated, correct the CVE-2010-2813 issue, a flaw in the way
+SquirrelMail handled failed log in attempts. A user preference file was
+created when attempting to log in with a password containing an 8-bit
+character, even if the username was not valid. A remote attacker could use
+this flaw to eventually consume all hard disk space on the target
+SquirrelMail server. (CVE-2012-2124)
+
+This update also fixes the following bugs:
+
+* Prior to this update, SquirrelMail could not decode multi-line subjects
+properly. Consequently, the decode header internationalization option did
+not properly handle new lines or tabs at the beginning of the lines. This
+bug has been fixed and SquirrelMail now works correctly in the described
+scenario. (BZ#241861)
+
+* Due to a bug, attachments written in HTML code on the Windows operating
+system were not displayed properly when accessed with SquirrelMail; the
+&quot;!=null&quot; string was trimmed to &quot;!ull&quot;. This bug has been fixed and the
+attachments are now displayed correctly in such a case. (BZ#359791)
+
+* Previously, e-mail messages with a Unique Identifier (UID) larger than
+2^31 bytes were unreadable when using the squirrelmail package. With this
+patch the squirrelmail package is able to read all messages regardless of
+the UIDs size. (BZ#450780)
+
+* Due to a bug, a PHP script did not assign the proper character set to
+requested variables. Consequently, SquirrelMail could not display any
+e-mails. The underlying source code has been modified and now the
+squirrelmail package assigns the correct character set. (BZ#475188)
+
+* Due to the incorrect internationalization option located at the i18n.php
+file, the squirrelmail package could not use the GB 2312 character set. The
+i18n.php file has been fixed and the GB 2312 character set works correctly
+in the described scenario. (BZ#508686)
+
+* Previously, the preg_split() function contained a misspelled constant,
+PREG_SPLIT_NI_EMPTY, which could cause SquirrelMail to produce error
+messages. The name of the constant has been corrected to
+PREG_SPLIT_NO_EMPTY, and SquirrelMail no longer produces error messages in
+this scenario. (BZ#528758)
+
+* Due to Security-Enhanced Linux (SELinux) settings, sending e-mails from
+the SquirrelMail web interface was blocked. This update adds a note to the
+SquirrelMail documentation that describes how to set the SELinux options to
+allow sending e-mails from the SquirrelMail web interface. (BZ#745380)
+
+* Previously, the squirrelmail package did not comply with the RFC 2822
+specification about line length limits. Consequently, attachments with
+lines longer than 998 characters could not be forwarded using SquirrelMail.
+This patch modifies the underlying source code and now SquirrelMail
+complies with the RFC 2822 specification as expected. (BZ#745469)
+
+* Prior to this update, the squirrelmail package required the php-common
+script instead of the mod_php script during installation or upgrade of the
+package, which led to a dependency error. As a result, attempting to
+install or upgrade the squirrelmail package failed on systems using the
+php53 packages. With this update, the dependencies of the squirrelmail
+package were changed and the installation or upgrade now works correctly in
+the described scenario. (BZ#789353)
+
+All users of SquirrelMail are advised to upgrade to this updated package,
+which contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+241861 - Bad decoding of multiple Subjects
+450780 - Email messages with UIDs bigger than 2^31 are unreadable via SquirrelMail
+475188 - PHP error: undefined variable charset in squirrelmail
+508686 - Squirrelmail could not use GB2312 for incorrect charset at i18n.php
+528758 - Fix misspelled constant PREG_SPLIT_NI_EMPTY in sqimap_get_message
+669663 - Package squirrelmail fails to build in brew due to gettext update.
+745380 - SELinux seems to block sending e-mails from the squirrelmail web interface
+745469 - rfc2822 line length limits
+789353 - squirrelmail should require mod_php not php
+814671 - CVE-2012-2124 squirrelmail: CVE-2010-2813 not fixed in RHSA-2012:0103
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squirrelmail-1.4.8-21.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squirrelmail-1.4.8-21.el5.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-21.el5.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squirrelmail-1.4.8-21.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squirrelmail-1.4.8-21.el5.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-21.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2124.html">https://www.redhat.com/security/data/cve/CVE-2012-2124.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0103.html">https://rhn.redhat.com/errata/RHSA-2012-0103.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68PzXlSAg2UNWIIRAmZiAJ0ZwfHvpyzDvO3gVvBqyOiKLCyT0QCffPx0
+hEMaidAAg1p2acCvZ64oL70=
+=qKzc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

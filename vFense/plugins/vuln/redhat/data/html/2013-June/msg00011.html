@@ -1,0 +1,325 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0928&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 11 Jun 2013 13:43:00 &#45;0400 -->
+<!--X-Message-Id: 201306111742.r5BHgxnt000727@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0928-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0928-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0928-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 11 Jun 2013 17:42:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2013:0928-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0928.html">https://rhn.redhat.com/errata/RHSA-2013-0928.html</a>
+Issue date:        2013-06-11
+CVE Names:         CVE-2012-4542 CVE-2013-0311 CVE-2013-1767 
+                   CVE-2013-1773 CVE-2013-1796 CVE-2013-1797 
+                   CVE-2013-1798 CVE-2013-1848 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.3 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server EUS (v. 6.3) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A flaw was found in the way the vhost kernel module handled descriptors
+that spanned multiple regions. A privileged guest user in a KVM
+(Kernel-based Virtual Machine) guest could use this flaw to crash the host
+or, potentially, escalate their privileges on the host. (CVE-2013-0311,
+Important)
+
+* A buffer overflow flaw was found in the way UTF-8 characters were
+converted to UTF-16 in the utf8s_to_utf16s() function of the Linux kernel's
+FAT file system implementation. A local user able to mount a FAT file
+system with the &quot;utf8=1&quot; option could use this flaw to crash the system or,
+potentially, to escalate their privileges. (CVE-2013-1773, Important)
+
+* A flaw was found in the way KVM handled guest time updates when the
+buffer the guest registered by writing to the MSR_KVM_SYSTEM_TIME machine
+state register (MSR) crossed a page boundary. A privileged guest user could
+use this flaw to crash the host or, potentially, escalate their privileges,
+allowing them to execute arbitrary code at the host kernel level.
+(CVE-2013-1796, Important)
+
+* A potential use-after-free flaw was found in the way KVM handled guest
+time updates when the GPA (guest physical address) the guest registered by
+writing to the MSR_KVM_SYSTEM_TIME machine state register (MSR) fell into a
+movable or removable memory region of the hosting user-space process (by
+default, QEMU-KVM) on the host. If that memory region is deregistered from
+KVM using KVM_SET_USER_MEMORY_REGION and the allocated virtual memory
+reused, a privileged guest user could potentially use this flaw to escalate
+their privileges on the host. (CVE-2013-1797, Important)
+
+* A flaw was found in the way KVM emulated IOAPIC (I/O Advanced
+Programmable Interrupt Controller). A missing validation check in the
+ioapic_read_indirect() function could allow a privileged guest user to
+crash the host, or read a substantial portion of host kernel memory.
+(CVE-2013-1798, Important)
+
+* It was found that the default SCSI command filter does not accommodate
+commands that overlap across device classes. A privileged guest user could
+potentially use this flaw to write arbitrary data to a LUN that is
+passed-through as read-only. (CVE-2012-4542, Moderate)
+
+* A use-after-free flaw was found in the tmpfs implementation. A local user
+able to mount and unmount a tmpfs file system could use this flaw to cause
+a denial of service or, potentially, escalate their privileges.
+(CVE-2013-1767, Low)
+
+* A format string flaw was found in the ext3_msg() function in the Linux
+kernel's ext3 file system implementation. A local user who is able to mount
+an ext3 file system could use this flaw to cause a denial of service or,
+potentially, escalate their privileges. (CVE-2013-1848, Low)
+
+Red Hat would like to thank Andrew Honig of Google for reporting the
+CVE-2013-1796, CVE-2013-1797, and CVE-2013-1798 issues. The CVE-2012-4542
+issue was discovered by Paolo Bonzini of Red Hat.
+
+This update also fixes several bugs. Documentation for these changes will
+be available shortly from the Technical Notes document linked to in the
+References section.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+875360 - CVE-2012-4542 kernel: block: default SCSI command filter does not accomodate commands overlap across device classes
+912905 - CVE-2013-0311 kernel: vhost: fix length for cross region descriptor
+915592 - CVE-2013-1767 Kernel: tmpfs: fix use-after-free of mempolicy object
+916115 - CVE-2013-1773 kernel: VFAT slab-based buffer overflow
+917012 - CVE-2013-1796 kernel: kvm: buffer overflow in handling of MSR_KVM_SYSTEM_TIME
+917013 - CVE-2013-1797 kernel: kvm: after free issue with the handling of MSR_KVM_SYSTEM_TIME
+917017 - CVE-2013-1798 kernel: kvm: out-of-bounds access in ioapic indirect register reads
+920783 - CVE-2013-1848 kernel: ext3: format string issues
+
+6. Package List:
+
+Red Hat Enterprise Linux Server EUS (v. 6.3):
+
+Source:
+kernel-2.6.32-279.31.1.el6.src.rpm
+
+i386:
+kernel-2.6.32-279.31.1.el6.i686.rpm
+kernel-debug-2.6.32-279.31.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-279.31.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-279.31.1.el6.i686.rpm
+kernel-devel-2.6.32-279.31.1.el6.i686.rpm
+kernel-headers-2.6.32-279.31.1.el6.i686.rpm
+perf-2.6.32-279.31.1.el6.i686.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-279.31.1.el6.noarch.rpm
+kernel-firmware-2.6.32-279.31.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debug-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-devel-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-headers-2.6.32-279.31.1.el6.ppc64.rpm
+perf-2.6.32-279.31.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debug-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-279.31.1.el6.s390x.rpm
+kernel-devel-2.6.32-279.31.1.el6.s390x.rpm
+kernel-headers-2.6.32-279.31.1.el6.s390x.rpm
+kernel-kdump-2.6.32-279.31.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-279.31.1.el6.s390x.rpm
+perf-2.6.32-279.31.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debug-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-devel-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-headers-2.6.32-279.31.1.el6.x86_64.rpm
+perf-2.6.32-279.31.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3):
+
+Source:
+kernel-2.6.32-279.31.1.el6.src.rpm
+
+i386:
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-279.31.1.el6.i686.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+python-perf-2.6.32-279.31.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-279.31.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+python-perf-2.6.32-279.31.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-279.31.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+python-perf-2.6.32-279.31.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-279.31.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+python-perf-2.6.32-279.31.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-279.31.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4542.html">https://www.redhat.com/security/data/cve/CVE-2012-4542.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0311.html">https://www.redhat.com/security/data/cve/CVE-2013-0311.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1767.html">https://www.redhat.com/security/data/cve/CVE-2013-1767.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1773.html">https://www.redhat.com/security/data/cve/CVE-2013-1773.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1796.html">https://www.redhat.com/security/data/cve/CVE-2013-1796.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1797.html">https://www.redhat.com/security/data/cve/CVE-2013-1797.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1798.html">https://www.redhat.com/security/data/cve/CVE-2013-1798.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1848.html">https://www.redhat.com/security/data/cve/CVE-2013-1848.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/kernel.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/kernel.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRt2GMXlSAg2UNWIIRAtsEAKCXUp7E7+w25NzbK8vmbVV/m0TsKACeNv5a
+r3NI91zOo4ypS0/SIG4i5TQ=
+=5o+0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

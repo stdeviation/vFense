@@ -1,0 +1,204 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0638&#45;01] Moderate: Red Hat OpenShift Enterprise 1.1.2	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 12 Mar 2013 15:05:44 &#45;0400 -->
+<!--X-Message-Id: 201303121905.r2CJ5hS5007420@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0638-01] Moderate: Red Hat OpenShift Enterprise 1.1.2	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0638-01] Moderate: Red Hat OpenShift Enterprise 1.1.2	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0638-01] Moderate: Red Hat OpenShift Enterprise 1.1.2	update</li>
+<li><em>Date</em>: Tue, 12 Mar 2013 19:05:43 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat OpenShift Enterprise 1.1.2 update
+Advisory ID:       RHSA-2013:0638-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0638.html">https://rhn.redhat.com/errata/RHSA-2013-0638.html</a>
+Issue date:        2013-03-12
+CVE Names:         CVE-2013-0262 CVE-2013-0263 CVE-2013-0327 
+                   CVE-2013-0328 CVE-2013-0329 CVE-2013-0330 
+                   CVE-2013-0331 
+=====================================================================
+
+1. Summary:
+
+Red Hat OpenShift Enterprise 1.1.2, which fixes several security issues, is
+now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat OpenShift Enterprise Infrastructure - noarch
+Red Hat OpenShift Enterprise Node - noarch
+
+3. Description:
+
+OpenShift Enterprise is a cloud computing Platform-as-a-Service (PaaS)
+solution from Red Hat, and is designed for on-premise or private cloud
+deployments.
+
+A flaw was found in the handling of paths provided to ruby193-rubygem-rack.
+A remote attacker could use this flaw to conduct a directory traversal
+attack by passing malformed requests. (CVE-2013-0262)
+
+A timing attack flaw was found in the way rubygem-rack and
+ruby193-rubygem-rack processed HMAC digests in cookies. This flaw could aid
+an attacker using forged digital signatures to bypass authentication
+checks. (CVE-2013-0263)
+
+It was found that Jenkins did not protect against Cross-Site Request
+Forgery (CSRF) attacks. If a remote attacker could trick a user, who was
+logged into Jenkins, into visiting a specially-crafted URL, the attacker
+could perform operations on Jenkins. (CVE-2013-0327, CVE-2013-0329)
+
+A cross-site scripting (XSS) flaw was found in Jenkins. A remote attacker
+could use this flaw to conduct an XSS attack against users of Jenkins.
+(CVE-2013-0328)
+
+A flaw could allow a Jenkins user to build jobs they do not have access to.
+(CVE-2013-0330)
+
+A flaw could allow a Jenkins user to cause a denial of service if they
+are able to supply a specially-crafted payload. (CVE-2013-0331)
+
+Users are advised to upgrade to Red Hat OpenShift Enterprise 1.1.2. It is
+recommended that you restart your system after applying this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+909071 - CVE-2013-0263 rubygem-rack: Timing attack in cookie sessions
+909072 - CVE-2013-0262 rubygem-rack: Path sanitization information disclosure
+914875 - CVE-2013-0327 jenkins: cross-site request forgery (CSRF) on Jenkins master
+914876 - CVE-2013-0328 jenkins: XSS
+914877 - CVE-2013-0329 jenkins: cross-site request forgery (CSRF) protection mechanism bypass
+914878 - CVE-2013-0330 jenkins: cause building jobs without direct access
+914879 - CVE-2013-0331 jenkins: denial of service attack by feeding a carefully crafted payload to Jenkins
+
+6. Package List:
+
+Red Hat OpenShift Enterprise Infrastructure:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-rack-1.4.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-rack-1.4.1-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-rack-1.3.0-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-rack-1.3.0-4.el6op.src.rpm</a>
+
+noarch:
+ruby193-rubygem-rack-1.4.1-4.el6.noarch.rpm
+rubygem-rack-1.3.0-4.el6op.noarch.rpm
+
+Red Hat OpenShift Enterprise Node:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/jenkins-1.502-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/jenkins-1.502-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-1.4-1.0.3-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-1.4-1.0.3-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-rack-1.4.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-rack-1.4.1-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-rack-1.3.0-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-rack-1.3.0-4.el6op.src.rpm</a>
+
+noarch:
+jenkins-1.502-1.el6op.noarch.rpm
+openshift-origin-cartridge-jenkins-1.4-1.0.3-1.el6op.noarch.rpm
+ruby193-rubygem-rack-1.4.1-4.el6.noarch.rpm
+rubygem-rack-1.3.0-4.el6op.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0262.html">https://www.redhat.com/security/data/cve/CVE-2013-0262.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0263.html">https://www.redhat.com/security/data/cve/CVE-2013-0263.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0327.html">https://www.redhat.com/security/data/cve/CVE-2013-0327.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0328.html">https://www.redhat.com/security/data/cve/CVE-2013-0328.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0329.html">https://www.redhat.com/security/data/cve/CVE-2013-0329.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0330.html">https://www.redhat.com/security/data/cve/CVE-2013-0330.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0331.html">https://www.redhat.com/security/data/cve/CVE-2013-0331.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16">https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRP3xxXlSAg2UNWIIRAh+1AJsF2XNG8khEIR8o2fUA4XA7NUjN6wCeOXNW
+x1Us/Pf3JvMIb0/Ih/EyeSw=
+=2yrc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

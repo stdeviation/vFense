@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0526&#45;02] Low: automake security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:52:47 &#45;0500 -->
+<!--X-Message-Id: 201302210652.r1L6qjAF006504@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0526-02] Low: automake security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0526-02] Low: automake security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0526-02] Low: automake security update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:41:43 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: automake security update
+Advisory ID:       RHSA-2013:0526-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0526.html">https://rhn.redhat.com/errata/RHSA-2013-0526.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-3386 
+=====================================================================
+
+1. Summary:
+
+An updated automake package that fixes one security issue is now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - noarch
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch
+Red Hat Enterprise Linux Server (v. 6) - noarch
+Red Hat Enterprise Linux Workstation (v. 6) - noarch
+
+3. Description:
+
+Automake is a tool for automatically generating Makefile.in files compliant
+with the GNU Coding Standards.
+
+It was found that the distcheck rule in Automake-generated Makefiles made a
+directory world-writable when preparing source archives. If a malicious,
+local user could access this directory, they could execute arbitrary code
+with the privileges of the user running &quot;make distcheck&quot;. (CVE-2012-3386)
+
+Red Hat would like to thank Jim Meyering for reporting this issue. Upstream
+acknowledges Stefano Lattarini as the original reporter.
+
+Users of automake are advised to upgrade to this updated package, which
+corrects this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+838286 - CVE-2012-3386 automake: locally exploitable &quot;make distcheck&quot; bug
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm</a>
+
+noarch:
+automake-1.11.1-4.el6.noarch.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm</a>
+
+noarch:
+automake-1.11.1-4.el6.noarch.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm</a>
+
+noarch:
+automake-1.11.1-4.el6.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/automake-1.11.1-4.el6.src.rpm</a>
+
+noarch:
+automake-1.11.1-4.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3386.html">https://www.redhat.com/security/data/cve/CVE-2012-3386.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcQyXlSAg2UNWIIRAgnyAJ9dD5zbPo7pHCs3XhEzRDKQ3T96oACeNDGZ
+CSOzHRnJmVwwby3KFf7C99k=
+=wCjX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1365&#45;01] Important: bind security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 12 Oct 2012 16:20:41 &#45;0400 -->
+<!--X-Message-Id: 201210122020.q9CKKZpK019070@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1365-01] Important: bind security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1365-01] Important: bind security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1365-01] Important: bind security update</li>
+<li><em>Date</em>: Fri, 12 Oct 2012 20:20:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: bind security update
+Advisory ID:       RHSA-2012:1365-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1365.html">https://rhn.redhat.com/errata/RHSA-2012-1365.html</a>
+Issue date:        2012-10-12
+CVE Names:         CVE-2012-4244 CVE-2012-5166 
+=====================================================================
+
+1. Summary:
+
+Updated bind packages that fix two security issues are now available for
+Red Hat Enterprise Linux 4 Extended Life Cycle Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (v. 4 ELS) - i386, ia64, x86_64
+Red Hat Enterprise Linux ES (v. 4 ELS) - i386, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+A flaw was found in the way BIND handled resource records with a large
+RDATA value. A malicious owner of a DNS domain could use this flaw to
+create specially-crafted DNS resource records, that would cause a recursive
+resolver or secondary server to exit unexpectedly with an assertion
+failure. (CVE-2012-4244)
+
+A flaw was found in the way BIND handled certain combinations of resource
+records. A remote attacker could use this flaw to cause a recursive
+resolver, or an authoritative server in certain configurations, to lockup.
+(CVE-2012-5166)
+
+Users of bind are advised to upgrade to these updated packages, which
+correct these issues. After installing the update, the BIND daemon (named)
+will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+856754 - CVE-2012-4244 bind: specially crafted resource record causes named to exit
+864273 - CVE-2012-5166 bind: Specially crafted DNS data can cause a lockup in named
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (v. 4 ELS):
+
+Source:
+bind-9.2.4-41.el4.src.rpm
+
+i386:
+bind-9.2.4-41.el4.i386.rpm
+bind-chroot-9.2.4-41.el4.i386.rpm
+bind-debuginfo-9.2.4-41.el4.i386.rpm
+bind-devel-9.2.4-41.el4.i386.rpm
+bind-libs-9.2.4-41.el4.i386.rpm
+bind-utils-9.2.4-41.el4.i386.rpm
+
+ia64:
+bind-9.2.4-41.el4.ia64.rpm
+bind-chroot-9.2.4-41.el4.ia64.rpm
+bind-debuginfo-9.2.4-41.el4.i386.rpm
+bind-debuginfo-9.2.4-41.el4.ia64.rpm
+bind-devel-9.2.4-41.el4.ia64.rpm
+bind-libs-9.2.4-41.el4.i386.rpm
+bind-libs-9.2.4-41.el4.ia64.rpm
+bind-utils-9.2.4-41.el4.ia64.rpm
+
+x86_64:
+bind-9.2.4-41.el4.x86_64.rpm
+bind-chroot-9.2.4-41.el4.x86_64.rpm
+bind-debuginfo-9.2.4-41.el4.i386.rpm
+bind-debuginfo-9.2.4-41.el4.x86_64.rpm
+bind-devel-9.2.4-41.el4.x86_64.rpm
+bind-libs-9.2.4-41.el4.i386.rpm
+bind-libs-9.2.4-41.el4.x86_64.rpm
+bind-utils-9.2.4-41.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES (v. 4 ELS):
+
+Source:
+bind-9.2.4-41.el4.src.rpm
+
+i386:
+bind-9.2.4-41.el4.i386.rpm
+bind-chroot-9.2.4-41.el4.i386.rpm
+bind-debuginfo-9.2.4-41.el4.i386.rpm
+bind-devel-9.2.4-41.el4.i386.rpm
+bind-libs-9.2.4-41.el4.i386.rpm
+bind-utils-9.2.4-41.el4.i386.rpm
+
+x86_64:
+bind-9.2.4-41.el4.x86_64.rpm
+bind-chroot-9.2.4-41.el4.x86_64.rpm
+bind-debuginfo-9.2.4-41.el4.i386.rpm
+bind-debuginfo-9.2.4-41.el4.x86_64.rpm
+bind-devel-9.2.4-41.el4.x86_64.rpm
+bind-libs-9.2.4-41.el4.i386.rpm
+bind-libs-9.2.4-41.el4.x86_64.rpm
+bind-utils-9.2.4-41.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4244.html">https://www.redhat.com/security/data/cve/CVE-2012-4244.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5166.html">https://www.redhat.com/security/data/cve/CVE-2012-5166.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.isc.org/software/bind/advisories/cve-2012-4244">http://www.isc.org/software/bind/advisories/cve-2012-4244</a>
+<a  rel="nofollow" href="http://www.isc.org/software/bind/advisories/cve-2012-5166">http://www.isc.org/software/bind/advisories/cve-2012-5166</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQeHtxXlSAg2UNWIIRAlYXAKCZ0FE0aPJH4BVSifwFTiFvVnrjmQCfamRD
+ITUYngHHNDIVcotxSY0b56w=
+=pvFb
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0547&#45;01] Moderate: CloudForms System Engine 1.1.2 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 14:25:06 &#45;0500 -->
+<!--X-Message-Id: 201302211925.r1LJP2g2019066@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0547-01] Moderate: CloudForms System Engine 1.1.2 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00067.html">Date Prev</a>][<a href="msg00069.html">Date Next</a>] &nbsp; [<a href="msg00067.html">Thread Prev</a>][<a href="msg00069.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00068">Thread Index</A>]
+[<A HREF="date.html#00068">Date Index</A>]
+[<A HREF="author.html#00068">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0547-01] Moderate: CloudForms System Engine 1.1.2 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:0547-01] Moderate: CloudForms System Engine 1.1.2 update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 19:25:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: CloudForms System Engine 1.1.2 update
+Advisory ID:       RHSA-2013:0547-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0547.html">https://rhn.redhat.com/errata/RHSA-2013-0547.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-5561 CVE-2012-6116 
+=====================================================================
+
+1. Summary:
+
+CloudForms System Engine 1.1.2 is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+CloudForms System Engine for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat CloudForms is an on-premise hybrid cloud
+Infrastructure-as-a-Service (IaaS) product that lets you create and manage
+private and public clouds. It provides self-service computing resources to
+users in a managed, governed, and secure way. CloudForms System Engine can
+be used to configure new systems, subscribe to updates, and maintain
+installations in distributed environments.
+
+It was found that the
+&quot;/usr/share/katello/script/katello-generate-passphrase&quot; utility, which is
+run during the installation and configuration process, set world-readable
+permissions on the &quot;/etc/katello/secure/passphrase&quot; file. A local attacker
+could use this flaw to obtain the passphrase for Katello, giving them
+access to information they would otherwise not have access to.
+(CVE-2012-5561)
+
+Note: After installing this update, ensure the
+&quot;/etc/katello/secure/passphrase&quot; file is owned by the root user and group
+and mode 0750 permissions. Sites should also consider re-creating the
+Katello passphrase as this issue exposed it to local users.
+
+One task the katello-configure utility performs is creating an RPM to be
+installed on client machines that need to connect to the Katello server. It
+was found that this RPM set world-readable and writable permissions on the
+pem file (containing the Certificate Authority certificate) used for
+trusting the Katello server. An attacker could use this flaw to perform a
+man-in-the-middle attack, allowing them to manage (such as installing and
+removing software) Katello client systems. (CVE-2012-6116)
+
+The CVE-2012-5561 issue was discovered by Aaron Weitekamp of the Red Hat
+Cloud Quality Engineering team, and CVE-2012-6116 was discovered by Dominic
+Cleal and James Laska of Red Hat.
+
+This update also fixes the following bugs:
+
+* The CloudForms System Engine command line tool incorrectly parsed
+locales, which caused the following error:
+
+&quot;translation missing: de.activerecord.errors.messages.record_invalid&quot;
+
+This update replaces the controller for setting the locale. The translation
+error no longer appears. (BZ#896251)
+
+* Certain locales did not properly escape certain UI content for new role
+creation. This broke the Save button for some locales. This update corrects
+the escape behavior for localized UI content. The Save button now works
+for new role creation. (BZ#896252)
+
+* A missing icon stopped users from deleting recent or saved searches. This
+update adds the icon and users can now delete recent or saved searches.
+(BZ#896253)
+
+* A performance issue in the Candlepin 0.7.8 component caused subscription
+responsiveness to decrease as the number of systems subscribed to
+CloudForms System Engine increases. This erratum updates to Candlepin
+0.7.19, which corrects the performance issues. (BZ#896261)
+
+* CloudForms System Engine would not fetch Extended Update Service (EUS)
+entitlements. This blocked the user from seeing and enabling EUS
+repositories. This update revises the manifest upload and deletion code,
+which also corrects the behavior for fetching entitlements. System Engine
+now fetches EUS entitlements. (BZ#896265)
+
+* Issues with menu widths caused the localized UI to not render certain
+menu items. This update corrects the style for the System Engine UI. The
+Web UI now renders the menu items correctly. (BZ#903702)
+
+Refer to the CloudForms 1.1.2 Release Notes for further information about
+this release. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+To upgrade, follow the upgrade instructions in the CloudForms Installation
+Guide, section &quot;4.1. Upgrading CloudForms System Engine&quot;:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html</a>
+
+Users of CloudForms System Engine are advised to upgrade to these updated
+packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+807455 - Deleted template still available in promoted environment
+879094 - CVE-2012-5561 Katello: /etc/katello/secure/passphrase is world readable
+896251 - [de_DE][zh_TW][pt_BR][ru_RU][SAM CLI] user module &quot;translation missing: de.activerecord.errors.messages.record_invalid&quot; errors
+896253 - Search -- missing ability to remove saved and/or recent search queries -- missing icon
+896261 - SCALE: Subscription of systems gets slower and slower as number of subscribed systems increases
+896265 - Unable to enable repos for EUS product
+903702 - Localized UI hides menu entries
+904128 - Unable to save system template
+906207 - CVE-2012-6116 Candlepin: bootstrap RPM deploys CA certificate file with mode 666
+907250 - translation missing: pt_BR.time.formats.default (I18n::MissingTranslationData)
+
+6. Package List:
+
+CloudForms System Engine for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/candlepin-0.7.19-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/candlepin-0.7.19-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-1.1.12.2-5.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-1.1.12.2-5.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-1.1.8-14.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-1.1.8-14.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-configure-1.1.9-13.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-configure-1.1.9-13.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-selinux-1.1.1-5.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-selinux-1.1.1-5.el6cf.src.rpm</a>
+
+noarch:
+candlepin-0.7.19-3.el6cf.noarch.rpm
+candlepin-devel-0.7.19-3.el6cf.noarch.rpm
+candlepin-selinux-0.7.19-3.el6cf.noarch.rpm
+candlepin-tomcat6-0.7.19-3.el6cf.noarch.rpm
+katello-1.1.12.2-5.el6cf.noarch.rpm
+katello-all-1.1.12.2-5.el6cf.noarch.rpm
+katello-api-docs-1.1.12.2-5.el6cf.noarch.rpm
+katello-cli-1.1.8-14.el6cf.noarch.rpm
+katello-cli-common-1.1.8-14.el6cf.noarch.rpm
+katello-common-1.1.12.2-5.el6cf.noarch.rpm
+katello-configure-1.1.9-13.el6cf.noarch.rpm
+katello-glue-candlepin-1.1.12.2-5.el6cf.noarch.rpm
+katello-glue-pulp-1.1.12.2-5.el6cf.noarch.rpm
+katello-selinux-1.1.1-5.el6cf.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5561.html">https://www.redhat.com/security/data/cve/CVE-2012-5561.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6116.html">https://www.redhat.com/security/data/cve/CVE-2012-6116.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJnRjXlSAg2UNWIIRAtrgAKCPq/A5TV3HDybGNOiDu/bLbMCk2gCgraj4
+FaFkBPHApaE7juOnpZKvRlo=
+=ZdWu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00067.html">Date Prev</a>][<a href="msg00069.html">Date Next</a>] &nbsp; [<a href="msg00067.html">Thread Prev</a>][<a href="msg00069.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00068">Thread Index</A>]
+[<A HREF="date.html#00068">Date Index</A>]
+[<A HREF="author.html#00068">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

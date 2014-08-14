@@ -1,0 +1,179 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0628&#45;01] Moderate: vdsm22 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Aug 2010 18:10:03 &#45;0400 -->
+<!--X-Message-Id: 201008192209.o7JM9vOk019356@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0628-01] Moderate: vdsm22 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0628-01] Moderate: vdsm22 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0628-01] Moderate: vdsm22 security and bug fix update</li>
+<li><em>Date</em>: Thu, 19 Aug 2010 16:09:57 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: vdsm22 security and bug fix update
+Advisory ID:       RHSA-2010:0628-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0628.html">https://rhn.redhat.com/errata/RHSA-2010-0628.html</a>
+Issue date:        2010-08-19
+CVE Names:         CVE-2010-2811 
+=====================================================================
+
+1. Summary:
+
+Updated vdsm22 packages that fix one security issue and multiple bugs are
+now available for Red Hat Enterprise Linux 5.5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Agents (VDSM) - x86_64
+
+3. Description:
+
+VDSM is a management module that serves as a Red Hat Enterprise
+Virtualization Manager agent on Red Hat Enterprise Virtualization
+Hypervisor or Red Hat Enterprise Linux hosts.
+
+Note: This update has been tested and is supported on Red Hat Enterprise
+Linux 5.5 (with all appropriate post-GA 5.5-specific updates).
+
+A flaw was found in the way VDSM accepted SSL connections. An attacker
+could trigger this flaw by creating a crafted SSL connection to VDSM,
+preventing VDSM from accepting SSL connections from other users.
+(CVE-2010-2811)
+
+These updated vdsm22 packages also fix the following bugs:
+
+* suspend-to-file hibernation failed for huge guests due to the migration
+and hibernation constant values being too short for huge guests. This
+update makes the timeouts proportional to guest RAM size, thus allowing
+suspension of huge guests in all cases except where storage is unbearably
+slow. (BZ#601275)
+
+* under certain circumstances, restarting a VDSM that was being used as a
+Storage Pool Manager killed all system processes on the host. With this
+update, stopping VDSM is ensured to kill only the processes that it
+started, and the VDSM SIGTERM handler is not run concurrently. With these
+changes, all processes on the host are no longer killed when VDSM is
+restarted. (BZ#614849)
+
+* when VDSM was requested to &quot;start in paused mode&quot;, it incorrectly
+reported virtual guest state as &quot;WaitForLaunch&quot; instead of &quot;Paused&quot;, which
+led to the virtual guest being inaccessible from Red Hat Enterprise
+Virtualization Manager. With this update, VDSM reports such virtual guests
+as &quot;Paused&quot;, and users are able to connect to the virtual guest display.
+(BZ#616464)
+
+Red Hat Enterprise Virtualization Manager 2.2 users with Red Hat Enterprise
+Linux hosts should install these updated packages, which resolve these
+issues. Alternatively, Red Hat Enterprise Virtualization Manager can
+install the new package automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+622928 - CVE-2010-2811 vdsm: SSL accept() blocks on a non-blocking Connection
+
+6. Package List:
+
+RHEV Agents (VDSM):
+
+x86_64:
+vdsm22-4.5-62.14.el5_5rhev2_2.x86_64.rpm
+vdsm22-cli-4.5-62.14.el5_5rhev2_2.x86_64.rpm
+vdsm22-debuginfo-4.5-62.14.el5_5rhev2_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2811.html">https://www.redhat.com/security/data/cve/CVE-2010-2811.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMbaujXlSAg2UNWIIRAvzSAJ0a5FgKWxSKfLKk69TAGNIMwqVd9ACgoTTm
+Qx8Atl2WiDarilAYO2I+358=
+=g9uS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

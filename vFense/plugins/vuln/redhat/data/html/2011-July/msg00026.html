@@ -1,0 +1,265 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1073&#45;01] Low: bash security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 09:40:55 &#45;0400 -->
+<!--X-Message-Id: 201107211340.p6LDen44016909@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1073-01] Low: bash security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1073-01] Low: bash security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1073-01] Low: bash security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 13:40:49 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: bash security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1073-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1073.html">https://rhn.redhat.com/errata/RHSA-2011-1073.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2008-5374 
+=====================================================================
+
+1. Summary:
+
+An updated bash package that fixes one security issue, several bugs, and
+adds one enhancement is now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Bash is the default shell for Red Hat Enterprise Linux.
+
+It was found that certain scripts bundled with the Bash documentation
+created temporary files in an insecure way. A malicious, local user could
+use this flaw to conduct a symbolic link attack, allowing them to overwrite
+the contents of arbitrary files accessible to the victim running the
+scripts. (CVE-2008-5374)
+
+This update fixes the following bugs:
+
+* When using the source builtin at location &quot;.&quot;, occasionally, bash
+opted to preserve internal consistency and abort scripts. This caused
+bash to abort scripts that assigned values to read-only variables.
+This is now fixed to ensure that such scripts are now executed as
+written and not aborted. (BZ#448508)
+
+* When the tab key was pressed for auto-completion options for the typed
+text, the cursor moved to an unexpected position on a previous line if
+the prompt contained characters that cannot be viewed and a &quot;\]&quot;. This
+is now fixed to retain the cursor at the expected position at the end of
+the target line after autocomplete options correctly display. (BZ#463880)
+
+* Bash attempted to interpret the NOBITS .dynamic section of the ELF
+header. This resulted in a &quot;^D: bad ELF interpreter: No such
+file or directory&quot; message. This is fixed to ensure that the invalid
+&quot;^D&quot; does not appear in the error message. (BZ#484809)
+
+* The $RANDOM variable in Bash carried over values from a previous
+execution for later jobs. This is fixed and the $RANDOM variable
+generates a new random number for each use. (BZ#492908)
+
+* When Bash ran a shell script with an embedded null character, bash's
+source builtin parsed the script incorrectly. This is fixed and
+bash's source builtin correctly parses shell script null characters.
+(BZ#503701)
+
+* The bash manual page for &quot;trap&quot; did not mention that signals ignored upon
+entry cannot be listed later. The manual page was updated for this update
+and now specifically notes that &quot;Signals ignored upon entry to the shell
+cannot be trapped, reset or listed&quot;. (BZ#504904)
+
+* Bash's readline incorrectly displayed additional text when resizing
+the terminal window when text spanned more than one line, which caused
+incorrect display output. This is now fixed to ensure that text in more
+than one line in a resized window displays as expected. (BZ#525474)
+
+* Previously, bash incorrectly displayed &quot;Broken pipe&quot; messages for
+builtins like &quot;echo&quot; and &quot;printf&quot; when output did not succeed due to
+EPIPE. This is fixed to ensure that the unnecessary &quot;Broken pipe&quot;
+messages no longer display. (BZ#546529)
+
+* Inserts with the repeat function were not possible after a deletion in
+vi-mode. This has been corrected and, with this update, the repeat function
+works as expected after a deletion. (BZ#575076)
+
+* In some situations, bash incorrectly appended &quot;/&quot; to files instead of
+just directories during tab-completion, causing incorrect
+auto-completions. This is fixed and auto-complete appends &quot;/&quot; only to
+directories. (BZ#583919)
+
+* Bash had a memory leak in the &quot;read&quot; builtin when the number of fields
+being read was not equal to the number of variables passed as arguments,
+causing a shell script crash. This is fixed to prevent a memory leak and
+shell script crash. (BZ#618393)
+
+* /usr/share/doc/bash-3.2/loadables in the bash package contained source
+files which would not build due to missing C header files. With this
+update, the unusable (and unbuildable) source files were removed from the
+package. (BZ#663656)
+
+This update also adds the following enhancement:
+
+* The system-wide &quot;/etc/bash.bash_logout&quot; bash logout file is now enabled.
+This allows administrators to write system-wide logout actions for all
+users. (BZ#592979)
+
+Users of bash are advised to upgrade to this updated package, which
+contains backported patches to resolve these issues and add this
+enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+448508 - Parsing of {} broken; breaks startup scripts
+463880 - bash completion in UTF8 locale has cursor positioning errors with long $PS1
+475474 - CVE-2008-5374 bash: Insecure temporary file use in aliasconv.sh, aliasconv.bash, cshtobash (symlink attack)
+484809 - [RHEL5] bash includes Control-D in &quot;bad ELF interpreter&quot; message
+492908 - $RANDOM value remains the same
+503701 - Cannot process scripts beyond an embedded NULL character when running in 'source' mode
+504904 - trap -p not displaying ignored signal when run from child bash
+525474 - bash/readline not detecting window resize properly
+583919 - tab-completion appends slash to non-directories
+592979 - system global bash.bash_logout is diabled in config-top.h
+618393 - memory leak in bash reading files
+663656 - Unusable loadables in /doc
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bash-3.2-32.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bash-3.2-32.el5.src.rpm</a>
+
+i386:
+bash-3.2-32.el5.i386.rpm
+bash-debuginfo-3.2-32.el5.i386.rpm
+
+x86_64:
+bash-3.2-32.el5.x86_64.rpm
+bash-debuginfo-3.2-32.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bash-3.2-32.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bash-3.2-32.el5.src.rpm</a>
+
+i386:
+bash-3.2-32.el5.i386.rpm
+bash-debuginfo-3.2-32.el5.i386.rpm
+
+ia64:
+bash-3.2-32.el5.i386.rpm
+bash-3.2-32.el5.ia64.rpm
+bash-debuginfo-3.2-32.el5.i386.rpm
+bash-debuginfo-3.2-32.el5.ia64.rpm
+
+ppc:
+bash-3.2-32.el5.ppc.rpm
+bash-debuginfo-3.2-32.el5.ppc.rpm
+
+s390x:
+bash-3.2-32.el5.s390x.rpm
+bash-debuginfo-3.2-32.el5.s390x.rpm
+
+x86_64:
+bash-3.2-32.el5.x86_64.rpm
+bash-debuginfo-3.2-32.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-5374.html">https://www.redhat.com/security/data/cve/CVE-2008-5374.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKCw3XlSAg2UNWIIRArwvAJ9JNXfDUEPE4WBoXAl87SjLpXU2NgCgpMxt
+sjSMOq2nb017SKjNDrKey0U=
+=hzBD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

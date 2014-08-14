@@ -1,0 +1,211 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1505&#45;01] Important: rhev&#45;hypervisor6 security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Dec 2012 15:30:43 &#45;0500 -->
+<!--X-Message-Id: 201212042030.qB4KUHUs012318@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1505-01] Important: rhev-hypervisor6 security, bug fix,	and e</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1505-01] Important: rhev-hypervisor6 security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1505-01] Important: rhev-hypervisor6 security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 4 Dec 2012 20:30:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:1505-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1505.html">https://rhn.redhat.com/errata/RHSA-2012-1505.html</a>
+Issue date:        2012-12-04
+CVE Names:         CVE-2012-0861 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes one security issue, various
+bugs, and adds enhancements is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found in the way Red Hat Enterprise Virtualization Hypervisor
+hosts were added to the Red Hat Enterprise Virtualization environment. The
+Python scripts needed to configure the host for Red Hat Enterprise
+Virtualization were downloaded in an insecure way, that is, without
+properly validating SSL certificates during HTTPS connections. An attacker
+on the local network could use this flaw to conduct a man-in-the-middle
+attack, potentially gaining root access to the host being added to the Red
+Hat Enterprise Virtualization environment. This update provides the VDSM
+part of the fix. The RHSA-2012:1506 Red Hat Enterprise Virtualization
+Manager update must also be installed to completely fix this issue.
+(CVE-2012-0861)
+
+The CVE-2012-0861 issue was discovered by Red Hat.
+
+This updated package provides updated components that include a fix for one
+security issue. This issue had no security impact on Red Hat Enterprise
+Virtualization Hypervisor itself, however. The security fix included in
+this update addresses the following CVE number:
+
+CVE-2012-0860 (VDSM issue)
+
+This updated Red Hat Enterprise Virtualization Hypervisor package also
+fixes the following bug:
+
+* This update adds Hypervisor support for use in Red Hat Enterprise
+Virtualization 3.1 compatible clusters. (BZ#846811)
+
+This update includes:
+
+* A fence-agents bug fix update (RHBA-2012:1439).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1439.html">https://rhn.redhat.com/errata/RHBA-2012-1439.html</a>
+
+* An ovirt-node bug fix update (RHBA-2012:1500).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1500.html">https://rhn.redhat.com/errata/RHBA-2012-1500.html</a>
+
+* A libvirt bug fix update (RHBA-2012:1501).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1501.html">https://rhn.redhat.com/errata/RHBA-2012-1501.html</a>
+
+* A sanlock bug fix and enhancement update (RHBA-2012:1507).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1507.html">https://rhn.redhat.com/errata/RHBA-2012-1507.html</a>
+
+* An important vdsm security and enhancement update (RHSA-2012:1508).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1508.html">https://rhn.redhat.com/errata/RHBA-2012-1508.html</a>
+
+* A qemu-kvm-rhev bug fix update (RHBA-2012:1510).
+  <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1510.html">https://rhn.redhat.com/errata/RHBA-2012-1510.html</a>
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which includes these security updates, bug
+fixes and enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization 
+environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+790754 - CVE-2012-0861 rhev: vds_installer is prone to MITM when downloading 2nd stage installer
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.3-20121121.0.el6_3.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0861.html">https://www.redhat.com/security/data/cve/CVE-2012-0861.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1439.html">https://rhn.redhat.com/errata/RHBA-2012-1439.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1500.html">https://rhn.redhat.com/errata/RHBA-2012-1500.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1501.html">https://rhn.redhat.com/errata/RHBA-2012-1501.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1507.html">https://rhn.redhat.com/errata/RHBA-2012-1507.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1508.html">https://rhn.redhat.com/errata/RHBA-2012-1508.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2012-1510.html">https://rhn.redhat.com/errata/RHBA-2012-1510.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQvl02XlSAg2UNWIIRApqvAKCZJeBXAkDMcL8uezswZlYhbhfZEgCdEXyN
+FvvLUXOy5WN7y/BcwNR6+ps=
+=FDbF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

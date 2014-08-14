@@ -1,0 +1,466 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1051&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Jul 2013 14:27:39 &#45;0400 -->
+<!--X-Message-Id: 201307161827.r6GIRc4s005297@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1051-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1051-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1051-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 16 Jul 2013 18:27:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2013:1051-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1051.html">https://rhn.redhat.com/errata/RHSA-2013-1051.html</a>
+Issue date:        2013-07-16
+CVE Names:         CVE-2012-6548 CVE-2013-0914 CVE-2013-1848 
+                   CVE-2013-2128 CVE-2013-2634 CVE-2013-2635 
+                   CVE-2013-2852 CVE-2013-3222 CVE-2013-3224 
+                   CVE-2013-3225 CVE-2013-3301 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A flaw was found in the tcp_read_sock() function in the Linux kernel's
+IPv4 TCP/IP protocol suite implementation in the way socket buffers (skb)
+were handled. A local, unprivileged user could trigger this issue via a
+call to splice(), leading to a denial of service. (CVE-2013-2128,
+Moderate)
+
+* Information leak flaws in the Linux kernel could allow a local,
+unprivileged user to leak kernel memory to user-space. (CVE-2012-6548,
+CVE-2013-2634, CVE-2013-2635, CVE-2013-3222, CVE-2013-3224, CVE-2013-3225,
+Low)
+
+* An information leak was found in the Linux kernel's POSIX signals
+implementation. A local, unprivileged user could use this flaw to bypass
+the Address Space Layout Randomization (ASLR) security feature.
+(CVE-2013-0914, Low)
+
+* A format string flaw was found in the ext3_msg() function in the Linux
+kernel's ext3 file system implementation. A local user who is able to mount
+an ext3 file system could use this flaw to cause a denial of service or,
+potentially, escalate their privileges. (CVE-2013-1848, Low)
+
+* A format string flaw was found in the b43_do_request_fw() function in the
+Linux kernel's b43 driver implementation. A local user who is able to
+specify the &quot;fwpostfix&quot; b43 module parameter could use this flaw to cause a
+denial of service or, potentially, escalate their privileges.
+(CVE-2013-2852, Low)
+
+* A NULL pointer dereference flaw was found in the Linux kernel's ftrace
+and function tracer implementations. A local user who has the CAP_SYS_ADMIN
+capability could use this flaw to cause a denial of service.
+(CVE-2013-3301, Low)
+
+Red Hat would like to thank Kees Cook for reporting CVE-2013-2852.
+
+This update also fixes several bugs. Documentation for these changes will
+be available shortly from the Technical Notes document linked to in the
+References section.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+920499 - CVE-2013-0914 Kernel: sa_restorer information leak
+920783 - CVE-2013-1848 kernel: ext3: format string issues
+922353 - CVE-2012-6548 Kernel: udf: information leak on export
+924689 - CVE-2013-2634 kernel: Information leak in the Data Center Bridging (DCB) component
+924690 - CVE-2013-2635 kernel: Information leak in the RTNETLINK component
+952197 - CVE-2013-3301 Kernel: tracing: NULL pointer dereference
+955216 - CVE-2013-3222 Kernel: atm: update msg_namelen in vcc_recvmsg()
+955599 - CVE-2013-3224 Kernel: Bluetooth: possible info leak in bt_sock_recvmsg()
+955649 - CVE-2013-3225 Kernel: Bluetooth: RFCOMM - missing msg_namelen update in rfcomm_sock_recvmsg
+968484 - CVE-2013-2128 Kernel: net: oops from tcp_collapse() when using splice(2)
+969518 - CVE-2013-2852 kernel: b43: format string leaking into error msgs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+kernel-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-headers-2.6.32-358.14.1.el6.i686.rpm
+perf-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.14.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.14.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.14.1.el6.x86_64.rpm
+perf-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-358.14.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.14.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.14.1.el6.x86_64.rpm
+perf-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+kernel-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-headers-2.6.32-358.14.1.el6.i686.rpm
+perf-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.14.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.14.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debug-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-devel-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-headers-2.6.32-358.14.1.el6.ppc64.rpm
+perf-2.6.32-358.14.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debug-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.14.1.el6.s390x.rpm
+kernel-devel-2.6.32-358.14.1.el6.s390x.rpm
+kernel-headers-2.6.32-358.14.1.el6.s390x.rpm
+kernel-kdump-2.6.32-358.14.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-358.14.1.el6.s390x.rpm
+perf-2.6.32-358.14.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.14.1.el6.x86_64.rpm
+perf-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.14.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+python-perf-2.6.32-358.14.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.14.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+python-perf-2.6.32-358.14.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+kernel-devel-2.6.32-358.14.1.el6.i686.rpm
+kernel-headers-2.6.32-358.14.1.el6.i686.rpm
+perf-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.14.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.14.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.14.1.el6.x86_64.rpm
+perf-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.14.1.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.14.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+python-perf-2.6.32-358.14.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.i686.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.14.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-2.6.32-358.14.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.14.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6548.html">https://www.redhat.com/security/data/cve/CVE-2012-6548.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0914.html">https://www.redhat.com/security/data/cve/CVE-2013-0914.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1848.html">https://www.redhat.com/security/data/cve/CVE-2013-1848.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2128.html">https://www.redhat.com/security/data/cve/CVE-2013-2128.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2634.html">https://www.redhat.com/security/data/cve/CVE-2013-2634.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2635.html">https://www.redhat.com/security/data/cve/CVE-2013-2635.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2852.html">https://www.redhat.com/security/data/cve/CVE-2013-2852.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3222.html">https://www.redhat.com/security/data/cve/CVE-2013-3222.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3224.html">https://www.redhat.com/security/data/cve/CVE-2013-3224.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3225.html">https://www.redhat.com/security/data/cve/CVE-2013-3225.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3301.html">https://www.redhat.com/security/data/cve/CVE-2013-3301.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/kernel.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/kernel.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR5ZCBXlSAg2UNWIIRAu45AJ4wvCIgZc5p6JTP60Jn+m6E6+7aWQCgomY5
+SsizMDtk6PKcY/bnlrCqcSQ=
+=15di
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

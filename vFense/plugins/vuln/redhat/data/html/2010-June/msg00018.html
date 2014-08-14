@@ -1,0 +1,300 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0500&#45;01] Critical: firefox security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 22 Jun 2010 18:34:24 &#45;0400 -->
+<!--X-Message-Id: 201006222234.o5MMYIf9026771@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0500-01] Critical: firefox security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0500-01] Critical: firefox security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0500-01] Critical: firefox security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 22 Jun 2010 16:34:15 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: firefox security, bug fix, and enhancement update
+Advisory ID:       RHSA-2010:0500-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0500.html">https://rhn.redhat.com/errata/RHSA-2010-0500.html</a>
+Issue date:        2010-06-22
+CVE Names:         CVE-2008-5913 CVE-2010-0182 CVE-2010-1121 
+                   CVE-2010-1125 CVE-2010-1196 CVE-2010-1197 
+                   CVE-2010-1198 CVE-2010-1199 CVE-2010-1200 
+                   CVE-2010-1202 CVE-2010-1203 
+=====================================================================
+
+1. Summary:
+
+An updated firefox package that addresses security issues, fixes bugs, adds
+numerous enhancements, and upgrades Firefox to version 3.6.4, is now
+available for Red Hat Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Mozilla Firefox is an open source web browser.
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Firefox to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+Firefox. (CVE-2010-1121, CVE-2010-1200, CVE-2010-1202, CVE-2010-1203)
+
+A flaw was found in the way browser plug-ins interact. It was possible for
+a plug-in to reference the freed memory from a different plug-in, resulting
+in the execution of arbitrary code with the privileges of the user running
+Firefox. (CVE-2010-1198)
+
+Several integer overflow flaws were found in the processing of malformed
+web content. A web page containing malicious content could cause Firefox to
+crash or, potentially, execute arbitrary code with the privileges of the
+user running Firefox. (CVE-2010-1196, CVE-2010-1199)
+
+A focus stealing flaw was found in the way Firefox handled focus changes. A
+malicious website could use this flaw to steal sensitive data from a user,
+such as usernames and passwords. (CVE-2010-1125)
+
+A flaw was found in the way Firefox handled the &quot;Content-Disposition:
+attachment&quot; HTTP header when the &quot;Content-Type: multipart&quot; HTTP header was
+also present. A website that allows arbitrary uploads and relies on the
+&quot;Content-Disposition: attachment&quot; HTTP header to prevent content from being
+displayed inline, could be used by an attacker to serve malicious content
+to users. (CVE-2010-1197)
+
+A flaw was found in the Firefox Math.random() function. This function could
+be used to identify a browsing session and track a user across different
+websites. (CVE-2008-5913)
+
+A flaw was found in the Firefox XML document loading security checks.
+Certain security checks were not being called when an XML document was
+loaded. This could possibly be leveraged later by an attacker to load
+certain resources that violate the security policies of the browser or its
+add-ons. Note that this issue cannot be exploited by only loading an XML
+document. (CVE-2010-0182)
+
+For technical details regarding these flaws, refer to the Mozilla security
+advisories for Firefox 3.6.4. You can find a link to the Mozilla advisories
+in the References section of this erratum.
+
+This erratum upgrades Firefox from version 3.0.19 to version 3.6.4, and as
+such, contains multiple bug fixes and numerous enhancements. Space
+precludes documenting these changes in this advisory. For details
+concerning these changes, refer to the Firefox Release Notes links in the
+References section of this erratum.
+
+Important: Firefox 3.6.4 is not completely backwards-compatible with all
+Mozilla Add-ons and Firefox plug-ins that worked with Firefox 3.0.19.
+Firefox 3.6 checks compatibility on first-launch, and, depending on the
+individual configuration and the installed Add-ons and plug-ins, may
+disable said Add-ons and plug-ins, or attempt to check for updates and
+upgrade them. Add-ons and plug-ins may have to be manually updated.
+
+All Firefox users should upgrade to this updated package, which contains
+Firefox version 3.6.4. After installing the update, Firefox must be
+restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+480938 - CVE-2008-5913 mozilla: in-session phishing attack
+577029 - CVE-2010-1121 firefox: arbitrary code execution via memory corruption
+577584 - CVE-2010-1125 firefox: keystrokes sent to hidden frame rather than visible frame due to javascript flaw
+586580 - CVE-2010-0182 mozilla: XMLDocument::load() doesn't check nsIContentPolicy (MFSA 2010-24)
+590804 - CVE-2010-1200 Mozilla Crashes with evidence of memory corruption
+590810 - CVE-2010-1202 Mozilla Crashes with evidence of memory corruption
+590816 - CVE-2010-1203 Mozilla Crashes with evidence of memory corruption
+590828 - CVE-2010-1198 Mozilla Freed object reuse across plugin instances
+590830 - CVE-2010-1196 Mozilla Heap buffer overflow in nsGenericDOMDataNode::SetTextInternal
+590833 - CVE-2010-1199 Mozilla Integer Overflow in XSLT Node Sorting
+590850 - CVE-2010-1197 Mozilla Content-Disposition: attachment ignored if Content-Type: multipart also present
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm</a>
+
+i386:
+firefox-3.6.4-8.el4.i386.rpm
+firefox-debuginfo-3.6.4-8.el4.i386.rpm
+
+ia64:
+firefox-3.6.4-8.el4.ia64.rpm
+firefox-debuginfo-3.6.4-8.el4.ia64.rpm
+
+ppc:
+firefox-3.6.4-8.el4.ppc.rpm
+firefox-debuginfo-3.6.4-8.el4.ppc.rpm
+
+s390:
+firefox-3.6.4-8.el4.s390.rpm
+firefox-debuginfo-3.6.4-8.el4.s390.rpm
+
+s390x:
+firefox-3.6.4-8.el4.s390x.rpm
+firefox-debuginfo-3.6.4-8.el4.s390x.rpm
+
+x86_64:
+firefox-3.6.4-8.el4.x86_64.rpm
+firefox-debuginfo-3.6.4-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm</a>
+
+i386:
+firefox-3.6.4-8.el4.i386.rpm
+firefox-debuginfo-3.6.4-8.el4.i386.rpm
+
+x86_64:
+firefox-3.6.4-8.el4.x86_64.rpm
+firefox-debuginfo-3.6.4-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm</a>
+
+i386:
+firefox-3.6.4-8.el4.i386.rpm
+firefox-debuginfo-3.6.4-8.el4.i386.rpm
+
+ia64:
+firefox-3.6.4-8.el4.ia64.rpm
+firefox-debuginfo-3.6.4-8.el4.ia64.rpm
+
+x86_64:
+firefox-3.6.4-8.el4.x86_64.rpm
+firefox-debuginfo-3.6.4-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-3.6.4-8.el4.src.rpm</a>
+
+i386:
+firefox-3.6.4-8.el4.i386.rpm
+firefox-debuginfo-3.6.4-8.el4.i386.rpm
+
+ia64:
+firefox-3.6.4-8.el4.ia64.rpm
+firefox-debuginfo-3.6.4-8.el4.ia64.rpm
+
+x86_64:
+firefox-3.6.4-8.el4.x86_64.rpm
+firefox-debuginfo-3.6.4-8.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-5913.html">https://www.redhat.com/security/data/cve/CVE-2008-5913.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0182.html">https://www.redhat.com/security/data/cve/CVE-2010-0182.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1121.html">https://www.redhat.com/security/data/cve/CVE-2010-1121.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1125.html">https://www.redhat.com/security/data/cve/CVE-2010-1125.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1196.html">https://www.redhat.com/security/data/cve/CVE-2010-1196.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1197.html">https://www.redhat.com/security/data/cve/CVE-2010-1197.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1198.html">https://www.redhat.com/security/data/cve/CVE-2010-1198.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1199.html">https://www.redhat.com/security/data/cve/CVE-2010-1199.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1200.html">https://www.redhat.com/security/data/cve/CVE-2010-1200.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1202.html">https://www.redhat.com/security/data/cve/CVE-2010-1202.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1203.html">https://www.redhat.com/security/data/cve/CVE-2010-1203.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://mozilla.com/en-US/firefox/3.6.4/releasenotes/">http://mozilla.com/en-US/firefox/3.6.4/releasenotes/</a>
+<a  rel="nofollow" href="http://mozilla.com/en-US/firefox/3.6/releasenotes/">http://mozilla.com/en-US/firefox/3.6/releasenotes/</a>
+<a  rel="nofollow" href="http://mozilla.org/security/known-vulnerabilities/firefox35.html">http://mozilla.org/security/known-vulnerabilities/firefox35.html</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/known-vulnerabilities/firefox36.html#firefox3.6.4">http://www.mozilla.org/security/known-vulnerabilities/firefox36.html#firefox3.6.4</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMITo6XlSAg2UNWIIRAn6PAJ0fTu1AXxt21oM83nvUSdmmZjPI6wCbBUwC
+VI3k5P7pazSUTCV66HXbYac=
+=Um5E
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

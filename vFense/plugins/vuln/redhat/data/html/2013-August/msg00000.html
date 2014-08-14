@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1133&#45;01] Moderate: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 5 Aug 2013 12:20:49 &#45;0400 -->
+<!--X-Message-Id: 201308051620.r75GKmuF014783@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1133-01] Moderate: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1133-01] Moderate: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1133-01] Moderate: httpd security update</li>
+<li><em>Date</em>: Mon, 5 Aug 2013 16:20:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security update
+Advisory ID:       RHSA-2013:1133-01
+Product:           Red Hat JBoss Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1133.html">https://rhn.redhat.com/errata/RHSA-2013-1133.html</a>
+Issue date:        2013-08-05
+CVE Names:         CVE-2013-1862 CVE-2013-1896 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix two security issues are now available for
+Red Hat JBoss Web Server 2.0.1 for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Web Server 2 for RHEL 5 Server - i386, x86_64
+Red Hat JBoss Web Server 2 for RHEL 6 Server - i386, x86_64
+
+3. Description:
+
+Red Hat JBoss Web Server is a fully integrated and certified set of
+components for hosting Java web applications. It is comprised of the Apache
+HTTP Server, the Apache Tomcat Servlet container, Apache Tomcat Connector
+(mod_jk), JBoss HTTP Connector (mod_cluster), Hibernate, and the Tomcat
+Native library.
+
+A flaw was found in the way the mod_dav module of the Apache HTTP Server
+handled merge requests. An attacker could use this flaw to send a crafted
+merge request that contains URIs that are not configured for DAV, causing
+the httpd child process to crash. (CVE-2013-1896)
+
+It was found that mod_rewrite did not filter terminal escape sequences from
+its log file. If mod_rewrite was configured with the RewriteLog directive,
+a remote attacker could use specially-crafted HTTP requests to inject
+terminal escape sequences into the mod_rewrite log file. If a victim viewed
+the log file with a terminal emulator, it could result in arbitrary command
+execution with the privileges of that user. (CVE-2013-1862)
+
+Warning: Before applying the update, back up your existing Red Hat JBoss
+Web Server installation (including all applications and configuration
+files).
+
+All users of Red Hat JBoss Web Server 2.0.1 should upgrade to these updated
+packages, which contain backported patches to correct these issues. After
+installing the updated packages, users must restart the httpd service for
+the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+953729 - CVE-2013-1862 httpd: mod_rewrite allows terminal escape sequences to be written to the log file
+983549 - CVE-2013-1896 httpd: mod_dav DoS (httpd child process crash) via a URI MERGE request with source URI not handled by mod_dav
+
+6. Package List:
+
+Red Hat JBoss Web Server 2 for RHEL 5 Server:
+
+Source:
+httpd-2.2.22-25.ep6.el5.src.rpm
+httpd-2.2.22-25.ep6.el5.src.rpm
+
+i386:
+httpd-2.2.22-25.ep6.el5.i386.rpm
+httpd-2.2.22-25.ep6.el5.i386.rpm
+httpd-debuginfo-2.2.22-25.ep6.el5.i386.rpm
+httpd-debuginfo-2.2.22-25.ep6.el5.i386.rpm
+httpd-devel-2.2.22-25.ep6.el5.i386.rpm
+httpd-manual-2.2.22-25.ep6.el5.i386.rpm
+httpd-tools-2.2.22-25.ep6.el5.i386.rpm
+mod_ssl-2.2.22-25.ep6.el5.i386.rpm
+
+x86_64:
+httpd-2.2.22-25.ep6.el5.x86_64.rpm
+httpd-debuginfo-2.2.22-25.ep6.el5.x86_64.rpm
+httpd-debuginfo-2.2.22-25.ep6.el5.x86_64.rpm
+httpd-devel-2.2.22-25.ep6.el5.x86_64.rpm
+httpd-manual-2.2.22-25.ep6.el5.x86_64.rpm
+httpd-tools-2.2.22-25.ep6.el5.x86_64.rpm
+mod_ssl-2.2.22-25.ep6.el5.x86_64.rpm
+
+Red Hat JBoss Web Server 2 for RHEL 6 Server:
+
+Source:
+httpd-2.2.22-25.ep6.el6.src.rpm
+httpd-2.2.22-25.ep6.el6.src.rpm
+
+i386:
+httpd-2.2.22-25.ep6.el6.i386.rpm
+httpd-2.2.22-25.ep6.el6.i386.rpm
+httpd-debuginfo-2.2.22-25.ep6.el6.i386.rpm
+httpd-debuginfo-2.2.22-25.ep6.el6.i386.rpm
+httpd-devel-2.2.22-25.ep6.el6.i386.rpm
+httpd-devel-2.2.22-25.ep6.el6.i386.rpm
+httpd-manual-2.2.22-25.ep6.el6.i386.rpm
+httpd-manual-2.2.22-25.ep6.el6.i386.rpm
+httpd-tools-2.2.22-25.ep6.el6.i386.rpm
+httpd-tools-2.2.22-25.ep6.el6.i386.rpm
+mod_ssl-2.2.22-25.ep6.el6.i386.rpm
+mod_ssl-2.2.22-25.ep6.el6.i386.rpm
+
+x86_64:
+httpd-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-debuginfo-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-debuginfo-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-devel-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-devel-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-manual-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-manual-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-tools-2.2.22-25.ep6.el6.x86_64.rpm
+httpd-tools-2.2.22-25.ep6.el6.x86_64.rpm
+mod_ssl-2.2.22-25.ep6.el6.x86_64.rpm
+mod_ssl-2.2.22-25.ep6.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1862.html">https://www.redhat.com/security/data/cve/CVE-2013-1862.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1896.html">https://www.redhat.com/security/data/cve/CVE-2013-1896.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR/9C/XlSAg2UNWIIRAkDcAKC66V0v9gh6PkNg93fXl6CUES3CVwCgr6zJ
+dtGnQS1zwKlK7HCeIs+wsrc=
+=N7Wc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

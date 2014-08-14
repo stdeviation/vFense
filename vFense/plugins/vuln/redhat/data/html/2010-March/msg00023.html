@@ -1,0 +1,489 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0165&#45;01] Moderate: nss security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 25 Mar 2010 07:03:09 &#45;0400 -->
+<!--X-Message-Id: 201003251103.o2PB33iM015305@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0165-01] Moderate: nss security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0165-01] Moderate: nss security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0165-01] Moderate: nss security update</li>
+<li><em>Date</em>: Thu, 25 Mar 2010 12:03:03 +0100</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: nss security update
+Advisory ID:       RHSA-2010:0165-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0165.html">https://rhn.redhat.com/errata/RHSA-2010-0165.html</a>
+Issue date:        2010-03-25
+CVE Names:         CVE-2009-3555 
+=====================================================================
+
+1. Summary:
+
+Updated nss packages that fix a security issue are now available for Red
+Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications. Applications built with NSS can support SSLv2, SSLv3, TLS,
+and other security standards.
+
+Netscape Portable Runtime (NSPR) provides platform independence for non-GUI
+operating system facilities. These facilities include threads, thread
+synchronization, normal file and network I/O, interval timing, calendar
+time, basic memory management (malloc and free), and shared library
+linking.
+
+A flaw was found in the way the TLS/SSL (Transport Layer Security/Secure
+Sockets Layer) protocols handled session renegotiation. A man-in-the-middle
+attacker could use this flaw to prefix arbitrary plain text to a client's
+session (for example, an HTTPS connection to a website). This could force
+the server to process an attacker's request as if authenticated using the
+victim's credentials. This update addresses this flaw by implementing the
+TLS Renegotiation Indication Extension, as defined in RFC 5746.
+(CVE-2009-3555)
+
+Refer to the following Knowledgebase article for additional details about
+this flaw: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+Users of Red Hat Certificate System 7.3 and 8.0 should review the following
+Knowledgebase article before installing this update:
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-28439">http://kbase.redhat.com/faq/docs/DOC-28439</a>
+
+All users of NSS are advised to upgrade to these updated packages, which
+update NSS to version 3.12.6. This erratum also updates the NSPR packages
+to the version required by NSS 3.12.6. All running applications using the
+NSS library must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+533125 - CVE-2009-3555 TLS: MITM attacks via session renegotiation
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-devel-4.8.4-1.1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-devel-3.12.6-1.el4_8.i386.rpm
+nss-tools-3.12.6-1.el4_8.i386.rpm
+
+ia64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.ia64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.ia64.rpm
+nspr-devel-4.8.4-1.1.el4_8.ia64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.ia64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.ia64.rpm
+nss-devel-3.12.6-1.el4_8.ia64.rpm
+nss-tools-3.12.6-1.el4_8.ia64.rpm
+
+ppc:
+nspr-4.8.4-1.1.el4_8.ppc.rpm
+nspr-4.8.4-1.1.el4_8.ppc64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.ppc.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.ppc64.rpm
+nspr-devel-4.8.4-1.1.el4_8.ppc.rpm
+nss-3.12.6-1.el4_8.ppc.rpm
+nss-3.12.6-1.el4_8.ppc64.rpm
+nss-debuginfo-3.12.6-1.el4_8.ppc.rpm
+nss-debuginfo-3.12.6-1.el4_8.ppc64.rpm
+nss-devel-3.12.6-1.el4_8.ppc.rpm
+nss-tools-3.12.6-1.el4_8.ppc.rpm
+
+s390:
+nspr-4.8.4-1.1.el4_8.s390.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.s390.rpm
+nspr-devel-4.8.4-1.1.el4_8.s390.rpm
+nss-3.12.6-1.el4_8.s390.rpm
+nss-debuginfo-3.12.6-1.el4_8.s390.rpm
+nss-devel-3.12.6-1.el4_8.s390.rpm
+nss-tools-3.12.6-1.el4_8.s390.rpm
+
+s390x:
+nspr-4.8.4-1.1.el4_8.s390.rpm
+nspr-4.8.4-1.1.el4_8.s390x.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.s390.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.s390x.rpm
+nspr-devel-4.8.4-1.1.el4_8.s390x.rpm
+nss-3.12.6-1.el4_8.s390.rpm
+nss-3.12.6-1.el4_8.s390x.rpm
+nss-debuginfo-3.12.6-1.el4_8.s390.rpm
+nss-debuginfo-3.12.6-1.el4_8.s390x.rpm
+nss-devel-3.12.6-1.el4_8.s390x.rpm
+nss-tools-3.12.6-1.el4_8.s390x.rpm
+
+x86_64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-devel-4.8.4-1.1.el4_8.x86_64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.x86_64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.x86_64.rpm
+nss-devel-3.12.6-1.el4_8.x86_64.rpm
+nss-tools-3.12.6-1.el4_8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-devel-4.8.4-1.1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-devel-3.12.6-1.el4_8.i386.rpm
+nss-tools-3.12.6-1.el4_8.i386.rpm
+
+x86_64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-devel-4.8.4-1.1.el4_8.x86_64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.x86_64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.x86_64.rpm
+nss-devel-3.12.6-1.el4_8.x86_64.rpm
+nss-tools-3.12.6-1.el4_8.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-devel-4.8.4-1.1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-devel-3.12.6-1.el4_8.i386.rpm
+nss-tools-3.12.6-1.el4_8.i386.rpm
+
+ia64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.ia64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.ia64.rpm
+nspr-devel-4.8.4-1.1.el4_8.ia64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.ia64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.ia64.rpm
+nss-devel-3.12.6-1.el4_8.ia64.rpm
+nss-tools-3.12.6-1.el4_8.ia64.rpm
+
+x86_64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-devel-4.8.4-1.1.el4_8.x86_64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.x86_64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.x86_64.rpm
+nss-devel-3.12.6-1.el4_8.x86_64.rpm
+nss-tools-3.12.6-1.el4_8.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nspr-4.8.4-1.1.el4_8.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/nss-3.12.6-1.el4_8.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-devel-4.8.4-1.1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-devel-3.12.6-1.el4_8.i386.rpm
+nss-tools-3.12.6-1.el4_8.i386.rpm
+
+ia64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.ia64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.ia64.rpm
+nspr-devel-4.8.4-1.1.el4_8.ia64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.ia64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.ia64.rpm
+nss-devel-3.12.6-1.el4_8.ia64.rpm
+nss-tools-3.12.6-1.el4_8.ia64.rpm
+
+x86_64:
+nspr-4.8.4-1.1.el4_8.i386.rpm
+nspr-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.i386.rpm
+nspr-debuginfo-4.8.4-1.1.el4_8.x86_64.rpm
+nspr-devel-4.8.4-1.1.el4_8.x86_64.rpm
+nss-3.12.6-1.el4_8.i386.rpm
+nss-3.12.6-1.el4_8.x86_64.rpm
+nss-debuginfo-3.12.6-1.el4_8.i386.rpm
+nss-debuginfo-3.12.6-1.el4_8.x86_64.rpm
+nss-devel-3.12.6-1.el4_8.x86_64.rpm
+nss-tools-3.12.6-1.el4_8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nss-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-tools-3.12.6-1.el5_4.i386.rpm
+
+x86_64:
+nspr-4.8.4-1.el5_4.i386.rpm
+nspr-4.8.4-1.el5_4.x86_64.rpm
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.x86_64.rpm
+nss-3.12.6-1.el5_4.i386.rpm
+nss-3.12.6-1.el5_4.x86_64.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.x86_64.rpm
+nss-tools-3.12.6-1.el5_4.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm</a>
+
+i386:
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-devel-4.8.4-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-devel-3.12.6-1.el5_4.i386.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.i386.rpm
+
+x86_64:
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.x86_64.rpm
+nspr-devel-4.8.4-1.el5_4.i386.rpm
+nspr-devel-4.8.4-1.el5_4.x86_64.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.x86_64.rpm
+nss-devel-3.12.6-1.el5_4.i386.rpm
+nss-devel-3.12.6-1.el5_4.x86_64.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.i386.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.8.4-1.el5_4.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.6-1.el5_4.src.rpm</a>
+
+i386:
+nspr-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-devel-4.8.4-1.el5_4.i386.rpm
+nss-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-devel-3.12.6-1.el5_4.i386.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.i386.rpm
+nss-tools-3.12.6-1.el5_4.i386.rpm
+
+ia64:
+nspr-4.8.4-1.el5_4.i386.rpm
+nspr-4.8.4-1.el5_4.ia64.rpm
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.ia64.rpm
+nspr-devel-4.8.4-1.el5_4.ia64.rpm
+nss-3.12.6-1.el5_4.i386.rpm
+nss-3.12.6-1.el5_4.ia64.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.ia64.rpm
+nss-devel-3.12.6-1.el5_4.ia64.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.ia64.rpm
+nss-tools-3.12.6-1.el5_4.ia64.rpm
+
+ppc:
+nspr-4.8.4-1.el5_4.ppc.rpm
+nspr-4.8.4-1.el5_4.ppc64.rpm
+nspr-debuginfo-4.8.4-1.el5_4.ppc.rpm
+nspr-debuginfo-4.8.4-1.el5_4.ppc64.rpm
+nspr-devel-4.8.4-1.el5_4.ppc.rpm
+nspr-devel-4.8.4-1.el5_4.ppc64.rpm
+nss-3.12.6-1.el5_4.ppc.rpm
+nss-3.12.6-1.el5_4.ppc64.rpm
+nss-debuginfo-3.12.6-1.el5_4.ppc.rpm
+nss-debuginfo-3.12.6-1.el5_4.ppc64.rpm
+nss-devel-3.12.6-1.el5_4.ppc.rpm
+nss-devel-3.12.6-1.el5_4.ppc64.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.ppc.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.ppc64.rpm
+nss-tools-3.12.6-1.el5_4.ppc.rpm
+
+s390x:
+nspr-4.8.4-1.el5_4.s390.rpm
+nspr-4.8.4-1.el5_4.s390x.rpm
+nspr-debuginfo-4.8.4-1.el5_4.s390.rpm
+nspr-debuginfo-4.8.4-1.el5_4.s390x.rpm
+nspr-devel-4.8.4-1.el5_4.s390.rpm
+nspr-devel-4.8.4-1.el5_4.s390x.rpm
+nss-3.12.6-1.el5_4.s390.rpm
+nss-3.12.6-1.el5_4.s390x.rpm
+nss-debuginfo-3.12.6-1.el5_4.s390.rpm
+nss-debuginfo-3.12.6-1.el5_4.s390x.rpm
+nss-devel-3.12.6-1.el5_4.s390.rpm
+nss-devel-3.12.6-1.el5_4.s390x.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.s390.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.s390x.rpm
+nss-tools-3.12.6-1.el5_4.s390x.rpm
+
+x86_64:
+nspr-4.8.4-1.el5_4.i386.rpm
+nspr-4.8.4-1.el5_4.x86_64.rpm
+nspr-debuginfo-4.8.4-1.el5_4.i386.rpm
+nspr-debuginfo-4.8.4-1.el5_4.x86_64.rpm
+nspr-devel-4.8.4-1.el5_4.i386.rpm
+nspr-devel-4.8.4-1.el5_4.x86_64.rpm
+nss-3.12.6-1.el5_4.i386.rpm
+nss-3.12.6-1.el5_4.x86_64.rpm
+nss-debuginfo-3.12.6-1.el5_4.i386.rpm
+nss-debuginfo-3.12.6-1.el5_4.x86_64.rpm
+nss-devel-3.12.6-1.el5_4.i386.rpm
+nss-devel-3.12.6-1.el5_4.x86_64.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.i386.rpm
+nss-pkcs11-devel-3.12.6-1.el5_4.x86_64.rpm
+nss-tools-3.12.6-1.el5_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3555.html">https://www.redhat.com/security/data/cve/CVE-2009-3555.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-28439">http://kbase.redhat.com/faq/docs/DOC-28439</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLq0JXXlSAg2UNWIIRAjEzAKC61nCUsxHfL7CpbzpPy3aYqFzAuACdFMEw
+/P91vo2S8cdK8VfnnbDItwo=
+=oW2l
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

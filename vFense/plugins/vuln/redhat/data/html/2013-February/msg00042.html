@@ -1,0 +1,566 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0496&#45;02] Important: Red Hat Enterprise Linux 6 kernel	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:21:15 &#45;0500 -->
+<!--X-Message-Id: 201302210621.r1L6LCrL017294@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0496-02] Important: Red Hat Enterprise Linux 6 kernel	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0496-02] Important: Red Hat Enterprise Linux 6 kernel	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0496-02] Important: Red Hat Enterprise Linux 6 kernel	update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:10:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Linux 6 kernel update
+Advisory ID:       RHSA-2013:0496-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0496.html">https://rhn.redhat.com/errata/RHSA-2013-0496.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-4508 CVE-2012-4542 CVE-2013-0190 
+                   CVE-2013-0309 CVE-2013-0310 CVE-2013-0311 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues, address several
+hundred bugs, and add numerous enhancements are now available as part of
+the ongoing support and maintenance of Red Hat Enterprise Linux version 6.
+This is the fourth regular update.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A race condition was found in the way asynchronous I/O and fallocate()
+interacted when using the ext4 file system. A local, unprivileged user
+could use this flaw to expose random data from an extent whose data blocks
+have not yet been written, and thus contain data from a deleted file.
+(CVE-2012-4508, Important)
+
+* A flaw was found in the way the vhost kernel module handled descriptors
+that spanned multiple regions. A privileged guest user in a KVM guest could
+use this flaw to crash the host or, potentially, escalate their privileges
+on the host. (CVE-2013-0311, Important)
+
+* It was found that the default SCSI command filter does not accommodate
+commands that overlap across device classes. A privileged guest user could
+potentially use this flaw to write arbitrary data to a LUN that is
+passed-through as read-only. (CVE-2012-4542, Moderate)
+
+* A flaw was found in the way the xen_failsafe_callback() function in the
+Linux kernel handled the failed iret (interrupt return) instruction
+notification from the Xen hypervisor. An unprivileged user in a 32-bit
+para-virtualized guest could use this flaw to crash the guest.
+(CVE-2013-0190, Moderate)
+
+* A flaw was found in the way pmd_present() interacted with PROT_NONE
+memory ranges when transparent hugepages were in use. A local, unprivileged
+user could use this flaw to crash the system. (CVE-2013-0309, Moderate)
+
+* A flaw was found in the way CIPSO (Common IP Security Option) IP options
+were validated when set from user mode. A local user able to set CIPSO IP
+options on the socket could use this flaw to crash the system.
+(CVE-2013-0310, Moderate)
+
+Red Hat would like to thank Theodore Ts'o for reporting CVE-2012-4508, and
+Andrew Cooper of Citrix for reporting CVE-2013-0190. Upstream acknowledges
+Dmitry Monakhov as the original reporter of CVE-2012-4508. The
+CVE-2012-4542 issue was discovered by Paolo Bonzini of Red Hat.
+
+This update also fixes several hundred bugs and adds enhancements. Refer to
+the Red Hat Enterprise Linux 6.4 Release Notes for information on the most
+significant of these changes, and the Technical Notes for further
+information, both linked to in the References.
+
+All Red Hat Enterprise Linux 6 users are advised to install these updated
+packages, which correct these issues, and fix the bugs and add the
+enhancements noted in the Red Hat Enterprise Linux 6.4 Release Notes and
+Technical Notes. The system must be rebooted for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+664586 - ALSA - backport the recent USB audio driver from upstream (to fix low audio volume issue, new hw enablement)
+700324 - RFE: add online discard support to XFS
+734051 - rhel6.1 guest hang when unplug is using virtio disk from monitor
+735768 - kernel BUG at fs/jbd2/commit.c:353 or fs/jbd/commit.c:319 hitting J_ASSERT(journal-&gt;j_running_transaction != NULL) in journal_commit_transaction
+749273 - Failure to resume from suspend (nVidia Quadro NVS 400)
+758202 - pNFS read crashes when mounting with rsize &lt; 4096
+767886 - ATS capability is disabled when NIC is assigned to a guest
+784174 - SECINFO support in the NFS v4 client in RHEL 6
+796352 - NFS mounts fail against Windows 8 servers
+796992 - krb5p mounts fail against a Microsoft 8 server.
+807503 - xfs contention problem
+808112 - [nfsv4] open(O_CREAT) returns EEXISTS on symbolic link created on another system until stat()ed
+813137 - [xfs/xfstests 273] heavy cp workload hang
+813227 - Balloon value reported doesn't get updated after guest driver is removed and re-inserted.
+816059 - can not Install guest(RHEL6.3 32) using scsi-hd  and  scsi-cd
+816308 - kvm: 9480: cpu0 unimplemented perfctr wrmsr: 0x186 data 0x130079
+816880 - ALSA: Update the snd-oxygen and snd-virtuoso (CMI87xx based) drivers for RHEL 6.4
+816888 - kernel panic in qfq_dequeue
+817243 - Guest failed to resume from S4 after migration with kvmclock
+821060 - dlm: make dlm_recv single threaded
+821463 - SEP CPU flag is disabled on Intel 64 bit when exec_shield is on
+822075 - Console complain about &quot;Unable to load target_core_stgt&quot;
+823018 - link of a delegated file fails (due to server returning NOENT instead of DELAY)
+823625 - cifs: fix handling of scopeid in cifs_convert_address
+823630 - cifs: simplify open code
+823842 - cifs: Cleanup TCP_SERVER_Info
+823843 - cifs: Fix oplock break handling
+823878 - cifs: Simplify cache invalidation
+823902 - cifs: Add rwpidforward mount option [kernel]
+823934 - cifs: Cleanup cifs mount code.
+824065 - cifs: Introduce code required for cifs idmap and ACL support
+824964 - dlm: deadlock between dlm_send and dlm_controld
+825009 - NFSv4.1: Add LAYOUTRETURN support
+826067 - Use-after-free on CPU hotplug
+826650 - pNFS: Page Infrastructure Upgrades.
+827474 - [RHEL 6.4] Sync up perf tool with upstream 3.4 [perf-tool]
+829031 - Fix KVM device assignment bridge test
+830977 - [RHEL6 kernel] crypto: sha512 - Fix byte counter overflow in SHA-512
+832252 - cifs_async_writev blocked by limited kmap on i386 with high-mem
+832301 - windows 8 32bit  can not be installed on qemu-kvm
+832434 - nfs: rpciod is blocked in nfs_release_page waiting for nfs_commit_inode to complete
+832486 - KVM: make GET_SUPPORTED_CPUID whitelist-based
+834097 - Performance regression between kernels 2.6.32-131.0.15 and 2.6.32-220
+836803 - RHEL6: Potential fix for leapsecond caused futex related load spikes
+837871 - pNFS: General Client Infrastructure
+839266 - Change network with netconsole loaded cause kernel panic
+839984 - [PATCH sysfs] kernel cannot rename network interfaces
+840458 - RFE - Virtio-scsi should support block_resize
+841578 - Update wireless LAN subsystem
+841604 - Add support for modern Ralink wireless devices (28xx/3xxx/53xx chips)
+841622 - add virtio-scsi unlocked kick patches
+841983 - VLAN configured on top of a bonded interface (active-backup) does not failover
+842312 - nfs_attr_use_mounted_on_file() returns wrong value
+842435 - NFSv4 Handle a bad or revoked delegation
+844542 - virtio: Use ida to allocate virtio index
+844579 - virtio-rng: 'cat' process hangs when ^C pressed when there's no input
+844582 - virtio-rng: module removal doesn't succeed till input from host received
+844583 - s3/s4 support for virtio-rng driver
+845233 - XFS regularly truncating files after crash/reboot
+846585 - [qemu-kvm] [hot-plug] qemu-process (RHEL6.3 guest) goes into D state during nic hot unplug (netdev_del hostnet1)
+846702 - [RHEL 6.4] Sync up perf tool with upstream 3.5 [perf-tool]
+847722 - backport: KVM: fix race with level interrupts
+849223 - RHEL5 Xen SR-IOV VF PCI passthru does not work to RHEL6 HVM guest; no interrupts received on the guest VF
+850642 - Fuse: backport FUSE_AUTO_INVAL_DATA flag support and related patches
+851312 - pNFS client fails to select correct DS from multipath
+854066 - [rhel6] lvs: issues with GRO / icmp fragmentation needed
+854584 - mmu_notifier: updates for RHEL6.4
+855436 - Spurious LVDS detected on HP T5740
+855448 - DM RAID: Bad table argument could cause kernel panic
+857555 - nfs: fix potential slabcache leaks when cache allocations fail
+857792 - drm rebase bug for 6.4
+857956 - hpsa: fix handling of protocol error
+858292 - cciss: fix handling of protocol error
+858850 - fuse: backport scatter-gather direct IO
+859242 - [6.4] Backport upstream XFS fixes
+859259 - parallel perf build fails
+859355 - wireless: crash in crypto_destroy_tfm
+860404 - [RHEL 6.4] Sync up perf tool with upstream latest 3.6 [perf-tool]
+862025 - wl1251_sdio driver missed in RHEL6.4
+863077 - Soft lockup on reboot with an active VG
+863212 - SUNRPC: Patch inclusion request
+865380 - Kernel oops/crash when running perf on a SandyBridge host
+865666 - host boot fail and when system boots with kernel parameter intel_iommu=on
+865929 - xfs: report projid32bit feature in geometry call
+866271 - When browse option is used, failed mounts by AutoFS leave broken directories
+866417 - iwlwifi rmmod crash after roaming
+867169 - nouveau in optimus configuration oops on load
+867688 - sysctl table check failed: /net/ipv6/nf_conntrack_frag6_low_thresh Unknown sysctl binary path
+868233 - [xfs/md] NULL pointer dereference - xfs_alloc_ioend_bio
+869856 - [Arrandale] Text disappearing in Firefox and Terminal
+869904 - CVE-2012-4508 kernel: ext4: AIO vs fallocate stale data exposure
+870246 - LVM RAID:  Images that are reintroduced into an array are not synced
+870297 - storvsc: Account for in-transit packets in the RESET path
+871350 - Add minimal hyper-v support to kvm in order to support relaxed timing feature
+871630 - DM RAID: kernel panic when attempting to activate partial RAID LV (i.e. an array that has missing devices)
+871968 - RPC tasks can deadlock during rpc_shutdown
+872229 - export the symbol nfs_fs_type
+872232 - export the symbol nfs_fhget
+872799 - net: WARN if struct ip_options was allocated directly by kmalloc [rhel-6.4]
+873226 - attaching a dummy interface to bonding device causes a crash
+873462 - PCIe SRIOV VFs may not configure on PCIe port with no ARI support
+873816 - NFSv4 referrals fail if NFS server returns hostnames rather than IP addresses (Kernel part)
+874322 - [6.4] XFS log recovery failure leads to loss of data
+874539 - [xfs] Bug on invaliding page that is not locked
+875309 - An Hyper-V RHEL6.3 Guest is unreachable from the network after live migration
+875360 - CVE-2012-4542 kernel: block: default SCSI command filter does not accomodate commands overlap across device classes
+896038 - CVE-2013-0190 kernel: stack corruption in xen_failsafe_callback()
+912898 - CVE-2013-0309 kernel: mm: thp: pmd_present and PROT_NONE local DoS
+912900 - CVE-2013-0310 kernel: net: CIPSO_V4_TAG_LOCAL tag NULL pointer dereference
+912905 - CVE-2013-0311 kernel: vhost: fix length for cross region descriptor
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.el6.i686.rpm
+kernel-debug-2.6.32-358.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+kernel-devel-2.6.32-358.el6.i686.rpm
+kernel-headers-2.6.32-358.el6.i686.rpm
+perf-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.el6.noarch.rpm
+kernel-firmware-2.6.32-358.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.el6.x86_64.rpm
+kernel-debug-2.6.32-358.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+kernel-devel-2.6.32-358.el6.x86_64.rpm
+kernel-headers-2.6.32-358.el6.x86_64.rpm
+perf-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-358.el6.noarch.rpm
+kernel-firmware-2.6.32-358.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.el6.x86_64.rpm
+kernel-debug-2.6.32-358.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+kernel-devel-2.6.32-358.el6.x86_64.rpm
+kernel-headers-2.6.32-358.el6.x86_64.rpm
+perf-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.el6.i686.rpm
+kernel-debug-2.6.32-358.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+kernel-devel-2.6.32-358.el6.i686.rpm
+kernel-headers-2.6.32-358.el6.i686.rpm
+perf-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.el6.noarch.rpm
+kernel-firmware-2.6.32-358.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-358.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-358.el6.ppc64.rpm
+kernel-debug-2.6.32-358.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-358.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.el6.ppc64.rpm
+kernel-devel-2.6.32-358.el6.ppc64.rpm
+kernel-headers-2.6.32-358.el6.ppc64.rpm
+perf-2.6.32-358.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-358.el6.s390x.rpm
+kernel-debug-2.6.32-358.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.s390x.rpm
+kernel-debug-devel-2.6.32-358.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.el6.s390x.rpm
+kernel-devel-2.6.32-358.el6.s390x.rpm
+kernel-headers-2.6.32-358.el6.s390x.rpm
+kernel-kdump-2.6.32-358.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-358.el6.s390x.rpm
+perf-2.6.32-358.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-358.el6.x86_64.rpm
+kernel-debug-2.6.32-358.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+kernel-devel-2.6.32-358.el6.x86_64.rpm
+kernel-headers-2.6.32-358.el6.x86_64.rpm
+perf-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-358.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.el6.ppc64.rpm
+python-perf-2.6.32-358.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-358.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.el6.s390x.rpm
+python-perf-2.6.32-358.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-358.el6.i686.rpm
+kernel-debug-2.6.32-358.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+kernel-devel-2.6.32-358.el6.i686.rpm
+kernel-headers-2.6.32-358.el6.i686.rpm
+perf-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.el6.noarch.rpm
+kernel-firmware-2.6.32-358.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.el6.x86_64.rpm
+kernel-debug-2.6.32-358.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+kernel-devel-2.6.32-358.el6.x86_64.rpm
+kernel-headers-2.6.32-358.el6.x86_64.rpm
+perf-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-358.el6.src.rpm</a>
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.el6.i686.rpm
+perf-debuginfo-2.6.32-358.el6.i686.rpm
+python-perf-2.6.32-358.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.el6.i686.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+python-perf-2.6.32-358.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4508.html">https://www.redhat.com/security/data/cve/CVE-2012-4508.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4542.html">https://www.redhat.com/security/data/cve/CVE-2012-4542.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0190.html">https://www.redhat.com/security/data/cve/CVE-2013-0190.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0309.html">https://www.redhat.com/security/data/cve/CVE-2013-0309.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0310.html">https://www.redhat.com/security/data/cve/CVE-2013-0310.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0311.html">https://www.redhat.com/security/data/cve/CVE-2013-0311.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.4_Release_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.4_Release_Notes/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/kernel.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/kernel.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJbzPXlSAg2UNWIIRAmX3AJ9DctrYSjJuZa+uuY9tw/foT40GUACfZrQF
+hkEOXd08QRr6xewsmMc1GfI=
+=KVbu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

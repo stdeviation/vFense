@@ -1,0 +1,336 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1461&#45;01] Moderate: libproxy security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Nov 2012 15:56:42 &#45;0500 -->
+<!--X-Message-Id: 201211142056.qAEKua6k002063@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1461-01] Moderate: libproxy security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1461-01] Moderate: libproxy security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1461-01] Moderate: libproxy security update</li>
+<li><em>Date</em>: Wed, 14 Nov 2012 20:56:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libproxy security update
+Advisory ID:       RHSA-2012:1461-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1461.html">https://rhn.redhat.com/errata/RHSA-2012-1461.html</a>
+Issue date:        2012-11-14
+CVE Names:         CVE-2012-4505 
+=====================================================================
+
+1. Summary:
+
+Updated libproxy packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+libproxy is a library that handles all the details of proxy configuration.
+
+A buffer overflow flaw was found in the way libproxy handled the
+downloading of proxy auto-configuration (PAC) files. A malicious server
+hosting a PAC file or a man-in-the-middle attacker could use this flaw to
+cause an application using libproxy to crash or, possibly, execute
+arbitrary code, if the proxy settings obtained by libproxy (from the
+environment or the desktop environment settings) instructed the use of a
+PAC proxy configuration. (CVE-2012-4505)
+
+This issue was discovered by the Red Hat Security Response Team.
+
+Users of libproxy should upgrade to these updated packages, which contain
+a backported patch to correct this issue. All applications using libproxy
+must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+864612 - CVE-2012-4505 libproxy: PAC handling insufficient content length check leading to buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-bin-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-python-0.3.0-3.el6_3.i686.rpm
+
+x86_64:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-0.3.0-3.el6_3.x86_64.rpm
+libproxy-bin-0.3.0-3.el6_3.x86_64.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-python-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-gnome-0.3.0-3.el6_3.i686.rpm
+libproxy-kde-0.3.0-3.el6_3.i686.rpm
+libproxy-mozjs-0.3.0-3.el6_3.i686.rpm
+libproxy-webkit-0.3.0-3.el6_3.i686.rpm
+
+x86_64:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.x86_64.rpm
+libproxy-gnome-0.3.0-3.el6_3.x86_64.rpm
+libproxy-kde-0.3.0-3.el6_3.x86_64.rpm
+libproxy-mozjs-0.3.0-3.el6_3.x86_64.rpm
+libproxy-webkit-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+x86_64:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-0.3.0-3.el6_3.x86_64.rpm
+libproxy-bin-0.3.0-3.el6_3.x86_64.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.x86_64.rpm
+libproxy-gnome-0.3.0-3.el6_3.x86_64.rpm
+libproxy-kde-0.3.0-3.el6_3.x86_64.rpm
+libproxy-mozjs-0.3.0-3.el6_3.x86_64.rpm
+libproxy-python-0.3.0-3.el6_3.x86_64.rpm
+libproxy-webkit-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-bin-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-python-0.3.0-3.el6_3.i686.rpm
+
+ppc64:
+libproxy-0.3.0-3.el6_3.ppc.rpm
+libproxy-0.3.0-3.el6_3.ppc64.rpm
+libproxy-bin-0.3.0-3.el6_3.ppc64.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.ppc.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.ppc64.rpm
+libproxy-python-0.3.0-3.el6_3.ppc64.rpm
+
+s390x:
+libproxy-0.3.0-3.el6_3.s390.rpm
+libproxy-0.3.0-3.el6_3.s390x.rpm
+libproxy-bin-0.3.0-3.el6_3.s390x.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.s390.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.s390x.rpm
+libproxy-python-0.3.0-3.el6_3.s390x.rpm
+
+x86_64:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-0.3.0-3.el6_3.x86_64.rpm
+libproxy-bin-0.3.0-3.el6_3.x86_64.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-python-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-gnome-0.3.0-3.el6_3.i686.rpm
+libproxy-kde-0.3.0-3.el6_3.i686.rpm
+libproxy-mozjs-0.3.0-3.el6_3.i686.rpm
+libproxy-webkit-0.3.0-3.el6_3.i686.rpm
+
+ppc64:
+libproxy-debuginfo-0.3.0-3.el6_3.ppc.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.ppc64.rpm
+libproxy-devel-0.3.0-3.el6_3.ppc.rpm
+libproxy-devel-0.3.0-3.el6_3.ppc64.rpm
+libproxy-gnome-0.3.0-3.el6_3.ppc64.rpm
+libproxy-kde-0.3.0-3.el6_3.ppc64.rpm
+libproxy-mozjs-0.3.0-3.el6_3.ppc64.rpm
+libproxy-webkit-0.3.0-3.el6_3.ppc64.rpm
+
+s390x:
+libproxy-debuginfo-0.3.0-3.el6_3.s390.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.s390x.rpm
+libproxy-devel-0.3.0-3.el6_3.s390.rpm
+libproxy-devel-0.3.0-3.el6_3.s390x.rpm
+libproxy-gnome-0.3.0-3.el6_3.s390x.rpm
+libproxy-kde-0.3.0-3.el6_3.s390x.rpm
+libproxy-mozjs-0.3.0-3.el6_3.s390x.rpm
+libproxy-webkit-0.3.0-3.el6_3.s390x.rpm
+
+x86_64:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.x86_64.rpm
+libproxy-gnome-0.3.0-3.el6_3.x86_64.rpm
+libproxy-kde-0.3.0-3.el6_3.x86_64.rpm
+libproxy-mozjs-0.3.0-3.el6_3.x86_64.rpm
+libproxy-webkit-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-bin-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-python-0.3.0-3.el6_3.i686.rpm
+
+x86_64:
+libproxy-0.3.0-3.el6_3.i686.rpm
+libproxy-0.3.0-3.el6_3.x86_64.rpm
+libproxy-bin-0.3.0-3.el6_3.x86_64.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-python-0.3.0-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libproxy-0.3.0-3.el6_3.src.rpm</a>
+
+i386:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-gnome-0.3.0-3.el6_3.i686.rpm
+libproxy-kde-0.3.0-3.el6_3.i686.rpm
+libproxy-mozjs-0.3.0-3.el6_3.i686.rpm
+libproxy-webkit-0.3.0-3.el6_3.i686.rpm
+
+x86_64:
+libproxy-debuginfo-0.3.0-3.el6_3.i686.rpm
+libproxy-debuginfo-0.3.0-3.el6_3.x86_64.rpm
+libproxy-devel-0.3.0-3.el6_3.i686.rpm
+libproxy-devel-0.3.0-3.el6_3.x86_64.rpm
+libproxy-gnome-0.3.0-3.el6_3.x86_64.rpm
+libproxy-kde-0.3.0-3.el6_3.x86_64.rpm
+libproxy-mozjs-0.3.0-3.el6_3.x86_64.rpm
+libproxy-webkit-0.3.0-3.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4505.html">https://www.redhat.com/security/data/cve/CVE-2012-4505.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQpAVhXlSAg2UNWIIRAlGOAJ40MYFWgmn1aBmwleCBZaEqw4HrbgCgwFD7
+Jcl0w00unoFqcFfpGFPOKJ8=
+=HkKO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

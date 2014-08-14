@@ -1,0 +1,254 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1295&#45;01] Moderate: Red Hat Enterprise MRG Grid 2.4	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Oct 2013 12:45:35 &#45;0400 -->
+<!--X-Message-Id: 201310011645.r91GjZuu018731@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1295-01] Moderate: Red Hat Enterprise MRG Grid 2.4	security u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1295-01] Moderate: Red Hat Enterprise MRG Grid 2.4	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1295-01] Moderate: Red Hat Enterprise MRG Grid 2.4	security update</li>
+<li><em>Date</em>: Tue, 1 Oct 2013 16:45:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise MRG Grid 2.4 security update
+Advisory ID:       RHSA-2013:1295-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1295.html">https://rhn.redhat.com/errata/RHSA-2013-1295.html</a>
+Issue date:        2013-10-01
+CVE Names:         CVE-2013-4284 
+=====================================================================
+
+1. Summary:
+
+Updated Grid component packages that fix one security issue, multiple bugs,
+and add various enhancements are now available for Red Hat Enterprise MRG
+2.4 for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid Execute Node for RHEL 5 Server v.2 - i386, noarch, x86_64
+MRG Grid for RHEL 5 Server v.2 - i386, noarch, x86_64
+MRG Management for RHEL 5 Server v.2 - noarch
+Red Hat MRG Messaging for RHEL 5 Server v.2 - noarch
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a next-generation
+IT infrastructure for enterprise computing. MRG offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+MRG Grid provides high-throughput computing and enables enterprises to
+achieve higher peak computing capacity as well as improved infrastructure
+utilization by leveraging their existing technology to build high
+performance grids. MRG Grid provides a job-queueing mechanism, scheduling
+policy, and a priority scheme, as well as resource monitoring and resource
+management. Users submit their jobs to MRG Grid, where they are placed into
+a queue. MRG Grid then chooses when and where to run the jobs based upon a
+policy, carefully monitors their progress, and ultimately informs the user
+upon completion.
+
+A denial of service flaw was found in the way cumin, a web management
+console for MRG, processed certain Ajax update queries. A remote attacker
+could use this flaw to issue a specially crafted HTTP request, causing
+excessive use of CPU time and memory on the system. (CVE-2013-4284)
+
+The CVE-2013-4284 issue was discovered by Tomas Novacik of Red Hat.
+
+These updated packages for Red Hat Enterprise Linux 5 provide numerous
+enhancements and bug fixes for the Grid component of MRG. Some of the most
+important enhancements include:
+
+* Improved resource utilization with scheduler driven slot partitioning
+* Enhanced integration with existing user &amp; group management 
+technology, specifically allowing group and netgroup specifications in 
+HTCondor security policies
+* Addition of global job priorities, allowing for priority to span 
+scaled-out queues
+* Reduced memory utilization per running job
+
+Space precludes documenting all of these changes in this advisory. Refer to
+the Red Hat Enterprise MRG 2 Technical Notes document, available shortly
+from the link in the References section, for information on these changes.
+
+All users of the Grid capabilities of Red Hat Enterprise MRG are advised to
+upgrade to these updated packages, which correct this issue, and fix the
+bugs and add the enhancements noted in the Red Hat Enterprise MRG 2
+Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+986214 - CVE-2013-4284 cumin: Denial of service due to improper handling of certain Ajax requests
+990231 - Grid 2.4 RHEL5
+
+6. Package List:
+
+MRG Grid for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.9-0.5.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.9-0.5.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5786-2.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5786-2.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm</a>
+
+i386:
+condor-7.8.9-0.5.el5_9.i386.rpm
+condor-aviary-7.8.9-0.5.el5_9.i386.rpm
+condor-classads-7.8.9-0.5.el5_9.i386.rpm
+condor-debuginfo-7.8.9-0.5.el5_9.i386.rpm
+condor-kbdd-7.8.9-0.5.el5_9.i386.rpm
+condor-qmf-7.8.9-0.5.el5_9.i386.rpm
+condor-vm-gahp-7.8.9-0.5.el5_9.i386.rpm
+
+noarch:
+cumin-0.1.5786-2.el5_9.noarch.rpm
+mrg-release-2.4.0-1.el5_9.noarch.rpm
+
+x86_64:
+condor-7.8.9-0.5.el5_9.x86_64.rpm
+condor-aviary-7.8.9-0.5.el5_9.x86_64.rpm
+condor-classads-7.8.9-0.5.el5_9.x86_64.rpm
+condor-debuginfo-7.8.9-0.5.el5_9.x86_64.rpm
+condor-kbdd-7.8.9-0.5.el5_9.x86_64.rpm
+condor-qmf-7.8.9-0.5.el5_9.x86_64.rpm
+condor-vm-gahp-7.8.9-0.5.el5_9.x86_64.rpm
+
+MRG Grid Execute Node for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.9-0.5.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.9-0.5.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm</a>
+
+i386:
+condor-7.8.9-0.5.el5_9.i386.rpm
+condor-classads-7.8.9-0.5.el5_9.i386.rpm
+condor-debuginfo-7.8.9-0.5.el5_9.i386.rpm
+condor-kbdd-7.8.9-0.5.el5_9.i386.rpm
+condor-qmf-7.8.9-0.5.el5_9.i386.rpm
+condor-vm-gahp-7.8.9-0.5.el5_9.i386.rpm
+
+noarch:
+mrg-release-2.4.0-1.el5_9.noarch.rpm
+
+x86_64:
+condor-7.8.9-0.5.el5_9.x86_64.rpm
+condor-classads-7.8.9-0.5.el5_9.x86_64.rpm
+condor-debuginfo-7.8.9-0.5.el5_9.x86_64.rpm
+condor-kbdd-7.8.9-0.5.el5_9.x86_64.rpm
+condor-qmf-7.8.9-0.5.el5_9.x86_64.rpm
+condor-vm-gahp-7.8.9-0.5.el5_9.x86_64.rpm
+
+MRG Management for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5786-2.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5786-2.el5_9.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm</a>
+
+noarch:
+cumin-0.1.5786-2.el5_9.noarch.rpm
+mrg-release-2.4.0-1.el5_9.noarch.rpm
+
+Red Hat MRG Messaging for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-2.4.0-1.el5_9.src.rpm</a>
+
+noarch:
+mrg-release-2.4.0-1.el5_9.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4284.html">https://www.redhat.com/security/data/cve/CVE-2013-4284.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/RHSA-2013-1295.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/RHSA-2013-1295.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSSvwIXlSAg2UNWIIRApbnAJsGeDGoP7h8mrqKpydaLfa3h0Pb7wCfYU23
+T8zWVWi1Ze/PNzlRXwd7XbQ=
+=BEDi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0559&#45;01] Low: rhevm&#45;dwh 3.3.3 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 May 2014 12:37:20 &#45;0400 -->
+<!--X-Message-Id: 201405271637.s4RGbJJO005077@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0559-01] Low: rhevm-dwh 3.3.3 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0559-01] Low: rhevm-dwh 3.3.3 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0559-01] Low: rhevm-dwh 3.3.3 security and bug fix update</li>
+<li><em>Date</em>: Tue, 27 May 2014 16:37:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: rhevm-dwh 3.3.3 security and bug fix update
+Advisory ID:       RHSA-2014:0559-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0559.html">https://rhn.redhat.com/errata/RHSA-2014-0559.html</a>
+Issue date:        2014-05-27
+CVE Names:         CVE-2014-0202 
+=====================================================================
+
+1. Summary:
+
+An updated rhevm-dwh package that fixes one security issue and two bugs is
+now available.
+
+The Red Hat Security Response Team has rated this update as having Low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.3 - noarch
+
+3. Description:
+
+The Red Hat Enterprise Virtualization Manager data warehouse package
+provides the Extract-Transform-Load (ETL) process and database scripts to
+create a historic database API. It also provides SQL BI reports creation
+for management and monitoring.
+
+It was found that the ovirt-engine-dwh setup script logged the history
+database password in plain text to a world-readable file. An attacker with
+a local user account on the Red Hat Enterprise Virtualization Manager
+server could use this flaw to access, read, and modify the reports
+database. (CVE-2014-0202)
+
+Note: Applying the update provided by this advisory does not modify any
+existing log files. It is recommended that you search your existing log
+files and remove any occurrences of plain text passwords manually.
+
+This issue was discovered by Red Hat.
+
+This update also fixes the following bugs:
+
+* Previously, the read-only user and custom users for the data warehouse
+database would lose access to views in the database when the database was
+upgraded. This was caused by the views being regenerated when the database
+was upgraded and the permissions for those views not being applied to the
+newly generated views. Now, user permissions are retained when the database
+is upgraded. (BZ#1078129)
+
+* Previously, the ovirt-engine-dwh-setup command would fail under certain
+conditions if the pg_hba.conf file had been manually edited prior to
+running that command. This was caused by the setup process checking the
+exact number of spaces in between values on the line corresponding to
+'local'. Now, the logic for checking the values in that line has been
+revised so that the setup process can correctly read all values regardless
+of the number of spaces. (BZ#1084760)
+
+All rhevm-dwh users are advised to upgrade to this updated package, which
+corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1078129 - On DB upgrade, readonly user and client custom users losses permissions to db views
+1084760 - rhevm-dwh-setup fails if pg_hba.conf is manually modified
+1094234 - CVE-2014-0202 ovirt-engine-dwh: setup script logs database password in cleartext
+
+6. Package List:
+
+RHEV-M 3.3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-dwh-3.3.3-1.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-dwh-3.3.3-1.el6ev.src.rpm</a>
+
+noarch:
+rhevm-dwh-3.3.3-1.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0202.html">https://www.redhat.com/security/data/cve/CVE-2014-0202.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFThL8zXlSAg2UNWIIRAtfnAKCAegA7+oRviMifXR9Vazx+4GfqzACgrH3P
+jEw+HizdXckXM82ZPE3nzI0=
+=vmlu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

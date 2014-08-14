@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1042&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 Jun 2012 14:45:49 &#45;0400 -->
+<!--X-Message-Id: 201206261845.q5QIjhI5005188@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1042-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1042-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1042-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 26 Jun 2012 18:45:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2012:1042-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1042.html">https://rhn.redhat.com/errata/RHSA-2012-1042.html</a>
+Issue date:        2012-06-26
+CVE Names:         CVE-2011-4347 CVE-2012-0038 CVE-2012-0044 
+                   CVE-2012-1097 CVE-2012-1179 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix various security issues and three bugs are
+now available for Red Hat Enterprise Linux 6.1 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server EUS (v. 6.1) - i386, noarch, ppc64, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A local, unprivileged user could use an integer overflow flaw in
+drm_mode_dirtyfb_ioctl() to cause a denial of service or escalate their
+privileges. (CVE-2012-0044, Important)
+
+* It was found that the kvm_vm_ioctl_assign_device() function in the KVM
+(Kernel-based Virtual Machine) subsystem of a Linux kernel did not check if
+the user requesting device assignment was privileged or not. A local,
+unprivileged user on the host could assign unused PCI devices, or even
+devices that were in use and whose resources were not properly claimed by
+the respective drivers, which could result in the host crashing.
+(CVE-2011-4347, Moderate)
+
+* A flaw was found in the way the Linux kernel's XFS file system
+implementation handled on-disk Access Control Lists (ACLs). A local,
+unprivileged user could use this flaw to cause a denial of service or
+escalate their privileges by mounting a specially-crafted disk.
+(CVE-2012-0038, Moderate)
+
+* It was found that the Linux kernel's register set (regset) common
+infrastructure implementation did not check if the required get and set
+handlers were initialized. A local, unprivileged user could use this flaw
+to cause a denial of service by performing a register set operation with a
+ptrace() PTRACE_SETREGSET or PTRACE_GETREGSET request. (CVE-2012-1097,
+Moderate)
+
+* A race condition was found in the Linux kernel's memory management
+subsystem in the way pmd_none_or_clear_bad(), when called with mmap_sem in
+read mode, and Transparent Huge Pages (THP) page faults interacted. A
+privileged user in a KVM guest with the ballooning functionality enabled
+could potentially use this flaw to crash the host. A local, unprivileged
+user could use this flaw to crash the system. (CVE-2012-1179, Moderate)
+
+Red Hat would like to thank Chen Haogang for reporting CVE-2012-0044; Sasha
+Levin for reporting CVE-2011-4347; Wang Xi for reporting CVE-2012-0038; and
+H. Peter Anvin for reporting CVE-2012-1097.
+
+This update also fixes the following bugs:
+
+* When a RoCE (RDMA over Converged Ethernet) adapter with active RoCE
+communications was taken down suddenly (either by adapter failure or the
+intentional shutdown of the interface), the ongoing RoCE communications
+could cause the kernel to panic and render the machine unusable. A patch
+has been provided to protect the kernel in this situation and to pass an
+error up to the application still using the interface after it has been
+taken down instead. (BZ#799944)
+
+* The fix for Red Hat Bugzilla bug 713494, released via RHSA-2011:0928,
+introduced a regression. Attempting to change the state of certain
+features, such as GRO (Generic Receive Offload) or TSO (TCP segment
+offloading), for a 10 Gigabit Ethernet card that is being used in a
+virtual LAN (VLAN) resulted in a kernel panic. (BZ#816974)
+
+* If a new file was created on a Network File System version 4 (NFSv4)
+share, the ownership was set to nfsnobody (-2) until it was possible to
+upcall to the idmapper. As a consequence, subsequent file system operations
+could incorrectly use &quot;-2&quot; for the user and group IDs for the given file,
+causing certain operations to fail. In reported cases, this issue also
+caused &quot;Viminfo file is not writable&quot; errors for users running Vim with
+files on an NFSv4 share. (BZ#820960)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+756084 - CVE-2011-4347 kernel: kvm: device assignment DoS
+772894 - CVE-2012-0044 kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
+773280 - CVE-2012-0038 kernel: xfs heap overflow
+799209 - CVE-2012-1097 kernel: regset: Prevent null pointer reference on readonly regsets
+803793 - CVE-2012-1179 kernel: thp:__split_huge_page() mapcount != page_mapcount BUG_ON()
+
+6. Package List:
+
+Red Hat Enterprise Linux Server EUS (v. 6.1):
+
+Source:
+kernel-2.6.32-131.29.1.el6.src.rpm
+
+i386:
+kernel-2.6.32-131.29.1.el6.i686.rpm
+kernel-debug-2.6.32-131.29.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.29.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.29.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.29.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.29.1.el6.i686.rpm
+kernel-devel-2.6.32-131.29.1.el6.i686.rpm
+kernel-headers-2.6.32-131.29.1.el6.i686.rpm
+perf-2.6.32-131.29.1.el6.i686.rpm
+perf-debuginfo-2.6.32-131.29.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.29.1.el6.noarch.rpm
+kernel-firmware-2.6.32-131.29.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-debug-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-devel-2.6.32-131.29.1.el6.ppc64.rpm
+kernel-headers-2.6.32-131.29.1.el6.ppc64.rpm
+perf-2.6.32-131.29.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-131.29.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-131.29.1.el6.s390x.rpm
+kernel-debug-2.6.32-131.29.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-131.29.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-131.29.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-131.29.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-131.29.1.el6.s390x.rpm
+kernel-devel-2.6.32-131.29.1.el6.s390x.rpm
+kernel-headers-2.6.32-131.29.1.el6.s390x.rpm
+kernel-kdump-2.6.32-131.29.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-131.29.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-131.29.1.el6.s390x.rpm
+perf-2.6.32-131.29.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-131.29.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-debug-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-devel-2.6.32-131.29.1.el6.x86_64.rpm
+kernel-headers-2.6.32-131.29.1.el6.x86_64.rpm
+perf-2.6.32-131.29.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.29.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4347.html">https://www.redhat.com/security/data/cve/CVE-2011-4347.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0038.html">https://www.redhat.com/security/data/cve/CVE-2012-0038.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0044.html">https://www.redhat.com/security/data/cve/CVE-2012-0044.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1097.html">https://www.redhat.com/security/data/cve/CVE-2012-1097.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1179.html">https://www.redhat.com/security/data/cve/CVE-2012-1179.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0928.html">https://rhn.redhat.com/errata/RHSA-2011-0928.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP6gMxXlSAg2UNWIIRAp0hAJ9EpNvBTuIJV1vvvNpd9N6ciCmK0QCfd3R7
+A3SX3RBMjY6D37NcWXCZU2o=
+=aZdF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0517&#45;02] Low: util&#45;linux&#45;ng security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:46:33 &#45;0500 -->
+<!--X-Message-Id: 201302210646.r1L6kVS9003739@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0517-02] Low: util-linux-ng security,	bug fix and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00056.html">Date Prev</a>][<a href="msg00058.html">Date Next</a>] &nbsp; [<a href="msg00056.html">Thread Prev</a>][<a href="msg00058.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00057">Thread Index</A>]
+[<A HREF="date.html#00057">Date Index</A>]
+[<A HREF="author.html#00057">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0517-02] Low: util-linux-ng security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0517-02] Low: util-linux-ng security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:35:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: util-linux-ng security, bug fix and enhancement update
+Advisory ID:       RHSA-2013:0517-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0517.html">https://rhn.redhat.com/errata/RHSA-2013-0517.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2013-0157 
+=====================================================================
+
+1. Summary:
+
+Updated util-linux-ng packages that fix one security issue, several bugs,
+and add various enhancements are now available for Red Hat Enterprise
+Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The util-linux-ng packages contain a large variety of low-level system
+utilities that are necessary for a Linux operating system to function.
+
+An information disclosure flaw was found in the way the mount command
+reported errors. A local attacker could use this flaw to determine the
+existence of files and directories they do not have access to.
+(CVE-2013-0157)
+
+These updated util-linux-ng packages include numerous bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.4 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+All users of util-linux-ng are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+679833 - [RFE] tailf should support `-n 0`
+783514 - Documentation for default barrier setting for EXT3 filesystems in mount manpage is wrong
+790728 - blkid ignores swap UUIDs if the first byte is a zero byte
+818621 - lsblk should not open device it prints info about
+839281 - manpage: mount option inode_readahead for ext4 should be inode_readahead_blks
+892330 - CVE-2013-0157 util-linux: mount folder existence information disclosure
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+uuidd-2.17.2-12.9.el6.i686.rpm
+
+x86_64:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-2.17.2-12.9.el6.x86_64.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+uuidd-2.17.2-12.9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+i386:
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+
+x86_64:
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+x86_64:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-2.17.2-12.9.el6.x86_64.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+uuidd-2.17.2-12.9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+x86_64:
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+uuidd-2.17.2-12.9.el6.i686.rpm
+
+ppc64:
+libblkid-2.17.2-12.9.el6.ppc.rpm
+libblkid-2.17.2-12.9.el6.ppc64.rpm
+libblkid-devel-2.17.2-12.9.el6.ppc.rpm
+libblkid-devel-2.17.2-12.9.el6.ppc64.rpm
+libuuid-2.17.2-12.9.el6.ppc.rpm
+libuuid-2.17.2-12.9.el6.ppc64.rpm
+libuuid-devel-2.17.2-12.9.el6.ppc.rpm
+libuuid-devel-2.17.2-12.9.el6.ppc64.rpm
+util-linux-ng-2.17.2-12.9.el6.ppc.rpm
+util-linux-ng-2.17.2-12.9.el6.ppc64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.ppc.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.ppc64.rpm
+uuidd-2.17.2-12.9.el6.ppc64.rpm
+
+s390x:
+libblkid-2.17.2-12.9.el6.s390.rpm
+libblkid-2.17.2-12.9.el6.s390x.rpm
+libblkid-devel-2.17.2-12.9.el6.s390.rpm
+libblkid-devel-2.17.2-12.9.el6.s390x.rpm
+libuuid-2.17.2-12.9.el6.s390.rpm
+libuuid-2.17.2-12.9.el6.s390x.rpm
+libuuid-devel-2.17.2-12.9.el6.s390.rpm
+libuuid-devel-2.17.2-12.9.el6.s390x.rpm
+util-linux-ng-2.17.2-12.9.el6.s390.rpm
+util-linux-ng-2.17.2-12.9.el6.s390x.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.s390.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.s390x.rpm
+uuidd-2.17.2-12.9.el6.s390x.rpm
+
+x86_64:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-2.17.2-12.9.el6.x86_64.rpm
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.x86_64.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+uuidd-2.17.2-12.9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/util-linux-ng-2.17.2-12.9.el6.src.rpm</a>
+
+i386:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+uuidd-2.17.2-12.9.el6.i686.rpm
+
+x86_64:
+libblkid-2.17.2-12.9.el6.i686.rpm
+libblkid-2.17.2-12.9.el6.x86_64.rpm
+libblkid-devel-2.17.2-12.9.el6.i686.rpm
+libblkid-devel-2.17.2-12.9.el6.x86_64.rpm
+libuuid-2.17.2-12.9.el6.i686.rpm
+libuuid-2.17.2-12.9.el6.x86_64.rpm
+libuuid-devel-2.17.2-12.9.el6.i686.rpm
+libuuid-devel-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-2.17.2-12.9.el6.x86_64.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.i686.rpm
+util-linux-ng-debuginfo-2.17.2-12.9.el6.x86_64.rpm
+uuidd-2.17.2-12.9.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0157.html">https://www.redhat.com/security/data/cve/CVE-2013-0157.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/util-linux-ng.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/util-linux-ng.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcLAXlSAg2UNWIIRApVzAJ0fshYq0oeOrw3dl/TjqHLja4TRRwCgpnRW
++V9KMgzKYmeGx/nj9jYsM7Q=
+=ghEC
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00056.html">Date Prev</a>][<a href="msg00058.html">Date Next</a>] &nbsp; [<a href="msg00056.html">Thread Prev</a>][<a href="msg00058.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00057">Thread Index</A>]
+[<A HREF="date.html#00057">Date Index</A>]
+[<A HREF="author.html#00057">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

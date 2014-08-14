@@ -1,0 +1,402 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0058&#45;01] Moderate: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Jan 2012 16:36:57 &#45;0500 -->
+<!--X-Message-Id: 201201242136.q0OLaqcO008548@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0058-01] Moderate: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0058-01] Moderate: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0058-01] Moderate: glibc security and bug fix update</li>
+<li><em>Date</em>: Tue, 24 Jan 2012 21:36:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security and bug fix update
+Advisory ID:       RHSA-2012:0058-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0058.html">https://rhn.redhat.com/errata/RHSA-2012-0058.html</a>
+Issue date:        2012-01-24
+CVE Names:         CVE-2009-5029 CVE-2011-4609 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues and three bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The glibc packages contain the standard C libraries used by multiple
+programs on the system. These packages contain the standard C and the
+standard math libraries. Without these two libraries, a Linux system cannot
+function properly.
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way the glibc library read timezone files. If a
+carefully-crafted timezone file was loaded by an application linked against
+glibc, it could cause the application to crash or, potentially, execute
+arbitrary code with the privileges of the user running the application.
+(CVE-2009-5029)
+
+A denial of service flaw was found in the remote procedure call (RPC)
+implementation in glibc. A remote attacker able to open a large number of
+connections to an RPC service that is using the RPC implementation from
+glibc, could use this flaw to make that service use an excessive amount of
+CPU time. (CVE-2011-4609)
+
+This update also fixes the following bugs:
+
+* glibc had incorrect information for numeric separators and groupings for
+specific French, Spanish, and German locales. Therefore, applications
+utilizing glibc's locale support printed numbers with the wrong separators
+and groupings when those locales were in use. With this update, the
+separator and grouping information has been fixed. (BZ#754116)
+
+* The RHBA-2011:1179 glibc update introduced a regression, causing glibc to
+incorrectly parse groups with more than 126 members, resulting in
+applications such as &quot;id&quot; failing to list all the groups a particular user
+was a member of. With this update, group parsing has been fixed.
+(BZ#766484)
+
+* glibc incorrectly allocated too much memory due to a race condition
+within its own malloc routines. This could cause a multi-threaded
+application to allocate more memory than was expected. With this update,
+the race condition has been fixed, and malloc's behavior is now consistent
+with the documentation regarding the MALLOC_ARENA_TEST and MALLOC_ARENA_MAX
+environment variables. (BZ#769594)
+
+Users should upgrade to these updated packages, which contain backported
+patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+761245 - CVE-2009-5029 glibc: __tzfile_read integer overflow to buffer overflow
+767299 - CVE-2011-4609 glibc: svc_run() produces high cpu usage when accept() fails with EMFILE error
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-headers-2.12-1.47.el6_2.5.i686.rpm
+glibc-utils-2.12-1.47.el6_2.5.i686.rpm
+nscd-2.12-1.47.el6_2.5.i686.rpm
+
+x86_64:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-headers-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-utils-2.12-1.47.el6_2.5.x86_64.rpm
+nscd-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+x86_64:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-headers-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-utils-2.12-1.47.el6_2.5.x86_64.rpm
+nscd-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+x86_64:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-headers-2.12-1.47.el6_2.5.i686.rpm
+glibc-utils-2.12-1.47.el6_2.5.i686.rpm
+nscd-2.12-1.47.el6_2.5.i686.rpm
+
+ppc64:
+glibc-2.12-1.47.el6_2.5.ppc.rpm
+glibc-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-common-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.ppc.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.ppc.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-devel-2.12-1.47.el6_2.5.ppc.rpm
+glibc-devel-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-headers-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-utils-2.12-1.47.el6_2.5.ppc64.rpm
+nscd-2.12-1.47.el6_2.5.ppc64.rpm
+
+s390x:
+glibc-2.12-1.47.el6_2.5.s390.rpm
+glibc-2.12-1.47.el6_2.5.s390x.rpm
+glibc-common-2.12-1.47.el6_2.5.s390x.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.s390.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.s390x.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.s390.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.s390x.rpm
+glibc-devel-2.12-1.47.el6_2.5.s390.rpm
+glibc-devel-2.12-1.47.el6_2.5.s390x.rpm
+glibc-headers-2.12-1.47.el6_2.5.s390x.rpm
+glibc-utils-2.12-1.47.el6_2.5.s390x.rpm
+nscd-2.12-1.47.el6_2.5.s390x.rpm
+
+x86_64:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-headers-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-utils-2.12-1.47.el6_2.5.x86_64.rpm
+nscd-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+
+ppc64:
+glibc-debuginfo-2.12-1.47.el6_2.5.ppc.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.ppc.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.ppc64.rpm
+glibc-static-2.12-1.47.el6_2.5.ppc.rpm
+glibc-static-2.12-1.47.el6_2.5.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.12-1.47.el6_2.5.s390.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.s390x.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.s390.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.s390x.rpm
+glibc-static-2.12-1.47.el6_2.5.s390.rpm
+glibc-static-2.12-1.47.el6_2.5.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-headers-2.12-1.47.el6_2.5.i686.rpm
+glibc-utils-2.12-1.47.el6_2.5.i686.rpm
+nscd-2.12-1.47.el6_2.5.i686.rpm
+
+x86_64:
+glibc-2.12-1.47.el6_2.5.i686.rpm
+glibc-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-devel-2.12-1.47.el6_2.5.i686.rpm
+glibc-devel-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-headers-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-utils-2.12-1.47.el6_2.5.x86_64.rpm
+nscd-2.12-1.47.el6_2.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.47.el6_2.5.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.i686.rpm
+glibc-debuginfo-common-2.12-1.47.el6_2.5.x86_64.rpm
+glibc-static-2.12-1.47.el6_2.5.i686.rpm
+glibc-static-2.12-1.47.el6_2.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-5029.html">https://www.redhat.com/security/data/cve/CVE-2009-5029.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4609.html">https://www.redhat.com/security/data/cve/CVE-2011-4609.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-1179.html">https://rhn.redhat.com/errata/RHBA-2011-1179.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPHyRKXlSAg2UNWIIRApoWAKC4J5Xxsn2G+Z/DPy9ewnJLtWAAYwCaA3B+
+LTuIiDvp3F1TwN7edxyBI6I=
+=hOeo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

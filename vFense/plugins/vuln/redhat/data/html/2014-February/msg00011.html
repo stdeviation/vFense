@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0148&#45;01] Moderate: spacewalk&#45;java,	spacewalk&#45;web and satellite&#45;branding security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Feb 2014 12:32:18 &#45;0500 -->
+<!--X-Message-Id: 201402101732.s1AHWHrO006180@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0148-01] Moderate: spacewalk-java,	spacewalk-web and satellit</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0148-01] Moderate: spacewalk-java,	spacewalk-web and satellite-branding security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:0148-01] Moderate: spacewalk-java,	spacewalk-web and satellite-branding security update</li>
+<li><em>Date</em>: Mon, 10 Feb 2014 17:32:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: spacewalk-java, spacewalk-web and satellite-branding security update
+Advisory ID:       RHSA-2014:0148-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0148.html">https://rhn.redhat.com/errata/RHSA-2014-0148.html</a>
+Issue date:        2014-02-10
+CVE Names:         CVE-2012-6149 CVE-2013-1869 CVE-2013-1871 
+                   CVE-2013-4415 
+=====================================================================
+
+1. Summary:
+
+Updated spacewalk-java, spacewalk-web, and satellite-branding packages that
+fix multiple security issues are now available for Red Hat Satellite 5.6.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Satellite 5.6 (RHEL v.5) - noarch
+Red Hat Satellite 5.6 (RHEL v.6) - noarch
+Red Hat Satellite Managed DB 5.6 (RHEL v.5) - noarch
+Red Hat Satellite Managed DB 5.6 (RHEL v.6) - noarch
+
+3. Description:
+
+Red Hat Satellite is a systems management tool for Linux-based
+infrastructures. It allows for provisioning, remote management and
+monitoring of multiple Linux deployments with a single, centralized tool.
+
+A cross-site scripting (XSS) flaw was found in the way the Red Hat
+Satellite web interface performed sanitization of notes for registered
+systems. A remote authenticated Red Hat Satellite user could create a
+malicious note that, when viewed by a victim, could execute arbitrary web
+script with the privileges of the user viewing that note. (CVE-2012-6149)
+
+Multiple cross-site scripting (XSS) flaws were found in the Red Hat
+Satellite web interface. A remote attacker could provide a specially
+crafted link that, when visited by an authenticated Red Hat Satellite user,
+would lead to arbitrary web script execution in the context of the user's
+web interface session. (CVE-2013-1871, CVE-2013-4415)
+
+An HTTP header injection flaw was found in the way the Red Hat Satellite
+web interface processed the return URL parameter for all HTTP GET requests.
+A remote attacker could use this flaw to conduct cross-site scripting (XSS)
+and HTTP response splitting attacks against users visiting the site.
+(CVE-2013-1869)
+
+Red Hat would like to thank Ben Ford of Puppet Labs for reporting
+CVE-2012-6149, Ryan Giobbi of UPMC for reporting CVE-2013-1869 and
+CVE-2013-1871, and Adam Willard and Jose Carlos de Arriba of Foreground
+Security for reporting CVE-2013-4415.
+
+Users of Red Hat Satellite 5.6 are advised to upgrade to these updated
+packages, which resolve these issues. For this update to take effect, Red
+Hat Satellite must be restarted. Refer to the Solution section for details.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+Run the following command to restart the Red Hat Satellite server:
+
+# rhn-satellite restart
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+882000 - CVE-2012-6149 Satellite, Spacewalk (spacewalk-java): XSS in system.addNote XML-RPC call due improper sanitization of note's subject and content
+923464 - CVE-2013-1869 Satellite/Spacewalk: header injection flaw
+923467 - CVE-2013-1871 Satellite/Spacewalk: XSS in EditAddress page
+979452 - CVE-2013-4415 Red Hat Satellite, Spacewalk: PAGE_SIZE_LABEL_SELECTED cross-site scripting (XSS)
+
+6. Package List:
+
+Red Hat Satellite Managed DB 5.6 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-base-minimal-2.0.3-19.el5sat.noarch.rpm
+spacewalk-dobby-2.0.3-19.el5sat.noarch.rpm
+
+Red Hat Satellite 5.6 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/satellite-branding-5.6.0.23-1.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/satellite-branding-5.6.0.23-1.el5sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-java-2.0.2-58.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-java-2.0.2-58.el5sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el5sat.src.rpm</a>
+
+noarch:
+satellite-branding-5.6.0.23-1.el5sat.noarch.rpm
+spacewalk-base-2.0.3-19.el5sat.noarch.rpm
+spacewalk-base-minimal-2.0.3-19.el5sat.noarch.rpm
+spacewalk-base-minimal-config-2.0.3-19.el5sat.noarch.rpm
+spacewalk-dobby-2.0.3-19.el5sat.noarch.rpm
+spacewalk-grail-2.0.3-19.el5sat.noarch.rpm
+spacewalk-html-2.0.3-19.el5sat.noarch.rpm
+spacewalk-java-2.0.2-58.el5sat.noarch.rpm
+spacewalk-java-config-2.0.2-58.el5sat.noarch.rpm
+spacewalk-java-lib-2.0.2-58.el5sat.noarch.rpm
+spacewalk-java-oracle-2.0.2-58.el5sat.noarch.rpm
+spacewalk-java-postgresql-2.0.2-58.el5sat.noarch.rpm
+spacewalk-pxt-2.0.3-19.el5sat.noarch.rpm
+spacewalk-sniglets-2.0.3-19.el5sat.noarch.rpm
+spacewalk-taskomatic-2.0.2-58.el5sat.noarch.rpm
+
+Red Hat Satellite Managed DB 5.6 (RHEL v.6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el6sat.src.rpm</a>
+
+noarch:
+spacewalk-base-minimal-2.0.3-19.el6sat.noarch.rpm
+spacewalk-dobby-2.0.3-19.el6sat.noarch.rpm
+
+Red Hat Satellite 5.6 (RHEL v.6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/satellite-branding-5.6.0.23-1.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/satellite-branding-5.6.0.23-1.el6sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-java-2.0.2-58.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-java-2.0.2-58.el6sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-2.0.3-19.el6sat.src.rpm</a>
+
+noarch:
+satellite-branding-5.6.0.23-1.el6sat.noarch.rpm
+spacewalk-base-2.0.3-19.el6sat.noarch.rpm
+spacewalk-base-minimal-2.0.3-19.el6sat.noarch.rpm
+spacewalk-base-minimal-config-2.0.3-19.el6sat.noarch.rpm
+spacewalk-dobby-2.0.3-19.el6sat.noarch.rpm
+spacewalk-grail-2.0.3-19.el6sat.noarch.rpm
+spacewalk-html-2.0.3-19.el6sat.noarch.rpm
+spacewalk-java-2.0.2-58.el6sat.noarch.rpm
+spacewalk-java-config-2.0.2-58.el6sat.noarch.rpm
+spacewalk-java-lib-2.0.2-58.el6sat.noarch.rpm
+spacewalk-java-oracle-2.0.2-58.el6sat.noarch.rpm
+spacewalk-java-postgresql-2.0.2-58.el6sat.noarch.rpm
+spacewalk-pxt-2.0.3-19.el6sat.noarch.rpm
+spacewalk-sniglets-2.0.3-19.el6sat.noarch.rpm
+spacewalk-taskomatic-2.0.2-58.el6sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6149.html">https://www.redhat.com/security/data/cve/CVE-2012-6149.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1869.html">https://www.redhat.com/security/data/cve/CVE-2013-1869.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1871.html">https://www.redhat.com/security/data/cve/CVE-2013-1871.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4415.html">https://www.redhat.com/security/data/cve/CVE-2013-4415.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS+Q0EXlSAg2UNWIIRAruMAKC5d40WZwHtoTvt237DrT4vPlKf3QCfS0bo
+fQN3ON2lBeJL1VpPdVskI4k=
+=J+jH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0343&#45;01] Important: krb5 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 6 Apr 2010 19:12:05 &#45;0400 -->
+<!--X-Message-Id: 201004062311.o36NBtCx028950@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0343-01] Important: krb5 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0343-01] Important: krb5 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0343-01] Important: krb5 security and bug fix update</li>
+<li><em>Date</em>: Tue, 6 Apr 2010 17:11:55 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: krb5 security and bug fix update
+Advisory ID:       RHSA-2010:0343-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0343.html">https://rhn.redhat.com/errata/RHSA-2010-0343.html</a>
+Issue date:        2010-04-06
+CVE Names:         CVE-2010-0629 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Kerberos is a network authentication system which allows clients and
+servers to authenticate to each other using symmetric encryption and a
+trusted third party, the Key Distribution Center (KDC).
+
+A use-after-free flaw was discovered in the MIT Kerberos administration
+daemon, kadmind. A remote, authenticated attacker could use this flaw to
+crash the kadmind daemon. Administrative privileges are not required to
+trigger this flaw, as any realm user can request information about their
+own principal from kadmind. (CVE-2010-0629)
+
+This update also fixes the following bug:
+
+* when a Kerberos client seeks tickets for use with a service, it must
+contact the Key Distribution Center (KDC) to obtain them. The client must
+also determine which realm the service belongs to and it typically does
+this with a combination of client configuration detail, DNS information and
+guesswork.
+
+If the service belongs to a realm other than the client's, cross-realm
+authentication is required. Using a combination of client configuration and
+guesswork, the client determines the trust relationship sequence which
+forms the trusted path between the client's realm and the service's realm.
+This may include one or more intermediate realms.
+
+Anticipating the KDC has better knowledge of extant trust relationships,
+the client then requests a ticket from the service's KDC, indicating it
+will accept guidance from the service's KDC by setting a special flag in
+the request. A KDC which recognizes the flag can, at its option, return a
+ticket-granting ticket for the next realm along the trust path the client
+should be following.
+
+If the ticket-granting ticket returned by the service's KDC is for use with
+a realm the client has already determined was in the trusted path, the
+client accepts this as an optimization and continues. If, however, the
+ticket is for use in a realm the client is not expecting, the client
+responds incorrectly: it treats the case as an error rather than continuing
+along the path suggested by the service's KDC.
+
+For this update, the krb5 1.7 modifications which allow the client to trust
+such KDCs to send them along the correct path, resulting in the client
+obtaining the tickets it originally desired, were backported to krb 1.6.1
+(the version shipped with Red Hat Enterprise Linux 5.5). (BZ#578540)
+
+All krb5 users should upgrade to these updated packages, which contain
+backported patches to correct these issues. All running KDC services must
+be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+576011 - CVE-2010-0629 krb5: kadmind use-after-free remote crash (MITKRB5-SA-2010-003)
+578540 - [RFE] Backport referral-chasing code within krb5-1.7 to RHEL5
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-libs-1.6.1-36.el5_5.2.i386.rpm
+krb5-workstation-1.6.1-36.el5_5.2.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-libs-1.6.1-36.el5_5.2.i386.rpm
+krb5-libs-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-workstation-1.6.1-36.el5_5.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-devel-1.6.1-36.el5_5.2.i386.rpm
+krb5-server-1.6.1-36.el5_5.2.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-devel-1.6.1-36.el5_5.2.i386.rpm
+krb5-devel-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-server-1.6.1-36.el5_5.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-36.el5_5.2.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-devel-1.6.1-36.el5_5.2.i386.rpm
+krb5-libs-1.6.1-36.el5_5.2.i386.rpm
+krb5-server-1.6.1-36.el5_5.2.i386.rpm
+krb5-workstation-1.6.1-36.el5_5.2.i386.rpm
+
+ia64:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.ia64.rpm
+krb5-devel-1.6.1-36.el5_5.2.ia64.rpm
+krb5-libs-1.6.1-36.el5_5.2.i386.rpm
+krb5-libs-1.6.1-36.el5_5.2.ia64.rpm
+krb5-server-1.6.1-36.el5_5.2.ia64.rpm
+krb5-workstation-1.6.1-36.el5_5.2.ia64.rpm
+
+ppc:
+krb5-debuginfo-1.6.1-36.el5_5.2.ppc.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.ppc64.rpm
+krb5-devel-1.6.1-36.el5_5.2.ppc.rpm
+krb5-devel-1.6.1-36.el5_5.2.ppc64.rpm
+krb5-libs-1.6.1-36.el5_5.2.ppc.rpm
+krb5-libs-1.6.1-36.el5_5.2.ppc64.rpm
+krb5-server-1.6.1-36.el5_5.2.ppc.rpm
+krb5-workstation-1.6.1-36.el5_5.2.ppc.rpm
+
+s390x:
+krb5-debuginfo-1.6.1-36.el5_5.2.s390.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.s390x.rpm
+krb5-devel-1.6.1-36.el5_5.2.s390.rpm
+krb5-devel-1.6.1-36.el5_5.2.s390x.rpm
+krb5-libs-1.6.1-36.el5_5.2.s390.rpm
+krb5-libs-1.6.1-36.el5_5.2.s390x.rpm
+krb5-server-1.6.1-36.el5_5.2.s390x.rpm
+krb5-workstation-1.6.1-36.el5_5.2.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-36.el5_5.2.i386.rpm
+krb5-debuginfo-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-devel-1.6.1-36.el5_5.2.i386.rpm
+krb5-devel-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-libs-1.6.1-36.el5_5.2.i386.rpm
+krb5-libs-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-server-1.6.1-36.el5_5.2.x86_64.rpm
+krb5-workstation-1.6.1-36.el5_5.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0629.html">https://www.redhat.com/security/data/cve/CVE-2010-0629.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLu7+ZXlSAg2UNWIIRApjsAJ93XHDDW4hJRWKduwl+5ArUKZrlGgCgs7RU
+7EdrL9YNleFuddEdlArDMEU=
+=Navz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

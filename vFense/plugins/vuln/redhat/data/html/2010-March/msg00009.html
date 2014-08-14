@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0144&#45;01] Moderate: cpio security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 15 Mar 2010 21:40:13 &#45;0400 -->
+<!--X-Message-Id: 201003160140.o2G1e7gI011169@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0144-01] Moderate: cpio security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0144-01] Moderate: cpio security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0144-01] Moderate: cpio security update</li>
+<li><em>Date</em>: Mon, 15 Mar 2010 21:40:07 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: cpio security update
+Advisory ID:       RHSA-2010:0144-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0144.html">https://rhn.redhat.com/errata/RHSA-2010-0144.html</a>
+Issue date:        2010-03-15
+CVE Names:         CVE-2007-4476 CVE-2010-0624 
+=====================================================================
+
+1. Summary:
+
+An updated cpio package that fixes two security issues is now available for
+Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+GNU cpio copies files into or out of a cpio or tar archive.
+
+A heap-based buffer overflow flaw was found in the way cpio expanded
+archive files. If a user were tricked into expanding a specially-crafted
+archive, it could cause the cpio executable to crash or execute arbitrary
+code with the privileges of the user running cpio. (CVE-2010-0624)
+
+Red Hat would like to thank Jakob Lell for responsibly reporting the
+CVE-2010-0624 issue.
+
+A denial of service flaw was found in the way cpio expanded archive files.
+If a user expanded a specially-crafted archive, it could cause the cpio
+executable to crash. (CVE-2007-4476)
+
+Users of cpio are advised to upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+280961 - CVE-2007-4476 tar/cpio stack crashing in safer_name_suffix
+564368 - CVE-2010-0624 tar, cpio: Heap-based buffer overflow by expanding a specially-crafted archive
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cpio-2.6-23.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cpio-2.6-23.el5_4.1.src.rpm</a>
+
+i386:
+cpio-2.6-23.el5_4.1.i386.rpm
+cpio-debuginfo-2.6-23.el5_4.1.i386.rpm
+
+x86_64:
+cpio-2.6-23.el5_4.1.x86_64.rpm
+cpio-debuginfo-2.6-23.el5_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cpio-2.6-23.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cpio-2.6-23.el5_4.1.src.rpm</a>
+
+i386:
+cpio-2.6-23.el5_4.1.i386.rpm
+cpio-debuginfo-2.6-23.el5_4.1.i386.rpm
+
+ia64:
+cpio-2.6-23.el5_4.1.ia64.rpm
+cpio-debuginfo-2.6-23.el5_4.1.ia64.rpm
+
+ppc:
+cpio-2.6-23.el5_4.1.ppc.rpm
+cpio-debuginfo-2.6-23.el5_4.1.ppc.rpm
+
+s390x:
+cpio-2.6-23.el5_4.1.s390x.rpm
+cpio-debuginfo-2.6-23.el5_4.1.s390x.rpm
+
+x86_64:
+cpio-2.6-23.el5_4.1.x86_64.rpm
+cpio-debuginfo-2.6-23.el5_4.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-4476.html">https://www.redhat.com/security/data/cve/CVE-2007-4476.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0624.html">https://www.redhat.com/security/data/cve/CVE-2010-0624.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLnuFsXlSAg2UNWIIRAgrDAJ9XO9ohIGqyy6Ct4hjrqFNW1RIQDQCbBvOn
+AUikWVJik+Io8GPO2uKVocA=
+=xqvs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0174&#45;01] Important: piranha security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Feb 2014 13:53:28 &#45;0500 -->
+<!--X-Message-Id: 201402131853.s1DIrSLs023114@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0174-01] Important: piranha security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0174-01] Important: piranha security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0174-01] Important: piranha security update</li>
+<li><em>Date</em>: Thu, 13 Feb 2014 18:53:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: piranha security update
+Advisory ID:       RHSA-2014:0174-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0174.html">https://rhn.redhat.com/errata/RHSA-2014-0174.html</a>
+Issue date:        2014-02-13
+CVE Names:         CVE-2013-6492 
+=====================================================================
+
+1. Summary:
+
+An updated piranha package that fixes one security issue is now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Clustering (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+Piranha provides high-availability and load-balancing services for Red Hat
+Enterprise Linux. The piranha packages contain various tools to administer
+and configure the Linux Virtual Server (LVS), as well as the heartbeat and
+failover components. LVS is a dynamically-adjusted kernel routing mechanism
+that provides load balancing, primarily for Web and FTP servers.
+
+It was discovered that the Piranha Configuration Tool did not properly
+restrict access to its web pages. A remote attacker able to connect to the
+Piranha Configuration Tool web server port could use this flaw to read or
+modify the LVS configuration without providing valid administrative
+credentials. (CVE-2013-6492)
+
+All piranha users are advised to upgrade to this updated package, which
+contains a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1043040 - CVE-2013-6492 piranha: web UI authentication bypass using POST requests
+
+6. Package List:
+
+RHEL Clustering (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/piranha-0.8.4-26.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/piranha-0.8.4-26.el5_10.1.src.rpm</a>
+
+i386:
+piranha-0.8.4-26.el5_10.1.i386.rpm
+piranha-debuginfo-0.8.4-26.el5_10.1.i386.rpm
+
+ia64:
+piranha-0.8.4-26.el5_10.1.ia64.rpm
+piranha-debuginfo-0.8.4-26.el5_10.1.ia64.rpm
+
+ppc:
+piranha-0.8.4-26.el5_10.1.ppc.rpm
+piranha-debuginfo-0.8.4-26.el5_10.1.ppc.rpm
+
+x86_64:
+piranha-0.8.4-26.el5_10.1.x86_64.rpm
+piranha-debuginfo-0.8.4-26.el5_10.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6492.html">https://www.redhat.com/security/data/cve/CVE-2013-6492.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS/RSSXlSAg2UNWIIRAllvAKCDxPbXEcGglUZgFc+IE08NOXzFcwCdGKqD
+jYmbn1MRFF5DMUDrMAw3yEw=
+=Hts1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

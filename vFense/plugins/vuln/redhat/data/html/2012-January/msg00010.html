@@ -1,0 +1,240 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0035&#45;01] Important: mod_cluster&#45;native security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 18 Jan 2012 14:31:00 &#45;0500 -->
+<!--X-Message-Id: 201201181930.q0IJUsH6024821@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0035-01] Important: mod_cluster-native security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0035-01] Important: mod_cluster-native security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0035-01] Important: mod_cluster-native security update</li>
+<li><em>Date</em>: Wed, 18 Jan 2012 19:30:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mod_cluster-native security update
+Advisory ID:       RHSA-2012:0035-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0035.html">https://rhn.redhat.com/errata/RHSA-2012-0035.html</a>
+Issue date:        2012-01-18
+CVE Names:         CVE-2011-4608 
+=====================================================================
+
+1. Summary:
+
+Updated mod_cluster packages that fix one security issue are now available
+for JBoss Enterprise Web Server 1.0.2 for Red Hat Enterprise Linux 4, 5,
+and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS - i386, noarch, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES - i386, noarch, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server - i386, noarch, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server - i386, noarch, x86_64
+
+3. Description:
+
+mod_cluster-native provides a native build of mod_cluster for the Apache
+HTTP Server (httpd). mod_cluster is an httpd-based load balancer. Like
+mod_jk, it uses a communication channel to forward requests from httpd to
+an application server node.
+
+It was found that mod_cluster allowed worker nodes to register on any
+virtual host (vhost), regardless of the security constraints applied to
+other vhosts. In a typical environment, there will be one vhost configured
+internally for worker nodes, and another configured externally for serving
+content. A remote attacker could use this flaw to register an
+attacker-controlled worker node via an external vhost that is not
+configured to apply security constraints, then use that worker node to
+serve malicious content, intercept credentials, and hijack user sessions.
+(CVE-2011-4608)
+
+This update also upgrades mod_cluster to version 1.0.10.GA_CP02.
+
+Users of mod_cluster should upgrade to these updated packages, which
+resolve this issue. After installing the updated packages, Red Hat
+Enterprise Linux 4 users must restart the httpd22 service, and Red Hat
+Enterprise Linux 5 and 6 users must restart the httpd service, for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+767020 - CVE-2011-4608 mod_cluster: malicious worker nodes can register on any vhost
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS:
+
+Source:
+mod_cluster-1.0.10-3.GA_CP02.ep5.el4.src.rpm
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.src.rpm
+
+i386:
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.i386.rpm
+mod_cluster-native-debuginfo-1.0.10-4.GA_CP02.ep5.el4.i386.rpm
+
+noarch:
+mod_cluster-demo-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-jbossas-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-tomcat6-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+
+x86_64:
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.x86_64.rpm
+mod_cluster-native-debuginfo-1.0.10-4.GA_CP02.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES:
+
+Source:
+mod_cluster-1.0.10-3.GA_CP02.ep5.el4.src.rpm
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.src.rpm
+
+i386:
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.i386.rpm
+mod_cluster-native-debuginfo-1.0.10-4.GA_CP02.ep5.el4.i386.rpm
+
+noarch:
+mod_cluster-demo-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-jbossas-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+mod_cluster-tomcat6-1.0.10-3.GA_CP02.ep5.el4.noarch.rpm
+
+x86_64:
+mod_cluster-native-1.0.10-4.GA_CP02.ep5.el4.x86_64.rpm
+mod_cluster-native-debuginfo-1.0.10-4.GA_CP02.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server:
+
+Source:
+mod_cluster-1.0.10-3.1.GA_CP02.ep5.el5.src.rpm
+mod_cluster-native-1.0.10-4.1.GA_CP02.ep5.el5.src.rpm
+
+i386:
+mod_cluster-native-1.0.10-4.1.GA_CP02.ep5.el5.i386.rpm
+mod_cluster-native-debuginfo-1.0.10-4.1.GA_CP02.ep5.el5.i386.rpm
+
+noarch:
+mod_cluster-demo-1.0.10-3.1.GA_CP02.ep5.el5.noarch.rpm
+mod_cluster-jbossas-1.0.10-3.1.GA_CP02.ep5.el5.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-3.1.GA_CP02.ep5.el5.noarch.rpm
+mod_cluster-tomcat6-1.0.10-3.1.GA_CP02.ep5.el5.noarch.rpm
+
+x86_64:
+mod_cluster-native-1.0.10-4.1.GA_CP02.ep5.el5.x86_64.rpm
+mod_cluster-native-debuginfo-1.0.10-4.1.GA_CP02.ep5.el5.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server:
+
+Source:
+mod_cluster-1.0.10-3.2.GA_CP02.ep5.el6.src.rpm
+mod_cluster-native-1.0.10-4.1.1.GA_CP02.ep5.el6.src.rpm
+
+i386:
+mod_cluster-native-1.0.10-4.1.1.GA_CP02.ep5.el6.i386.rpm
+mod_cluster-native-debuginfo-1.0.10-4.1.1.GA_CP02.ep5.el6.i386.rpm
+
+noarch:
+mod_cluster-demo-1.0.10-3.2.GA_CP02.ep5.el6.noarch.rpm
+mod_cluster-jbossas-1.0.10-3.2.GA_CP02.ep5.el6.noarch.rpm
+mod_cluster-jbossweb2-1.0.10-3.2.GA_CP02.ep5.el6.noarch.rpm
+mod_cluster-tomcat6-1.0.10-3.2.GA_CP02.ep5.el6.noarch.rpm
+
+x86_64:
+mod_cluster-native-1.0.10-4.1.1.GA_CP02.ep5.el6.x86_64.rpm
+mod_cluster-native-debuginfo-1.0.10-4.1.1.GA_CP02.ep5.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4608.html">https://www.redhat.com/security/data/cve/CVE-2011-4608.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPFx3WXlSAg2UNWIIRApg/AJ0dcT0PfPKQtJwT4k+Mn58Cp/+1mQCaAppt
+ciaLpT0zbQJT8pMyoVR3ATM=
+=+VkK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

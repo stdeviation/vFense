@@ -1,0 +1,215 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0940&#45;01] Moderate: openstack&#45;nova security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Jul 2014 13:46:54 &#45;0400 -->
+<!--X-Message-Id: 201407241746.s6OHkrdl025274@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0940-01] Moderate: openstack-nova security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0940-01] Moderate: openstack-nova security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0940-01] Moderate: openstack-nova security and bug fix	update</li>
+<li><em>Date</em>: Thu, 24 Jul 2014 17:46:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-nova security and bug fix update
+Advisory ID:       RHSA-2014:0940-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0940.html">https://rhn.redhat.com/errata/RHSA-2014-0940.html</a>
+Issue date:        2014-07-24
+CVE Names:         CVE-2014-3517 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix one security issue and several
+bugs are now available for Red Hat Enterprise Linux OpenStack Platform 5.0
+(Icehouse) for Red Hat Enterprise Linux 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Compute (Nova) launches and schedules large networks of virtual
+machines, creating a redundant and scalable cloud computing platform.
+
+A side-channel timing attack flaw was found in Nova. An attacker could
+possibly use this flaw to guess valid instance ID signatures, giving them
+access to details of another instance, by analyzing the response times of
+requests for instance metadata. This issue only affected configurations
+that proxy metadata requests via Neutron. (CVE-2014-3517)
+
+Red Hat would like to thank the OpenStack project for reporting this issue.
+Upstream acknowledges Alex Gaynor from Rackspace as the original reporter.
+
+This update also fixes the following bugs:
+
+* The GlusterFS driver changes the file name used to point to a volume when
+a snapshot is changed, but in the past the new file name was not stored in
+Compute's block device information.
+
+As a result, if the VM was shut down and started again, the old file name
+in the snapshot chain was used, resulting in corruption of the qcow2 chain
+and unexpected results in the instance.
+
+This has been fixed by persisting the new file name in Compute's block
+device info when a snapshot is created. Now, GlusterFS volumes work as
+expected after creating or deleting a snapshot and then rebooting the
+instance. (BZ#1085852)
+
+* Previously, in some cases, it may not have been possible to attach a
+read-only volume to an instance. (BZ#1100358)
+
+* The sysfsutils package enables the Compute service to attach Block
+Storage volumes. This package is automatically installed by PackStack.
+However, sysfsutils was not a dependency of the Compute service; as such,
+when not using PackStack, it was possible to deploy OpenStack without
+sysfsutils installed. When this occurred, the Compute service was unable to
+attach Block Storage volumes.
+
+With this release, the sysfsutils package is now a dependency of the
+Compute service. This ensures that sysfsutils is installed, regardless of
+what deployment method is used. (BZ#1114637)
+
+* An issue with Fibre Channel Cinder volumes not being removed after the
+image has been destroyed has been fixed. (BZ#1115375)
+
+* This update fixes legacy group support, allowing you to provide a group
+by name in the scheduler hint instead of using the new server groups API.
+(BZ#1116866)
+
+* The openstack-nova package has been updated to upstream version
+2014.1.1, which fixes a number of bugs. (BZ#1117895)
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1085852 - GlusterFS: Instance is not using the correct snapshot backing file after reboot
+1100358 - can't attach a read only volume to an instance
+1112499 - CVE-2014-3517 openstack-nova: timing attack issue allows access to other instances' configuration information
+1114637 - sysfsutils needs to be a dependency of OpenStack nova
+1115375 - FC cinder volumes still show mpath device on nova host after volumes are detached from instance.
+1116866 - Fix legacy server group support
+1117895 - Rebase openstack-nova to 2014.1.1
+
+6. Package List:
+
+OpenStack 5.0 for RHEL 7:
+
+Source:
+openstack-nova-2014.1.1-4.el7ost.src.rpm
+
+noarch:
+openstack-nova-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-api-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-cells-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-cert-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-common-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-compute-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-conductor-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-console-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-doc-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-network-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-novncproxy-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-objectstore-2014.1.1-4.el7ost.noarch.rpm
+openstack-nova-scheduler-2014.1.1-4.el7ost.noarch.rpm
+python-nova-2014.1.1-4.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3517.html">https://www.redhat.com/security/data/cve/CVE-2014-3517.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFT0UZwXlSAg2UNWIIRAv87AKCnXO3C7Qn8UfdtIqa89ie8PKBpRACghG6x
+KvN+O805m1KVn/PiZvto1ME=
+=YexK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

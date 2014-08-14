@@ -1,0 +1,194 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0710&#45;01] Important: puppet security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 4 Apr 2013 16:23:04 &#45;0400 -->
+<!--X-Message-Id: 201304042023.r34KN4Bq003288@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0710-01] Important: puppet security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0710-01] Important: puppet security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0710-01] Important: puppet security update</li>
+<li><em>Date</em>: Thu, 4 Apr 2013 20:23:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: puppet security update
+Advisory ID:       RHSA-2013:0710-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0710.html">https://rhn.redhat.com/errata/RHSA-2013-0710.html</a>
+Issue date:        2013-04-04
+CVE Names:         CVE-2012-6120 CVE-2013-1640 CVE-2013-1652 
+                   CVE-2013-1654 CVE-2013-2274 CVE-2013-2275 
+=====================================================================
+
+1. Summary:
+
+Updated puppet packages that fix several security issues are now available
+for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+Puppet allows provisioning, patching, and configuration of clients to be
+managed and automated.
+
+A flaw was found in how Puppet handled certain HTTP PUT requests. An
+attacker with valid authentication credentials, and authorized to save to
+the authenticated client's own report, could construct a malicious request
+that could possibly cause the Puppet master to execute arbitrary code.
+(CVE-2013-2274)
+
+A flaw was found in how Puppet handled the &quot;template&quot; and &quot;inline_template&quot;
+functions during catalog compilation. If an authenticated attacker were to
+requests its catalog from the Puppet master, it could possibly result in
+arbitrary code execution when the catalog is compiled. (CVE-2013-1640)
+
+A flaw was found in how Puppet handled certain HTTP GET requests. An
+attacker with valid authentication credentials could construct a request to
+retrieve catalogs from the Puppet master that they are not authorized to
+access. (CVE-2013-1652)
+
+It was found that the default /etc/puppet/auth.conf configuration file
+allowed an authenticated node to submit a report for any other node, which
+could breach compliance requirements. (CVE-2013-2275)
+
+It was found that the /var/log/puppet directory was created world-readable.
+This could allow local users to obtain sensitive information from the
+Puppet log files. (CVE-2012-6120)
+
+It was found that Puppet allowed the use of the SSLv2 protocol. A Puppet
+agent could use this to negotiate the use of the weak SSLv2 protocol for
+its connection to a Puppet master. (CVE-2013-1654)
+
+Red Hat would like to thank Puppet Labs for reporting CVE-2013-1640,
+CVE-2013-1652, CVE-2013-1654, CVE-2013-2274, and CVE-2013-2275.
+
+Note: In most default configurations these issues are not directly
+exploitable unless the attacker has access to the underlying OpenStack
+infrastructure (e.g. shell access to a Nova compute node).
+
+Users of Red Hat OpenStack Folsom are advised to upgrade to these updated
+packages, which upgrade Puppet to version 2.6.18 and correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+908629 - CVE-2012-6120 Puppet: Directory /var/log/puppet is world readable
+919770 - CVE-2013-1654 Puppet: SSL protocol downgrade
+919773 - CVE-2013-2274 Puppet: HTTP PUT report saving code execution vulnerability
+919783 - CVE-2013-1640 Puppet: catalog request code execution
+919784 - CVE-2013-1652 Puppet: HTTP GET request catalog retrieval
+919785 - CVE-2013-2275 Puppet: default auth.conf allows authenticated node to submit a report for any other node
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/puppet-2.6.18-1.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/puppet-2.6.18-1.el6ost.src.rpm</a>
+
+noarch:
+puppet-2.6.18-1.el6ost.noarch.rpm
+puppet-server-2.6.18-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6120.html">https://www.redhat.com/security/data/cve/CVE-2012-6120.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1640.html">https://www.redhat.com/security/data/cve/CVE-2013-1640.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1652.html">https://www.redhat.com/security/data/cve/CVE-2013-1652.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1654.html">https://www.redhat.com/security/data/cve/CVE-2013-1654.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2274.html">https://www.redhat.com/security/data/cve/CVE-2013-2274.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2275.html">https://www.redhat.com/security/data/cve/CVE-2013-2275.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRXeEWXlSAg2UNWIIRAg5BAJsE5+PAglk11qGp7T6oSne0HRWNFACcCEUg
+0Obt7H7Owwa3ukyrJWsPvns=
+=ago7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

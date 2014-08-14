@@ -1,0 +1,267 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0217&#45;01] Important: mingw32&#45;libxml2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 31 Jan 2013 16:58:20 &#45;0500 -->
+<!--X-Message-Id: 201301312158.r0VLwJtc021015@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0217-01] Important: mingw32-libxml2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0217-01] Important: mingw32-libxml2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0217-01] Important: mingw32-libxml2 security update</li>
+<li><em>Date</em>: Thu, 31 Jan 2013 21:58:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mingw32-libxml2 security update
+Advisory ID:       RHSA-2013:0217-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0217.html">https://rhn.redhat.com/errata/RHSA-2013-0217.html</a>
+Issue date:        2013-01-31
+CVE Names:         CVE-2010-4008 CVE-2010-4494 CVE-2011-0216 
+                   CVE-2011-1944 CVE-2011-2821 CVE-2011-2834 
+                   CVE-2011-3102 CVE-2011-3905 CVE-2011-3919 
+                   CVE-2012-0841 CVE-2012-5134 
+=====================================================================
+
+1. Summary:
+
+Updated mingw32-libxml2 packages that fix several security issues are now
+available for Red Hat Enterprise Linux 6. This advisory also contains
+information about future updates for the mingw32 packages, as well as the
+deprecation of the packages with the release of Red Hat
+Enterprise Linux 6.4.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - noarch
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch
+Red Hat Enterprise Linux Server Optional (v. 6) - noarch
+Red Hat Enterprise Linux Workstation Optional (v. 6) - noarch
+
+3. Description:
+
+These packages provide the libxml2 library, a development toolbox providing
+the implementation of various XML standards, for users of MinGW (Minimalist
+GNU for Windows).
+
+IMPORTANT NOTE: The mingw32 packages in Red Hat Enterprise Linux 6 will no
+longer be updated proactively and will be deprecated with the release of
+Red Hat Enterprise Linux 6.4. These packages were provided to support other
+capabilities in Red Hat Enterprise Linux and were not intended for direct
+customer use. Customers are advised to not use these packages with
+immediate effect. Future updates to these packages will be at Red Hat's
+discretion and these packages may be removed in a future minor release.
+
+A heap-based buffer overflow flaw was found in the way libxml2 decoded
+entity references with long names. A remote attacker could provide a
+specially-crafted XML file that, when opened in an application linked
+against libxml2, would cause the application to crash or, potentially,
+execute arbitrary code with the privileges of the user running the
+application. (CVE-2011-3919)
+
+A heap-based buffer underflow flaw was found in the way libxml2 decoded
+certain entities. A remote attacker could provide a specially-crafted XML
+file that, when opened in an application linked against libxml2, would
+cause the application to crash or, potentially, execute arbitrary code with
+the privileges of the user running the application. (CVE-2012-5134)
+
+It was found that the hashing routine used by libxml2 arrays was
+susceptible to predictable hash collisions. Sending a specially-crafted
+message to an XML service could result in longer processing time, which
+could lead to a denial of service. To mitigate this issue, randomization
+has been added to the hashing function to reduce the chance of an attacker
+successfully causing intentional collisions. (CVE-2012-0841)
+
+Multiple flaws were found in the way libxml2 parsed certain XPath (XML Path
+Language) expressions. If an attacker were able to supply a
+specially-crafted XML file to an application using libxml2, as well as an
+XPath expression for that application to run against the crafted file, it
+could cause the application to crash. (CVE-2010-4008, CVE-2010-4494,
+CVE-2011-2821, CVE-2011-2834)
+
+Two heap-based buffer overflow flaws were found in the way libxml2 decoded
+certain XML files. A remote attacker could provide a specially-crafted XML
+file that, when opened in an application linked against libxml2, would
+cause the application to crash or, potentially, execute arbitrary code with
+the privileges of the user running the application. (CVE-2011-0216,
+CVE-2011-3102)
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way libxml2 parsed certain XPath expressions. If an attacker
+were able to supply a specially-crafted XML file to an application using
+libxml2, as well as an XPath expression for that application to run against
+the crafted file, it could cause the application to crash or, possibly,
+execute arbitrary code. (CVE-2011-1944)
+
+An out-of-bounds memory read flaw was found in libxml2. A remote attacker
+could provide a specially-crafted XML file that, when opened in an
+application linked against libxml2, would cause the application to crash.
+(CVE-2011-3905)
+
+Red Hat would like to thank the Google Security Team for reporting the
+CVE-2010-4008 issue. Upstream acknowledges Bui Quang Minh from Bkis as the
+original reporter of CVE-2010-4008.
+
+All users of mingw32-libxml2 are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+645341 - CVE-2010-4008 libxml2: Crash (stack frame overflow or NULL pointer dereference) by traversal of XPath axis
+665963 - CVE-2010-4494 libxml2: double-free in XPath processing code
+709747 - CVE-2011-1944 libxml, libxml2: Heap-based buffer overflow by adding new namespace node to an existing nodeset or merging nodesets
+724906 - CVE-2011-0216 libxml2: Off-by-one error leading to heap-based buffer overflow in encoding
+735712 - CVE-2011-2821 libxml2: double free caused by malformed XPath expression in XSLT
+735751 - CVE-2011-2834 libxml2: double-free caused by malformed XPath expression in XSLT
+767387 - CVE-2011-3905 libxml2 out of bounds read
+771896 - CVE-2011-3919 libxml2: Heap-based buffer overflow when decoding an entity reference with a long name
+787067 - CVE-2012-0841 libxml2: hash table collisions CPU usage DoS
+822109 - CVE-2011-3102 libxml: An off-by-one out-of-bounds write by XPointer part evaluation
+880466 - CVE-2012-5134 libxml2: Heap-buffer-underflow in xmlParseAttValueComplex
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm</a>
+
+noarch:
+mingw32-libxml2-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-debuginfo-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-static-2.7.6-6.el6_3.noarch.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm</a>
+
+noarch:
+mingw32-libxml2-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-debuginfo-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-static-2.7.6-6.el6_3.noarch.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm</a>
+
+noarch:
+mingw32-libxml2-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-debuginfo-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-static-2.7.6-6.el6_3.noarch.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mingw32-libxml2-2.7.6-6.el6_3.src.rpm</a>
+
+noarch:
+mingw32-libxml2-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-debuginfo-2.7.6-6.el6_3.noarch.rpm
+mingw32-libxml2-static-2.7.6-6.el6_3.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4008.html">https://www.redhat.com/security/data/cve/CVE-2010-4008.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4494.html">https://www.redhat.com/security/data/cve/CVE-2010-4494.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0216.html">https://www.redhat.com/security/data/cve/CVE-2011-0216.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1944.html">https://www.redhat.com/security/data/cve/CVE-2011-1944.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2821.html">https://www.redhat.com/security/data/cve/CVE-2011-2821.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2834.html">https://www.redhat.com/security/data/cve/CVE-2011-2834.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3102.html">https://www.redhat.com/security/data/cve/CVE-2011-3102.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3905.html">https://www.redhat.com/security/data/cve/CVE-2011-3905.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3919.html">https://www.redhat.com/security/data/cve/CVE-2011-3919.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0841.html">https://www.redhat.com/security/data/cve/CVE-2012-0841.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5134.html">https://www.redhat.com/security/data/cve/CVE-2012-5134.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRCujqXlSAg2UNWIIRAq0HAJ41YXDqlCpJkg97YuQmaF2MqKDIpACgn5j7
+sLTqWGtUMTYIUvLH8YXGFX4=
+=rOjB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00063.html">Date Prev</a>][<a href="msg00065.html">Date Next</a>] &nbsp; [<a href="msg00063.html">Thread Prev</a>][<a href="msg00065.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

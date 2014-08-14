@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0522&#45;02] Moderate: gdb security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:51:09 &#45;0500 -->
+<!--X-Message-Id: 201302210651.r1L6p76w030069@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0522-02] Moderate: gdb security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00060.html">Date Prev</a>][<a href="msg00062.html">Date Next</a>] &nbsp; [<a href="msg00060.html">Thread Prev</a>][<a href="msg00062.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00061">Thread Index</A>]
+[<A HREF="date.html#00061">Date Index</A>]
+[<A HREF="author.html#00061">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0522-02] Moderate: gdb security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0522-02] Moderate: gdb security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:40:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gdb security and bug fix update
+Advisory ID:       RHSA-2013:0522-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0522.html">https://rhn.redhat.com/errata/RHSA-2013-0522.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2011-4355 
+=====================================================================
+
+1. Summary:
+
+Updated gdb packages that fix one security issue and three bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The GNU Debugger (GDB) allows debugging of programs written in C, C++,
+Java, and other languages by executing them in a controlled fashion and
+then printing out their data.
+
+GDB tried to auto-load certain files (such as GDB scripts, Python scripts,
+and a thread debugging library) from the current working directory when
+debugging programs. This could result in the execution of arbitrary code
+with the user's privileges when GDB was run in a directory that has
+untrusted content. (CVE-2011-4355)
+
+With this update, GDB no longer auto-loads files from the current directory
+and only trusts certain system directories by default. The list of trusted
+directories can be viewed and modified using the &quot;show auto-load safe-path&quot;
+and &quot;set auto-load safe-path&quot; GDB commands. Refer to the GDB manual, linked
+to in the References, for further information.
+
+This update also fixes the following bugs:
+
+* When a struct member was at an offset greater than 256 MB, the resulting
+bit position within the struct overflowed and caused an invalid memory
+access by GDB. With this update, the code has been modified to ensure that
+GDB can access such positions. (BZ#795424)
+
+* When a thread list of the core file became corrupted, GDB did not print
+this list but displayed the &quot;Cannot find new threads: generic error&quot; error
+message instead. With this update, GDB has been modified and it now prints
+the thread list of the core file as expected. (BZ#811648)
+
+* GDB did not properly handle debugging of multiple binaries with the
+same build ID. This update modifies GDB to use symbolic links created for
+particular binaries so that debugging of binaries that share a build ID
+now proceeds as expected. Debugging of live programs and core files is
+now more user-friendly. (BZ#836966)
+
+All users of gdb are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+703238 - CVE-2011-4355 gdb: object file .debug_gdb_scripts section improper input validation
+811648 - Cannot find new threads: generic error
+836966 - Backport gdb fix to handle identical binaries via additional build-id symlinks
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gdb-7.2-60.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gdb-7.2-60.el6.src.rpm</a>
+
+i386:
+gdb-7.2-60.el6.i686.rpm
+gdb-debuginfo-7.2-60.el6.i686.rpm
+gdb-gdbserver-7.2-60.el6.i686.rpm
+
+x86_64:
+gdb-7.2-60.el6.x86_64.rpm
+gdb-debuginfo-7.2-60.el6.x86_64.rpm
+gdb-gdbserver-7.2-60.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gdb-7.2-60.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gdb-7.2-60.el6.src.rpm</a>
+
+x86_64:
+gdb-7.2-60.el6.x86_64.rpm
+gdb-debuginfo-7.2-60.el6.x86_64.rpm
+gdb-gdbserver-7.2-60.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gdb-7.2-60.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gdb-7.2-60.el6.src.rpm</a>
+
+i386:
+gdb-7.2-60.el6.i686.rpm
+gdb-debuginfo-7.2-60.el6.i686.rpm
+gdb-gdbserver-7.2-60.el6.i686.rpm
+
+ppc64:
+gdb-7.2-60.el6.ppc64.rpm
+gdb-debuginfo-7.2-60.el6.ppc64.rpm
+gdb-gdbserver-7.2-60.el6.ppc64.rpm
+
+s390x:
+gdb-7.2-60.el6.s390x.rpm
+gdb-debuginfo-7.2-60.el6.s390x.rpm
+gdb-gdbserver-7.2-60.el6.s390x.rpm
+
+x86_64:
+gdb-7.2-60.el6.x86_64.rpm
+gdb-debuginfo-7.2-60.el6.x86_64.rpm
+gdb-gdbserver-7.2-60.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gdb-7.2-60.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gdb-7.2-60.el6.src.rpm</a>
+
+i386:
+gdb-7.2-60.el6.i686.rpm
+gdb-debuginfo-7.2-60.el6.i686.rpm
+gdb-gdbserver-7.2-60.el6.i686.rpm
+
+x86_64:
+gdb-7.2-60.el6.x86_64.rpm
+gdb-debuginfo-7.2-60.el6.x86_64.rpm
+gdb-gdbserver-7.2-60.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4355.html">https://www.redhat.com/security/data/cve/CVE-2011-4355.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading-safe-path.html#Auto_002dloading-safe-path">http://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading-safe-path.html#Auto_002dloading-safe-path</a>
+<a  rel="nofollow" href="http://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading.html#Auto_002dloading">http://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading.html#Auto_002dloading</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcPUXlSAg2UNWIIRAgyhAJ9hsfRVdjlhr+KJf1ZMiqlG4DcbpACgoHVo
+KCUZsj3fAHT1LEqkylrcPkc=
+=1RCc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00060.html">Date Prev</a>][<a href="msg00062.html">Date Next</a>] &nbsp; [<a href="msg00060.html">Thread Prev</a>][<a href="msg00062.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00061">Thread Index</A>]
+[<A HREF="date.html#00061">Date Index</A>]
+[<A HREF="author.html#00061">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

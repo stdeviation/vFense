@@ -1,0 +1,150 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1152&#45;01] Important: Red Hat JBoss Enterprise Application	Platform 6.1.0 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 12 Aug 2013 14:37:57 &#45;0400 -->
+<!--X-Message-Id: 201308121837.r7CIbvkT015996@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1152-01] Important: Red Hat JBoss Enterprise Application	Plat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1152-01] Important: Red Hat JBoss Enterprise Application	Platform 6.1.0 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1152-01] Important: Red Hat JBoss Enterprise Application	Platform 6.1.0 security update</li>
+<li><em>Date</em>: Mon, 12 Aug 2013 18:37:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Enterprise Application Platform 6.1.0 security update
+Advisory ID:       RHSA-2013:1152-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1152.html">https://rhn.redhat.com/errata/RHSA-2013-1152.html</a>
+Issue date:        2013-08-12
+CVE Names:         CVE-2013-4128 CVE-2013-4213 
+=====================================================================
+
+1. Summary:
+
+An update for Red Hat JBoss Enterprise Application Platform 6.1.0 that
+fixes two security issues is now available from the Red Hat Customer
+Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+A flaw was discovered in the way authenticated connections were cached on
+the server by remote-naming. After a user has successfully logged in, a
+remote attacker could use a remoting client to log in as that user without
+knowing their password, allowing them to access data and perform actions
+with the privileges of that user. (CVE-2013-4128)
+
+A flaw was discovered in the way connections for remote EJB invocations via
+the EJB client API were cached on the server. After a user has successfully
+logged in, a remote attacker could use an EJB client to log in as that user
+without knowing their password, allowing them to access data and perform
+actions with the privileges of that user. (CVE-2013-4213)
+
+These issues were discovered by Wolf-Dieter Fink of the Red Hat GSS Team.
+
+Warning: Before applying this update, back up your existing Red Hat JBoss
+Enterprise Application Platform installation and deployed applications.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.1.0 as
+provided from the Red Hat Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing Red Hat JBoss Enterprise Application Platform installation and
+deployed applications.
+
+The JBoss server process must be restarted for the update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+984795 - CVE-2013-4128 JBoss remote-naming: Session fixation due improper connection caching
+985359 - CVE-2013-4213 JBoss ejb-client: Session fixation due improper connection caching
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4128.html">https://www.redhat.com/security/data/cve/CVE-2013-4128.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4213.html">https://www.redhat.com/security/data/cve/CVE-2013-4213.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=6.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=6.1.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSCStxXlSAg2UNWIIRAut6AJ9y5zGuZHzsyBBu7SMxLA1n4hn2zQCfTyUp
+lzO4SXe81U5+sYj6YPKkg74=
+=r0QV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

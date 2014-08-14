@@ -1,0 +1,299 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0516&#45;02] Low: evolution security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:45:56 &#45;0500 -->
+<!--X-Message-Id: 201302210645.r1L6jsYo029616@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0516-02] Low: evolution security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00055.html">Date Prev</a>][<a href="msg00057.html">Date Next</a>] &nbsp; [<a href="msg00055.html">Thread Prev</a>][<a href="msg00057.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00056">Thread Index</A>]
+[<A HREF="date.html#00056">Date Index</A>]
+[<A HREF="author.html#00056">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0516-02] Low: evolution security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0516-02] Low: evolution security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:34:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: evolution security and bug fix update
+Advisory ID:       RHSA-2013:0516-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0516.html">https://rhn.redhat.com/errata/RHSA-2013-0516.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2011-3201 
+=====================================================================
+
+1. Summary:
+
+Updated evolution packages that fix one security issue and three bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, ppc64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Evolution is the GNOME mailer, calendar, contact manager and communication
+tool. The components which make up Evolution are tightly integrated with
+one another and act as a seamless personal information-management tool.
+
+The way Evolution handled mailto URLs allowed any file to be attached to
+the new message. This could lead to information disclosure if the user did
+not notice the attached file before sending the message. With this update,
+mailto URLs cannot be used to attach certain files, such as hidden files or
+files in hidden directories, files in the /etc/ directory, or files
+specified using a path containing &quot;..&quot;. (CVE-2011-3201)
+
+Red Hat would like to thank Matt McCutchen for reporting this issue.
+
+This update also fixes the following bugs:
+
+* Creating a contact list with contact names encoded in UTF-8 caused these
+names to be displayed in the contact list editor in the ASCII encoding
+instead of UTF-8. This bug has been fixed and the contact list editor now
+displays the names in the correct format. (BZ#707526)
+
+* Due to a bug in the evolution-alarm-notify process, calendar appointment
+alarms did not appear in some types of calendars. The underlying source
+code has been modified and calendar notifications work as expected.
+(BZ#805239)
+
+* An attempt to print a calendar month view as a PDF file caused Evolution
+to terminate unexpectedly. This update applies a patch to fix this bug and
+Evolution no longer crashes in this situation. (BZ#890642)
+
+All evolution users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All running instances
+of Evolution must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+733504 - CVE-2011-3201 evolution: mailto URL scheme attachment header improper input validation
+805239 - Alarms don't work for CalDAV
+890642 - Evolution has implicit declarations (unknown functions)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm</a>
+
+i386:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+
+noarch:
+evolution-help-2.28.3-30.el6.noarch.rpm
+
+x86_64:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-2.28.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm</a>
+
+i386:
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-perl-2.28.3-30.el6.i686.rpm
+evolution-pst-2.28.3-30.el6.i686.rpm
+evolution-spamassassin-2.28.3-30.el6.i686.rpm
+
+x86_64:
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-conduits-2.28.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.x86_64.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.x86_64.rpm
+evolution-perl-2.28.3-30.el6.x86_64.rpm
+evolution-pst-2.28.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.28.3-30.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm</a>
+
+i386:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-perl-2.28.3-30.el6.i686.rpm
+evolution-pst-2.28.3-30.el6.i686.rpm
+evolution-spamassassin-2.28.3-30.el6.i686.rpm
+
+noarch:
+evolution-help-2.28.3-30.el6.noarch.rpm
+
+ppc64:
+evolution-2.28.3-30.el6.ppc.rpm
+evolution-2.28.3-30.el6.ppc64.rpm
+evolution-conduits-2.28.3-30.el6.ppc.rpm
+evolution-conduits-2.28.3-30.el6.ppc64.rpm
+evolution-debuginfo-2.28.3-30.el6.ppc.rpm
+evolution-debuginfo-2.28.3-30.el6.ppc64.rpm
+evolution-devel-2.28.3-30.el6.ppc.rpm
+evolution-devel-2.28.3-30.el6.ppc64.rpm
+evolution-perl-2.28.3-30.el6.ppc64.rpm
+evolution-pst-2.28.3-30.el6.ppc64.rpm
+evolution-spamassassin-2.28.3-30.el6.ppc64.rpm
+
+x86_64:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-2.28.3-30.el6.x86_64.rpm
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-conduits-2.28.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.x86_64.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.x86_64.rpm
+evolution-perl-2.28.3-30.el6.x86_64.rpm
+evolution-pst-2.28.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.28.3-30.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm</a>
+
+i386:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+
+noarch:
+evolution-help-2.28.3-30.el6.noarch.rpm
+
+x86_64:
+evolution-2.28.3-30.el6.i686.rpm
+evolution-2.28.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/evolution-2.28.3-30.el6.src.rpm</a>
+
+i386:
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-perl-2.28.3-30.el6.i686.rpm
+evolution-pst-2.28.3-30.el6.i686.rpm
+evolution-spamassassin-2.28.3-30.el6.i686.rpm
+
+x86_64:
+evolution-conduits-2.28.3-30.el6.i686.rpm
+evolution-conduits-2.28.3-30.el6.x86_64.rpm
+evolution-debuginfo-2.28.3-30.el6.i686.rpm
+evolution-debuginfo-2.28.3-30.el6.x86_64.rpm
+evolution-devel-2.28.3-30.el6.i686.rpm
+evolution-devel-2.28.3-30.el6.x86_64.rpm
+evolution-perl-2.28.3-30.el6.x86_64.rpm
+evolution-pst-2.28.3-30.el6.x86_64.rpm
+evolution-spamassassin-2.28.3-30.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3201.html">https://www.redhat.com/security/data/cve/CVE-2011-3201.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcKeXlSAg2UNWIIRAqv+AJwPysYEKtMjL15q/Trr/08OHbHFBwCfTtcZ
+uAOmI8dVOysk38hApB+yBmk=
+=dD60
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00055.html">Date Prev</a>][<a href="msg00057.html">Date Next</a>] &nbsp; [<a href="msg00055.html">Thread Prev</a>][<a href="msg00057.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00056">Thread Index</A>]
+[<A HREF="date.html#00056">Date Index</A>]
+[<A HREF="author.html#00056">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

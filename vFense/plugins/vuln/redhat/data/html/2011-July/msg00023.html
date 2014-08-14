@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1005&#45;01] Low: sysstat security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 09:32:57 &#45;0400 -->
+<!--X-Message-Id: 201107211332.p6LDWogj006683@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1005-01] Low: sysstat security, bug fix,	and enhancement upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1005-01] Low: sysstat security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1005-01] Low: sysstat security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 13:32:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sysstat security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1005-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1005.html">https://rhn.redhat.com/errata/RHSA-2011-1005.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2007-3852 
+=====================================================================
+
+1. Summary:
+
+An updated sysstat package that fixes one security issue, various bugs, and
+adds one enhancement is now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The sysstat package contains a set of utilities which enable system
+monitoring of disks, network, and other I/O activity.
+
+It was found that the sysstat initscript created a temporary file in an
+insecure way. A local attacker could use this flaw to create arbitrary
+files via a symbolic link attack. (CVE-2007-3852)
+
+This update fixes the following bugs:
+
+* On systems under heavy load, the sadc utility would sometimes output the
+following error message if a write() call was unable to write all of the
+requested input:
+
+&quot;Cannot write data to system activity file: Success.&quot;
+
+In this updated package, the sadc utility tries to write the remaining
+input, resolving this issue. (BZ#454617)
+
+* On the Itanium architecture, the &quot;sar -I&quot; command provided incorrect
+information about the interrupt statistics of the system. With this update,
+the &quot;sar -I&quot; command has been disabled for this architecture, preventing
+this bug. (BZ#468340)
+
+* Previously, the &quot;iostat -n&quot; command used invalid data to create
+statistics for read and write operations. With this update, the data source
+for these statistics has been fixed, and the iostat utility now returns
+correct information. (BZ#484439)
+
+* The &quot;sar -d&quot; command used to output invalid data about block devices.
+With this update, the sar utility recognizes disk registration and disk
+overflow statistics properly, and only correct and relevant data is now
+displayed. (BZ#517490)
+
+* Previously, the sar utility set the maximum number of days to be logged
+in one month too high. Consequently, data from a month was appended to
+data from the preceding month. With this update, the maximum number of days
+has been set to 25, and data from a month now correctly replaces data from
+the preceding month. (BZ#578929)
+
+* In previous versions of the iostat utility, the number of NFS mount
+points was hard-coded. Consequently, various issues occurred while iostat
+was running and NFS mount points were mounted or unmounted; certain values
+in iostat reports overflowed and some mount points were not reported at
+all. With this update, iostat properly recognizes when an NFS mount point
+mounts or unmounts, fixing these issues. (BZ#675058, BZ#706095, BZ#694767)
+
+* When a device name was longer than 13 characters, the iostat utility
+printed a redundant new line character, making its output less readable.
+This bug has been fixed and now, no extra characters are printed if a long
+device name occurs in iostat output. (BZ#604637)
+
+* Previously, if kernel interrupt counters overflowed, the sar utility
+provided confusing output. This bug has been fixed and the sum of
+interrupts is now reported correctly. (BZ#622557)
+
+* When some processors were disabled on a multi-processor system, the sar
+utility sometimes failed to provide information about the CPU activity.
+With this update, the uptime of a single processor is used to compute the
+statistics, rather than the total uptime of all processors, and this bug no
+longer occurs. (BZ#630559)
+
+* Previously, the mpstat utility wrongly interpreted data about processors
+in the system. Consequently, it reported a processor that did not exist.
+This bug has been fixed and non-existent CPUs are no longer reported by
+mpstat. (BZ#579409)
+
+* Previously, there was no easy way to enable the collection of statistics
+about disks and interrupts. Now, the SADC_OPTIONS variable can be used to
+set parameters for the sadc utility, fixing this bug. (BZ#598794)
+
+* The read_uptime() function failed to close its open file upon exit. A
+patch has been provided to fix this bug. (BZ#696672)
+
+This update also adds the following enhancement:
+
+* With this update, the cifsiostat utility has been added to the sysstat
+package to provide CIFS (Common Internet File System) mount point I/O
+statistics. (BZ#591530)
+
+All sysstat users are advised to upgrade to this updated package, which
+contains backported patches to correct these issues and add this
+enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+251200 - CVE-2007-3852 sysstat insecure temporary file usage
+454617 - [RHEL5] Though function write() executed sucessful, sadc end with an error.
+484439 - iostat -n enhancement not report NFS client stats correctly
+517490 - The 'sar -d ' command outputs invalid data
+578929 - March sar data was appended to February data
+579409 - The sysstat's programs such as mpstat shows one extra cpu.
+598794 - Enable parametrization of sadc arguments
+604637 - extraneous newline in iostat report for long device names
+622557 - sar interrupt count goes backward
+630559 - 'sar -P ALL -f xxxx ' does not display activity information.
+675058 - iostat: bogus value appears when device is unmounted/mounted
+694767 - iostat doesn't report statistics for shares with long names
+696672 - Resource leak
+706095 - iostat -n - values in output overflows
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sysstat-7.0.2-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sysstat-7.0.2-11.el5.src.rpm</a>
+
+i386:
+sysstat-7.0.2-11.el5.i386.rpm
+sysstat-debuginfo-7.0.2-11.el5.i386.rpm
+
+x86_64:
+sysstat-7.0.2-11.el5.x86_64.rpm
+sysstat-debuginfo-7.0.2-11.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sysstat-7.0.2-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sysstat-7.0.2-11.el5.src.rpm</a>
+
+i386:
+sysstat-7.0.2-11.el5.i386.rpm
+sysstat-debuginfo-7.0.2-11.el5.i386.rpm
+
+ia64:
+sysstat-7.0.2-11.el5.ia64.rpm
+sysstat-debuginfo-7.0.2-11.el5.ia64.rpm
+
+ppc:
+sysstat-7.0.2-11.el5.ppc.rpm
+sysstat-debuginfo-7.0.2-11.el5.ppc.rpm
+
+s390x:
+sysstat-7.0.2-11.el5.s390x.rpm
+sysstat-debuginfo-7.0.2-11.el5.s390x.rpm
+
+x86_64:
+sysstat-7.0.2-11.el5.x86_64.rpm
+sysstat-debuginfo-7.0.2-11.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-3852.html">https://www.redhat.com/security/data/cve/CVE-2007-3852.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKCpOXlSAg2UNWIIRArs4AKDEkbDrwz58M23UNX26ao1/5gmz4QCgprlL
+hFn31chNrjw6+rDcWl5Xh0o=
+=kZ3b
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

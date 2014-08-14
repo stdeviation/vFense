@@ -1,0 +1,291 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0742&#45;01] Low: 389&#45;ds&#45;base security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 15 Apr 2013 14:28:20 &#45;0400 -->
+<!--X-Message-Id: 201304151828.r3FISJXO008304@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0742-01] Low: 389-ds-base security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0742-01] Low: 389-ds-base security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0742-01] Low: 389-ds-base security and bug fix update</li>
+<li><em>Date</em>: Mon, 15 Apr 2013 18:28:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: 389-ds-base security and bug fix update
+Advisory ID:       RHSA-2013:0742-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0742.html">https://rhn.redhat.com/errata/RHSA-2013-0742.html</a>
+Issue date:        2013-04-15
+CVE Names:         CVE-2013-1897 
+=====================================================================
+
+1. Summary:
+
+Updated 389-ds-base packages that fix one security issue and several bugs
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The 389 Directory Server is an LDAPv3 compliant server. The base packages
+include the Lightweight Directory Access Protocol (LDAP) server and
+command-line utilities for server administration.
+ 
+It was found that the 389 Directory Server did not properly restrict access
+to entries when the &quot;nsslapd-allow-anonymous-access&quot; configuration setting
+was set to &quot;rootdse&quot;. An anonymous user could connect to the LDAP database
+and, if the search scope is set to BASE, obtain access to information
+outside of the rootDSE. (CVE-2013-1897)
+
+This issue was discovered by Martin Kosek of Red Hat.
+
+This update also fixes the following bugs:
+
+* Previously, the schema-reload plug-in was not thread-safe. Consequently,
+executing the schema-reload.pl script under heavy load could have caused
+the ns-slapd process to terminate unexpectedly with a segmentation fault.
+Currently, the schema-reload plug-in is re-designed so that it is
+thread-safe, and the schema-reload.pl script can be executed along with
+other LDAP operations. (BZ#929107)
+
+* An out of scope problem for a local variable, in some cases, caused the
+modrdn operation to terminate unexpectedly with a segmentation fault. This
+update declares the local variable at the proper place of the function so
+it does not go out of scope, and the modrdn operation no longer crashes.
+(BZ#929111)
+
+* A task manually constructed an exact value to be removed from the
+configuration if the &quot;replica-force-cleaning&quot; option was used.
+Consequently, the task configuration was not cleaned up, and every time the
+server was restarted, the task behaved in the described manner. This update
+searches the configuration for the exact value to delete, instead of
+manually building the value, and the task does not restart when the server
+is restarted. (BZ#929114)
+
+* Previously, a NULL pointer dereference could have occurred when
+attempting to get effective rights on an entry that did not exist, leading
+to an unexpected termination due to a segmentation fault. This update
+checks for NULL entry pointers and returns the appropriate error. Now,
+attempts to get effective rights on an entry that does not exist no longer
+causes crashes, and the server returns the appropriate error message.
+(BZ#929115)
+
+* A problem in the lock timing in the DNA plug-in caused a deadlock if the
+DNA operation was executed with other plug-ins. This update moves the
+release timing of the problematic lock, and the DNA plug-in does not cause
+the deadlock. (BZ#929196)
+
+All 389-ds-base users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. After installing
+this update, the 389 server service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+928105 - CVE-2013-1897 389-ds: unintended information exposure when rootdse is enabled
+929111 - Crash in MODRDN
+929114 - cleanAllRUV task fails to cleanup config upon completion
+929115 - crash in aci evaluation
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+x86_64:
+389-ds-base-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-libs-1.2.11.15-14.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-14.el6_4.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-14.el6_4.x86_64.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.i686.rpm
+389-ds-base-devel-1.2.11.15-14.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1897.html">https://www.redhat.com/security/data/cve/CVE-2013-1897.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRbEaoXlSAg2UNWIIRAljxAKC0E74UmFHZIXB3kS4NxUnY48OmaACfby4U
+4hUo4hx7NbxT/BONVzH3fIQ=
+=RCm0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

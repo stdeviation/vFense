@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1379&#45;01] Important: openstack&#45;swift security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Oct 2012 13:59:34 &#45;0400 -->
+<!--X-Message-Id: 201210161759.q9GHxSU2018159@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1379-01] Important: openstack-swift security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1379-01] Important: openstack-swift security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1379-01] Important: openstack-swift security update</li>
+<li><em>Date</em>: Tue, 16 Oct 2012 17:59:28 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-swift security update
+Advisory ID:       RHSA-2012:1379-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1379.html">https://rhn.redhat.com/errata/RHSA-2012-1379.html</a>
+Issue date:        2012-10-16
+CVE Names:         CVE-2012-4406 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-swift packages that fix one security issue are now
+available for Red Hat OpenStack Essex.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHOS Essex Release - noarch
+
+3. Description:
+
+OpenStack Swift (<a  rel="nofollow" href="http://swift.openstack.org">http://swift.openstack.org</a>) is a highly available,
+distributed, eventually consistent object/blob store.
+
+It was found that OpenStack Swift used the Python pickle module in an
+insecure way to serialize and deserialize data from memcached. As
+memcached does not have authentication, an attacker on the local network,
+or possibly an unprivileged user in a virtual machine hosted on OpenStack,
+could use this flaw to inject specially-crafted data that would lead to
+arbitrary code execution. (CVE-2012-4406)
+
+Red Hat would like to thank Sebastian Krahmer of the SUSE Security Team for
+reporting this issue.
+
+Note: The fix for CVE-2012-4406 is not enabled by default, and requires
+manual action on the affected Proxy nodes. This update adds a
+&quot;memcache_serialization_support&quot; option. It is configured in
+&quot;/etc/swift/proxy-server.conf&quot; and is set to &quot;0&quot; by default. This default
+setting is vulnerable to CVE-2012-4406.
+
+To enable the fix, this option must be changed; however, the required
+changes can have a temporary, large performance impact. The following
+instructions aim to minimize performance issues:
+
+1) Install the updated openstack-swift packages.
+
+2) In &quot;/etc/swift/proxy-server.conf&quot;, set the
+&quot;memcache_serialization_support&quot; option in the memcache/[filter:cache]
+section to &quot;1&quot;. (The default value, &quot;0&quot;, leaves you vulnerable to
+CVE-2012-4406.) When set to &quot;1&quot;, the JSON (JavaScript Object Notation)
+format is used but pickle is still supported. This configuration is still
+vulnerable, but new data will be stored in JSON format.
+
+3) After setting the option to &quot;1&quot;, run &quot;service openstack-swift-proxy
+restart&quot;.
+
+4) After 24 hours, set the &quot;memcache_serialization_support&quot; option in
+&quot;/etc/swift/proxy-server.conf&quot; to &quot;2&quot;. &quot;2&quot; is the secure option: only JSON
+is used.
+
+5) After setting the option to &quot;2&quot;, run &quot;service openstack-swift-proxy
+restart&quot;.
+
+If &quot;memcache_serialization_support&quot; is set directly from &quot;0&quot; to &quot;2&quot;, all
+data in memcached will be flushed and re-created. This can lead to a
+temporary, large performance impact.
+
+All users of openstack-swift are advised to upgrade to these updated
+packages, which correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+854757 - CVE-2012-4406 Openstack-Swift: insecure use of python pickle()
+
+6. Package List:
+
+RHOS Essex Release:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-swift-1.4.8-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-swift-1.4.8-5.el6.src.rpm</a>
+
+noarch:
+openstack-swift-1.4.8-5.el6.noarch.rpm
+openstack-swift-account-1.4.8-5.el6.noarch.rpm
+openstack-swift-container-1.4.8-5.el6.noarch.rpm
+openstack-swift-doc-1.4.8-5.el6.noarch.rpm
+openstack-swift-object-1.4.8-5.el6.noarch.rpm
+openstack-swift-proxy-1.4.8-5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4406.html">https://www.redhat.com/security/data/cve/CVE-2012-4406.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQfaBXXlSAg2UNWIIRAvLbAKColdZiv5oB0VKjkGi6qVuBcoC/9gCeKACf
+nS6/o9bHcfhFdiQvnwsIxdE=
+=420G
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

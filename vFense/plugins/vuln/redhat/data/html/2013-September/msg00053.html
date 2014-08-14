@@ -1,0 +1,192 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1323&#45;01] Low: ccid security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Sep 2013 19:38:00 &#45;0400 -->
+<!--X-Message-Id: 201309302338.r8UNc0Pa023221@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1323-01] Low: ccid security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1323-01] Low: ccid security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1323-01] Low: ccid security and bug fix update</li>
+<li><em>Date</em>: Mon, 30 Sep 2013 23:37:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: ccid security and bug fix update
+Advisory ID:       RHSA-2013:1323-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1323.html">https://rhn.redhat.com/errata/RHSA-2013-1323.html</a>
+Issue date:        2013-09-30
+CVE Names:         CVE-2010-4530 
+=====================================================================
+
+1. Summary:
+
+An updated ccid package that fixes one security issue and one bug is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Chip/Smart Card Interface Devices (CCID) is a USB smart card reader
+standard followed by most modern smart card readers. The ccid package
+provides a Generic, USB-based CCID driver for readers, which follow this
+standard.
+
+An integer overflow, leading to an array index error, was found in the way
+the CCID driver processed a smart card's serial number. A local attacker
+could use this flaw to execute arbitrary code with the privileges of the
+user running the PC/SC Lite pcscd daemon (root, by default), by inserting a
+specially-crafted smart card. (CVE-2010-4530)
+
+This update also fixes the following bug:
+
+* The pcscd service failed to read from the SafeNet Smart Card 650 v1 when
+it was inserted into a smart card reader. The operation failed with a
+&quot;IFDHPowerICC() PowerUp failed&quot; error message. This was due to the card
+taking a long time to respond with a full Answer To Reset (ATR) request,
+which lead to a timeout, causing the card to fail to power up. This update
+increases the timeout value so that the aforementioned request is processed
+properly, and the card is powered on as expected. (BZ#907821)
+
+All ccid users are advised to upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+664986 - CVE-2010-4530 CCID: Integer overflow, leading to array index error when processing crafted serial number of certain cards
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ccid-1.3.8-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/ccid-1.3.8-2.el5.src.rpm</a>
+
+i386:
+ccid-1.3.8-2.el5.i386.rpm
+ccid-debuginfo-1.3.8-2.el5.i386.rpm
+
+x86_64:
+ccid-1.3.8-2.el5.x86_64.rpm
+ccid-debuginfo-1.3.8-2.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ccid-1.3.8-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/ccid-1.3.8-2.el5.src.rpm</a>
+
+i386:
+ccid-1.3.8-2.el5.i386.rpm
+ccid-debuginfo-1.3.8-2.el5.i386.rpm
+
+ia64:
+ccid-1.3.8-2.el5.ia64.rpm
+ccid-debuginfo-1.3.8-2.el5.ia64.rpm
+
+ppc:
+ccid-1.3.8-2.el5.ppc.rpm
+ccid-debuginfo-1.3.8-2.el5.ppc.rpm
+
+x86_64:
+ccid-1.3.8-2.el5.x86_64.rpm
+ccid-debuginfo-1.3.8-2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4530.html">https://www.redhat.com/security/data/cve/CVE-2010-4530.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSSgtFXlSAg2UNWIIRAk8AAJwMuvxGK76hDAKhDZl/EXok+h0tFQCdHi9x
+yBwSU2uUzLuAX4EgTsSzARU=
+=gCbJ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

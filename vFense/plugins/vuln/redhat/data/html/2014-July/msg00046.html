@@ -1,0 +1,374 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0920&#45;01] Important: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Jul 2014 06:06:10 &#45;0400 -->
+<!--X-Message-Id: 201407231006.s6NA62UU010594@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0920-01] Important: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0920-01] Important: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0920-01] Important: httpd security update</li>
+<li><em>Date</em>: Wed, 23 Jul 2014 10:13:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: httpd security update
+Advisory ID:       RHSA-2014:0920-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0920.html">https://rhn.redhat.com/errata/RHSA-2014-0920.html</a>
+Issue date:        2014-07-23
+CVE Names:         CVE-2014-0118 CVE-2014-0226 CVE-2014-0231 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix three security issues are now available for
+Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The httpd packages provide the Apache HTTP Server, a powerful, efficient,
+and extensible web server.
+
+A race condition flaw, leading to heap-based buffer overflows, was found in
+the mod_status httpd module. A remote attacker able to access a status page
+served by mod_status on a server using a threaded Multi-Processing Module
+(MPM) could send a specially crafted request that would cause the httpd
+child process to crash or, possibly, allow the attacker to execute
+arbitrary code with the privileges of the &quot;apache&quot; user. (CVE-2014-0226)
+
+A denial of service flaw was found in the way httpd's mod_deflate module
+handled request body decompression (configured via the &quot;DEFLATE&quot; input
+filter). A remote attacker able to send a request whose body would be
+decompressed could use this flaw to consume an excessive amount of system
+memory and CPU on the target system. (CVE-2014-0118)
+
+A denial of service flaw was found in the way httpd's mod_cgid module
+executed CGI scripts that did not read data from the standard input.
+A remote attacker could submit a specially crafted request that would cause
+the httpd child process to hang indefinitely. (CVE-2014-0231)
+
+All httpd users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the httpd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1120596 - CVE-2014-0231 httpd: mod_cgid denial of service
+1120601 - CVE-2014-0118 httpd: mod_deflate denial of service
+1120603 - CVE-2014-0226 httpd: mod_status heap-based buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+httpd-2.2.3-87.el5_10.src.rpm
+
+i386:
+httpd-2.2.3-87.el5_10.i386.rpm
+httpd-debuginfo-2.2.3-87.el5_10.i386.rpm
+mod_ssl-2.2.3-87.el5_10.i386.rpm
+
+x86_64:
+httpd-2.2.3-87.el5_10.x86_64.rpm
+httpd-debuginfo-2.2.3-87.el5_10.x86_64.rpm
+mod_ssl-2.2.3-87.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client):
+
+Source:
+httpd-2.2.3-87.el5_10.src.rpm
+
+i386:
+httpd-debuginfo-2.2.3-87.el5_10.i386.rpm
+httpd-devel-2.2.3-87.el5_10.i386.rpm
+httpd-manual-2.2.3-87.el5_10.i386.rpm
+
+x86_64:
+httpd-debuginfo-2.2.3-87.el5_10.i386.rpm
+httpd-debuginfo-2.2.3-87.el5_10.x86_64.rpm
+httpd-devel-2.2.3-87.el5_10.i386.rpm
+httpd-devel-2.2.3-87.el5_10.x86_64.rpm
+httpd-manual-2.2.3-87.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+httpd-2.2.3-87.el5_10.src.rpm
+
+i386:
+httpd-2.2.3-87.el5_10.i386.rpm
+httpd-debuginfo-2.2.3-87.el5_10.i386.rpm
+httpd-devel-2.2.3-87.el5_10.i386.rpm
+httpd-manual-2.2.3-87.el5_10.i386.rpm
+mod_ssl-2.2.3-87.el5_10.i386.rpm
+
+ia64:
+httpd-2.2.3-87.el5_10.ia64.rpm
+httpd-debuginfo-2.2.3-87.el5_10.ia64.rpm
+httpd-devel-2.2.3-87.el5_10.ia64.rpm
+httpd-manual-2.2.3-87.el5_10.ia64.rpm
+mod_ssl-2.2.3-87.el5_10.ia64.rpm
+
+ppc:
+httpd-2.2.3-87.el5_10.ppc.rpm
+httpd-debuginfo-2.2.3-87.el5_10.ppc.rpm
+httpd-debuginfo-2.2.3-87.el5_10.ppc64.rpm
+httpd-devel-2.2.3-87.el5_10.ppc.rpm
+httpd-devel-2.2.3-87.el5_10.ppc64.rpm
+httpd-manual-2.2.3-87.el5_10.ppc.rpm
+mod_ssl-2.2.3-87.el5_10.ppc.rpm
+
+s390x:
+httpd-2.2.3-87.el5_10.s390x.rpm
+httpd-debuginfo-2.2.3-87.el5_10.s390.rpm
+httpd-debuginfo-2.2.3-87.el5_10.s390x.rpm
+httpd-devel-2.2.3-87.el5_10.s390.rpm
+httpd-devel-2.2.3-87.el5_10.s390x.rpm
+httpd-manual-2.2.3-87.el5_10.s390x.rpm
+mod_ssl-2.2.3-87.el5_10.s390x.rpm
+
+x86_64:
+httpd-2.2.3-87.el5_10.x86_64.rpm
+httpd-debuginfo-2.2.3-87.el5_10.i386.rpm
+httpd-debuginfo-2.2.3-87.el5_10.x86_64.rpm
+httpd-devel-2.2.3-87.el5_10.i386.rpm
+httpd-devel-2.2.3-87.el5_10.x86_64.rpm
+httpd-manual-2.2.3-87.el5_10.x86_64.rpm
+mod_ssl-2.2.3-87.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+i386:
+httpd-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-tools-2.2.15-31.el6_5.i686.rpm
+
+x86_64:
+httpd-2.2.15-31.el6_5.x86_64.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-tools-2.2.15-31.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+i386:
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+mod_ssl-2.2.15-31.el6_5.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-31.el6_5.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.x86_64.rpm
+mod_ssl-2.2.15-31.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+x86_64:
+httpd-2.2.15-31.el6_5.x86_64.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-tools-2.2.15-31.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+noarch:
+httpd-manual-2.2.15-31.el6_5.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.x86_64.rpm
+mod_ssl-2.2.15-31.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+i386:
+httpd-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-tools-2.2.15-31.el6_5.i686.rpm
+mod_ssl-2.2.15-31.el6_5.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-31.el6_5.noarch.rpm
+
+ppc64:
+httpd-2.2.15-31.el6_5.ppc64.rpm
+httpd-debuginfo-2.2.15-31.el6_5.ppc.rpm
+httpd-debuginfo-2.2.15-31.el6_5.ppc64.rpm
+httpd-devel-2.2.15-31.el6_5.ppc.rpm
+httpd-devel-2.2.15-31.el6_5.ppc64.rpm
+httpd-tools-2.2.15-31.el6_5.ppc64.rpm
+mod_ssl-2.2.15-31.el6_5.ppc64.rpm
+
+s390x:
+httpd-2.2.15-31.el6_5.s390x.rpm
+httpd-debuginfo-2.2.15-31.el6_5.s390.rpm
+httpd-debuginfo-2.2.15-31.el6_5.s390x.rpm
+httpd-devel-2.2.15-31.el6_5.s390.rpm
+httpd-devel-2.2.15-31.el6_5.s390x.rpm
+httpd-tools-2.2.15-31.el6_5.s390x.rpm
+mod_ssl-2.2.15-31.el6_5.s390x.rpm
+
+x86_64:
+httpd-2.2.15-31.el6_5.x86_64.rpm
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.x86_64.rpm
+httpd-tools-2.2.15-31.el6_5.x86_64.rpm
+mod_ssl-2.2.15-31.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+httpd-2.2.15-31.el6_5.src.rpm
+
+i386:
+httpd-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-tools-2.2.15-31.el6_5.i686.rpm
+mod_ssl-2.2.15-31.el6_5.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-31.el6_5.noarch.rpm
+
+x86_64:
+httpd-2.2.15-31.el6_5.x86_64.rpm
+httpd-debuginfo-2.2.15-31.el6_5.i686.rpm
+httpd-debuginfo-2.2.15-31.el6_5.x86_64.rpm
+httpd-devel-2.2.15-31.el6_5.i686.rpm
+httpd-devel-2.2.15-31.el6_5.x86_64.rpm
+httpd-tools-2.2.15-31.el6_5.x86_64.rpm
+mod_ssl-2.2.15-31.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0118.html">https://www.redhat.com/security/data/cve/CVE-2014-0118.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0226.html">https://www.redhat.com/security/data/cve/CVE-2014-0226.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0231.html">https://www.redhat.com/security/data/cve/CVE-2014-0231.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTz4jxXlSAg2UNWIIRAi2PAJ4mlJA8WFsfdw7lpgSkwwJatJC8bgCghwMO
+KauvIF7hYrmFTrbgsOdEycI=
+=fHZu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

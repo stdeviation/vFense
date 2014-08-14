@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0995&#45;01] Important: Foreman security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 27 Jun 2013 14:23:17 &#45;0400 -->
+<!--X-Message-Id: 201306271823.r5RINGqd008177@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0995-01] Important: Foreman security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0995-01] Important: Foreman security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0995-01] Important: Foreman security and bug fix update</li>
+<li><em>Date</em>: Thu, 27 Jun 2013 18:23:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Foreman security and bug fix update
+Advisory ID:       RHSA-2013:0995-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0995.html">https://rhn.redhat.com/errata/RHSA-2013-0995.html</a>
+Issue date:        2013-06-27
+CVE Names:         CVE-2013-2113 CVE-2013-2121 
+=====================================================================
+
+1. Summary:
+
+Updated Foreman packages that fix two security issues and multiple bugs
+are now available for Red Hat OpenStack 3.0 (Grizzly) Preview.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch, x86_64
+
+3. Description:
+
+The Foreman packages provide facilities for rapidly deploying Red Hat
+OpenStack 3.0 (&quot;Grizzly&quot;) Preview. These packages are provided as a
+Technology Preview. For more information on the scope and nature of support
+for items marked as Technology Preview, refer to
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+A flaw was found in the create method of the Foreman Bookmarks controller.
+A user with privileges to create a bookmark could use this flaw to execute
+arbitrary code with the privileges of the user running Foreman, giving them
+control of the system running Foreman (such as installing new packages) and
+all systems managed by Foreman. (CVE-2013-2121)
+
+A flaw was found in the way the Foreman UsersController controller handled
+user creation. A non-admin user with privileges to create non-admin
+accounts could use this flaw to create admin accounts, giving them control
+of the system running Foreman (such as installing new packages) and all
+systems managed by Foreman. (CVE-2013-2113)
+
+These issues were discovered by Ramon de C Valle of the Red Hat Product
+Security Team.
+
+This update also fixes the following bugs:
+
+* The cron job for Puppet had an incorrect path when installed via the
+Foreman installer. (BZ#969531)
+
+* This update removes provisioning templates and installation media for
+unsupported client operating systems. (BZ#971545)
+
+* Previously, the init script for Foreman was installed in the /opt/
+directory, resulting in errors when attempting to use the &quot;service&quot;
+command to control Foreman, and errors when installing or upgrading the
+Foreman packages. As the Foreman service is not needed for Red Hat
+OpenStack, this update removes the init script. (BZ#972755)
+
+* Previously, after using Foreman to install controller and compute nodes,
+it was not possible to launch compute instances. (BZ#972780)
+
+* Previously, Foreman compiled assets for an incorrect path. The assets
+were configured for &quot;[fully qualified domain name]/foreman&quot;, which is not
+where Foreman is served from in Red Hat OpenStack. (BZ#975068)
+
+* Previously, the Foreman installer used a reference to an OpenStack
+host's network interface instead of its own secondary interface when
+creating a subnet, which could cause subnet creation to fail and a &quot;rake
+aborted!&quot; message to be displayed. (BZ#976907)
+
+Users of Foreman are advised to upgrade to these updated packages, which
+correct these issues. In Red Hat OpenStack, Foreman runs on the Apache HTTP
+Server using mod_passenger. As such, after installing the updated packages,
+the httpd service must be restarted (&quot;service httpd restart&quot;) for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+966804 - CVE-2013-2113 Foreman: app/controllers/users_controller.rb arbitrary admin user creation due to mass assignment
+968166 - CVE-2013-2121 Foreman: app/controllers/bookmarks_controller.rb remote code execution
+969531 - puppet cron installed with wrong path
+971545 - Brand: remove non-RHEL templates and install media from Foreman
+972780 - Unable to launch a compute instance (openstack-foreman)
+975068 - Foreman asset compilation directory incorrect
+976907 - Foreman installer ruby setup uses wrong nic
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-1.1.10009-3.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-1.1.10009-3.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-proxy-1.1.10001-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-proxy-1.1.10001-4.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-openstack-foreman-installer-0.0.18-1.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-openstack-foreman-installer-0.0.18-1.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-ancestry-1.3.0-5.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-ancestry-1.3.0-5.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-fog-1.10.1-11.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-fog-1.10.1-11.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-mysql-2.8.1-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-mysql-2.8.1-4.el6ost.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-safemode-1.2.0-9.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-rubygem-safemode-1.2.0-9.el6ost.src.rpm</a>
+
+noarch:
+ruby193-foreman-1.1.10009-3.el6ost.noarch.rpm
+ruby193-foreman-mysql-1.1.10009-3.el6ost.noarch.rpm
+ruby193-foreman-proxy-1.1.10001-4.el6ost.noarch.rpm
+ruby193-rubygem-ancestry-1.3.0-5.el6ost.noarch.rpm
+ruby193-rubygem-ancestry-doc-1.3.0-5.el6ost.noarch.rpm
+ruby193-rubygem-fog-1.10.1-11.el6ost.noarch.rpm
+ruby193-rubygem-fog-doc-1.10.1-11.el6ost.noarch.rpm
+ruby193-rubygem-safemode-1.2.0-9.el6ost.noarch.rpm
+ruby193-rubygem-safemode-doc-1.2.0-9.el6ost.noarch.rpm
+
+x86_64:
+ruby193-openstack-foreman-installer-0.0.18-1.el6ost.x86_64.rpm
+ruby193-openstack-foreman-installer-debuginfo-0.0.18-1.el6ost.x86_64.rpm
+ruby193-rubygem-mysql-2.8.1-4.el6ost.x86_64.rpm
+ruby193-rubygem-mysql-debuginfo-2.8.1-4.el6ost.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2113.html">https://www.redhat.com/security/data/cve/CVE-2013-2113.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2121.html">https://www.redhat.com/security/data/cve/CVE-2013-2121.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRzIMBXlSAg2UNWIIRApRSAJ9gfedwYSR4ATSeJkRu4sa+pUcyZwCgmmXE
+rbU2+kw9Xxwnbgk1xxgmvDI=
+=a6Yd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

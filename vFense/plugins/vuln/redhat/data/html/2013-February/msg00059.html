@@ -1,0 +1,270 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0520&#45;02] Low: dovecot security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:47:45 &#45;0500 -->
+<!--X-Message-Id: 201302210647.r1L6lhsH030586@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0520-02] Low: dovecot security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0520-02] Low: dovecot security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0520-02] Low: dovecot security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:36:41 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: dovecot security and bug fix update
+Advisory ID:       RHSA-2013:0520-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0520.html">https://rhn.redhat.com/errata/RHSA-2013-0520.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2011-2166 CVE-2011-2167 CVE-2011-4318 
+=====================================================================
+
+1. Summary:
+
+Updated dovecot packages that fix three security issues and one bug are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Dovecot is an IMAP server, written with security primarily in mind, for
+Linux and other UNIX-like systems. It also contains a small POP3 server. It
+supports mail in either of maildir or mbox formats. The SQL drivers and
+authentication plug-ins are provided as sub-packages.
+
+Two flaws were found in the way some settings were enforced by the
+script-login functionality of Dovecot. A remote, authenticated user could
+use these flaws to bypass intended access restrictions or conduct a
+directory traversal attack by leveraging login scripts. (CVE-2011-2166,
+CVE-2011-2167)
+
+A flaw was found in the way Dovecot performed remote server identity
+verification, when it was configured to proxy IMAP and POP3 connections to
+remote hosts using TLS/SSL protocols. A remote attacker could use this flaw
+to conduct man-in-the-middle attacks using an X.509 certificate issued by
+a trusted Certificate Authority (for a different name). (CVE-2011-4318)
+
+This update also fixes the following bug:
+
+* When a new user first accessed their IMAP inbox, Dovecot was, under some
+circumstances, unable to change the group ownership of the inbox directory
+in the user's Maildir location to match that of the user's mail spool
+(/var/mail/$USER). This correctly generated an &quot;Internal error occurred&quot;
+message. However, with a subsequent attempt to access the inbox, Dovecot
+saw that the directory already existed and proceeded with its operation,
+leaving the directory with incorrectly set permissions. This update
+corrects the underlying permissions setting error. When a new user now
+accesses their inbox for the first time, and it is not possible to set
+group ownership, Dovecot removes the created directory and generates an
+error message instead of keeping the directory with incorrect group
+ownership. (BZ#697620)
+
+Users of dovecot are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the dovecot service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+709095 - CVE-2011-2166 dovecot: authenticated remote bypass of intended access restrictions
+709097 - CVE-2011-2167 dovecot: directory traversal due to not obeying chroot directive
+754980 - CVE-2011-4318 dovecot: proxy destination host name not checked against SSL certificate name
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm</a>
+
+i386:
+dovecot-2.0.9-5.el6.i686.rpm
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-mysql-2.0.9-5.el6.i686.rpm
+dovecot-pgsql-2.0.9-5.el6.i686.rpm
+dovecot-pigeonhole-2.0.9-5.el6.i686.rpm
+
+ppc64:
+dovecot-2.0.9-5.el6.ppc.rpm
+dovecot-2.0.9-5.el6.ppc64.rpm
+dovecot-debuginfo-2.0.9-5.el6.ppc.rpm
+dovecot-debuginfo-2.0.9-5.el6.ppc64.rpm
+dovecot-mysql-2.0.9-5.el6.ppc64.rpm
+dovecot-pgsql-2.0.9-5.el6.ppc64.rpm
+dovecot-pigeonhole-2.0.9-5.el6.ppc64.rpm
+
+s390x:
+dovecot-2.0.9-5.el6.s390.rpm
+dovecot-2.0.9-5.el6.s390x.rpm
+dovecot-debuginfo-2.0.9-5.el6.s390.rpm
+dovecot-debuginfo-2.0.9-5.el6.s390x.rpm
+dovecot-mysql-2.0.9-5.el6.s390x.rpm
+dovecot-pgsql-2.0.9-5.el6.s390x.rpm
+dovecot-pigeonhole-2.0.9-5.el6.s390x.rpm
+
+x86_64:
+dovecot-2.0.9-5.el6.i686.rpm
+dovecot-2.0.9-5.el6.x86_64.rpm
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-debuginfo-2.0.9-5.el6.x86_64.rpm
+dovecot-mysql-2.0.9-5.el6.x86_64.rpm
+dovecot-pgsql-2.0.9-5.el6.x86_64.rpm
+dovecot-pigeonhole-2.0.9-5.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm</a>
+
+i386:
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-devel-2.0.9-5.el6.i686.rpm
+
+ppc64:
+dovecot-debuginfo-2.0.9-5.el6.ppc64.rpm
+dovecot-devel-2.0.9-5.el6.ppc64.rpm
+
+s390x:
+dovecot-debuginfo-2.0.9-5.el6.s390x.rpm
+dovecot-devel-2.0.9-5.el6.s390x.rpm
+
+x86_64:
+dovecot-debuginfo-2.0.9-5.el6.x86_64.rpm
+dovecot-devel-2.0.9-5.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm</a>
+
+i386:
+dovecot-2.0.9-5.el6.i686.rpm
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-mysql-2.0.9-5.el6.i686.rpm
+dovecot-pgsql-2.0.9-5.el6.i686.rpm
+dovecot-pigeonhole-2.0.9-5.el6.i686.rpm
+
+x86_64:
+dovecot-2.0.9-5.el6.i686.rpm
+dovecot-2.0.9-5.el6.x86_64.rpm
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-debuginfo-2.0.9-5.el6.x86_64.rpm
+dovecot-mysql-2.0.9-5.el6.x86_64.rpm
+dovecot-pgsql-2.0.9-5.el6.x86_64.rpm
+dovecot-pigeonhole-2.0.9-5.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dovecot-2.0.9-5.el6.src.rpm</a>
+
+i386:
+dovecot-debuginfo-2.0.9-5.el6.i686.rpm
+dovecot-devel-2.0.9-5.el6.i686.rpm
+
+x86_64:
+dovecot-debuginfo-2.0.9-5.el6.x86_64.rpm
+dovecot-devel-2.0.9-5.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2166.html">https://www.redhat.com/security/data/cve/CVE-2011-2166.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2167.html">https://www.redhat.com/security/data/cve/CVE-2011-2167.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4318.html">https://www.redhat.com/security/data/cve/CVE-2011-4318.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcMBXlSAg2UNWIIRAsLkAKCVzudrg6y2jNbVu8TARQH65FPliACgpPzA
+3cvEfHEUoK/fdUBZNDEuZqU=
+=9rAE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

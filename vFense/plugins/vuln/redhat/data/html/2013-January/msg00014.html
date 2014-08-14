@@ -1,0 +1,265 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0131&#45;01] Low: gnome&#45;vfs2 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 02:04:08 &#45;0500 -->
+<!--X-Message-Id: 201301080704.r08746Yd016356@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0131-01] Low: gnome-vfs2 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0131-01] Low: gnome-vfs2 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0131-01] Low: gnome-vfs2 security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:54:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: gnome-vfs2 security and bug fix update
+Advisory ID:       RHSA-2013:0131-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0131.html">https://rhn.redhat.com/errata/RHSA-2013-0131.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2009-2473 
+=====================================================================
+
+1. Summary:
+
+Updated gnome-vfs2 packages that fix one security issue and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The gnome-vfs2 packages provide the GNOME Virtual File System, which is the
+foundation of the Nautilus file manager. neon is an HTTP and WebDAV client
+library embedded in the gnome-vfs2 packages.
+
+A denial of service flaw was found in the neon Extensible Markup Language
+(XML) parser. Visiting a malicious DAV server with an application using
+gnome-vfs2 (such as Nautilus) could possibly cause the application to
+consume an excessive amount of CPU and memory. (CVE-2009-2473)
+
+This update also fixes the following bugs:
+
+* When extracted from the Uniform Resource Identifier (URI), gnome-vfs2
+returned escaped file paths. If a path, as stored in the URI,
+contained non-ASCII characters or ASCII characters which are parsed as
+something other than a file path (for example, spaces), the escaped path
+was inaccurate. Consequently, files with the described type of URI could
+not be processed. With this update, gnome-vfs2 properly unescapes paths
+that are required for a system call. As a result, these paths are parsed
+properly. (BZ#580855)
+
+* In certain cases, the trash info file was populated by foreign
+entries, pointing to live data. Emptying the trash caused an accidental
+deletion of valuable data. With this update, a workaround has been applied
+in order to prevent the deletion. As a result, the accidental data loss is
+prevented, however further information is still gathered to fully fix this
+problem. (BZ#586015)
+
+* Due to a wrong test checking for a destination file system, the Nautilus
+file manager failed to delete a symbolic link to a folder which was
+residing in another file system. With this update, a special test has been
+added. As a result, a symbolic link pointing to another file system can be
+trashed or deleted properly. (BZ#621394)
+
+* Prior to this update, when directories without a read permission were
+marked for copy, the Nautilus file manager skipped these unreadable
+directories without notification. With this update, Nautilus displays an
+error message and properly informs the user about the aforementioned
+problem. (BZ#772307)
+
+* Previously, gnome-vfs2 used the stat() function calls for every file on
+the MultiVersion File System (MVFS), used for example by IBM Rational
+ClearCase. This behavior significantly slowed down file operations. With
+this update, the unnecessary stat() operations have been limited. As a
+result, gnome-vfs2 user interfaces, such as Nautilus, are more responsive.
+(BZ#822817)
+
+All gnome-vfs2 users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+518215 - CVE-2009-2473 neon: billion laughs DoS attack
+580855 - Cannot delete folder contents if the name of the folder contains spaces
+621394 - can't delete symlink to other filesystem
+822817 - Fix Gnome VFS components to not stat every file on an ClearCase mvfs filesystem
+848822 - Problem while loading OAFIID: GNOME_Panel_TrashApplet
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm</a>
+
+i386:
+gnome-vfs2-2.16.2-10.el5.i386.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-smb-2.16.2-10.el5.i386.rpm
+
+x86_64:
+gnome-vfs2-2.16.2-10.el5.i386.rpm
+gnome-vfs2-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-smb-2.16.2-10.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm</a>
+
+i386:
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-devel-2.16.2-10.el5.i386.rpm
+
+x86_64:
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-devel-2.16.2-10.el5.i386.rpm
+gnome-vfs2-devel-2.16.2-10.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnome-vfs2-2.16.2-10.el5.src.rpm</a>
+
+i386:
+gnome-vfs2-2.16.2-10.el5.i386.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-devel-2.16.2-10.el5.i386.rpm
+gnome-vfs2-smb-2.16.2-10.el5.i386.rpm
+
+ia64:
+gnome-vfs2-2.16.2-10.el5.ia64.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.ia64.rpm
+gnome-vfs2-devel-2.16.2-10.el5.ia64.rpm
+gnome-vfs2-smb-2.16.2-10.el5.ia64.rpm
+
+ppc:
+gnome-vfs2-2.16.2-10.el5.ppc.rpm
+gnome-vfs2-2.16.2-10.el5.ppc64.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.ppc.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.ppc64.rpm
+gnome-vfs2-devel-2.16.2-10.el5.ppc.rpm
+gnome-vfs2-devel-2.16.2-10.el5.ppc64.rpm
+gnome-vfs2-smb-2.16.2-10.el5.ppc.rpm
+gnome-vfs2-smb-2.16.2-10.el5.ppc64.rpm
+
+s390x:
+gnome-vfs2-2.16.2-10.el5.s390.rpm
+gnome-vfs2-2.16.2-10.el5.s390x.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.s390.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.s390x.rpm
+gnome-vfs2-devel-2.16.2-10.el5.s390.rpm
+gnome-vfs2-devel-2.16.2-10.el5.s390x.rpm
+gnome-vfs2-smb-2.16.2-10.el5.s390x.rpm
+
+x86_64:
+gnome-vfs2-2.16.2-10.el5.i386.rpm
+gnome-vfs2-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.i386.rpm
+gnome-vfs2-debuginfo-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-devel-2.16.2-10.el5.i386.rpm
+gnome-vfs2-devel-2.16.2-10.el5.x86_64.rpm
+gnome-vfs2-smb-2.16.2-10.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2473.html">https://www.redhat.com/security/data/cve/CVE-2009-2473.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68TiXlSAg2UNWIIRAqZoAJ97ED4YrwQDGGwRp0+hnbUJRQCGnACfVKyt
+vr5BSs6N6KiDVMPz4Y8KL7k=
+=APMX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

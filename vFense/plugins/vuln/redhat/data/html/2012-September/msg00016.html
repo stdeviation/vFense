@@ -1,0 +1,308 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1261&#45;01] Moderate: dbus security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Sep 2012 13:21:46 &#45;0400 -->
+<!--X-Message-Id: 201209131721.q8DHLfin003403@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1261-01] Moderate: dbus security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1261-01] Moderate: dbus security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1261-01] Moderate: dbus security update</li>
+<li><em>Date</em>: Thu, 13 Sep 2012 17:21:40 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: dbus security update
+Advisory ID:       RHSA-2012:1261-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1261.html">https://rhn.redhat.com/errata/RHSA-2012-1261.html</a>
+Issue date:        2012-09-13
+CVE Names:         CVE-2012-3524 
+=====================================================================
+
+1. Summary:
+
+Updated dbus packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - noarch
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - noarch
+
+3. Description:
+
+D-Bus is a system for sending messages between applications. It is used for
+the system-wide message bus service and as a per-user-login-session
+messaging facility.
+
+It was discovered that the D-Bus library honored environment settings even
+when running with elevated privileges. A local attacker could possibly use
+this flaw to escalate their privileges, by setting specific environment
+variables before running a setuid or setgid application linked against the
+D-Bus library (libdbus). (CVE-2012-3524)
+
+Note: With this update, libdbus ignores environment variables when used by
+setuid or setgid applications. The environment is not ignored when an
+application gains privileges via file system capabilities; however, no
+application shipped in Red Hat Enterprise Linux 6 gains privileges via file
+system capabilities.
+
+Red Hat would like to thank Sebastian Krahmer of the SUSE Security Team for
+reporting this issue.
+
+All users are advised to upgrade to these updated packages, which contain a
+backported patch to correct this issue. For the update to take effect, all
+running instances of dbus-daemon and all running applications using the
+libdbus library must be restarted, or the system rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+847402 - CVE-2012-3524 X.org: arbitrary code execution as root when libdbus &gt;= 1.5 is used
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+i386:
+dbus-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-x11-1.2.24-7.el6_3.i686.rpm
+
+x86_64:
+dbus-1.2.24-7.el6_3.x86_64.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.x86_64.rpm
+dbus-x11-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+i386:
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+
+noarch:
+dbus-doc-1.2.24-7.el6_3.noarch.rpm
+
+x86_64:
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+x86_64:
+dbus-1.2.24-7.el6_3.x86_64.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.x86_64.rpm
+dbus-x11-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+noarch:
+dbus-doc-1.2.24-7.el6_3.noarch.rpm
+
+x86_64:
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+i386:
+dbus-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-x11-1.2.24-7.el6_3.i686.rpm
+
+ppc64:
+dbus-1.2.24-7.el6_3.ppc64.rpm
+dbus-debuginfo-1.2.24-7.el6_3.ppc.rpm
+dbus-debuginfo-1.2.24-7.el6_3.ppc64.rpm
+dbus-devel-1.2.24-7.el6_3.ppc.rpm
+dbus-devel-1.2.24-7.el6_3.ppc64.rpm
+dbus-libs-1.2.24-7.el6_3.ppc.rpm
+dbus-libs-1.2.24-7.el6_3.ppc64.rpm
+dbus-x11-1.2.24-7.el6_3.ppc64.rpm
+
+s390x:
+dbus-1.2.24-7.el6_3.s390x.rpm
+dbus-debuginfo-1.2.24-7.el6_3.s390.rpm
+dbus-debuginfo-1.2.24-7.el6_3.s390x.rpm
+dbus-devel-1.2.24-7.el6_3.s390.rpm
+dbus-devel-1.2.24-7.el6_3.s390x.rpm
+dbus-libs-1.2.24-7.el6_3.s390.rpm
+dbus-libs-1.2.24-7.el6_3.s390x.rpm
+dbus-x11-1.2.24-7.el6_3.s390x.rpm
+
+x86_64:
+dbus-1.2.24-7.el6_3.x86_64.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.x86_64.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.x86_64.rpm
+dbus-x11-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+noarch:
+dbus-doc-1.2.24-7.el6_3.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+i386:
+dbus-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-x11-1.2.24-7.el6_3.i686.rpm
+
+x86_64:
+dbus-1.2.24-7.el6_3.x86_64.rpm
+dbus-debuginfo-1.2.24-7.el6_3.i686.rpm
+dbus-debuginfo-1.2.24-7.el6_3.x86_64.rpm
+dbus-devel-1.2.24-7.el6_3.i686.rpm
+dbus-devel-1.2.24-7.el6_3.x86_64.rpm
+dbus-libs-1.2.24-7.el6_3.i686.rpm
+dbus-libs-1.2.24-7.el6_3.x86_64.rpm
+dbus-x11-1.2.24-7.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-1.2.24-7.el6_3.src.rpm</a>
+
+noarch:
+dbus-doc-1.2.24-7.el6_3.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3524.html">https://www.redhat.com/security/data/cve/CVE-2012-3524.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQUhYLXlSAg2UNWIIRAk4LAJ0XMDkKrx8BKrQ5ebuS77IoErxi/gCeJQnS
+Xf4NI8lqycSfoi+up1nqc5o=
+=Pf0m
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

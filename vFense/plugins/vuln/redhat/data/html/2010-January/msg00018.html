@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0062&#45;02] Moderate: bind security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jan 2010 10:22:32 &#45;0500 -->
+<!--X-Message-Id: 201001201522.o0KFMR3d025146@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0062-02] Moderate: bind security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0062-02] Moderate: bind security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0062-02] Moderate: bind security update</li>
+<li><em>Date</em>: Wed, 20 Jan 2010 10:22:27 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: bind security update
+Advisory ID:       RHSA-2010:0062-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0062.html">https://rhn.redhat.com/errata/RHSA-2010-0062.html</a>
+Issue date:        2010-01-20
+CVE Names:         CVE-2010-0097 CVE-2010-0290 
+=====================================================================
+
+1. Summary:
+
+Updated bind packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. BIND includes a DNS server (named); a resolver
+library (routines for applications to use when interfacing with DNS); and
+tools for verifying that the DNS server is operating correctly.
+
+A flaw was found in the BIND DNSSEC NSEC/NSEC3 validation code. If BIND was
+running as a DNSSEC-validating resolver, it could incorrectly cache
+NXDOMAIN responses, as if they were valid, for records proven by NSEC or
+NSEC3 to exist. A remote attacker could use this flaw to cause a BIND
+server to return the bogus, cached NXDOMAIN responses for valid records and
+prevent users from retrieving those records (denial of service).
+(CVE-2010-0097)
+
+The original fix for CVE-2009-4022 was found to be incomplete. BIND was
+incorrectly caching certain responses without performing proper DNSSEC
+validation. CNAME and DNAME records could be cached, without proper DNSSEC
+validation, when received from processing recursive client queries that
+requested DNSSEC records but indicated that checking should be disabled. A
+remote attacker could use this flaw to bypass the DNSSEC validation check
+and perform a cache poisoning attack if the target BIND server was
+receiving such client queries. (CVE-2010-0290)
+
+All BIND users are advised to upgrade to these updated packages, which
+contain a backported patch to resolve these issues. After installing the
+update, the BIND daemon (named) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+554851 - CVE-2010-0097 BIND DNSSEC NSEC/NSEC3 validation code could cause bogus NXDOMAIN responses
+557121 - CVE-2010-0290 BIND upstream fix for CVE-2009-4022 is incomplete
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm</a>
+
+i386:
+bind-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.i386.rpm
+
+x86_64:
+bind-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm</a>
+
+i386:
+bind-chroot-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.i386.rpm
+
+x86_64:
+bind-chroot-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.x86_64.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/bind-9.3.6-4.P1.el5_4.2.src.rpm</a>
+
+i386:
+bind-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-chroot-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.i386.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.i386.rpm
+
+ia64:
+bind-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-chroot-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.ia64.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.ia64.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.ia64.rpm
+
+ppc:
+bind-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-chroot-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.ppc64.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.ppc64.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.ppc64.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.ppc64.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.ppc.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.ppc.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.ppc.rpm
+
+s390x:
+bind-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-chroot-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.s390.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.s390.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.s390.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.s390.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.s390x.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.s390x.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.s390x.rpm
+
+x86_64:
+bind-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-chroot-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-debuginfo-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-devel-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libbind-devel-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.i386.rpm
+bind-libs-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-sdb-9.3.6-4.P1.el5_4.2.x86_64.rpm
+bind-utils-9.3.6-4.P1.el5_4.2.x86_64.rpm
+caching-nameserver-9.3.6-4.P1.el5_4.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0097.html">https://www.redhat.com/security/data/cve/CVE-2010-0097.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0290.html">https://www.redhat.com/security/data/cve/CVE-2010-0290.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLVx+GXlSAg2UNWIIRAvz/AJ9H7FhvT0s+dBH6WB0WLXqOi504SgCfSKp8
+f06YLQzTf8bhbdzVt7HjWB4=
+=m8lV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

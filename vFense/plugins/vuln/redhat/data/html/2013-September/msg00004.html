@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1196&#45;01] Important: Foreman security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 3 Sep 2013 16:42:51 &#45;0400 -->
+<!--X-Message-Id: 201309032042.r83Kgoru005720@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1196-01] Important: Foreman security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1196-01] Important: Foreman security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1196-01] Important: Foreman security update</li>
+<li><em>Date</em>: Tue, 3 Sep 2013 20:42:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Foreman security update
+Advisory ID:       RHSA-2013:1196-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1196.html">https://rhn.redhat.com/errata/RHSA-2013-1196.html</a>
+Issue date:        2013-09-03
+CVE Names:         CVE-2013-4180 CVE-2013-4182 
+=====================================================================
+
+1. Summary:
+
+Updated Foreman packages that fix two security issues are now available for
+Red Hat OpenStack 3.0.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch
+
+3. Description:
+
+The Foreman packages provide facilities for rapidly deploying Red Hat
+OpenStack 3.0. These packages are provided as a Technology Preview. For
+more information on the scope and nature of support for items marked as
+Technology Preview, refer to
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+A flaw was found in the API where insufficient privilege checks were
+conducted by the hosts controller, allowing any user with API access to
+control any host. (CVE-2013-4182)
+
+A denial of service flaw was found in Foreman in the way user input was
+converted to a symbol. An authenticated user could create inputs that would
+lead to excessive memory consumption. (CVE-2013-4180)
+
+Red Hat would like to thank Daniel Lobato of CERN IT-PES-PS for reporting
+CVE-2013-4182. The CVE-2013-4180 issue was discovered by Marek Hulán of the
+Red Hat Foreman team.
+
+Users of Foreman are advised to upgrade to these updated packages, which
+correct these issues. In Red Hat OpenStack, Foreman runs on the Apache HTTP
+Server using mod_passenger. As such, after installing the updated packages,
+the httpd service must be restarted (&quot;service httpd restart&quot;) for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+989755 - CVE-2013-4180 Foreman: hosts_controller.rb power/ipmi_boot Symbol creation DoS
+990374 - CVE-2013-4182 foreman: app/controllers/api/v1/hosts_controller.rb API privilege escalation
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-1.1.10014-1.2.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/ruby193-foreman-1.1.10014-1.2.el6ost.src.rpm</a>
+
+noarch:
+ruby193-foreman-1.1.10014-1.2.el6ost.noarch.rpm
+ruby193-foreman-mysql-1.1.10014-1.2.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4180.html">https://www.redhat.com/security/data/cve/CVE-2013-4180.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4182.html">https://www.redhat.com/security/data/cve/CVE-2013-4182.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSJkm1XlSAg2UNWIIRAnt7AKCrMMY1ONechqDAvLFlLYZd7sGRpwCeNmfq
+JT/3n85nTbAu4052iubYo8w=
+=UrJy
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

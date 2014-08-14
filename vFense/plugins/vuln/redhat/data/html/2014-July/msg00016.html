@@ -1,0 +1,421 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0861&#45;02] Moderate: lzo security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 9 Jul 2014 13:29:43 &#45;0400 -->
+<!--X-Message-Id: 201407091729.s69HThqw027093@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0861-02] Moderate: lzo security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0861-02] Moderate: lzo security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0861-02] Moderate: lzo security update</li>
+<li><em>Date</em>: Wed, 9 Jul 2014 17:29:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: lzo security update
+Advisory ID:       RHSA-2014:0861-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0861.html">https://rhn.redhat.com/errata/RHSA-2014-0861.html</a>
+Issue date:        2014-07-09
+CVE Names:         CVE-2014-4607 
+=====================================================================
+
+1. Summary:
+
+Updated lzo packages that fix one security issue are now available for Red
+Hat Enterprise Linux 6 and 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+LZO is a portable lossless data compression library written in ANSI C.
+
+An integer overflow flaw was found in the way the lzo library decompressed
+certain archives compressed with the LZO algorithm. An attacker could
+create a specially crafted LZO-compressed input that, when decompressed by
+an application using the lzo library, would cause that application to crash
+or, potentially, execute arbitrary code. (CVE-2014-4607)
+
+Red Hat would like to thank Don A. Bailey from Lab Mouse Security for
+reporting this issue.
+
+All lzo users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. For the update to take
+effect, all services linked to the lzo library must be restarted or the
+system rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1112418 - CVE-2014-4607 lzo: lzo1x_decompress_safe() integer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+
+ppc64:
+lzo-2.03-3.1.el6_5.1.ppc64.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.ppc64.rpm
+
+s390x:
+lzo-2.03-3.1.el6_5.1.s390x.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.s390x.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+
+ppc64:
+lzo-2.03-3.1.el6_5.1.ppc.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.ppc.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.ppc64.rpm
+lzo-devel-2.03-3.1.el6_5.1.ppc.rpm
+lzo-devel-2.03-3.1.el6_5.1.ppc64.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.ppc.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.ppc64.rpm
+
+s390x:
+lzo-2.03-3.1.el6_5.1.s390.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.s390.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.s390x.rpm
+lzo-devel-2.03-3.1.el6_5.1.s390.rpm
+lzo-devel-2.03-3.1.el6_5.1.s390x.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.s390.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.s390x.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+lzo-2.03-3.1.el6_5.1.src.rpm
+
+i386:
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+
+x86_64:
+lzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.i686.rpm
+lzo-debuginfo-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-devel-2.03-3.1.el6_5.1.i686.rpm
+lzo-devel-2.03-3.1.el6_5.1.x86_64.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.i686.rpm
+lzo-minilzo-2.03-3.1.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+lzo-2.06-6.el7_0.2.src.rpm
+
+x86_64:
+lzo-2.06-6.el7_0.2.i686.rpm
+lzo-2.06-6.el7_0.2.x86_64.rpm
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-minilzo-2.06-6.el7_0.2.i686.rpm
+lzo-minilzo-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-devel-2.06-6.el7_0.2.i686.rpm
+lzo-devel-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+lzo-2.06-6.el7_0.2.src.rpm
+
+x86_64:
+lzo-2.06-6.el7_0.2.i686.rpm
+lzo-2.06-6.el7_0.2.x86_64.rpm
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-devel-2.06-6.el7_0.2.i686.rpm
+lzo-devel-2.06-6.el7_0.2.x86_64.rpm
+lzo-minilzo-2.06-6.el7_0.2.i686.rpm
+lzo-minilzo-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+lzo-2.06-6.el7_0.2.src.rpm
+
+ppc64:
+lzo-2.06-6.el7_0.2.ppc.rpm
+lzo-2.06-6.el7_0.2.ppc64.rpm
+lzo-debuginfo-2.06-6.el7_0.2.ppc.rpm
+lzo-debuginfo-2.06-6.el7_0.2.ppc64.rpm
+
+s390x:
+lzo-2.06-6.el7_0.2.s390.rpm
+lzo-2.06-6.el7_0.2.s390x.rpm
+lzo-debuginfo-2.06-6.el7_0.2.s390.rpm
+lzo-debuginfo-2.06-6.el7_0.2.s390x.rpm
+
+x86_64:
+lzo-2.06-6.el7_0.2.i686.rpm
+lzo-2.06-6.el7_0.2.x86_64.rpm
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-minilzo-2.06-6.el7_0.2.i686.rpm
+lzo-minilzo-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+lzo-debuginfo-2.06-6.el7_0.2.ppc.rpm
+lzo-debuginfo-2.06-6.el7_0.2.ppc64.rpm
+lzo-devel-2.06-6.el7_0.2.ppc.rpm
+lzo-devel-2.06-6.el7_0.2.ppc64.rpm
+lzo-minilzo-2.06-6.el7_0.2.ppc.rpm
+lzo-minilzo-2.06-6.el7_0.2.ppc64.rpm
+
+s390x:
+lzo-debuginfo-2.06-6.el7_0.2.s390.rpm
+lzo-debuginfo-2.06-6.el7_0.2.s390x.rpm
+lzo-devel-2.06-6.el7_0.2.s390.rpm
+lzo-devel-2.06-6.el7_0.2.s390x.rpm
+lzo-minilzo-2.06-6.el7_0.2.s390.rpm
+lzo-minilzo-2.06-6.el7_0.2.s390x.rpm
+
+x86_64:
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-devel-2.06-6.el7_0.2.i686.rpm
+lzo-devel-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+lzo-2.06-6.el7_0.2.src.rpm
+
+x86_64:
+lzo-2.06-6.el7_0.2.i686.rpm
+lzo-2.06-6.el7_0.2.x86_64.rpm
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-minilzo-2.06-6.el7_0.2.i686.rpm
+lzo-minilzo-2.06-6.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+lzo-debuginfo-2.06-6.el7_0.2.i686.rpm
+lzo-debuginfo-2.06-6.el7_0.2.x86_64.rpm
+lzo-devel-2.06-6.el7_0.2.i686.rpm
+lzo-devel-2.06-6.el7_0.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-4607.html">https://www.redhat.com/security/data/cve/CVE-2014-4607.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTvXwAXlSAg2UNWIIRAjMYAJ95mlHImoIprxyBKCiRSWXPZT+m1QCeKo4X
+3d8b73N9CSR+sW5dmWW3zXk=
+=FYOa
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

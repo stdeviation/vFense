@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0959&#45;01] Moderate: mutt security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 19 Jul 2011 14:05:33 &#45;0400 -->
+<!--X-Message-Id: 201107191805.p6JI5RJN001123@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0959-01] Moderate: mutt security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0959-01] Moderate: mutt security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0959-01] Moderate: mutt security update</li>
+<li><em>Date</em>: Tue, 19 Jul 2011 18:05:27 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mutt security update
+Advisory ID:       RHSA-2011:0959-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0959.html">https://rhn.redhat.com/errata/RHSA-2011-0959.html</a>
+Issue date:        2011-07-19
+CVE Names:         CVE-2011-1429 
+=====================================================================
+
+1. Summary:
+
+An updated mutt package that fixes one security issue is now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Mutt is a text-mode mail user agent.
+
+A flaw was found in the way Mutt verified SSL certificates. When a server
+presented an SSL certificate chain, Mutt could ignore a server hostname
+check failure. A remote attacker able to get a certificate from a trusted
+Certificate Authority could use this flaw to trick Mutt into accepting a
+certificate issued for a different hostname, and perform man-in-the-middle
+attacks against Mutt's SSL connections. (CVE-2011-1429)
+
+All Mutt users should upgrade to this updated package, which contains a
+backported patch to correct this issue. All running instances of Mutt must
+be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+688755 - CVE-2011-1429 mutt: SSL host name check may be skipped when verifying certificate chain
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm</a>
+
+i386:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+
+x86_64:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm</a>
+
+x86_64:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm</a>
+
+i386:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+
+ppc64:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.ppc64.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.ppc64.rpm
+
+s390x:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.s390x.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.s390x.rpm
+
+x86_64:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mutt-1.5.20-2.20091214hg736b6a.el6_1.1.src.rpm</a>
+
+i386:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.i686.rpm
+
+x86_64:
+mutt-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+mutt-debuginfo-1.5.20-2.20091214hg736b6a.el6_1.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1429.html">https://www.redhat.com/security/data/cve/CVE-2011-1429.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOJcc/XlSAg2UNWIIRAoQAAKCksJfaSfDF4e41g+4B5D95Bc4M6wCgw+sT
++0hWdVwUkjPrrokQOJpVxyw=
+=97VY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

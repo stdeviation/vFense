@@ -1,0 +1,228 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0545&#45;01] Moderate: CloudForms Cloud Engine 1.1.2 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 14:23:20 &#45;0500 -->
+<!--X-Message-Id: 201302211923.r1LJNK4T006224@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0545-01] Moderate: CloudForms Cloud Engine 1.1.2 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0545-01] Moderate: CloudForms Cloud Engine 1.1.2 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:0545-01] Moderate: CloudForms Cloud Engine 1.1.2 update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 19:23:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: CloudForms Cloud Engine 1.1.2 update
+Advisory ID:       RHSA-2013:0545-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0545.html">https://rhn.redhat.com/errata/RHSA-2013-0545.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-5509 CVE-2012-6117 CVE-2012-6118 
+=====================================================================
+
+1. Summary:
+
+CloudForms Cloud Engine 1.1.2 is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+CloudForms Cloud Engine for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat CloudForms is an on-premise hybrid cloud
+Infrastructure-as-a-Service (IaaS) product that lets you create and manage
+private and public clouds. It provides self-service computing resources to
+users in a managed, governed, and secure way. CloudForms Cloud Engine is a
+management application for cloud resources.
+
+It was found that the Aeolus Configuration Server stored passwords in plain
+text in the world-readable &quot;/var/log/aeolus-configserver/configserver.log&quot;
+file. A local attacker could use this flaw to obtain the administrative
+passwords for other services (such as Katello, databases, and so on).
+(CVE-2012-6117)
+
+It was found that Conductor, the web-based management console, allowed
+unprivileged users to modify their quota for the number of instances they
+are allowed to run. An unprivileged user could use this flaw to monopolize
+resources and run more instances than intended. (CVE-2012-6118)
+
+It was found that the aeolus-configserver-setup script created a
+world-readable file containing authentication details in plain text in the
+&quot;/tmp/&quot; directory. A local attacker could use this flaw to obtain Audrey
+credentials, allowing them to make configuration changes to Audrey-enabled
+instances. (CVE-2012-5509)
+
+The CVE-2012-6117 issue was discovered by James Laska of Red Hat;
+CVE-2012-6118 was discovered by Tomas Sedovic of Red Hat; and CVE-2012-5509
+was discovered by Aaron Weitekamp of the Red Hat Cloud Quality Engineering
+team.
+
+This update also fixes the following bug:
+
+* A bug in the initial filter view for instances caused stopped instances
+to display for the default &quot;Non stopped applications&quot; option until
+auto-refresh. This bug fix corrects the form rendering for the filter view.
+The filter view now displays only non-stopped instances. (BZ#895569)
+
+Additionally, this update adds the following enhancements:
+
+* Red Hat Enterprise Linux 5.9 support to guest image building in
+CloudForms Cloud Engine. (BZ#903646)
+
+* Support for Red Hat Enterprise Linux 5.9 Amazon Machine Images (AMI) on
+Amazon Web Services (AWS) Elastic Compute Cloud (EC2) providers for
+CloudForms Cloud Engine. (BZ#903651)
+
+* Red Hat Enterprise Linux 6.4 support to guest image building in
+CloudForms Cloud Engine. (BZ#903395)
+
+* Support for Red Hat Enterprise Linux 6.4 Amazon Machine Images (AMI) on
+Amazon Web Services (AWS) Elastic Compute Cloud (EC2) providers for
+CloudForms Cloud Engine. (BZ#903650)
+
+Refer to the CloudForms 1.1.2 Release Notes for further information about
+this release. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+To upgrade, follow the upgrade instructions in the CloudForms Installation
+Guide:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/Updating_CloudForms_Cloud_Engine.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/Updating_CloudForms_Cloud_Engine.html</a>
+
+Users of CloudForms Cloud Engine are advised to upgrade to these updated
+packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+875294 - CVE-2012-5509 aeolus-configserver: aeolus-configserver-setup /tmp file conductor credentials leak
+895569 - Default Filter view option &quot;Non stopped applications&quot; lists stopped instance, and removes them after auto refresh
+903395 - Add support for RHEL-6.4 to Oz
+903646 - Add support for RHEL-5.9 to Oz
+903650 - Update jeos AMI's for RHEL-6.4
+903651 - Update jeos AMI's for RHEL-5.9
+906192 - CVE-2012-6118 Aeolus Conductor: Unprivileged user can change their own Maximum Running Instances quota
+906201 - CVE-2012-6117 Aeolus Configserver: Passwords from application blueprint stored plaintext in configserver.log
+912395 - image customization fails using root user, must use ec2-user
+
+6. Package List:
+
+CloudForms Cloud Engine for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/aeolus-conductor-0.13.26-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/aeolus-conductor-0.13.26-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/aeolus-configserver-0.4.12-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/aeolus-configserver-0.4.12-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/imagefactory-1.0.3-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/imagefactory-1.0.3-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/oz-0.8.0-8.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/oz-0.8.0-8.el6cf.src.rpm</a>
+
+noarch:
+aeolus-all-0.13.26-1.el6cf.noarch.rpm
+aeolus-conductor-0.13.26-1.el6cf.noarch.rpm
+aeolus-conductor-daemons-0.13.26-1.el6cf.noarch.rpm
+aeolus-conductor-devel-0.13.26-1.el6cf.noarch.rpm
+aeolus-conductor-doc-0.13.26-1.el6cf.noarch.rpm
+aeolus-configserver-0.4.12-3.el6cf.noarch.rpm
+imagefactory-1.0.3-1.el6cf.noarch.rpm
+imagefactory-jeosconf-ec2-fedora-1.0.3-1.el6cf.noarch.rpm
+imagefactory-jeosconf-ec2-rhel-1.0.3-1.el6cf.noarch.rpm
+oz-0.8.0-8.el6cf.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5509.html">https://www.redhat.com/security/data/cve/CVE-2012-5509.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6117.html">https://www.redhat.com/security/data/cve/CVE-2012-6117.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6118.html">https://www.redhat.com/security/data/cve/CVE-2012-6118.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/Updating_CloudForms_Cloud_Engine.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/Updating_CloudForms_Cloud_Engine.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJnQVXlSAg2UNWIIRAg1XAKCdQz9OAxS3wA516u3tkZNbUEMUqACfUz8j
+2cKPvsz+MCt3WTl+vIgXyR8=
+=nMZt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

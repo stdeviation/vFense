@@ -1,0 +1,485 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0332&#45;01] Critical: samba security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 23 Feb 2012 16:24:46 &#45;0500 -->
+<!--X-Message-Id: 201202232124.q1NLOeF5022075@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0332-01] Critical: samba security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0332-01] Critical: samba security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0332-01] Critical: samba security update</li>
+<li><em>Date</em>: Thu, 23 Feb 2012 21:24:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: samba security update
+Advisory ID:       RHSA-2012:0332-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0332.html">https://rhn.redhat.com/errata/RHSA-2012-0332.html</a>
+Issue date:        2012-02-23
+CVE Names:         CVE-2012-0870 
+=====================================================================
+
+1. Summary:
+
+Updated samba packages that fix one security issue are now available for
+Red Hat Enterprise Linux 4 and 5, and Red Hat Enterprise Linux 5.3 Long
+Life, and 5.6 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux EUS (v. 5.6 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Long Life (v. 5.3 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Samba is a suite of programs used by machines to share files, printers, and
+other information.
+
+An input validation flaw was found in the way Samba handled Any Batched
+(AndX) requests. A remote, unauthenticated attacker could send a
+specially-crafted SMB packet to the Samba server, possibly resulting in
+arbitrary code execution with the privileges of the Samba server (root).
+(CVE-2012-0870)
+
+Red Hat would like to thank the Samba team for reporting this issue.
+Upstream acknowledges Andy Davis of NGS Secure as the original reporter.
+
+Users of Samba are advised to upgrade to these updated packages, which
+contain a backported patch to resolve this issue. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+795509 - CVE-2012-0870 samba: Any Batched (&quot;AndX&quot;) request processing infinite recursion and heap-based buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.35.el4.i386.rpm
+samba-client-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-swat-3.0.33-0.35.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.35.el4.ia64.rpm
+samba-client-3.0.33-0.35.el4.ia64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.ia64.rpm
+samba-swat-3.0.33-0.35.el4.ia64.rpm
+
+ppc:
+samba-3.0.33-0.35.el4.ppc.rpm
+samba-client-3.0.33-0.35.el4.ppc.rpm
+samba-common-3.0.33-0.35.el4.ppc.rpm
+samba-common-3.0.33-0.35.el4.ppc64.rpm
+samba-debuginfo-3.0.33-0.35.el4.ppc.rpm
+samba-debuginfo-3.0.33-0.35.el4.ppc64.rpm
+samba-swat-3.0.33-0.35.el4.ppc.rpm
+
+s390:
+samba-3.0.33-0.35.el4.s390.rpm
+samba-client-3.0.33-0.35.el4.s390.rpm
+samba-common-3.0.33-0.35.el4.s390.rpm
+samba-debuginfo-3.0.33-0.35.el4.s390.rpm
+samba-swat-3.0.33-0.35.el4.s390.rpm
+
+s390x:
+samba-3.0.33-0.35.el4.s390x.rpm
+samba-client-3.0.33-0.35.el4.s390x.rpm
+samba-common-3.0.33-0.35.el4.s390.rpm
+samba-common-3.0.33-0.35.el4.s390x.rpm
+samba-debuginfo-3.0.33-0.35.el4.s390.rpm
+samba-debuginfo-3.0.33-0.35.el4.s390x.rpm
+samba-swat-3.0.33-0.35.el4.s390x.rpm
+
+x86_64:
+samba-3.0.33-0.35.el4.x86_64.rpm
+samba-client-3.0.33-0.35.el4.x86_64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.x86_64.rpm
+samba-swat-3.0.33-0.35.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.35.el4.i386.rpm
+samba-client-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-swat-3.0.33-0.35.el4.i386.rpm
+
+x86_64:
+samba-3.0.33-0.35.el4.x86_64.rpm
+samba-client-3.0.33-0.35.el4.x86_64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.x86_64.rpm
+samba-swat-3.0.33-0.35.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.35.el4.i386.rpm
+samba-client-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-swat-3.0.33-0.35.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.35.el4.ia64.rpm
+samba-client-3.0.33-0.35.el4.ia64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.ia64.rpm
+samba-swat-3.0.33-0.35.el4.ia64.rpm
+
+x86_64:
+samba-3.0.33-0.35.el4.x86_64.rpm
+samba-client-3.0.33-0.35.el4.x86_64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.x86_64.rpm
+samba-swat-3.0.33-0.35.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.33-0.35.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.35.el4.i386.rpm
+samba-client-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-swat-3.0.33-0.35.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.35.el4.ia64.rpm
+samba-client-3.0.33-0.35.el4.ia64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.ia64.rpm
+samba-swat-3.0.33-0.35.el4.ia64.rpm
+
+x86_64:
+samba-3.0.33-0.35.el4.x86_64.rpm
+samba-client-3.0.33-0.35.el4.x86_64.rpm
+samba-common-3.0.33-0.35.el4.i386.rpm
+samba-common-3.0.33-0.35.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.35.el4.i386.rpm
+samba-debuginfo-3.0.33-0.35.el4.x86_64.rpm
+samba-swat-3.0.33-0.35.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.38.el5_8.i386.rpm
+samba-3.0.33-3.38.el5_8.i386.rpm
+samba-client-3.0.33-3.38.el5_8.i386.rpm
+samba-common-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+samba-swat-3.0.33-3.38.el5_8.i386.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.38.el5_8.i386.rpm
+libsmbclient-3.0.33-3.38.el5_8.x86_64.rpm
+samba-3.0.33-3.38.el5_8.x86_64.rpm
+samba-client-3.0.33-3.38.el5_8.x86_64.rpm
+samba-common-3.0.33-3.38.el5_8.i386.rpm
+samba-common-3.0.33-3.38.el5_8.x86_64.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.x86_64.rpm
+samba-swat-3.0.33-3.38.el5_8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+
+x86_64:
+libsmbclient-devel-3.0.33-3.38.el5_8.i386.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.x86_64.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux Long Life (v. 5.3 server):
+
+Source:
+samba-3.0.33-3.7.el5_3.4.src.rpm
+
+i386:
+samba-3.0.33-3.7.el5_3.4.i386.rpm
+samba-client-3.0.33-3.7.el5_3.4.i386.rpm
+samba-common-3.0.33-3.7.el5_3.4.i386.rpm
+samba-debuginfo-3.0.33-3.7.el5_3.4.i386.rpm
+samba-swat-3.0.33-3.7.el5_3.4.i386.rpm
+
+ia64:
+samba-3.0.33-3.7.el5_3.4.ia64.rpm
+samba-client-3.0.33-3.7.el5_3.4.ia64.rpm
+samba-common-3.0.33-3.7.el5_3.4.ia64.rpm
+samba-debuginfo-3.0.33-3.7.el5_3.4.ia64.rpm
+samba-swat-3.0.33-3.7.el5_3.4.ia64.rpm
+
+x86_64:
+samba-3.0.33-3.7.el5_3.4.x86_64.rpm
+samba-client-3.0.33-3.7.el5_3.4.x86_64.rpm
+samba-common-3.0.33-3.7.el5_3.4.i386.rpm
+samba-common-3.0.33-3.7.el5_3.4.x86_64.rpm
+samba-debuginfo-3.0.33-3.7.el5_3.4.i386.rpm
+samba-debuginfo-3.0.33-3.7.el5_3.4.x86_64.rpm
+samba-swat-3.0.33-3.7.el5_3.4.x86_64.rpm
+
+Red Hat Enterprise Linux EUS (v. 5.6 server):
+
+Source:
+samba-3.0.33-3.29.el5_6.4.src.rpm
+
+i386:
+libsmbclient-3.0.33-3.29.el5_6.4.i386.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.i386.rpm
+samba-3.0.33-3.29.el5_6.4.i386.rpm
+samba-client-3.0.33-3.29.el5_6.4.i386.rpm
+samba-common-3.0.33-3.29.el5_6.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.i386.rpm
+samba-swat-3.0.33-3.29.el5_6.4.i386.rpm
+
+ia64:
+libsmbclient-3.0.33-3.29.el5_6.4.ia64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.ia64.rpm
+samba-3.0.33-3.29.el5_6.4.ia64.rpm
+samba-client-3.0.33-3.29.el5_6.4.ia64.rpm
+samba-common-3.0.33-3.29.el5_6.4.ia64.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.ia64.rpm
+samba-swat-3.0.33-3.29.el5_6.4.ia64.rpm
+
+ppc:
+libsmbclient-3.0.33-3.29.el5_6.4.ppc.rpm
+libsmbclient-3.0.33-3.29.el5_6.4.ppc64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.ppc.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.ppc64.rpm
+samba-3.0.33-3.29.el5_6.4.ppc.rpm
+samba-client-3.0.33-3.29.el5_6.4.ppc.rpm
+samba-common-3.0.33-3.29.el5_6.4.ppc.rpm
+samba-common-3.0.33-3.29.el5_6.4.ppc64.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.ppc.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.ppc64.rpm
+samba-swat-3.0.33-3.29.el5_6.4.ppc.rpm
+
+s390x:
+libsmbclient-3.0.33-3.29.el5_6.4.s390.rpm
+libsmbclient-3.0.33-3.29.el5_6.4.s390x.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.s390.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.s390x.rpm
+samba-3.0.33-3.29.el5_6.4.s390x.rpm
+samba-client-3.0.33-3.29.el5_6.4.s390x.rpm
+samba-common-3.0.33-3.29.el5_6.4.s390.rpm
+samba-common-3.0.33-3.29.el5_6.4.s390x.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.s390.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.s390x.rpm
+samba-swat-3.0.33-3.29.el5_6.4.s390x.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.29.el5_6.4.i386.rpm
+libsmbclient-3.0.33-3.29.el5_6.4.x86_64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.i386.rpm
+libsmbclient-devel-3.0.33-3.29.el5_6.4.x86_64.rpm
+samba-3.0.33-3.29.el5_6.4.x86_64.rpm
+samba-client-3.0.33-3.29.el5_6.4.x86_64.rpm
+samba-common-3.0.33-3.29.el5_6.4.i386.rpm
+samba-common-3.0.33-3.29.el5_6.4.x86_64.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_6.4.x86_64.rpm
+samba-swat-3.0.33-3.29.el5_6.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.38.el5_8.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.38.el5_8.i386.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.i386.rpm
+samba-3.0.33-3.38.el5_8.i386.rpm
+samba-client-3.0.33-3.38.el5_8.i386.rpm
+samba-common-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+samba-swat-3.0.33-3.38.el5_8.i386.rpm
+
+ia64:
+libsmbclient-3.0.33-3.38.el5_8.ia64.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.ia64.rpm
+samba-3.0.33-3.38.el5_8.ia64.rpm
+samba-client-3.0.33-3.38.el5_8.ia64.rpm
+samba-common-3.0.33-3.38.el5_8.ia64.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.ia64.rpm
+samba-swat-3.0.33-3.38.el5_8.ia64.rpm
+
+ppc:
+libsmbclient-3.0.33-3.38.el5_8.ppc.rpm
+libsmbclient-3.0.33-3.38.el5_8.ppc64.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.ppc.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.ppc64.rpm
+samba-3.0.33-3.38.el5_8.ppc.rpm
+samba-client-3.0.33-3.38.el5_8.ppc.rpm
+samba-common-3.0.33-3.38.el5_8.ppc.rpm
+samba-common-3.0.33-3.38.el5_8.ppc64.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.ppc.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.ppc64.rpm
+samba-swat-3.0.33-3.38.el5_8.ppc.rpm
+
+s390x:
+libsmbclient-3.0.33-3.38.el5_8.s390.rpm
+libsmbclient-3.0.33-3.38.el5_8.s390x.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.s390.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.s390x.rpm
+samba-3.0.33-3.38.el5_8.s390x.rpm
+samba-client-3.0.33-3.38.el5_8.s390x.rpm
+samba-common-3.0.33-3.38.el5_8.s390.rpm
+samba-common-3.0.33-3.38.el5_8.s390x.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.s390.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.s390x.rpm
+samba-swat-3.0.33-3.38.el5_8.s390x.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.38.el5_8.i386.rpm
+libsmbclient-3.0.33-3.38.el5_8.x86_64.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.i386.rpm
+libsmbclient-devel-3.0.33-3.38.el5_8.x86_64.rpm
+samba-3.0.33-3.38.el5_8.x86_64.rpm
+samba-client-3.0.33-3.38.el5_8.x86_64.rpm
+samba-common-3.0.33-3.38.el5_8.i386.rpm
+samba-common-3.0.33-3.38.el5_8.x86_64.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.i386.rpm
+samba-debuginfo-3.0.33-3.38.el5_8.x86_64.rpm
+samba-swat-3.0.33-3.38.el5_8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0870.html">https://www.redhat.com/security/data/cve/CVE-2012-0870.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPRq5BXlSAg2UNWIIRAi8UAKCeG0OK/toZruQMW71pNgX/9EFWJACfWhgR
+2fYxfIbc/dSB94Bi22p/vW4=
+=Pybf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

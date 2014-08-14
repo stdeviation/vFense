@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0434&#45;01] Moderate: security update for Red Hat Network	Satellite -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 11 Apr 2011 16:29:52 &#45;0400 -->
+<!--X-Message-Id: 201104112029.p3BKTlZH008723@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0434-01] Moderate: security update for Red Hat Network	Satell</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0434-01] Moderate: security update for Red Hat Network	Satellite</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2011:0434-01] Moderate: security update for Red Hat Network	Satellite</li>
+<li><em>Date</em>: Mon, 11 Apr 2011 14:29:46 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: security update for Red Hat Network Satellite
+Advisory ID:       RHSA-2011:0434-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0434.html">https://rhn.redhat.com/errata/RHSA-2011-0434.html</a>
+Issue date:        2011-04-11
+CVE Names:         CVE-2009-0788 CVE-2010-1171 
+=====================================================================
+
+1. Summary:
+
+Updated packages that fix two security issues are now available for Red Hat
+Network Satellite 5.3 and 5.4.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server 5.3 (RHEL v.4) - noarch
+Red Hat Network Satellite Server 5.3 (RHEL v.5) - noarch
+Red Hat Network Satellite Server 5.4 (RHEL v.5) - noarch
+
+3. Description:
+
+Red Hat Network Satellite (RHN Satellite) is a system management tool for
+Linux-based infrastructures. It allows for the provisioning, remote
+management and monitoring of multiple Linux deployments with a single,
+centralized tool.
+
+RHN Satellite incorrectly exposed an obsolete XML-RPC API for configuring
+package group (comps.xml) files for channels. An authenticated user could
+use this flaw to gain access to arbitrary files accessible to the RHN
+Satellite server process, and prevent clients from performing certain yum
+operations. (CVE-2010-1171)
+
+A flaw was found in the way RHN Satellite rewrote certain URLs. An
+unauthenticated user could use a specially-crafted HTTP request to obtain
+sensitive information about the host system RHN Satellite was running on.
+They could also use RHN Satellite as a distributed denial of service tool,
+forcing it to connect to an arbitrary service at an arbitrary IP address
+via a specially-crafted HTTP request. (CVE-2009-0788)
+
+Note: Refer to the Solution section below for manual steps that may be
+required to fully address the CVE-2009-0788 issue.
+
+Users of RHN Satellite 5.3 and 5.4 are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues. The RHN
+Satellite server must be restarted (&quot;rhn-satellite restart&quot;) for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+The patch for CVE-2009-0788 includes changes to
+&quot;/etc/httpd/conf.d/zz-spacewalk-www.conf&quot;. If you have manually edited
+this file, this erratum will not overwrite or replace your existing
+version, but will create a new file containing the fixes,
+&quot;/etc/httpd/conf.d/zz-spacewalk-www.conf.rpmnew&quot;. If this .rpmnew file
+exists after installing the update, the following steps must be
+performed to fully fix CVE-2009-0788:
+
+1) Create a backup copy of your
+&quot;/etc/httpd/conf.d/zz-spacewalk-www.conf&quot; file.
+
+2) Carefully review your manual zz-spacewalk-www.conf changes, and
+merge those changes into the zz-spacewalk-www.conf.rpmnew file.
+
+3) Once you have merged all your manual changes into
+zz-spacewalk-www.conf.rpmnew, save this new version as
+&quot;/etc/httpd/conf.d/zz-spacewalk-www.conf&quot;, and then restart the RHN
+Satellite server (&quot;rhn-satellite restart&quot;).
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+491365 - CVE-2009-0788 rhn_satellite: Incorrect mod_rewrite rules (information disclosure, abuse as distributed DoS tool)
+584118 - CVE-2010-1171 rhn_satellite: Improper channel comps information management
+
+6. Package List:
+
+Red Hat Network Satellite Server 5.3 (RHEL v.4):
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHNSAT/SRPMS/spacewalk-backend-0.5.28-59.2.el4sat.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHNSAT/SRPMS/spacewalk-backend-0.5.28-59.2.el4sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHNSAT/SRPMS/spacewalk-config-0.5.9-16.el4sat.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHNSAT/SRPMS/spacewalk-config-0.5.9-16.el4sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-app-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-applet-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-config-files-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-config-files-common-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-config-files-tool-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-iss-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-iss-export-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-package-push-server-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-server-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-sql-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-tools-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-upload-server-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-xml-export-libs-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-xmlrpc-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-backend-xp-0.5.28-59.2.el4sat.noarch.rpm
+spacewalk-config-0.5.9-16.el4sat.noarch.rpm
+
+Red Hat Network Satellite Server 5.3 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-0.5.28-59.2.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-0.5.28-59.2.el5sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-config-0.5.9-16.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-config-0.5.9-16.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-app-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-applet-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-common-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-config-files-tool-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-iss-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-iss-export-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-package-push-server-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-server-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-sql-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-tools-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-upload-server-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-xml-export-libs-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-xmlrpc-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-backend-xp-0.5.28-59.2.el5sat.noarch.rpm
+spacewalk-config-0.5.9-16.el5sat.noarch.rpm
+
+Red Hat Network Satellite Server 5.4 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-1.2.13-37.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-backend-1.2.13-37.el5sat.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-config-1.2.2-2.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-config-1.2.2-2.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-app-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-applet-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-config-files-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-config-files-common-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-config-files-tool-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-iss-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-iss-export-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-libs-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-package-push-server-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-server-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-sql-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-sql-oracle-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-tools-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-upload-server-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-xml-export-libs-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-xmlrpc-1.2.13-37.el5sat.noarch.rpm
+spacewalk-backend-xp-1.2.13-37.el5sat.noarch.rpm
+spacewalk-config-1.2.2-2.el5sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0788.html">https://www.redhat.com/security/data/cve/CVE-2009-0788.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1171.html">https://www.redhat.com/security/data/cve/CVE-2010-1171.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNo2SeXlSAg2UNWIIRAg1mAKCx/KTgoOopUDYWmhDFsXPsY1wATwCgsJEM
+ZLuGVgjozltvW6C40njOD3k=
+=hYXF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0833&#45;01] Important: JBoss Enterprise Application Platform	6.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 May 2013 15:43:47 &#45;0400 -->
+<!--X-Message-Id: 201305201943.r4KJhkfJ029785@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0833-01] Important: JBoss Enterprise Application Platform	6.1</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0833-01] Important: JBoss Enterprise Application Platform	6.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0833-01] Important: JBoss Enterprise Application Platform	6.1.0 update</li>
+<li><em>Date</em>: Mon, 20 May 2013 19:43:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Application Platform 6.1.0 update
+Advisory ID:       RHSA-2013:0833-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0833.html">https://rhn.redhat.com/errata/RHSA-2013-0833.html</a>
+Issue date:        2013-05-20
+CVE Names:         CVE-2012-4529 CVE-2012-4572 CVE-2012-5575 
+                   CVE-2013-0166 CVE-2013-0169 CVE-2013-0218 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Application Platform 6.1.0, which fixes multiple security
+issues, various bugs, and adds enhancements, is now available from the Red
+Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise Application Platform 6 is a platform for Java applications
+based on JBoss Application Server 7.
+
+This release serves as a replacement for JBoss Enterprise Application
+Platform 6.0.1, and includes bug fixes and enhancements. Refer to the 6.1.0
+Release Notes for information on the most significant of these changes,
+available shortly from <a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+Security fixes:
+
+XML encryption backwards compatibility attacks were found against various
+frameworks, including Apache CXF. An attacker could force a server to use
+insecure, legacy cryptosystems, even when secure cryptosystems were enabled
+on endpoints. By forcing the use of legacy cryptosystems, flaws such as
+CVE-2011-1096 and CVE-2011-2487 would be exposed, allowing plain text to be
+recovered from cryptograms and symmetric keys. (CVE-2012-5575)
+
+Note: Automatic checks to prevent CVE-2012-5575 are only run when
+WS-SecurityPolicy is used to enforce security requirements. It is best
+practice to use WS-SecurityPolicy to enforce security requirements.
+
+A NULL pointer dereference flaw was found in the OCSP response verification
+in OpenSSL. A malicious OCSP server could use this flaw to crash
+applications performing OCSP verification by sending a specially-crafted
+response. (CVE-2013-0166)
+
+It was discovered that OpenSSL leaked timing information when decrypting
+TLS/SSL and DTLS protocol encrypted records when CBC-mode cipher suites
+were used. A remote attacker could possibly use this flaw to retrieve plain
+text from the encrypted packets by using a TLS/SSL or DTLS server as a
+padding oracle. (CVE-2013-0169)
+
+When applications running on JBoss Web used the COOKIE session tracking
+method, the org.apache.catalina.connector.Response.encodeURL() method
+returned the URL with the jsessionid appended as a query string parameter
+when processing the first request of a session. An attacker could possibly
+exploit this flaw by performing a man-in-the-middle attack to obtain a
+user's jsessionid and hijack their session, or by extracting the jsessionid
+from log files. Note that no session tracking method is used by default,
+one must be configured. (CVE-2012-4529)
+
+If multiple applications used the same custom authorization module class
+name, and provided their own implementations of it, the first application
+to be loaded will have its implementation used for all other applications
+using the same custom authorization module class name. A local attacker
+could use this flaw to deploy a malicious application that provides
+implementations of custom authorization modules that permit or deny user
+access according to rules supplied by the attacker. (CVE-2012-4572)
+
+The GUI installer created a world-readable auto-install XML file containing
+both the JBoss Enterprise Application Platform administrator password and
+the sucker password for the selected messaging system in plain text. A
+local user able to access the directory where the GUI installer was run
+could use this flaw to gain administrative access to the JBoss Enterprise
+Application Platform instance. (CVE-2013-0218)
+
+Red Hat would like to thank Tibor Jager, Kenneth G. Paterson and Juraj
+Somorovsky of Ruhr-University Bochum for reporting CVE-2012-5575.
+CVE-2012-4572 was discovered by Josef Cacek of the Red Hat JBoss EAP
+Quality Engineering team, and CVE-2013-0218 was discovered by Arun
+Neelicattu of the Red Hat Security Response Team.
+
+Warning: Before applying this update, back up your existing JBoss
+Enterprise Application Platform installation and deployed applications.
+
+Users of JBoss Enterprise Application Platform 6.0.1 as provided from the
+Red Hat Customer Portal are advised to upgrade to JBoss Enterprise
+Application Platform 6.1.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Enterprise Application Platform installation and deployed
+applications.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+868202 - CVE-2012-4529 JBoss Web: jsessionid exposed via encoded url when using cookie based session tracking
+872059 - CVE-2012-4572 JBoss: custom authorization module implementations shared between applications
+880443 - CVE-2012-5575 jbossws-native, jbossws-cxf, apache-cxf: XML encryption backwards compatibility attacks
+903073 - CVE-2013-0218 JBoss EAP/EWP Installer: Generated auto-install xml is world readable
+907589 - CVE-2013-0169 SSL/TLS: CBC padding timing attack (lucky-13)
+908052 - CVE-2013-0166 openssl: DoS due to improper handling of OCSP response verification
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4529.html">https://www.redhat.com/security/data/cve/CVE-2012-4529.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4572.html">https://www.redhat.com/security/data/cve/CVE-2012-4572.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5575.html">https://www.redhat.com/security/data/cve/CVE-2012-5575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0166.html">https://www.redhat.com/security/data/cve/CVE-2013-0166.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0169.html">https://www.redhat.com/security/data/cve/CVE-2013-0169.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0218.html">https://www.redhat.com/security/data/cve/CVE-2013-0218.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="http://cxf.apache.org/cve-2012-5575.html">http://cxf.apache.org/cve-2012-5575.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRmnziXlSAg2UNWIIRAnVxAKC378cUNkeN/oONFQfrKGxLhyzlxwCgtrTr
+jJBYCBUuow0d2BuBQBlIA6Q=
+=7T8N
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
