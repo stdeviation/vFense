@@ -11,7 +11,7 @@ from vFense.plugins.vuln._db_model import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
-class FetchVulns(object):
+class FetchVulnBase(object):
     def __init__(
         self, collection, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
@@ -94,7 +94,6 @@ class FetchVulns(object):
             logger.exception(e)
 
         return(count, data)
-
 
 
     def _set_base_query(self):
