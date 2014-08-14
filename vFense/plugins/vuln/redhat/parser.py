@@ -23,48 +23,50 @@ URL = REDHAT_ARCHIVE
 
 def get_threads():
 
-    """
-    Parse the Redhat Officlial Annouces (URL: "https://www.redhat.com/archives/rhsa-announce/") and
-    return the list of threads
+    """Parse the Redhat Official Annouces (URL: "https://www.redhat.com/archives/rhsa-announce/")
+        and return the list of threads.
 
-    BASIC USAGE:
-        >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
+    Basic Usage:
+        >>> from vFense.plugins.vuln.redhat.parser import get_threads
         >>> threads = get_threads()
 
-    RETURNS:
-        >>> threads[0]
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
-        >>>
+    Returns:
+        List of urls
+        >>> [
+            'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        ]
 
     """
 
     threads=[]
     req = requests.get(URL)
     soup= BeautifulSoup(req.text)
-    for link in soup.find_all('a'):
-        href=link.get('href')
-        if "thread" in href:
-            threads.append(os.path.join(URL, href))
-    rh_threads = list(set(threads))
-    return(rh_threads)
+    threads = (
+        map(
+            lambda x: os.path.join(URL, x.get("href")),
+            soup.findAll(
+                "a", text=re.compile("Thread")
+            )
+        )
+    )
+
+    return(threads)
 
 def get_msg_links_by_thread(thread):
-    """
-    Parse the Redhat update thread link and return the list of data link or message link.
+    """Parse the Redhat update thread link and return the list of data link or message link.
     Args:
-        thread (url) : This should be valid Redhat thread link.
-        e.g:
-        >>> thread
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        thread (str) : This should be valid Redhat thread url.
 
-    BASIC USAGE:
-    >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-    >>> dlinks=get_dlinks(thread)
+    Basic Usage:
+        >>> from vFense.plugins.vuln.redhat.parser import get_msg_links_by_thread
+        >>> thread = 'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        >>> msg_links = get_msg_links_by_thread(thread)
 
-    RETURNS:
-        >>> dlinks[0]
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
-        >>>
+    Returns:
+        List of urls
+        >>> [
+            'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
+        ]
     """
 
     dlinks = []
@@ -72,13 +74,14 @@ def get_msg_links_by_thread(thread):
     if req.ok:
         date = thread.split('/')[-2]
         tsoup=BeautifulSoup(req.text)
-        for mlink in tsoup.find_all('a'):
-             if "msg" in mlink.get('href'):
-                 hlink = (os.path.join(URL, date, mlink.get('href')))
-                 dlinks.append(hlink)
+        dlinks = (
+            map(
+                lambda x: os.path.join(URL, date, x.get('href')),
+                tsoup.find_all("a", attrs={"name": re.compile("\d+")})
+            )
+        )
 
-    rh_data_links = list(set(dlinks))
-    return(rh_data_links)
+    return(dlinks)
 
 def get_html_content(hlink, force=False):
     """
@@ -123,6 +126,41 @@ def get_html_content(hlink, force=False):
             msg_file.close()
 
     return(content)
+
+def get_html_latest_content(hlink):
+    """
+    Parse the content of Individual RedHat Updates or Message link and return the html contents
+    Args:
+        hlink (url) : Redhat Update or Message link
+        e.g:
+        >>> hlink
+        'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
+
+    Basic Usage :
+        >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
+        >>> content = parse_hdata(hlink)
+
+    Returns:
+        html webpage content
+
+    """
+    content = None
+    msg_location = (
+        os.path.join(
+            RedhatDataDir.HTML_DIR, '/'.join(hlink.split('/')[-2:])
+        )
+    )
+
+    if not os.path.exists(msg_location):
+        request = requests.get(hlink)
+        if request.ok:
+            content = request.content
+            msg_file = open(msg_location, 'wb')
+            msg_file.write(content)
+            msg_file.close()
+
+    return(content)
+
 
 def make_html_folder(dir_name):
     """
@@ -246,12 +284,6 @@ def get_rh_data(content):
     RETURNS:
         A dictionary data contents redhat update info.
 
-        >>> rh_data['bulletin_id']
-        'RHSA-2010:0333-01'
-        >>> rh_data.keys()
-        ['product', 'bulletin_details', 'bullentin_summary', 'bulletin_id', 'solutions', 'references', 'support_url', 'cve_ids', 'apps', 'date_posted']
-        >>>
-
     """
     redhat = Redhat()
     description_search  = (
@@ -285,7 +317,7 @@ def get_rh_data(content):
 
     return(redhat)
 
-def insert_data_to_db(thread):
+def insert_data_to_db(thread, latest=False):
     """
     Insert the redhat vulnerability updates parsed from data files to the db. It first collects
     data link parsed from threads and then parse each data link and update the list of updates to
@@ -303,22 +335,34 @@ def insert_data_to_db(thread):
     """
     vulnerabilities = []
     msg_links = get_msg_links_by_thread(thread)
+    update_completed = False
+    date = None
     if msg_links:
         date = thread.split('/')[-2]
         make_html_folder(date)
 
         for link in msg_links:
-            content = get_html_content(link)
-            if content:
-                redhat = get_rh_data(content)
-                if redhat.vulnerability_id:
-                    vulnerabilities.append(redhat.to_dict_db())
+            if latest:
+                content = get_html_latest_content(link)
+                if content:
+                    redhat = get_rh_data(content)
+                    if redhat.vulnerability_id:
+                        vulnerabilities.append(redhat.to_dict_db())
+                else:
+                    update_completed = True
+                    break
+            else:
+                content = get_html_content(link)
+                if content:
+                    redhat = get_rh_data(content)
+                    if redhat.vulnerability_id:
+                        vulnerabilities.append(redhat.to_dict_db())
 
-        insert=insert_bulletin_data(bulletin_data=vulnerabilities)
-        return(insert)
+        _, count, _, _  = insert_bulletin_data(bulletin_data=vulnerabilities)
+        return(count, date, update_completed)
 
 
-def begin_redhat_archive_processing():
+def begin_redhat_archive_processing(latest=False):
     """
     This will call the function to insert the data into db for all the threads
     and will insert the data one by one.
@@ -331,4 +375,16 @@ def begin_redhat_archive_processing():
     threads=get_threads()
     if threads:
         for thread in threads:
-            insert_data_to_db(thread)
+            count, date, update_completed = insert_data_to_db(thread, latest)
+            if latest and update_completed:
+                msg = 'There aren\'t any vulnerabilities available'
+                logger.info(msg)
+                print msg
+                break
+            else:
+                msg = (
+                    'RedHat vulnerabilities inserted: {0} for Year/Month: {1}'
+                    .format(count, date)
+                )
+                logger.info(msg)
+                print msg

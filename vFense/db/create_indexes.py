@@ -74,7 +74,7 @@ def initialize_indexes_and_create_tables():
     cve_list = r.table(CVECollections.CVE).index_list().run(conn)
     windows_bulletin_list = r.table(WindowsVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
     ubuntu_bulletin_list = r.table(UbuntuVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
-    redhat_bulletin_list = r.table(RedhatVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
+    redhat_bulletin_list = r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
     files_list = r.table(FileCollections.Files).index_list().run(conn)
     file_server_list = r.table(FileCollections.FileServers).index_list().run(conn)
     tags_list = r.table(TagCollections.Tags).index_list().run(conn)
@@ -462,13 +462,13 @@ def initialize_indexes_and_create_tables():
 
 #################################### Redhat Bulletin Indexes ###################################################
     if not RedhatVulnerabilityIndexes.NameAndVersion in redhat_bulletin_list:
-        r.table(RedhatVulnerabilityCollections.Vulnerabilities).index_create(
+        r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_create(
             RedhatVulnerabilityIndexes.NameAndVersion, lambda x:
                 x[RedhatVulnerabilityKeys.Apps].map(lambda y:
                     [y[RedhatVulnSubKeys.NAME], y[RedhatVulnSubKeys.VERSION]]), multi=True).run(conn)
 
     if not RedhatVulnerabilityIndexes.AppId in redhat_bulletin_list:
-        r.table(RedhatVulnerabilityCollections.Vulnerabilities).index_create(
+        r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_create(
             RedhatVulnerabilityIndexes.AppId, lambda x:
                 x[RedhatVulnerabilityKeys.Apps].map(lambda y:
                     y[RedhatVulnSubKeys.APP_ID]), multi=True).run(conn)
