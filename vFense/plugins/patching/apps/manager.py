@@ -33,8 +33,6 @@ from vFense.plugins.patching.downloader.downloader import (
     download_all_files_in_app
 )
 
-import vFense.plugins.vuln.windows.ms as ms
-import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
 from vFense.plugins.vuln.search.vuln_search import FetchVulns
 
@@ -310,17 +308,17 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
     manager = AppsManager()
     apps_data = []
     now = time()
-    agent = AgentManager(agent_id)
+    agent = Agent(**AgentManager(agent_id).properties)
     if isinstance(apps, list):
         for app in apps:
             files_data = []
-            files = app.pop(DbCommonAppKeys.FileData)
+            files = app.pop(DbCommonAppKeys.FileData, None)
             app_data = Apps(**app)
             app_data.views = agent.views
             app_data.os_code = agent.os_code
             app_data.os_string = agent.os_string
             app_data.agent_id = agent_id
-            app.fill_in_defaults()
+            app_data.fill_in_defaults()
             if isinstance(files, list):
                 for file_data in files:
                     files_data.append(Files(**file_data))

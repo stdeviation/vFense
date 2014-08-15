@@ -23,4 +23,5 @@ class AgentDefaults(object):
     AGENT_STATUS = 'up'
     REBOOTED = True
     VIEWS = ['global']
+    TAGS = []
     DISPLAY_NAME = None

@@ -121,7 +121,7 @@ class Apps(object):
             self.reboot_required= AppDefaults.reboot_required()
 
         if not self.download_status:
-            self.download_status = AppDefaults.download_status
+            self.download_status = AppDefaults.download_status()
 
         if not self.vfense_severity:
             self.vfense_severity = get_proper_severity(self.vendor_severity)
