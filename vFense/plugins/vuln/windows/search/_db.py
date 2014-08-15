@@ -3,6 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 
+from vFense.plugins.vuln.search._db_vuln_base import FetchVulnBase
 from vFense.plugins.vuln.windows._db_model import (
     WindowsVulnerabilityCollections, WindowsVulnerabilityIndexes
 )
@@ -10,10 +11,10 @@ from vFense.plugins.vuln.windows._db_model import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
-class FetchWindowVulns(object):
+class FetchWindowsVulns(FetchVulnBase):
     def __init__(self, **kwargs):
         self.collection = WindowsVulnerabilityCollections.Vulnerabilities
-        super(FetchWindowVulns, self).__init__(self.collection, **kwargs)
+        super(FetchWindowsVulns, self).__init__(self.collection, **kwargs)
 
     @db_create_close
     def by_component_kb(self, kb, conn=None):

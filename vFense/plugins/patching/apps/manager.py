@@ -36,6 +36,7 @@ from vFense.plugins.patching.downloader.downloader import (
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
+from vFense.plugins.vuln.search.vuln_search import FetchVulns
 
 
 import redis
@@ -123,23 +124,12 @@ class AppsManager(object):
             and version for Ubuntu.
         """
 
-
-        if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
-            vuln_info = ms.get_vuln_ids(app.kb)
-
-        elif (re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
-              and app.name and app.version):
-            vuln_info = (
-                Apps(
-                    **usn.get_vuln_ids(
-                        app.name, app.version, app.os_string
-                    )
-                )
-            )
+        search = FetchVulns(app.os_string)
+        vuln_info = search.by_app_info(app.name, app.version, app.kb)
 
         if vuln_info:
             app.cve_ids = vuln_info.cve_ids
-            app.vulnerability_id = vuln_info.bulletin_id
+            app.vulnerability_id = vuln_info.vulnerability_id
             for cve_id in app.cve_ids:
                 app.vulnerability_categories += (
                     cve.get_vulnerability_categories(cve_id)
