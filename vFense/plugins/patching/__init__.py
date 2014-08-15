@@ -157,6 +157,9 @@ class Apps(object):
         if not self.views:
             self.cve_ids = AppDefaults.views()
 
+        if not self.install_date:
+            self.install_date = 0
+
 
     def get_invalid_fields(self):
         """Check the app for any invalid fields.

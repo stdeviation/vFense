@@ -245,7 +245,10 @@ class AppsManager(object):
                     now = time()
 
                 app.last_modified_time = now
+                app.agent_id = agent_id
                 if isinstance(app, Apps):
+                    print app.to_dict_db_apps_per_agent()
+                    app.fill_in_app_per_agent_defaults()
                     apps_to_insert.append(app.to_dict_db_apps_per_agent())
 
         if apps_to_insert:
@@ -323,7 +326,7 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
                 for file_data in files:
                     files_data.append(Files(**file_data))
 
-            apps_data.append(Apps(app_data))
+            apps_data.append(app_data)
             manager.store_app_in_db(app_data, files_data)
 
         manager.add_apps_to_agent(agent_id, apps_data, now, delete_afterwards)
