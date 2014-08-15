@@ -50,7 +50,7 @@ logger = logging.getLogger('rvapi')
 
 class AppsManager(object):
     def __init__(self):
-        self.apps_collection = AppCollections.CustomApps
+        self.apps_collection = AppCollections.UniqueApplications
         self.apps_per_agent_collection = AppCollections.AppsPerAgent
 
     def url_path(self, app_id, app_name, view):
@@ -247,13 +247,14 @@ class AppsManager(object):
                 app.last_modified_time = now
                 app.agent_id = agent_id
                 if isinstance(app, Apps):
-                    print app.to_dict_db_apps_per_agent()
                     app.fill_in_app_per_agent_defaults()
                     apps_to_insert.append(app.to_dict_db_apps_per_agent())
 
         if apps_to_insert:
             status_code, count, _, _ = (
-                insert_data_in_table(apps_to_insert, self.apps_collection)
+                insert_data_in_table(
+                    apps_to_insert, self.apps_per_agent_collection
+                )
             )
 
             if isinstance(count, list):
@@ -269,7 +270,7 @@ class AppsManager(object):
 
             status_code, count, _, _ = (
                 delete_apps_per_agent_older_than(
-                    agent_id, now, self.apps_collection
+                    agent_id, now, self.apps_per_agent_collection
                 )
             )
 
