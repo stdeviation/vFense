@@ -52,14 +52,13 @@ class NewAgentV1(BaseHandler):
             )
             status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
             if status_code == AgentResultCodes.NewAgentSucceeded:
-                agent_info = results[ApiResultKeys.DATA].pop(0)
+                results[ApiResultKeys.DATA].pop(0)
                 agent_id = results[ApiResultKeys.GENERATED_IDS]
                 try:
                     if 'rv' in plugins:
                         RvHandOff().new_agent_operation(
                             agent_id,
                             plugins['rv']['data'],
-                            agent_info
                         )
 
                 except Exception as e:
@@ -129,13 +128,13 @@ class NewAgentV2(AgentBaseHandler):
             )
             status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
             if status_code == AgentResultCodes.NewAgentSucceeded:
-                agent_info = results[ApiResultKeys.DATA].pop(0)
+                results[ApiResultKeys.DATA].pop(0)
                 agent_id = results[ApiResultKeys.GENERATED_IDS]
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
                         ).new_agent_operation(
-                            agent_id, plugins['rv']['data'], agent_info
+                            agent_id, plugins['rv']['data']
                         )
 
                 except Exception as e:

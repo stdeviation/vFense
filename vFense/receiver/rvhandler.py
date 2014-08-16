@@ -4,15 +4,16 @@ import redis
 from rq import Connection, Queue
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import fetch_agent
-from vFense.plugins.patching._db_model import AppCollections
-from vFense.plugins.patching.apps.incoming_apps import \
+from vFense.plugins.patching.apps.manager import (
    incoming_applications_from_agent
-from vFense.plugins.patching.apps.custom_apps.custom_apps import \
+)
+from vFense.plugins.patching.apps.custom_apps.custom_apps import (
     add_custom_app_to_agents
-from vFense.plugins.patching.apps.supported_apps.syncer import \
+)
+from vFense.plugins.patching.apps.supported_apps.syncer import (
     get_all_supported_apps_for_agent
+)
 
 
 RQ_HOST = 'localhost'
@@ -54,36 +55,25 @@ class RvHandOff():
             timeout=3600
         )
 
-    def _add_applications_from_agent(self, agent_data,
-                                     apps, delete_afterwards, app_collection,
-                                     apps_per_agent_collection):
+    def _add_applications_from_agent(self, agent_id, apps):
 
         rv_q = Queue('incoming_updates', connection=RQ_POOL)
         rv_q.enqueue_call(
             func=incoming_applications_from_agent,
             args=(
-                agent_data[AgentKeys.AgentId],
-                agent_data[AgentKeys.OsCode],
-                agent_data[AgentKeys.OsString],
+                agent_id,
                 apps,
-                delete_afterwards,
-                app_collection,
-                apps_per_agent_collection
+                self.delete_afterwards,
             ),
             timeout=3600
         )
 
-    def new_agent_operation(self, agent_id, apps_data, agent_data=None):
-
-        if not agent_data:
-            agent_data = self._get_agent_data(agent_id)
+    def new_agent_operation(self, agent_id, apps_data):
 
         self._add_applications_from_agent(
-            agent_data,
+            agent_id,
             apps_data,
             self.delete_afterwards,
-            AppCollections.UniqueApplications,
-            AppCollections.AppsPerAgent
         )
         self._add_custom_apps(
             agent_id
@@ -98,28 +88,19 @@ class RvHandOff():
 
         self.refresh_apps_operation(agent_id, apps_data, agent_data)
 
-    def refresh_apps_operation(self, agent_id, apps_data, agent_data=None):
-
-        if not agent_data:
-            agent_data = self._get_agent_data(agent_id)
+    def refresh_apps_operation(self, agent_id, apps_data):
 
         self._add_applications_from_agent(
-            agent_data,
+            agent_id,
             apps_data,
             self.delete_afterwards,
-            AppCollections.UniqueApplications,
-            AppCollections.AppsPerAgent
         )
         self._add_supported_apps(agent_id)
 
     def available_agent_update_operation(self, agent_id, app_data):
-        agent_data = self._get_agent_data(agent_id)
-
         apps_data = [app_data]
         self._add_applications_from_agent(
-            agent_data,
+            agent_id,
             apps_data,
             self.delete_afterwards,
-            AppCollections.vFenseApps,
-            AppCollections.vFenseAppsPerAgent
         )

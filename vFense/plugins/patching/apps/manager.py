@@ -1,5 +1,4 @@
 import os
-import re
 import logging
 from time import time
 
@@ -308,7 +307,6 @@ class AppsManager(object):
 
 
 def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
-
     manager = AppsManager()
     apps_data = []
     now = time()
