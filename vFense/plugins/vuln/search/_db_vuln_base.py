@@ -138,7 +138,7 @@ ch\ncontain backported patches to correct these issues. The system must be\nrebo
         Args:
             name (str): The name of the application you are searching for.
             version (str): The version of the application you are
-                .searching for.
+                searching for.
 
         Basic Usage:
             >>> from vFense.plugins.vuln.search._db_vuln_base import FetchVulnBase

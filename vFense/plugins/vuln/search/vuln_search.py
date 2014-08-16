@@ -41,6 +41,10 @@ class FetchVulns(object):
         self.offset
         self.sort
         self.sort_key
+        self.search
+        self.redhat
+        self.ubuntu
+        self.windows
 
     """
     def __init__(self, os_string, **kwargs):
@@ -62,6 +66,17 @@ class FetchVulns(object):
 
 
     def by_app_info(self, name=None, version=None, kb=None):
+        """Search by name and version or by kb
+        Kwargs:
+            name (str): The name of the application you are searching for.
+            version (str): The version of the application you are
+            kb (str): The knowledge base. Example.. KB246731
+
+        Basic Usage:
+            >>> from vFense.plugins.vuln.search.vuln_search import FetchVulns
+            >>> search = FetchVulns()
+            >>> search.by_app_info(name="kernel-kdump-devel", version="2.6.32431.20.5.el6")
+        """
         data = Vulnerability()
 
         if name and version:
