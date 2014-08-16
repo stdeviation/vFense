@@ -18,7 +18,38 @@ from vFense.plugins.vuln.cve._db_model import CveKeys
 
 
 class Cve(object):
-    """Used to represent an instance of a vulnerability."""
+    """Used to represent an instance of a cve.
+    Kwargs:
+    cve_id (str): The Common Vulnerability and Exposure ID
+        Example.. CVE-2014-2363
+    descriptions (list of dictionaries):
+        Example.. [
+            {
+                u'source': u'cve',
+                u'description': u'Morpho Itemiser 3 8.17 has hardcoded administrative credentials, which makes it easier for remote attackers to obtain access via a login request.'
+            }
+        ]
+    severity (str): The vendor supplied severity.
+        Example... Important, Critical, Security, etc..
+    date_posted (int|float): The date this vulnerability was posted in
+        epoch time.
+        Example... 1408226168.046107 or 1408226180
+    references (list): list of the vendor supplied url, id, and source.
+        Example.. [
+        {
+            u'url': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01',
+            u'source': u'MISC',
+            u'id': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01'
+         }
+    ]
+    reject (str):
+    vulns_soft (list of dictionaries):
+    vulnerability_categories (list): List of categories, this cve belongs too.
+        Example [DDOS, Exploit, Cross Site Scripting]
+    score (int): The CVSS base score. 0 - 10
+
+    """
+
 
     def __init__(self, cve_id=None, descriptions=None, severity=None,
                  date_posted=None, date_modified=None, references=None,
@@ -26,9 +57,7 @@ class Cve(object):
                  score=None, base_score=None, impact_score=None,
                  exploit_score=None, vector=None, version=None,
                  cvss_type=None):
-        """
-        Kwargs:
-        """
+
         self.cve_id = cve_id
         self.descriptions = descriptions
         self.date_posted = date_posted

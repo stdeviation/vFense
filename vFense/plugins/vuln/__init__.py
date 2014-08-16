@@ -7,7 +7,34 @@ from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
 
 class Vulnerability(object):
-    """Used to represent an instance of a vulnerability."""
+    """Used to represent an instance of a vulnerability.
+        This is the base class, that all other vulnerabilities, will
+        inherit from.
+
+    Kwargs:
+        vulnerability_id (str): The vendor assigned vulnerability id.
+        date_posted (int|float): The epcoh time, of when this vulnerability
+            was posted.
+        details (str): The complete description of this vulnerability.
+        cve_ids (list): List of cve ids, that were assigned to this
+            vulnerability.
+        support_url (str): The vendor supplied url, that describes this
+            vulnerability.
+        os_strings (list): List of operating systems, this vulnerability
+            affects.
+        apps (list of dictionaries): List of affected applications, and the
+            specific details about the vulnerability and the application
+            that is effected.
+
+    Attributes:
+        self.vulnerability_id
+        self.date_posted
+        self.details
+        self.cve_ids
+        self.support_url
+        self.os_strings
+        self.apps
+    """
 
     def __init__(self, vulnerability_id=None, date_posted=None,
                  details=None, cve_ids=None, support_url=None,
@@ -28,9 +55,9 @@ class Vulnerability(object):
         the hardcoded default values.
 
         Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
-            functions to call this method to fill in the rest.
+            Useful when you want to create an instance and only
+            want to fill in a few fields, then allow the instance to call
+            this method to fill in the rest.
         """
 
         if not self.cve_ids:
@@ -52,7 +79,7 @@ class Vulnerability(object):
             self.date_posted = 0
 
     def get_invalid_fields(self):
-        """Check the app for any invalid fields.
+        """Check for any invalid fields.
 
         Returns:
             (list): List of key/value pair dictionaries corresponding
@@ -131,11 +158,11 @@ class Vulnerability(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the attributes into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields corresponding to this
+                instance.
 
         """
 
@@ -150,11 +177,10 @@ class Vulnerability(object):
         }
 
     def to_dict_db(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the attributes into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields corresponding to this class.
 
         """
 
@@ -167,11 +193,11 @@ class Vulnerability(object):
 
 
     def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+        """ Use to get non None fields of this instance. Useful when
+        filling out just a few fields.
 
         Returns:
-            (dict): a dictionary with the non None fields of this install.
+            (dict): a dictionary with the non None fields of this instance.
         """
         install_dict = self.to_dict()
 

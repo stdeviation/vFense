@@ -70,7 +70,7 @@ class FetchVulnBase(object):
             >>> search.by_id("RHSA-2014:0924-01")
 
         Returns:
-            Tuple (count|list of dictionaries)
+            Tuple (count, list of dictionaries)
 [
     1,
     [
@@ -146,7 +146,7 @@ ch\ncontain backported patches to correct these issues. The system must be\nrebo
             >>> search.by_app_name_and_version("kernel-kdump-devel", "2.6.32431.20.5.el6")
 
         Returns:
-            Tuple (count|list of dictionaries)
+            Tuple (count, list of dictionaries)
 [
     1,
     [
