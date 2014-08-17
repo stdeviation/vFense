@@ -46,7 +46,13 @@ class Cve(object):
     vulns_soft (list of dictionaries):
     vulnerability_categories (list): List of categories, this cve belongs too.
         Example [DDOS, Exploit, Cross Site Scripting]
-    score (int): The CVSS base score. 0 - 10
+    score (int): The CVSS base score. 0 - 10 ( backward compatibility )
+    base_score (int): The CVSS base score. 0 - 10 ( backward compatibility )
+    impact_score (int): The CVSS impact score. 0 - 10
+    exploit_score (int): The CVSS exploit score. 0 - 10
+    vector (list of dictionaries):
+    version (str):
+    cvss_type (str)
 
     """
 
