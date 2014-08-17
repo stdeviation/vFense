@@ -8,7 +8,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from lxml import etree
 from re import sub
 from vFense.plugins.vuln.cve import (
-    Cve, CvssVector, CveDescriptions, CveReferences
+    Cve, CvssVector, CveDescriptions, CveReferences, CveVulnSoft
 )
 from vFense.plugins.vuln.cve._constants import (
     CVEDataDir, NVDFeeds, CVEStrings, CVECategories
@@ -146,25 +146,16 @@ class NvdParser(object):
         """
         vuln_soft_list = []
         for vulns_soft in entry:
-            vuln_soft_dict = {}
-            vuln_soft_dict[CVEStrings.VENDOR_VERSIONS] = []
             vulns = vulns_soft.getchildren()
             for vuln in vulns:
-                vuln_soft_dict[CVEStrings.VENDOR] = (
-                    vuln.attrib.get(CVEStrings.VENDOR)
-                )
-                vuln_soft_dict[CVEStrings.VENDOR_NAME] = (
-                    vuln.attrib.get(CVEStrings.VENDOR_NAME)
-                )
+                vuln_soft = CveVulnSoft()
+                vuln_soft.fill_in_defaults()
+                vuln_soft.vendor = vuln.attrib.get(CVEStrings.VENDOR)
+                vuln_soft.vendor = vuln.attrib.get(CVEStrings.VENDOR_NAME)
                 vulns_versions = vuln.getchildren()
                 for version in vulns_versions:
-                    version_dict = {}
-                    for key in version.keys():
-                        version_dict[key] = version.attrib[key]
-                    vuln_soft_dict[CVEStrings.VENDOR_VERSIONS].append(
-                        version_dict
-                    )
-            vuln_soft_list.append(vuln_soft_dict)
+                    vuln_soft.versions.append(version.attrib["num"])
+                vuln_soft_list.append(vuln_soft.to_dict())
 
         return(vuln_soft_list)
 
@@ -219,8 +210,8 @@ def parse_cve_and_udpatedb(
             if entry.tag == NVDFeeds.REFS and event == 'start':
                 cve.references = parser.get_refs(entry)
 
-            #if entry.tag == NVDFeeds.VULN_SOFT and event == 'start':
-            #    cve_data[CveKeys.CveVulnsSoft] = parser.get_vulns_soft(entry)
+            if entry.tag == NVDFeeds.VULN_SOFT and event == 'start':
+                cve_data[CveKeys.CveVulnsSoft] = parser.get_vulns_soft(entry)
 
             if entry.tag == NVDFeeds.ENTRY and event == 'end':
                 cve_data_list.append(cve.to_dict_db())

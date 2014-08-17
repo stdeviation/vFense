@@ -34,6 +34,10 @@ class CveDefaults():
     def descriptions():
         return list()
 
+    @staticmethod
+    def versions():
+        return list()
+
 class CVEStrings():
     START_YEAR = 2002
     METRIC = 'metric'

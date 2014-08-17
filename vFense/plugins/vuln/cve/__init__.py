@@ -287,9 +287,7 @@ class CvssVector(object):
         the hardcoded default values.
 
         Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
-            functions to call this method to fill in the rest.
+            Useful when you want to fill in a few fields.
         """
         pass
 
@@ -379,7 +377,7 @@ class CvssVector(object):
 
 
     def get_invalid_fields(self):
-        """Check the app for any invalid fields.
+        """Check for any invalid fields.
 
         Returns:
             (list): List of key/value pair dictionaries corresponding
@@ -411,11 +409,10 @@ class CvssVector(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the attributes into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with all the attributes.
 
         """
 
@@ -426,11 +423,11 @@ class CvssVector(object):
 
 
     def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+        """ Use to get non None fields, usefull when filling out just a
+            few attributes.
 
         Returns:
-            (dict): a dictionary with the non None fields of this install.
+            (dict): a dictionary with the non None fields.
         """
         install_dict = self.to_dict()
 
@@ -454,14 +451,12 @@ class CveDescriptions(object):
         the hardcoded default values.
 
         Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
-            functions to call this method to fill in the rest.
+            Useful when you want to fill in a few fields.
         """
         pass
 
     def get_invalid_fields(self):
-        """Check the app for any invalid fields.
+        """Check for any invalid fields.
 
         Returns:
             (list): List of key/value pair dictionaries corresponding
@@ -476,11 +471,10 @@ class CveDescriptions(object):
         return []
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the attributes into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary of all the attributes.
 
         """
 
@@ -491,11 +485,11 @@ class CveDescriptions(object):
 
 
     def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+        """ Use to get non None fields. Useful when filling out
+            just a few fields.
 
         Returns:
-            (dict): a dictionary with the non None fields of this install.
+            (dict): a dictionary with the non None fields.
         """
         install_dict = self.to_dict()
 
@@ -527,7 +521,83 @@ class CveReferences(object):
         pass
 
     def get_invalid_fields(self):
-        """Check the app for any invalid fields.
+        """Check for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+
+                Ex:
+                    [
+                        {'view_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
+        """
+        return []
+
+    def to_dict(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            ReferenceKeys.URL: self.url,
+            ReferenceKeys.Source: self.source,
+            ReferenceKeys.Id: self.id,
+        }
+
+
+    def to_dict_non_null(self):
+        """ Use to get non None fields of an install. Useful when
+        filling out just a few fields to perform an install.
+
+        Returns:
+            (dict): a dictionary with the non None fields of this install.
+        """
+        install_dict = self.to_dict()
+
+        return {k:install_dict[k] for k in install_dict
+                if install_dict[k] != None}
+
+
+class CveVulnSoft(object):
+    """Used to represent an instance of a CveVulnSoft. This includes
+        the name, of the software and vendor and the affected versions
+
+    Kwargs:
+        name (str): The name of the affected product.
+        vendor (str): The owner of the affected product.
+        versions (list of strings): The versions that are affected by this
+            vulnerability
+    """
+
+    def __init__(self, name=None, vendor=None, versions=None):
+        self.name = name
+        self.vendor = vendor
+        self.versions = versions
+
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+
+        if not self.versions:
+            self.versions = (
+                CveDefaults.versions()
+            )
+
+    def get_invalid_fields(self):
+        """Check for any invalid fields.
 
         Returns:
             (list): List of key/value pair dictionaries corresponding
