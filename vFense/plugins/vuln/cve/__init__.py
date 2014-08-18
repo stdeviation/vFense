@@ -5,7 +5,7 @@ from vFense.core.status_codes import GenericCodes
 from vFense.plugins.vuln.cve._constants import (
     CveDefaults, CVEVectors, VectorKeys, DescriptionKeys,
     CVSS_BASE_VECTORS, CVSS_BASE_VECTOR_AV_VALUES, ReferenceKeys,
-    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
+    VulnSoftKeys, CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
     CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
     CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
     CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
@@ -270,9 +270,6 @@ class CvssVector(object):
 
     def __init__(self, metric=None, value=None, untranslated_metric=None,
                  untranslated_value=None):
-        """
-        Kwargs:
-        """
         self.metric = metric
         self.value = value
         self.untranslated_metric = untranslated_metric
@@ -439,9 +436,6 @@ class CveDescriptions(object):
     """Used to represent an instance of a vulnerability."""
 
     def __init__(self, description=None, source=None):
-        """
-        Kwargs:
-        """
         self.description = description
         self.source = source
 
@@ -498,15 +492,25 @@ class CveDescriptions(object):
 
 
 class CveReferences(object):
-    """Used to represent an instance of a vulnerability."""
+    """Used to represent an instance of a cve reference.
+    Kwargs:
+        url (str): hyperlink to the reference.
+        source (str): Name of reference source.
+        id (str): The vulnerability reference id.
+        signature (bool): Indicates this reference includes a tool signature.
+        advisory (bool): Indicates this reference is a Security Advisory.
+        patch (bool): Indicates this reference includes a patch for
+            this vulnerability
+    """
 
-    def __init__(self, url=None, source=None, id=None):
-        """
-        Kwargs:
-        """
+    def __init__(self, url=None, source=None, id=None, patch=None,
+                 advisory=None, signature=None):
+        self.id = id
         self.url = url
         self.source = source
-        self.id = id
+        self.patch = patch
+        self.advisory = advisory
+        self.signature = signature
 
 
     def fill_in_defaults(self):
@@ -518,7 +522,14 @@ class CveReferences(object):
             want to fill in a few fields, then allow the install
             functions to call this method to fill in the rest.
         """
-        pass
+        if not self.signature:
+            self.signature = False
+
+        if not self.advisory:
+            self.advisory = False
+
+        if not self.patch:
+            self.patch = False
 
     def get_invalid_fields(self):
         """Check for any invalid fields.
@@ -545,9 +556,12 @@ class CveReferences(object):
         """
 
         return {
+            ReferenceKeys.Id: self.id,
             ReferenceKeys.URL: self.url,
             ReferenceKeys.Source: self.source,
-            ReferenceKeys.Id: self.id,
+            ReferenceKeys.Patch: self.patch,
+            ReferenceKeys.Advisory: self.advisory,
+            ReferenceKeys.Signature: self.signature,
         }
 
 
@@ -621,9 +635,82 @@ class CveVulnSoft(object):
         """
 
         return {
-            ReferenceKeys.URL: self.url,
-            ReferenceKeys.Source: self.source,
-            ReferenceKeys.Id: self.id,
+            VulnSoftKeys.Name: self.name,
+            VulnSoftKeys.Vendor: self.vendor,
+            VulnSoftKeys.Versions: self.versions,
+        }
+
+
+    def to_dict_non_null(self):
+        """ Use to get non None fields of an install. Useful when
+        filling out just a few fields to perform an install.
+
+        Returns:
+            (dict): a dictionary with the non None fields of this install.
+        """
+        install_dict = self.to_dict()
+
+        return {k:install_dict[k] for k in install_dict
+                if install_dict[k] != None}
+
+
+class CveVulnSoftVers(object):
+    """Used to represent an instance of a CveVulnSoft. This includes
+        the name, of the software and vendor and the affected versions
+
+    Kwargs:
+        number (str): The version number.
+        previous (str): Indicates that versions previous to this version
+            number are also affected by this vulnerability
+        edition (str): Indicates the edition associated with the version
+            number
+    """
+
+    def __init__(self, number=None, previous=None, edition=None):
+        self.number = number
+        self.previous = previous
+        self.edition = edition
+
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+        pass
+
+    def get_invalid_fields(self):
+        """Check for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+
+                Ex:
+                    [
+                        {'view_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
+        """
+        return []
+
+    def to_dict(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            VulnSoftKeys.Number: self.number,
+            VulnSoftKeys.Previous: self.previous,
+            VulnSoftKeys.Edition: self.edition,
         }
 
 

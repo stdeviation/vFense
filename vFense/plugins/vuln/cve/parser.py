@@ -8,7 +8,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 from lxml import etree
 from re import sub
 from vFense.plugins.vuln.cve import (
-    Cve, CvssVector, CveDescriptions, CveReferences, CveVulnSoft
+    Cve, CvssVector, CveDescriptions, CveReferences,
+    CveVulnSoft, CveVulnSoftVers
 )
 from vFense.plugins.vuln.cve._constants import (
     CVEDataDir, NVDFeeds, CVEStrings, CVECategories
@@ -126,13 +127,13 @@ class NvdParser(object):
         """
         list_of_refs = []
         for reference in entry:
-            ref = (
-                CveReferences(
-                    url=reference.attrib.get(CVEStrings.REF_URL),
-                    source=reference.attrib.get(CVEStrings.REF_SOURCE),
-                    id=reference.text
-                )
-            )
+            ref = CveReferences()
+            ref.url = reference.attrib.get(CVEStrings.REF_URL)
+            ref.source = reference.attrib.get(CVEStrings.REF_SOURCE)
+            ref.id = reference.text
+            ref.signature = reference.attrib.get(CVEStrings.REF_SIG, False)
+            ref.advisory = reference.attrib.get(CVEStrings.REF_ADV, False)
+            ref.patch = reference.attrib.get(CVEStrings.REF_PATCH, False)
             list_of_refs.append(ref.to_dict())
 
         return(list_of_refs)
@@ -146,16 +147,18 @@ class NvdParser(object):
         """
         vuln_soft_list = []
         for vulns_soft in entry:
+            vuln_soft = CveVulnSoft()
+            vuln_soft.fill_in_defaults()
+            vuln_soft.vendor = vulns_soft.attrib.get(CVEStrings.VENDOR)
+            vuln_soft.name = vulns_soft.attrib.get(CVEStrings.VENDOR_NAME)
             vulns = vulns_soft.getchildren()
             for vuln in vulns:
-                vuln_soft = CveVulnSoft()
-                vuln_soft.fill_in_defaults()
-                vuln_soft.vendor = vuln.attrib.get(CVEStrings.VENDOR)
-                vuln_soft.vendor = vuln.attrib.get(CVEStrings.VENDOR_NAME)
-                vulns_versions = vuln.getchildren()
-                for version in vulns_versions:
-                    vuln_soft.versions.append(version.attrib["num"])
-                vuln_soft_list.append(vuln_soft.to_dict())
+                version = CveVulnSoftVers()
+                version.number = vuln.attrib.get("num")
+                version.previous = vuln.attrib.get("prev")
+                version.edition = vuln.attrib.get("edition")
+                vuln_soft.versions.append(version.to_dict())
+            vuln_soft_list.append(vuln_soft.to_dict())
 
         return(vuln_soft_list)
 
@@ -211,7 +214,7 @@ def parse_cve_and_udpatedb(
                 cve.references = parser.get_refs(entry)
 
             if entry.tag == NVDFeeds.VULN_SOFT and event == 'start':
-                cve_data[CveKeys.CveVulnsSoft] = parser.get_vulns_soft(entry)
+                cve.vuln_soft = parser.get_vulns_soft(entry)
 
             if entry.tag == NVDFeeds.ENTRY and event == 'end':
                 cve_data_list.append(cve.to_dict_db())

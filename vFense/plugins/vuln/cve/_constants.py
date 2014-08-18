@@ -59,6 +59,9 @@ class CVEStrings():
     DESCRIPTION_SOURCE = 'source'
     REF_URL = 'url'
     REF_SOURCE = 'source'
+    REF_SIG = 'sig'
+    REF_PATCH = 'patch'
+    REF_ADV = 'adv'
     REF_ID = 'id'
     NVD_TYPE = 'type'
     CVE_SEVERITY = 'severity'
@@ -79,9 +82,20 @@ class DescriptionKeys():
 
 
 class ReferenceKeys():
+    Id = 'id'
     URL = 'url'
     Source = 'source'
-    Id = 'id'
+    Patch = 'patch'
+    Advisory = 'advisory'
+    Signature = 'signature'
+
+class VulnSoftKeys():
+    Name = 'name'
+    Vendor = 'vendor'
+    Versions = 'versions'
+    Number = 'number'
+    Previous = 'previous'
+    Edition = 'edition'
 
 
 class CVEVectors():
