@@ -85,7 +85,7 @@ class NvdParser(object):
         categories = []
         for desc in entry:
             description = CveDescriptions()
-            description.description = unicode(desc.text),
+            description.description = unicode(desc.text)
             description.source = (
                 desc.attrib.get(CVEStrings.DESCRIPTION_SOURCE)
             )
@@ -129,7 +129,7 @@ class NvdParser(object):
             ref = CveReferences()
             ref.url = reference.attrib.get(CVEStrings.REF_URL)
             ref.source = reference.attrib.get(CVEStrings.REF_SOURCE)
-            ref.id = reference.text
+            ref.id = unicode(reference.text)
             ref.signature = reference.attrib.get(CVEStrings.REF_SIG, False)
             if ref.signature:
                 ref.signature = True
