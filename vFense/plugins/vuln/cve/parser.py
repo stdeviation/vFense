@@ -84,11 +84,10 @@ class NvdParser(object):
         list_of_descriptions = []
         categories = []
         for desc in entry:
-            description = (
-                CveDescriptions(
-                    description=unicode(desc.text),
-                    source = desc.attrib.get(CVEStrings.DESCRIPTION_SOURCE)
-                )
+            description = CveDescriptions()
+            description.description = unicode(desc.text),
+            description.source = (
+                desc.attrib.get(CVEStrings.DESCRIPTION_SOURCE)
             )
 
             for category in CVECategories.get_values():
@@ -132,8 +131,14 @@ class NvdParser(object):
             ref.source = reference.attrib.get(CVEStrings.REF_SOURCE)
             ref.id = reference.text
             ref.signature = reference.attrib.get(CVEStrings.REF_SIG, False)
+            if ref.signature:
+                ref.signature = True
             ref.advisory = reference.attrib.get(CVEStrings.REF_ADV, False)
+            if ref.advisory:
+                ref.advisory = True
             ref.patch = reference.attrib.get(CVEStrings.REF_PATCH, False)
+            if ref.patch:
+                ref.patch = True
             list_of_refs.append(ref.to_dict())
 
         return(list_of_refs)
