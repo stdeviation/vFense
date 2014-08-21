@@ -177,7 +177,7 @@ define(
                 event.preventDefault();
                 var $row = $(event.currentTarget),
                     data = $row.data(),
-                    agent = _.findWhere(this.model.get('agents'), {agent_id: data.id}),
+                    agent = _.findWhere(this.model.get('agents'), {computer_name: data.agent}),
                     errors = _.where(agent.applications, {results: 6003});
                 this.modal.setHeaderHTML(this.renderModalHeader(agent.computer_name));
                 this.modal.setContentHTML(this.renderModalContent(errors, this.model.get('operation')));

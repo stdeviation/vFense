@@ -130,15 +130,15 @@ define(
                         $groups = this.$('#groups');
                     $users.select2({
                         ajax: {
-                            url: 'api/users',
+                            url: 'api/v1/users',
                             data: function (search) {
                                 return {query: search};
                             },
                             results: function (data) {
                                 var results = [];
-                                if (data.pass) {
+                                if (data) {
                                     _.each(data.data, function (object) {
-                                        results.push({id: object.username, text: object.username});
+                                        results.push({id: object.user_name, text: object.user_name});
                                     });
                                     return {results: results, more: false, context: results};
                                 }
@@ -151,7 +151,7 @@ define(
                     });
                     $groups.select2({
                         ajax: {
-                            url: 'api/groups',
+                            url: 'api/v1/groups',
                             data: function (search) {
                                 return {query: search};
                             },

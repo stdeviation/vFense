@@ -412,7 +412,7 @@ def add_user_to_groups(
         )
         status_code = DbCodes.Errors
         generic_status_code = GenericCodes.InvalidId
-        vfense_status_code = GroupCodes.GroupFailureCodes.InvalidGroupId
+        vfense_status_code = GroupFailureCodes.InvalidGroupId
 
     elif not user_exist:
         msg = 'User name is invalid: %s' % (username)
