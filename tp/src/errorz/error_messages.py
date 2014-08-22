@@ -66,7 +66,7 @@ class GenericResults(object):
             }
         )
 
-    def file_doesnt_exist(self, pkg_file, error):
+    def file_doesnt_exist(self, pkg_file):
         return(
             {
                 status: 409,

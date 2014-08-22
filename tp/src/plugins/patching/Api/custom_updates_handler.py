@@ -1084,15 +1084,14 @@ class CustomAppsHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            #app_ids = self.arguments.get('app_ids') The UI needs to past the options as the body not as arguments
-            app_ids = self.get_arguments('app_ids')
+            app_ids = self.arguments.get('app_ids') # The UI needs to past the options as the body not as arguments
             appids_deleted = 0
             appids_failed = 0
             for appid in app_ids:
                 deleted = (
                     delete_app_from_vfense(
-                        appid, CustomAppsCollection,
-                        CustomAppsPerAgentCollection
+                        appid, AppCollections.CustomApps,
+                        AppCollections.CustomAppsPerAgent
                     )
                 )
                 if deleted:

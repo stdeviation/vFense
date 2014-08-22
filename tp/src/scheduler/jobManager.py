@@ -52,7 +52,7 @@ def start_scheduler(redis_db=10, conn=None):
         if customers:
             for customer in customers:
                 sched.add_jobstore(
-                    RedisJobStore(db=10), customer[CustomerKey.CustomerName]
+                    RedisJobStore(db=10, key_prefix=customer[CustomerKey.CustomerName]+'.'), customer[CustomerKey.CustomerName]
                 )
                 list_of_customers.append(
                     {

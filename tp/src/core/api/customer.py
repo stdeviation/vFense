@@ -8,6 +8,8 @@ from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import authenticated_request, convert_json_to_arguments
 
+from apscheduler.jobstores.redis_store import RedisJobStore
+
 from vFense.core.permissions._constants import *
 from vFense.core.permissions.permissions import verify_permission_for_user, \
     return_results_for_permissions
@@ -194,6 +196,9 @@ class CustomerHandler(BaseHandler):
                 )
             )
 
+            sched = self.application.scheduler
+            jobs = sched.get_jobs(name=customer_name)
+
             if move_agents_to_customer:
                 customer_exist = get_customer(move_agents_to_customer)
                 if not customer_exist:
@@ -232,6 +237,9 @@ class CustomerHandler(BaseHandler):
                             customer_name, move_agents_to_customer
                         )
 
+                        for job in jobs:
+                            sched.unschedule_job(job)
+
             elif deleted_agents == ApiValues.YES:
                 results = (
                     remove_customer(
@@ -248,6 +256,9 @@ class CustomerHandler(BaseHandler):
                     remove_all_agents_for_customer(customer_name)
                     remove_all_apps_for_customer(customer_name)
 
+                    for job in jobs:
+                        sched.unschedule_job(job)
+
             elif deleted_agents == ApiValues.NO:
                 results = (
                     remove_customer(
@@ -255,6 +266,10 @@ class CustomerHandler(BaseHandler):
                         active_user, uri, method
                     )
                 )
+
+                for job in jobs:
+                    sched.unschedule_job(job)
+                    
                 self.set_status(results['http_status'])
                 self.set_header('Content-Type', 'application/json')
                 self.write(json.dumps(results, indent=4))
@@ -391,6 +406,12 @@ class CustomersHandler(BaseHandler):
                 customer, active_user,
                 user_name=active_user, uri=uri, method=method
             )
+
+            if results[ApiResultKeys.VFENSE_STATUS_CODE] == CustomerCodes.CustomerCreated:
+                self.application.scheduler.add_jobstore(
+                    RedisJobStore(db=10, key_prefix=customer_name+'.'),
+                    customer_name
+                )
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')

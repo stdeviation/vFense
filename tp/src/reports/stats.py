@@ -37,10 +37,14 @@ def system_hardware_details(agent_info):
 
 def system_network_details(agent_info):
     hardware_info=agent_info.get(AgentKey.Hardware)
+    # Windows agent writes network information into 'network' and linux agent writes it into 'nic'
+    ntw = hardware_info.get('nic')
+    if ntw is None:
+        ntw = hardware_info.get('network')
 
     data = {
         "computer-name":agent_info.get(AgentKey.ComputerName),
-        "network":hardware_info.get('nic'),
+        "network":ntw,
     }
 
     return data

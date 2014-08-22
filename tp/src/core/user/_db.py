@@ -161,7 +161,8 @@ def fetch_user_and_all_properties(username, conn=None):
                     index=GroupsPerUserIndexes.GroupName
                 )
                 .zip()
-                .map(lambda x: x[GroupKeys.Permissions])[0]
+                .map(lambda x: x[GroupKeys.Permissions])
+                .map(lambda k: r.branch(k, k[0].default([]), []))
             )
         }
     )
@@ -285,7 +286,8 @@ def fetch_users_and_all_properties(customer_name=None, conn=None):
                     index=GroupsPerUserIndexes.GroupName
                 )
                 .zip()
-                .map(lambda b: b[GroupKeys.Permissions])[0]
+                .map(lambda b: b[GroupKeys.Permissions])
+                .map(lambda k: r.branch(k, k[0].default([]), []))
             )
         }
     )

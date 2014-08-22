@@ -170,7 +170,7 @@ def store_package_info_in_db(
         results = (
             GenericResults(
                 username, uri, method
-            ).file_doesnt_exist(name, e)
+            ).file_doesnt_exist(name)
         )
         logger.info(results)
 
