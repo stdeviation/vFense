@@ -1084,10 +1084,7 @@ class CustomAppsHandler(BaseHandler):
         uri = self.request.uri
         method = self.request.method
         try:
-            app_ids = []
-            #app_ids = self.arguments.get('app_ids') The UI needs to past the options as the body not as arguments
-            data = json.loads(self.request.body)
-            app_ids = data.get('app_ids')
+            app_ids = self.arguments.get('app_ids') # The UI needs to past the options as the body not as arguments
             appids_deleted = 0
             appids_failed = 0
             for appid in app_ids:

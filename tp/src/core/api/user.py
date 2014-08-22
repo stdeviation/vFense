@@ -216,7 +216,7 @@ class UserHandler(BaseHandler):
                     edit_user_properties(username, **data_dict)
                 )
 
-            default_customer = self.arguments.get('default_customer', None)
+            default_customer = self.arguments.get('default_customer_id', None)
             if default_customer:
                 data_dict[UserKeys.DefaultCustomer] = default_customer
                 results = (
