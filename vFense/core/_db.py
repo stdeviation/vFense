@@ -216,7 +216,7 @@ def insert_data_in_table(data, collection, conn=None):
         results = (
             r
             .table(collection)
-            .insert(data, upsert=True)
+            .insert(data, conflict="replace")
             .run(conn, no_reply=True, durability='soft')
         )
 

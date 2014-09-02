@@ -152,7 +152,7 @@ def insert_cve_data(cve_data, conn=None):
         data = (
             r
             .table(CVECollections.CVE)
-            .insert(cve_data, upsert=True)
+            .insert(cve_data, conflict="replace")
             .run(conn)
         )
 
