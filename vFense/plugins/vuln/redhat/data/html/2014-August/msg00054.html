@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1102&#45;01] Important: ror40&#45;rubygem&#45;activerecord security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Aug 2014 10:29:17 &#45;0400 -->
+<!--X-Message-Id: 201408271429.s7RETGVt029726@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1102-01] Important: ror40-rubygem-activerecord security	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1102-01] Important: ror40-rubygem-activerecord security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1102-01] Important: ror40-rubygem-activerecord security	update</li>
+<li><em>Date</em>: Wed, 27 Aug 2014 14:29:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: ror40-rubygem-activerecord security update
+Advisory ID:       RHSA-2014:1102-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1102.html">https://rhn.redhat.com/errata/RHSA-2014-1102.html</a>
+Issue date:        2014-08-27
+CVE Names:         CVE-2014-3514 
+=====================================================================
+
+1. Summary:
+
+Updated ror40-rubygem-activerecord packages that fix one security issue are
+now available for Red Hat Software Collections 1.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7) - noarch
+
+3. Description:
+
+Ruby on Rails is a model-view-controller (MVC) framework for web
+application development. Active Record implements object-relational mapping
+for accessing database entries using objects.
+
+It was discovered that Active Record's create_with method failed to
+properly check attributes passed to it. A remote attacker could possibly
+use this flaw to bypass the strong parameter protection and modify
+arbitrary model attributes via mass assignment if an application using
+Active Record called create_with with untrusted values. (CVE-2014-3514)
+
+All ror40-rubygem-activerecord users are advised to upgrade to these
+updated packages, which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1131240 - CVE-2014-3514 rubygem-activerecord: Strong Parameter bypass with create_with
+
+6. Package List:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.src.rpm
+
+noarch:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.noarch.rpm
+ror40-rubygem-activerecord-doc-4.0.2-2.3.el6.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.src.rpm
+
+noarch:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.noarch.rpm
+ror40-rubygem-activerecord-doc-4.0.2-2.3.el6.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.src.rpm
+
+noarch:
+ror40-rubygem-activerecord-4.0.2-2.3.el6.noarch.rpm
+ror40-rubygem-activerecord-doc-4.0.2-2.3.el6.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ror40-rubygem-activerecord-4.0.2-2.3.el7.src.rpm
+
+noarch:
+ror40-rubygem-activerecord-4.0.2-2.3.el7.noarch.rpm
+ror40-rubygem-activerecord-doc-4.0.2-2.3.el7.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+ror40-rubygem-activerecord-4.0.2-2.3.el7.src.rpm
+
+noarch:
+ror40-rubygem-activerecord-4.0.2-2.3.el7.noarch.rpm
+ror40-rubygem-activerecord-doc-4.0.2-2.3.el7.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3514.html">https://www.redhat.com/security/data/cve/CVE-2014-3514.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT/essXlSAg2UNWIIRAnRtAJwO/bVMwfsjnC4jNqOFw8xgeMP18ACgqeeZ
+QrU4rqoVm+ElHHGmf8QFOO0=
+=N8hH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

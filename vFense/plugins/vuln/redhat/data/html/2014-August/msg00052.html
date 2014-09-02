@@ -1,0 +1,170 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1098&#45;01] Important: devtoolset&#45;2&#45;httpcomponents&#45;client	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 Aug 2014 12:52:35 &#45;0400 -->
+<!--X-Message-Id: 201408261652.s7QGqYxC026827@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1098-01] Important: devtoolset-2-httpcomponents-client	securi</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00051.html">Date Prev</a>][<a href="msg00053.html">Date Next</a>] &nbsp; [<a href="msg00051.html">Thread Prev</a>][<a href="msg00053.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00052">Thread Index</A>]
+[<A HREF="date.html#00052">Date Index</A>]
+[<A HREF="author.html#00052">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1098-01] Important: devtoolset-2-httpcomponents-client	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1098-01] Important: devtoolset-2-httpcomponents-client	security update</li>
+<li><em>Date</em>: Tue, 26 Aug 2014 16:52:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: devtoolset-2-httpcomponents-client security update
+Advisory ID:       RHSA-2014:1098-01
+Product:           Red Hat Developer Toolset
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1098.html">https://rhn.redhat.com/errata/RHSA-2014-1098.html</a>
+Issue date:        2014-08-26
+CVE Names:         CVE-2012-6153 
+=====================================================================
+
+1. Summary:
+
+Updated devtoolset-2-httpcomponents-client packages that fix one security
+issue are now available for Red Hat Developer Toolset 2.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Developer Toolset 2 for Red Hat Enterprise Linux 6 Server - noarch
+Red Hat Developer Toolset 2 for Red Hat Enterprise Linux 6 Workstation - noarch
+
+3. Description:
+
+HttpClient is an HTTP/1.1 compliant HTTP agent implementation based on
+httpcomponents HttpCore.
+
+It was discovered that the HttpClient incorrectly extracted host name from
+an X.509 certificate subject's Common Name (CN) field. A man-in-the-middle
+attacker could use this flaw to spoof an SSL server using a specially
+crafted X.509 certificate. (CVE-2012-6153)
+
+This issue was discovered by Florian Weimer of Red Hat Product Security.
+
+For additional information on this flaw, refer to the Knowledgebase article
+in the References section.
+
+All devtoolset-2-httpcomponents-client users are advised to upgrade to
+these updated packages, which contain a backported patch to correct this
+issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1129916 - CVE-2012-6153 Apache HttpComponents client: SSL hostname verification bypass, incomplete CVE-2012-5783 fix
+
+6. Package List:
+
+Red Hat Developer Toolset 2 for Red Hat Enterprise Linux 6 Server:
+
+Source:
+devtoolset-2-httpcomponents-client-4.2.1-6.el6.src.rpm
+
+noarch:
+devtoolset-2-httpcomponents-client-4.2.1-6.el6.noarch.rpm
+devtoolset-2-httpcomponents-client-javadoc-4.2.1-6.el6.noarch.rpm
+
+Red Hat Developer Toolset 2 for Red Hat Enterprise Linux 6 Workstation:
+
+Source:
+devtoolset-2-httpcomponents-client-4.2.1-6.el6.src.rpm
+
+noarch:
+devtoolset-2-httpcomponents-client-4.2.1-6.el6.noarch.rpm
+devtoolset-2-httpcomponents-client-javadoc-4.2.1-6.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6153.html">https://www.redhat.com/security/data/cve/CVE-2012-6153.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1165533">https://access.redhat.com/solutions/1165533</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT/LsoXlSAg2UNWIIRApN1AJ9tc8nvLkxn0SEciX5J2+ZXDQYjXwCeKWSa
+EzdFsO90RKKMUrM8lz+8cvc=
+=6bG/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00051.html">Date Prev</a>][<a href="msg00053.html">Date Next</a>] &nbsp; [<a href="msg00051.html">Thread Prev</a>][<a href="msg00053.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00052">Thread Index</A>]
+[<A HREF="date.html#00052">Date Index</A>]
+[<A HREF="author.html#00052">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1101&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Aug 2014 10:28:47 &#45;0400 -->
+<!--X-Message-Id: 201408271428.s7RESkEI029401@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1101-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1101-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1101-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 27 Aug 2014 14:28:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2014:1101-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1101.html">https://rhn.redhat.com/errata/RHSA-2014-1101.html</a>
+Issue date:        2014-08-27
+CVE Names:         CVE-2013-7339 CVE-2014-2672 CVE-2014-2678 
+                   CVE-2014-2706 CVE-2014-2851 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.4 Extended Update Support.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.4) - x86_64
+Red Hat Enterprise Linux HPC Node EUS (v. 6.4) - noarch, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.4) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.4) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A use-after-free flaw was found in the way the ping_init_sock() function
+of the Linux kernel handled the group_info reference counter. A local,
+unprivileged user could use this flaw to crash the system or, potentially,
+escalate their privileges on the system. (CVE-2014-2851, Important)
+
+* A NULL pointer dereference flaw was found in the rds_ib_laddr_check()
+function in the Linux kernel's implementation of Reliable Datagram Sockets
+(RDS). A local, unprivileged user could use this flaw to crash the system.
+(CVE-2013-7339, Moderate)
+
+* It was found that a remote attacker could use a race condition flaw in
+the ath_tx_aggr_sleep() function to crash the system by creating large
+network traffic on the system's Atheros 9k wireless network adapter.
+(CVE-2014-2672, Moderate)
+
+* A NULL pointer dereference flaw was found in the rds_iw_laddr_check()
+function in the Linux kernel's implementation of Reliable Datagram Sockets
+(RDS). A local, unprivileged user could use this flaw to crash the system.
+(CVE-2014-2678, Moderate)
+
+* A race condition flaw was found in the way the Linux kernel's mac80211
+subsystem implementation handled synchronization between TX and STA wake-up
+code paths. A remote attacker could use this flaw to crash the system.
+(CVE-2014-2706, Moderate)
+
+This update also fixes the following bugs:
+
+* The Completely Fair Scheduler (CFS) did not verify whether the CFS
+period timer is running while throttling tasks on the CFS run queue.
+Therefore under certain circumstances, the CFS run queue became stuck
+because the CFS period timer was inactive and could not be restarted. To
+fix this problem, the CFS now restarts the CFS period timer inside the
+throttling function if it is inactive. (BZ#1120666)
+
+* A previous change to the SCSI code fixed a race condition that could
+occur when removing a SCSI device. However, that change caused performance
+degradation because it used a certain function from the block layer code
+that was returning different values compared with later versions of the
+kernel. This update alters the SCSI code to properly utilize the values
+returned by the block layer code. (BZ#1117581)
+
+* If a statically defined gateway became unreachable and its corresponding
+neighbor entry entered a FAILED state, the gateway stayed in the FAILED
+state even after it became reachable again. This prevented routing of the
+traffic through that gateway. This update allows probing such a gateway
+automatically and routing the traffic through the gateway again once it
+becomes reachable. (BZ#1115262)
+
+* A miscalculation in the &quot;radix_tree&quot; swap encoding corrupted swap area
+indexes bigger than 8 by truncating lower bits of swap entries.
+Consequently, systems with more than 8 swap areas could trigger a bogus
+OOM scenario when swapping out to such a swap area. This update fixes this
+problem by reducing a return value of the SWP_TYPE_SHIFT() function and
+removing a broken function call from the read_swap_header() function.
+(BZ#1099727)
+
+* The automatic route cache rebuilding feature could incorrectly compute
+the length of a route hash chain if the cache contained multiple entries
+with the same key but a different TOS, mark, or OIF bit. Consequently, the
+feature could reach the rebuild limit and disable the routing cache on the
+system. This problem is fixed by using a helper function that avoids
+counting such duplicate routes. (BZ#1113823)
+
+* When booting a guest in the Hyper-V environment and enough of
+Programmable Interval Timer (PIT) interrupts were lost or not injected
+into the guest on time, the kernel panicked and the guest failed to boot.
+This problem has been fixed by bypassing the relevant PIT check when the
+guest is running under the Hyper-V environment. (BZ#1112225)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1079214 - CVE-2013-7339 kernel: net: rds: dereference of a NULL device in rds_ib_laddr_check()
+1083246 - CVE-2014-2672 kernel: ath9k: tid-&gt;sched race in ath_tx_aggr_sleep()
+1083274 - CVE-2014-2678 kernel: net: rds: dereference of a NULL device in rds_iw_laddr_check()
+1083512 - CVE-2014-2706 Kernel: net: mac80211: crash dues to AP powersave TX vs. wakeup race
+1086730 - CVE-2014-2851 kernel: net: ping: refcount issue in ping_init_sock() function
+
+6. Package List:
+
+Red Hat Enterprise Linux HPC Node EUS (v. 6.4):
+
+Source:
+kernel-2.6.32-358.48.1.el6.src.rpm
+
+noarch:
+kernel-doc-2.6.32-358.48.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.48.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.48.1.el6.x86_64.rpm
+perf-2.6.32-358.48.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.4):
+
+Source:
+kernel-2.6.32-358.48.1.el6.src.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.48.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+kernel-2.6.32-358.48.1.el6.src.rpm
+
+i386:
+kernel-2.6.32-358.48.1.el6.i686.rpm
+kernel-debug-2.6.32-358.48.1.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+kernel-debug-devel-2.6.32-358.48.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.48.1.el6.i686.rpm
+kernel-devel-2.6.32-358.48.1.el6.i686.rpm
+kernel-headers-2.6.32-358.48.1.el6.i686.rpm
+perf-2.6.32-358.48.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-358.48.1.el6.noarch.rpm
+kernel-firmware-2.6.32-358.48.1.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debug-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-devel-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-headers-2.6.32-358.48.1.el6.ppc64.rpm
+perf-2.6.32-358.48.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debug-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debug-devel-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.48.1.el6.s390x.rpm
+kernel-devel-2.6.32-358.48.1.el6.s390x.rpm
+kernel-headers-2.6.32-358.48.1.el6.s390x.rpm
+kernel-kdump-2.6.32-358.48.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-358.48.1.el6.s390x.rpm
+perf-2.6.32-358.48.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-devel-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-headers-2.6.32-358.48.1.el6.x86_64.rpm
+perf-2.6.32-358.48.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.4):
+
+Source:
+kernel-2.6.32-358.48.1.el6.src.rpm
+
+i386:
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-358.48.1.el6.i686.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+python-perf-2.6.32-358.48.1.el6.i686.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-358.48.1.el6.ppc64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+python-perf-2.6.32-358.48.1.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-358.48.1.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+python-perf-2.6.32-358.48.1.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.48.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-2.6.32-358.48.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.48.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-7339.html">https://www.redhat.com/security/data/cve/CVE-2013-7339.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2672.html">https://www.redhat.com/security/data/cve/CVE-2014-2672.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2678.html">https://www.redhat.com/security/data/cve/CVE-2014-2678.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2706.html">https://www.redhat.com/security/data/cve/CVE-2014-2706.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2851.html">https://www.redhat.com/security/data/cve/CVE-2014-2851.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT/er5XlSAg2UNWIIRApP0AKCFEM+jjoGj+R5+1DN0JCpGXwAHtQCfWHzv
+vdwLqG6QQjHXkk+pM2WTjW8=
+=vd7v
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

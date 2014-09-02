@@ -1,0 +1,203 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1121&#45;01] Low: openstack&#45;keystone security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Sep 2014 14:31:15 &#45;0400 -->
+<!--X-Message-Id: 201409021831.s82IVEYe028291@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1121-01] Low: openstack-keystone security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1121-01] Low: openstack-keystone security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1121-01] Low: openstack-keystone security and bug fix	update</li>
+<li><em>Date</em>: Tue, 2 Sep 2014 18:31:14 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openstack-keystone security and bug fix update
+Advisory ID:       RHSA-2014:1121-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1121.html">https://rhn.redhat.com/errata/RHSA-2014-1121.html</a>
+Issue date:        2014-09-02
+CVE Names:         CVE-2014-5251 CVE-2014-5252 CVE-2014-5253 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-keystone packages that fix three security issues and
+several bugs are now available for Red Hat Enterprise Linux OpenStack
+Platform 5.0 for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+The OpenStack Identity service (Keystone) authenticates and authorizes
+OpenStack users by keeping track of users and their permitted activities.
+The Identity service supports multiple forms of authentication, including
+user name and password credentials, token-based systems, and AWS-style
+logins.
+
+It was found that the MySQL token driver did not correctly store token
+expiration times, which prevented manual token revocation. Only OpenStack
+Identity setups configured to make use of revocation events were affected.
+(CVE-2014-5251)
+
+A flaw was found in keystone revocation events that resulted in the
+&quot;issued_at&quot; time being updated when a token created by the V2 API was
+processed by the V3 API. This could allow a user to evade token revocation.
+Only OpenStack Identity setups configured to make use of revocation events
+and UUID tokens were affected. (CVE-2014-5252)
+
+It was discovered that domain-scoped tokens were not revoked when a domain
+was disabled. Only OpenStack Identity setups configured to make use of
+revocation events were affected. (CVE-2014-5253)
+
+The openstack-keystone packages have been upgraded to upstream version
+2014.1.2.1, which provides a number of bug fixes over the previous version.
+The most notable bug fixes are:
+
+* When a scoped token that was created from an unscoped token was revoked,
+the original token was revoked as well. This was because the scope was not
+included in the revocation event. By including the scope in the revocation
+event, only the scoped token is revoked.
+
+* If a domain or a project was renamed, the old name remained in the cache.
+As a result the old name could be used in some requests until the cache
+record expired. For example, the old domain name could still be used for
+authentication after renaming the domain. Cache entries are now properly
+invalidated for domain and project rename operations.
+
+* OpenStack Identity did not return the same status and headers for HEAD
+and GET requests, which does not follow the HTTP specification. This would
+lead to different status codes between running keystone-all versus running
+keystone in Apache httpd with mod_wsgi. The responses have been corrected
+to be consistent regardless of the webserver being used.
+
+* The migration operation that creates the region table did not explicitly
+set the character set to 'utf8'. Consequently, when the database's default
+character set was not set, the db_sync operation failed. The migration
+operation now detects this condition and corrects the database.
+
+Refer to <a  rel="nofollow" href="https://launchpad.net/keystone/icehouse/2014.1.2">https://launchpad.net/keystone/icehouse/2014.1.2</a> for more
+information on the bug fixes included in version 2014.1.2.1. (BZ#1127434)
+
+All openstack-keystone users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1127250 - CVE-2014-5252 openstack-keystone: token expiration date stored incorrectly
+1127253 - CVE-2014-5253 openstack-keystone: domain-scoped tokens don't get revoked
+1127259 - CVE-2014-5251 openstack-keystone: revocation events are broken with mysql
+1127421 - Rebase openstack-keystone to 2014.1.2.1
+
+6. Package List:
+
+OpenStack 5.0 for RHEL 7:
+
+Source:
+openstack-keystone-2014.1.2.1-1.el7ost.src.rpm
+
+noarch:
+openstack-keystone-2014.1.2.1-1.el7ost.noarch.rpm
+openstack-keystone-doc-2014.1.2.1-1.el7ost.noarch.rpm
+python-keystone-2014.1.2.1-1.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5251.html">https://www.redhat.com/security/data/cve/CVE-2014-5251.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5252.html">https://www.redhat.com/security/data/cve/CVE-2014-5252.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5253.html">https://www.redhat.com/security/data/cve/CVE-2014-5253.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://launchpad.net/keystone/icehouse/2014.1.2">https://launchpad.net/keystone/icehouse/2014.1.2</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUBgzrXlSAg2UNWIIRAsyrAJ9cD4gz8E7mSSjSVFUp9/8Ru5yQWwCfTPtb
+WioOGLiH+ipC8PyuCbJ6ZSA=
+=PK4S
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

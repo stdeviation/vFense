@@ -1,0 +1,230 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1120&#45;01] Moderate: openstack&#45;neutron security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Sep 2014 14:30:50 &#45;0400 -->
+<!--X-Message-Id: 201409021830.s82IUoNQ027630@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1120-01] Moderate: openstack-neutron security, bug fix,	and e</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1120-01] Moderate: openstack-neutron security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1120-01] Moderate: openstack-neutron security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 2 Sep 2014 18:30:49 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-neutron security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1120-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1120.html">https://rhn.redhat.com/errata/RHSA-2014-1120.html</a>
+Issue date:        2014-09-02
+CVE Names:         CVE-2014-3555 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-neutron packages that fix one security issue, several
+bugs, and add various enhancements are now available for Red Hat Enterprise
+Linux OpenStack Platform 5.0 for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 5 - noarch
+
+3. Description:
+
+OpenStack Networking (neutron) is a pluggable, scalable, and API-driven
+system that provisions networking services to virtual machines. Its main
+function is to manage connectivity to and from virtual machines. As of Red
+Hat Enterprise Linux OpenStack Platform 4.0, 'neutron' replaces 'quantum'
+as the core component of OpenStack Networking.
+
+A denial of service flaw was found in neutron's handling of allowed address
+pairs. As there was no enforced quota on the amount of allowed address
+pairs, a sufficiently authorized user could possibly create a large number
+of firewall rules, impacting performance or potentially rendering a compute
+node unusable. (CVE-2014-3555)
+
+Red Hat would like to thank the OpenStack project for reporting this issue.
+Upstream acknowledges Liping Mao from Cisco as the original reporter.
+
+The openstack-neutron packages have been upgraded to upstream version
+2014.1.2, which provides a number of bug fixes and enhancements over the
+previous version, most notable of which are:
+
+* Multiple Open vSwitch agent fixes: the agent now sets bridges in the
+correct order to avoid breaking tunnel networks, creates the integration
+bridge if it is missing, sets the secure-failing mode for integration
+bridges to ensure the 'openvswitch' service does not program NORMAL action
+on restart and instead relies on L2 agent to manage those bridges on
+restart, limits veth names to 15 characters, and no longer spawns RPC
+consumers before all the needed data structures are ready to be accessed.
+
+* RPC interactions between the DHCP agent and the Neutron plug-in have
+been optimized.
+
+* Rule updates for security groups are now applied more effectively.
+
+* Firewall-as-a-Service (FWaaS): a possible race condition when deleting a
+firewall has been fixed; iptables updates are no longer deferred for the
+service.
+
+* Metering: metering data for egress and ingress are now reported
+separately; incorrect router key used to report against MongoDB has
+been fixed.
+
+* Load-Balancing-as-a-Service (LBaaS): resources are now registered against
+quotas engine; rootwrap filters are now shipped independent of L3 agent
+filters.
+
+* Metaplugin now supports multiple RPC workers.
+
+* The following plug-ins have been updated: BigSwitch, Brocade, Cisco N1k,
+HyperV, OFAgent, PLUMgrid, and VMWare NSX.
+
+Refer to <a  rel="nofollow" href="https://launchpad.net/neutron/icehouse/2014.1.2">https://launchpad.net/neutron/icehouse/2014.1.2</a> for more
+information on the changes included in the 2014.1.2 of openstack-neutron.
+(BZ#1127439)
+
+This update also fixes the following bug:
+
+* Previously, OpenStack Networking could stop processing network ports that
+disappeared from the integration bridge during the L2-agent loop, even
+after those ports were back on the bridge. As a result, updates for
+temporarily disappeared ports were not handled by the L2 agent. With this
+update, these ports are no longer marked as processed if not found on the
+integration bridge. Ports are now processed correctly even after they
+temporarily disappear from the integration bridge. (BZ#1115588)
+
+All openstack-neutron users are advised to upgrade to these updated
+packages, which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1118833 - CVE-2014-3555 openstack-neutron: Denial of Service in Neutron allowed address pair
+1127439 - Rebase openstack-neutron to 2014.1.2
+
+6. Package List:
+
+OpenStack 5:
+
+Source:
+openstack-neutron-2014.1.2-2.el6ost.src.rpm
+
+noarch:
+openstack-neutron-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-bigswitch-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-brocade-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-cisco-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-hyperv-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-ibm-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-linuxbridge-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-mellanox-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-metaplugin-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-metering-agent-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-midonet-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-ml2-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-nec-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-ofagent-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-oneconvergence-nvsd-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-openvswitch-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-plumgrid-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-ryu-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-vmware-2014.1.2-2.el6ost.noarch.rpm
+openstack-neutron-vpn-agent-2014.1.2-2.el6ost.noarch.rpm
+python-neutron-2014.1.2-2.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3555.html">https://www.redhat.com/security/data/cve/CVE-2014-3555.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://launchpad.net/neutron/icehouse/2014.1.2">https://launchpad.net/neutron/icehouse/2014.1.2</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUBgy4XlSAg2UNWIIRAvmaAKCwAHReLZaqtY7NSGFPXNK5y66acwCggmHB
+nYANtUcL4H8UzbZs5MwjtOc=
+=nZKJ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

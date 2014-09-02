@@ -1,0 +1,650 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1110&#45;01] Important: glibc security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 29 Aug 2014 17:44:39 &#45;0400 -->
+<!--X-Message-Id: 201408292144.s7TLidUp008737@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1110-01] Important: glibc security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00055.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00055.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00056">Thread Index</A>]
+[<A HREF="date.html#00056">Date Index</A>]
+[<A HREF="author.html#00056">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1110-01] Important: glibc security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1110-01] Important: glibc security update</li>
+<li><em>Date</em>: Fri, 29 Aug 2014 21:44:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: glibc security update
+Advisory ID:       RHSA-2014:1110-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1110.html">https://rhn.redhat.com/errata/RHSA-2014-1110.html</a>
+Issue date:        2014-08-29
+CVE Names:         CVE-2014-0475 CVE-2014-5119 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5, 6, and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The glibc packages contain the standard C libraries used by multiple
+programs on the system. These packages contain the standard C and the
+standard math libraries. Without these two libraries, a Linux system cannot
+function properly.
+
+An off-by-one heap-based buffer overflow flaw was found in glibc's internal
+__gconv_translit_find() function. An attacker able to make an application
+call the iconv_open() function with a specially crafted argument could
+possibly use this flaw to execute arbitrary code with the privileges of
+that application. (CVE-2014-5119)
+
+A directory traveral flaw was found in the way glibc loaded locale files.
+An attacker able to make an application use a specially crafted locale name
+value (for example, specified in an LC_* environment variable) could
+possibly use this flaw to execute arbitrary code with the privileges of
+that application. (CVE-2014-0475)
+
+Red Hat would like to thank Stephane Chazelas for reporting CVE-2014-0475.
+
+All glibc users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1102353 - CVE-2014-0475 glibc: directory traversal in LC_* locale handling
+1119128 - CVE-2014-5119 glibc: off-by-one error leading to a heap-based buffer overflow flaw in __gconv_translit_find()
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+glibc-2.5-118.el5_10.3.src.rpm
+
+i386:
+glibc-2.5-118.el5_10.3.i386.rpm
+glibc-2.5-118.el5_10.3.i686.rpm
+glibc-common-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i686.rpm
+glibc-debuginfo-common-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.i386.rpm
+glibc-headers-2.5-118.el5_10.3.i386.rpm
+glibc-utils-2.5-118.el5_10.3.i386.rpm
+nscd-2.5-118.el5_10.3.i386.rpm
+
+x86_64:
+glibc-2.5-118.el5_10.3.i686.rpm
+glibc-2.5-118.el5_10.3.x86_64.rpm
+glibc-common-2.5-118.el5_10.3.x86_64.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.3.x86_64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.x86_64.rpm
+glibc-headers-2.5-118.el5_10.3.x86_64.rpm
+glibc-utils-2.5-118.el5_10.3.x86_64.rpm
+nscd-2.5-118.el5_10.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+glibc-2.5-118.el5_10.3.src.rpm
+
+i386:
+glibc-2.5-118.el5_10.3.i386.rpm
+glibc-2.5-118.el5_10.3.i686.rpm
+glibc-common-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i686.rpm
+glibc-debuginfo-common-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.i386.rpm
+glibc-headers-2.5-118.el5_10.3.i386.rpm
+glibc-utils-2.5-118.el5_10.3.i386.rpm
+nscd-2.5-118.el5_10.3.i386.rpm
+
+ia64:
+glibc-2.5-118.el5_10.3.i686.rpm
+glibc-2.5-118.el5_10.3.ia64.rpm
+glibc-common-2.5-118.el5_10.3.ia64.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.3.ia64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.ia64.rpm
+glibc-headers-2.5-118.el5_10.3.ia64.rpm
+glibc-utils-2.5-118.el5_10.3.ia64.rpm
+nscd-2.5-118.el5_10.3.ia64.rpm
+
+ppc:
+glibc-2.5-118.el5_10.3.ppc.rpm
+glibc-2.5-118.el5_10.3.ppc64.rpm
+glibc-common-2.5-118.el5_10.3.ppc.rpm
+glibc-debuginfo-2.5-118.el5_10.3.ppc.rpm
+glibc-debuginfo-2.5-118.el5_10.3.ppc64.rpm
+glibc-devel-2.5-118.el5_10.3.ppc.rpm
+glibc-devel-2.5-118.el5_10.3.ppc64.rpm
+glibc-headers-2.5-118.el5_10.3.ppc.rpm
+glibc-utils-2.5-118.el5_10.3.ppc.rpm
+nscd-2.5-118.el5_10.3.ppc.rpm
+
+s390x:
+glibc-2.5-118.el5_10.3.s390.rpm
+glibc-2.5-118.el5_10.3.s390x.rpm
+glibc-common-2.5-118.el5_10.3.s390x.rpm
+glibc-debuginfo-2.5-118.el5_10.3.s390.rpm
+glibc-debuginfo-2.5-118.el5_10.3.s390x.rpm
+glibc-devel-2.5-118.el5_10.3.s390.rpm
+glibc-devel-2.5-118.el5_10.3.s390x.rpm
+glibc-headers-2.5-118.el5_10.3.s390x.rpm
+glibc-utils-2.5-118.el5_10.3.s390x.rpm
+nscd-2.5-118.el5_10.3.s390x.rpm
+
+x86_64:
+glibc-2.5-118.el5_10.3.i686.rpm
+glibc-2.5-118.el5_10.3.x86_64.rpm
+glibc-common-2.5-118.el5_10.3.x86_64.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.3.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.3.x86_64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.i386.rpm
+glibc-devel-2.5-118.el5_10.3.x86_64.rpm
+glibc-headers-2.5-118.el5_10.3.x86_64.rpm
+glibc-utils-2.5-118.el5_10.3.x86_64.rpm
+nscd-2.5-118.el5_10.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-headers-2.12-1.132.el6_5.4.i686.rpm
+glibc-utils-2.12-1.132.el6_5.4.i686.rpm
+nscd-2.12-1.132.el6_5.4.i686.rpm
+
+x86_64:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-headers-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-utils-2.12-1.132.el6_5.4.x86_64.rpm
+nscd-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+x86_64:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-headers-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-utils-2.12-1.132.el6_5.4.x86_64.rpm
+nscd-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-headers-2.12-1.132.el6_5.4.i686.rpm
+glibc-utils-2.12-1.132.el6_5.4.i686.rpm
+nscd-2.12-1.132.el6_5.4.i686.rpm
+
+ppc64:
+glibc-2.12-1.132.el6_5.4.ppc.rpm
+glibc-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-common-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.ppc.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.ppc.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-devel-2.12-1.132.el6_5.4.ppc.rpm
+glibc-devel-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-headers-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-utils-2.12-1.132.el6_5.4.ppc64.rpm
+nscd-2.12-1.132.el6_5.4.ppc64.rpm
+
+s390x:
+glibc-2.12-1.132.el6_5.4.s390.rpm
+glibc-2.12-1.132.el6_5.4.s390x.rpm
+glibc-common-2.12-1.132.el6_5.4.s390x.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.s390.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.s390x.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.s390.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.s390x.rpm
+glibc-devel-2.12-1.132.el6_5.4.s390.rpm
+glibc-devel-2.12-1.132.el6_5.4.s390x.rpm
+glibc-headers-2.12-1.132.el6_5.4.s390x.rpm
+glibc-utils-2.12-1.132.el6_5.4.s390x.rpm
+nscd-2.12-1.132.el6_5.4.s390x.rpm
+
+x86_64:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-headers-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-utils-2.12-1.132.el6_5.4.x86_64.rpm
+nscd-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+
+ppc64:
+glibc-debuginfo-2.12-1.132.el6_5.4.ppc.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.ppc.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.ppc64.rpm
+glibc-static-2.12-1.132.el6_5.4.ppc.rpm
+glibc-static-2.12-1.132.el6_5.4.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.12-1.132.el6_5.4.s390.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.s390x.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.s390.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.s390x.rpm
+glibc-static-2.12-1.132.el6_5.4.s390.rpm
+glibc-static-2.12-1.132.el6_5.4.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-headers-2.12-1.132.el6_5.4.i686.rpm
+glibc-utils-2.12-1.132.el6_5.4.i686.rpm
+nscd-2.12-1.132.el6_5.4.i686.rpm
+
+x86_64:
+glibc-2.12-1.132.el6_5.4.i686.rpm
+glibc-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-devel-2.12-1.132.el6_5.4.i686.rpm
+glibc-devel-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-headers-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-utils-2.12-1.132.el6_5.4.x86_64.rpm
+nscd-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+glibc-2.12-1.132.el6_5.4.src.rpm
+
+i386:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.i686.rpm
+glibc-debuginfo-common-2.12-1.132.el6_5.4.x86_64.rpm
+glibc-static-2.12-1.132.el6_5.4.i686.rpm
+glibc-static-2.12-1.132.el6_5.4.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.1.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.1.i686.rpm
+glibc-2.17-55.el7_0.1.x86_64.rpm
+glibc-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-devel-2.17-55.el7_0.1.i686.rpm
+glibc-devel-2.17-55.el7_0.1.x86_64.rpm
+glibc-headers-2.17-55.el7_0.1.x86_64.rpm
+glibc-utils-2.17-55.el7_0.1.x86_64.rpm
+nscd-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-static-2.17-55.el7_0.1.i686.rpm
+glibc-static-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.1.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.1.i686.rpm
+glibc-2.17-55.el7_0.1.x86_64.rpm
+glibc-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-devel-2.17-55.el7_0.1.i686.rpm
+glibc-devel-2.17-55.el7_0.1.x86_64.rpm
+glibc-headers-2.17-55.el7_0.1.x86_64.rpm
+glibc-utils-2.17-55.el7_0.1.x86_64.rpm
+nscd-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-static-2.17-55.el7_0.1.i686.rpm
+glibc-static-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.1.src.rpm
+
+ppc64:
+glibc-2.17-55.el7_0.1.ppc.rpm
+glibc-2.17-55.el7_0.1.ppc64.rpm
+glibc-common-2.17-55.el7_0.1.ppc64.rpm
+glibc-debuginfo-2.17-55.el7_0.1.ppc.rpm
+glibc-debuginfo-2.17-55.el7_0.1.ppc64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.ppc.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.ppc64.rpm
+glibc-devel-2.17-55.el7_0.1.ppc.rpm
+glibc-devel-2.17-55.el7_0.1.ppc64.rpm
+glibc-headers-2.17-55.el7_0.1.ppc64.rpm
+glibc-utils-2.17-55.el7_0.1.ppc64.rpm
+nscd-2.17-55.el7_0.1.ppc64.rpm
+
+s390x:
+glibc-2.17-55.el7_0.1.s390.rpm
+glibc-2.17-55.el7_0.1.s390x.rpm
+glibc-common-2.17-55.el7_0.1.s390x.rpm
+glibc-debuginfo-2.17-55.el7_0.1.s390.rpm
+glibc-debuginfo-2.17-55.el7_0.1.s390x.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.s390.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.s390x.rpm
+glibc-devel-2.17-55.el7_0.1.s390.rpm
+glibc-devel-2.17-55.el7_0.1.s390x.rpm
+glibc-headers-2.17-55.el7_0.1.s390x.rpm
+glibc-utils-2.17-55.el7_0.1.s390x.rpm
+nscd-2.17-55.el7_0.1.s390x.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.1.i686.rpm
+glibc-2.17-55.el7_0.1.x86_64.rpm
+glibc-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-devel-2.17-55.el7_0.1.i686.rpm
+glibc-devel-2.17-55.el7_0.1.x86_64.rpm
+glibc-headers-2.17-55.el7_0.1.x86_64.rpm
+glibc-utils-2.17-55.el7_0.1.x86_64.rpm
+nscd-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+glibc-debuginfo-2.17-55.el7_0.1.ppc.rpm
+glibc-debuginfo-2.17-55.el7_0.1.ppc64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.ppc.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.ppc64.rpm
+glibc-static-2.17-55.el7_0.1.ppc.rpm
+glibc-static-2.17-55.el7_0.1.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.17-55.el7_0.1.s390.rpm
+glibc-debuginfo-2.17-55.el7_0.1.s390x.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.s390.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.s390x.rpm
+glibc-static-2.17-55.el7_0.1.s390.rpm
+glibc-static-2.17-55.el7_0.1.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-static-2.17-55.el7_0.1.i686.rpm
+glibc-static-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.1.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.1.i686.rpm
+glibc-2.17-55.el7_0.1.x86_64.rpm
+glibc-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-devel-2.17-55.el7_0.1.i686.rpm
+glibc-devel-2.17-55.el7_0.1.x86_64.rpm
+glibc-headers-2.17-55.el7_0.1.x86_64.rpm
+glibc-utils-2.17-55.el7_0.1.x86_64.rpm
+nscd-2.17-55.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.1.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.1.x86_64.rpm
+glibc-static-2.17-55.el7_0.1.i686.rpm
+glibc-static-2.17-55.el7_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0475.html">https://www.redhat.com/security/data/cve/CVE-2014-0475.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5119.html">https://www.redhat.com/security/data/cve/CVE-2014-5119.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1176253">https://access.redhat.com/solutions/1176253</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUAPQ0XlSAg2UNWIIRAqvrAJ9SpWMaa/RpcK4k28lWWgBkXT3WgwCfdREK
+R2D/f2zxMQ/T5+qB8wjvIRc=
+=8ELy
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00055.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00055.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00056">Thread Index</A>]
+[<A HREF="date.html#00056">Date Index</A>]
+[<A HREF="author.html#00056">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

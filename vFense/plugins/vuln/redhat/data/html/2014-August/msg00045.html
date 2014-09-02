@@ -1,0 +1,194 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1082&#45;01] Important: thermostat1&#45;httpcomponents&#45;client	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Aug 2014 07:20:30 &#45;0400 -->
+<!--X-Message-Id: 201408201120.s7KBKS9V029917@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1082-01] Important: thermostat1-httpcomponents-client	securit</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00044.html">Date Prev</a>][<a href="msg00046.html">Date Next</a>] &nbsp; [<a href="msg00044.html">Thread Prev</a>][<a href="msg00046.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1082-01] Important: thermostat1-httpcomponents-client	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1082-01] Important: thermostat1-httpcomponents-client	security update</li>
+<li><em>Date</em>: Wed, 20 Aug 2014 11:28:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: thermostat1-httpcomponents-client security update
+Advisory ID:       RHSA-2014:1082-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1082.html">https://rhn.redhat.com/errata/RHSA-2014-1082.html</a>
+Issue date:        2014-08-20
+CVE Names:         CVE-2012-6153 CVE-2014-3577 
+=====================================================================
+
+1. Summary:
+
+Updated thermostat1-httpcomponents-client packages that fix two security
+issues are now available for Red Hat Software Collections 1.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4) - noarch
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6) - noarch
+
+3. Description:
+
+Thermostat is a monitoring and instrumentation tool for the OpenJDK HotSpot
+Java Virtual Machine (JVM) with support for monitoring multiple
+JVM instances.
+
+The httpcomponents-client package provides an HTTP agent implementation
+that is used by Thermostat to visualize collected data in an HTTP-aware
+client application.
+
+It was found that the fix for CVE-2012-5783 was incomplete: the code added
+to check that the server hostname matches the domain name in a subject's
+Common Name (CN) field in X.509 certificates was flawed.
+A man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2012-6153)
+
+It was found that the fix for CVE-2012-6153 was incomplete: the code added
+to check that the server hostname matches the domain name in a subject's
+Common Name (CN) field in X.509 certificates was flawed.
+A man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2014-3577)
+
+The CVE-2012-6153 issue was discovered by Florian Weimer of Red Hat
+Product Security.
+
+For additional information on these flaws, refer to the Knowledgebase
+article in the References section.
+
+All thermostat1-httpcomponents-client users are advised to upgrade to these
+updated packages, which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1129074 - CVE-2014-3577 Apache HttpComponents client: Hostname verification susceptible to MITM attack
+1129916 - CVE-2012-6153 Apache HttpComponents client: Hostname verification susceptible to MITM attack
+
+6. Package List:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.src.rpm
+
+noarch:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.noarch.rpm
+thermostat1-httpcomponents-client-javadoc-4.2.5-3.4.el6.1.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.src.rpm
+
+noarch:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.noarch.rpm
+thermostat1-httpcomponents-client-javadoc-4.2.5-3.4.el6.1.noarch.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.src.rpm
+
+noarch:
+thermostat1-httpcomponents-client-4.2.5-3.4.el6.1.noarch.rpm
+thermostat1-httpcomponents-client-javadoc-4.2.5-3.4.el6.1.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6153.html">https://www.redhat.com/security/data/cve/CVE-2012-6153.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3577.html">https://www.redhat.com/security/data/cve/CVE-2014-3577.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1165533">https://access.redhat.com/solutions/1165533</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT9IRyXlSAg2UNWIIRAqusAJ0aNAWHT6am+LIbC/zOeh20J47BpACgqBHx
+fPflwl6KyHeJ9lF6O8UZ1cU=
+=0FXG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00044.html">Date Prev</a>][<a href="msg00046.html">Date Next</a>] &nbsp; [<a href="msg00044.html">Thread Prev</a>][<a href="msg00046.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
